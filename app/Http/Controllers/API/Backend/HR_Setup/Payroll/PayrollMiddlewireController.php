@@ -1,0 +1,190 @@
+<?php
+
+namespace App\Http\Controllers\API\Backend\HR_Setup\Payroll;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+
+use App\Models\Transaction_With;
+use App\Models\Transaction_Head;
+use App\Models\Pay_Roll_Setup;
+use App\Models\Pay_Roll_Middlewire;
+
+class PayrollMiddlewireController extends Controller
+{
+    // Show All Payroll Middlewire
+    public function ShowAll(Request $req){
+        $currentYear = Carbon::now()->year; 
+        $currentMonth = Carbon::now()->month;
+        $payroll = Pay_Roll_Middlewire::with('Employee','Head')
+            ->orderBy('emp_id','asc')
+            ->whereYear('date', $currentYear)
+            ->whereMonth('date', $currentMonth)
+            ->paginate(15); 
+        $tranwith = Transaction_With::where('user_role', 6)->get();
+        $heads = Transaction_Head::where('groupe_id','1')->get();
+
+        return response()->json([
+            'status'=> true,
+            'data' => $payroll,
+            'tranwith' => $tranwith,
+            'heads' => $heads,
+        ], 200);
+    } // End Method
+
+
+
+    // Insert Payroll Middlewire
+    public function Insert(Request $req){
+        $currentYear = $req->year;
+        $currentMonth = $req->month;
+        $date = $req->year."-".$req->month."-01";
+
+        $req->validate([
+            "user" => 'required',
+            "head" => 'required',
+            "amount" => 'required',
+        ]);
+
+
+        // Check If the Salary Component is Already Added or Not
+        $middlewire = Pay_Roll_Middlewire::where('emp_id', $req->user)
+                    ->where('head_id', $req->head)
+                    ->where(function ($query) use ($currentYear, $currentMonth) {
+                        $query->whereYear('date', $currentYear)
+                            ->whereMonth('date', $currentMonth)
+                            ->orWhereNull('date');
+                    })
+                    ->count();
+
+        $setup = Pay_Roll_Setup::where('emp_id', $req->user)
+                    ->where('head_id', $req->head)
+                    ->count();
+
+        // If the Salary Component is Already Added Send Error Message
+        if($middlewire > 0 || $setup > 0){
+            return response()->json([
+                'errors' => [
+                    'head' => ["You have already added this salary component for this user."]
+                ]
+            ], 422);
+        }
+        else{
+            Pay_Roll_Middlewire::insert([
+                "emp_id" => $req->user,
+                "head_id" => $req->head,
+                "amount" => $req->amount,
+                "date" => $date,
+            ]);
+
+            return response()->json([
+                'status'=> true,
+                'message' => 'Payroll Middlewire Added Successfully'
+            ], 200);
+        }
+    } // End Method
+
+
+
+    // Edit Payroll Middlewire
+    public function Edit(Request $req){
+        $payroll = Pay_Roll_Middlewire::with('Employee', 'Head')->where('id',$req->id)->findOrFail($req->id);
+        $tranwith = Transaction_With::where('user_role', 6)->get();
+        $heads = Transaction_Head::where('groupe_id','1')->get();
+        return response()->json([
+            'status'=> true,
+            'payroll'=>$payroll,
+            'tranwith'=>$tranwith,
+            'heads'=>$heads,
+        ], 200);
+    } // End Method
+
+
+
+    // Update Payroll Middlewire
+    public function Update(Request $req){
+        $currentYear = $req->year;
+        $currentMonth = $req->month;
+
+        $req->validate([
+            "with" => 'required',
+            "user" => 'required',
+            "head" => 'required',
+            "amount" => 'required',
+        ]);
+
+
+        // Check If the Salary Component is Already Added or Not
+        $middlewire = Pay_Roll_Middlewire::where('emp_id', $req->user)
+                    ->where('head_id', $req->head)
+                    ->where(function ($query) use ($currentYear, $currentMonth) {
+                        $query->whereYear('date', $currentYear)
+                            ->whereMonth('date', $currentMonth)
+                            ->orWhereNull('date');
+                    })
+                    ->where('id', '!=', $req->id)
+                    ->count();
+
+        $setup = Pay_Roll_Setup::where('emp_id', $req->user)
+                    ->where('head_id', $req->head)
+                    ->count();
+
+        // If the Salary Component is Already Added Send Error Message
+        if($middlewire > 0 || $setup > 0){
+            return response()->json([
+                'errors' => [
+                    'head' => ["You have already added this salary component for this user."]
+                ]
+            ], 422);
+        }
+        else{
+            $update = Pay_Roll_Middlewire::findOrFail($req->id)->update([
+                "emp_id" => $req->user,
+                "head_id" => $req->head,
+                "amount" => $req->amount,
+                "date" => $req->date,
+            ]);
+    
+            if($update){
+                return response()->json([
+                    'status'=>true,
+                    'message' => 'Payroll Middlewire Updated Successfully',
+                ], 200); 
+            }
+        }
+    } // End Method
+
+
+
+    // Delete Payroll Middlewire
+    public function Delete(Request $req){
+        Pay_Roll_Middlewire::findOrFail($req->id)->delete();
+        return response()->json([
+            'status'=> true,
+            'message' => 'Payroll Middlewire Deleted Successfully',
+        ], 200); 
+    } // End Method
+
+
+
+    // Search Payroll Middlewire
+    public function Search(Request $req){
+        $currentYear = $req->year;
+        $currentMonth = $req->month;
+        $payroll = Pay_Roll_Middlewire::with('Employee', 'Head')
+        ->whereHas($req->searchOption == 1 ? 'Employee' : 'Head', function ($query) use ($req) {
+            $query->where($req->searchOption == 1 ? 'user_name' : 'tran_head_name', 'like', '%'.$req->search.'%');
+            $query->orderby($req->searchOption == 1 ? 'user_name' : 'tran_head_name');
+        })
+        ->whereYear('date', $currentYear)
+        ->whereMonth('date', $currentMonth)
+        ->orWhereNull('date')
+        ->paginate(15);
+        
+        return response()->json([
+            'status' => true,
+            'data' => $payroll,
+        ], 200);
+    } // End Method
+}

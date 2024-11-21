@@ -1,0 +1,120 @@
+<?php
+
+namespace App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Setup;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use App\Models\Item_Category;
+
+class PharmacyCategoryController extends Controller
+{
+    // Show All Item/Product Category
+    public function ShowAll(Request $req){
+        $category = Item_Category::where('type_id', '6')->orderBy('added_at','asc')->paginate(15);
+        return response()->json([
+            'status'=> true,
+            'data' => $category,
+        ], 200);
+    } // End Method
+
+
+
+    // Insert Item/Product Category
+    public function Insert(Request $req){
+        $req->validate([
+            'name' => 'required',
+        ]);
+
+        Item_Category::insert([
+            'category_name' => $req->name,
+            'type_id'=> '6',
+        ]);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Category Added Successfully'
+        ], 200);  
+    } // End Method
+
+
+
+    // Edit Item/Product Category
+    public function Edit(Request $req){
+        $category = Item_Category::where('id', $req->id)->first();
+        return response()->json([
+            'status'=> true,
+            'category'=> $category,
+        ], 200);
+    } // End Method
+
+
+
+    // Update Item/Product Category
+    public function Update(Request $req){
+        $req->validate([
+            'name' => 'required',
+        ]);
+
+        $update = Item_Category::findOrFail($req->id)->update([
+            'category_name' => $req->name,
+            "updated_at" => now()
+        ]);
+
+        if($update){
+            return response()->json([
+                'status'=>true,
+                'message' => 'Category Updated Successfully',
+            ], 200); 
+        }
+    } // End Method
+
+
+
+    // Delete Item/Product Category
+    public function Delete(Request $req){
+        Item_Category::findOrFail($req->id)->delete();
+        return response()->json([
+            'status'=> true,
+            'message' => 'Category Deleted Successfully',
+        ], 200); 
+    } // End Method
+
+
+
+    // Search Item/Product Category
+    public function Search(Request $req){
+        $category = Item_Category::where('type_id', '6')
+        ->where('category_name', 'like', '%'.$req->search.'%')
+        ->orderBy('category_name','asc')
+        ->paginate(15);
+        
+        return response()->json([
+            'status' => true,
+            'data' => $category,
+        ], 200);
+    } // End Method
+
+
+
+    // Get Item/Product Category By Name
+    public function Get(Request $req){
+        $categories = Item_Category::where('type_id', '6')
+        ->where('category_name', 'like', '%'.$req->category.'%')
+        ->orderBy('category_name','asc')
+        ->take(10)
+        ->get();
+
+
+        if($categories->count() > 0){
+            $list = "";
+            foreach($categories as $index => $category) {
+                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$category->id.'">'.$category->category_name.'</li>';
+            }
+        }
+        else{
+            $list = '<li>No Data Found</li>';
+        }
+        return $list;
+    } // End Method
+}
