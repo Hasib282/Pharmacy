@@ -1,0 +1,17 @@
+[
+    { "tran_with_name": "Regular Employee",                 "user_role": "6",        "tran_type":"3",    "tran_method":"Both" },
+    { "tran_with_name": "Bit Pion",                         "user_role": "6",        "tran_type":"3",    "tran_method":"Both" },
+    { "tran_with_name": "District Employee",                "user_role": "6",        "tran_type":"3",    "tran_method":"Both" },
+    { "tran_with_name": "General Client",                   "user_role": "4",        "tran_type":"1",    "tran_method":"Receive" },
+    { "tran_with_name": "Advertisement Client",             "user_role": "4",        "tran_type":"1",    "tran_method":"Receive" },
+    { "tran_with_name": "Newspaper Client",                 "user_role": "4",        "tran_type":"1",    "tran_method":"Receive" },
+    { "tran_with_name": "General Supplier",                 "user_role": "5",        "tran_type":"1",    "tran_method":"Payment" },
+    { "tran_with_name": "Printing tools Supplier",          "user_role": "5",        "tran_type":"1",    "tran_method":"Payment" },
+    { "tran_with_name": "Newspaper Supplier",               "user_role": "5",        "tran_type":"1",    "tran_method":"Payment" },
+    { "tran_with_name": "Food Supplier",                    "user_role": "5",        "tran_type":"5",    "tran_method":"Payment" },
+    { "tran_with_name": "Food Client",                      "user_role": "4",        "tran_type":"5",    "tran_method":"Receive" },
+    { "tran_with_name": "Stationary Supplier",              "user_role": "5",        "tran_type":"5",    "tran_method":"Payment" },
+    { "tran_with_name": "Stationary Client",                "user_role": "4",        "tran_type":"5",    "tran_method":"Receive" },
+    { "tran_with_name": "Medicine Supplier",                "user_role": "5",        "tran_type":"6",    "tran_method":"Payment" },
+    { "tran_with_name": "Medicine Client",                  "user_role": "4",        "tran_type":"6",    "tran_method":"Receive" }
+]

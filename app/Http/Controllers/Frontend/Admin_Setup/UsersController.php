@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Http\Controllers\Frontend\Admin_Setup;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class UsersController extends Controller
+{
+    /////////////////////////// --------------- Admin Methods start---------- //////////////////////////
+    // Show Admins
+    public function ShowAdmins(Request $req){
+        $name = "Admin";
+        $js = "admin";
+        if ($req->ajax()) {
+            return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
+        }
+        else{
+            return view('admin_setup.users.users', compact('name', 'js'));
+        }
+    } // End Method
+
+
+
+    // Search Admin
+    public function SearchAdmins(Request $request){
+        $name = "Admin";
+        $js = "admin";
+        return view('admin_setup.users.users', compact('name', 'js'));
+    } // End Method
+
+
+
+
+
+    /////////////////////////// --------------- Super Admin Methods start---------- //////////////////////////
+    // Show Super Admins
+    public function ShowSuperAdmins(Request $req){
+        $name = "Super Admin";
+        $js = "super_admin";
+        if ($req->ajax()) {
+            return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
+        }
+        else{
+            return view('admin_setup.users.users', compact('name', 'js'));
+        }
+    } // End Method
+
+
+
+    // Search SuperAdmins
+    public function SearchSuperAdmins(Request $request){
+        $name = "Super Admin";
+        $js = "super_admin";
+        return view('admin_setup.users.users', compact('name', 'js'));
+    } // End Method
+
+
+
+
+
+    /////////////////////////// --------------- Client Methods start---------- //////////////////////////
+    // Show Clients
+    public function ShowClients(Request $req){
+        $name = "Client";
+        $js = "client";
+        if ($req->ajax()) {
+            return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
+        }
+        else{
+            return view('admin_setup.users.users', compact('name', 'js'));
+        }
+    } // End Method
+
+
+    // Search Client
+    public function SearchClients(Request $request){
+        $name = "Client";
+        $js = "client";
+        return view('admin_setup.users.users', compact('name', 'js'));
+    } // End Method
+
+
+
+
+    
+    /////////////////////////// --------------- Suppliers Methods start---------- //////////////////////////
+    // Show Suppliers
+    public function ShowSuppliers(Request $req){
+        $name = "Supplier";
+        $js = "supplier";
+        if ($req->ajax()) {
+            return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
+        }
+        else{
+            return view('admin_setup.users.users', compact('name', 'js'));
+        }
+    } // End Method
+
+
+
+    // Search Suppplier by Name
+    public function SearchSuppliers(Request $request){
+        $name = "Supplier";
+        $js = "supplier";
+        return view('admin_setup.users.users', compact('name', 'js'));
+    } // End Method
+}
