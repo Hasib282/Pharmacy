@@ -52,6 +52,7 @@ class PartyTransactionController extends Controller
             "with" => 'required',
             "user" => 'required',
             "amount" => 'required',
+            "company" => 'required'
         ]);
 
 
@@ -103,6 +104,7 @@ class PartyTransactionController extends Controller
                             "receive" => $receive,
                             "payment" => $payment,
                             "due" => 0,
+                            "company_id" => $req->company,
                         ]);
                         
 
@@ -159,6 +161,7 @@ class PartyTransactionController extends Controller
                                             "receive" => $detail_receive,
                                             "payment" => $detail_payment,
                                             "batch_id" => $detail->tran_id,
+                                            "company_id" => $req->company,
                                         ]);
 
                                         $detailAmount = $detailAmount - $detail->due;
@@ -182,6 +185,7 @@ class PartyTransactionController extends Controller
                                         'due'=> 0,
                                         "party_amount" => $req->amount,
                                         "batch_id" => $item->tran_id,
+                                        "company_id" => $req->company,
                                     ]);
 
                                     $totAmount = $totAmount - $item->due;
@@ -238,6 +242,7 @@ class PartyTransactionController extends Controller
                                             "receive" => $detail_receive,
                                             "payment" => $detail_payment,
                                             "batch_id" => $detail->tran_id,
+                                            "company_id" => $req->company,
                                         ]);
 
                                         $detailAmount = $detailAmount - $detail->due;
@@ -261,6 +266,7 @@ class PartyTransactionController extends Controller
                                         'due'=> $due,
                                         "party_amount" => $req->amount,
                                         "batch_id" => $item->tran_id,
+                                        "company_id" => $req->company,
                                     ]);
 
                                     $billDiscount = 0;

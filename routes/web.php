@@ -11,7 +11,7 @@ use App\Http\Controllers\ProfileController;
 // Admin Setup Related Controllers
 use App\Http\Controllers\Frontend\Admin_Setup\AdminSetupController;
 use App\Http\Controllers\Frontend\Admin_Setup\UsersController;
-use App\Http\Controllers\Frontend\Admin_Setup\AuthSetupController;
+use App\Http\Controllers\Frontend\Admin_Setup\PermissionController;
 
 
 // Auth Controllers
@@ -110,6 +110,11 @@ Route::middleware([CheckPermission::class])->group(function () {
         // *************************************** User Routes Start *************************************** //
         Route::prefix('/users')->group(function () {
             Route::controller(UsersController::class)->group(function () {
+                ///////////// --------------- Role routes ----------- ///////////////////
+                Route::get('/roles', 'ShowRoles')->name('show.roles');
+                Route::get('/roles/search', 'SearchRoles')->name('search.roles');
+                
+
                 ///////////// --------------- Admin Routes ----------- ///////////////////
                 Route::get('/admins', 'ShowAdmins')->name('show.admins');
                 Route::get('/admins/search', 'SearchAdmins')->name('search.admins');
@@ -136,46 +141,38 @@ Route::middleware([CheckPermission::class])->group(function () {
 
 
 
-        // *************************************** Auth Routes Start *************************************** //
-        Route::prefix('/auth')->group(function () {
-            Route::controller(AuthSetupController::class)->group(function () {
-                ///////////// --------------- Role routes ----------- ///////////////////
-                Route::get('/roles', 'ShowRoles')->name('show.roles');
-                Route::get('/roles/search', 'SearchRoles')->name('search.roles');
+        // *************************************** Permission Routes Start *************************************** //
+        Route::prefix('/permission')->group(function () {
+            Route::controller(PermissionController::class)->group(function () {
+                ///////////// --------------- Permission Main Heads routes ----------- ///////////////////
+                Route::get('/mainhead', 'ShowPermissionMainheads')->name('show.permissionMainheads');
+                Route::get('/mainhead/search', 'SearchPermissionMainheads')->name('search.permissionMainheads');
+                
+                
+                
+                ///////////// --------------- Permission Heads routes ----------- ///////////////////
+                Route::get('/', 'ShowPermissions')->name('show.permissions');
+                Route::get('/search', 'SearchPermissions')->name('search.permissions');
+
+
+
+                ///////////// --------------- Role Permission routes ----------- ///////////////////
+                Route::get('/rolepermissions', 'ShowRolePermissions')->name('show.rolePermissions');
+                Route::get('/rolepermissions/search', 'SearchRolePermissions')->name('search.rolePermissions');
+
+
+
+                ///////////// --------------- Route Permission routes ----------- ///////////////////
+                Route::get('/routepermissions', 'ShowRoutePermissions')->name('show.routePermissions');
+                Route::get('/routepermissions/search', 'SearchRoutePermissions')->name('search.routePermissions');
                 
 
-                // !!!!!!!!!!!!!!!!!!!! --------------- Permission Routes Start ----------- !!!!!!!!!!!!!!!!!!!! //
-                Route::prefix('/permission')->group(function () {
-                    ///////////// --------------- Permission Main Heads routes ----------- ///////////////////
-                    Route::get('/mainhead', 'ShowPermissionMainheads')->name('show.permissionMainheads');
-                    Route::get('/mainhead/search', 'SearchPermissionMainheads')->name('search.permissionMainheads');
-                    
-                    
-                    
-                    ///////////// --------------- Permission Heads routes ----------- ///////////////////
-                    Route::get('/', 'ShowPermissions')->name('show.permissions');
-                    Route::get('/search', 'SearchPermissions')->name('search.permissions');
 
-
-
-                    ///////////// --------------- Role Permission routes ----------- ///////////////////
-                    Route::get('/rolepermissions', 'ShowRolePermissions')->name('show.rolePermissions');
-                    Route::get('/rolepermissions/search', 'SearchRolePermissions')->name('search.rolePermissions');
-
-
-
-                    ///////////// --------------- Route Permission routes ----------- ///////////////////
-                    Route::get('/routepermissions', 'ShowRoutePermissions')->name('show.routePermissions');
-                    Route::get('/routepermissions/search', 'SearchRoutePermissions')->name('search.routePermissions');
-                    
-
-
-                    ///////////// --------------- User Permission routes ----------- ///////////////////
-                    Route::get('/userpermissions', 'ShowUserPermissions')->name('show.userPermissions');
-                    Route::get('/userpermissions/search', 'SearchUserPermissions')->name('search.userPermissions');
-                }); // End Permission Routes
-            }); // End Auth Setup Controller
-        }); // End Auth Routes
+                ///////////// --------------- User Permission routes ----------- ///////////////////
+                Route::get('/userpermissions', 'ShowUserPermissions')->name('show.userPermissions');
+                Route::get('/userpermissions/search', 'SearchUserPermissions')->name('search.userPermissions');
+            }); // End Permission Controller
+        }); // End Permission Routes
 
 
 

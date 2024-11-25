@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\User_Info;
 use App\Models\Transaction_With;
@@ -17,7 +18,14 @@ class SupplierController extends Controller
 {
     // Show All Suppliers
     public function ShowAll(Request $req){
-        $supplier = User_Info::with('Withs','Location')->where('user_role', 5)->orderBy('added_at','asc')->paginate(15);
+        $query = User_Info::with('Withs', 'Location')->where('user_role', 5);
+
+        if (Auth::user()->user_role != 1) {
+            $query->where('company_id', Auth::user()->company_id);
+        }
+
+        $supplier = $query->orderBy('added_at', 'asc')->paginate(15);
+        
         return response()->json([
             'status'=> true,
             'data' => $supplier,
@@ -49,7 +57,6 @@ class SupplierController extends Controller
                 $originalName = $req->file('image')->getClientOriginalName();
                 $imageName = '('. $req->company . ')'. $id . '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
                 $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-                \Log::info("Image stored at: $imagePath");
             }
             else{
                 $imageName = null;
@@ -162,51 +169,40 @@ class SupplierController extends Controller
 
     // Search Suppliers
     public function Search(Request $req){
-        if($req->searchOption == 1){
-            $supplier = User_Info::with('Withs','Location')
-            ->where('user_role', 5)
-            ->where('user_name', 'like','%'.$req->search.'%')
-            ->orderBy('user_name','asc')
-            ->paginate(15);
+        $query = User_Info::with('Withs', 'Location')->where('user_role', 5);
+
+        // Filter Data for Non-super-admin users
+        if (Auth::user()->user_role != 1) {
+            $query->where('company_id', Auth::user()->company_id);
         }
-        else if($req->searchOption == 2){
-            $supplier = User_Info::with('Withs','Location')
-            ->where('user_role', 5)
-            ->where('user_email', 'like','%'.$req->search.'%')
-            ->orderBy('user_email','asc')
-            ->paginate(15);
+
+        switch ($req->searchOption) {
+            case 1: // Search User By Name
+                $query->where('user_name', 'like', '%' . $req->search . '%')->orderBy('user_name', 'asc');
+                break;
+            case 2: // Search By Email
+                $query->where('user_email', 'like', '%' . $req->search . '%')->orderBy('user_email', 'asc');
+                break;
+            case 3: // Search By Phone
+                $query->where('user_phone', 'like', '%' . $req->search . '%')->orderBy('user_phone', 'asc');
+                break;
+            case 4: // Search By Location
+                $query->whereHas('Location', function ($locationQuery) use ($req) {
+                    $locationQuery->where('upazila', 'like', '%' . $req->search . '%')->orderBy('upazila', 'asc');
+                });
+                break;
+            case 5: // Search By Address
+                $query->where('address', 'like', '%' . $req->search . '%')->orderBy('address', 'asc');
+                break;
+            case 6: // Search By User Type
+                $query->whereHas('Withs', function ($withQuery) use ($req) {
+                    $withQuery->where('tran_with_name', 'like', '%' . $req->search . '%')->orderBy('tran_with_name', 'asc');
+                });
+                break;
         }
-        else if($req->searchOption == 3){
-            $supplier = User_Info::with('Withs','Location')
-            ->where('user_role', 5)
-            ->where('user_phone', 'like','%'.$req->search.'%')
-            ->orderBy('user_phone','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 4){
-            $supplier = User_Info::with('Withs','Location')
-            ->whereHas('Location', function ($query) use ($req) {
-                $query->where('upazila', 'like', '%'.$req->search.'%');
-                $query->orderBy('upazila','asc');
-            })
-            ->where('user_role', 5)
-            ->paginate(15);
-        }
-        else if($req->searchOption == 5){
-            $supplier = User_Info::with('Withs','Location')->where('user_role', 5)
-            ->where('address', 'like', '%'.$req->search.'%')
-            ->orderBy('address','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 6){
-            $supplier = User_Info::with('Withs','Location')
-            ->whereHas('Withs', function ($query) use ($req) {
-                $query->where('tran_with_name', 'like', '%'.$req->search.'%');
-                $query->orderBy('tran_with_name','asc');
-            })
-            ->where('user_role', 5)
-            ->paginate(15);
-        }
+
+        // Execute query and paginate
+        $supplier = $query->paginate(15);
         
         return response()->json([
             'status' => true,
@@ -217,7 +213,7 @@ class SupplierController extends Controller
 
 
     // Show Supplier Details
-    public function SupplierDetails(Request $req){
+    public function Details(Request $req){
         $supplier = User_Info::with('Location','Withs')->where('user_id', "=", $req->id)->first();
         $transaction = Transaction_Main::where('tran_user', "=", $req->id)->get();
         return response()->json([

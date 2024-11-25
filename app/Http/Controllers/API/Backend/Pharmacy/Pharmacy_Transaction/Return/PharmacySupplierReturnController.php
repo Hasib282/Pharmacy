@@ -34,14 +34,14 @@ class PharmacySupplierReturnController extends Controller
             "batch" => 'required',
             "method" => 'required',
             "type" => 'required',
-            "withs" => 'required',
             "user" => 'required',
             "amountRP" => 'required',
             "discount" => 'required',
             "netAmount" => 'required',
             "advance" => 'required',
             "balance" => 'required',
-            "store" => 'required'
+            "store" => 'required',
+            "company" => 'required',
         ]);
 
 
@@ -91,7 +91,8 @@ class PharmacySupplierReturnController extends Controller
                 "net_amount" => $req->netAmount,
                 "payment" => $req->advance,
                 "due" => $req->balance,
-                "store_id" => $req->store
+                "store_id" => $req->store,
+                "company_id" => $req->company
             ]);
 
             $billDiscount = $req->discount;
@@ -136,7 +137,8 @@ class PharmacySupplierReturnController extends Controller
                     "cp" => $product['cp'],
                     "expiry_date" => $p->expiry_date,
                     "store_id" => $req->store,
-                    "batch_id" => $req->batch
+                    "batch_id" => $req->batch,
+                    "company_id" => $req->company
                 ]);
 
                 $billDiscount -= $discount;

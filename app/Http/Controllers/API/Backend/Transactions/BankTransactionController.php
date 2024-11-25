@@ -52,6 +52,7 @@ class BankTransactionController extends Controller
             "bank"  => 'required',
             "head"  => 'required',
             "amount"  => 'required|numeric',
+            "company" => 'required'
         ]);
 
         // Generates Auto Increment Purchase Id
@@ -77,6 +78,7 @@ class BankTransactionController extends Controller
                 "receive" => $receive,
                 "payment" => $payment,
                 "due" => 0,
+                "company_id" => $req->company,
             ]);
 
 
@@ -94,6 +96,7 @@ class BankTransactionController extends Controller
                 "receive" => $receive,
                 "payment" => $payment,
                 "due" => 0,
+                "company_id" => $req->company,
             ]);
         });
         

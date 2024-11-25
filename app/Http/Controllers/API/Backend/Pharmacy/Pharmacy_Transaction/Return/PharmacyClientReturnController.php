@@ -34,7 +34,6 @@ class PharmacyClientReturnController extends Controller
             "batch" => 'required',
             "method" => 'required',
             "type" => 'required',
-            "withs" => 'required',
             "user" => 'required',
             "amountRP" => 'required',
             "discount" => 'required',
@@ -42,6 +41,7 @@ class PharmacyClientReturnController extends Controller
             "advance" => 'required',
             "balance" => 'required',
             "store" => 'required',
+            "company" => 'required',
         ]);
 
 
@@ -80,18 +80,23 @@ class PharmacyClientReturnController extends Controller
         $id = ($transaction) ? 'PCR' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'PCR000000001';
 
         DB::transaction(function () use ($req, $id) {
+            $batchDetails = Transaction_Main::where('tran_id', $req->batch)->first();
             Transaction_Main::insert([
                 "tran_id" => $id,
                 "tran_type" => $req->type,
                 "tran_method" => $req->method,
                 "tran_type_with" => $req->withs,
                 "tran_user" => $req->user,
+                "user_name" => $batchDetails->user_name,
+                "user_phone" => $batchDetails->user_phone,
+                "user_address" => $batchDetails->user_address,
                 "bill_amount" => $req->amountRP,
                 "discount" => $req->discount,
                 "net_amount" => $req->netAmount,
                 "payment" => $req->advance,
                 "due" => $req->balance,
-                "store_id" => $req->store
+                "store_id" => $req->store,
+                "company_id" => $req->company
             ]);
 
             $billDiscount = $req->discount;
@@ -134,6 +139,9 @@ class PharmacyClientReturnController extends Controller
                     "tran_method" => $req->method,
                     "tran_type_with" => $req->withs,
                     "tran_user" => $req->user,
+                    "user_name" => $batchDetails->user_name,
+                    "user_phone" => $batchDetails->user_phone,
+                    "user_address" => $batchDetails->user_address,
                     "tran_groupe_id" => $product['groupe'],
                     "tran_head_id" => $product['product'],
                     "amount" => $product['mrp'],
@@ -146,7 +154,8 @@ class PharmacyClientReturnController extends Controller
                     "cp" => $p->cp,
                     "expiry_date" => $p->expiry_date,
                     "store_id" => $req->store,
-                    "batch_id" => $req->batch
+                    "batch_id" => $req->batch,
+                    "company_id" => $req->company
                 ]);
 
                 $billDiscount -= $discount;

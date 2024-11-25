@@ -20,6 +20,9 @@ return new class extends Migration
             $table->unsignedBigInteger('loc_id')->nullable();
             $table->unsignedBigInteger('tran_type_with')->nullable();
             $table->string('tran_user')->nullable();
+            $table->string('user_name')->nullable();
+            $table->string('user_phone')->nullable();
+            $table->string('user_address')->nullable();
             $table->unsignedBigInteger('tran_groupe_id')->nullable();
             $table->unsignedBigInteger('tran_head_id')->nullable();
             $table->float('quantity')->default(1);

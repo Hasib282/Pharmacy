@@ -30,7 +30,7 @@ class User_Info extends Authenticatable
     }
     
     public function Company(){
-        return $this->belongsTo(Company_Details::class,'company_id','id');
+        return $this->belongsTo(Company_Details::class,'company_id','company_id');
     }
 
     public function Department(){

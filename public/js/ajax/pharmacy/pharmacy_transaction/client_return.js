@@ -359,10 +359,11 @@ $(document).ready(function () {
         let advance = $('#advance').val();
         let balance = $('#balance').val();
         let batch = $('#batch').val();
+        let company = $('#company').attr('data-id');
         $.ajax({
             url: `${apiUrl}/pharmacy/transaction/return/client`,
             method: 'POST',
-            data: { products:JSON.stringify(products), batch, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance },
+            data: { products:JSON.stringify(products), batch, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
             success: function (res) {
                 if (res.status) {
                     $('#AddForm')[0].reset();

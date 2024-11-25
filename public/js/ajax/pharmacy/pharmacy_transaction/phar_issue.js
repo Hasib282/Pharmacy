@@ -104,6 +104,11 @@ $(document).ready(function () {
     AddModalFunctionality("#product", function(){
         GetTransactionWith(6, 'Receive', '#within');
         localStorage.removeItem('transactionData');
+        $('#store').val("Store 1")
+        $('#store').attr("data-id", '1');
+        $('#user').val('General Customer')
+        $('#user').attr('data-id', 'C000000101')
+        $('#user').attr('data-with', 4);
         $('.transaction_grid tbody').html('');
     });
 
@@ -154,6 +159,9 @@ $(document).ready(function () {
         $('#updateUser').val(res.pharmacy.user.user_name);
         $('#updateTotalDiscount').val(res.pharmacy.discount);
         $('#updateAdvance').val(res.pharmacy.receive);
+        $('#updateName').val(res.pharmacy.user_name);
+        $('#updatePhone').val(res.pharmacy.user_phone);
+        $('#updateAddress').val(res.pharmacy.user_address);
         $("#updateProduct").focus();
     }
 
@@ -559,22 +567,31 @@ $(document).ready(function () {
         let type = '6';
         let withs = $('#user').attr('data-with');
         let user = $('#user').attr('data-id');
+        let name = $('#name').val();
+        let phone = $('#phone').val();
+        let address = $('#address').val();
         let store = $('#store').attr('data-id');
         let amountRP = $('#amountRP').val();
         let discount = $('#totalDiscount').val();
         let netAmount = $('#netAmount').val();
         let advance = $('#advance').val();
         let balance = $('#balance').val();
+        let company = $('#company').attr('data-id');
         $.ajax({
             url: `${apiUrl}/pharmacy/transaction/issue`,
             method: 'POST',
-            data: { products:JSON.stringify(products), type, method, withs, user, store, amountRP, discount, netAmount, advance, balance },
+            data: { products:JSON.stringify(products), name, phone, address, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
             success: function (res) {
                 if (res.status) {
                     $('#AddForm')[0].reset();
-                    $('#store').removeAttr('data-id');
-                    $('#user').removeAttr('data-id');
-                    $('#user').removeAttr('data-with');
+                    // $('#store').removeAttr('data-id');
+                    // $('#user').removeAttr('data-id');
+                    // $('#user').removeAttr('data-with');
+                    $('#store').val("Store 1")
+                    $('#store').attr("data-id", '1');
+                    $('#user').val('General Customer')
+                    $('#user').attr('data-id', 'C000000101')
+                    $('#user').attr('data-with', 4);
                     $('.transaction_grid tbody').html('');
                     ReloadData('pharmacy/transaction/issue', ShowPharmacyIssues);
                     $('#product').focus();
@@ -606,10 +623,13 @@ $(document).ready(function () {
         let netAmount = $('#updateNetAmount').val();
         let advance = $('#updateAdvance').val();
         let balance = $('#updateBalance').val();
+        let name = $('#updateName').val();
+        let phone = $('#updatePhone').val();
+        let address = $('#updateAddress').val();
         $.ajax({
             url: `${apiUrl}/pharmacy/transaction/issue`,
             method: 'PUT',
-            data: { products:JSON.stringify(products), id, tranid, method, amountRP, totalDiscount, netAmount, advance, balance },
+            data: { products:JSON.stringify(products), name, phone, address, id, tranid, method, amountRP, totalDiscount, netAmount, advance, balance },
             beforeSend:function() {
                 $(document).find('span.error').text('');  
             },

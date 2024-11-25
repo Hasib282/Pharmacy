@@ -48,7 +48,6 @@ class SuperAdminController extends Controller
                 $originalName = $req->file('image')->getClientOriginalName();
                 $imageName = $id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
                 $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-                \Log::info("Image stored at: $imagePath");
             }
             else{
                 $imageName = null;

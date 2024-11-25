@@ -35,14 +35,14 @@ class PharmacyPurchaseController extends Controller
         $req->validate([
             "method" => 'required',
             "type" => 'required',
-            "withs" => 'required',
             "user" => 'required',
             "amountRP" => 'required',
             "discount" => 'required',
             "netAmount" => 'required',
             "advance" => 'required',
             "balance" => 'required',
-            "store" => 'required'
+            "store" => 'required',
+            "company" => 'required'
         ]);
 
 
@@ -92,7 +92,8 @@ class PharmacyPurchaseController extends Controller
                 "net_amount" => $req->netAmount,
                 "payment" => $req->advance,
                 "due" => $req->balance,
-                "store_id" => $req->store
+                "store_id" => $req->store,
+                "company_id" => $req->company
             ]);
 
             $billDiscount = $req->discount;
@@ -137,7 +138,8 @@ class PharmacyPurchaseController extends Controller
                     "payment" => $advance,
                     "due" => $due,
                     "expiry_date" => $product['expiry'] == null ? null : $product['expiry'],
-                    "store_id" => $req->store
+                    "store_id" => $req->store,
+                    "company_id" => $req->company
                 ]);
 
                 $billDiscount -= $discount;
@@ -303,6 +305,7 @@ class PharmacyPurchaseController extends Controller
                     "due" => $due,
                     "expiry_date" => $product['expiry'] ?? null,
                     "store_id" => $transaction->store_id,
+                    "company_id" => $transaction->company_id,
                     "tran_date" => $transaction->tran_date
                 ];
     
@@ -444,12 +447,16 @@ class PharmacyPurchaseController extends Controller
             "tran_method" => $mains->tran_method,
             "tran_type_with" => $mains->tran_type_with,
             "tran_user" => $mains->tran_user,
+            "user_name" => $mains->user_name,
+            "user_phone" => $mains->user_phone,
+            "user_address" => $mains->user_address,
             "bill_amount" => $mains->bill_amount,
             "discount" => $mains->discount,
             "net_amount" => $mains->net_amount,
             "payment" => $mains->payment,
             "due" => $mains->due,
-            "store_id" => $mains->store_id
+            "store_id" => $mains->store_id,
+            "company_id" => $mains->company_id
         ]);
 
         
@@ -471,6 +478,9 @@ class PharmacyPurchaseController extends Controller
                 "tran_method" => $detail->tran_method,
                 "tran_type_with" => $detail->tran_type_with,
                 "tran_user" => $detail->tran_user,
+                "user_name" => $mains->user_name,
+                "user_phone" => $mains->user_phone,
+                "user_address" => $mains->user_address,
                 "tran_groupe_id" => $detail->tran_groupe_id,
                 "tran_head_id" => $detail->tran_head_id,
                 "amount" => $detail->amount,
@@ -484,7 +494,8 @@ class PharmacyPurchaseController extends Controller
                 "payment" => $detail->payment,
                 "due" => $detail->due,
                 "expiry_date" => $detail->expiry_date == null ? null : $detail->expiry_date,
-                "store_id" => $detail->store_id
+                "store_id" => $detail->store_id,
+                "company_id" => $detail->company_id
             ]);
         }
 

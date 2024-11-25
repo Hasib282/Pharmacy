@@ -32,14 +32,14 @@ class PharmacyIssueController extends Controller
         $req->validate([
             "method" => 'required',
             "type" => 'required',
-            "withs" => 'required',
             "user" => 'required',
             "amountRP" => 'required',
             "discount" => 'required',
             "netAmount" => 'required',
             "advance" => 'required',
             "balance" => 'required',
-            "store" => 'required'
+            "store" => 'required',
+            "company" => 'required',
         ]);
 
 
@@ -85,12 +85,16 @@ class PharmacyIssueController extends Controller
                 "tran_method" => $req->method,
                 "tran_type_with" => $req->withs,
                 "tran_user" => $req->user,
+                "user_name" => $req->name,
+                "user_phone" => $req->phone,
+                "user_address" => $req->address,
                 "bill_amount" => $req->amountRP,
                 "discount" => $req->discount,
                 "net_amount" => $req->netAmount,
                 "receive" => $req->advance,
                 "due" => $req->balance,
-                "store_id" => $req->store
+                "store_id" => $req->store,
+                "company_id" => $req->company
             ]);
 
             $billDiscount = $req->discount;
@@ -136,6 +140,9 @@ class PharmacyIssueController extends Controller
                                 "tran_head_id" => $product['product'],
                                 "tran_type_with" => $req->with,
                                 "tran_user" => $req->user,
+                                "user_name" => $req->name,
+                                "user_phone" => $req->phone,
+                                "user_address" => $req->address,
                                 "amount" => $product['mrp'],
                                 "mrp" => $product['mrp'],
                                 "cp" => $pro->cp,
@@ -148,6 +155,7 @@ class PharmacyIssueController extends Controller
                                 "discount" => $discount,
                                 "expiry_date" => $pro->expiry_date,
                                 "batch_id" => $pro->tran_id,
+                                "company_id" => $req->company
                             ]);
 
                             $quantity = $quantity - $pro->quantity;
@@ -184,6 +192,9 @@ class PharmacyIssueController extends Controller
                                 "tran_head_id" => $product['product'],
                                 "tran_type_with" => $req->withs,
                                 "tran_user" => $req->user,
+                                "user_name" => $req->name,
+                                "user_phone" => $req->phone,
+                                "user_address" => $req->address,
                                 "amount" => $product['mrp'],
                                 "mrp" => $product['mrp'],
                                 "cp" => $pro->cp,
@@ -196,6 +207,7 @@ class PharmacyIssueController extends Controller
                                 "due" => $due,
                                 "expiry_date" => $pro->expiry_date,
                                 "batch_id" => $pro->tran_id,
+                                "company_id" => $req->company
                             ]);
                             $quantity = 0;
                             $billDiscount -= $discount;
@@ -280,6 +292,9 @@ class PharmacyIssueController extends Controller
 
         DB::transaction(function () use ($req, $transaction) {
             $transaction->update([
+                "user_name" => $req->name,
+                "user_phone" => $req->phone,
+                "user_address" => $req->address,
                 "bill_amount" => $req->amountRP,
                 "discount" => $req->totalDiscount,
                 "net_amount" => $req->netAmount,
@@ -359,6 +374,9 @@ class PharmacyIssueController extends Controller
                                 "tran_head_id" => $product['product'],
                                 "tran_type_with" => $transaction->tran_type_with,
                                 "tran_user" => $transaction->tran_user,
+                                "user_name" => $req->name,
+                                "user_phone" => $req->phone,
+                                "user_address" => $req->address,
                                 "amount" => $product['mrp'],
                                 "mrp" => $product['mrp'],
                                 "cp" => $pro->cp,
@@ -371,6 +389,7 @@ class PharmacyIssueController extends Controller
                                 "discount" => $discount,
                                 "expiry_date" => $pro->expiry_date,
                                 "batch_id" => $pro->tran_id,
+                                "company_id" => $pro->company_id,
                             ]);
 
                             $quantity = $quantity - $pro->quantity;
@@ -407,6 +426,9 @@ class PharmacyIssueController extends Controller
                                 "tran_head_id" => $product['product'],
                                 "tran_type_with" => $transaction->tran_type_with,
                                 "tran_user" => $transaction->tran_user,
+                                "user_name" => $req->name,
+                                "user_phone" => $req->phone,
+                                "user_address" => $req->address,
                                 "amount" => $product['mrp'],
                                 "mrp" => $product['mrp'],
                                 "cp" => $pro->cp,
@@ -419,6 +441,7 @@ class PharmacyIssueController extends Controller
                                 "due" => $due,
                                 "expiry_date" => $pro->expiry_date,
                                 "batch_id" => $pro->tran_id,
+                                "company_id" => $pro->company_id,
                             ]);
                             $quantity = 0;
                             $billDiscount -= $discount;

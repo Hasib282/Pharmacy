@@ -63,6 +63,7 @@ $(document).ready(function () {
         {
             user: { selector: '#user', attribute: 'data-id' },
             withs: { selector: '#user', attribute: 'data-with' },
+            company: { selector: '#company', attribute: 'data-id' },
             'groupe': 2,
             'head': 2,
             'type': 2,

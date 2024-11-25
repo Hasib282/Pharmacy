@@ -46,6 +46,7 @@ class PharmacyAdjustmentController extends Controller
             "type" => 'required',
             "groupe" => 'required',
             "product" => 'required',
+            "company" => 'required',
         ]);
 
         $prefixes = [
@@ -83,6 +84,7 @@ class PharmacyAdjustmentController extends Controller
                         "quantity" => $req->quantity,
                         "cp" => $product->cp,
                         "mrp" => $product->mrp,
+                        "company_id" => $req->company,
                     ]);
 
                     return response()->json([
@@ -115,6 +117,7 @@ class PharmacyAdjustmentController extends Controller
                         "quantity" => $req->quantity,
                         "cp" => $product->cp,
                         "mrp" => $product->mrp,
+                        "company_id" => $req->company,
                     ]);
 
                     return response()->json([

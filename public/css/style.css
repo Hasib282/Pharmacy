@@ -158,12 +158,18 @@ ol, ul, p {
 }
 
 .company-details{
+    padding-top: 10px;
     display: flex;
     gap: 5px;
     align-items: center;
     justify-content: center;
     color: #5d4b4b;
     font-size: 30px;
+}
+
+.company-name h1{
+    font-size: 30px;
+    margin: 0;
 }
 
 
@@ -175,7 +181,15 @@ ol, ul, p {
     border-radius: 50%;
 }
 
-.company-logo img, .user-image img{
+
+.company-logo img{
+    padding: 2px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.user-image img{
     padding: 2px;
     height: 30px;
     width: 30px;

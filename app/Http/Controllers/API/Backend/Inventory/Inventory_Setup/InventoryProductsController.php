@@ -201,17 +201,17 @@ class InventoryProductsController extends Controller
     // Get Inventory Product By Groupe
     public function Get(Request $req){
         // Update Product Quantity
-        // DB::table('transaction__heads as h')
-        // ->join(DB::raw("(SELECT tran_head_id, SUM(IF(tran_method = 'Purchase',quantity_actual,0)) 
-        // -SUM(IF(tran_method = 'Issue',quantity_actual,0)) 
-        // -SUM(IF(tran_method = 'Supplier Return',quantity_actual,0)) 
-        // +SUM(IF(tran_method = 'Client Return',quantity_actual,0)) 
-        // +SUM(IF(tran_method = 'Positive',quantity_actual,0)) 
-        // -SUM(IF(tran_method = 'Negative',quantity_actual,0)) as balance
-        //   FROM transaction__details
-        //     GROUP BY tran_head_id
-        // ) as x"),'h.id', '=', 'x.tran_head_id')
-        // ->update(['h.quantity' => DB::raw('x.balance')]);
+        DB::table('transaction__heads as h')
+        ->join(DB::raw("(SELECT tran_head_id, SUM(IF(tran_method = 'Purchase',quantity_actual,0)) 
+        -SUM(IF(tran_method = 'Issue',quantity_actual,0)) 
+        -SUM(IF(tran_method = 'Supplier Return',quantity_actual,0)) 
+        +SUM(IF(tran_method = 'Client Return',quantity_actual,0)) 
+        +SUM(IF(tran_method = 'Positive',quantity_actual,0)) 
+        -SUM(IF(tran_method = 'Negative',quantity_actual,0)) as balance
+          FROM transaction__details
+            GROUP BY tran_head_id
+        ) as x"),'h.id', '=', 'x.tran_head_id')
+        ->update(['h.quantity' => DB::raw('x.balance')]);
 
         $heads = Transaction_Head::with("Unit","Form","Manufecturer","Category")
         ->where('tran_head_name', 'like', '%'.$req->product.'%')

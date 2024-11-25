@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\User_Info;
 use App\Models\Transaction_With;
@@ -17,7 +18,14 @@ class AdminController extends Controller
 {
     // Show All Admins
     public function ShowAll(Request $req){
-        $admin = User_Info::with('Withs','Location')->where('user_role', 2)->orderBy('added_at','asc')->paginate(15);
+        $query = User_Info::with('Withs', 'Location')->where('user_role', 2);
+
+        if (Auth::user()->user_role != 1) {
+            $query->where('company_id', Auth::user()->company_id);
+        }
+
+        $admin = $query->orderBy('added_at', 'asc')->paginate(15);
+
         return response()->json([
             'status'=> true,
             'data' => $admin,
@@ -49,7 +57,6 @@ class AdminController extends Controller
                 $originalName = $req->file('image')->getClientOriginalName();
                 $imageName = '('. $req->company . ')'.$id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
                 $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-                \Log::info("Image stored at: $imagePath");
             }
             else{
                 $imageName = null;
@@ -160,46 +167,40 @@ class AdminController extends Controller
 
     // Search Admins
     public function Search(Request $req){
-        if($req->searchOption == 1){ // Search User By Name
-            $admin = User_Info::with('Withs','Location')
-            ->where('user_role', 2)
-            ->where('user_name', 'like', '%'.$req->search.'%')
-            ->orderBy('user_name','asc')
-            ->paginate(15);
+        $query = User_Info::with('Withs', 'Location')->where('user_role', 2);
+
+        // Filter Data for Non-super-admin users
+        if (Auth::user()->user_role != 1) {
+            $query->where('company_id', Auth::user()->company_id);
         }
-        else if($req->searchOption == 2){ // Search By Email
-            $admin = User_Info::with('Withs','Location')
-            ->where('user_role', 2)
-            ->where('user_email', 'like', '%'.$req->search.'%')
-            ->orderBy('user_email','asc')
-            ->paginate(15);
+
+        // Handle search options
+        switch ($req->searchOption) {
+            case 1: // Search User By Name
+                $query->where('user_name', 'like', '%' . $req->search . '%')->orderBy('user_name', 'asc');
+                break;
+            case 2: // Search By Email
+                $query->where('user_email', 'like', '%' . $req->search . '%')->orderBy('user_email', 'asc');
+                break;
+            case 3: // Search By Phone
+                $query->where('user_phone', 'like', '%' . $req->search . '%')->orderBy('user_phone', 'asc');
+                break;
+            case 4: // Search By Location
+                $query->whereHas('Location', function ($locationQuery) use ($req) {
+                    $locationQuery->where('upazila', 'like', '%' . $req->search . '%')->orderBy('upazila', 'asc');
+                });
+                break;
+            case 5: // Search By Address
+                $query->where('address', 'like', '%' . $req->search . '%')->orderBy('address', 'asc');
+                break;
         }
-        else if($req->searchOption == 3){ // Search By Phone
-            $admin = User_Info::where('user_role', 2)
-            ->where('user_phone', 'like', '%'.$req->search.'%')
-            ->orderBy('user_phone','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 4){ // Search By Location
-            $admin = User_Info::with('Withs','Location')
-            ->whereHas('Location', function ($query) use ($req) {
-                $query->where('upazila', 'like', '%'.$req->search.'%');
-                $query->orderBy('upazila','asc');
-            })
-            ->where('user_role', 2)
-            ->paginate(15);
-        }
-        else if($req->searchOption == 5){ // Search By Address
-            $admin = User_Info::with('Withs','Location')
-            ->where('user_role', 2)
-            ->where('address', 'like', '%'.$req->search.'%')
-            ->orderBy('address','asc')
-            ->paginate(15);
-        }
-        
+
+        // Execute query and paginate
+        $admins = $query->paginate(15);
+
         return response()->json([
             'status' => true,
-            'data' => $admin,
+            'data' => $admins,
         ], 200);
     } // End Method
 

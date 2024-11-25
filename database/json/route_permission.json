@@ -126,19 +126,19 @@
 
 
     { "permission_id": 59, "route_name": "show.deposits" },
-    { "permission_id": 59, "route_name": "search.bankTransactions" },
-    { "permission_id": 60, "route_name": "insert.bankTransactions" },
-    { "permission_id": 61, "route_name": "edit.bankTransactions" },
-    { "permission_id": 61, "route_name": "update.bankTransactions" },
-    { "permission_id": 62, "route_name": "delete.bankTransactions" },
+    { "permission_id": 59, "route_name": "search.deposits" },
+    { "permission_id": 60, "route_name": "insert.deposits" },
+    { "permission_id": 61, "route_name": "edit.deposits" },
+    { "permission_id": 61, "route_name": "update.deposits" },
+    { "permission_id": 62, "route_name": "delete.deposits" },
     { "permission_id": 63, "route_name": "print.transaction" },
 
-    { "permission_id": 64, "route_name": "show.deposits" },
-    { "permission_id": 64, "route_name": "search.bankTransactions" },
-    { "permission_id": 65, "route_name": "insert.bankTransactions" },
-    { "permission_id": 66, "route_name": "edit.bankTransactions" },
-    { "permission_id": 66, "route_name": "update.bankTransactions" },
-    { "permission_id": 67, "route_name": "delete.bankTransactions" },
+    { "permission_id": 64, "route_name": "show.withdraws" },
+    { "permission_id": 64, "route_name": "search.withdraws" },
+    { "permission_id": 65, "route_name": "insert.withdraws" },
+    { "permission_id": 66, "route_name": "edit.withdraws" },
+    { "permission_id": 66, "route_name": "update.withdraws" },
+    { "permission_id": 67, "route_name": "delete.withdraws" },
     { "permission_id": 68, "route_name": "print.transaction" },
 
 

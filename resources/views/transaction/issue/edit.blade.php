@@ -39,7 +39,7 @@
                         </div>
                         <div class="c-6">
                             <div class="form-input-group">
-                                <label for="updateUser">Supplier Name</label>
+                                <label for="updateUser">Client Name</label>
                                 <input type="text" name="user" class="form-input" id="updateUser" autocomplete="off">
                                 <div id="update-user">
                                     <ul>
@@ -47,6 +47,27 @@
                                     </ul>
                                 </div>
                                 <span class="error" id="update_user_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-4">
+                            <div class="form-input-group">
+                                <label for="updateName">Name</label>
+                                <input type="text" name="name" class="form-input" id="updateName">
+                                <span class="error" id="update_name_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-4">
+                            <div class="form-input-group">
+                                <label for="updatePhone">Phone</label>
+                                <input type="text" name="phone" class="form-input" id="updatePhone">
+                                <span class="error" id="update_phone_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-4">
+                            <div class="form-input-group">
+                                <label for="updateAddress">Address</label>
+                                <input type="text" name="address" class="form-input" id="updateAddress">
+                                <span class="error" id="update_address_error"></span>
                             </div>
                         </div>
                         <div class="c-12">

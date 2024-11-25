@@ -103,6 +103,11 @@ $(document).ready(function () {
     // Add Modal Open Functionality
     AddModalFunctionality("#product", function(){
         GetTransactionWith(5, 'Receive', '#within');
+        $('#store').val("Store 1")
+        $('#store').attr("data-id", '1');
+        $('#user').val('General Customer')
+        $('#user').attr('data-id', 'C000000101')
+        $('#user').attr('data-with', 4);
         localStorage.removeItem('transactionData');
         $('.transaction_grid tbody').html('');
     });
@@ -154,6 +159,9 @@ $(document).ready(function () {
         $('#updateUser').val(res.inventory.user.user_name);
         $('#updateTotalDiscount').val(res.inventory.discount);
         $('#updateAdvance').val(res.inventory.receive);
+        $('#updateName').val(res.inventory.user_name);
+        $('#updatePhone').val(res.inventory.user_phone);
+        $('#updateAddress').val(res.inventory.user_address);
         $("#updateProduct").focus();
     }
 
@@ -556,22 +564,31 @@ $(document).ready(function () {
         let type = '5';
         let withs = $('#user').attr('data-with');
         let user = $('#user').attr('data-id');
+        let name = $('#name').val();
+        let phone = $('#phone').val();
+        let address = $('#address').val();
         let store = $('#store').attr('data-id');
         let amountRP = $('#amountRP').val();
         let discount = $('#totalDiscount').val();
         let netAmount = $('#netAmount').val();
         let advance = $('#advance').val();
         let balance = $('#balance').val();
+        let company = $('#company').attr('data-id');
         $.ajax({
             url: `${apiUrl}/inventory/transaction/issue`,
             method: 'POST',
-            data: { products:JSON.stringify(products), type, method, withs, user, store, amountRP, discount, netAmount, advance, balance },
+            data: { products:JSON.stringify(products), name, phone, address, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
             success: function (res) {
                 if (res.status) {
                     $('#AddForm')[0].reset();
-                    $('#store').removeAttr('data-id');
-                    $('#user').removeAttr('data-id');
-                    $('#user').removeAttr('data-with');
+                    // $('#store').removeAttr('data-id');
+                    // $('#user').removeAttr('data-id');
+                    // $('#user').removeAttr('data-with');
+                    $('#store').val("Store 1")
+                    $('#store').attr("data-id", '1');
+                    $('#user').val('General Customer')
+                    $('#user').attr('data-id', 'C000000101')
+                    $('#user').attr('data-with', 4);
                     $('.transaction_grid tbody').html('');
                     ReloadData('inventory/transaction/issue', ShowInventoryIssues);
                     $('#product').focus();
@@ -603,10 +620,13 @@ $(document).ready(function () {
         let netAmount = $('#updateNetAmount').val();
         let advance = $('#updateAdvance').val();
         let balance = $('#updateBalance').val();
+        let name = $('#updateName').val();
+        let phone = $('#updatePhone').val();
+        let address = $('#updateAddress').val();
         $.ajax({
             url: `${apiUrl}/inventory/transaction/issue`,
             method: 'PUT',
-            data: { products:JSON.stringify(products), id, tranid, method, amountRP, totalDiscount, netAmount, advance, balance },
+            data: { products:JSON.stringify(products), name, phone, address, id, tranid, method, amountRP, totalDiscount, netAmount, advance, balance },
             beforeSend:function() {
                 $(document).find('span.error').text('');  
             },

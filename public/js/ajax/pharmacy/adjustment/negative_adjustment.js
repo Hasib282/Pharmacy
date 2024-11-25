@@ -77,6 +77,7 @@ $(document).ready(function () {
             store: { selector: '#store', attribute: 'data-id' },
             product: { selector: '#product', attribute: 'data-id' },
             groupe: { selector: '#product', attribute: 'data-groupe' },
+            company: { selector: '#company', attribute: 'data-id' },
             method: 'Negative',
             type: 6,
         }, 

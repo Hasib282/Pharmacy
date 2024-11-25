@@ -55,6 +55,7 @@ class GeneralTransactionController extends Controller
             "netAmount" => 'required',
             "advance" => 'required',
             "balance" => 'required',
+            "company" => 'required'
         ]);
 
 
@@ -113,6 +114,7 @@ class GeneralTransactionController extends Controller
                 "receive" => $receive,
                 "payment" => $payment,
                 "due" => $req->balance,
+                "company_id" => $req->company,
             ]);
 
 
@@ -151,6 +153,7 @@ class GeneralTransactionController extends Controller
                     "payment" => $payment,
                     "due" => $due,
                     "expiry_date" => $req->expiry == null ? null :$req->expiry,
+                    "company_id" => $req->company,
                 ]);
 
                 $billDiscount -= $discount;
@@ -464,7 +467,7 @@ class GeneralTransactionController extends Controller
         if($users->count() > 0){
             $list = "";
             foreach($users as $index => $user) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$user->user_id.'"  data-with="'.$user->tran_user_type.'">'.$user->user_name.'</li>';
+                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$user->user_id.'"  data-with="'.$user->tran_user_type.'" data-name="'.$user->user_name.'" data-phone="'.$user->user_phone.'" data-address="'.$user->address.'">'.$user->user_name.'</li>';
             }
         }
         else{
