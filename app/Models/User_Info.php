@@ -11,7 +11,11 @@ use Illuminate\Support\Facades\Cache;
 class User_Info extends Authenticatable
 {
     use Notifiable, HasFactory, HasApiTokens;
+
+    protected $connection = 'mysql';
+
     protected $guarded = [];
+    
     public $timestamps = false;
 
     protected $table = 'user__infos';

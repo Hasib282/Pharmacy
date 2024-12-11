@@ -14,11 +14,13 @@ class HRSetupController extends Controller
     /////////////////////////// --------------- Department Table Methods start---------- //////////////////////////
     // Show All Departments
     public function ShowDepartments(Request $req){
+        $name = "Department";
+        $js = 'hr/department';
         if ($req->ajax()) {
-            return view('hr.hr_setup.department.ajaxBlade');
+            return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('hr.hr_setup.department.departments');
+            return view('common_modals.single_input.singleData', compact('name', 'js'));
         }
     } // End Method
 
@@ -26,7 +28,9 @@ class HRSetupController extends Controller
 
     // Departments Search
     public function SearchDepartments(Request $req){
-        return view('hr.hr_setup.department.departments');
+        $name = "Department";
+        $js = 'hr/department';
+        return view('common_modals.single_input.singleData', compact('name', 'js'));
     } // End Method
 
     /////////////////////////// --------------- Department Table Methods End---------- //////////////////////////
@@ -36,11 +40,12 @@ class HRSetupController extends Controller
     /////////////////////////// --------------- Designations Table Methods start ---------- //////////////////////////
     // Show All Designations
     public function ShowDesignations(Request $req){
+        $name = "Designation";
         if ($req->ajax()) {
-            return view('hr.hr_setup.designation.ajaxBlade');
+            return view('hr.designation.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.hr_setup.designation.designations');
+            return view('hr.designation.designations', compact('name'));
         }
     } // End Method
 
@@ -48,7 +53,8 @@ class HRSetupController extends Controller
 
     // Designation Search
     public function SearchDesignations(Request $req){
-        return view('hr.hr_setup.designation.designations');
+        $name = "Designation";
+        return view('hr.designation.designations', compact('name'));
     } // End Method
 
     /////////////////////////// --------------- Designations Table Methods End ---------- //////////////////////////

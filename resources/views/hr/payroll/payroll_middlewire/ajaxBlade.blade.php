@@ -1,17 +1,3 @@
-@section('style')
-    <style>
-        #search {
-            width: 100%;
-            margin: 0;
-        }
-
-        #searchOption {
-            width: 100%;
-            margin: 0;
-        }
-    </style>
-@endsection
-
 @php
     $searchValue = request()->query('search');
     $searchOptionValue = request()->query('searchOption');
@@ -55,7 +41,7 @@
                 <div class="c-2">
                     <div class="form-group">
                         <label for="searchOption">Search Option</label>
-                        <select name="searchOption" id="searchOption">
+                        <select name="searchOption" id="searchOption" style="width: 100%;margin: 0;">
                             <option value="1" {{ $searchOptionValue=='1' ? 'selected' : '' }}>User Name</option>
                             <option value="2" {{ $searchOptionValue=='2' ? 'selected' : '' }}>Head</option>
                         </select>
@@ -65,7 +51,7 @@
                     <div class="form-group">
                         <label for="search">Search</label>
                         <input type="text" name="search" id="search" class="form-input" placeholder="Search here..."
-                            value="{{ $searchValue ? $searchValue : '' }}">
+                            value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%;margin: 0;">
                     </div>
                 </div>
             </div>
@@ -102,7 +88,7 @@
 
 @include('hr.payroll.payroll_middlewire.edit')
 
-@include('hr.payroll.payroll_middlewire.delete')
+@include('common_modals.delete')
 
 
 <!-- ajax part start from here -->

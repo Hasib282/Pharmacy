@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Attendence extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql';
+    
     protected $guarded = [];
 
     public $timestamps = false;

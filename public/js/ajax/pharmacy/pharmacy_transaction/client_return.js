@@ -82,7 +82,7 @@ $(document).ready(function () {
     // Add Modal Open Functionality
     AddModalFunctionality("#store", function () {
         $('#AddForm')[0].reset();
-        $('#type').val(5);
+        $('#type').val(6);
         $('#method').val('Issue');
         $('#batch').removeAttr('data-id');
         $('#store').removeAttr('data-id');

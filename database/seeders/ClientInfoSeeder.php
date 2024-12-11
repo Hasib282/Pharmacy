@@ -18,7 +18,7 @@ class ClientInfoSeeder extends Seeder
         $clients = collect(json_decode($json));
 
         $clients->each(function($client){
-            User_Info::create([
+            User_Info::on('mysql')->create([
                 "user_id" => $client->user_id,
                 "user_name" => $client->user_name,
                 "user_email" => $client->user_email,

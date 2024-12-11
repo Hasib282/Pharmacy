@@ -33,45 +33,14 @@ function ShowDepartments(data, startIndex) {
 
 
 
+// Additional Edit Functionality
+function EditFormInputValue(res){
+    $('#id').val(res.department.id);
+    $('#updateName').val(res.department.dept_name);
+    $('#updateName').focus();
+}
+
+
 $(document).ready(function () {
-    // Load Data on Hard Reload
-    ReloadData('hr/departments', ShowDepartments);
-    
-
-    // Add Modal Open Functionality
-    AddModalFunctionality("#deptName");
-
-
-    // Insert Ajax
-    InsertAjax('hr/departments', ShowDepartments, {}, function() {
-        $('#deptName').focus();
-    });
-
-
-    //Edit Ajax
-    EditAjax('hr/departments', EditFormInputValue);
-
-
-    // Update Ajax
-    UpdateAjax('hr/departments', ShowDepartments);
-    
-
-    // Delete Ajax
-    DeleteAjax('hr/departments', ShowDepartments);
-
-
-    // Pagination Ajax
-    PaginationAjax(ShowDepartments);
-
-
-    // Search Ajax
-    SearchAjax('hr/departments', ShowDepartments, {  });
-
-
-    // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.department.id);
-        $('#updateDeptName').val(res.department.dept_name);
-        $('#updateDeptName').focus();
-    }
+    SingleInputDataCrudeAjax('hr/departments', ShowDepartments);
 });

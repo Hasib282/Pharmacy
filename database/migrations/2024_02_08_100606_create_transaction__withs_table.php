@@ -11,24 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction__withs', function (Blueprint $table) {
+        Schema::connection('mysql')->create('transaction__withs', function (Blueprint $table) {
             $table->id();
             $table->string('tran_with_name');
-            $table->unsignedBigInteger('user_role');
-            $table->unsignedBigInteger('tran_type');
+            $table->bigInteger('user_role')->comment('roles');
+            $table->bigInteger('tran_type')->comment('transaction__main__heads');
             $table->string('tran_method');
-            $table->string('company_id')->nullable();
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
-
-            //Foreignkey Decleration
-            $table->foreign('user_role')->references('id')->on('roles')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            $table->foreign('tran_type')->references('id')->on('transaction__main__heads')
-                    ->onUpdate('cascade');
-            $table->foreign('company_id')->references('company_id')->on('company__details')
-                    ->onUpdate('cascade');
         });
     }
 
@@ -37,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction__withs');
+        Schema::connection('mysql')->dropIfExists('transaction__withs');
     }
 };

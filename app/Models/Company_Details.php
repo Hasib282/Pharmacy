@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Company_Details extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql_second';
+
     protected $guarded = [];
+    
     public $timestamps = false;
     
 

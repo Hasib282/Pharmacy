@@ -1,4 +1,4 @@
-@section('style')
+{{-- @section('style')
 <style>
     .modal-subject {
         width: 75%;
@@ -13,11 +13,11 @@
         background-color: #E8E8E8 !important;
     }
 </style>
-@endsection
+@endsection --}}
 
 
 <div id="addModal" class="modal-container">
-    <div class="modal-subject">
+    <div class="modal-subject" style="width: 80%;">
         <div class="modal-heading banner">
             <div class="center">
                 <h3>Add Organization Detail</h3>

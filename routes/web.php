@@ -310,48 +310,36 @@ Route::middleware([CheckPermission::class])->group(function () {
             Route::controller(EmployeeInfoController::class)->group(function () {
                 ///////////// --------------- Employee Routes ----------- ///////////////////
                 Route::get('/all', 'ShowEmployees')->name('show.employees');
-                Route::get('/all/details', 'ShowEmployeeDetails')->name('detail.employees');
                 Route::get('/all/search', 'SearchEmployees')->name('search.employees');
-                //Search List Routes Start
-                Route::get('/get', 'GetEmployeeByName')->name('get.employees')->withoutMiddleware(CheckPermission::class);
 
 
 
                 ///////////// --------------- Employee Personal Details Routes ----------- ///////////////////
                 Route::get('/personal',  'PersonalDetails')->name('show.employeePersonal');
-                Route::get('/personal/details',  'ShowPersonalDetails')->name('detail.employeePersonal');
                 Route::get('/personal/search',  'SearchPersonalDetails')->name('search.employeePersonal');
 
 
 
                 ///////////// --------------- Employee Education Details Routes ----------- ///////////////////
                 Route::get('/education',  'EducationDetails')->name('show.employeeEducation');
-                Route::get('/education/details',  'ShowEmployeesEducationDetails')->name('detail.employeeEducation');
-                Route::get('/education/grid',  'EmployeesEducationDetailsGrid')->name('grid.employeeEducation');
                 Route::get('/education/search',  'SearchEducationDetails')->name('search.employeeEducation');
                 
                 
 
                 ///////////// --------------- Employee Training Details Routes ----------- ///////////////////
                 Route::get('/training',  'TrainingDetails')->name('show.employeeTraining');
-                Route::get('/training/details',  'ShowTrainingDetails')->name('detail.employeeTraining');
-                Route::get('/training/grid',  'EmployeeTrainingDetailsGrid')->name('grid.employeeTraining');
                 Route::get('/training/search',  'SearchTrainingDetails')->name('search.employeeTraining');
 
 
 
                 ///////////// --------------- Employee Experience Details Routes ----------- ///////////////////
                 Route::get('/experience',  'ExperienceDetails')->name('show.employeeExperience');
-                Route::get('/experience/details',  'ShowExperienceDetails')->name('detail.employeeExperience');
-                Route::get('/experience/grid',  'EmployeeExperienceDetailsGrid')->name('grid.employeeExperience');
                 Route::get('/experience/search',  'SearchExperienceDetails')->name('search.employeeExperience');
                 
 
 
                 ///////////// --------------- Employee Organization Routes ----------- ///////////////////
                 Route::get('/organization',  'OrganizationDetails')->name('show.employeeOrganization');
-                Route::get('/organization/details',  'ShowOrganizationDetails')->name('detail.employeeOrganization');
-                Route::get('/organization/grid',  'EmployeeOrganizationDetailsGrid')->name('grid.employeeOrganization');
                 Route::get('/organization/search',  'SearchOrganizationDetails')->name('search.employeeOrganization');
                 
 
@@ -387,8 +375,6 @@ Route::middleware([CheckPermission::class])->group(function () {
                 ///////////// --------------- Payroll Installment(Salary Payment) Routes ----------- ///////////////////
                 Route::get('/process','ShowPayroll')->name('show.payroll');
                 Route::get('/process/search', 'SearchPayroll')->name('search.payroll');
-                // Search List Routes Start
-                Route::get('/get/user/date', 'GetPayrollByUserIdAndDate')->name('get.payrollByDate')->withoutMiddleware(CheckPermission::class);
             });
         }); // End Hr Payroll Routes
 

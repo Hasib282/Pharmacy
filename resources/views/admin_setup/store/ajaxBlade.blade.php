@@ -30,6 +30,7 @@
             <select name="searchOption" id="searchOption">
                 <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Store Name</option>
                 <option value="2" {{ $searchOptionValue == '2' ? 'selected' : '' }}>Location </option>
+                <option value="3" {{ $searchOptionValue == '3' ? 'selected' : '' }}>Address </option>
             </select>
         </div>
         <div class="c-5">
@@ -51,6 +52,7 @@
                 <th>Store Name</th>
                 <th>Division</th>
                 <th>Location</th>
+                <th>Address</th>
                 <th>Action</th>
             </tr>
         </thead>

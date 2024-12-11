@@ -15,7 +15,7 @@ class RoutePermissionController extends Controller
 {
     // Show All Route Permissions
     public function ShowAll(Request $req){
-        $permissionroute = Permission_Head::with('routes')->paginate(15);
+        $permissionroute = Permission_Head::on('mysql_second')->with('routes')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $permissionroute,
@@ -26,8 +26,8 @@ class RoutePermissionController extends Controller
 
     // Edit Route Permissions
     public function Edit(Request $req){
-        $permission = Permission_Head::where('id',$req->id)->first();
-        $permissionroute = Permission_Route::where('permission_id', $req->id)->pluck('route_name')->toArray();
+        $permission = Permission_Head::on('mysql_second')->where('id',$req->id)->first();
+        $permissionroute = Permission_Route::on('mysql_second')->where('permission_id', $req->id)->pluck('route_name')->toArray();
 
 
         $routes = Route::getRoutes();
@@ -61,10 +61,10 @@ class RoutePermissionController extends Controller
 
     // Update Route Permissions
     public function Update(Request $req){
-        $permission = Permission_Head::findOrFail($req->permission);
+        $permission = Permission_Head::on('mysql_second')->findOrFail($req->permission);
 
         $req->validate([
-            'permission' => 'required|exists:permission__heads,id',
+            'permission' => 'required|exists:mysql_second.permission__heads,id',
             'routes' => 'array',
             'routes.*' => 'string',
         ]);
@@ -76,13 +76,13 @@ class RoutePermissionController extends Controller
         $routesToRemove = array_diff($existingRoutes, $req->routes);
 
         foreach ($routesToAdd as $routeName) {
-            Permission_Route::create([
+            Permission_Route::on('mysql_second')->create([
                 'permission_id' => $permission->id,
                 'route_name' => $routeName,
             ]);
         }
 
-        Permission_Route::where('permission_id', $permission->id)
+        Permission_Route::on('mysql_second')->where('permission_id', $permission->id)
             ->whereIn('route_name', $routesToRemove)
             ->delete();
         
@@ -96,7 +96,7 @@ class RoutePermissionController extends Controller
 
     // Search Route Permissions
     public function Search(Request $req){
-        $permissionroute = Permission_Head::where('name', 'like', '%'.$req->search.'%')
+        $permissionroute = Permission_Head::on('mysql_second')->where('name', 'like', '%'.$req->search.'%')
         ->with('routes')
         ->orderBy('name')
         ->paginate(15);

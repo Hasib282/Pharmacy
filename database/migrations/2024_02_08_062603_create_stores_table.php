@@ -11,22 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stores', function (Blueprint $table) {
+        Schema::connection('mysql')->create('stores', function (Blueprint $table) {
             $table->id();
             $table->string('store_name');
             $table->string('division');
-            $table->unsignedBigInteger('location_id');
+            $table->bigInteger('location_id');
+            $table->string('address')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');
-            $table->string('company_id')->nullable();
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
-
-            $table->foreign('location_id')->references('id')->on('location__infos')
-                    ->cascadeOnUpdate()
-                    ->cascadeOnDelete();
-
-            $table->foreign('company_id')->references('company_id')->on('company__details')
-                    ->onUpdate('cascade');
         });
     }
 
@@ -35,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stores');
+        Schema::connection('mysql')->dropIfExists('stores');
     }
 };

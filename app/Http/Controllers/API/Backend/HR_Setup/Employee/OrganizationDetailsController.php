@@ -8,13 +8,14 @@ use Illuminate\Http\Request;
 use App\Models\User_Info;
 use App\Models\Transaction_With;
 use App\Models\Employee_Organization_Detail;
+use App\Models\Employee_Personal_Detail;
 
 class OrganizationDetailsController extends Controller
 {
     // Show All Employee Organization Details
     public function ShowAll(Request $req){
-        $employee = User_Info::with('Withs','Location','organizationDetail')->where('user_role', 6)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::where('user_role', 6)->get();
+        $employee = User_Info::on('mysql')->with('Withs','Location','organizationDetail')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
+        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'data' => $employee,
@@ -35,7 +36,7 @@ class OrganizationDetailsController extends Controller
         ]);
 
         
-        Employee_Organization_Detail::insert([
+        Employee_Organization_Detail::on('mysql')->insert([
             'emp_id' =>  $req->user,
             "joining_date" => $req->joining_date,
             "joining_location" =>  $req->location,
@@ -53,8 +54,8 @@ class OrganizationDetailsController extends Controller
 
     // Edit Employee Organization Details
     public function Edit(Request $req){
-        $employee = Employee_Organization_Detail::with('Department','Designation','Location')->where('id', $req->id)->first();
-        $tranwith = Transaction_With::where('user_role', 6)->get();
+        $employee = Employee_Organization_Detail::on('mysql')->with('Department','Designation','Location')->where('id', $req->id)->first();
+        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'employee'=>$employee,
@@ -73,9 +74,9 @@ class OrganizationDetailsController extends Controller
             'designation' => 'required',
         ]);
 
-        $employee = Employee_Organization_Detail::where('emp_id', $req->emp_id)->first();
+        $employee = Employee_Organization_Detail::on('mysql')->where('emp_id', $req->emp_id)->first();
         
-        $update = Employee_Organization_Detail::findOrFail($req->id)->update([
+        $update = Employee_Organization_Detail::on('mysql')->findOrFail($req->id)->update([
             "joining_date" => $req->joining_date,
             "joining_location" =>  $req->location,
             "department" => $req->department,
@@ -95,7 +96,7 @@ class OrganizationDetailsController extends Controller
 
     // Delete Employee Organization Details
     public function Delete(Request $req){
-        Employee_Organization_Detail::findOrFail($req->id)->delete();
+        Employee_Organization_Detail::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Employee Organization Details Deleted Successfully',
@@ -106,7 +107,7 @@ class OrganizationDetailsController extends Controller
 
     // Search Employee Organization Details
     public function Search(Request $req){
-        $query = User_Info::with('Withs','Location')->where('user_role', 6); // Base query
+        $query = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3); // Base query
 
         if ($req->filled('search') && $req->searchOption) {
             switch ($req->searchOption) {
@@ -163,5 +164,30 @@ class OrganizationDetailsController extends Controller
             'status' => true,
             'data' => $employee,
         ], 200);
+    } // End Method
+
+
+
+    // Show Employee Organization Details
+    public function Details(Request $req){
+        $employeeorganization = Employee_Organization_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
+        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
+
+        return response()->json([
+            'status' => true,
+            'data'=>view('hr.employee_info.organization_details.details', compact('employeeorganization', 'personaldetail'))->render(),
+        ]);
+    } // End Method
+
+
+
+    // Show Employee Organization Details Grid
+    public function Grid(Request $req){
+        $employeeorganization = Employee_Organization_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
+        
+        return response()->json([
+            'status' => true,
+            'data'=>view('hr.employee_info.organization_details.detailsOrganizations', compact('employeeorganization'))->render(),
+        ]);
     } // End Method
 }

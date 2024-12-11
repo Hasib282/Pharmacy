@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Permission_Role extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql_second';
+
     protected $guarded = [];
+    
     public $timestamps = false;
 
 

@@ -14,7 +14,7 @@ class RolePermissionController extends Controller
 {
     // Show All Role Permissions
     public function ShowAll(Request $req){
-        $rolepermission = Role::whereNotIn('id', ['1'])->with('permissions')->orderBy('id')->get();
+        $rolepermission = Role::on('mysql_second')->whereNotIn('id', ['1'])->with('permissions')->orderBy('id')->get();
         return response()->json([
             'status'=> true,
             'data' => $rolepermission,
@@ -25,9 +25,9 @@ class RolePermissionController extends Controller
 
     // Edit Role Permissions
     public function Edit(Request $req){
-        $role = Role::whereNotIn('id', ['1'])->where('id',$req->id)->first();
-        $rolepermission = Permission_Role::where('role_id', $req->id)->pluck('permission_id')->toArray();
-        $permissions = Permission_Head::with('mainhead')
+        $role = Role::on('mysql_second')->whereNotIn('id', ['1'])->where('id',$req->id)->first();
+        $rolepermission = Permission_Role::on('mysql_second')->where('role_id', $req->id)->pluck('permission_id')->toArray();
+        $permissions = Permission_Head::on('mysql_second')->with('mainhead')
         ->orderBy('permission_mainhead')
         ->get()
         ->groupBy('permission_mainhead');
@@ -44,12 +44,12 @@ class RolePermissionController extends Controller
 
     // Update Role Permissions
     public function Update(Request $req){
-        $role = Role::whereNotIn('id', ['1'])->findOrFail($req->role);
+        $role = Role::on('mysql_second')->whereNotIn('id', ['1'])->findOrFail($req->role);
 
         $req->validate([
             'role' => 'required',
             'permissions' => 'array',
-            'permissions.*' => 'integer|exists:permission__heads,id',
+            'permissions.*' => 'integer|exists:mysql_second.permission__heads,id',
         ]);
 
         $role->permissions()->sync($req->permissions);
@@ -64,7 +64,7 @@ class RolePermissionController extends Controller
 
     // Search Role Permissions
     public function Search(Request $req){
-        $rolepermission = Role::whereNotIn('id', ['1'])
+        $rolepermission = Role::on('mysql_second')->whereNotIn('id', ['1'])
         ->where('name', 'like', '%'.$req->search.'%')
         ->with('permissions')
         ->orderBy('name')

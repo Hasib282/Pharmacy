@@ -88,11 +88,12 @@ class EmployeeInfoController extends Controller
     /////////////////////////// --------------- All Employees Details Table Methods Starts---------- //////////////////////////
     // Show All Employees
     public function ShowEmployees(Request $req){
+        $name = "Employee Details";
         if ($req->ajax()) {
-            return view('hr.employee_info.employees.ajaxBlade');
+            return view('hr.employee_info.employees.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.employee_info.employees.employees');
+            return view('hr.employee_info.employees.employees', compact('name'));
         }
     } // End Method
 
@@ -100,152 +101,9 @@ class EmployeeInfoController extends Controller
 
     // Search Employees
     public function SearchEmployees(Request $req){
-        return view('hr.employee_info.employees.employees');
+        $name = "Employee Details";
+        return view('hr.employee_info.employees.employees', compact('name'));
     } // End Method
-
-
-
-    // Show Employee Details
-    public function ShowEmployeeDetails(Request $req){
-        $employee = User_Info::with('Designation','Department','Location','Withs','personalDetail','educationDetail','trainingDetail','experienceDetail','organizationDetail')->where('user_id', "=", $req->id)->first();
-        $education = Employee_Education_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
-        $training = Employee_Training_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
-        $experience = Employee_Experience_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
-        $payroll = Pay_Roll_Setup::with('Head','Employee')->where('emp_id', $employee->user_id)->get();
-        
-        return response()->json([
-            'data'=>view('hr.employee_info.employees.details', compact('employee','education','training','experience','payroll'))->render(),
-        ]);
-    } // End Method
-
-
-
-    // // Insert Employees
-    // public function InsertEmployees(Request $req){
-    //     $req->validate([
-    //         "name" => 'required',
-    //         "email" => 'required|email|unique:user__infos,user_email,email',
-    //         "phone" => 'required|numeric|unique:user__infos,user_phone,phone',
-    //         "gender" => 'required|in:Male,Female,Others',
-    //         "location" => 'required',
-    //         "type" => 'required',
-    //         "department" => 'required',
-    //         "designation" => 'required',
-    //         "dob" => 'required',
-    //         "nid" => 'required',
-    //         "address" => 'required',
-    //         "image" => 'image|mimes:jpg,jpeg,png,gif|max:2048',
-    //         "password" => 'required|confirmed',
-    //     ]);
-
-    //     //generates Auto Increment Employee Id
-    //     $latestEmployee = User_Info::where('user_role', 6)->orderBy('added_at','desc')->first();
-    //     $id = ($latestEmployee) ? 'E' . str_pad((intval(substr($latestEmployee->user_id, 1)) + 1), 9, '0', STR_PAD_LEFT) : 'E000000101';
-
-    //     //process the image name and store it to storage/app/public/profiles directory
-    //     if ($req->hasFile('image') && $req->file('image')->isValid()) {
-    //         $originalName = $req->file('image')->getClientOriginalName();
-    //         $imageName = $id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-    //         $imagePath = $req->file('image')->storeAs('public/profiles', $imageName);
-    //     }
-    //     else{
-    //         $imageName = null;
-    //     }
-
-    //     User_Info::insert([
-    //         "user_id" => $id,
-    //         "user_name" => $req->name,
-    //         "user_email" => $req->email,
-    //         "user_phone" => $req->phone,
-    //         "gender" => $req->gender,
-    //         "loc_id" => $req->location,
-    //         "user_role" => 6,
-    //         "tran_user_type" => $req->type,
-    //         "dob" => $req->dob,
-    //         "nid" => $req->nid,
-    //         "address" => $req->address,
-    //         "image" => $imageName,
-    //         "password" => $req->password,
-    //     ]);
-
-    //     return response()->json([
-    //         'status'=>'success',
-    //     ]);
-    // } // End Method
-
-
-
-    // // Edit Employees
-    // public function EditEmployees(Request $req){
-    //     $employee = User_Info::with('Department','Designation','Location')->findOrFail($req->id);
-    //     $tranwith = Transaction_With::where('user_role', 6)->get();
-    //     return response()->json([
-    //         'employee'=>$employee,
-    //         'tranwith'=>$tranwith,
-    //     ]);
-    // } // End Method
-
-
-
-    // // Update Employees
-    // public function UpdateEmployees(Request $req){
-    //     $req->validate([
-    //         "name" => 'required',
-    //         "email" => ['required','email',Rule::unique('user__infos', 'user_email')->ignore($req->id)],
-    //         "phone" => ['required','numeric',Rule::unique('user__infos', 'user_phone')->ignore($req->id)],
-    //         "gender" => 'required|in:Male,Female,Others',
-    //         "location" => 'required',
-    //         "type" => 'required',
-    //         "department" => 'required',
-    //         "designation" => 'required',
-    //         "dob" => 'required',
-    //         "nid" => 'required',
-    //         "address" => 'required',
-    //         "password" => 'required',
-    //     ]);
-
-    //     $employee = User_Info::findOrFail($req->id);
-    //     $path = 'public/profiles/'.$employee->image;
-    //     // dd($path);
-    //     if($req->image != null){
-    //         $req->validate([
-    //             "image" => 'image|mimes:jpg,jpeg,png,gif|max:2048',
-    //         ]);
-
-    //         //process the image name and store it to storage/app/public/profiles directory
-    //         if ($req->hasFile('image') && $req->file('image')->isValid()) {
-    //             Storage::delete($path);
-    //             $imageName = $req->empId. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-    //             $imagePath = $req->file('image')->storeAs('public/profiles', $imageName);
-    //         }
-    //     }
-    //     else{
-    //         $imageName = $employee->image;
-    //     }
-
-    //     $update = User_Info::findOrFail($req->id)->update([
-    //         "user_name" => $req->name,
-    //         "user_email" => $req->email,
-    //         "user_phone" => $req->phone,
-    //         "gender" => $req->gender,
-    //         "loc_id" => $req->location,
-    //         "user_role" => 6,
-    //         "tran_user_type" => $req->type,
-    //         "dept_id" => $req->department,
-    //         "designation_id" => $req->designation,
-    //         "dob" => $req->dob,
-    //         "nid" => $req->nid,
-    //         "address" => $req->address,
-    //         "image" => $imageName,
-    //         "password" => $req->password,
-    //         "updated_at" => now()
-    //     ]);
-    //     if($update){
-    //         return response()->json([
-    //             'status'=>'success'
-    //         ]); 
-    //     }
-    // } // End Method
 
     /////////////////////////// --------------- All Employees Details Table Methods End---------- //////////////////////////
 
@@ -256,28 +114,20 @@ class EmployeeInfoController extends Controller
     /////////////////////////// --------------- Employee Personal Details Table Methods Start---------- //////////////////////////
     // Show All Employee
     public function PersonalDetails(Request $req){
+        $name = "Personal Details";
         if ($req->ajax()) {
-            return view('hr.employee_info.personal_details.ajaxBlade');
+            return view('hr.employee_info.personal_details.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.employee_info.personal_details.employeePersonals');
+            return view('hr.employee_info.personal_details.employeePersonals', compact('name'));
         }
     } // End Method
 
 
     // Search Employee Personal Details
     public function SearchPersonalDetails(Request $req){
-        return view('hr.employee_info.personal_details.employeePersonals');
-    } // End Method
-
-
-
-    // Show Employee Personal Details
-    public function ShowPersonalDetails(Request $req){
-        $employeepersonal = Employee_Personal_Detail::where('employee_id', $req->id)->get();
-        return response()->json([
-            'data'=>view('hr.employee_info.personal_details.details', compact('employeepersonal'))->render(),
-        ]);
+        $name = "Personal Details";
+        return view('hr.employee_info.personal_details.employeePersonals', compact('name'));
     } // End Method
 
     /////////////////////////// --------------- Employee Personal Details Table Methods End---------- //////////////////////////
@@ -288,11 +138,12 @@ class EmployeeInfoController extends Controller
     /////////////////////////// --------------- Employee Education Details Table Methods Start---------- //////////////////////////
     // Show All Employees
     public function EducationDetails(Request $req){
+        $name = "Personal Details";
         if ($req->ajax()) {
-            return view('hr.employee_info.education_details.ajaxBlade');
+            return view('hr.employee_info.education_details.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.employee_info.education_details.employeeEducations');
+            return view('hr.employee_info.education_details.employeeEducations', compact('name'));
         }
     } // End Method
 
@@ -300,30 +151,8 @@ class EmployeeInfoController extends Controller
 
     // Search Employee Education Details by Name
     public function SearchEducationDetails(Request $req){
-        return view('hr.employee_info.education_details.employeeEducations');
-    } // End Method
-
-
-
-    // Show Employee Education Details
-    public function ShowEmployeesEducationDetails(Request $req){
-        $employeeeducation = Employee_Education_Detail::with('personalDetail')->where('emp_id', $req->id)->get();
-        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
-
-        return response()->json([
-            'data'=>view('hr.employee_info.education_details.details', compact('employeeeducation', 'personaldetail'))->render(),
-        ]);
-    } // End Method
-
-
-
-    // Employee Education Details Grid
-    public function EmployeesEducationDetailsGrid(Request $req){
-        $employeeeducation = Employee_Education_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
-        
-        return response()->json([
-            'data'=>view('hr.employee_info.education_details.detailsEducation', compact('employeeeducation'))->render(),
-        ]);
+        $name = "Personal Details";
+        return view('hr.employee_info.education_details.employeeEducations', compact('name'));
     } // End Method
 
     /////////////////////////// --------------- Employee Education Details Table Methods End---------- //////////////////////////
@@ -333,11 +162,12 @@ class EmployeeInfoController extends Controller
     /////////////////////////// --------------- Employee Training Details Table Methods Start---------- //////////////////////////
     // Show All Employee
     public function TrainingDetails(Request $req){
+        $name = "Training Details";
         if ($req->ajax()) {
-            return view('hr.employee_info.training_details.ajaxBlade');
+            return view('hr.employee_info.training_details.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.employee_info.training_details.employeeTrainings');
+            return view('hr.employee_info.training_details.employeeTrainings', compact('name'));
         }
     } // End Method
 
@@ -345,30 +175,8 @@ class EmployeeInfoController extends Controller
 
     // Search Employee by Name
     public function SearchTrainingDetails(Request $req){
-        return view('hr.employee_info.training_details.employeeTrainings');
-    } // End Method
-
-
-
-    // Show Employee Training Details
-    public function ShowTrainingDetails(Request $req){
-        $employeetraining = Employee_Training_Detail::with('personalDetail')->where('emp_id', "=", $req->id)->get();
-        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
-
-        return response()->json([
-            'data'=>view('hr.employee_info.training_details.details', compact('employeetraining', 'personaldetail'))->render(),
-        ]);
-    } // End Method
-
-
-
-    // Show Employee Training Details Grid
-    public function EmployeeTrainingDetailsGrid(Request $req){
-        $employeetraining = Employee_Training_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
-        
-        return response()->json([
-            'data'=>view('hr.employee_info.training_details.detailsTraining', compact('employeetraining'))->render(),
-        ]);
+        $name = "Training Details";
+        return view('hr.employee_info.training_details.employeeTrainings', compact('name'));
     } // End Method
 
     /////////////////////////// --------------- Employee Training Details Table Methods End---------- //////////////////////////
@@ -378,11 +186,12 @@ class EmployeeInfoController extends Controller
     /////////////////////////// --------------- Employee Experience Details Table Methods Start---------- //////////////////////////
     // Show All Employees
     public function ExperienceDetails(Request $req){
+        $name = "Experience Details";
         if ($req->ajax()) {
-            return view('hr.employee_info.experience_details.ajaxBlade');
+            return view('hr.employee_info.experience_details.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.employee_info.experience_details.employeeExperiences');
+            return view('hr.employee_info.experience_details.employeeExperiences', compact('name'));
         }
     } // End Method
 
@@ -390,30 +199,8 @@ class EmployeeInfoController extends Controller
 
     // Search Employee by Name
     public function SearchExperienceDetails(Request $req){
-        return view('hr.employee_info.experience_details.employeeExperiences');
-    } // End Method
-
-
-
-    // Show Employee Experience Details
-    public function ShowExperienceDetails(Request $req){
-        $employeeexperience = Employee_Experience_Detail::with('personalDetail')->where('emp_id', $req->id)->get();
-        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
-
-        return response()->json([
-            'data'=>view('hr.employee_info.experience_details.details', compact('employeeexperience', 'personaldetail'))->render(),
-        ]);
-    } // End Method
-
-
-
-    // Show Employee Experience Grid
-    public function EmployeeExperienceDetailsGrid(Request $req){
-        $employeeexperience = Employee_Experience_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
-        
-        return response()->json([
-            'data'=>view('hr.employee_info.experience_details.detailsExperiences', compact('employeeexperience'))->render(),
-        ]);
+        $name = "Experience Details";
+        return view('hr.employee_info.experience_details.employeeExperiences', compact('name'));
     } // End Method
 
     /////////////////////////// --------------- Employee Experience Details Table Methods End---------- //////////////////////////
@@ -423,11 +210,12 @@ class EmployeeInfoController extends Controller
     /////////////////////////// --------------- Employee Organization Details Table Methods Start---------- //////////////////////////
     // Show All Employee Details
     public function OrganizationDetails(Request $req){
+        $name = "Organization Details";
         if ($req->ajax()) {
-            return view('hr.employee_info.organization_details.ajaxBlade');
+            return view('hr.employee_info.organization_details.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.employee_info.organization_details.employeeOrganizations');
+            return view('hr.employee_info.organization_details.employeeOrganizations', compact('name'));
         }
     } // End Method
 
@@ -435,30 +223,8 @@ class EmployeeInfoController extends Controller
 
     // Search Employee by Name
     public function SearchOrganizationDetails(Request $req){
-        return view('hr.employee_info.organization_details.employeeOrganizations');
-    } // End Method
-
-
-
-    // Show Employee Organization Details
-    public function ShowOrganizationDetails(Request $req){
-        $employeeorganization = Employee_Organization_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
-        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
-
-        return response()->json([
-            'data'=>view('hr.employee_info.organization_details.details', compact('employeeorganization', 'personaldetail'))->render(),
-        ]);
-    } // End Method
-
-
-
-    // Show Employee Organization Details Grid
-    public function EmployeeOrganizationDetailsGrid(Request $req){
-        $employeeorganization = Employee_Organization_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
-        
-        return response()->json([
-            'data'=>view('hr.employee_info.organization_details.detailsOrganizations', compact('employeeorganization'))->render(),
-        ]);
+        $name = "Organization Details";
+        return view('hr.employee_info.organization_details.employeeOrganizations', compact('name'));
     } // End Method
 
     /////////////////////////// --------------- Employee Organization Details Table Methods Start---------- //////////////////////////

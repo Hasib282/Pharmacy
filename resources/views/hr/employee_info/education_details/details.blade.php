@@ -1,7 +1,7 @@
 <ul>
     @foreach($personaldetail as $item)
         @if ($loop->first)
-        <li data-id="1">Personal Details</li>
+        <li data-id="1.1">Personal Details</li>
         <div class="personal">
             <div class="details-head">
                 <div class="image-round">
@@ -80,7 +80,7 @@
         
     
 
-        <li data-id="2">Education Details</li> 
+        <li data-id="1.2">Education Details</li> 
         @endif
     @endforeach 
 

@@ -56,11 +56,11 @@
 
 @include('hr.employee_info.training_details.add')
 
-@include('hr.employee_info.training_details.employeeTrainingDetails')
+@include('hr.employee_info.employeeDetails')
 
 @include('hr.employee_info.training_details.edit')
 
-@include('hr.employee_info.training_details.delete')
+@include('common_modals.delete')
 
 <!-- ajax part start from here -->
 <script src="{{ asset('js/ajax/hr/employee_info/employeeTraining.js') }}"></script>

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction__groupes', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('transaction__groupes', function (Blueprint $table) {
             $table->id();
             $table->string('tran_groupe_name');
             $table->unsignedBigInteger('tran_groupe_type');
@@ -33,6 +33,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction__groupes');
+        Schema::connection('mysql')->dropIfExists('transaction__groupes');
+        Schema::connection('mysql_second')->dropIfExists('transaction__groupes');
     }
 };

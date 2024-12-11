@@ -9,7 +9,7 @@
         <div class="rows">
             <div class="c-3">
                 {{-- @if(Auth::user()->hasPermissionToRoute('insert.designations')) --}}
-                    <button class="open-modal add" data-modal-id="addModal">Add Designation</button>
+                    <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
                 {{-- @endif --}}
             </div>
             <div class="c-9 search">
@@ -26,7 +26,7 @@
     <!-- table show -->
     <div class="load-data" style="overflow-x:auto;">
         <table class="show-table">
-            <caption class="caption">Designation Details</caption>
+            <caption class="caption">{{ $name }} Details</caption>
             <thead>
                 <tr>
                     <th>SL:</th>
@@ -43,14 +43,14 @@
     </div>
 
 
-    @include('hr.hr_setup.designation.add')
+    @include('hr.designation.add')
 
-    @include('hr.hr_setup.designation.edit')
+    @include('hr.designation.edit')
 
-    @include('hr.hr_setup.designation.delete')
+    @include('common_modals.delete')
 
 
     <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/hr/hr_setup/designation.js') }}"></script>
+    <script src="{{ asset('js/ajax/hr/designation.js') }}"></script>
     <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
 @endsection

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\PasswordResetEmail;
 use Illuminate\Support\Str;
 
-use App\Models\User_Info;
+use App\Models\Login_User;
 
 class ForgetPasswordController extends Controller
 {
@@ -20,7 +20,7 @@ class ForgetPasswordController extends Controller
         $req->validate(['email' => 'required|email']);
         $frontendUrl = $req->frontend_url;
         
-        $user = User_Info::where('user_email', $req->email)->first();
+        $user = Login_User::where('user_email', $req->email)->first();
 
         if (!$user) {
             return response()->json([
@@ -69,7 +69,7 @@ class ForgetPasswordController extends Controller
             ], 404);
         }
 
-        $user = User_Info::where('user_email', $req->email)->first();
+        $user = Login_User::where('user_email', $req->email)->first();
 
         $user->password = Hash::make($req->password);
         $user->save();

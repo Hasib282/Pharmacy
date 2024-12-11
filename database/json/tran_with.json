@@ -1,7 +1,7 @@
 [
-    { "tran_with_name": "Regular Employee",                 "user_role": "6",        "tran_type":"3",    "tran_method":"Both" },
-    { "tran_with_name": "Bit Pion",                         "user_role": "6",        "tran_type":"3",    "tran_method":"Both" },
-    { "tran_with_name": "District Employee",                "user_role": "6",        "tran_type":"3",    "tran_method":"Both" },
+    { "tran_with_name": "Regular Employee",                 "user_role": "3",        "tran_type":"3",    "tran_method":"Both" },
+    { "tran_with_name": "Bit Pion",                         "user_role": "3",        "tran_type":"3",    "tran_method":"Both" },
+    { "tran_with_name": "District Employee",                "user_role": "3",        "tran_type":"3",    "tran_method":"Both" },
     { "tran_with_name": "General Client",                   "user_role": "4",        "tran_type":"1",    "tran_method":"Receive" },
     { "tran_with_name": "Advertisement Client",             "user_role": "4",        "tran_type":"1",    "tran_method":"Receive" },
     { "tran_with_name": "Newspaper Client",                 "user_role": "4",        "tran_type":"1",    "tran_method":"Receive" },

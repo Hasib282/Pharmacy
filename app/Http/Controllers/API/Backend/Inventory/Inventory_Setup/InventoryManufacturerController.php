@@ -11,7 +11,7 @@ class InventoryManufacturerController extends Controller
 {
     // Show All Item/Product Manufacturer
     public function ShowAll(Request $req){
-        $manufacturer = Item_Manufacturer::where('type_id', '5')->orderBy('added_at','asc')->paginate(15);
+        $manufacturer = Item_Manufacturer::on('mysql_second')->where('type_id', '5')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $manufacturer,
@@ -26,7 +26,7 @@ class InventoryManufacturerController extends Controller
             'name' => 'required',
         ]);
  
-        Item_Manufacturer::insert([
+        Item_Manufacturer::on('mysql_second')->insert([
             'manufacturer_name' => $req->name,
             'type_id'=> '5',
         ]);
@@ -41,7 +41,7 @@ class InventoryManufacturerController extends Controller
 
     // Edit Item/Product Manufacturer
     public function Edit(Request $req){
-        $manufacturer = Item_Manufacturer::where('id', $req->id)->first();
+        $manufacturer = Item_Manufacturer::on('mysql_second')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
             'manufacturer'=> $manufacturer,
@@ -56,7 +56,7 @@ class InventoryManufacturerController extends Controller
             'name' => 'required',
         ]);
 
-        $update = Item_Manufacturer::findOrFail($req->id)->update([
+        $update = Item_Manufacturer::on('mysql_second')->findOrFail($req->id)->update([
             'manufacturer_name' => $req->name,
             "updated_at" => now()
         ]);
@@ -73,7 +73,7 @@ class InventoryManufacturerController extends Controller
 
     // Delete Item/Product Manufacturer
     public function Delete(Request $req){
-        Item_Manufacturer::findOrFail($req->id)->delete();
+        Item_Manufacturer::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Manufacturer Deleted Successfully',
@@ -84,7 +84,7 @@ class InventoryManufacturerController extends Controller
 
     // Search Item/Product Manufacturer
     public function Search(Request $req){
-        $manufacturer = Item_Manufacturer::where('type_id', '5')
+        $manufacturer = Item_Manufacturer::on('mysql_second')->where('type_id', '5')
         ->where('manufacturer_name', 'like', '%'.$req->search.'%')
         ->orderBy('manufacturer_name','asc')
         ->paginate(15);
@@ -99,7 +99,7 @@ class InventoryManufacturerController extends Controller
 
     // Get Manufacturer
     public function Get(Request $req){
-        $manufacturers = Item_Manufacturer::where('type_id', '5')
+        $manufacturers = Item_Manufacturer::on('mysql_second')->where('type_id', '5')
         ->where('manufacturer_name', 'like', '%'.$req->manufacturer.'%')
         ->orderBy('manufacturer_name','asc')
         ->take(10)

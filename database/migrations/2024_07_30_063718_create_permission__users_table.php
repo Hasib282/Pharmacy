@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permission__users', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('permission__users', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
             $table->unsignedBigInteger('permission_id');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreign('permission_id')->references('id')->on('permission__heads')
                     ->cascadeOnUpdate()
                     ->cascadeOnDelete();
-            $table->foreign('user_id')->references('user_id')->on('user__infos')
+            $table->foreign('user_id')->references('user_id')->on('login__users')
                     ->cascadeOnUpdate()
                     ->cascadeOnDelete();
             $table->foreign('company_id')->references('company_id')->on('company__details')
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permission__users');
+        Schema::connection('mysql_second')->dropIfExists('permission__users');
     }
 };

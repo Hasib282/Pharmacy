@@ -70,7 +70,7 @@ return [
         // ],
         'users' => [
             'driver' => 'custom-eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User_Info::class),
+            'model' => env('AUTH_MODEL', App\Models\Login_User::class),
         ],
 
         // 'users' => [

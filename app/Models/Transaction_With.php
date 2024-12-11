@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction_With extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql';
+
     protected $guarded = [];
+
     public $timestamps = false;
 
-    public function role(){
+    public function Role(){
         return $this->belongsTo(Role::class,'user_role','id');
     }
 

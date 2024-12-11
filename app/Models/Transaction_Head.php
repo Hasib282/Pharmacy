@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction_Head extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql_second';
+
     protected $guarded = [];
     public $timestamps = false;
 

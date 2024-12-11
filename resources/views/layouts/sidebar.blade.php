@@ -221,7 +221,7 @@
                             
                     @if(auth()->user()->hasPermissionToRoute('show.mainhead'))
                         <li class="sub-menu-item" data-url="{{route('show.mainhead')}}">
-                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'mainhead') ? 'active':''}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'mainheads') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-money-check-dollar"></i>
                                     Main Head 
@@ -1377,7 +1377,7 @@
                     <i class="fas fa-angle-right"></i>
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'report' ? 'show':''}}">
-                    <li class="sub-menu-item">
+                    {{-- <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'balancesheet') ? 'active':''}}">
                             <p>
                             <i class="fa-solid fa-sheet-plastic"></i>
@@ -1408,7 +1408,7 @@
                                 </li>
                             @endif
                         </ul>
-                    </li>
+                    </li> --}}
 
                     {{-- accounts statement part start --}}
                     <li class="sub-menu-item">
@@ -1489,7 +1489,7 @@
                         </ul>
                     </li>
                                 
-                    @if(auth()->user()->hasPermissionToRoute('show.groupeReport'))
+                    {{-- @if(auth()->user()->hasPermissionToRoute('show.groupeReport'))
                         <li class="sub-menu-item" data-url="{{route('show.groupeReport')}}">
                             <div class="menu-title">
                                 <p>
@@ -1509,7 +1509,7 @@
                                 </p>
                             </div>
                         </li>
-                    @endif
+                    @endif --}}
                 </ul>
             </li>
         @endif

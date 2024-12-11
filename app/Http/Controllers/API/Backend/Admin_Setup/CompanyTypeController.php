@@ -12,7 +12,7 @@ class CompanyTypeController extends Controller
 {
     // Show All Company Types
     public function ShowAll(Request $req){
-        $type = Company_Type::orderBy('added_at')->paginate(15);
+        $type = Company_Type::on('mysql_second')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $type,
@@ -24,10 +24,10 @@ class CompanyTypeController extends Controller
     // Insert Company Types
     public function Insert(Request $req){
         $req->validate([
-            "name" => 'required|unique:company__types,name',
+            "name" => 'required|unique:mysql_second.company__types,name',
         ]);
 
-        Company_Type::insert([
+        Company_Type::on('mysql_second')->insert([
             "name" => $req->name,
         ]);
         
@@ -41,7 +41,7 @@ class CompanyTypeController extends Controller
 
     // Edit Company Types
     public function Edit(Request $req){
-        $type = Company_Type::findOrFail($req->id);
+        $type = Company_Type::on('mysql_second')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'type'=> $type,
@@ -52,13 +52,13 @@ class CompanyTypeController extends Controller
 
     // Update Company Types
     public function Update(Request $req){
-        $type = Company_Type::findOrFail($req->id);
+        $type = Company_Type::on('mysql_second')->findOrFail($req->id);
         
         $req->validate([
-            "name" => ['required',Rule::unique('company__types', 'name')->ignore($type->id)],
+            "name" => ['required',Rule::unique('mysql_second.company__types', 'name')->ignore($type->id)],
         ]);
 
-        $update = Company_Type::findOrFail($req->id)->update([
+        $update = Company_Type::on('mysql_second')->findOrFail($req->id)->update([
             "name" => $req->name,
             "updated_at" => now()
         ]);
@@ -75,7 +75,7 @@ class CompanyTypeController extends Controller
 
     // Delete Company Types
     public function Delete(Request $req){
-        Company_Type::findOrFail($req->id)->delete();
+        Company_Type::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Company Type Deleted Successfully',
@@ -86,7 +86,7 @@ class CompanyTypeController extends Controller
 
     // Search Company Types
     public function Search(Request $req){
-        $type = Company_Type::where('name', 'like', '%'.$req->search.'%')
+        $type = Company_Type::on('mysql_second')->where('name', 'like', '%'.$req->search.'%')
         ->orderBy('name')
         ->paginate(15);
         
@@ -100,7 +100,7 @@ class CompanyTypeController extends Controller
 
     // Get Transaction Main Head
     public function Get(){
-        $type = Company_Type::orderBy('added_at')->paginate(15);
+        $type = Company_Type::on('mysql_second')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status' => true,
             'type'=> $type,

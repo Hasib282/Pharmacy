@@ -9,6 +9,8 @@ class Employee_Organization_Detail extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql';
+
     protected $guarded = [];
 
     public function User(){

@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Party_Payment_Receive extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql';
+
     protected $guarded = [];
+    
     public $timestamps = false;
 
     public function User(){

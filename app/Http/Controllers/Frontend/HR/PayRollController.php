@@ -21,11 +21,12 @@ class PayRollController extends Controller
     /////////////// ----------------------- Payroll Setup Part Start Here ------------------- ////////////////
     // Show Payroll Setup
     public function ShowPayrollSetup(Request $req){
+        $name = "Payroll Setup";
         if ($req->ajax()) {
-            return view('hr.payroll.payroll_setup.ajaxBlade');
+            return view('hr.payroll.payroll_setup.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.payroll.payroll_setup.payrollSetup');
+            return view('hr.payroll.payroll_setup.payrollSetup', compact('name'));
         }
     } // End Method 
 
@@ -33,7 +34,8 @@ class PayRollController extends Controller
 
     // Search Payroll Setup by user
     public function SearchPayrollSetup(Request $req){
-        return view('hr.payroll.payroll_setup.payrollSetup');
+        $name = "Payroll Setup";
+        return view('hr.payroll.payroll_setup.payrollSetup', compact('name'));
     } // End Method
 
     /////////////// ----------------------- Payroll Setup Part End Here ------------------- ////////////////
@@ -44,11 +46,12 @@ class PayRollController extends Controller
     /////////////// ----------------------- Payroll Middlewire Part Start Here ------------------- ////////////////
     // Show Payroll Miiddlewire
     public function ShowPayrollMiddlewire(Request $req){
+        $name = "Payroll Middlewire";
         if ($req->ajax()) {
-            return view('hr.payroll.payroll_middlewire.ajaxBlade');
+            return view('hr.payroll.payroll_middlewire.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.payroll.payroll_middlewire.payrollMiddlewire');
+            return view('hr.payroll.payroll_middlewire.payrollMiddlewire', compact('name'));
         }
     } // End Method
 
@@ -56,7 +59,8 @@ class PayRollController extends Controller
 
     // Search Payroll Middlewire by user
     public function SearchPayrollMiddlewire(Request $req){
-        return view('hr.payroll.payroll_middlewire.payrollMiddlewire');
+        $name = "Payroll Middlewire";
+        return view('hr.payroll.payroll_middlewire.payrollMiddlewire', compact('name'));
     } // End Method
 
     /////////////// ----------------------- Payroll Middlewire Part End Here ------------------- ////////////////
@@ -84,42 +88,4 @@ class PayRollController extends Controller
     } // End Method
 
     ////////////// ------------------------ Payroll Part End Here --------------------- ////////////////////////////
-
-
-    // Get Payroll By User And Date
-    public function GetPayrollByUserIdAndDate(Request $req){
-        $currentYear = $req->year;
-        $currentMonth = $req->month;
-        $payrolls = Pay_Roll_Setup::with('Employee')->select(
-            'emp_id',
-            'head_id',
-            'amount',
-            \DB::raw('0 as date'),
-        )
-        ->where('emp_id', $req->id)
-        ->union(
-            Pay_Roll_Middlewire::select(
-                'emp_id',
-                'head_id',
-                'amount',
-                'date',
-            )
-            ->where('emp_id', $req->id)
-            ->where(function ($query) use ($currentYear, $currentMonth) {
-                $query->whereYear('date', $currentYear)
-                    ->whereMonth('date', $currentMonth)
-                    ->orWhereNull('date');
-            })
-        )
-        ->orderBy('emp_id')
-        ->get();
-        
-        $heads = Transaction_Head::where('groupe_id','1')->get();
-        return response()->json([
-            'status'=> 'success',
-            'data'=> view('hr.payroll.details',compact('payrolls'))->render(),
-            'payrolls'=> $payrolls,
-            'heads' => $heads
-        ]); 
-    } // End Method
 }

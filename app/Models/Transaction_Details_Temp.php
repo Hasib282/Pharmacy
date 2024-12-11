@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction_Details_Temp extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql';
+
     protected $guarded = [];
+    
     public $timestamps = false;
 
     public function User(){

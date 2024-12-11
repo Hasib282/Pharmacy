@@ -6,7 +6,7 @@ function ShowInventoryExpiryDetails(data, startIndex) {
             tableRows += `
                 <tr>
                     <td>${startIndex + key + 1}</td>
-                    <td>${item.Head.tran_head_name}</td>
+                    <td>${item.head.tran_head_name}</td>
                     <td>${new Date(item.expiry_date).toLocaleDateString('en-CA')}</td>
                     <td>${item.tran_id}</td>
                 </tr>

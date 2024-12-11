@@ -1,4 +1,4 @@
-@section('style')
+{{-- @section('style')
     <style>
         .modal-subject {
             width: 75%;
@@ -18,10 +18,10 @@
             margin-bottom: 20px; /* Adjust the value as needed */
         }
     </style>
-@endsection
+@endsection --}}
 
 <div id= "addModal" class="modal-container">
-    <div class="modal-subject">
+    <div class="modal-subject" style="width: 80%;">
         <div class="modal-heading banner">
             <div class="center">
                 <h3>Add Training Detail</h3>

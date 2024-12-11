@@ -9,6 +9,7 @@ function ShowStores(data, startIndex) {
                     <td>${item.store_name}</td>
                     <td>${item.division}</td>
                     <td>${item.location.upazila}</td>
+                    <td>${item.address}</td>
                     <td>
                         <div style="display: flex;gap:5px;">
                             
@@ -91,5 +92,6 @@ $(document).ready(function () {
 
         $('#updateLocation').val(res.store.location.upazila);
         $('#updateLocation').attr('data-id',res.store.location_id);
+        $('#updateAddress').val(res.store.address);
     }; // End Method
 });

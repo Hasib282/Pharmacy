@@ -6,14 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User_Info;
+use App\Models\Pay_Roll_Setup;
 use App\Models\Transaction_With;
+use App\Models\Employee_Personal_Detail;
+use App\Models\Employee_Training_Detail;
+use App\Models\Employee_Education_Detail;
+use App\Models\Employee_Experience_Detail;
+use App\Models\Employee_Organization_Detail;
 
 class EmployeeController extends Controller
 {
     // Show All Employee Details
     public function ShowAll(Request $req){
-        $employee = User_Info::with('Withs','Location')->where('user_role', 6)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::where('user_role', 6)->get();
+        $employee = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
+        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'data' => $employee,
@@ -83,7 +89,7 @@ class EmployeeController extends Controller
 
     // Delete Employee Details
     public function Delete(Request $req){
-        User_Info::findOrFail($req->id)->delete();
+        User_Info::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Employee Details Deleted Successfully',
@@ -94,7 +100,7 @@ class EmployeeController extends Controller
 
     // Search Employee Details
     public function Search(Request $req){
-        $query = User_Info::with('Withs','Location')->where('user_role', 6); // Base query
+        $query = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3); // Base query
 
         if ($req->filled('search') && $req->searchOption) {
             switch ($req->searchOption) {
@@ -151,5 +157,21 @@ class EmployeeController extends Controller
             'status' => true,
             'data' => $employee,
         ], 200);
+    } // End Method
+
+
+
+    // Show Employee Details
+    public function Details(Request $req){
+        $employee = User_Info::with('Designation','Department','Location','Withs','personalDetail','educationDetail','trainingDetail','experienceDetail','organizationDetail')->where('user_id', "=", $req->id)->first();
+        $education = Employee_Education_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
+        $training = Employee_Training_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
+        $experience = Employee_Experience_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
+        $payroll = Pay_Roll_Setup::with('Head','Employee')->where('emp_id', $employee->user_id)->get();
+        
+        return response()->json([
+            'status' => true,
+            'data'=>view('hr.employee_info.employees.details', compact('employee','education','training','experience','payroll'))->render(),
+        ]);
     } // End Method
 }

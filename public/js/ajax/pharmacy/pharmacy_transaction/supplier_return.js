@@ -82,7 +82,7 @@ $(document).ready(function () {
     // Add Modal Open Functionality
     AddModalFunctionality("#store", function () {
         $('#AddForm')[0].reset();
-        $('#type').val(5);
+        $('#type').val(6);
         $('#method').val('Purchase');
         $('#batch').removeAttr('data-id');
         $('#store').removeAttr('data-id');
@@ -90,7 +90,7 @@ $(document).ready(function () {
         $('#user').removeAttr('data-with');
         $('#product').removeAttr('data-id');
         $('#product').removeAttr('data-groupe');
-        GetTransactionWith(6, 'Receive', '#within');
+        GetTransactionWith(6, 'Payment', '#within');
         localStorage.removeItem('transactionData');
         $('.transaction_grid tbody').html('');
         $('#batch-details-list tbody').html('');

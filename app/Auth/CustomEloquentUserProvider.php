@@ -16,12 +16,11 @@ class CustomEloquentUserProvider extends EloquentUserProvider
     {
         // Use the parent method to get the user
         $user = parent::retrieveById($identifier);
-
+        
         if ($user) {
             // Load relationships
             $user->load(['Company', 'Roles', 'permissions']);
         }
-
         return $user;
     }
 }

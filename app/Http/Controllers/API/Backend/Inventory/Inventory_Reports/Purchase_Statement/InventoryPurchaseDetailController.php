@@ -11,7 +11,7 @@ class InventoryPurchaseDetailController extends Controller
 {
     // Show All Inventory Purchase Details Statement
     public function ShowAll(Request $req){
-        $inventory = Transaction_Detail::with('User','Head')
+        $inventory = Transaction_Detail::on('mysql')->with('User','Head')
         ->where('tran_method', 'Purchase')
         ->where('tran_type', 5)
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
@@ -29,7 +29,7 @@ class InventoryPurchaseDetailController extends Controller
     // Search Inventory Purchase Details Statement
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $inventory = Transaction_Detail::with('User','Head')
+            $inventory = Transaction_Detail::on('mysql')->with('User','Head')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
@@ -38,7 +38,7 @@ class InventoryPurchaseDetailController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $inventory = Transaction_Detail::with('User','Head')
+            $inventory = Transaction_Detail::on('mysql')->with('User','Head')
             ->whereHas('User', function ($query) use ($req) {
                 $query->where('user_name', 'like', '%'.$req->search.'%');
                 $query->orderBy('user_name','asc');
@@ -49,7 +49,7 @@ class InventoryPurchaseDetailController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 3){
-            $inventory = Transaction_Detail::with('User','Head')
+            $inventory = Transaction_Detail::on('mysql')->with('User','Head')
             ->whereHas('Head', function ($query) use ($req) {
                 $query->where('tran_head_name', 'like', '%'.$req->search.'%');
                 $query->orderBy('tran_head_name','asc');

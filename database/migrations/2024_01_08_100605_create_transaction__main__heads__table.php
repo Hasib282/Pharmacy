@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction__main__heads', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('transaction__main__heads', function (Blueprint $table) {
             $table->id();
             $table->string('type_name');
             $table->timestamp('added_at')->useCurrent();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction__main__heads');
+        Schema::connection('mysql_second')->dropIfExists('transaction__main__heads');
     }
 };

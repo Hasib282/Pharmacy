@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('department__infos', function (Blueprint $table) {
+        Schema::connection('mysql')->create('department__infos', function (Blueprint $table) {
             $table->id();
             $table->string('dept_name');
-            $table->string('company_id')->nullable();
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
-
-            $table->foreign('company_id')->references('company_id')->on('company__details')
-                    ->onUpdate('cascade');
         });
     }
 
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('department__infos');
+        Schema::connection('mysql')->dropIfExists('department__infos');
     }
 };

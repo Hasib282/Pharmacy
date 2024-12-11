@@ -41,22 +41,6 @@
                 <input type="text" name="amount" class="form-input" id="amount">
                 <span class="error" id="amount_error"></span>
             </div>
-            @if (auth()->user()->user_role == 1)
-                <div class="form-input-group">
-                    <label for="company">Company <span class="required" title="Required">*</span></label>
-                    <input type="text" name="company" class="form-input" id="company" autocomplete="off">
-                    <div id="company-list">
-                        <ul>
-
-                        </ul>
-                    </div>
-                    <span class="error" id="company_error"></span>
-                </div>
-            @else
-                <div class="form-input-group">
-                    <input type="text" name="company" class="form-input" id="company" data-id="{{auth()->user()->company_id}}" style="display: none">
-                </div>
-            @endif
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Submit</button>
             </div>

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction__details__temps', function (Blueprint $table) {
+        Schema::connection('mysql')->create('transaction__details__temps', function (Blueprint $table) {
             $table->id();
             $table->string('tran_id');
-            $table->unsignedBigInteger('tran_type');
+            $table->bigInteger('tran_type')->comment('transaction__main__heads');
             $table->string('tran_method');
             $table->string('invoice')->nullable();
-            $table->unsignedBigInteger('loc_id')->nullable();
+            $table->bigInteger('loc_id')->nullable()->comment('location_infos');
             $table->unsignedBigInteger('tran_type_with')->nullable();
             $table->string('tran_user')->nullable();
             $table->string('user_name')->nullable();
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->double('quantity')->default(1);
             $table->double('quantity_issue')->default(0);
             $table->double('quantity_return')->default(0);
-            $table->unsignedBigInteger('unit_id')->nullable();
+            $table->unsignedBigInteger('unit_id')->nullable()->comment('item_units');
             $table->double('amount')->nullable();
             $table->double('tot_amount')->nullable();
             $table->double('discount')->nullable();
@@ -44,28 +44,18 @@ return new class extends Migration
             $table->unsignedBigInteger('store_id')->nullable();
             $table->string('batch_id')->nullable();
             $table->timestamp('tran_date')->useCurrent();
-            $table->string('company_id')->nullable();
             $table->timestamp('updated_at')->nullable();
             
             // Foreignkey Decleration
-            $table->foreign('tran_type')->references('id')->on('transaction__main__heads')
-                    ->onUpdate('cascade');
-            $table->foreign('loc_id')->references('id')->on('location__infos')
-                    ->onUpdate('cascade')
-                    ->onDelete('set null');
             $table->foreign('tran_type_with')->references('id')->on('transaction__withs')
                     ->onUpdate('cascade');
-            $table->foreign('tran_groupe_id')->references('id')->on('transaction__groupes')
-                    ->onUpdate('cascade');
-            $table->foreign('tran_head_id')->references('id')->on('transaction__heads')
-                    ->onUpdate('cascade');
+        //     $table->foreign('tran_groupe_id')->references('id')->on('transaction__groupes')
+        //             ->onUpdate('cascade');
+        //     $table->foreign('tran_head_id')->references('id')->on('transaction__heads')
+        //             ->onUpdate('cascade');
             $table->foreign('tran_user')->references('user_id')->on('user__infos')
                     ->onUpdate('cascade');
             $table->foreign('store_id')->references('id')->on('stores')
-                    ->onUpdate('cascade');
-            $table->foreign('unit_id')->references('id')->on('item__units')
-                    ->onUpdate('cascade');
-            $table->foreign('company_id')->references('company_id')->on('company__details')
                     ->onUpdate('cascade');
         });
     }
@@ -75,6 +65,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction__details__temps');
+        Schema::connection('mysql')->dropIfExists('transaction__details__temps');
     }
 };

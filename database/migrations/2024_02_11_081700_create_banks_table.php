@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('banks', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('banks', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->unique();
             $table->string('name')->nullable();
@@ -20,14 +20,13 @@ return new class extends Migration
             $table->unsignedBigInteger('loc_id')->nullable();
             $table->string('address')->nullable();
             $table->string('logo')->nullable();
-            
+            $table->timestamp('added_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
+
             // Foreignkey Decleration 
             $table->foreign('loc_id')->references('id')->on('location__infos')
                     ->onUpdate('cascade')
                     ->onDelete('set null');
-
-            $table->timestamp('added_at')->useCurrent();
-            $table->timestamp('updated_at')->nullable();
         });
     }
 
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('banks');
+        Schema::connection('mysql_second')->dropIfExists('banks');
     }
 };

@@ -11,7 +11,7 @@ class LocationController extends Controller
 {
     // Show All Locations
     public function ShowAll(Request $req){
-        $location = Location_Info::orderBy('added_at')->paginate(15);
+        $location = Location_Info::on('mysql_second')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $location,
@@ -44,7 +44,7 @@ class LocationController extends Controller
 
     // Edit Locations
     public function Edit(Request $req){
-        $location = Location_Info::findOrFail($req->id);
+        $location = Location_Info::on('mysql_second')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'location'=> $location,
@@ -61,7 +61,7 @@ class LocationController extends Controller
             "upazila"  => 'required',
         ]);
 
-        $update = Location_Info::findOrFail($req->id)->update([
+        $update = Location_Info::on('mysql_second')->findOrFail($req->id)->update([
             "district" => $req->district,
             "division" => $req->division,
             "upazila" => $req->upazila,
@@ -80,7 +80,7 @@ class LocationController extends Controller
 
     // Delete Locations
     public function Delete(Request $req){
-        Location_Info::findOrFail($req->id)->delete();
+        Location_Info::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Location Deleted Successfully',
@@ -92,17 +92,17 @@ class LocationController extends Controller
     // Search Locations
     public function Search(Request $req){
         if($req->searchOption == 1){ // Search By Division
-            $location = Location_Info::where('division', 'like', '%'.$req->search.'%')
+            $location = Location_Info::on('mysql_second')->where('division', 'like', '%'.$req->search.'%')
             ->orderBy('division')
             ->paginate(15);
         }
         else if($req->searchOption == 2){ // Search By District
-            $location = Location_Info::where('district', 'like', '%'.$req->search.'%')
+            $location = Location_Info::on('mysql_second')->where('district', 'like', '%'.$req->search.'%')
             ->orderBy('district')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search By Upazila
-            $location = Location_Info::where('upazila', 'like', '%'.$req->search.'%')
+            $location = Location_Info::on('mysql_second')->where('upazila', 'like', '%'.$req->search.'%')
             ->orderBy('upazila')
             ->paginate(15);
         }
@@ -117,7 +117,7 @@ class LocationController extends Controller
 
     // Get Location By Upazila
     public function Get(Request $req){
-        $locations = Location_Info::where('upazila', 'like', '%'.$req->location.'%')
+        $locations = Location_Info::on('mysql_second')->where('upazila', 'like', '%'.$req->location.'%')
         ->orderBy('upazila')
         ->take(10)
         ->get();
@@ -139,7 +139,7 @@ class LocationController extends Controller
     
     // Get Location By Division
     public function GetLocationByDivision(Request $req){
-        $locations = Location_Info::where('upazila', 'like', '%'.$req->location.'%')
+        $locations = Location_Info::on('mysql_second')->where('upazila', 'like', '%'.$req->location.'%')
         ->where('division', '=', $req->division)
         ->orderBy('upazila')
         ->take(10)

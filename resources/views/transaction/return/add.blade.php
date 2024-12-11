@@ -91,24 +91,6 @@
                                 <span class="error" id="totAmount_error"></span>
                             </div>
                         </div>
-                        @if (auth()->user()->user_role == 1)
-                            <div class="c-4">
-                                <div class="form-input-group">
-                                    <label for="company">Company <span class="required" title="Required">*</span></label>
-                                    <input type="text" name="company" class="form-input" id="company" autocomplete="off">
-                                    <div id="company-list">
-                                        <ul>
-
-                                        </ul>
-                                    </div>
-                                    <span class="error" id="company_error"></span>
-                                </div>
-                            </div>
-                        @else
-                            <div class="c-4">
-                                <input type="text" name="company" class="form-input" id="company" data-id="{{auth()->user()->company_id}}" style="display: none">
-                            </div>
-                        @endif
                     </div>
                     <div class="center">
                         <button type="submit" id="Add" class="btn-blue">Add</button>

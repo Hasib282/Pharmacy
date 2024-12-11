@@ -47,47 +47,49 @@
                     </div>
                 </div>
 
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="updateGender">Gender <span class="required" title="Required">*</span></label>
-                        <select name="gender" id="updateGender">
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="others">Others</option>
-                        </select>
-                        <span class="error" id="update_gender_error"></span>
-                    </div>
-                </div>
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="updateDivision">Division <span class="required" title="Required">*</span></label>
-                        <select name="division" id="updateDivision">
-        
-                        </select>
-                        <span class="error" id="update_division_error"></span>
-                    </div>
-                </div>
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="updateLocation">Location <span class="required" title="Required">*</span></label>
-                        <input type="text" name="location" class="form-input" id="updateLocation" autocomplete="off">
-                        <div id="update-location">
-                            <ul>
-
-                            </ul>
+                @if ($name != "Super Admin" && $name != "Admin")
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="updateGender">Gender <span class="required" title="Required">*</span></label>
+                            <select name="gender" id="updateGender">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="others">Others</option>
+                            </select>
+                            <span class="error" id="update_gender_error"></span>
                         </div>
-                        <span class="error" id="update_location_error"></span>
                     </div>
-                </div>
-                
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="updateAddress">Address</label>
-                        <input type="text" name="address" class="form-input" id="updateAddress">
-                        <span class="error" id="update_address_error"></span>
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="updateDivision">Division <span class="required" title="Required">*</span></label>
+                            <select name="division" id="updateDivision">
+            
+                            </select>
+                            <span class="error" id="update_division_error"></span>
+                        </div>
                     </div>
-                </div>
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="updateLocation">Location <span class="required" title="Required">*</span></label>
+                            <input type="text" name="location" class="form-input" id="updateLocation" autocomplete="off">
+                            <div id="update-location">
+                                <ul>
+
+                                </ul>
+                            </div>
+                            <span class="error" id="update_location_error"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="updateAddress">Address</label>
+                            <input type="text" name="address" class="form-input" id="updateAddress">
+                            <span class="error" id="update_address_error"></span>
+                        </div>
+                    </div>
+                @endif
 
                 <div class="c-4">
                     <div class="form-input-group">

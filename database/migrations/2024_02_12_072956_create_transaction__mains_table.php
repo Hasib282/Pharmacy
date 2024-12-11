@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction__mains', function (Blueprint $table) {
+        Schema::connection('mysql')->create('transaction__mains', function (Blueprint $table) {
             $table->id();
             $table->string('tran_id')->unique();
-            $table->unsignedBigInteger('tran_type');
+            $table->bigInteger('tran_type')->comment('transaction__main__heads');
             $table->string('tran_method');
             $table->string('invoice')->nullable();
-            $table->unsignedBigInteger('loc_id')->nullable();
+            $table->bigInteger('loc_id')->nullable()->comment('location__infos');
             $table->unsignedBigInteger('tran_type_with')->nullable();
             $table->string('tran_bank')->nullable();
             $table->string('tran_user')->nullable();
@@ -35,24 +35,14 @@ return new class extends Migration
             $table->unsignedBigInteger('store_id')->nullable();
             $table->timestamp('tran_date')->useCurrent();
             $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');
-            $table->string('company_id')->nullable();
             $table->timestamp('updated_at')->nullable();
             
             // Foreignkey Decleration
-            $table->foreign('tran_type')->references('id')->on('transaction__main__heads')
-                    ->onUpdate('cascade');
-            $table->foreign('loc_id')->references('id')->on('location__infos')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
             $table->foreign('tran_type_with')->references('id')->on('transaction__withs')
                     ->onUpdate('cascade');
             $table->foreign('tran_user')->references('user_id')->on('user__infos')
                     ->onUpdate('cascade');
-            $table->foreign('tran_bank')->references('user_id')->on('banks')
-                    ->onUpdate('cascade');
             $table->foreign('store_id')->references('id')->on('stores')
-                    ->onUpdate('cascade');
-            $table->foreign('company_id')->references('company_id')->on('company__details')
                     ->onUpdate('cascade');
         });
     }
@@ -62,6 +52,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction__mains');
+        Schema::connection('mysql')->dropIfExists('transaction__mains');
     }
 };

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permission__heads', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('permission__heads', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('permission_mainhead');
             $table->string('name');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permission__heads');
+        Schema::connection('mysql_second')->dropIfExists('permission__heads');
     }
 };

@@ -76,7 +76,6 @@ $(document).ready(function () {
             bank: {selector: '#bank', attribute: 'data-id' },
             head: {selector: '#head', attribute: 'data-id' },
             groupe: {selector: '#head', attribute: 'data-groupe' },
-            company: {selector: '#company', attribute: 'data-id' },
         }, 
         function() {
             $('#head').removeAttr('data-id');

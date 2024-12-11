@@ -2,7 +2,7 @@
     <div class="modal-subject">
         <div class="modal-heading banner">
             <div class="center">
-                <h3 class="card-title">Add Payroll Setup</h3>
+                <h3 class="card-title">Add {{ $name }}</h3>
                 <span class="close-modal" data-modal-id="addModal">&times;</span>
             </div>
         </div>

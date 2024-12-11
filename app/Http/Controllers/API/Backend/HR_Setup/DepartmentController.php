@@ -12,7 +12,7 @@ class DepartmentController extends Controller
 {
     // Show All Departments
     public function ShowAll(Request $req){
-        $department = Department_Info::orderBy('added_at','asc')->paginate(15);
+        $department = Department_Info::on('mysql')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $department,
@@ -24,11 +24,11 @@ class DepartmentController extends Controller
     // Insert Departments
     public function Insert(Request $req){
         $req->validate([
-            "deptName" => 'required|unique:department__infos,dept_name'
+            "name" => 'required|unique:mysql.department__infos,dept_name'
         ]);
 
-        Department_Info::insert([
-            "dept_name" => $req->deptName,
+        Department_Info::on('mysql')->insert([
+            "dept_name" => $req->name,
         ]);
         
         return response()->json([
@@ -41,7 +41,7 @@ class DepartmentController extends Controller
 
     // Edit Departments
     public function Edit(Request $req){
-        $department = Department_Info::findOrFail($req->id);
+        $department = Department_Info::on('mysql')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'department'=> $department,
@@ -52,14 +52,14 @@ class DepartmentController extends Controller
 
     // Update Departments
     public function Update(Request $req){
-        $department = Department_Info::findOrFail($req->id);
+        $department = Department_Info::on('mysql')->findOrFail($req->id);
 
         $req->validate([
-            "deptName" => ['required',Rule::unique('department__infos', 'dept_name')->ignore($department->id)],
+            "name" => ['required',Rule::unique('mysql.department__infos', 'dept_name')->ignore($department->id)],
         ]);
 
-        $update = Department_Info::findOrFail($req->id)->update([
-            "dept_name" => $req->deptName,
+        $update = Department_Info::on('mysql')->findOrFail($req->id)->update([
+            "dept_name" => $req->name,
             "updated_at" => now()
         ]);
 
@@ -75,7 +75,7 @@ class DepartmentController extends Controller
 
     // Delete Departments
     public function Delete(Request $req){
-        Department_Info::findOrFail($req->id)->delete();
+        Department_Info::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Department Deleted Successfully',
@@ -86,7 +86,7 @@ class DepartmentController extends Controller
 
     // Search Departments
     public function Search(Request $req){
-        $department = Department_Info::where('dept_name', 'like', '%'.$req->search.'%')
+        $department = Department_Info::on('mysql')->where('dept_name', 'like', '%'.$req->search.'%')
         ->orderBy('dept_name','asc')
         ->paginate(15);
         
@@ -99,7 +99,7 @@ class DepartmentController extends Controller
 
     // Get Departments
     public function Get(Request $req){
-        $departments = Department_Info::where('dept_name', 'like', '%'.$req->department.'%')
+        $departments = Department_Info::on('mysql')->where('dept_name', 'like', '%'.$req->department.'%')
         ->orderBy('dept_name','asc')
         ->take(10)
         ->get();

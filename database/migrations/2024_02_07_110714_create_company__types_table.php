@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('company__types', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('company__types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamp('added_at')->useCurrent();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('company__types');
+        Schema::connection('mysql_second')->dropIfExists('company__types');
     }
 };

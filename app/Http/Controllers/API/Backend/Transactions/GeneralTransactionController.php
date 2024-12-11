@@ -18,8 +18,8 @@ class GeneralTransactionController extends Controller
 {
     // Show All General Transaction Receives
     public function ShowAllReceive(Request $req){
-        $transactions = Transaction_Main::with('User')->where('tran_method','Receive')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::where('tran_groupe_type', '1')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
+        $transactions = Transaction_Main::on('mysql')->with('User')->where('tran_method','Receive')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '1')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $transactions,
@@ -31,8 +31,8 @@ class GeneralTransactionController extends Controller
     
     // Show All General Transaction Payment
     public function ShowAllPayment(Request $req){
-        $transactions = Transaction_Main::with('User')->where('tran_method','Payment')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::where('tran_groupe_type', '1')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
+        $transactions = Transaction_Main::on('mysql')->with('User')->where('tran_method','Payment')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '1')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $transactions,
@@ -55,7 +55,6 @@ class GeneralTransactionController extends Controller
             "netAmount" => 'required',
             "advance" => 'required',
             "balance" => 'required',
-            "company" => 'required'
         ]);
 
 
@@ -89,7 +88,7 @@ class GeneralTransactionController extends Controller
         }
 
         // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Main::where('tran_type', 1)->where('tran_method', $req->method)->latest('tran_id')->first();
+        $transaction = Transaction_Main::on('mysql')->where('tran_type', 1)->where('tran_method', $req->method)->latest('tran_id')->first();
         if($req->method === 'Receive'){
             $id = ($transaction) ? 'REC' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'REC000000001';
         }
@@ -101,7 +100,7 @@ class GeneralTransactionController extends Controller
         DB::transaction(function () use ($req, $id) {
             $receive = $req->method === 'Receive' ? $req->advance : null;
             $payment = $req->method === 'Payment' ? $req->advance : null;
-            Transaction_Main::insert([
+            Transaction_Main::on('mysql')->insert([
                 "tran_id" => $id,
                 "tran_type" => 1,
                 "tran_method" => $req->method,
@@ -114,7 +113,6 @@ class GeneralTransactionController extends Controller
                 "receive" => $receive,
                 "payment" => $payment,
                 "due" => $req->balance,
-                "company_id" => $req->company,
             ]);
 
 
@@ -135,7 +133,7 @@ class GeneralTransactionController extends Controller
                 $receive = $req->method === 'Receive' ? $advance : null;
                 $payment = $req->method === 'Payment' ? $advance : null;
 
-                Transaction_Detail::insert([
+                Transaction_Detail::on('mysql')->insert([
                     "tran_id" => $id,
                     "loc_id" => $req->location,
                     "tran_type" => 1,
@@ -153,7 +151,6 @@ class GeneralTransactionController extends Controller
                     "payment" => $payment,
                     "due" => $due,
                     "expiry_date" => $req->expiry == null ? null :$req->expiry,
-                    "company_id" => $req->company,
                 ]);
 
                 $billDiscount -= $discount;
@@ -173,7 +170,7 @@ class GeneralTransactionController extends Controller
 
     // Edit General Transaction
     public function Edit(Request $req){
-        $transaction = Transaction_Main::with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+        $transaction = Transaction_Main::on('mysql')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
         return response()->json([
             'status'=> true,
             'transaction'=> $transaction,
@@ -222,7 +219,7 @@ class GeneralTransactionController extends Controller
             ], 422);
         }
 
-        $transaction = Transaction_Main::findOrFail($req->id);
+        $transaction = Transaction_Main::on('mysql')->findOrFail($req->id);
 
         
 
@@ -242,7 +239,7 @@ class GeneralTransactionController extends Controller
 
 
             // Delete the previous transaction details
-            Transaction_Detail::where('tran_id', $req->tranid)->delete();
+            Transaction_Detail::on('mysql')->where('tran_id', $req->tranid)->delete();
 
 
             $billDiscount = $req->totalDiscount;
@@ -262,7 +259,7 @@ class GeneralTransactionController extends Controller
                 $receive = $req->method == 'Receive' ? $advance : null;
                 $payment = $req->method == 'Payment' ? $advance : null;
 
-                $update = Transaction_Detail::insert([
+                $update = Transaction_Detail::on('mysql')->insert([
                     "tran_id" => $req->tranid,
                     "loc_id" => $req->location,
                     "tran_type" => 1,
@@ -299,8 +296,8 @@ class GeneralTransactionController extends Controller
 
     // Delete General Transaction
     public function Delete(Request $req){
-        Transaction_Main::where("tran_id", $req->id)->delete();
-        Transaction_Detail::where("tran_id", $req->id)->delete();
+        Transaction_Main::on('mysql')->where("tran_id", $req->id)->delete();
+        Transaction_Detail::on('mysql')->where("tran_id", $req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Transaction Deleted Successfully',
@@ -312,7 +309,7 @@ class GeneralTransactionController extends Controller
     // Search General Transaction
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $transaction = Transaction_Main::with('User')
+            $transaction = Transaction_Main::on('mysql')->with('User')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
@@ -321,7 +318,7 @@ class GeneralTransactionController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $transaction = Transaction_Main::with('User')
+            $transaction = Transaction_Main::on('mysql')->with('User')
             ->whereHas('User', function ($query) use ($req) {
                 $query->where('user_name', 'like', '%'.$req->search.'%');
                 $query->orderBy('user_name','asc');
@@ -344,8 +341,8 @@ class GeneralTransactionController extends Controller
     public function Invoice(Request $req)
     {
         if($req->status == 1){
-            $transactionMain = Transaction_Main::where('tran_id', $req->id)->first();
-            $transDetailsInvoice = Transaction_Detail::
+            $transactionMain = Transaction_Main::on('mysql')->where('tran_id', $req->id)->first();
+            $transDetailsInvoice = Transaction_Detail::on('mysql')->
             select(
                 'tran_head_id', 
                 'amount', 
@@ -359,8 +356,8 @@ class GeneralTransactionController extends Controller
             ->get();
         }
         else if($req->status == 2){
-            $transactionMain = Transaction_Mains_Temp::where('tran_id', $req->id)->first();
-            $transDetailsInvoice = Transaction_Details_Temp::
+            $transactionMain = Transaction_Mains_Temp::on('mysql')->where('tran_id', $req->id)->first();
+            $transDetailsInvoice = Transaction_Details_Temp::on('mysql')->
             select(
                 'tran_head_id', 
                 'amount', 
@@ -386,7 +383,7 @@ class GeneralTransactionController extends Controller
     // Get Inserted Transacetion Grid By Transaction Id
     public function GetTransactionGrid(Request $request){
         if($request->status == 1){
-            $transaction = Transaction_Detail::with('Head')
+            $transaction = Transaction_Detail::on('mysql')->with('Head')
             ->select(
                 'tran_head_id',
                 'mrp',
@@ -404,7 +401,7 @@ class GeneralTransactionController extends Controller
             ->get();
         }
         else if($request->status == 2){
-            $transaction = Transaction_Details_Temp::with('Head')
+            $transaction = Transaction_Details_Temp::on('mysql')->with('Head')
             ->select(
                 'tran_head_id',
                 'mrp',
@@ -444,7 +441,7 @@ class GeneralTransactionController extends Controller
     // Get User By User Type
     public function GetUser(Request $req){
         if($req->within == "1"){
-            $users = User_Info::where('user_name', 'like', '%'.$req->tranUser.'%')
+            $users = User_Info::on('mysql')->where('user_name', 'like', '%'.$req->tranUser.'%')
             ->whereIn('tran_user_type', $req->tranUserType)
             ->orderBy('user_name','asc')
             ->take(10)
@@ -456,7 +453,7 @@ class GeneralTransactionController extends Controller
                 return $list;
             }
             else{
-                $users = User_Info::where('user_name', 'like', '%'.$req->tranUser.'%')
+                $users = User_Info::on('mysql')->where('user_name', 'like', '%'.$req->tranUser.'%')
                 ->where('tran_user_type', $req->tranUserType)
                 ->orderBy('user_name','asc')
                 ->take(10)
@@ -510,16 +507,23 @@ class GeneralTransactionController extends Controller
         ->where('tran_id', $req->batch)
         ->orderBy('tran_id','asc')
         ->get();
-
+        
         if($batches->count() > 0){
             $list = "";
             foreach($batches as $index => $batch) {
+                $amount = '';
+                if ($batch->tran_method === 'Issue') {
+                    $amount = $batch->mrp;
+                } elseif ($batch->tran_method === 'Purchase') {
+                    $amount = $batch->cp;
+                }
+
                 $list .= '
-                <tr data-id="' . htmlspecialchars($batch->tran_head_id) . '" data-name="' . htmlspecialchars($batch->head->tran_head_name) . '" data-groupe="' . htmlspecialchars($batch->tran_groupe_id) . '" data-quantity="' . htmlspecialchars($batch->quantity) . '" data-cp="' . htmlspecialchars($batch->cp) . '" data-tot="' . htmlspecialchars($batch->tot_amount) . '" data-batch="' . htmlspecialchars($batch->batch_id) . '">
+                <tr data-id="' . htmlspecialchars($batch->tran_head_id) . '" data-name="' . htmlspecialchars($batch->head->tran_head_name) . '" data-groupe="' . htmlspecialchars($batch->tran_groupe_id) . '" data-quantity="' . htmlspecialchars($batch->quantity) . '" data-price="' . htmlspecialchars($amount) . '" data-tot="' . htmlspecialchars($batch->tot_amount) . '" data-batch="' . htmlspecialchars($batch->batch_id) . '">
                     <td>' . htmlspecialchars($batch->head->tran_head_name) . '</td>
                     <td style="text-align: center">' . htmlspecialchars($batch->quantity) . '</td>
-                    <td style="text-align: right">' . htmlspecialchars($batch->cp) . '</td>
-                    <td style="text-align: right">' . htmlspecialchars($batch->tot_amount) . '</td>
+                    <td style="text-align: right">' . $amount . '</td>
+                    <td style="text-align: right">' . htmlspecialchars($batch->quantity * $amount) . '</td>
                     <td style="text-align: center">' . htmlspecialchars($batch->batch_id) . '</td>
                 </tr>';
             }

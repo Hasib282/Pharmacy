@@ -12,7 +12,7 @@ class RoleController extends Controller
 {
     // Show All User Roles
     public function ShowAll(Request $req){
-        $roles = Role::whereNotIn('id', ['1'])->orderBy('added_at','asc')->paginate(15);
+        $roles = Role::on('mysql_second')->whereNotIn('id', ['1'])->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $roles,
@@ -24,10 +24,10 @@ class RoleController extends Controller
     // Insert User Roles
     public function Insert(Request $req){
         $req->validate([
-            "name" => 'required|unique:roles,name',
+            "name" => 'required|unique:mysql_second.roles,name',
         ]);
 
-        Role::insert([
+        Role::on('mysql_second')->insert([
             "name" => $req->name,
         ]);
         
@@ -41,7 +41,7 @@ class RoleController extends Controller
 
     // Edit User Roles
     public function Edit(Request $req){
-        $roles = Role::findOrFail($req->id);
+        $roles = Role::on('mysql_second')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'roles'=> $roles,
@@ -52,13 +52,13 @@ class RoleController extends Controller
 
     // Update User Roles
     public function Update(Request $req){
-        $roles = Role::findOrFail($req->id);
+        $roles = Role::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
-            "name" => ['required',Rule::unique('roles', 'name')->ignore($roles->id)],
+            "name" => ['required',Rule::unique('mysql_second.roles', 'name')->ignore($roles->id)],
         ]);
 
-        $update = Role::findOrFail($req->id)->update([
+        $update = Role::on('mysql_second')->findOrFail($req->id)->update([
             "name" => $req->name
         ]);
 
@@ -74,7 +74,7 @@ class RoleController extends Controller
 
     // Delete User Roles
     public function Delete(Request $req){
-        Role::whereNotIn('id', ['1'])->findOrFail($req->id)->delete();
+        Role::on('mysql_second')->whereNotIn('id', ['1'])->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'User Role Deleted Successfully',
@@ -85,7 +85,7 @@ class RoleController extends Controller
 
     // Search User Roles
     public function Search(Request $req){
-        $roles = Role::whereNotIn('id', ['1'])->where('name', 'like', '%'.$req->search.'%')
+        $roles = Role::on('mysql_second')->whereNotIn('id', ['1'])->where('name', 'like', '%'.$req->search.'%')
         ->orderBy('name','asc')
         ->paginate(15);
         
@@ -99,7 +99,7 @@ class RoleController extends Controller
 
     // Get Roles
     public function Get(){
-        $roles = Role::whereNotIn('id', ['1'])
+        $roles = Role::on('mysql_second')->whereNotIn('id', ['1'])
         ->where('name', 'like', '%'.$req->role.'%')
         ->orderBy('name')
         ->take(10)

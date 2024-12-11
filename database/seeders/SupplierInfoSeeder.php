@@ -18,7 +18,7 @@ class SupplierInfoSeeder extends Seeder
         $suppliers = collect(json_decode($json));
 
         $suppliers->each(function($supplier){
-            User_Info::create([
+            User_Info::on('mysql')->create([
                 "user_id" => $supplier->user_id,
                 "user_name" => $supplier->user_name,
                 "user_email" => $supplier->user_email,

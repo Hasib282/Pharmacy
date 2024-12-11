@@ -56,11 +56,11 @@
 
 @include('hr.employee_info.experience_details.add')
 
-@include('hr.employee_info.experience_details.employeeExperienceDetails')
+@include('hr.employee_info.employeeDetails')
 
 @include('hr.employee_info.experience_details.edit')
 
-@include('hr.employee_info.experience_details.delete')
+@include('common_modals.delete')
 
 <!-- ajax part start from here -->
 <script src="{{ asset('js/ajax/hr/employee_info/employeeExperience.js') }}"></script>

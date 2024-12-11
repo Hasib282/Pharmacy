@@ -228,11 +228,6 @@ function DetailsAjax(link) {
 
 
 
-
-
-
-
-
 $(document).ready(function () {
     //////////////////// -------------------- Delete Ajax Part Start -------------------- ////////////////////
     // Delete Button Functionality

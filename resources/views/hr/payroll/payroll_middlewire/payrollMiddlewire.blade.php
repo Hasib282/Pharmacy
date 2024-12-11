@@ -1,16 +1,3 @@
-@section('style')
-    <style>
-        #search {
-            width: 100%;
-            margin: 0;
-        }
-        #searchOption {
-            width: 100%;
-            margin: 0;
-        }
-    </style>
-@endsection
-
 @php
     $searchValue = request()->query('search');
     $searchOptionValue = request()->query('searchOption');
@@ -22,7 +9,7 @@
         <div class="rows">
             <div class="c-3">
                 {{-- @if(Auth::user()->hasPermissionToRoute('insert.payrollMiddlewire')) --}}
-                    <button class="open-modal add" data-modal-id="addModal">Add Payroll Middlewire</button>
+                    <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
                 {{-- @endif --}}
             </div>
             <div class="c-2">
@@ -55,7 +42,7 @@
                     <div class="c-2">
                         <div class="form-group">
                             <label for="searchOption">Search Option</label>
-                            <select name="searchOption" id="searchOption">
+                            <select name="searchOption" id="searchOption" style="width: 100%;margin: 0;">
                                 <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>User Name</option>
                                 <option value="2" {{ $searchOptionValue == '2' ? 'selected' : '' }}>Head</option>
                             </select>
@@ -64,7 +51,7 @@
                     <div class="c-10">
                         <div class="form-group">
                             <label for="search">Search</label>
-                            <input type="text" name="search" id="search" class="form-input" placeholder="Search here..." value="{{ $searchValue ? $searchValue : '' }}">
+                            <input type="text" name="search" id="search" class="form-input" placeholder="Search here..." value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%;margin: 0;">
                         </div>
                     </div>
                 </div>
@@ -76,7 +63,7 @@
     <!-- table show -->
     <div class="load-data" style="overflow-x:auto;">
         <table class="show-table">
-            <caption class="caption">Additional Payroll Middlewire</caption>
+            <caption class="caption">{{ $name }} Details</caption>
             <thead>
                 <tr>
                     <th>SL:</th>
@@ -89,51 +76,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
-                {{-- @php
-                    $lastEmpId = null;
-                @endphp
-        
-                @foreach ($payroll as $key => $item)
-                    <tr>
-                        <td>{{ $payroll->firstItem() + $key }}</td>
-        
-                        @if($item->emp_id != $lastEmpId)
-                            <td>{{ $item->emp_id }}</td>
-                            <td>{{ $item->Employee->user_name }}</td>
-                        @else
-                            <td></td>
-                            <td></td>
-                        @endif
-                        
-                        @php
-                            $lastEmpId = $item->emp_id;
-                        @endphp
-        
-                        <td>{{ $item->Head->tran_head_name }}</td>
-                        <td>{{ $item->amount }}</td>
-                        @if ($item->date != null)
-                            <td>{{ date('m', strtotime($item->date)) }}</td>
-                            <td>{{ date('Y', strtotime($item->date)) }}</td>
-                        @else
-                            <td></td>
-                            <td></td>
-                        @endif
-                        
-                        <td>
-                            <div style="display: flex;gap:5px;">
-                                @if(Auth::user()->hasPermissionToRoute('update.payrollMiddlewire'))
-                                    <button class="open-modal" data-modal-id="editModal" id="edit"
-                                        data-id="{{ $item->id }}"><i class="fas fa-edit"></i></button>
-                                @endif
-                                @if(Auth::user()->hasPermissionToRoute('delete.payrollMiddlewire'))
-                                    <button data-id="{{ $item->id }}" id="delete"><i class="fas fa-trash"></i></button>
-                                @endif
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach --}}
-            </tbody>
+            <tbody></tbody>
             <tfoot></tfoot>
         </table>
         
@@ -145,21 +88,10 @@
 
     @include('hr.payroll.payroll_middlewire.edit')
 
-    @include('hr.payroll.payroll_middlewire.delete')
+    @include('common_modals.delete')
 
 
     <!-- ajax part start from here -->
-    {{-- <script>
-        const urls = {
-            insert:     "{{ route('insert.payrollMiddlewire') }}",
-            edit:       "{{ route('edit.payrollMiddlewire') }}",
-            update:     "{{ route('update.payrollMiddlewire') }}",
-            delete:     "{{ route('delete.payrollMiddlewire') }}",
-            search:     "{{ route('search.payrollMiddlewire') }}",
-            paginate:   "{{ route('pagination.payrollMiddlewire') }}",
-            getuser:    "{{ route('get.payrollUser') }}",
-        };
-    </script> --}}
     <script src="{{ asset('js/ajax/hr/payroll/payroll_middlewire.js') }}"></script>
     <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
 @endsection

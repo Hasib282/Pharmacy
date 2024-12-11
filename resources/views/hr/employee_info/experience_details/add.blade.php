@@ -1,9 +1,5 @@
-@section('style')
+{{-- @section('style')
 <style>
-    .modal-subject {
-        width: 75%;
-    }
-
     label {
         font-size: 16px !important;
         font-weight: normal !important;
@@ -22,10 +18,10 @@
         /* Adjust the value as needed */
     }
 </style>
-@endsection
+@endsection --}}
 
 <div id="addModal" class="modal-container">
-    <div class="modal-subject">
+    <div class="modal-subject" style="width: 80%;">
         <div class="modal-heading banner">
             <div class="center">
                 <h3 class="card-title">Add Experience Detail</h3>
@@ -37,7 +33,7 @@
             <div class="rows">
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="with">Employee Type<span class="red">*</span></label>
+                        <label for="with">Employee Type <span class="required" title="Required">*</span></label>
                         <select name="with" id="with">
                             {{-- <option value="">Select Employee Type</option>
                             @foreach ($tranwith as $with)
@@ -49,7 +45,7 @@
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="user">Name<span class="red">*</span></label>
+                        <label for="user">Name <span class="required" title="Required">*</span></label>
                         <input type="text" name="user" class="form-input" id="user" autocomplete="off">
                         <div id="user-list">
                             <ul>
@@ -67,28 +63,28 @@
                 <div class="rows">
                     <div class="c-6">
                         <div class="form-input-group">
-                            <label for="company_name_1">Company Name<span class="red">*</span></label>
+                            <label for="company_name_1">Company Name <span class="required" title="Required">*</span></label>
                             <input type="text" name="company_name" id="company_name_1" class="form-input">
                             <span class="error" id="company_name_error_1"></span>
                         </div>
                     </div>
                     <div class="c-6">
                         <div class="form-input-group">
-                            <label for="department_1">Department<span class="red">*</span></label>
+                            <label for="department_1">Department <span class="required" title="Required">*</span></label>
                             <input type="text" name="department" id="department_1" class="form-input">
                             <span class="error" id="department_error_1"></span>
                         </div>
                     </div>
                     <div class="c-6">
                         <div class="form-input-group">
-                            <label for="designation">Designation<span class="red">*</span></label>
+                            <label for="designation">Designation <span class="required" title="Required">*</span></label>
                             <input type="text" name="designation" id="designation" class="form-input">
                             <span class="error" id="designation_error_1"></span>
                         </div>
                     </div>
                     <div class="c-6">
                         <div class="form-input-group">
-                            <label for="company_location_1">Company Address<span class="red">*</span></label>
+                            <label for="company_location_1">Company Address <span class="required" title="Required">*</span></label>
                             <input type="text" name="company_location" id="company_location_1" class="form-input">
                             <span class="error" id="company_location_error_1"></span>
                         </div>

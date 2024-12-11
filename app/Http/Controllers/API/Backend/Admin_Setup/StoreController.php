@@ -11,7 +11,7 @@ class StoreController extends Controller
 {
     // Show All Stores
     public function ShowAll(Request $req){
-        $store = Store::with('Location')->orderBy('added_at')->paginate(15);
+        $store = Store::on('mysql')->with('Location')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $store,
@@ -25,14 +25,14 @@ class StoreController extends Controller
         $req->validate([
             'store_name' => 'required',
             'division' => 'required',
-            'location' => 'required',
+            'location' => 'required|exists:mysql_second.location__infos,id',
         ]);
  
-        Store::insert([
+        Store::on('mysql')->insert([
             'store_name' => $req->store_name,
             'division' => $req->division,
             'location_id' => $req->location,
-            "status" => $req->status,
+            'address' => $req->address,
         ]);
         
         return response()->json([
@@ -45,7 +45,7 @@ class StoreController extends Controller
 
     // Edit Stores
     public function Edit(Request $req){
-        $store = Store::with('Location')->where('id', $req->id)->first();
+        $store = Store::on('mysql')->with('Location')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
             'store'=> $store,
@@ -59,13 +59,14 @@ class StoreController extends Controller
         $req->validate([
             'store_name' => 'required',
             'division' => 'required',
-            'location' => 'required',
+            'location' => 'required|exists:mysql_second.location__infos,id',
         ]);
 
-        $update = Store::findOrFail($req->id)->update([
+        $update = Store::on('mysql')->findOrFail($req->id)->update([
             'store_name' => $req->store_name,
             'division' => $req->division,
             'location_id' => $req->location,
+            'address' => $req->address,
             "updated_at" => now()
         ]);
 
@@ -81,7 +82,7 @@ class StoreController extends Controller
 
     // Delete Stores
     public function Delete(Request $req){
-        Store::findOrFail($req->id)->delete();
+        Store::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Store Details Deleted Successfully',
@@ -93,19 +94,26 @@ class StoreController extends Controller
     // Search Stores
     public function Search(Request $req){
         if($req->searchOption == 1){ // Search By Store Name
-            $store = Store::with('Location')
+            $store = Store::on('mysql')->with('Location')
             ->where('store_name', 'like', '%'.$req->search.'%')
             ->where('division', 'like','%'.$req->division.'%')
             ->orderBy('store_name')
             ->paginate(15);
         }
         else if($req->searchOption == 2){ // Search By Upazila/Location
-            $store = Store::with('Location')
+            $store = Store::on('mysql')->with('Location')
             ->whereHas('Location', function ($query) use ($req) {
                 $query->where('upazila', 'like', '%'.$req->search.'%');
                 $query->orderBy('upazila');
             })
             ->where('division', 'like','%'.$req->division.'%')
+            ->paginate(15);
+        }
+        else if($req->searchOption == 3){ // Search By Upazila/Location
+            $store = Store::on('mysql')->with('Location')
+            ->where('address', 'like', '%'.$req->search.'%')
+            ->where('division', 'like','%'.$req->division.'%')
+            ->orderBy('store_name')
             ->paginate(15);
         }
         
@@ -119,7 +127,7 @@ class StoreController extends Controller
 
     // Get Store By Name
     public function Get(Request $req){
-        $stores = Store::where('store_name', 'like', '%'.$req->store.'%')
+        $stores = Store::on('mysql')->where('store_name', 'like', '%'.$req->store.'%')
         ->orderBy('store_name')
         ->take(10)
         ->get();

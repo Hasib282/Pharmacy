@@ -617,6 +617,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 // Route::put('/all', 'Update');
                 Route::delete('/all', 'Delete');
                 Route::get('/all/search', 'Search');
+                Route::get('/all/details', 'Details');
             });
 
 
@@ -629,6 +630,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/personal', 'Update');
                 Route::delete('/personal', 'Delete');
                 Route::get('/personal/search', 'Search');
+                Route::get('/personal/details', 'Details');
             });
 
 
@@ -641,6 +643,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/education', 'Update');
                 Route::delete('/education', 'Delete');
                 Route::get('/education/search', 'Search');
+                Route::get('/education/details', 'Details');
+                Route::get('/education/grid', 'Grid');
             });
 
 
@@ -653,6 +657,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/training', 'Update');
                 Route::delete('/training', 'Delete');
                 Route::get('/training/search', 'Search');
+                Route::get('/training/details', 'Details');
+                Route::get('/training/grid', 'Grid');
             });
 
 
@@ -665,6 +671,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/experience', 'Update');
                 Route::delete('/experience', 'Delete');
                 Route::get('/experience/search', 'Search');
+                Route::get('/experience/details', 'Details');
+                Route::get('/experience/grid', 'Grid');
             });
 
 
@@ -677,6 +685,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/organization', 'Update');
                 Route::delete('/organization', 'Delete');
                 Route::get('/organization/search', 'Search');
+                Route::get('/organization/details', 'Details');
+                Route::get('/organization/grid', 'Grid');
             });
             
             
@@ -725,11 +735,12 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
             Route::controller(PayrollProcessController::class)->group(function () {
                 Route::get('/process', 'ShowAll');
                 Route::post('/process', 'Insert');
-                // Route::get('/process/edit', 'Edit');
+                Route::get('/process/edit', 'Edit');
                 // Route::put('/process', 'Update');
                 // Route::delete('/process', 'Delete');
                 Route::get('/process/search', 'Search');
                 Route::get('/get', 'Get');
+                // Route::get('/get/data', 'GetByDate');
             });
         }); // End HR Payroll Routes
 
