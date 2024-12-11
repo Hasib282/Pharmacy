@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Login_User;
 use App\Models\User_Info;
 use App\Models\Transaction_With;
 use App\Models\Transaction_Main;
@@ -82,7 +83,6 @@ class AdminController extends Controller
                 "user_role" =>  2,
                 "password" => Hash::make($req->password),
                 "image" => $imageName,
-                "company_id" =>  $req->company,
             ]);
         });
         

@@ -17,11 +17,13 @@ return Application::configure(basePath: dirname(__DIR__))
             App\Http\Middleware\Cors::class,
             App\Http\Middleware\SessionMiddleware::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            // 'throttle:api',
+            'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Illuminate\Session\Middleware\StartSession::class,
         ]);
         $middleware->web(append: [
             App\Http\Middleware\Cors::class,
+            \Illuminate\Session\Middleware\StartSession::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

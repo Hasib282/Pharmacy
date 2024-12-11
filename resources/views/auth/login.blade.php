@@ -112,6 +112,9 @@
                             data: formData,
                             contentType: false,
                             processData: false,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
                             // xhrFields: {
                             //     withCredentials: true, // Send session cookies
                             // },

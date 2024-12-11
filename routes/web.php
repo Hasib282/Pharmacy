@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 // Middlewares
 // use App\Http\Middleware\ValidUser;
 use App\Http\Middleware\CheckPermission;
