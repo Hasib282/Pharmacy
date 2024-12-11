@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\User_Info;
 use App\Models\Transaction_With;
@@ -17,7 +18,12 @@ class AdminController extends Controller
 {
     // Show All Admins
     public function ShowAll(Request $req){
-        $admin = User_Info::with('Withs','Location')->where('user_role', 2)->orderBy('added_at','asc')->paginate(15);
+        $admin = User_Info::on('mysql')
+        ->with('Withs', 'Location')
+        ->where('user_role', 2)
+        ->orderBy('added_at', 'asc')
+        ->paginate(15);
+
         return response()->json([
             'status'=> true,
             'data' => $admin,
@@ -30,10 +36,8 @@ class AdminController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "name" => 'required',
-            "phone" => 'required|numeric|unique:user__infos,user_phone',
-            "email" => 'required|email|unique:user__infos,user_email',
-            "gender" => 'required',
-            "location" => 'required|numeric',
+            "phone" => 'required|numeric|unique:mysql.user__infos,user_phone',
+            "email" => 'required|email|unique:mysql.user__infos,user_email',
             'password' => 'required|confirmed',
             'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
             'company' => 'required',
@@ -41,29 +45,40 @@ class AdminController extends Controller
 
 
         DB::transaction(function () use ($req) {
-            // Generates Auto Increment Admin Id
-            $latestEmployee = User_Info::where('user_role', 2)->orderBy('user_id','desc')->first();
-            $id = ($latestEmployee) ? 'AD' . str_pad((intval(substr($latestEmployee->user_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'AD000000001';
+            // Generates Auto Increment Admin Id For Login
+            $latestAdmin = Login_User::on('mysql_second')->where('user_role', 2)->orderBy('user_id','desc')->first();
+            $id = ($latestAdmin) ? 'AD' . str_pad((intval(substr($latestAdmin->user_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'AD000000001';
+            // Generates Auto Increment Admin Id Company Wise
+            $latestAdminId = User_Info::on('mysql')->where('user_role', 2)->orderBy('user_id','desc')->first();
+            $adminId = ($latestAdmin) ? 'AD' . str_pad((intval(substr($latestAdmin->user_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'AD000000001';
 
             if ($req->hasFile('image') && $req->file('image')->isValid()) {
                 $originalName = $req->file('image')->getClientOriginalName();
                 $imageName = '('. $req->company . ')'.$id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
                 $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-                \Log::info("Image stored at: $imagePath");
             }
             else{
                 $imageName = null;
             }
 
-            $admin = User_Info::insert([
+            Login_User::on('mysql_second')->insert([
                 "user_id" => $id,
-                "tran_user_type" => $req->type,
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
                 "user_email" => $req->email,
-                "gender" => $req->gender,
-                "loc_id" => $req->location,
-                "address" => $req->address,
+                "user_role" =>  2,
+                "password" => Hash::make($req->password),
+                "image" => $imageName,
+                "company_id" =>  $req->company,
+            ]);
+            
+            
+            User_Info::on('mysql')->insert([
+                "user_id" => $id,
+                "login_user_id" => $adminId,
+                "user_name" => $req->name,
+                "user_phone" => $req->phone,
+                "user_email" => $req->email,
                 "user_role" =>  2,
                 "password" => Hash::make($req->password),
                 "image" => $imageName,
@@ -81,7 +96,7 @@ class AdminController extends Controller
 
     // Edit Admins
     public function Edit(Request $req){
-        $admin = User_Info::with('Withs','Location')->findOrFail($req->id);
+        $admin = User_Info::on('mysql')->with('Withs','Location')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'admin'=> $admin,
@@ -92,19 +107,17 @@ class AdminController extends Controller
 
     // Update Admins
     public function Update(Request $req){
-        $admin = User_Info::findOrFail($req->id);
+        $admin = User_Info::on('mysql')->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
-            "phone" => ['required','numeric',Rule::unique('user__infos', 'user_phone')->ignore($admin->id)],
-            "email" => ['required','email',Rule::unique('user__infos', 'user_email')->ignore($admin->id)],
-            "gender" => 'required',
-            "location" => 'required|numeric',
+            "phone" => ['required','numeric',Rule::unique('mysql.user__infos', 'user_phone')->ignore($admin->id)],
+            "email" => ['required','email',Rule::unique('mysql.user__infos', 'user_email')->ignore($admin->id)],
         ]);
 
 
         DB::transaction(function () use ($req) {
-            $admin = User_Info::findOrFail($req->id);
+            $admin = User_Info::on('mysql')->findOrFail($req->id);
             $path = 'public/profiles/'.$admin->image;
             
             if($req->image != null){
@@ -123,14 +136,10 @@ class AdminController extends Controller
                 $imageName = $admin->image;
             }
 
-            $update = User_Info::findOrFail($req->id)->update([
-                "tran_user_type" => $req->type,
+            $update = User_Info::on('mysql')->findOrFail($req->id)->update([
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
                 "user_email" => $req->email,
-                "gender" => $req->gender,
-                "loc_id" => $req->location,
-                "address" => $req->address,
                 "image" => $imageName,
                 "updated_at" => now(),
             ]);
@@ -146,7 +155,7 @@ class AdminController extends Controller
 
     // Delete Admins
     public function Delete(Request $req){
-        $admin = User_Info::findOrFail($req->id);
+        $admin = User_Info::on('mysql')->findOrFail($req->id);
         $path = 'public/profiles/'.$admin->image;
         Storage::delete($path);
         $admin->delete();
@@ -160,46 +169,32 @@ class AdminController extends Controller
 
     // Search Admins
     public function Search(Request $req){
-        if($req->searchOption == 1){ // Search User By Name
-            $admin = User_Info::with('Withs','Location')
-            ->where('user_role', 2)
-            ->where('user_name', 'like', '%'.$req->search.'%')
-            ->orderBy('user_name','asc')
-            ->paginate(15);
+        $query = User_Info::on('mysql')->with('Withs', 'Location')->where('user_role', 2);
+
+        // Filter Data for Non-super-admin users
+        if (Auth::user()->user_role != 1) {
+            $query->where('company_id', Auth::user()->company_id);
         }
-        else if($req->searchOption == 2){ // Search By Email
-            $admin = User_Info::with('Withs','Location')
-            ->where('user_role', 2)
-            ->where('user_email', 'like', '%'.$req->search.'%')
-            ->orderBy('user_email','asc')
-            ->paginate(15);
+
+        // Handle search options
+        switch ($req->searchOption) {
+            case 1: // Search User By Name
+                $query->where('user_name', 'like', '%' . $req->search . '%')->orderBy('user_name', 'asc');
+                break;
+            case 2: // Search By Email
+                $query->where('user_email', 'like', '%' . $req->search . '%')->orderBy('user_email', 'asc');
+                break;
+            case 3: // Search By Phone
+                $query->where('user_phone', 'like', '%' . $req->search . '%')->orderBy('user_phone', 'asc');
+                break;
         }
-        else if($req->searchOption == 3){ // Search By Phone
-            $admin = User_Info::where('user_role', 2)
-            ->where('user_phone', 'like', '%'.$req->search.'%')
-            ->orderBy('user_phone','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 4){ // Search By Location
-            $admin = User_Info::with('Withs','Location')
-            ->whereHas('Location', function ($query) use ($req) {
-                $query->where('upazila', 'like', '%'.$req->search.'%');
-                $query->orderBy('upazila','asc');
-            })
-            ->where('user_role', 2)
-            ->paginate(15);
-        }
-        else if($req->searchOption == 5){ // Search By Address
-            $admin = User_Info::with('Withs','Location')
-            ->where('user_role', 2)
-            ->where('address', 'like', '%'.$req->search.'%')
-            ->orderBy('address','asc')
-            ->paginate(15);
-        }
-        
+
+        // Execute query and paginate
+        $admins = $query->paginate(15);
+
         return response()->json([
             'status' => true,
-            'data' => $admin,
+            'data' => $admins,
         ], 200);
     } // End Method
 
@@ -207,7 +202,7 @@ class AdminController extends Controller
 
     // Show Admin Details
     public function Details(Request $req){
-        $admin = User_Info::with('Location','Withs')->where('user_id', $req->id)->first();
+        $admin = User_Info::on('mysql')->with('Location','Withs')->where('user_id', $req->id)->first();
         return response()->json([
             'status'=> true,
             'data'=>view('admin_setup.users.admin.details', compact('admin'))->render(),

@@ -1,5 +1,5 @@
 <div id="editModal" class="modal-container">
-    <div class="modal-subject">
+    <div class="modal-subject" style="width: 80%;">
         <div class="modal-heading banner">
             <div class="center">
                 <h3>Edit Employee Training Detail</h3>

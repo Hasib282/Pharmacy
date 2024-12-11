@@ -1,28 +1,28 @@
-$(document).ready(function () {
-    /////////////// ------------------ Search Ajax Part Start ---------------- /////////////////////////////
-   // Search by Date Range
-   $(document).on('change', '#startDate, #endDate, #typeOption', function(e){
-       e.preventDefault();
-       let startDate = $('#startDate').val();
-       let endDate = $('#endDate').val();
-       let search = $('#search').val();
-       let searchOption = $("#searchOption").val();
-       let typeOption = $("#typeOption").val();
-       LoadData(`/report/account/search/summary`, {search, startDate, endDate, searchOption, typeOption});
-   });
+// $(document).ready(function () {
+//     /////////////// ------------------ Search Ajax Part Start ---------------- /////////////////////////////
+//    // Search by Date Range
+//    $(document).on('change', '#startDate, #endDate, #typeOption', function(e){
+//        e.preventDefault();
+//        let startDate = $('#startDate').val();
+//        let endDate = $('#endDate').val();
+//        let search = $('#search').val();
+//        let searchOption = $("#searchOption").val();
+//        let typeOption = $("#typeOption").val();
+//        LoadData(`/report/account/search/summary`, {search, startDate, endDate, searchOption, typeOption});
+//    });
 
 
-   // Search By User Input
-   $(document).on('keyup', '#search', function (e) {
-       e.preventDefault();
-       let startDate = $('#startDate').val();
-       let endDate = $('#endDate').val();
-       let search = $(this).val();
-       let searchOption = $("#searchOption").val();
-       let typeOption = $("#typeOption").val();
-       LoadData(`/report/account/search/summary`, {search, startDate, endDate, searchOption, typeOption});
-   });
-});
+//    // Search By User Input
+//    $(document).on('keyup', '#search', function (e) {
+//        e.preventDefault();
+//        let startDate = $('#startDate').val();
+//        let endDate = $('#endDate').val();
+//        let search = $(this).val();
+//        let searchOption = $("#searchOption").val();
+//        let typeOption = $("#typeOption").val();
+//        LoadData(`/report/account/search/summary`, {search, startDate, endDate, searchOption, typeOption});
+//    });
+// });
 
 
 
@@ -45,11 +45,11 @@ function ShowSummaryReports(data, startIndex) {
 
         // Inject the generated rows into the table body
         $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
+        // $('.load-data .show-table tfoot').html('')
     }
     else{
         $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="5" style="text-align:center;">No Data Found</td></tr>')
+        // $('.load-data .show-table tfoot').html('<tr><td colspan="5" style="text-align:center;">No Data Found</td></tr>')
     }
 }; // End Function
 
@@ -57,7 +57,7 @@ function ShowSummaryReports(data, startIndex) {
 
 $(document).ready(function () {
     // Load Data on Hard Reload
-    ReloadData('report/summary', ShowSummaryReports);
+    ReloadData('report/account/summary', ShowSummaryReports);
 
 
     // Pagination Ajax
@@ -65,9 +65,9 @@ $(document).ready(function () {
 
 
     // Search Ajax
-    SearchAjax('report/summary', ShowSummaryReports, {  });
+    SearchAjax('report/account/summary', ShowSummaryReports, {  });
 
 
     // Search By Date
-    SearchByDateAjax('report/summary', ShowSummaryReports);
+    SearchByDateAjax('report/account/summary', ShowSummaryReports);
 });

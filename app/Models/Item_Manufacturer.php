@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Item_Manufacturer extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql_second';
     
     protected $guarded = [];
+    
     public $timestamps = false;
 
 }

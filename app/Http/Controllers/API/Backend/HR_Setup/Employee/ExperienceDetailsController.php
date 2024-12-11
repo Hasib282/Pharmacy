@@ -8,13 +8,14 @@ use Illuminate\Http\Request;
 use App\Models\User_Info;
 use App\Models\Transaction_With;
 use App\Models\Employee_Experience_Detail;
+use App\Models\Employee_Personal_Detail;
 
 class ExperienceDetailsController extends Controller
 {
     // Show All Employee Experience Details
     public function ShowAll(Request $req){
-        $employee = User_Info::with('Withs','Location')->where('user_role', 6)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::where('user_role', 6)->get();
+        $employee = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
+        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'data' => $employee,
@@ -37,7 +38,7 @@ class ExperienceDetailsController extends Controller
             
         ]);
 
-        Employee_Experience_Detail::insert([
+        Employee_Experience_Detail::on('mysql')->insert([
             'emp_id' =>  $req->user,
             "company_name" => $req->company_name,
             "designation" =>  $req->designation,
@@ -57,8 +58,8 @@ class ExperienceDetailsController extends Controller
 
     // Edit Employee Experience Details
     public function Edit(Request $req){
-        $employee = Employee_Experience_Detail::where('id', $req->id)->first();
-        $tranwith = Transaction_With::where('user_role', 6)->get();
+        $employee = Employee_Experience_Detail::on('mysql')->where('id', $req->id)->first();
+        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'employee'=>$employee,
@@ -79,10 +80,10 @@ class ExperienceDetailsController extends Controller
             'end_date' => 'nullable|after:start_date',
         ]);
 
-        $employee = Employee_Experience_Detail::findOrFail($req->id);
+        $employee = Employee_Experience_Detail::on('mysql')->findOrFail($req->id);
         
 
-        $update = Employee_Experience_Detail::findOrFail($req->id)->update([
+        $update = Employee_Experience_Detail::on('mysql')->findOrFail($req->id)->update([
             "company_name" => $req->company_name,
             "designation" =>  $req->designation,
             "department" => $req->department,
@@ -104,7 +105,7 @@ class ExperienceDetailsController extends Controller
 
     // Delete Employee Experience Details
     public function Delete(Request $req){
-        Employee_Experience_Detail::findOrFail($req->id)->delete();
+        Employee_Experience_Detail::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Employee Experience Details Deleted Successfully',
@@ -115,7 +116,7 @@ class ExperienceDetailsController extends Controller
 
     // Search Employee Experience Details
     public function Search(Request $req){
-        $query = User_Info::with('Withs','Location')->where('user_role', 6); // Base query
+        $query = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3); // Base query
 
         if ($req->filled('search') && $req->searchOption) {
             switch ($req->searchOption) {
@@ -172,5 +173,30 @@ class ExperienceDetailsController extends Controller
             'status' => true,
             'data' => $employee,
         ], 200);
+    } // End Method
+    
+
+
+    // Show Employee Experience Details
+    public function Details(Request $req){
+        $employeeexperience = Employee_Experience_Detail::with('personalDetail')->where('emp_id', $req->id)->get();
+        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
+
+        return response()->json([
+            'status' => true,
+            'data'=>view('hr.employee_info.experience_details.details', compact('employeeexperience', 'personaldetail'))->render(),
+        ]);
+    } // End Method
+
+
+
+    // Show Employee Experience Grid
+    public function Grid(Request $req){
+        $employeeexperience = Employee_Experience_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
+        
+        return response()->json([
+            'status' => true,
+            'data'=>view('hr.employee_info.experience_details.detailsExperiences', compact('employeeexperience'))->render(),
+        ]);
     } // End Method
 }

@@ -11,7 +11,7 @@ class PharmacyFormController extends Controller
 {
     // Show All Item/Product Form
     public function ShowAll(Request $req){
-        $form = Item_Form::where('type_id', '6')->orderBy('added_at','asc')->paginate(15);
+        $form = Item_Form::on('mysql_second')->where('type_id', '6')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $form,
@@ -26,7 +26,7 @@ class PharmacyFormController extends Controller
             'name' => 'required',
         ]);
  
-        Item_Form::insert([
+        Item_Form::on('mysql_second')->insert([
             'form_name' => $req->name,
             'type_id'=> '6',
         ]);
@@ -41,7 +41,7 @@ class PharmacyFormController extends Controller
 
     // Edit Item/Product Form
     public function Edit(Request $req){
-        $form = Item_Form::where('id', $req->id)->first();
+        $form = Item_Form::on('mysql_second')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
             'form'=> $form,
@@ -56,7 +56,7 @@ class PharmacyFormController extends Controller
             'name' => 'required',
         ]);
 
-        $update = Item_Form::findOrFail($req->id)->update([
+        $update = Item_Form::on('mysql_second')->findOrFail($req->id)->update([
             'form_name' => $req->name,
             "updated_at" => now()
         ]);
@@ -73,7 +73,7 @@ class PharmacyFormController extends Controller
 
     // Delete Item/Product Form
     public function Delete(Request $req){
-        Item_Form::findOrFail($req->id)->delete();
+        Item_Form::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Location Deleted Successfully',
@@ -84,7 +84,7 @@ class PharmacyFormController extends Controller
 
     // Search Item/Product Form
     public function Search(Request $req){
-        $form = Item_Form::where('type_id', '6')
+        $form = Item_Form::on('mysql_second')->where('type_id', '6')
         ->where('form_name', 'like', '%'.$req->search.'%')
         ->orderBy('form_name','asc')
         ->paginate(15);
@@ -99,7 +99,7 @@ class PharmacyFormController extends Controller
 
     // Get Item/Product Form
     public function Get(Request $req){
-        $forms = Item_Form::where('type_id', '6')
+        $forms = Item_Form::on('mysql_second')->where('type_id', '6')
         ->where('form_name', 'like', '%'.$req->form.'%')
         ->orderBy('form_name','asc')
         ->take(10)

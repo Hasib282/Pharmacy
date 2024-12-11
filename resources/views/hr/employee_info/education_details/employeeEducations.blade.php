@@ -55,11 +55,11 @@
 
     @include('hr.employee_info.education_details.add')
 
-    @include('hr.employee_info.education_details.employeeEducationDetails')
+    @include('hr.employee_info.employeeDetails')
 
     @include('hr.employee_info.education_details.edit')
 
-    @include('hr.employee_info.education_details.delete')
+    @include('common_modals.delete')
 
 
     <!-- ajax part start from here -->

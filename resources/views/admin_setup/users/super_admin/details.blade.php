@@ -24,7 +24,7 @@
                 <div class="c-2 bold">Phone No</div>
                 <div class="c-10">{{$superadmin->user_phone}}</div>
             </div>
-            <div class="rows each-row"> 
+            {{-- <div class="rows each-row"> 
                 <div class="c-2 bold">Gender</div>
                 <div class="c-10">{{$superadmin->gender}}</div>
             </div>
@@ -35,7 +35,7 @@
             <div class="rows each-row"> 
                 <div class="c-2 bold">Address</div>
                 <div class="c-10">{{$superadmin->address}}</div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </ul>

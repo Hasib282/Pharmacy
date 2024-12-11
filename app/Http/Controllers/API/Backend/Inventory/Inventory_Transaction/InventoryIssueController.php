@@ -15,8 +15,8 @@ class InventoryIssueController extends Controller
 {
     // Show All Inventory Issue
     public function ShowAll(Request $req){
-        $inventory = Transaction_Main::with('User')->where('tran_method','Issue')->where('tran_type','5')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::where('tran_groupe_type', '5')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
+        $inventory = Transaction_Main::on('mysql')->with('User')->where('tran_method','Issue')->where('tran_type','5')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '5')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $inventory,
@@ -32,14 +32,13 @@ class InventoryIssueController extends Controller
         $req->validate([
             "method" => 'required',
             "type" => 'required',
-            "withs" => 'required',
             "user" => 'required',
             "amountRP" => 'required',
             "discount" => 'required',
             "netAmount" => 'required',
             "advance" => 'required',
             "balance" => 'required',
-            "store" => 'required'
+            "store" => 'required',
         ]);
 
 
@@ -75,22 +74,25 @@ class InventoryIssueController extends Controller
 
 
         // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Main::where('tran_type', $req->type)->where('tran_method', $req->method)->latest('tran_id')->first();
+        $transaction = Transaction_Main::on('mysql')->where('tran_type', $req->type)->where('tran_method', $req->method)->latest('tran_id')->first();
         $id = ($transaction) ? 'IPI' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'IPI000000001';
 
         DB::transaction(function () use ($req, $id) {
-            Transaction_Main::insert([
+            Transaction_Main::on('mysql')->insert([
                 "tran_id" => $id,
                 "tran_type" => $req->type,
                 "tran_method" => $req->method,
                 "tran_type_with" => $req->withs,
                 "tran_user" => $req->user,
+                "user_name" => $req->name,
+                "user_phone" => $req->phone,
+                "user_address" => $req->address,
                 "bill_amount" => $req->amountRP,
                 "discount" => $req->discount,
                 "net_amount" => $req->netAmount,
                 "receive" => $req->advance,
                 "due" => $req->balance,
-                "store_id" => $req->store
+                "store_id" => $req->store,
             ]);
 
             $billDiscount = $req->discount;
@@ -99,7 +101,7 @@ class InventoryIssueController extends Controller
             $billAdvance = $req->advance;
             $products = json_decode($req->products, true);
             foreach($products as $product){
-                $purchase = Transaction_Detail::where('tran_head_id', $product['product'])
+                $purchase = Transaction_Detail::on('mysql')->where('tran_head_id', $product['product'])
                 ->where('quantity', '>', 0)
                 ->whereIn('tran_method', ["Purchase","Positive"])
                 ->orderBy('tran_date', 'asc')
@@ -120,14 +122,14 @@ class InventoryIssueController extends Controller
                             $advance = round( ($billAdvance * $amount) / $billNet );
                             $due = $amount - $advance;
 
-                            Transaction_Detail::findOrFail($pro->id)->update([
+                            Transaction_Detail::on('mysql')->findOrFail($pro->id)->update([
                                 "quantity_issue" => $issue,
                                 "quantity" => 0,
                                 "updated_at" => now()
                             ]);
 
 
-                            Transaction_Detail::insert([
+                            Transaction_Detail::on('mysql')->insert([
                                 "tran_id" => $id,
                                 "store_id" => $req->store,
                                 "tran_type" => $req->type,
@@ -136,6 +138,9 @@ class InventoryIssueController extends Controller
                                 "tran_head_id" => $product['product'],
                                 "tran_type_with" => $req->withs,
                                 "tran_user" => $req->user,
+                                "user_name" => $req->name,
+                                "user_phone" => $req->phone,
+                                "user_address" => $req->address,
                                 "amount" => $product['mrp'],
                                 "mrp" => $product['mrp'],
                                 "cp" => $pro->cp,
@@ -169,13 +174,13 @@ class InventoryIssueController extends Controller
                             $advance = round( ($billAdvance * $amount) / $billNet );
                             $due = $amount - $advance;
 
-                            Transaction_Detail::findOrFail($pro->id)->update([
+                            Transaction_Detail::on('mysql')->findOrFail($pro->id)->update([
                                 "quantity_issue" => $issue,
                                 "quantity" => $dueQuantity,
                                 "updated_at" => now()
                             ]);
 
-                            Transaction_Detail::insert([
+                            Transaction_Detail::on('mysql')->insert([
                                 "tran_id" => $id,
                                 "store_id" => $req->store,
                                 "tran_type" => $req->type,
@@ -184,6 +189,9 @@ class InventoryIssueController extends Controller
                                 "tran_head_id" => $product['product'],
                                 "tran_type_with" => $req->withs,
                                 "tran_user" => $req->user,
+                                "user_name" => $req->name,
+                                "user_phone" => $req->phone,
+                                "user_address" => $req->address,
                                 "amount" => $product['mrp'],
                                 "mrp" => $product['mrp'],
                                 "cp" => $pro->cp,
@@ -206,9 +214,9 @@ class InventoryIssueController extends Controller
                     }
                 }
 
-                $heads = Transaction_Head::where('id',$product['product'])->first();
+                $heads = Transaction_Head::on('mysql_second')->where('id',$product['product'])->first();
                 $remain_quantity = $heads->quantity - $product['quantity'];
-                Transaction_Head::findOrFail($product['product'])->update([
+                Transaction_Head::on('mysql_second')->findOrFail($product['product'])->update([
                     "quantity" => $remain_quantity
                 ]);
             }
@@ -224,7 +232,7 @@ class InventoryIssueController extends Controller
 
     // Edit Inventory Issue
     public function Edit(Request $req){
-        $inventory = Transaction_Main::with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+        $inventory = Transaction_Main::on('mysql')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
         return response()->json([
             'status'=> true,
             'inventory'=> $inventory,
@@ -274,10 +282,13 @@ class InventoryIssueController extends Controller
         }
 
 
-        $transaction = Transaction_Main::findOrfail($req->id);
+        $transaction = Transaction_Main::on('mysql')->findOrfail($req->id);
 
         DB::transaction(function () use ($req, $transaction) {
             $transaction->update([
+                "user_name" => $req->name,
+                "user_phone" => $req->phone,
+                "user_address" => $req->address,
                 "bill_amount" => $req->amountRP,
                 "discount" => $req->totalDiscount,
                 "net_amount" => $req->netAmount,
@@ -288,9 +299,9 @@ class InventoryIssueController extends Controller
             
             
             // Update the data and delete previous transaction
-            $details = Transaction_Detail::where('tran_id', $req->tranid)->get();
+            $details = Transaction_Detail::on('mysql')->where('tran_id', $req->tranid)->get();
             foreach($details as $item){
-                $product = Transaction_Head::findOrfail($item->tran_head_id);
+                $product = Transaction_Head::on('mysql_second')->findOrfail($item->tran_head_id);
                 if($product){
                     $quantity = $product->quantity + $item->quantity;
 
@@ -301,16 +312,16 @@ class InventoryIssueController extends Controller
                 }
 
                 // Change the Issue Quantity
-                $batch = Transaction_Detail::where("tran_id", $item->batch_id)->where("tran_head_id", $item->tran_head_id)->first();
+                $batch = Transaction_Detail::on('mysql')->where("tran_id", $item->batch_id)->where("tran_head_id", $item->tran_head_id)->first();
                 $detailQty = $batch->quantity +  $item->quantity;
                 $issue = $batch->quantity_issue - $item->quantity;
 
-                Transaction_Detail::where("tran_id", $item->batch_id)->where("tran_head_id", $item->tran_head_id)->update([
+                Transaction_Detail::on('mysql')->where("tran_id", $item->batch_id)->where("tran_head_id", $item->tran_head_id)->update([
                     "quantity" => $detailQty,
                     "quantity_issue" => $issue
                 ]);
             }
-            Transaction_Detail::where('tran_id', $req->tranid)->delete();
+            Transaction_Detail::on('mysql')->where('tran_id', $req->tranid)->delete();
 
 
     
@@ -321,7 +332,7 @@ class InventoryIssueController extends Controller
             $products = json_decode($req->products, true);
             
             foreach($products as $product) {
-                $purchase = Transaction_Detail::where('tran_head_id', $product['product'])
+                $purchase = Transaction_Detail::on('mysql')->where('tran_head_id', $product['product'])
                 ->where('quantity', '>', 0)
                 ->whereIn('tran_method', ["Purchase","Positive"])
                 ->orderBy('tran_date', 'asc')
@@ -342,14 +353,14 @@ class InventoryIssueController extends Controller
                             $advance = round( ($billAdvance * $amount) / $billNet );
                             $due = $amount - $advance;
 
-                            Transaction_Detail::findOrFail($pro->id)->update([
+                            Transaction_Detail::on('mysql')->findOrFail($pro->id)->update([
                                 "quantity_issue" => $issue,
                                 "quantity" => 0,
                                 "updated_at" => now()
                             ]);
 
 
-                            Transaction_Detail::insert([
+                            Transaction_Detail::on('mysql')->insert([
                                 "tran_id" => $req->tranid,
                                 "tran_type" => $transaction->tran_type,
                                 "tran_method" => $transaction->tran_method,
@@ -357,6 +368,9 @@ class InventoryIssueController extends Controller
                                 "tran_head_id" => $product['product'],
                                 "tran_type_with" => $transaction->tran_type_with,
                                 "tran_user" => $transaction->tran_user,
+                                "user_name" => $req->name,
+                                "user_phone" => $req->phone,
+                                "user_address" => $req->address,
                                 "amount" => $product['mrp'],
                                 "mrp" => $product['mrp'],
                                 "cp" => $pro->cp,
@@ -390,13 +404,13 @@ class InventoryIssueController extends Controller
                             $advance = round( ($billAdvance * $amount) / $billNet );
                             $due = $amount - $advance;
 
-                            Transaction_Detail::findOrFail($pro->id)->update([
+                            Transaction_Detail::on('mysql')->findOrFail($pro->id)->update([
                                 "quantity_issue" => $issue,
                                 "quantity" => $dueQuantity,
                                 "updated_at" => now()
                             ]);
 
-                            Transaction_Detail::insert([
+                            Transaction_Detail::on('mysql')->insert([
                                 "tran_id" => $req->tranid,
                                 "store_id" => $req->store,
                                 "tran_type" => $transaction->tran_type,
@@ -405,6 +419,9 @@ class InventoryIssueController extends Controller
                                 "tran_head_id" => $product['product'],
                                 "tran_type_with" => $transaction->tran_type_with,
                                 "tran_user" => $transaction->tran_user,
+                                "user_name" => $req->name,
+                                "user_phone" => $req->phone,
+                                "user_address" => $req->address,
                                 "amount" => $product['mrp'],
                                 "mrp" => $product['mrp'],
                                 "cp" => $pro->cp,
@@ -428,7 +445,7 @@ class InventoryIssueController extends Controller
                 }
 
 
-                $heads = Transaction_Head::findOrFail($product['product']);
+                $heads = Transaction_Head::on('mysql_second')->findOrFail($product['product']);
                 $remain_quantity = $heads->quantity - $product['quantity'];
                 $heads->update([
                     "quantity" => $remain_quantity
@@ -446,10 +463,10 @@ class InventoryIssueController extends Controller
 
     // Delete Inventory Issue
     public function Delete(Request $req){
-        $details = Transaction_Detail::where("tran_id", $req->id)->get();
+        $details = Transaction_Detail::on('mysql')->where("tran_id", $req->id)->get();
         DB::transaction(function () use ($req, $details) {
             foreach($details as $item){
-                $product = Transaction_Head::findOrfail($item->tran_head_id);
+                $product = Transaction_Head::on('mysql_second')->findOrfail($item->tran_head_id);
                 if($product){
                     $quantity = $product->quantity + $item->quantity;
 
@@ -459,19 +476,19 @@ class InventoryIssueController extends Controller
                     ]);
 
                     // Change the Issue Quantity
-                    $batch = Transaction_Detail::where("tran_id", $item->batch_id)->where("tran_head_id", $item->tran_head_id)->first();
+                    $batch = Transaction_Detail::on('mysql')->where("tran_id", $item->batch_id)->where("tran_head_id", $item->tran_head_id)->first();
                     $detailQty = $batch->quantity +  $item->quantity;
                     $issue = $batch->quantity_issue - $item->quantity;
 
-                    Transaction_Detail::where("tran_id", $item->batch_id)->where("tran_head_id", $item->tran_head_id)->update([
+                    Transaction_Detail::on('mysql')->where("tran_id", $item->batch_id)->where("tran_head_id", $item->tran_head_id)->update([
                         "quantity" => $detailQty,
                         "quantity_issue" => $issue
                     ]);
                 }
             }
 
-            Transaction_Main::where("tran_id", $req->id)->delete();
-            Transaction_Detail::where("tran_id", $req->id)->delete();
+            Transaction_Main::on('mysql')->where("tran_id", $req->id)->delete();
+            Transaction_Detail::on('mysql')->where("tran_id", $req->id)->delete();
         });
 
         return response()->json([
@@ -485,7 +502,7 @@ class InventoryIssueController extends Controller
     // Search Inventory Issue
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $inventory = Transaction_Main::with('User')
+            $inventory = Transaction_Main::on('mysql')->with('User')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
@@ -494,7 +511,7 @@ class InventoryIssueController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $inventory = Transaction_Main::with('User')
+            $inventory = Transaction_Main::on('mysql')->with('User')
             ->whereHas('User', function ($query) use ($req) {
                 $query->where('user_name', 'like', '%'.$req->search.'%');
                 $query->orderBy('user_name','asc');

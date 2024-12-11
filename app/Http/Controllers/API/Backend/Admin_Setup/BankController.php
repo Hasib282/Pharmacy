@@ -13,7 +13,7 @@ class BankController extends Controller
 {
     // Show All Banks
     public function ShowAll(Request $req){
-        $bank = Bank::with('Location')->orderBy('added_at','asc')->paginate(15);
+        $bank = Bank::on('mysql_second')->with('Location')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $bank,
@@ -26,15 +26,15 @@ class BankController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "name" => 'required',
-            "phone" => 'required|numeric|unique:banks,phone',
-            "email" => 'required|email|unique:banks,email',
+            "phone" => 'required|numeric|unique:mysql_second.banks,phone',
+            "email" => 'required|email|unique:mysql_second.banks,email',
             "address" => 'required',
-            "location" => 'required|numeric',
+            "location" => 'required|exists:mysql_second.location__infos,id',
         ]);
 
 
         // Generates Auto Increment Bank Id
-        $latestId = Bank::orderBy('user_id','desc')->first();
+        $latestId = Bank::on('mysql_second')->orderBy('user_id','desc')->first();
         $id = ($latestId) ? 'B' . str_pad((intval(substr($latestId->user_id, 1)) + 1), 9, '0', STR_PAD_LEFT) : 'B000000001';
 
 
@@ -57,7 +57,7 @@ class BankController extends Controller
 
     // Edit Banks
     public function Edit(Request $req){
-        $bank = Bank::with('Location')->findOrFail($req->id);
+        $bank = Bank::on('mysql_second')->with('Location')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'bank'=> $bank,
@@ -68,18 +68,18 @@ class BankController extends Controller
 
     // Update Banks
     public function Update(Request $req){
-        $bank = Bank::findOrFail($req->id);
+        $bank = Bank::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
-            "phone" => ['required','numeric',Rule::unique('banks', 'phone')->ignore($bank->id)],
-            "email" => ['required','email',Rule::unique('banks', 'email')->ignore($bank->id)],
+            "phone" => ['required','numeric',Rule::unique('mysql_second.banks', 'phone')->ignore($bank->id)],
+            "email" => ['required','email',Rule::unique('mysql_second.banks', 'email')->ignore($bank->id)],
             "address" => 'required',
-            "location" => 'required|numeric',
+            "location" => 'required|exists:mysql_second.location__infos,id',
         ]);
 
 
-        $update = Bank::findOrFail($req->id)->update([
+        $update = Bank::on('mysql_second')->findOrFail($req->id)->update([
             "name" => $req->name,
             "phone" => $req->phone,
             "email" => $req->email,
@@ -100,7 +100,7 @@ class BankController extends Controller
 
     // Delete Banks
     public function Delete(Request $req){
-        Bank::findOrFail($req->id)->delete();
+        Bank::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Bank Details Deleted Successfully',
@@ -112,25 +112,25 @@ class BankController extends Controller
     // Search Banks
     public function Search(Request $req){
         if($req->searchOption == 1){ // Search By Name
-            $bank = Bank::with('Location')
+            $bank = Bank::on('mysql_second')->with('Location')
             ->where('name', 'like', '%'.$req->search.'%')
             ->orderBy('name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){ // Search By Email
-            $bank = Bank::with('Location')
+            $bank = Bank::on('mysql_second')->with('Location')
             ->where('email', 'like', '%'.$req->search.'%')
             ->orderBy('email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search By Phone
-            $bank = Bank::with('Location')
+            $bank = Bank::on('mysql_second')->with('Location')
             ->where('phone', 'like', '%'.$req->search.'%')
             ->orderBy('phone','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 4){ // Search By Location
-            $bank = Bank::with('Location')
+            $bank = Bank::on('mysql_second')->with('Location')
             ->whereHas('Location', function ($query) use ($req) {
                 $query->where('upazila', 'like', '%'.$req->search.'%');
                 $query->orderBy('upazila','asc');
@@ -138,7 +138,7 @@ class BankController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 5){ // Search By Address
-            $bank = Bank::with('Location')
+            $bank = Bank::on('mysql_second')->with('Location')
             ->where('address', 'like', '%'.$req->search.'%')
             ->orderBy('address','asc')
             ->paginate(15);
@@ -154,7 +154,7 @@ class BankController extends Controller
 
     // Get Banks
     public function Get(Request $req){
-        $banks = Bank::select('name','user_id')
+        $banks = Bank::on('mysql_second')->select('name','user_id')
         ->where('name', 'like', '%'.$req->bank.'%')
         ->orderBy('name')
         ->take(10)
@@ -177,8 +177,8 @@ class BankController extends Controller
 
     // Show Full Bank Details
     public function Details(Request $req){
-        $bank = Bank::with('Location')->where('user_id', $req->id)->first();
-        $transaction = Transaction_Main::where('tran_bank', $req->id)->get();
+        $bank = Bank::on('mysql_second')->with('Location')->where('user_id', $req->id)->first();
+        $transaction = Transaction_Main::on('mysql')->where('tran_bank', $req->id)->get();
         return response()->json([
             'status' => true,
             'data'=>view('admin_setup.bank.details', compact('bank','transaction'))->render(),

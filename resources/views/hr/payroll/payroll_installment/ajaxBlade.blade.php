@@ -33,7 +33,7 @@
         <div class="c-6">
             <label for="search">Search</label>
             <input type="text" name="search" id="search" class="form-input" placeholder="Search Employee here..."
-                value="{{ $searchValue ? $searchValue : '' }}">
+                value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%;margin: 0;">
         </div>
     </div>
 </div>

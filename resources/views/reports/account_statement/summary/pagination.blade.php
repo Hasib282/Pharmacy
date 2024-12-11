@@ -1,465 +1,455 @@
-<hr>
 <table class="show-table">
     <thead>
         <caption class="caption">Accounts Summary Statement</caption>
-    </thead>
-</table>
-
-<table class="show-table">
-    <tfoot>
-        <tr>
+        <th>
             <td style="text-align: right;">Opening Balance</td>
             <td style="text-align: right; width:12%;">{{ number_format($opening->total_receive - $opening->total_payment, 0, '.', ',') }}</td>
-        </tr>
-    </tfoot>
-</table>
+        </th>
+    </thead>
+    <tbody>
+        @php
+            $grandReceive = 0;
+            $grandPayment = 0;
+        @endphp
 
-@php
-    $grandReceive = 0;
-    $grandPayment = 0;
-@endphp
+        {{-- general account part start --}}
+        @isset($general)
+            @if($general->isNotEmpty())
+                <table class="show-table">
+                    <thead>
+                        <caption class="sub-caption">General Account</caption>
+                        <tr>
+                            <th style="width: 4%;">SL:</th>
+                            <th style="text-align: center; width:20%;">Groupe</th>
+                            <th style="text-align: center; width:40%;">Product/Service</th>
+                            <th style="text-align: center; width:12%;">Receive</th>
+                            <th style="text-align: center; width:12%;">Payment</th>
+                        </tr>
+                    </thead>
+                    @php
+                        $lastGroupeId = null;
+                    @endphp
+                    <tbody>
+                        @foreach ($general as $key => $item)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                @if($item->tran_groupe_id != $lastGroupeId)
+                                    <td>{{ $item->Groupe->tran_groupe_name }}</td>
+                                @else
+                                    <td></td>
+                                @endif
+                                @php
+                                    $lastGroupeId = $item->tran_groupe_id;
+                                @endphp
+                                <td>{{ $item->Head->tran_head_name }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            @php
+                                $totalReceive = 0;
+                                $totalPayment = 0;
+                            @endphp
+                            @foreach ($general as $key => $item)
+                                @php
+                                    $totalReceive += $item->total_receive;
+                                    $totalPayment += $item->total_payment;
+                                @endphp
+                            @endforeach
+                            @php
+                                $grandReceive += $totalReceive;
+                                $grandPayment += $totalPayment;
+                            @endphp
+                            <td colspan="3" style="text-align: right">Sub Total:</td>
+                            <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
+                        </tr>     
+                    </tfoot> 
+                </table>
+            @endif
+        @endisset
 
-{{-- general account part start --}}
-@isset($general)
-    @if($general->isNotEmpty())
-        <table class="show-table">
-            <thead>
-                <caption class="sub-caption">General Account</caption>
-                <tr>
-                    <th style="width: 4%;">SL:</th>
-                    <th style="text-align: center; width:20%;">Groupe</th>
-                    <th style="text-align: center; width:40%;">Product/Service</th>
-                    <th style="text-align: center; width:12%;">Receive</th>
-                    <th style="text-align: center; width:12%;">Payment</th>
-                </tr>
-            </thead>
-            @php
-                $lastGroupeId = null;
-            @endphp
-            <tbody>
-                @foreach ($general as $key => $item)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        @if($item->tran_groupe_id != $lastGroupeId)
-                            <td>{{ $item->Groupe->tran_groupe_name }}</td>
-                        @else
-                            <td></td>
-                        @endif
-                        @php
-                            $lastGroupeId = $item->tran_groupe_id;
-                        @endphp
-                        <td>{{ $item->Head->tran_head_name }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
+        {{-- Party Payment part start --}}
+        @isset($party)
+            @if($party->isNotEmpty())
+                <table class="show-table">
+                    <thead>
+                        <caption class="sub-caption">Party Payments</caption>
+                        <tr>
+                            <th style="width: 4%;">SL:</th>
+                            <th style="text-align: center; width:20%;">Groupe</th>
+                            <th style="text-align: center; width:40%;">Product/Service</th>
+                            <th style="text-align: center; width:12%;">Receive</th>
+                            <th style="text-align: center; width:12%;">Payment</th>
+                        </tr>
+                    </thead>
                     @php
-                        $totalReceive = 0;
-                        $totalPayment = 0;
+                        $lastGroupeId = null;
                     @endphp
-                    @foreach ($general as $key => $item)
-                        @php
-                            $totalReceive += $item->total_receive;
-                            $totalPayment += $item->total_payment;
-                        @endphp
-                    @endforeach
-                    @php
-                        $grandReceive += $totalReceive;
-                        $grandPayment += $totalPayment;
-                    @endphp
-                    <td colspan="3" style="text-align: right">Sub Total:</td>
-                    <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
-                    <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
-                </tr>     
-            </tfoot> 
-        </table>
-    @endif
-@endisset
-
-{{-- Party Payment part start --}}
-@isset($party)
-    @if($party->isNotEmpty())
-        <table class="show-table">
-            <thead>
-                <caption class="sub-caption">Party Payments</caption>
-                <tr>
-                    <th style="width: 4%;">SL:</th>
-                    <th style="text-align: center; width:20%;">Groupe</th>
-                    <th style="text-align: center; width:40%;">Product/Service</th>
-                    <th style="text-align: center; width:12%;">Receive</th>
-                    <th style="text-align: center; width:12%;">Payment</th>
-                </tr>
-            </thead>
-            @php
-                $lastGroupeId = null;
-            @endphp
-            <tbody>
-                @foreach ($party as $key => $item)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        @if($item->tran_groupe_id != $lastGroupeId)
-                            <td>{{ $item->Groupe->tran_groupe_name }}</td>
-                        @else
-                            <td></td>
-                        @endif
-                        @php
-                            $lastGroupeId = $item->tran_groupe_id;
-                        @endphp
-                        <td>{{ $item->Head->tran_head_name }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    @php
-                        $totalReceive = 0;
-                        $totalPayment = 0;
-                    @endphp
-                    @foreach ($party as $key => $item)
-                        @php
-                            $totalReceive += $item->total_receive;
-                            $totalPayment += $item->total_payment;
-                        @endphp
-                    @endforeach
-                    @php
-                        $grandReceive += $totalReceive;
-                        $grandPayment += $totalPayment;
-                    @endphp
-                    <td colspan="3" style="text-align: right">Sub Total:</td>
-                    <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
-                    <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
-                </tr>     
-            </tfoot> 
-        </table>
-    @endif
-@endisset
-
-
-{{-- Payroll part start --}}
-@isset($payroll)
-    @if($payroll->isNotEmpty())
-        <table class="show-table">
-            <thead>
-                <caption class="sub-caption">Payroll</caption>
-                <tr>
-                    <th style="width: 4%;">SL:</th>
-                    <th style="text-align: center; width:20%;">Groupe</th>
-                    <th style="text-align: center; width:40%;">Product/Service</th>
-                    <th style="text-align: center; width:12%;">Receive</th>
-                    <th style="text-align: center; width:12%;">Payment</th>
-                </tr>
-            </thead>
-            @php
-                $lastGroupeId = null;
-            @endphp
-            <tbody>
-                @foreach ($payroll as $key => $item)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        @if($item->tran_groupe_id != $lastGroupeId)
-                            <td>{{ $item->Groupe->tran_groupe_name }}</td>
-                        @else
-                            <td></td>
-                        @endif
-                        @php
-                            $lastGroupeId = $item->tran_groupe_id;
-                        @endphp
-                        <td>{{ $item->Head->tran_head_name }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    @php
-                        $totalReceive = 0;
-                        $totalPayment = 0;
-                    @endphp
-                    @foreach ($payroll as $key => $item)
-                        @php
-                            $totalReceive += $item->total_receive;
-                            $totalPayment += $item->total_payment;
-                        @endphp
-                    @endforeach
-                    @php
-                        $grandReceive += $totalReceive;
-                        $grandPayment += $totalPayment;
-                    @endphp
-                    <td colspan="3" style="text-align: right">Sub Total:</td>
-                    <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
-                    <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
-                </tr>     
-            </tfoot> 
-        </table>
-    @endif
-@endisset
+                    <tbody>
+                        @foreach ($party as $key => $item)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                @if($item->tran_groupe_id != $lastGroupeId)
+                                    <td>{{ $item->Groupe->tran_groupe_name }}</td>
+                                @else
+                                    <td></td>
+                                @endif
+                                @php
+                                    $lastGroupeId = $item->tran_groupe_id;
+                                @endphp
+                                <td>{{ $item->Head->tran_head_name }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            @php
+                                $totalReceive = 0;
+                                $totalPayment = 0;
+                            @endphp
+                            @foreach ($party as $key => $item)
+                                @php
+                                    $totalReceive += $item->total_receive;
+                                    $totalPayment += $item->total_payment;
+                                @endphp
+                            @endforeach
+                            @php
+                                $grandReceive += $totalReceive;
+                                $grandPayment += $totalPayment;
+                            @endphp
+                            <td colspan="3" style="text-align: right">Sub Total:</td>
+                            <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
+                        </tr>     
+                    </tfoot> 
+                </table>
+            @endif
+        @endisset
 
 
-{{-- Bank Transaction part start --}}
-@isset($bank)
-    @if($bank->isNotEmpty())
-        <table class="show-table">
-            <thead>
-                <caption class="sub-caption">Bank</caption>
-                <tr>
-                    <th style="width: 4%;">SL:</th>
-                    <th style="text-align: center; width:20%;">Groupe</th>
-                    <th style="text-align: center; width:40%;">Product/Service</th>
-                    <th style="text-align: center; width:12%;">Receive</th>
-                    <th style="text-align: center; width:12%;">Payment</th>
-                </tr>
-            </thead>
-            @php
-                $lastGroupeId = null;
-            @endphp
-            <tbody>
-                @foreach ($bank as $key => $item)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        @if($item->tran_groupe_id != $lastGroupeId)
-                            <td>{{ $item->Groupe->tran_groupe_name }}</td>
-                        @else
-                            <td></td>
-                        @endif
-                        @php
-                            $lastGroupeId = $item->tran_groupe_id;
-                        @endphp
-                        <td>{{ $item->Head->tran_head_name }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
+        {{-- Payroll part start --}}
+        @isset($payroll)
+            @if($payroll->isNotEmpty())
+                <table class="show-table">
+                    <thead>
+                        <caption class="sub-caption">Payroll</caption>
+                        <tr>
+                            <th style="width: 4%;">SL:</th>
+                            <th style="text-align: center; width:20%;">Groupe</th>
+                            <th style="text-align: center; width:40%;">Product/Service</th>
+                            <th style="text-align: center; width:12%;">Receive</th>
+                            <th style="text-align: center; width:12%;">Payment</th>
+                        </tr>
+                    </thead>
                     @php
-                        $totalReceive = 0;
-                        $totalPayment = 0;
+                        $lastGroupeId = null;
                     @endphp
-                    @foreach ($bank as $key => $item)
-                        @php
-                            $totalReceive += $item->total_receive;
-                            $totalPayment += $item->total_payment;
-                        @endphp
-                    @endforeach
-                    @php
-                        $grandReceive += $totalReceive;
-                        $grandPayment += $totalPayment;
-                    @endphp
-                    <td colspan="3" style="text-align: right">Sub Total:</td>
-                    <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
-                    <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
-                </tr>     
-            </tfoot> 
-        </table>
-    @endif
-@endisset
-
-{{-- Inventory part start --}}
-@isset($inventory)
-    @if($inventory->isNotEmpty())
-        <table class="show-table">
-            <thead>
-                <caption class="sub-caption">Inventory</caption>
-                <tr>
-                    <th style="width: 4%;">SL:</th>
-                    <th style="text-align: center; width:20%;">Groupe</th>
-                    <th style="text-align: center; width:40%;">Product/Service</th>
-                    <th style="text-align: center; width:12%;">Receive</th>
-                    <th style="text-align: center; width:12%;">Payment</th>
-                </tr>
-            </thead>
-            @php
-                $lastGroupeId = null;
-            @endphp
-            <tbody>
-                @foreach ($inventory as $key => $item)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        @if($item->tran_groupe_id != $lastGroupeId)
-                            <td>{{ $item->Groupe->tran_groupe_name }}</td>
-                        @else
-                            <td></td>
-                        @endif
-                        @php
-                            $lastGroupeId = $item->tran_groupe_id;
-                        @endphp
-                        <td>{{ $item->Head->tran_head_name }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    @php
-                        $totalReceive = 0;
-                        $totalPayment = 0;
-                    @endphp
-                    @foreach ($inventory as $key => $item)
-                        @php
-                            $totalReceive += $item->total_receive;
-                            $totalPayment += $item->total_payment;
-                        @endphp
-                    @endforeach
-                    @php
-                        $grandReceive += $totalReceive;
-                        $grandPayment += $totalPayment;
-                    @endphp
-                    <td colspan="3" style="text-align: right">Sub Total:</td>
-                    <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
-                    <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
-                </tr>     
-            </tfoot> 
-        </table>
-    @endif
-@endisset
+                    <tbody>
+                        @foreach ($payroll as $key => $item)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                @if($item->tran_groupe_id != $lastGroupeId)
+                                    <td>{{ $item->Groupe->tran_groupe_name }}</td>
+                                @else
+                                    <td></td>
+                                @endif
+                                @php
+                                    $lastGroupeId = $item->tran_groupe_id;
+                                @endphp
+                                <td>{{ $item->Head->tran_head_name }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            @php
+                                $totalReceive = 0;
+                                $totalPayment = 0;
+                            @endphp
+                            @foreach ($payroll as $key => $item)
+                                @php
+                                    $totalReceive += $item->total_receive;
+                                    $totalPayment += $item->total_payment;
+                                @endphp
+                            @endforeach
+                            @php
+                                $grandReceive += $totalReceive;
+                                $grandPayment += $totalPayment;
+                            @endphp
+                            <td colspan="3" style="text-align: right">Sub Total:</td>
+                            <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
+                        </tr>     
+                    </tfoot> 
+                </table>
+            @endif
+        @endisset
 
 
-{{-- Pharmacy part start --}}
-@isset($pharmacy)
-    @if($pharmacy->isNotEmpty())
-        <table class="show-table">
-            <thead>
-                <caption class="sub-caption">Pharmacy</caption>
-                <tr>
-                    <th style="width: 4%;">SL:</th>
-                    <th style="text-align: center; width:20%;">Groupe</th>
-                    <th style="text-align: center; width:40%;">Product/Service</th>
-                    <th style="text-align: center; width:12%;">Receive</th>
-                    <th style="text-align: center; width:12%;">Payment</th>
-                </tr>
-            </thead>
-            @php
-                $lastGroupeId = null;
-            @endphp
-            <tbody>
-                @foreach ($pharmacy as $key => $item)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        @if($item->tran_groupe_id != $lastGroupeId)
-                            <td>{{ $item->Groupe->tran_groupe_name }}</td>
-                        @else
-                            <td></td>
-                        @endif
-                        @php
-                            $lastGroupeId = $item->tran_groupe_id;
-                        @endphp
-                        <td>{{ $item->Head->tran_head_name }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
+        {{-- Bank Transaction part start --}}
+        @isset($bank)
+            @if($bank->isNotEmpty())
+                <table class="show-table">
+                    <thead>
+                        <caption class="sub-caption">Bank</caption>
+                        <tr>
+                            <th style="width: 4%;">SL:</th>
+                            <th style="text-align: center; width:20%;">Groupe</th>
+                            <th style="text-align: center; width:40%;">Product/Service</th>
+                            <th style="text-align: center; width:12%;">Receive</th>
+                            <th style="text-align: center; width:12%;">Payment</th>
+                        </tr>
+                    </thead>
                     @php
-                        $totalReceive = 0;
-                        $totalPayment = 0;
+                        $lastGroupeId = null;
                     @endphp
-                    @foreach ($pharmacy as $key => $item)
-                        @php
-                            $totalReceive += $item->total_receive;
-                            $totalPayment += $item->total_payment;
-                        @endphp
-                    @endforeach
+                    <tbody>
+                        @foreach ($bank as $key => $item)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                @if($item->tran_groupe_id != $lastGroupeId)
+                                    <td>{{ $item->Groupe->tran_groupe_name }}</td>
+                                @else
+                                    <td></td>
+                                @endif
+                                @php
+                                    $lastGroupeId = $item->tran_groupe_id;
+                                @endphp
+                                <td>{{ $item->Head->tran_head_name }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            @php
+                                $totalReceive = 0;
+                                $totalPayment = 0;
+                            @endphp
+                            @foreach ($bank as $key => $item)
+                                @php
+                                    $totalReceive += $item->total_receive;
+                                    $totalPayment += $item->total_payment;
+                                @endphp
+                            @endforeach
+                            @php
+                                $grandReceive += $totalReceive;
+                                $grandPayment += $totalPayment;
+                            @endphp
+                            <td colspan="3" style="text-align: right">Sub Total:</td>
+                            <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
+                        </tr>     
+                    </tfoot> 
+                </table>
+            @endif
+        @endisset
+
+        {{-- Inventory part start --}}
+        @isset($inventory)
+            @if($inventory->isNotEmpty())
+                <table class="show-table">
+                    <thead>
+                        <caption class="sub-caption">Inventory</caption>
+                        <tr>
+                            <th style="width: 4%;">SL:</th>
+                            <th style="text-align: center; width:20%;">Groupe</th>
+                            <th style="text-align: center; width:40%;">Product/Service</th>
+                            <th style="text-align: center; width:12%;">Receive</th>
+                            <th style="text-align: center; width:12%;">Payment</th>
+                        </tr>
+                    </thead>
                     @php
-                        $grandReceive += $totalReceive;
-                        $grandPayment += $totalPayment;
+                        $lastGroupeId = null;
                     @endphp
-                    <td colspan="3" style="text-align: right">Sub Total:</td>
-                    <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
-                    <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
-                </tr>     
-            </tfoot> 
-        </table>
-    @endif
-@endisset
+                    <tbody>
+                        @foreach ($inventory as $key => $item)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                @if($item->tran_groupe_id != $lastGroupeId)
+                                    <td>{{ $item->Groupe->tran_groupe_name }}</td>
+                                @else
+                                    <td></td>
+                                @endif
+                                @php
+                                    $lastGroupeId = $item->tran_groupe_id;
+                                @endphp
+                                <td>{{ $item->Head->tran_head_name }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            @php
+                                $totalReceive = 0;
+                                $totalPayment = 0;
+                            @endphp
+                            @foreach ($inventory as $key => $item)
+                                @php
+                                    $totalReceive += $item->total_receive;
+                                    $totalPayment += $item->total_payment;
+                                @endphp
+                            @endforeach
+                            @php
+                                $grandReceive += $totalReceive;
+                                $grandPayment += $totalPayment;
+                            @endphp
+                            <td colspan="3" style="text-align: right">Sub Total:</td>
+                            <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
+                        </tr>     
+                    </tfoot> 
+                </table>
+            @endif
+        @endisset
 
 
-{{-- Mischellaneous part start --}}
-@isset($miscellaneous)
-    @if($miscellaneous->isNotEmpty())
-        <table class="show-table">
-            <caption class="sub-caption">Miscellaneous</caption>
-            <thead>
-                <tr>
-                    <th style="width: 4%;">SL:</th>
-                    <th style="text-align: center; width:20%;">Groupe</th>
-                    <th style="text-align: center; width:40%;">Product/Service</th>
-                    <th style="text-align: center; width:12%;">Receive</th>
-                    <th style="text-align: center; width:12%;">Payment</th>
-                </tr>
-            </thead>
-            @php
-                $lastGroupeId = null;
-            @endphp
-            <tbody>
-                @foreach ($miscellaneous as $key => $item)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        @if($item->tran_groupe_id != $lastGroupeId)
-                            <td>{{ $item->Groupe->tran_groupe_name }}</td>
-                        @else
-                            <td></td>
-                        @endif
-                        @php
-                            $lastGroupeId = $item->tran_groupe_id;
-                        @endphp
-                        <td>{{ $item->Head->tran_head_name }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
-                        <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
+        {{-- Pharmacy part start --}}
+        @isset($pharmacy)
+            @if($pharmacy->isNotEmpty())
+                <table class="show-table">
+                    <thead>
+                        <caption class="sub-caption">Pharmacy</caption>
+                        <tr>
+                            <th style="width: 4%;">SL:</th>
+                            <th style="text-align: center; width:20%;">Groupe</th>
+                            <th style="text-align: center; width:40%;">Product/Service</th>
+                            <th style="text-align: center; width:12%;">Receive</th>
+                            <th style="text-align: center; width:12%;">Payment</th>
+                        </tr>
+                    </thead>
                     @php
-                        $totalReceive = 0;
-                        $totalPayment = 0;
+                        $lastGroupeId = null;
                     @endphp
-                    @foreach ($miscellaneous as $key => $item)
-                        @php
-                            $totalReceive += $item->total_receive;
-                            $totalPayment += $item->total_payment;
-                        @endphp
-                    @endforeach
-                    @php
-                        $grandReceive += $totalReceive;
-                        $grandPayment += $totalPayment;
-                    @endphp
-                    <td colspan="3" style="text-align: right">Sub Total:</td>
-                    <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
-                    <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
-                </tr>     
-            </tfoot> 
-        </table>
-    @endif
-@endisset
+                    <tbody>
+                        @foreach ($pharmacy as $key => $item)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                @if($item->tran_groupe_id != $lastGroupeId)
+                                    <td>{{ $item->Groupe->tran_groupe_name }}</td>
+                                @else
+                                    <td></td>
+                                @endif
+                                @php
+                                    $lastGroupeId = $item->tran_groupe_id;
+                                @endphp
+                                <td>{{ $item->Head->tran_head_name }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            @php
+                                $totalReceive = 0;
+                                $totalPayment = 0;
+                            @endphp
+                            @foreach ($pharmacy as $key => $item)
+                                @php
+                                    $totalReceive += $item->total_receive;
+                                    $totalPayment += $item->total_payment;
+                                @endphp
+                            @endforeach
+                            @php
+                                $grandReceive += $totalReceive;
+                                $grandPayment += $totalPayment;
+                            @endphp
+                            <td colspan="3" style="text-align: right">Sub Total:</td>
+                            <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
+                        </tr>     
+                    </tfoot> 
+                </table>
+            @endif
+        @endisset
 
 
-<table class="show-table">
+        {{-- Mischellaneous part start --}}
+        @isset($miscellaneous)
+            @if($miscellaneous->isNotEmpty())
+                <table class="show-table">
+                    <caption class="sub-caption">Miscellaneous</caption>
+                    <thead>
+                        <tr>
+                            <th style="width: 4%;">SL:</th>
+                            <th style="text-align: center; width:20%;">Groupe</th>
+                            <th style="text-align: center; width:40%;">Product/Service</th>
+                            <th style="text-align: center; width:12%;">Receive</th>
+                            <th style="text-align: center; width:12%;">Payment</th>
+                        </tr>
+                    </thead>
+                    @php
+                        $lastGroupeId = null;
+                    @endphp
+                    <tbody>
+                        @foreach ($miscellaneous as $key => $item)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                @if($item->tran_groupe_id != $lastGroupeId)
+                                    <td>{{ $item->Groupe->tran_groupe_name }}</td>
+                                @else
+                                    <td></td>
+                                @endif
+                                @php
+                                    $lastGroupeId = $item->tran_groupe_id;
+                                @endphp
+                                <td>{{ $item->Head->tran_head_name }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_receive, 0, '.', ',') }}</td>
+                                <td style="text-align: right">{{ number_format($item->total_payment, 0, '.', ',') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            @php
+                                $totalReceive = 0;
+                                $totalPayment = 0;
+                            @endphp
+                            @foreach ($miscellaneous as $key => $item)
+                                @php
+                                    $totalReceive += $item->total_receive;
+                                    $totalPayment += $item->total_payment;
+                                @endphp
+                            @endforeach
+                            @php
+                                $grandReceive += $totalReceive;
+                                $grandPayment += $totalPayment;
+                            @endphp
+                            <td colspan="3" style="text-align: right">Sub Total:</td>
+                            <td style="text-align: right">{{ number_format($totalReceive, 0, '.', ',') }}</td>
+                            <td style="text-align: right">{{ number_format($totalPayment, 0, '.', ',') }}</td>
+                        </tr>     
+                    </tfoot> 
+                </table>
+            @endif
+        @endisset
+    </tbody>
     <tfoot>
         <tr>
             <td style="text-align: right;">Grand Total:</td>
             <td style="text-align: right; width:12%;">{{ number_format($grandReceive, 0, '.', ',') }}</td>
             <td style="text-align: right; width:12%;">{{ number_format($grandPayment, 0, '.', ',') }}</td>
         </tr>
-    </tfoot>
-</table>
-
-
-<table class="show-table">
-    <tfoot>
         <tr>
             <td style="text-align: right;">Closing Balance</td>
+            <td></td>
             <td style="text-align: right; width:12%;">{{ number_format(($opening->total_receive - $opening->total_payment) + ($grandReceive - $grandPayment), 0, '.', ',') }}</td>
         </tr>
     </tfoot>
 </table>
+
+
+
+

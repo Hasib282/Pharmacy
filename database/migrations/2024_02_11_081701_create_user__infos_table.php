@@ -11,36 +11,29 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user__infos', function (Blueprint $table) {
+        Schema::connection('mysql')->create('user__infos', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->unique();
+            $table->string('login_user_id')->nullable();
             $table->string('user_name')->nullable();
             $table->string('user_email')->nullable();
             $table->string('user_phone')->nullable();
             $table->string('gender')->nullable();
-            $table->unsignedBigInteger('loc_id')->nullable();
-            $table->unsignedBigInteger('user_role');
+            $table->bigInteger('loc_id')->nullable()->comment('locations');
+            $table->bigInteger('user_role')->comment('roles');
             $table->unsignedBigInteger('tran_user_type')->nullable();
             $table->date('dob')->nullable();
             $table->string('nid')->nullable();
             $table->string('address')->nullable();
             $table->string('password')->nullable();
             $table->string('image')->nullable();
-            $table->string('company_id')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');
             $table->string('remember_token', 100)->nullable();
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
             
-            // Foreignkey Decleration 
-            $table->foreign('user_role')->references('id')->on('roles')
-                ->onUpdate('cascade');
-            $table->foreign('loc_id')->references('id')->on('location__infos')
-                    ->onUpdate('cascade')
-                    ->onDelete('set null');
+            // Foreignkey Decleration
             $table->foreign('tran_user_type')->references('id')->on('transaction__withs')
-                    ->onUpdate('cascade');
-            $table->foreign('company_id')->references('company_id')->on('company__details')
                     ->onUpdate('cascade');
         });
     }
@@ -50,6 +43,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user__infos');
+        Schema::connection('mysql')->dropIfExists('user__infos');
     }
 };

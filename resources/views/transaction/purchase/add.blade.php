@@ -96,7 +96,6 @@
                                 <span class="error" id="expiry_error"></span>
                             </div>
                         </div>
-
                     </div>
                     <div class="center">
                         <button type="submit" id="Insert" class="btn-blue">Add</button>

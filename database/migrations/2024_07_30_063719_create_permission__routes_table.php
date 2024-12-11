@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permission__routes', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('permission__routes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('permission_id');
             $table->string('route_name');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permission__routes');
+        Schema::connection('mysql_second')->dropIfExists('permission__routes');
     }
 };

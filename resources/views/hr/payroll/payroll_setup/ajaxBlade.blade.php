@@ -8,7 +8,7 @@
     <div class="rows">
         <div class="c-3">
             {{-- @if(Auth::user()->hasPermissionToRoute('insert.payrollSetup')) --}}
-            <button class="open-modal add" data-modal-id="addModal">Add Payroll Setup</button>
+            <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
             {{-- @endif --}}
         </div>
         <div class="c-9 search">
@@ -26,7 +26,7 @@
 <!-- table show -->
 <div class="load-data" style="overflow-x:auto;">
     <table class="show-table">
-        <caption class="caption">Additional Payroll Details</caption>
+        <caption class="caption">{{ $name }} Details</caption>
         <thead>
             <tr>
                 <th>SL:</th>
@@ -49,7 +49,7 @@
 
 @include('hr.payroll.payroll_setup.edit')
 
-@include('hr.payroll.payroll_setup.delete')
+@include('common_modals.delete')
 
 
 <!-- ajax part start from here -->

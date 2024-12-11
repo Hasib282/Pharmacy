@@ -1,12 +1,12 @@
 <header>
     <div class="company-details">
         <div class="company-logo">
-            <img src="/images/male.png" alt="">
+            {{-- <img src="/images/male.png" alt=""> --}}
+            <img src="{{ auth()->user()->company?->logo ? rtrim(env('API_URL'), '/api') . '/storage/logos/' . auth()->user()->company->logo : '/images/tsbd.png' }}" alt="">
         </div>
         <div class="company-name">
-            <strong>Team-Pharma</strong>
+            <h1>{{ auth()->user()->company ? auth()->user()->company->company_name : 'Team-Solutions-Bangladesh' }}</h1>
         </div>
-        
     </div>
     @if (session('message'))
         <h6 style="text-align:center; margin-top:5px; color:#dc3545;">

@@ -25,18 +25,13 @@ function ShowEmployeeEducationDetails(data, startIndex) {
                     </td>
                     <td>
                         <div style="display: flex;gap:5px;">
-                            <button class="btn-show open-modal emp_educationDetail" data-modal-id="emp_educationDetail"
-                                data-id="${item.user_id}">Show <i class="fa fa-chevron-circle-right"></i></button>
+                            <button class="btn-show" id="showGrid" data-id="${item.user_id}">Show <i class="fa fa-chevron-circle-right"></i></button>
                             <button class="open-modal" data-modal-id="detailsModal" id="details"
                                 data-id="${item.user_id}"><i class="fa-solid fa-circle-info"></i></button>
                         </div>
                     </td>
                 </tr>
-                <tr id="detailseducation${item.user_id}" style="display:none">
-                    <td colspan="11">
-        
-                    </td>
-                </tr>
+                <tr id="grid${item.user_id}" style="display:none"></tr>
             `;
         });
 
@@ -448,69 +443,10 @@ $(document).ready(function () {
     }
 
 
-
-    // Show Button part
-    $(document).on('click', '.emp_educationDetail', function (e) {
-        let id = $(this).attr('data-id');
-        let $detailsRow = $(`#detailseducation${id}`);
-        let $button = $(this); // Reference to the clicked button
-    
-        if ($detailsRow.is(':visible')) {
-            // If the row is visible, hide it, change button text to "Show", and remove caret rotation
-            $detailsRow.hide();
-            $button.find('.fa-chevron-circle-right').removeClass('rotate');
-        } else {
-            // Fetch data and show it, then change button text to "Hide", and add caret rotation
-            $.ajax({
-                url: '/hr/employee/education/grid',
-                method: 'GET',
-                data: { id },
-                success: function (res) {
-                    console.log(res);
-                    $detailsRow.find('td').html(res.data);
-                    $detailsRow.show();
-                    $button.find('.fa-chevron-circle-right').addClass('rotate');
-                }
-            });
-        }
-    });
+    // Show Detals Ajax
+    DetailsAjax('hr/employee/education');
 
 
-
-    //Show Employee Education Details on details modal
-    $(document).on('click', '#details', function (e) {
-        let modal = $(this).attr('data-modal-id');
-        let id = $(this).attr('data-id');
-        $.ajax({
-            url: `/hr/employee/education/details`,
-            method: 'GET',
-            data: { id },
-            success: function (res) {
-                $("#"+ modal).show();
-                $('.employeeeducationdetails').html(res.data)
-            }
-        });
-    });
-
-
-    // Show Employee Details List Toggle Functionality
-    $(document).on('click', '.employeeeducationdetails li', function(e){
-        let id = $(this).attr('data-id');
-        if(id == 1){
-            if($('.personal').is(':visible')){
-                $('.personal').hide()
-            }
-            else{
-                $('.personal').show();
-            }
-        }
-        else if(id == 2){
-            if($('.education').is(':visible')){
-                $('.education').hide()
-            }
-            else{
-                $('.education').show();
-            }
-        }
-    });
+    // Show Grid
+    GridAjax('hr/employee/education');
 });

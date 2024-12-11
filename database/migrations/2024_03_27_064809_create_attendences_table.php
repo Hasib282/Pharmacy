@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendences', function (Blueprint $table) {
+        Schema::connection('mysql')->create('attendences', function (Blueprint $table) {
             $table->id();
             $table->integer('employee_id');
             $table->date('date');
             $table->string('attend_status');
-            $table->string('company_id')->nullable();
             $table->timestamp('entry_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
-
-            $table->foreign('company_id')->references('company_id')->on('company__details')
-                    ->onUpdate('cascade');
         });
     }
 
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendences');
+        Schema::connection('mysql')->dropIfExists('attendences');
     }
 };

@@ -48,11 +48,30 @@
 
     <!-- table show -->
     <div class="load-data" style="overflow-x:auto;">
-        <hr>
         <table class="show-table">
+            <caption class="caption">Accounts Summary Statement</caption>
             <thead>
-                <caption class="caption">Accounts Summary Statement</caption>
+                <tr>
+                    <th style="text-align: right;">Opening Balance</th>
+                    <th></th>
+                    <th style="text-align: right; width:12%;" id="opening"></th>
+                </tr>
             </thead>
+            <tbody>
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td style="text-align: right;">Grand Total:</td>
+                    <td style="text-align: right; width:12%;" id="grandReceive"></td>
+                    <td style="text-align: right; width:12%;" id="grandPayment"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Closing Balance</td>
+                    <td></td>
+                    <td style="text-align: right; width:12%;" id="closing"></td>
+                </tr>
+            </tfoot>
         </table>
 
         {{-- <table class="show-table">

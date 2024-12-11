@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cache', function ($table) {
+        Schema::connection('mysql')->create('cache', function ($table) {
             $table->string('key')->unique();
             $table->text('value');
             $table->integer('expiration');
         });
-        
     }
 
     /**
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cache');
+        Schema::connection('mysql_second')->dropIfExists('cache');
     }
 };

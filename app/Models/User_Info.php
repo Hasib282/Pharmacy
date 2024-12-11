@@ -11,7 +11,11 @@ use Illuminate\Support\Facades\Cache;
 class User_Info extends Authenticatable
 {
     use Notifiable, HasFactory, HasApiTokens;
+
+    protected $connection = 'mysql';
+
     protected $guarded = [];
+    
     public $timestamps = false;
 
     protected $table = 'user__infos';
@@ -30,7 +34,7 @@ class User_Info extends Authenticatable
     }
     
     public function Company(){
-        return $this->belongsTo(Company_Details::class,'company_id','id');
+        return $this->belongsTo(Company_Details::class,'company_id','company_id');
     }
 
     public function Department(){

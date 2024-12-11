@@ -9,6 +9,9 @@ class Item_Category extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql_second';
+
     protected $guarded = [];
+    
     public $timestamps = false;
 }

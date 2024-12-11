@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Employee_Personal_Detail extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql';
     
     protected $guarded = [];
 

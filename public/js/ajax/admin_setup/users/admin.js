@@ -10,13 +10,9 @@ function ShowAdmins(data, startIndex) {
                     <td>${item.user_name}</td>
                     <td>${item.user_email}</td>
                     <td>${item.user_phone}</td>
-                    <td>${item.loc_id ? item.location.upazila : ""}</td>
-                    <td>${item.address ? item.address : "" }</td>
                     <td><img src="${apiUrl.replace('/api', '')}/storage/profiles/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
                     <td>
                         <div style="display: flex;gap:5px;">
-                            
-                            <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${item.user_id}"><i class="fa-solid fa-circle-info"></i></button>
 
                             <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
                                     
@@ -50,7 +46,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('admin/users/admins', ShowAdmins, {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }}, function() {
+    InsertAjax('admin/users/admins', ShowAdmins, {company: { selector: '#company', attribute: 'data-id' }}, function() {
         $('#name').focus();
         $('#location').removeAttr('data-id');
     });
@@ -61,7 +57,7 @@ $(document).ready(function () {
 
 
     // Update Ajax
-    UpdateAjax('admin/users/admins', ShowAdmins, {location: { selector: '#updateLocation', attribute: 'data-id' }});
+    UpdateAjax('admin/users/admins', ShowAdmins);
     
 
     // Delete Ajax
@@ -83,26 +79,6 @@ $(document).ready(function () {
         $('#updatePhone').val(res.admin.user_phone);
         $('#updateEmail').val(res.admin.user_email);
 
-        // Create options dynamically
-        $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${res.admin.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-            <option value="Chittagong" ${res.admin.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-            <option value="Rajshahi" ${res.admin.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-            <option value="Khulna" ${res.admin.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-            <option value="Sylhet" ${res.admin.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barisal" ${res.admin.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
-            <option value="Rangpur" ${res.admin.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-            <option value="Mymensingh" ${res.admin.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-
-        // Create options dynamically based on the status value
-        $('#updateGender').empty();
-        $('#updateGender').append(`<option value="Male" ${res.admin.gender === 'Male' ? 'selected' : ''}>Male</option>
-                                    <option value="Female" ${res.admin.gender === 'Female' ? 'selected' : ''}>Female</option>
-                                    <option value="Others" ${res.admin.gender === 'Others' ? 'selected' : ''}>Others</option>`);
-
-        $('#updateLocation').val(res.admin.location.upazila);
-        $('#updateLocation').attr('data-id',res.admin.loc_id);
-        $('#updateAddress').val(res.admin.address);
         $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/profiles/${res.admin.image}?${new Date().getTime()} `).show();
         $('#updateName').focus();
     }; // End Method

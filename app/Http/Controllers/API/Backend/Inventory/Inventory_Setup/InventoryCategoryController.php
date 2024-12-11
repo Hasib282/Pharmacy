@@ -11,7 +11,7 @@ class InventoryCategoryController extends Controller
 {
     // Show All Item/Product Category
     public function ShowAll(Request $req){
-        $category = Item_Category::where('type_id', '5')->orderBy('added_at','asc')->paginate(15);
+        $category = Item_Category::on('mysql_second')->where('type_id', '5')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $category,
@@ -26,7 +26,7 @@ class InventoryCategoryController extends Controller
             'name' => 'required',
         ]);
 
-        Item_Category::insert([
+        Item_Category::on('mysql_second')->insert([
             'category_name' => $req->name,
             'type_id'=> '5',
         ]);
@@ -41,7 +41,7 @@ class InventoryCategoryController extends Controller
 
     // Edit Item/Product Category
     public function Edit(Request $req){
-        $category = Item_Category::where('id', $req->id)->first();
+        $category = Item_Category::on('mysql_second')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
             'category'=> $category,
@@ -56,7 +56,7 @@ class InventoryCategoryController extends Controller
             'name' => 'required',
         ]);
 
-        $update = Item_Category::findOrFail($req->id)->update([
+        $update = Item_Category::on('mysql_second')->findOrFail($req->id)->update([
             'category_name' => $req->name,
             "updated_at" => now()
         ]);
@@ -73,7 +73,7 @@ class InventoryCategoryController extends Controller
 
     // Delete Item/Product Category
     public function Delete(Request $req){
-        Item_Category::findOrFail($req->id)->delete();
+        Item_Category::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Category Deleted Successfully',
@@ -84,7 +84,7 @@ class InventoryCategoryController extends Controller
 
     // Search Item/Product Category
     public function Search(Request $req){
-        $category = Item_Category::where('type_id', '5')
+        $category = Item_Category::on('mysql_second')->where('type_id', '5')
         ->where('category_name', 'like', '%'.$req->search.'%')
         ->orderBy('category_name','asc')
         ->paginate(15);
@@ -99,7 +99,7 @@ class InventoryCategoryController extends Controller
 
     // Get Item/Product Category
     public function Get(Request $req){
-        $categories = Item_Category::where('type_id', '5')
+        $categories = Item_Category::on('mysql_second')->where('type_id', '5')
         ->where('category_name', 'like', '%'.$req->category.'%')
         ->orderBy('category_name','asc')
         ->take(10)

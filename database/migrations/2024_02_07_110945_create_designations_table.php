@@ -11,19 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('designations', function (Blueprint $table) {
+        Schema::connection('mysql')->create('designations', function (Blueprint $table) {
             $table->id();
             $table->string('designation');
             $table->unsignedBigInteger('dept_id');
-            $table->string('company_id')->nullable();
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 
             //Foreignkey Decleration
             $table->foreign('dept_id')->references('id')->on('department__infos')
-                    ->onUpdate('cascade');
-
-            $table->foreign('company_id')->references('company_id')->on('company__details')
                     ->onUpdate('cascade');
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('designations');
+        Schema::connection('mysql')->dropIfExists('designations');
     }
 };

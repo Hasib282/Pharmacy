@@ -1,4 +1,4 @@
-@section('style')
+{{-- @section('style')
     <style>
         .modal-subject {
             width: 80%;
@@ -28,7 +28,7 @@
             flex-wrap: wrap;
         }
     </style>
-@endsection
+@endsection --}}
 
 
 @php
@@ -80,13 +80,10 @@
     <div class="center paginate" id="paginate"></div>
 </div>
 
-{{-- @include('hr.employee_info.employees.add') --}}
 
-{{-- @include('hr.employee_info.employees.edit') --}}
+@include('hr.employee_info.employeeDetails')
 
-@include('hr.employee_info.employees.employeeDetails')
-
-@include('hr.employee_info.employees.delete')
+@include('common_modals.delete')
 
 
 <!-- ajax part start from here -->

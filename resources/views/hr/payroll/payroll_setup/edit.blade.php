@@ -2,7 +2,7 @@
     <div class="modal-subject">
         <div class="modal-heading banner">
             <div class="center">
-                <h3>Edit Payroll Setup</h3>
+                <h3>Edit {{ $name }}</h3>
                 <span class="close-modal" data-modal-id="editModal">&times;</span>
             </div>
         </div>

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction__heads', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('transaction__heads', function (Blueprint $table) {
             $table->id();
             $table->string('tran_head_name');
             $table->unsignedBigInteger('groupe_id')->nullabe();
@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('manufacturer_id')->nullable();
             $table->unsignedBigInteger('form_id')->nullable();
             $table->unsignedBigInteger('unit_id')->default(1);
-            $table->unsignedBigInteger('store_id')->nullable();
             $table->double('quantity')->default(0);
             $table->double('cp')->default(0);
             $table->double('mrp')->default(0);
@@ -44,9 +43,6 @@ return new class extends Migration
             $table->foreign('unit_id')->references('id')->on('item__units')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-            $table->foreign('store_id')->references('id')->on('stores')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
             $table->foreign('company_id')->references('company_id')->on('company__details')
                     ->onUpdate('cascade');
         });
@@ -57,6 +53,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction__heads');
+        Schema::connection('mysql')->dropIfExists('transaction__heads');
+        Schema::connection('mysql_second')->dropIfExists('transaction__heads');
     }
 };

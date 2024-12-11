@@ -1,40 +1,40 @@
 // $(document).ready(function () {
-    // ///////////// ------------------ Payroll Details Part Ajax Start Here ---------------- /////////////////////////////
-    // $(document).on('click', '#details', function () {
-    //     let modalId = $(this).data('modal-id');
-    //     let id = $(this).data('id');
-    //     let month = $('#month').attr('data-id'); 
-    //     let year = $('#year').val();
-    //     $.ajax({
-    //         url: urls.payrollByDate,
-    //         method: 'GET',
-    //         data: { id, month, year },
-    //         success: function (res) {
-    //             if (res.status === 'success') {
-    //                 $('.payroll-grid tbody').html(res.data);
-    //                 $('#employee').val(res.payrolls[0].employee.user_name);
-    //                 $('#employee').attr('data-id', res.payrolls[0].emp_id);
+    ///////////// ------------------ Payroll Details Part Ajax Start Here ---------------- /////////////////////////////
+    $(document).on('click', '#details', function () {
+        let modalId = $(this).data('modal-id');
+        let id = $(this).data('id');
+        let month = $('#month').attr('data-id'); 
+        let year = $('#year').val();
+        $.ajax({
+            url: urls.payrollByDate,
+            method: 'GET',
+            data: { id, month, year },
+            success: function (res) {
+                if (res.status === 'success') {
+                    $('.payroll-grid tbody').html(res.data);
+                    $('#employee').val(res.payrolls[0].employee.user_name);
+                    $('#employee').attr('data-id', res.payrolls[0].emp_id);
 
-    //                 $('#head').empty();
-    //                 $('#head').append('<option value="">Select Payroll Category</option>');
-    //                 $.each(res.heads, function (key, head) {
-    //                     $('#head').append(`<option value="${head.id}">${head.tran_head_name}</option>`);
-    //                 });
-    //             } 
-    //             else {
-    //                 $('.payroll-grid tbody').html('');
-    //             }
+                    $('#head').empty();
+                    $('#head').append('<option value="">Select Payroll Category</option>');
+                    $.each(res.heads, function (key, head) {
+                        $('#head').append(`<option value="${head.id}">${head.tran_head_name}</option>`);
+                    });
+                } 
+                else {
+                    $('.payroll-grid tbody').html('');
+                }
 
-    //             var modal = document.getElementById(modalId);
-    //             if (modal) {
-    //                 modal.style.display = 'block';
-    //             }
-    //         },
-    //         error: function (err) {
-    //             console.log(err);
-    //         }
-    //     });
-    // });
+                var modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.style.display = 'block';
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
     
 
 
@@ -94,7 +94,7 @@ function ShowPayrolls(data, startIndex) {
                     <td>${item['salary'].toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
                     <td>
                         
-                        <button class="open-modal" data-modal-id="detailsModal" id="details"
+                        <button class="open-modal" data-modal-id="editModal" id="edit"
                                     data-id="${item['emp_id']}"><i class="fa-solid fa-circle-info"></i></button>
                         
                     </td>
@@ -129,8 +129,8 @@ $(document).ready(function () {
     // });
 
 
-    // //Edit Ajax
-    // EditAjax('hr/payroll/process', EditFormInputValue);
+    //Edit Ajax
+    EditAjax('hr/payroll/process', EditFormInputValue, EditModalOn);
 
 
     // // Update Ajax
@@ -155,20 +155,44 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.location.id);
-        // Create options dynamically
-        $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${res.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-                                    <option value="Chittagong" ${res.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-                                    <option value="Rajshahi" ${res.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-                                    <option value="Khulna" ${res.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-                                    <option value="Sylhet" ${res.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-                                    <option value="Barishal" ${res.location.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
-                                    <option value="Rangpur" ${res.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-                                    <option value="Mymensingh" ${res.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-        $('#updateDistrict').val(res.location.district);
-        $('#updateUpazila').val(res.location.upazila);
-        $('#updateDivision').focus();
+        if (res.status) {
+            $('.payroll-grid tbody').html(res.data);
+            $('#employee').val(res.payrolls[0].employee.user_name);
+            $('#employee').attr('data-id', res.payrolls[0].emp_id);
+
+            CreateSelectOptions('#head', 'Select Payroll Category', res.heads, null, 'tran_head_name');
+
+            // $('#head').empty();
+            // $('#head').append('<option value="">Select Payroll Category</option>');
+            // $.each(res.heads, function (key, head) {
+            //     $('#head').append(`<option value="${head.id}">${head.tran_head_name}</option>`);
+            // });
+        } 
+        else {
+            $('.payroll-grid tbody').html('');
+        }
+        // $('#id').val(res.location.id);
+        // // Create options dynamically
+        // $('#updateDivision').empty();
+        // $('#updateDivision').append(`<option value="Dhaka" ${res.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
+        //                             <option value="Chittagong" ${res.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
+        //                             <option value="Rajshahi" ${res.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
+        //                             <option value="Khulna" ${res.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
+        //                             <option value="Sylhet" ${res.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
+        //                             <option value="Barishal" ${res.location.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
+        //                             <option value="Rangpur" ${res.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
+        //                             <option value="Mymensingh" ${res.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
+        // $('#updateDistrict').val(res.location.district);
+        // $('#updateUpazila').val(res.location.upazila);
+        // $('#updateDivision').focus();
+    }
+
+
+
+    // Additional Edit Functionality
+    function EditModalOn(){
+        let month = $('#month').attr('data-id'); 
+        let year = $('#year').val();
     }
 
 

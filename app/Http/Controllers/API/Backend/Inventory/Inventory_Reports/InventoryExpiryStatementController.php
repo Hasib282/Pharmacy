@@ -11,7 +11,7 @@ class InventoryExpiryStatementController extends Controller
 {
     // Show All Inventory Expiry Statement
     public function ShowAll(Request $req){
-        $inventory = Transaction_Detail::with('Head')
+        $inventory = Transaction_Detail::on('mysql')->with('Head')
         ->whereIn('tran_method', ['Purchase', 'Positive'])
         ->where('tran_type', 5)
         ->where('quantity', '>', 0)
@@ -30,7 +30,7 @@ class InventoryExpiryStatementController extends Controller
     // Search Inventory Expiry Statement
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $inventory = Transaction_Detail::with('Head')
+            $inventory = Transaction_Detail::on('mysql')->with('Head')
             ->whereHas('Head', function ($query) use ($req) {
                 $query->where('tran_head_name', 'like', '%' . $req->search . '%');
                 $query->orderBy('tran_head_name','asc');
@@ -41,7 +41,7 @@ class InventoryExpiryStatementController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $inventory = Transaction_Detail::where('tran_id', "like", '%'. $req->search .'%')
+            $inventory = Transaction_Detail::on('mysql')->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("expiry_date BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->whereIn('tran_method', ['Purchase', 'Positive'])
             ->where('tran_type', 5)

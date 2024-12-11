@@ -90,7 +90,7 @@ $(document).ready(function () {
         $('#user').removeAttr('data-with');
         $('#product').removeAttr('data-id');
         $('#product').removeAttr('data-groupe');
-        GetTransactionWith(5, 'Receive', '#within');
+        GetTransactionWith(5, 'Payment', '#within');
         localStorage.removeItem('transactionData');
         $('.transaction_grid tbody').html('');
         $('#batch-details-list tbody').html('');
@@ -350,10 +350,11 @@ $(document).ready(function () {
         let advance = $('#advance').val();
         let balance = $('#balance').val();
         let batch = $('#batch').val();
+        let company = $('#company').attr('data-id');
         $.ajax({
             url: `${apiUrl}/inventory/transaction/return/supplier`,
             method: 'POST',
-            data: { products:JSON.stringify(products), batch, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance },
+            data: { products:JSON.stringify(products), batch, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
             success: function (res) {
                 if (res.status) {
                     $('#AddForm')[0].reset();

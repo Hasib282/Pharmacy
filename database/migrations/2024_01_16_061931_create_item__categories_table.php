@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('item__categories', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('item__categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('type_id')->nullable();
             $table->string('category_name');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('item__categories');
+        Schema::connection('mysql_second')->dropIfExists('item__categories');
     }
 };

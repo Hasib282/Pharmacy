@@ -26,14 +26,18 @@ function ShowPharmacyItemflowStatements(data, startIndex, res) {
                 balance -= item.quantity_actual;
             } else if (item.tran_method == "Client Return") {
                 balance += item.quantity_actual;
+            } else if (item.tran_method == "Positive") {
+                balance += item.quantity_actual;
+            } else if (item.tran_method == "Negative") {
+                balance -= item.quantity_actual;
             }
 
             tableRows += `
                 <tr>
                     <td>${key + 1}</td>
                     <td>${item.tran_method}</td>
-                    <td>${item.tran_method == "Purchase" ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
-                    <td>${item.tran_method == "Issue" ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
+                    <td>${(item.tran_method == "Purchase" || item.tran_method == "Positive") ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
+                    <td>${(item.tran_method == "Issue" || item.tran_method == "Negative") ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
                     <td>${item.tran_method == "Supplier Return" ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
                     <td>${item.tran_method == "Client Return" ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
                     <td>${balance.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>

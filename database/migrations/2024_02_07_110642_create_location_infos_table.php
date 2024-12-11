@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('location__infos', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('location__infos', function (Blueprint $table) {
             $table->id();
             $table->string('division');
             $table->string('district');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('location__infos');
+        Schema::connection('mysql_second')->dropIfExists('location__infos');
     }
 };

@@ -665,10 +665,11 @@ $(document).ready(function () {
         let netAmount = $('#netAmount').val();
         let advance = $('#advance').val();
         let balance = $('#balance').val();
+        let company = $('#company').attr('data-id');
         $.ajax({
             url: `${apiUrl}/inventory/transaction/purchase`,
             method: 'POST',
-            data: { products:JSON.stringify(products), type, method, withs, user, store, amountRP, discount, netAmount, advance, balance },
+            data: { products:JSON.stringify(products), type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
             success: function (res) {
                 if (res.status) {
                     $('#AddForm')[0].reset();

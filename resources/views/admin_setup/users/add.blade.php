@@ -45,57 +45,59 @@
                     </div>
                 </div>
 
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="gender">Gender <span class="required" title="Required">*</span></label>
-                        <select name="gender" id="gender">
-                            <option value="">Select Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Others">Others</option>
-                        </select>
-                        <span class="error" id="gender_error"></span>
-                    </div>
-                </div>
-
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="division">Division <span class="required" title="Required">*</span></label>
-                        <select name="division" id="division">
-                            <option value="">Select Division</option>
-                            <option value="Dhaka">Dhaka</option>
-                            <option value="Chittagong">Chittagong</option>
-                            <option value="Rajshahi">Rajshahi</option>
-                            <option value="Khulna">Khulna</option>
-                            <option value="Sylhet">Sylhet</option>
-                            <option value="Barisal">Barisal</option>
-                            <option value="Rangpur">Rangpur</option>
-                            <option value="Mymensingh">Mymensingh</option>
-                        </select>
-                        <span class="error" id="division_error"></span>
-                    </div>
-                </div>
-
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="location">Location <span class="required" title="Required">*</span></label>
-                        <input type="text" name="location" class="form-input" id="location" autocomplete="off">
-                        <div id="location-list">
-                            <ul>
-
-                            </ul>
+                @if ($name != "Super Admin" && $name != "Admin")
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="gender">Gender <span class="required" title="Required">*</span></label>
+                            <select name="gender" id="gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Others">Others</option>
+                            </select>
+                            <span class="error" id="gender_error"></span>
                         </div>
-                        <span class="error" id="location_error"></span>
                     </div>
-                </div>
-                
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="address">Address</label>
-                        <input type="text" name="address" class="form-input" id="address">
-                        <span class="error" id="address_error"></span>
+
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="division">Division <span class="required" title="Required">*</span></label>
+                            <select name="division" id="division">
+                                <option value="">Select Division</option>
+                                <option value="Dhaka">Dhaka</option>
+                                <option value="Chittagong">Chittagong</option>
+                                <option value="Rajshahi">Rajshahi</option>
+                                <option value="Khulna">Khulna</option>
+                                <option value="Sylhet">Sylhet</option>
+                                <option value="Barisal">Barisal</option>
+                                <option value="Rangpur">Rangpur</option>
+                                <option value="Mymensingh">Mymensingh</option>
+                            </select>
+                            <span class="error" id="division_error"></span>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="location">Location <span class="required" title="Required">*</span></label>
+                            <input type="text" name="location" class="form-input" id="location" autocomplete="off">
+                            <div id="location-list">
+                                <ul>
+
+                                </ul>
+                            </div>
+                            <span class="error" id="location_error"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="address">Address</label>
+                            <input type="text" name="address" class="form-input" id="address">
+                            <span class="error" id="address_error"></span>
+                        </div>
+                    </div>
+                @endif
 
                 @if ($name != "Client" && $name != "Supplier")
                     <div class="c-4">
@@ -124,7 +126,7 @@
                     </div>
                 </div>
                 
-                @if ($name != "Super Admin")
+                @if ($name == "Admin")
                     @if (auth()->user()->user_role == 1)
                         <div class="c-4">
                             <div class="form-input-group">

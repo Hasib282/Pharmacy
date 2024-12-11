@@ -17,9 +17,11 @@
                     <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Name</option>
                     <option value="2" {{ $searchOptionValue == '2' ? 'selected' : '' }}>Email</option>
                     <option value="3" {{ $searchOptionValue == '3' ? 'selected' : '' }}>Phone</option>
-                    <option value="4" {{ $searchOptionValue == '4' ? 'selected' : '' }}>Location</option>
-                    <option value="5" {{ $searchOptionValue == '5' ? 'selected' : '' }}>Address</option>
-                    <option value="6" {{ $searchOptionValue == '6' ? 'selected' : '' }}>Type</option>
+                    @if ($name != "Super Admin" && $name != "Admin")
+                        <option value="4" {{ $searchOptionValue == '4' ? 'selected' : '' }}>Location</option>
+                        <option value="5" {{ $searchOptionValue == '5' ? 'selected' : '' }}>Address</option>
+                        <option value="6" {{ $searchOptionValue == '6' ? 'selected' : '' }}>Type</option>
+                    @endif
                 </select>
                 <input type="text" name="search" id="search" class="input-small" placeholder="Search here..." value="{{ $searchValue ? $searchValue : '' }}">
             </div>
@@ -40,10 +42,15 @@
                     @if ($name != "Admin" && $name != "Super Admin")
                         <th>{{ $name }} Type</th>
                     @endif
+
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>Location</th>
-                    <th>Address</th>
+                    
+                    @if ($name != "Super Admin" && $name != "Admin")
+                        <th>Location</th>
+                        <th>Address</th>
+                    @endif
+
                     <th>Image</th>
                     <th>Action</th>
                 </tr>

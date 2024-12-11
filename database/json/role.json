@@ -1,8 +1,8 @@
 [
     { "name": "Super Admin" },
     { "name": "Admin" },
-    { "name": "Company" },
+    { "name": "Employee" },
     { "name": "Client" },
-    { "name": "Supplier" },
-    { "name": "Employee" }
+    { "name": "Supplier" }
+    
 ]

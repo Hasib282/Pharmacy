@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee__training__details', function (Blueprint $table) {
+        Schema::connection('mysql')->create('employee__training__details', function (Blueprint $table) {
             $table->id();
             $table->string('emp_id');
             $table->string('training_title');
@@ -21,16 +21,12 @@ return new class extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->integer('training_year');
-            $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');
-            $table->string('company_id')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 
             $table->foreign('emp_id')->references('employee_id')->on('employee__personal__details')
                     ->cascadeOnUpdate()
                     ->cascadeOnDelete();
-            $table->foreign('company_id')->references('company_id')->on('company__details')
-                    ->onUpdate('cascade');
         });
     }
 
@@ -39,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employee__training__details');
+        Schema::connection('mysql')->dropIfExists('employee__training__details');
     }
 };

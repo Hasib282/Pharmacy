@@ -13,7 +13,7 @@ class PharmacyItemFlowStatementController extends Controller
 {
     // Show All Pharmacy Item Flow Statement
     public function ShowAll(Request $req){
-        $groupes = Transaction_Groupe::where('tran_groupe_type', '6')->orderBy('added_at','asc')->get();
+        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '6')->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => [],
@@ -35,7 +35,7 @@ class PharmacyItemFlowStatementController extends Controller
         
 
         function getBalance($tranMethod, $startDate, $searchId) {
-            return Transaction_Detail::with('Head')
+            return Transaction_Detail::on('mysql')->with('Head')
                 ->where('tran_type', 6)
                 ->where('tran_method', $tranMethod)
                 ->where('tran_date', '<', $startDate)
@@ -66,7 +66,7 @@ class PharmacyItemFlowStatementController extends Controller
             $pharmacy = [];
         }
         else{
-            $pharmacy = Transaction_Detail::with('Head')
+            $pharmacy = Transaction_Detail::on('mysql')->with('Head')
             ->where('tran_type', 6)
             ->whereRaw("tran_date BETWEEN ? AND ?", [$req->startDate, $req->endDate . ' 23:59:59'])
             ->where('tran_head_id', $req->search_id)

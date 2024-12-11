@@ -56,11 +56,11 @@
     
     @include('hr.employee_info.personal_details.add')
 
-    @include('hr.employee_info.personal_details.employeePersonalDetail')
+    @include('hr.employee_info.employeeDetails')
 
     @include('hr.employee_info.personal_details.edit')
 
-    @include('hr.employee_info.personal_details.delete')
+    @include('common_modals.delete')
 
 
     <!-- ajax part start from here -->

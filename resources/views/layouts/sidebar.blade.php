@@ -22,28 +22,39 @@
                     <i class="fas fa-angle-right"></i>
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'admin' ? 'show':''}}">
-                    @if(auth()->user()->hasPermissionToRoute('show.companytype'))
-                        <li data-url="{{route('show.companytype')}}" class="sub-menu-item">
-                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'companytype') ? 'active':''}}">
+                    {{-- Company Menu --}}
+                    @if(auth()->user()->user_role == 1)
+                        <li class="sub-menu-item">
+                            <div class="menu-title {{ (Request::segment(1) == 'admin' && (Request::segment(2) == 'companytype' || Request::segment(2) == 'companies')) ? 'active' : '' }}">
                                 <p>
-                                    <i class="fa-solid fa-house-circle-exclamation"></i>
-                                    Company Types
+                                    <i class="fa-solid fa-building"></i>
+                                    Company
                                 </p>
+                                <i class="fas fa-angle-right"></i>
                             </div>
-                        </li>
-                    @endif
-                    
-                    @if(auth()->user()->hasPermissionToRoute('show.companies'))
-                        <li data-url="{{route('show.companies')}}" class="sub-menu-item">
-                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'companies') ? 'active':''}}">
-                                <p>
-                                    <i class="fa-solid fa-house-user"></i>
-                                    Company Details
-                                </p>
-                            </div>
+                            <ul class="sub-menu1 {{ (Request::segment(1) == 'admin' && (Request::segment(2) == 'companytype' || Request::segment(2) == 'companies')) ? 'show':''}}">
+                                <li class="sub-menu1-item" data-url="{{route('show.companytype')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'companytype') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-house-circle-exclamation"></i>
+                                            Types
+                                        </p>
+                                    </div>
+                                </li>
+
+                                <li class="sub-menu1-item" data-url="{{route('show.companies')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'companies') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-house-user"></i>
+                                            Details
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
                         </li>
                     @endif
 
+                    {{-- Users Menu --}}
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'users') ? 'active':''}}">
                             <p>
@@ -53,8 +64,17 @@
                             <i class="fas fa-angle-right"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'users') ? 'show':''}}">
-                            @if(auth()->user()->hasPermissionToRoute('show.superAdmins'))
-                                <li data-url="{{route('show.superAdmins')}}" class="sub-menu1-item">
+                            @if(auth()->user()->user_role == 1)
+                                <li class="sub-menu1-item" data-url="{{route('show.roles')}}">
+                                    <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'users' && Request::segment(3) == 'roles') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-dice-six"></i>
+                                            Roles
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                <li class="sub-menu1-item" data-url="{{route('show.superAdmins')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'users' && Request::segment(3) == 'superadmins') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-user-secret"></i>
@@ -65,7 +85,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.admins'))
-                                <li data-url="{{route('show.admins')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.admins')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'users' && Request::segment(3) == 'admins') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-user-tie"></i>
@@ -76,7 +96,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.clients'))
-                                <li data-url="{{route('show.clients')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.clients')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'users' && Request::segment(3) == 'clients') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-users"></i>
@@ -87,7 +107,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.suppliers'))
-                                <li data-url="{{route('show.suppliers')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.suppliers')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'users' && Request::segment(3) == 'suppliers') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-people-carry-box"></i>
@@ -98,95 +118,76 @@
                             @endif
                         </ul>
                     </li>
+
+                    {{-- Permissions Menu --}}
                     <li class="sub-menu-item">
-                        <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'auth') ? 'active':''}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission') ? 'active':''}}">
                             <p>
-                                <i class="fa-solid fa-users"></i>
-                                Auth Setup
+                                <i class="fa-solid fa-user-lock"></i>
+                                Permissions
                             </p>
                             <i class="fas fa-angle-right"></i>
                         </div>
-                        <ul class="sub-menu1 {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'auth') ? 'show':''}}">
-                            @if(auth()->user()->hasPermissionToRoute('show.roles'))
-                                <li data-url="{{route('show.roles')}}" class="sub-menu1-item">
-                                    <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'auth' && Request::segment(3) == 'roles') ? 'active':''}}">
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission') ? 'show':''}}">
+                            @if(auth()->user()->hasPermissionToRoute('show.permissionMainheads'))
+                                <li class="sub-menu1-item" data-url="{{route('show.permissionMainheads')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'mainhead') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-user-secret"></i>
-                                            Roles
+                                            Permission Main Head
                                         </p>
                                     </div>
                                 </li>
                             @endif
-                            <li class="sub-menu1-item">
-                                <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'auth' && Request::segment(3) == 'permission') ? 'active':''}}">
-                                    <p>
-                                        <i class="fa-solid fa-people-carry-box"></i>
-                                        Permission
-                                    </p>
-                                    <i class="fas fa-angle-right"></i>
-                                </div>
-                                <ul class="sub-menu2 {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'auth' && Request::segment(3) == 'permission') ? 'show':''}}">
-                                    @if(auth()->user()->hasPermissionToRoute('show.permissionMainheads'))
-                                        <li data-url="{{route('show.permissionMainheads')}}" class="sub-menu2-item">
-                                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'auth' && Request::segment(3) == 'permission' && Request::segment(4) == 'mainhead') ? 'active':''}}">
-                                                <p>
-                                                    <i class="fa-solid fa-user-secret"></i>
-                                                    Permission Main Head
-                                                </p>
-                                            </div>
-                                        </li>
-                                    @endif
-                            
-                                    @if(auth()->user()->hasPermissionToRoute('show.permissions'))
-                                        <li data-url="{{route('show.permissions')}}" class="sub-menu2-item">
-                                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'auth' && Request::segment(3) == 'permission' && Request::segment(4) == '') ? 'active':''}}">
-                                                <p>
-                                                    <i class="fa-solid fa-user-secret"></i>
-                                                    Permission Heads
-                                                </p>
-                                            </div>
-                                        </li>
-                                    @endif
-                            
-                                    @if(auth()->user()->hasPermissionToRoute('show.routePermissions'))
-                                        <li data-url="{{route('show.routePermissions')}}" class="sub-menu2-item">
-                                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'auth' && Request::segment(3) == 'permission' && Request::segment(4) == 'routepermissions') ? 'active':''}}">
-                                                <p>
-                                                    <i class="fa-solid fa-user-secret"></i>
-                                                    Route Permissions
-                                                </p>
-                                            </div>
-                                        </li>
-                                    @endif
-                            
-                                    @if(auth()->user()->hasPermissionToRoute('show.userPermissions'))
-                                        <li data-url="{{route('show.userPermissions')}}" class="sub-menu2-item">
-                                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'auth' && Request::segment(3) == 'permission' && Request::segment(4) == 'userpermissions') ? 'active':''}}">
-                                                <p>
-                                                    <i class="fa-solid fa-user-secret"></i>
-                                                    User Permissions
-                                                </p>
-                                            </div>
-                                        </li>
-                                    @endif
-                            
-                                    @if(auth()->user()->hasPermissionToRoute('show.rolePermissions'))
-                                        <li data-url="{{route('show.rolePermissions')}}" class="sub-menu2-item">
-                                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'auth' && Request::segment(3) == 'permission' && Request::segment(4) == 'rolepermissions') ? 'active':''}}">
-                                                <p>
-                                                    <i class="fa-solid fa-user-secret"></i>
-                                                    Role Permissions
-                                                </p>
-                                            </div>
-                                        </li>
-                                    @endif
-                                </ul>
-                            </li>
+                    
+                            @if(auth()->user()->hasPermissionToRoute('show.permissions'))
+                                <li class="sub-menu1-item" data-url="{{route('show.permissions')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == '') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-user-secret"></i>
+                                            Permission Heads
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                    
+                            @if(auth()->user()->hasPermissionToRoute('show.routePermissions'))
+                                <li class="sub-menu1-item" data-url="{{route('show.routePermissions')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'routepermissions') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-user-secret"></i>
+                                            Route Permissions
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                    
+                            @if(auth()->user()->hasPermissionToRoute('show.userPermissions'))
+                                <li class="sub-menu1-item" data-url="{{route('show.userPermissions')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'userpermissions') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-user-secret"></i>
+                                            User Permissions
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                    
+                            @if(auth()->user()->hasPermissionToRoute('show.rolePermissions'))
+                                <li class="sub-menu1-item" data-url="{{route('show.rolePermissions')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'rolepermissions') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-user-secret"></i>
+                                            Role Permissions
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
                         </ul>
                     </li>
                                 
                     @if(auth()->user()->hasPermissionToRoute('show.banks'))
-                        <li data-url="{{route('show.banks')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.banks')}}">
                             <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'banks') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-people-roof"></i>
@@ -197,7 +198,7 @@
                     @endif
                                 
                     @if(auth()->user()->hasPermissionToRoute('show.locations'))
-                        <li data-url="{{route('show.locations')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.locations')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'locations') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-location-dot"></i>
@@ -208,7 +209,7 @@
                     @endif
                             
                     @if(auth()->user()->hasPermissionToRoute('show.stores'))
-                        <li data-url="{{route('show.stores')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.stores')}}">
                             <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'store') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-shop"></i>
@@ -219,8 +220,8 @@
                     @endif
                             
                     @if(auth()->user()->hasPermissionToRoute('show.mainhead'))
-                        <li data-url="{{route('show.mainhead')}}" class="sub-menu-item">
-                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'mainhead') ? 'active':''}}">
+                        <li class="sub-menu-item" data-url="{{route('show.mainhead')}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'mainheads') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-money-check-dollar"></i>
                                     Main Head 
@@ -230,7 +231,7 @@
                     @endif
                             
                     @if(auth()->user()->hasPermissionToRoute('show.tranwith'))
-                        <li data-url="{{route('show.tranwith')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.tranwith')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'tranwith') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-users-gear"></i>
@@ -241,7 +242,7 @@
                     @endif
                             
                     @if(auth()->user()->hasPermissionToRoute('show.tranGroupes'))
-                        <li data-url="{{route('show.tranGroupes')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.tranGroupes')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'trangroupes') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-dice-six"></i>
@@ -252,7 +253,7 @@
                     @endif
                             
                     @if(auth()->user()->hasPermissionToRoute('show.tranHeads'))
-                        <li data-url="{{route('show.tranHeads')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.tranHeads')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'tranheads') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-dice-one"></i>
@@ -279,7 +280,7 @@
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'transaction' ? 'show':''}}">
                     @if(auth()->user()->hasPermissionToRoute('show.transactionReceive'))
-                        <li data-url="{{route('show.transactionReceive')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.transactionReceive')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'receive') ? 'active':''}}">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
@@ -290,7 +291,7 @@
                     @endif
                             
                     @if(auth()->user()->hasPermissionToRoute('show.transactionPayment'))
-                        <li data-url="{{route('show.transactionPayment')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.transactionPayment')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'payment') ? 'active':''}}">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
@@ -317,7 +318,7 @@
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'bank' ? 'show':''}}">
                     @if(auth()->user()->hasPermissionToRoute('show.withdraws'))
-                        <li data-url="{{route('show.withdraws')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.withdraws')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'bank' && Request::segment(2) == 'withdraw') ? 'active':''}}">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
@@ -328,7 +329,7 @@
                     @endif
                     
                     @if(auth()->user()->hasPermissionToRoute('show.deposits'))
-                        <li data-url="{{route('show.deposits')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.deposits')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'bank' && Request::segment(2) == 'deposit') ? 'active':''}}">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
@@ -365,7 +366,7 @@
                         </div>
                         <ul class=" sub-menu1 {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.employees'))
-                                <li data-url="{{route('show.employees')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.employees')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'all') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -376,7 +377,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.employeePersonal'))
-                                <li data-url="{{ route('show.employeePersonal') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.employeePersonal') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'personal') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -387,7 +388,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.employeeEducation'))
-                                <li data-url="{{ route('show.employeeEducation') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.employeeEducation') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'education') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -398,7 +399,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.employeeTraining'))
-                                <li data-url="{{ route('show.employeeTraining') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.employeeTraining') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'training') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -409,7 +410,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.employeeExperience'))
-                                <li data-url="{{ route('show.employeeExperience') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.employeeExperience') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'experience') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -420,7 +421,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.employeeOrganization'))
-                                <li data-url="{{ route('show.employeeOrganization') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.employeeOrganization') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'organization') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -431,7 +432,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.employeeAttendence'))
-                                <li data-url="{{ route('show.employeeAttendence') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.employeeAttendence') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'attendence') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -453,7 +454,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'payroll') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.payrollSetup'))
-                                <li data-url="{{route('show.payrollSetup')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.payrollSetup')}}">
                                     <div class="menu-title  {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'payroll' && Request::segment(3) == 'setup') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -464,7 +465,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.payrollMiddlewire'))
-                                <li data-url="{{route('show.payrollMiddlewire')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.payrollMiddlewire')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'payroll' && Request::segment(3) == 'middlewire') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -475,7 +476,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.payroll'))
-                                <li data-url="{{route('show.payroll')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.payroll')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'payroll' && Request::segment(3) == 'process') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -488,7 +489,7 @@
                     </li>
                     
                     @if(auth()->user()->hasPermissionToRoute('show.departments'))
-                        <li data-url="{{route('show.departments')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.departments')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'departments') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-building"></i>
@@ -499,7 +500,7 @@
                     @endif
                                 
                     @if(auth()->user()->hasPermissionToRoute('show.designations'))
-                        <li data-url="{{route('show.designations')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.designations')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'designations') ? 'active':''}}">
                                 <p>
                                     <i class="fas fa-id-badge"></i>
@@ -512,14 +513,14 @@
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'report') ? 'active':''}}">
                             <p>
-                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
                                 Report
                             </p>
                             <i class="fas fa-angle-right"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'report') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.salarySummaryReport'))
-                                <li data-url="{{route('show.salarySummaryReport')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.salarySummaryReport')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'report' && Request::segment(4) == 'summary') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -530,7 +531,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.salaryDetailsReport'))
-                                <li data-url="{{route('show.salaryDetailsReport')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.salaryDetailsReport')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'report' && Request::segment(4) == 'details') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -568,7 +569,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'setup') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyManufacturer'))
-                                <li data-url="{{route('show.pharmacyManufacturer')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyManufacturer')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'setup' && Request::segment(3) == 'manufacturer') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-industry"></i>
@@ -579,7 +580,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyCategory'))
-                                <li data-url="{{route('show.pharmacyCategory')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyCategory')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'setup' && Request::segment(3) == 'category') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-table-cells-large"></i>
@@ -590,7 +591,7 @@
                             @endif
                             
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyUnit'))
-                                <li data-url="{{route('show.pharmacyUnit')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyUnit')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'setup' && Request::segment(3) == 'unit') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-scale-unbalanced"></i>
@@ -601,7 +602,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyForm'))
-                                <li data-url="{{route('show.pharmacyForm')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyForm')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'setup' && Request::segment(3) == 'form') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-list-ul"></i>
@@ -612,7 +613,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyProduct'))
-                                <li data-url="{{route('show.pharmacyProduct')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyProduct')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'setup' && Request::segment(3) == 'product') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-cart-shopping"></i>
@@ -635,7 +636,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'transaction') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyPurchase'))
-                                <li data-url="{{route('show.pharmacyPurchase')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyPurchase')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'transaction' && Request::segment(3) == 'purchase') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -646,7 +647,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyIssue'))
-                                <li data-url="{{route('show.pharmacyIssue')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyIssue')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'transaction' && Request::segment(3) == 'issue') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -666,7 +667,7 @@
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'transaction' && Request::segment(3) == 'return' ) ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyClientReturn'))
-                                        <li data-url="{{route('show.pharmacyClientReturn')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacyClientReturn')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'transaction' && Request::segment(3) == 'return' && Request::segment(4) == 'client') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -677,7 +678,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacySupplierReturn'))
-                                        <li data-url="{{route('show.pharmacySupplierReturn')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacySupplierReturn')}}">
                                             <div class="menu-title  {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'transaction' && Request::segment(3) == 'return' && Request::segment(4) == 'supplier') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -703,7 +704,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'adjustment') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyPosAdjustment'))
-                                <li data-url="{{route('show.pharmacyPosAdjustment')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyPosAdjustment')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'adjustment' && Request::segment(3) == 'positive') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -714,7 +715,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyNegAdjustment'))
-                                <li data-url="{{route('show.pharmacyNegAdjustment')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyNegAdjustment')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'adjustment' && Request::segment(3) == 'negative') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -738,7 +739,7 @@
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report') ? 'show':''}}">
                             {{-- Item Flow statement start --}}
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyItemFlow'))
-                                <li data-url="{{route('show.pharmacyItemFlow')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyItemFlow')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'item') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-hand-holding-dollar"></i>
@@ -759,7 +760,7 @@
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'stock') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyStockDetails'))
-                                        <li data-url="{{route('show.pharmacyStockDetails')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacyStockDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'stock' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -770,7 +771,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyStockSummary'))
-                                        <li data-url="{{route('show.pharmacyStockSummary')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item data-url="{{route('show.pharmacyStockSummary')}}"">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'stock' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -786,7 +787,7 @@
                             
                             {{-- Profitability statement start --}}    
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyProfit'))
-                                <li data-url="{{route('show.pharmacyProfit')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyProfit')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'profitability') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-hand-holding-dollar"></i>
@@ -798,7 +799,7 @@
 
                             {{-- Expiry statement start --}}    
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyExpiry'))
-                                <li data-url="{{route('show.pharmacyExpiry')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyExpiry')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'expiry') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-tag"></i>
@@ -820,7 +821,7 @@
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyPurchaseDetails'))
-                                        <li data-url="{{route('show.pharmacyPurchaseDetails')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacyPurchaseDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -831,7 +832,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyPurchaseSummary'))
-                                        <li data-url="{{route('show.pharmacyPurchaseSummary')}}" class="sub-menu2-item">
+                                        <li  class="sub-menu2-item"data-url="{{route('show.pharmacyPurchaseSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -854,7 +855,7 @@
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'issue') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyIssueDetails'))
-                                        <li data-url="{{route('show.pharmacyIssueDetails')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacyIssueDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'issue' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -865,7 +866,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyIssueSummary'))
-                                        <li data-url="{{route('show.pharmacyIssueSummary')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacyIssueSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'issue' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -887,7 +888,7 @@
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyClientReturnDetails'))
-                                        <li data-url="{{route('show.pharmacyClientReturnDetails')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacyClientReturnDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'client' && Request::segment(5) == 'details') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -898,7 +899,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyClientReturnSummary'))
-                                        <li data-url="{{route('show.pharmacyClientReturnSummary')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacyClientReturnSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'client' && Request::segment(5) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -909,7 +910,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacySupplierReturnDetails'))
-                                        <li data-url="{{route('show.pharmacySupplierReturnDetails')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacySupplierReturnDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'supplier' && Request::segment(5) == 'details') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -920,7 +921,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacySupplierReturnSummary'))
-                                        <li data-url="{{route('show.pharmacySupplierReturnSummary')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacySupplierReturnSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'supplier' && Request::segment(5) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -961,7 +962,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'setup') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.invManufacturer'))
-                                <li data-url="{{route('show.invManufacturer')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invManufacturer')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'setup' && Request::segment(3) == 'manufacturer') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-industry"></i>
@@ -972,7 +973,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.invCategory'))
-                                <li data-url="{{route('show.invCategory')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invCategory')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'setup' && Request::segment(3) == 'category') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-table-cells-large"></i>
@@ -983,7 +984,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.invUnit'))
-                                <li data-url="{{route('show.invUnit')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invUnit')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'setup' && Request::segment(3) == 'unit') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-scale-unbalanced"></i>
@@ -994,7 +995,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.invForm'))
-                                <li data-url="{{route('show.invForm')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invForm')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'setup' && Request::segment(3) == 'form') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-list-ul"></i>
@@ -1005,7 +1006,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.invProduct'))
-                                <li data-url="{{route('show.invProduct')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invProduct')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'setup' && Request::segment(3) == 'product') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-cart-shopping"></i>
@@ -1028,7 +1029,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'transaction') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.invPurchase'))
-                                <li data-url="{{route('show.invPurchase')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invPurchase')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'transaction' && Request::segment(3) == 'purchase') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1039,7 +1040,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.invIssue'))
-                                <li data-url="{{route('show.invIssue')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invIssue')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'transaction' && Request::segment(3) == 'issue') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1059,7 +1060,7 @@
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'transaction' && Request::segment(3) == 'return' ) ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.invClientReturn'))
-                                        <li data-url="{{route('show.invClientReturn')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invClientReturn')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'transaction' && Request::segment(3) == 'return' && Request::segment(4) == 'client') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1070,7 +1071,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.invSupplierReturn'))
-                                        <li data-url="{{route('show.invSupplierReturn')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invSupplierReturn')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'transaction' && Request::segment(3) == 'return'  && Request::segment(4) == 'supplier') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1095,7 +1096,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'adjustment') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.invPosAdjustment'))
-                                <li data-url="{{route('show.invPosAdjustment')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invPosAdjustment')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'adjustment' && Request::segment(3) == 'positive') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1106,7 +1107,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.invNegAdjustment'))
-                                <li data-url="{{route('show.invNegAdjustment')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invNegAdjustment')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'adjustment' && Request::segment(3) == 'negative') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1130,7 +1131,7 @@
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report') ? 'show':''}}">
                             {{-- Item Flow statement start --}}
                             @if(auth()->user()->hasPermissionToRoute('show.invItemFlow'))
-                                <li data-url="{{route('show.invItemFlow')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invItemFlow')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'item') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-hand-holding-dollar"></i>
@@ -1151,7 +1152,7 @@
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'stock') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.invStockDetails'))
-                                        <li data-url="{{route('show.invStockDetails')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invStockDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'stock' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1162,7 +1163,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.invStockSummary'))
-                                        <li data-url="{{route('show.invStockSummary')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invStockSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'stock' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1176,7 +1177,7 @@
 
                             {{-- Profitability statement start --}}
                             @if(auth()->user()->hasPermissionToRoute('show.invProfit'))
-                                <li data-url="{{route('show.invProfit')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invProfit')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'profitability') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-hand-holding-dollar"></i>
@@ -1188,7 +1189,7 @@
 
                             {{-- Expiry statement start --}}
                             @if(auth()->user()->hasPermissionToRoute('show.invExpiry'))
-                                <li data-url="{{route('show.invExpiry')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.invExpiry')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'expiry') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-tag"></i>
@@ -1209,7 +1210,7 @@
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.invPurchaseDetails'))
-                                        <li data-url="{{route('show.invPurchaseDetails')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invPurchaseDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1220,7 +1221,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.invPurchaseSummary'))
-                                        <li data-url="{{route('show.invPurchaseSummary')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invPurchaseSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1243,7 +1244,7 @@
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'issue') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.invIssueDetails'))
-                                        <li data-url="{{route('show.invIssueDetails')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invIssueDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'issue' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1254,7 +1255,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.invIssueSummary'))
-                                        <li data-url="{{route('show.invIssueSummary')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invIssueSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'issue' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1277,7 +1278,7 @@
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.invClientReturnDetails'))
-                                        <li data-url="{{route('show.invClientReturnDetails')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invClientReturnDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'client' && Request::segment(5) == 'details') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1288,7 +1289,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.invClientSReturnummary'))
-                                        <li data-url="{{route('show.invClientReturnSummary')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invClientReturnSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'client' && Request::segment(5) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1299,7 +1300,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.invSupplierReturnDetails'))
-                                        <li data-url="{{route('show.invSupplierReturnDetails')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invSupplierReturnDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'supplier' && Request::segment(5) == 'details') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1310,7 +1311,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.invSupplierReturnSummary'))
-                                        <li data-url="{{route('show.invSupplierReturnSummary')}}" class="sub-menu2-item">
+                                        <li class="sub-menu2-item" data-url="{{route('show.invSupplierReturnSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'supplier' && Request::segment(5) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>
@@ -1340,7 +1341,7 @@
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'party' ? 'show':''}}">
                     @if(auth()->user()->hasPermissionToRoute('show.partyReceive'))
-                        <li data-url="{{route('show.partyReceive')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.partyReceive')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'party' && Request::segment(2) == 'receive') ? 'active':''}}">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
@@ -1351,7 +1352,7 @@
                     @endif
                                 
                     @if(auth()->user()->hasPermissionToRoute('show.partyPayment'))
-                        <li data-url="{{route('show.partyPayment')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.partyPayment')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'party' && Request::segment(2) == 'payment') ? 'active':''}}">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
@@ -1376,7 +1377,7 @@
                     <i class="fas fa-angle-right"></i>
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'report' ? 'show':''}}">
-                    <li class="sub-menu-item">
+                    {{-- <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'balancesheet') ? 'active':''}}">
                             <p>
                             <i class="fa-solid fa-sheet-plastic"></i>
@@ -1386,7 +1387,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'balancesheet') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.balanceSheetDetails'))
-                                <li data-url="{{route('show.balanceSheetDetails')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.balanceSheetDetails')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'balancesheet' && Request::segment(3) == 'details') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1397,7 +1398,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.balanceSheetSummary'))
-                                <li data-url="{{route('show.balanceSheetSummary')}}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{route('show.balanceSheetSummary')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'balancesheet' && Request::segment(3) == 'summary') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1407,7 +1408,7 @@
                                 </li>
                             @endif
                         </ul>
-                    </li>
+                    </li> --}}
 
                     {{-- accounts statement part start --}}
                     <li class="sub-menu-item">
@@ -1420,7 +1421,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.accountSummary'))
-                                <li data-url="{{ route('show.accountSummary') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.accountSummary') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account' && Request::segment(3) == 'summary') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1431,7 +1432,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.accountSummaryByGroupe'))
-                                <li data-url="{{ route('show.accountSummaryByGroupe') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.accountSummaryByGroupe') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account' && Request::segment(3) == 'summarygroupe') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1442,7 +1443,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.accountDetails'))
-                                <li data-url="{{ route('show.accountDetails') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.accountDetails') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account' && Request::segment(3) == 'details') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1465,7 +1466,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'party') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.partyDetails'))
-                                <li data-url="{{ route('show.partyDetails') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.partyDetails') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'party' && Request::segment(3) == 'details') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1476,7 +1477,7 @@
                             @endif
                                 
                             @if(auth()->user()->hasPermissionToRoute('show.partySummary'))
-                                <li data-url="{{ route('show.partySummary') }}" class="sub-menu1-item">
+                                <li class="sub-menu1-item" data-url="{{ route('show.partySummary') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'party' && Request::segment(3) == 'summary') ? 'active':''}}">
                                         <p>
                                             <i class="far fa-circle nav-icon"></i>
@@ -1488,8 +1489,8 @@
                         </ul>
                     </li>
                                 
-                    @if(auth()->user()->hasPermissionToRoute('show.groupeReport'))
-                        <li data-url="{{route('show.groupeReport')}}" class="sub-menu-item">
+                    {{-- @if(auth()->user()->hasPermissionToRoute('show.groupeReport'))
+                        <li class="sub-menu-item" data-url="{{route('show.groupeReport')}}">
                             <div class="menu-title">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
@@ -1500,7 +1501,7 @@
                     @endif
                                 
                     @if(auth()->user()->hasPermissionToRoute('show.summaryReport'))
-                        <li data-url="{{route('show.summaryReport')}}" class="sub-menu-item">
+                        <li class="sub-menu-item" data-url="{{route('show.summaryReport')}}">
                             <div class="menu-title">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
@@ -1508,7 +1509,7 @@
                                 </p>
                             </div>
                         </li>
-                    @endif
+                    @endif --}}
                 </ul>
             </li>
         @endif

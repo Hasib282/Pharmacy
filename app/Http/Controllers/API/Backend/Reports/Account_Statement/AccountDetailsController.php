@@ -13,7 +13,7 @@ class AccountDetailsController extends Controller
 {
     // Create a Common Function for Getting Data Easily
     public function GetAccountDetailsStatement($tranType) {
-        return Transaction_Detail::where('tran_type', $tranType)
+        return Transaction_Detail::on('mysql')->where('tran_type', $tranType)
             ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
             ->orderBy('tran_id', 'asc')
             ->get();
@@ -31,14 +31,14 @@ class AccountDetailsController extends Controller
         $pharmacy = $this->GetAccountDetailsStatement(6);
         $michellaneous = $this->GetAccountDetailsStatement(7);
         
-        $opening = Transaction_Detail::select(
+        $opening = Transaction_Detail::on('mysql')->select(
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
         )
         ->whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])
         ->first();
 
-        $type = Transaction_Main_Head::get();
+        $type = Transaction_Main_Head::on('mysql_second')->get();
         
         $data = [       
             'opening'           =>      $opening,
@@ -62,7 +62,7 @@ class AccountDetailsController extends Controller
 
     // Create a Common Function for Getting Data Easily
     public function FindAccountDetailsStatement($tranType, $req) {
-        return Transaction_Detail::whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        return Transaction_Detail::on('mysql')->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
         ->where('tran_type', $tranType)
         ->orderBy('tran_id', 'asc')
         ->get();
@@ -72,7 +72,7 @@ class AccountDetailsController extends Controller
 
     // Search Salary Details Report
     public function Search(Request $req){
-        $opening = Transaction_Detail::select(
+        $opening = Transaction_Detail::on('mysql')->select(
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
         )

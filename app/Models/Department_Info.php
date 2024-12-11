@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Department_Info extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql';
+
     protected $guarded = [];
+    
     public $timestamps = false;
 
 }

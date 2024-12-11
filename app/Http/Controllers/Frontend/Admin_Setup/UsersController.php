@@ -7,6 +7,33 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+    /////////////////////////// --------------- Roles Table Methods start ---------- //////////////////////////
+    // Show All Roles
+    public function ShowRoles(Request $req){
+        $name = "User Role";
+        $js = 'admin_setup/users/roles';
+        if ($req->ajax()) {
+            return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
+        }
+        else{
+            return view('common_modals.single_input.singleData', compact('name', 'js'));
+        }
+    } // End Method
+
+
+
+    // Roles Search
+    public function SearchRoles(Request $req){
+        $name = "User Role";
+        $js = 'admin_setup/users/roles';
+        return view('common_modals.single_input.singleData', compact('name', 'js'));
+    } // End Method
+    /////////////////////////// --------------- Roles Methods End ---------- //////////////////////////
+
+
+
+    
+
     /////////////////////////// --------------- Admin Methods start---------- //////////////////////////
     // Show Admins
     public function ShowAdmins(Request $req){

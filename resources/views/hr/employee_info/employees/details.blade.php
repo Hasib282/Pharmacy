@@ -1,5 +1,3 @@
-
-
 @if(!$employee && !$employee->personalDetail && !$education->isNotEmpty() && !$training->isNotEmpty() && !$experience->isNotEmpty() && !$employee->organizationDetail)
     <div class="details-table">
         <div class="rows each-row"> 
@@ -10,7 +8,7 @@
 
 <ul>
     {{-- Personal Details Part Starts --}}
-    <li data-id="1">Personal Details</li>
+    <li data-id="1.1">Personal Details</li>
     <div class="personal">
         <div class="details-head">
             <div class="image-round">
@@ -88,7 +86,7 @@
     </div>
 
 
-    <li data-id="2">Education Details</li>
+    <li data-id="1.2">Education Details</li>
     @if($education->isNotEmpty())
         @foreach($education as $employees)
         {{-- Education Details part starts --}}
@@ -159,7 +157,7 @@
 
 
     {{-- Training Details part starts --}}
-    <li data-id="3">Training Details</li>
+    <li data-id="1.3">Training Details</li>
     @if($training->isNotEmpty())
         @foreach($training as $employees)
         <div class="training">
@@ -214,7 +212,7 @@
 
     
     {{-- Experience Details part starts --}}
-    <li data-id="4">Experience Details</li>
+    <li data-id="1.4">Experience Details</li>
     @if($experience->isNotEmpty())
         @foreach($experience as $employees)
         <div class="experience">
@@ -260,7 +258,7 @@
 
 
     {{-- Organization Details part starts --}}
-    <li data-id="5">Organization Details</li>
+    <li data-id="1.5">Organization Details</li>
     @isset($employee->organizationDetail)
     <div class="organization">
         <div class="details-table" style="">
@@ -289,7 +287,7 @@
     @endif
 
     {{-- Payroll details part starts --}}
-    <li data-id="6">Payroll Details</li>
+    <li data-id="1.6">Payroll Details</li>
     <div class="payroll">
         <table class="show-table">
             <thead>

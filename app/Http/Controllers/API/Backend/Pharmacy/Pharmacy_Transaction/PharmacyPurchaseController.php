@@ -18,8 +18,8 @@ class PharmacyPurchaseController extends Controller
 {
     // Show All Pharmacy Purchase
     public function ShowAll(Request $req){
-        $pharmacy = Transaction_Main::with('User')->where('tran_method','Purchase')->where('tran_type','6')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::where('tran_groupe_type', '6')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
+        $pharmacy = Transaction_Main::on('mysql')->with('User')->where('tran_method','Purchase')->where('tran_type','6')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '6')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $pharmacy,
@@ -35,14 +35,13 @@ class PharmacyPurchaseController extends Controller
         $req->validate([
             "method" => 'required',
             "type" => 'required',
-            "withs" => 'required',
             "user" => 'required',
             "amountRP" => 'required',
             "discount" => 'required',
             "netAmount" => 'required',
             "advance" => 'required',
             "balance" => 'required',
-            "store" => 'required'
+            "store" => 'required',
         ]);
 
 
@@ -77,11 +76,11 @@ class PharmacyPurchaseController extends Controller
         // Validation Part End
 
         // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Mains_Temp::where('tran_type', $req->type)->where('tran_method', $req->method)->latest('tran_id')->first();
+        $transaction = Transaction_Mains_Temp::on('mysql')->where('tran_type', $req->type)->where('tran_method', $req->method)->latest('tran_id')->first();
         $id = ($transaction) ? 'PIP' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'PIP000000001';
 
         DB::transaction(function () use ($req, $id) {
-            Transaction_Mains_Temp::insert([
+            Transaction_Mains_Temp::on('mysql')->insert([
                 "tran_id" => $id,
                 "tran_type" => $req->type,
                 "tran_method" => $req->method,
@@ -92,7 +91,7 @@ class PharmacyPurchaseController extends Controller
                 "net_amount" => $req->netAmount,
                 "payment" => $req->advance,
                 "due" => $req->balance,
-                "store_id" => $req->store
+                "store_id" => $req->store,
             ]);
 
             $billDiscount = $req->discount;
@@ -101,7 +100,7 @@ class PharmacyPurchaseController extends Controller
             $billAdvance = $req->advance;
             $products = json_decode($req->products, true);
             foreach($products as $product){
-                $p = Transaction_Head::findOrFail($product['product']);
+                $p = Transaction_Head::on('mysql_second')->findOrFail($product['product']);
                 // Calculate Profit
                 $totalMrp = $product['quantity'] * $product['mrp'];
                 $totalCp = $product['quantity'] * $product['cp'];
@@ -118,7 +117,7 @@ class PharmacyPurchaseController extends Controller
                     "updated_at" => now()
                 ]);
 
-                Transaction_Details_Temp::insert([
+                Transaction_Details_Temp::on('mysql')->insert([
                     "tran_id" => $id,
                     "tran_type" => $req->type,
                     "tran_method" => $req->method,
@@ -137,7 +136,7 @@ class PharmacyPurchaseController extends Controller
                     "payment" => $advance,
                     "due" => $due,
                     "expiry_date" => $product['expiry'] == null ? null : $product['expiry'],
-                    "store_id" => $req->store
+                    "store_id" => $req->store,
                 ]);
 
                 $billDiscount -= $discount;
@@ -158,14 +157,14 @@ class PharmacyPurchaseController extends Controller
     // Edit Pharmacy Purchase
     public function Edit(Request $req){
         if($req->status == 1){
-            $pharmacy = Transaction_Main::with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+            $pharmacy = Transaction_Main::on('mysql')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
             return response()->json([
                 'status'=> true,
                 'pharmacy'=> $pharmacy,
             ], 200);
         }
         else if($req->status == 2){
-            $pharmacy = Transaction_Mains_Temp::with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+            $pharmacy = Transaction_Mains_Temp::on('mysql')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
             return response()->json([
                 'status'=> true,
                 'pharmacy'=> $pharmacy,
@@ -218,10 +217,10 @@ class PharmacyPurchaseController extends Controller
 
 
         if($req->status == 1){
-            $transaction = Transaction_Main::findOrfail($req->id);
+            $transaction = Transaction_Main::on('mysql')->findOrfail($req->id);
         }
         else if($req->status == 2){
-            $transaction = Transaction_Mains_Temp::findOrfail($req->id);
+            $transaction = Transaction_Mains_Temp::on('mysql')->findOrfail($req->id);
         }
 
         DB::transaction(function () use ($req, $transaction) {
@@ -237,9 +236,9 @@ class PharmacyPurchaseController extends Controller
             
             
             if($req->status == 1){
-                $details = Transaction_Detail::where('tran_id', $req->tranid)->get();
+                $details = Transaction_Detail::on('mysql')->where('tran_id', $req->tranid)->get();
                 foreach($details as $item){
-                    $product = Transaction_Head::findOrfail($item->tran_head_id);
+                    $product = Transaction_Head::on('mysql_second')->findOrfail($item->tran_head_id);
                     if($product){
                         $quantity = $product->quantity - $item->quantity;
 
@@ -249,10 +248,10 @@ class PharmacyPurchaseController extends Controller
                         ]);
                     }
                 }
-                Transaction_Detail::where('tran_id', $req->tranid)->delete();
+                Transaction_Detail::on('mysql')->where('tran_id', $req->tranid)->delete();
             }
             else if($req->status == 2){
-                Transaction_Details_Temp::where('tran_id', $req->tranid)->delete();
+                Transaction_Details_Temp::on('mysql')->where('tran_id', $req->tranid)->delete();
             }
 
     
@@ -263,7 +262,7 @@ class PharmacyPurchaseController extends Controller
             $products = json_decode($req->products, true);
             
             foreach($products as $product) {
-                $p = Transaction_Head::findOrFail($product['product']);
+                $p = Transaction_Head::on('mysql_second')->findOrFail($product['product']);
                 $quantity = $p->quantity + $product['quantity'];
                 // Calculate Profit
                 $totalMrp = $product['quantity'] * $product['mrp'];
@@ -308,13 +307,13 @@ class PharmacyPurchaseController extends Controller
     
                 // Update Product Details
                 if ($req->status == 1) {
-                    Transaction_Detail::create($commonData);
+                    Transaction_Detail::on('mysql')->create($commonData);
                     $p->update([
                         "quantity" => $quantity,
                     ]);
                 } 
                 else if ($req->status == 2) {
-                    Transaction_Details_Temp::create($commonData);
+                    Transaction_Details_Temp::on('mysql')->create($commonData);
                 }
                 
     
@@ -336,10 +335,10 @@ class PharmacyPurchaseController extends Controller
     // Delete Pharmacy Purchase
     public function Delete(Request $req){
         if($req->status == 1){
-            $details = Transaction_Detail::where("tran_id", $req->id)->get();
+            $details = Transaction_Detail::on('mysql')->where("tran_id", $req->id)->get();
 
             foreach($details as $item){
-                $product = Transaction_Head::findOrfail($item->tran_head_id);
+                $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
                 if($product){
                     $quantity = $product->quantity - $item->quantity;
 
@@ -350,8 +349,8 @@ class PharmacyPurchaseController extends Controller
                 }
             }
 
-            Transaction_Main::where("tran_id", $req->id)->delete();
-            Transaction_Detail::where("tran_id", $req->id)->delete();
+            Transaction_Main::on('mysql')->where("tran_id", $req->id)->delete();
+            Transaction_Detail::on('mysql')->where("tran_id", $req->id)->delete();
             
             return response()->json([
                 'status'=> true,
@@ -359,10 +358,10 @@ class PharmacyPurchaseController extends Controller
             ], 200);
         }
         else if($req->status == 2){
-            $details = Transaction_Details_Temp::where("tran_id", $req->id)->get();
+            $details = Transaction_Details_Temp::on('mysql')->where("tran_id", $req->id)->get();
 
-            Transaction_Mains_Temp::where("tran_id", $req->id)->delete();
-            Transaction_Details_Temp::where("tran_id", $req->id)->delete();
+            Transaction_Mains_Temp::on('mysql')->where("tran_id", $req->id)->delete();
+            Transaction_Details_Temp::on('mysql')->where("tran_id", $req->id)->delete();
             
             return response()->json([
                 'status'=> true,
@@ -377,7 +376,7 @@ class PharmacyPurchaseController extends Controller
     public function Search(Request $req){
         if($req->status == 1){
             if($req->searchOption == 1){
-                $pharmacy = Transaction_Main::with('User')
+                $pharmacy = Transaction_Main::on('mysql')->with('User')
                 ->where('tran_id', "like", '%'. $req->search .'%')
                 ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
                 ->where('tran_method',$req->method)
@@ -386,7 +385,7 @@ class PharmacyPurchaseController extends Controller
                 ->paginate(15);
             }
             else if($req->searchOption == 2){
-                $pharmacy = Transaction_Main::with('User')
+                $pharmacy = Transaction_Main::on('mysql')->with('User')
                 ->whereHas('User', function ($query) use ($req) {
                     $query->where('user_name', 'like', '%'.$req->search.'%');
                     $query->orderBy('user_name','asc');
@@ -399,7 +398,7 @@ class PharmacyPurchaseController extends Controller
         }
         else if($req->status == 2){
             if($req->searchOption == 1){
-                $pharmacy = Transaction_Mains_Temp::with('User')
+                $pharmacy = Transaction_Mains_Temp::on('mysql')->with('User')
                 ->where('tran_id', "like", '%'. $req->search .'%')
                 ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
                 ->where('tran_method',$req->method)
@@ -408,7 +407,7 @@ class PharmacyPurchaseController extends Controller
                 ->paginate(15);
             }
             else if($req->searchOption == 2){
-                $pharmacy = Transaction_Mains_Temp::with('User')
+                $pharmacy = Transaction_Mains_Temp::on('mysql')->with('User')
                 ->whereHas('User', function ($query) use ($req) {
                     $query->where('user_name', 'like', '%'.$req->search.'%');
                     $query->orderBy('user_name','asc');
@@ -430,32 +429,35 @@ class PharmacyPurchaseController extends Controller
 
     // Verify Pharmacy Purchase
     public function Verify(Request $req){
-        $details = Transaction_Details_Temp::where("tran_id", $req->id)->get();
-        $mains = Transaction_Mains_Temp::where("tran_id", $req->id)->first();
+        $details = Transaction_Details_Temp::on('mysql')->where("tran_id", $req->id)->get();
+        $mains = Transaction_Mains_Temp::on('mysql')->where("tran_id", $req->id)->first();
 
         // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Main::where('tran_type', $mains->tran_type)->where('tran_method', $mains->tran_method)->latest('tran_id')->first();
+        $transaction = Transaction_Main::on('mysql')->where('tran_type', $mains->tran_type)->where('tran_method', $mains->tran_method)->latest('tran_id')->first();
         $id = ($transaction) ? 'PIP' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'PIP000000001';
 
 
-        Transaction_Main::insert([
+        Transaction_Main::on('mysql')->insert([
             "tran_id" => $id,
             "tran_type" => $mains->tran_type,
             "tran_method" => $mains->tran_method,
             "tran_type_with" => $mains->tran_type_with,
             "tran_user" => $mains->tran_user,
+            "user_name" => $mains->user_name,
+            "user_phone" => $mains->user_phone,
+            "user_address" => $mains->user_address,
             "bill_amount" => $mains->bill_amount,
             "discount" => $mains->discount,
             "net_amount" => $mains->net_amount,
             "payment" => $mains->payment,
             "due" => $mains->due,
-            "store_id" => $mains->store_id
+            "store_id" => $mains->store_id,
         ]);
 
         
         
         foreach($details as $detail){
-            $p = Transaction_Head::findOrFail($detail->tran_head_id);
+            $p = Transaction_Head::on('mysql_second')->findOrFail($detail->tran_head_id);
             $quantity = $p->quantity + $detail->quantity;
             $p->update([
                 "quantity" => $quantity, 
@@ -465,12 +467,15 @@ class PharmacyPurchaseController extends Controller
                 "updated_at" => now()
             ]);
 
-            Transaction_Detail::insert([
+            Transaction_Detail::on('mysql')->insert([
                 "tran_id" => $id,
                 "tran_type" => $detail->tran_type,
                 "tran_method" => $detail->tran_method,
                 "tran_type_with" => $detail->tran_type_with,
                 "tran_user" => $detail->tran_user,
+                "user_name" => $mains->user_name,
+                "user_phone" => $mains->user_phone,
+                "user_address" => $mains->user_address,
                 "tran_groupe_id" => $detail->tran_groupe_id,
                 "tran_head_id" => $detail->tran_head_id,
                 "amount" => $detail->amount,
@@ -484,13 +489,13 @@ class PharmacyPurchaseController extends Controller
                 "payment" => $detail->payment,
                 "due" => $detail->due,
                 "expiry_date" => $detail->expiry_date == null ? null : $detail->expiry_date,
-                "store_id" => $detail->store_id
+                "store_id" => $detail->store_id,
             ]);
         }
 
 
-        Transaction_Details_Temp::where("tran_id", $req->id)->delete();
-        Transaction_Mains_Temp::where("tran_id", $req->id)->delete();
+        Transaction_Details_Temp::on('mysql')->where("tran_id", $req->id)->delete();
+        Transaction_Mains_Temp::on('mysql')->where("tran_id", $req->id)->delete();
 
         return response()->json([
             'status' => true,

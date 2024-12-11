@@ -210,21 +210,6 @@ $(document).ready(function () {
 
 
 
-    ///////////// ------------------ Show Personal Details Ajax Part Start ---------------- /////////////////////////////
-    $(document).on('click', '#details', function (e) {
-        let modal = $(this).attr('data-modal-id');
-        let id = $(this).attr('data-id');
-        $.ajax({
-            url: `/hr/employee/personal/details`,
-            method: 'GET',
-            data: {id:id},
-            success: function (res) {
-                $("#"+ modal).show();
-                $('.employeepersonaldetails').html(res.data)
-            },
-            error: function (err) {
-                console.log(err)
-            }
-        });
-    });
+    // Show Detals Ajax
+    DetailsAjax('hr/employee/personal');
 });

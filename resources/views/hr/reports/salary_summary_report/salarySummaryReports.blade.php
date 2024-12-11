@@ -1,81 +1,3 @@
-@section('style')
-    <style>
-        .add-search{
-            margin: 15px 10px;
-        }
-        #search {
-            width: 100%;
-            margin: 0;
-        }
-        .rows{
-            width: 60%;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        @media print {
-            .sidenav {
-                display: none;
-            }
-
-            @page {
-                size: auto;   /* auto is the current printer page size */
-                margin: 0;  /* margin you want for the content */
-            }
-
-            html, body {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-                overflow: hidden;
-            }
-
-            body * {
-                visibility: hidden;
-            }
-
-            .show-table, .show-table * {
-                visibility: visible;
-            }
-
-            .show-table {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100vw;  /* Full viewport width */
-                height: auto;
-                border-collapse: collapse;
-                border: 1px solid #000;
-            }
-
-            .show-table th, .show-table td {
-                border: 1px solid #000;
-                padding: 8px;
-            }
-
-            .caption {
-                text-align: center;
-                font-weight: bold;
-                font-size: 1.5em;
-                margin-bottom: 10px;
-            }
-
-            .paginate {
-                display: none;
-            }
-
-            .print-button {
-                display: none;
-            }
-        }
-
-    </style>
-@endsection
-
-
 @php
     $searchValue = request()->query('search');
     $monthValue = request()->query('month');
@@ -104,7 +26,7 @@
                         <option value="12" {{ date('m') == '12' ? 'selected' : '' }}>December</option>
                     </select>
                 </div>
-                <div class="c-1">
+                <div class="c-2">
                     <label for="year">Year</label>
                     <select name="year" id="year">
                         @for ($year = date('Y'); $year >= 2000; $year--)
@@ -114,12 +36,13 @@
                 </div>
                 <div class="c-6">
                     <label for="search">Search</label>
-                    <input type="text" name="search" id="search" class="form-input" placeholder="Search Employee here..." value="{{ $searchValue ? $searchValue : '' }}">
+                    <input type="text" name="search" id="search" class="form-input" placeholder="Search Employee here..." value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%;margin: 0;">
+                </div>
+                <div class="c-2 center">
+                    <button onclick="window.print()" class="btn-blue"> <i class="fa-solid fa-print"></i> Print</button>
                 </div>
             </div>
-            <div class="print-button">
-                <button onclick="window.print()" class="btn-blue"> <i class="fa-solid fa-print"></i> Print</button>
-            </div>
+            
         </div>
     </div>
 

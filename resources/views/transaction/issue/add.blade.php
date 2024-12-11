@@ -46,11 +46,31 @@
                                 <span class="error" id="user_error"></span>
                             </div>
                         </div>
+                        <div class="c-4">
+                            <div class="form-input-group">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" class="form-input" id="name">
+                                <span class="error" id="name_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-4">
+                            <div class="form-input-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="text" name="phone" class="form-input" id="phone">
+                                <span class="error" id="phone_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-4">
+                            <div class="form-input-group">
+                                <label for="address">Address</label>
+                                <input type="text" name="address" class="form-input" id="address">
+                                <span class="error" id="address_error"></span>
+                            </div>
+                        </div>
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="product">Product Name</label>
                                 <input type="text" name="product" id="product" class="form-input" autocomplete="off">
-
                                 <span class="error" id="product_error"></span>
                             </div>
                         </div>

@@ -33,7 +33,11 @@
                 </div>
                 <span class="error" id="update_location_error"></span>
             </div>
-
+            <div class="form-input-group">
+                <label for="updateAddress">Address</label>
+                <input type="text" name="address" class="form-input" id="updateAddress">
+                <span class="error" id="address_error"></span>
+            </div>
             <div class="center">
                 <button type="submit" id="Update" class="btn-blue">Update</button>
             </div>

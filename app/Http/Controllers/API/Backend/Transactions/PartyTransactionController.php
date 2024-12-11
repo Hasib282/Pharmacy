@@ -19,8 +19,8 @@ class PartyTransactionController extends Controller
 {
     // Show All Party Receive Collection
     public function ShowAllReceive(Request $req){
-        $transaction = Transaction_Main::with('User')->where('tran_method', "Receive")->where('tran_type', "2")->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::where('tran_groupe_type', '2')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
+        $transaction = Transaction_Main::on('mysql')->with('User')->where('tran_method', "Receive")->where('tran_type', "2")->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '2')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $transaction,
@@ -32,8 +32,8 @@ class PartyTransactionController extends Controller
     
     // Show All Party Payment Collection
     public function ShowAllPayment(Request $req){
-        $transaction = Transaction_Main::with('User')->where('tran_method', "Payment")->where('tran_type', "2")->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::where('tran_groupe_type', '2')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
+        $transaction = Transaction_Main::on('mysql')->with('User')->where('tran_method', "Payment")->where('tran_type', "2")->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '2')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $transaction,
@@ -55,7 +55,7 @@ class PartyTransactionController extends Controller
         ]);
 
 
-        $transaction = Party_Payment_Receive::where('tran_type', 2)->where('tran_method', $req->method)->latest('tran_id')->first();
+        $transaction = Party_Payment_Receive::on('mysql')->where('tran_type', 2)->where('tran_method', $req->method)->latest('tran_id')->first();
         if($req->method == "Receive"){
             $id = ($transaction) ? 'PPR' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : 'PPR000000001';
         }
@@ -64,7 +64,7 @@ class PartyTransactionController extends Controller
         }
 
         // Get the Due List For Requested User
-        $transaction = Transaction_Main::where('tran_user', $req->user)
+        $transaction = Transaction_Main::on('mysql')->where('tran_user', $req->user)
         ->where('due', '>', 0)
         ->orderBy('tran_date','asc')
         ->get();
@@ -91,7 +91,7 @@ class PartyTransactionController extends Controller
                         
                         $receive = $req->method === 'Receive' ? $req->amount : null;
                         $payment = $req->method === 'Payment' ? $req->amount : null;
-                        Transaction_Main::insert([
+                        Transaction_Main::on('mysql')->insert([
                             "tran_id" => $id,
                             "tran_type" => 2,
                             "tran_method" => $req->method,
@@ -118,7 +118,7 @@ class PartyTransactionController extends Controller
 
                                     $receive = $req->method === 'Receive' ? $due : null;
                                     $payment = $req->method === 'Payment' ? $due : null;
-                                    Transaction_Main::findOrFail($item->id)->update([
+                                    Transaction_Main::on('mysql')->findOrFail($item->id)->update([
                                         "due_col" => $due_col,
                                         "due_disc" => $due_discount,
                                         "due" => 0,
@@ -127,7 +127,7 @@ class PartyTransactionController extends Controller
 
 
                                     // Calculate and Update Details Table Transactions
-                                    $details = Transaction_Detail::where('tran_id', $item->tran_id)->get();
+                                    $details = Transaction_Detail::on('mysql')->where('tran_id', $item->tran_id)->get();
                                     $detailAmount = $item->due;
                                     $detailDiscount = $discount;
                                     foreach($details as $index => $detail){
@@ -137,7 +137,7 @@ class PartyTransactionController extends Controller
                                         $detail_due_disc = $detail->due_disc + $detail_discount;
 
 
-                                        Transaction_Detail::findOrFail($detail->id)->update([
+                                        Transaction_Detail::on('mysql')->findOrFail($detail->id)->update([
                                             "due_col" => $detail_due_col,
                                             "due_disc" => $detail_due_disc,
                                             "due" => 0,
@@ -147,7 +147,7 @@ class PartyTransactionController extends Controller
 
                                         $detail_receive = $req->method === 'Receive' ? $detail_due : null;
                                         $detail_payment = $req->method === 'Payment' ? $detail_due : null;
-                                        Transaction_Detail::insert([
+                                        Transaction_Detail::on('mysql')->insert([
                                             "tran_id" => $id,
                                             "tran_type" => 2,
                                             "tran_method" => $req->method,
@@ -166,7 +166,7 @@ class PartyTransactionController extends Controller
                                     }
 
 
-                                    Party_Payment_Receive::insert([
+                                    Party_Payment_Receive::on('mysql')->insert([
                                         "tran_id" => $id,
                                         "tran_type" => 2,
                                         "tran_method" => $req->method,
@@ -195,7 +195,7 @@ class PartyTransactionController extends Controller
 
                                     $receive = $req->method === 'Receive' ? ($totAmount - $billDiscount) : null;
                                     $payment = $req->method === 'Payment' ? ($totAmount - $billDiscount) : null;
-                                    Transaction_Main::findOrFail($item->id)->update([
+                                    Transaction_Main::on('mysql')->findOrFail($item->id)->update([
                                         "due_col" => $due_col,
                                         "due_disc" => $due_discount,
                                         "due" => $due,
@@ -204,7 +204,7 @@ class PartyTransactionController extends Controller
 
 
                                     // Calculate and Update Details Table Transactions
-                                    $details = Transaction_Detail::where('tran_id', $item->tran_id)->get();
+                                    $details = Transaction_Detail::on('mysql')->where('tran_id', $item->tran_id)->get();
                                     $detailAmount = $item->due;
                                     $detailPaid = $totAmount - $billDiscount;
                                     $detailDiscount = $billDiscount;
@@ -216,7 +216,7 @@ class PartyTransactionController extends Controller
                                         $detail_due_disc = $detail->due_disc + $detail_discount;
 
 
-                                        Transaction_Detail::findOrFail($detail->id)->update([
+                                        Transaction_Detail::on('mysql')->findOrFail($detail->id)->update([
                                             "due_col" => $detail_due_col,
                                             "due_disc" => $detail_due_disc,
                                             "due" => $detail_due,
@@ -226,7 +226,7 @@ class PartyTransactionController extends Controller
                                         $detail_receive = $req->method === 'Receive' ? $detail_paid : null;
                                         $detail_payment = $req->method === 'Payment' ? $detail_paid : null;
 
-                                        Transaction_Detail::insert([
+                                        Transaction_Detail::on('mysql')->insert([
                                             "tran_id" => $id,
                                             "tran_type" => 2,
                                             "tran_method" => $req->method,
@@ -245,7 +245,7 @@ class PartyTransactionController extends Controller
                                         $detailDiscount = $detailDiscount - $detail_discount;
                                     }
 
-                                    Party_Payment_Receive::insert([
+                                    Party_Payment_Receive::on('mysql')->insert([
                                         "tran_id" => $id,
                                         "tran_type" => 2,
                                         "tran_method" => $req->method,
@@ -283,7 +283,7 @@ class PartyTransactionController extends Controller
 
     // Edit Party Collection
     public function Edit(Request $req){
-        $party = Transaction_Main::with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+        $party = Transaction_Main::on('mysql')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
         return response()->json([
             'status'=> true,
             'party'=>$party,
@@ -331,7 +331,7 @@ class PartyTransactionController extends Controller
     // Search Party Collection
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $transaction = Transaction_Main::with('User')
+            $transaction = Transaction_Main::on('mysql')->with('User')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
@@ -340,7 +340,7 @@ class PartyTransactionController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $transaction = Transaction_Main::with('User')
+            $transaction = Transaction_Main::on('mysql')->with('User')
             ->whereHas('User', function ($query) use ($req) {
                 $query->where('user_name', 'like', '%'.$req->search.'%');
                 $query->orderBy('user_name','asc');
@@ -362,7 +362,7 @@ class PartyTransactionController extends Controller
     // Get Transacetion Due List By User Id
     public function GetDueList(Request $req){
         if($req->id != ""){
-            $transaction = Transaction_Main::where('tran_user', 'like', '%'.$req->id.'%')
+            $transaction = Transaction_Main::on('mysql')->where('tran_user', 'like', '%'.$req->id.'%')
             ->where('due', '>', 0)
             ->orderBy('tran_date','asc')
             ->get();

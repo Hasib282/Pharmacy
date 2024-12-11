@@ -13,7 +13,7 @@ class AccountSummaryController extends Controller
 {
     // Create a Common Function for Getting Data Easily
     public function GetAccountSummaryStatement($tranType) {
-        return Transaction_Detail::select(
+        return Transaction_Detail::on('mysql')->select(
                 'tran_head_id', 
                 'tran_groupe_id', 
                 DB::raw('SUM(receive) as total_receive'), 
@@ -39,14 +39,14 @@ class AccountSummaryController extends Controller
         $pharmacy = $this->GetAccountSummaryStatement(6);
         $michellaneous = $this->GetAccountSummaryStatement(7);
         
-        $opening = Transaction_Detail::select(
+        $opening = Transaction_Detail::on('mysql')->select(
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
         )
         ->whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])
         ->first();
 
-        $type = Transaction_Main_Head::get();
+        $type = Transaction_Main_Head::on('mysql_second')->get();
 
         $data = [       
             'opening'           =>      $opening,
@@ -71,7 +71,7 @@ class AccountSummaryController extends Controller
     // Create a Common Function for Getting Data Easily
     public function FindAccountSummaryStatement($tranType, $req) {
         if($req->searchOption == 1){
-            return Transaction_Detail::with('Groupe')
+            return Transaction_Detail::on('mysql')->with('Groupe')
             ->whereHas('Groupe', function ($query) use ($req) {
                 $query->where('tran_groupe_name', 'like', '%'.$req->search.'%');
                 $query->orderBy('tran_groupe_name','asc');
@@ -89,7 +89,7 @@ class AccountSummaryController extends Controller
             ->get();
         }
         else if($req->searchOption == 2){
-            return Transaction_Detail::with('Head')
+            return Transaction_Detail::on('mysql')->with('Head')
             ->whereHas('Head', function ($query) use ($req) {
                 $query->where('tran_head_name', 'like', '%'.$req->search.'%');
                 $query->orderBy('tran_head_name','asc');
@@ -113,7 +113,7 @@ class AccountSummaryController extends Controller
 
     // Search Salary Details Report
     public function Search(Request $req){
-        $opening = Transaction_Detail::select(
+        $opening = Transaction_Detail::on('mysql')->select(
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
         )

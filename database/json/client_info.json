@@ -1,14 +1,15 @@
 [
-    {"user_id":"C000000101", "user_name":"Tanim",       "user_email":"tanim@gmail.com",         "user_phone":"01845258578",     "loc_id":1,         "address":"Badda, Dhaka",               "tran_user_type":4},
-    {"user_id":"C000000102", "user_name":"Ayman",       "user_email":"ayman@gmail.com",         "user_phone":"01845258501",     "loc_id":2,         "address":"Dhanmondi, Dhaka",           "tran_user_type":4},
-    {"user_id":"C000000103", "user_name":"Jim",         "user_email":"jim@gmail.com",           "user_phone":"01845258502",     "loc_id":3,         "address":"Motijhil, Dhaka",            "tran_user_type":5},
-    {"user_id":"C000000104", "user_name":"Samy",        "user_email":"samy@gmail.com",          "user_phone":"01845258503",     "loc_id":4,         "address":"Arambag, Dhaka",             "tran_user_type":5},
-    {"user_id":"C000000105", "user_name":"Tanvir",      "user_email":"tanvir@gmail.com",        "user_phone":"01845258504",     "loc_id":5,         "address":"Valuka, Mymensingh",         "tran_user_type":6},
-    {"user_id":"C000000106", "user_name":"Sakib",       "user_email":"sakib@gmail.com",         "user_phone":"01845258505",     "loc_id":6,         "address":"Norail, Mymensingh",         "tran_user_type":6},
-    {"user_id":"C000000107", "user_name":"Muntamim",    "user_email":"muntamim@gmail.com",      "user_phone":"01845258506",     "loc_id":7,         "address":"Sahrasti, Chandpur",         "tran_user_type":11},
-    {"user_id":"C000000108", "user_name":"Tamim",       "user_email":"tamim@gmail.com",         "user_phone":"01845258507",     "loc_id":8,         "address":"Kandirpar, Cumilla",         "tran_user_type":11},
-    {"user_id":"C000000109", "user_name":"Dip",         "user_email":"dip@gmail.com",           "user_phone":"01845258508",     "loc_id":9,         "address":"Kalibari more, Chandpur",    "tran_user_type":13},
-    {"user_id":"C000000110", "user_name":"Imon",        "user_email":"imon@gmail.com",          "user_phone":"01845258509",     "loc_id":10,        "address":"Iletgonj, Cumilla",          "tran_user_type":13},
-    {"user_id":"C000000111", "user_name":"Raju",        "user_email":"raju@gmail.com",          "user_phone":"01845258510",     "loc_id":11,        "address":"Kaptanbazar, Cumilla",       "tran_user_type":15},
-    {"user_id":"C000000112", "user_name":"Arpon",       "user_email":"arpon@gmail.com",         "user_phone":"01845258511",     "loc_id":12,        "address":"Akhaura Shadar, Akhaura",    "tran_user_type":15}
+    {"user_id":"C000000101", "user_name":"General Customer",        "user_email":null,                      "user_phone":null,              "loc_id":null,      "address":null,                         "tran_user_type":4},
+    {"user_id":"C000000102", "user_name":"Tanim",                   "user_email":"tanim@gmail.com",         "user_phone":"01845258578",     "loc_id":1,         "address":"Badda, Dhaka",               "tran_user_type":4},
+    {"user_id":"C000000103", "user_name":"Ayman",                   "user_email":"ayman@gmail.com",         "user_phone":"01845258501",     "loc_id":2,         "address":"Dhanmondi, Dhaka",           "tran_user_type":4},
+    {"user_id":"C000000104", "user_name":"Jim",                     "user_email":"jim@gmail.com",           "user_phone":"01845258502",     "loc_id":3,         "address":"Motijhil, Dhaka",            "tran_user_type":5},
+    {"user_id":"C000000105", "user_name":"Samy",                    "user_email":"samy@gmail.com",          "user_phone":"01845258503",     "loc_id":4,         "address":"Arambag, Dhaka",             "tran_user_type":5},
+    {"user_id":"C000000106", "user_name":"Tanvir",                  "user_email":"tanvir@gmail.com",        "user_phone":"01845258504",     "loc_id":5,         "address":"Valuka, Mymensingh",         "tran_user_type":6},
+    {"user_id":"C000000107", "user_name":"Sakib",                   "user_email":"sakib@gmail.com",         "user_phone":"01845258505",     "loc_id":6,         "address":"Norail, Mymensingh",         "tran_user_type":6},
+    {"user_id":"C000000108", "user_name":"Muntamim",                "user_email":"muntamim@gmail.com",      "user_phone":"01845258506",     "loc_id":7,         "address":"Sahrasti, Chandpur",         "tran_user_type":11},
+    {"user_id":"C000000109", "user_name":"Tamim",                   "user_email":"tamim@gmail.com",         "user_phone":"01845258507",     "loc_id":8,         "address":"Kandirpar, Cumilla",         "tran_user_type":11},
+    {"user_id":"C000000110", "user_name":"Dip",                     "user_email":"dip@gmail.com",           "user_phone":"01845258508",     "loc_id":9,         "address":"Kalibari more, Chandpur",    "tran_user_type":13},
+    {"user_id":"C000000111", "user_name":"Imon",                    "user_email":"imon@gmail.com",          "user_phone":"01845258509",     "loc_id":10,        "address":"Iletgonj, Cumilla",          "tran_user_type":13},
+    {"user_id":"C000000112", "user_name":"Raju",                    "user_email":"raju@gmail.com",          "user_phone":"01845258510",     "loc_id":11,        "address":"Kaptanbazar, Cumilla",       "tran_user_type":15},
+    {"user_id":"C000000113", "user_name":"Arpon",                   "user_email":"arpon@gmail.com",         "user_phone":"01845258511",     "loc_id":12,        "address":"Akhaura Shadar, Akhaura",    "tran_user_type":15}
 ]

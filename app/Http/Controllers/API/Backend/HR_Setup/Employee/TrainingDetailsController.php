@@ -8,13 +8,14 @@ use Illuminate\Http\Request;
 use App\Models\User_Info;
 use App\Models\Transaction_With;
 use App\Models\Employee_Training_Detail;
+use App\Models\Employee_Personal_Detail;
 
 class TrainingDetailsController extends Controller
 {
     // Show All Employee Training Details
     public function ShowAll(Request $req){
-        $employee = User_Info::with('Withs','Location')->where('user_role', 6)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::where('user_role', 6)->get();
+        $employee = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
+        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'data' => $employee,
@@ -36,8 +37,8 @@ class TrainingDetailsController extends Controller
         ]);
 
 
-        Employee_Training_Detail::insert([
-            'user' => $req->user,
+        Employee_Training_Detail::on('mysql')->insert([
+            'emp_id' => $req->user,
             'training_title' => $req->training_title,
             'country' => $req->country,
             'topic' => $req->topic,
@@ -57,8 +58,8 @@ class TrainingDetailsController extends Controller
 
     // Edit Employee Training Details
     public function Edit(Request $req){
-        $employee = Employee_Training_Detail::where('id', $req->id)->first();
-        $tranwith = Transaction_With::where('user_role', 6)->get();
+        $employee = Employee_Training_Detail::on('mysql')->where('id', $req->id)->first();
+        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'employee'=>$employee,
@@ -78,10 +79,10 @@ class TrainingDetailsController extends Controller
             'training_year' => 'required|numeric',
         ]);
 
-        $employee = Employee_Training_Detail::findOrFail($req->id);
+        $employee = Employee_Training_Detail::on('mysql')->findOrFail($req->id);
         
 
-        $update = Employee_Training_Detail::findOrFail($req->id)->update([
+        $update = Employee_Training_Detail::on('mysql')->findOrFail($req->id)->update([
             'training_title' => $req->training_title,
             'country' => $req->country,
             'topic' => $req->topic,
@@ -104,7 +105,7 @@ class TrainingDetailsController extends Controller
 
     // Delete Employee Training Details
     public function Delete(Request $req){
-        Employee_Training_Detail::findOrFail($req->id)->delete();
+        Employee_Training_Detail::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Employee Training Details Deleted Successfully',
@@ -115,7 +116,7 @@ class TrainingDetailsController extends Controller
 
     // Search Employee Training Details
     public function Search(Request $req){
-        $query = User_Info::with('Withs','Location')->where('user_role', 6); // Base query
+        $query = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3); // Base query
 
         if ($req->filled('search') && $req->searchOption) {
             switch ($req->searchOption) {
@@ -172,5 +173,30 @@ class TrainingDetailsController extends Controller
             'status' => true,
             'data' => $employee,
         ], 200);
+    } // End Method
+
+
+
+    // Show Employee Training Details
+    public function Details(Request $req){
+        $employeetraining = Employee_Training_Detail::with('personalDetail')->where('emp_id', "=", $req->id)->get();
+        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
+
+        return response()->json([
+            'status' => true,
+            'data'=>view('hr.employee_info.training_details.details', compact('employeetraining', 'personaldetail'))->render(),
+        ]);
+    } // End Method
+
+
+
+    // Show Employee Training Details Grid
+    public function Grid(Request $req){
+        $employeetraining = Employee_Training_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
+        
+        return response()->json([
+            'status' => true,
+            'data'=>view('hr.employee_info.training_details.detailsTraining', compact('employeetraining'))->render(),
+        ]);
     } // End Method
 }

@@ -39,6 +39,11 @@
                 </div>
                 <span class="error" id="location_error"></span>
             </div>
+            <div class="form-input-group">
+                <label for="address">Address</label>
+                <input type="text" name="address" class="form-input" id="address">
+                <span class="error" id="address_error"></span>
+            </div>
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Submit</button>
             </div>

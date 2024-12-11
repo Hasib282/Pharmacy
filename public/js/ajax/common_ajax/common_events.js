@@ -1,3 +1,30 @@
+/////////////// ------------------ Details Grid Toggle Functionality Ajax Part Start ---------------- /////////////////////////////
+function GridAjax(link) {
+    $(document).off('click', '#showGrid').on('click', '#showGrid', function (e) {
+        let id = $(this).attr('data-id');
+        let grid = $(`#grid${id}`);
+        let arrow = $(this).find('.fa-chevron-circle-right');
+        
+        if (grid.is(':visible')) {
+            grid.hide();
+            arrow.removeClass('rotate');
+        }
+        else {
+            $.ajax({
+                url: `${apiUrl}/${link}/grid`,
+                method: 'GET',
+                data: { id },
+                success: function (res) {
+                    grid.html(res.data);
+                    grid.show();
+                    arrow.addClass('rotate');
+                }
+            });
+        }
+    });
+};
+
+
 $(document).ready(function () {
     //////////////////// --------------------- Show Image When Select File ---------------- /////////////////////
     $(document).on('change','#image', function (e){
@@ -93,11 +120,61 @@ $(document).ready(function () {
                 $('.others').show();
             }
         }
+        // Employee Details
+        else if(id == 1.1){
+            if($('.personal').is(':visible')){
+                $('.personal').hide()
+            }
+            else{
+                $('.personal').show();
+            }
+        }
+        else if(id == 1.2){
+            if($('.education').is(':visible')){
+                $('.education').hide()
+            }
+            else{
+                $('.education').show();
+            }
+        }
+        else if(id == 1.3){
+            if($('.training').is(':visible')){
+                $('.training').hide()
+            }
+            else{
+                $('.training').show();
+            }
+        }
+        else if(id == 1.4){
+            if($('.experience').is(':visible')){
+                $('.experience').hide()
+            }
+            else{
+                $('.experience').show();
+            }
+        }
+        else if(id == 1.5){
+            if($('.organization').is(':visible')){
+                $('.organization').hide()
+            }
+            else{
+                $('.organization').show();
+            }
+        }
+        else if(id == 1.6){
+            if($('.payroll').is(':visible')){
+                $('.payroll').hide()
+            }
+            else{
+                $('.payroll').show();
+            }
+        }
     }); // End Toggle  Event
     /////////////// ------------------ User Details List Toggle Functionality Ajax Part End ---------------- /////////////////////////////
     
     
     
+
     
     /////////////// ------------------ Show Invoice And Print Functionality Ajax Part End ---------------- /////////////////////////////
     // Show Transaction Print Details 

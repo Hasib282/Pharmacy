@@ -11,7 +11,7 @@ class PharmacyUnitController extends Controller
 {
     // Show All Item/Product Unit
     public function ShowAll(Request $req){
-        $unit = Item_Unit::where('type_id', '6')->orderBy('added_at','asc')->paginate(15);
+        $unit = Item_Unit::on('mysql_second')->where('type_id', '6')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $unit,
@@ -26,7 +26,7 @@ class PharmacyUnitController extends Controller
             'name' => 'required',
         ]);
 
-        Item_Unit::insert([
+        Item_Unit::on('mysql_second')->insert([
             'unit_name' => $req->name,
             'type_id'=> '6',
         ]);
@@ -41,7 +41,7 @@ class PharmacyUnitController extends Controller
 
     // Edit Item/Product Unit
     public function Edit(Request $req){
-        $unit = Item_Unit::where('id', $req->id)->first();
+        $unit = Item_Unit::on('mysql_second')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
             'unit'=> $unit,
@@ -56,7 +56,7 @@ class PharmacyUnitController extends Controller
             'name' => 'required',
         ]);
 
-        $update = Item_Unit::findOrFail($req->id)->update([
+        $update = Item_Unit::on('mysql_second')->findOrFail($req->id)->update([
             'unit_name' => $req->name,
             "updated_at" => now()
         ]);
@@ -73,7 +73,7 @@ class PharmacyUnitController extends Controller
 
     // Delete Item/Product Unit
     public function Delete(Request $req){
-        Item_Unit::findOrFail($req->id)->delete();
+        Item_Unit::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Unit Deleted Successfully',
@@ -84,7 +84,7 @@ class PharmacyUnitController extends Controller
 
     // Search Item/Product Unit
     public function Search(Request $req){
-        $unit = Item_Unit::where('type_id', '6')
+        $unit = Item_Unit::on('mysql_second')->where('type_id', '6')
         ->where('unit_name', 'like', '%'.$req->search.'%')
         ->orderBy('unit_name','asc')
         ->paginate(15);
@@ -99,7 +99,7 @@ class PharmacyUnitController extends Controller
 
     // Get Unit
     public function Get(Request $req){
-        $units = Item_Unit::where('type_id', '6')
+        $units = Item_Unit::on('mysql_second')->where('type_id', '6')
         ->where('unit_name', 'like', '%'.$req->unit.'%')
         ->orderBy('unit_name','asc')
         ->take(10)

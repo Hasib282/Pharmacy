@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Pay_Roll_Middlewire extends Model
 {
     use HasFactory;
+
+    protected $connection = 'mysql';
+
     protected $guarded = [];
+    
     public $timestamps = false;
 
     public function Employee(){

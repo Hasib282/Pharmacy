@@ -12,7 +12,7 @@ class MainHeadController extends Controller
 {
     // Show All MainHeads
     public function ShowAll(Request $req){
-        $mainhead = Transaction_Main_head::orderBy('added_at')->paginate(15);
+        $mainhead = Transaction_Main_head::on('mysql_second')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $mainhead,
@@ -24,10 +24,10 @@ class MainHeadController extends Controller
     // Insert MainHeads
     public function Insert(Request $req){
         $req->validate([
-            "name" => 'required|unique:transaction__main__heads,type_name',
+            "name" => 'required|unique:mysql_second.transaction__main__heads,type_name',
         ]);
 
-        Transaction_Main_head::insert([
+        Transaction_Main_head::on('mysql_second')->insert([
             "type_name" => $req->name,
         ]);
         
@@ -41,7 +41,7 @@ class MainHeadController extends Controller
 
     // Edit MainHeads
     public function Edit(Request $req){
-        $mainhead = Transaction_Main_head::findOrFail($req->id);
+        $mainhead = Transaction_Main_head::on('mysql_second')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'mainhead'=> $mainhead,
@@ -52,10 +52,10 @@ class MainHeadController extends Controller
 
     // Update MainHeads
     public function Update(Request $req){
-        $mainhead = Transaction_Main_head::findOrFail($req->id);
+        $mainhead = Transaction_Main_head::on('mysql_second')->findOrFail($req->id);
         
         $req->validate([
-            "name" => ['required',Rule::unique('transaction__main__heads', 'type_name')->ignore($mainhead->id)],
+            "name" => ['required',Rule::unique('mysql_second.transaction__main__heads', 'type_name')->ignore($mainhead->id)],
         ]);
 
         $update = Transaction_Main_head::findOrFail($req->id)->update([
@@ -75,7 +75,7 @@ class MainHeadController extends Controller
 
     // Delete MainHeads
     public function Delete(Request $req){
-        Transaction_Main_head::findOrFail($req->id)->delete();
+        Transaction_Main_head::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'MainHead Deleted Successfully',
@@ -86,7 +86,7 @@ class MainHeadController extends Controller
 
     // Search MainHeads
     public function Search(Request $req){
-        $mainhead = Transaction_Main_head::where('type_name', 'like', '%'.$req->search.'%')
+        $mainhead = Transaction_Main_head::on('mysql_second')->where('type_name', 'like', '%'.$req->search.'%')
         ->orderBy('type_name')
         ->paginate(15);
         
@@ -100,7 +100,7 @@ class MainHeadController extends Controller
 
     // Get Transaction Main Head
     public function Get(){
-        $mainhead = Transaction_Main_head::orderBy('added_at')->paginate(15);
+        $mainhead = Transaction_Main_head::on('mysql_second')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status' => true,
             'mainhead'=> $mainhead,

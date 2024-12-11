@@ -13,7 +13,7 @@ class DesignationController extends Controller
 {
     // Show All Designations
     public function ShowAll(Request $req){
-        $designations = Designation::with('Department:id,dept_name')->orderBy('added_at','asc')->paginate(15);
+        $designations = Designation::on('mysql')->with('Department:id,dept_name')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $designations,
@@ -25,11 +25,11 @@ class DesignationController extends Controller
     // Insert Designations
     public function Insert(Request $req){
         $req->validate([
-            "designations" => 'required|unique:designations,designation',
+            "designations" => 'required|unique:mysql.designations,designation',
             "department" => 'required|numeric'
         ]);
 
-        Designation::insert([
+        Designation::on('mysql')->insert([
             "designation" => $req->designations,
             "dept_id" => $req->department,
         ]);
@@ -44,7 +44,7 @@ class DesignationController extends Controller
 
     // Edit Designations
     public function Edit(Request $req){
-        $designations = Designation::with('Department:id,dept_name')->findOrFail($req->id);
+        $designations = Designation::on('mysql')->with('Department:id,dept_name')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'designations'=> $designations,
@@ -55,14 +55,14 @@ class DesignationController extends Controller
 
     // Update Designations
     public function Update(Request $req){
-        $designations = Designation::findOrFail($req->id);
+        $designations = Designation::on('mysql')->findOrFail($req->id);
 
         $req->validate([
-            "designations" => ['required',Rule::unique('designations', 'designation')->ignore($designations->id)],
+            "designations" => ['required',Rule::unique('mysql.designations', 'designation')->ignore($designations->id)],
             "department"  => 'required|numeric'
         ]);
 
-        $update = Designation::findOrFail($req->id)->update([
+        $update = Designation::on('mysql')->findOrFail($req->id)->update([
             "designation" => $req->designations,
             "dept_id" => $req->department,
             "updated_at" => now()
@@ -80,7 +80,7 @@ class DesignationController extends Controller
 
     // Delete Designations
     public function Delete(Request $req){
-        Designation::findOrFail($req->id)->delete();
+        Designation::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Designation Deleted Successfully',
@@ -92,12 +92,12 @@ class DesignationController extends Controller
     // Search Designations
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $designations = Designation::with('Department:id,dept_name')->where('designation', 'like', '%'.$req->search.'%')
+            $designations = Designation::on('mysql')->with('Department:id,dept_name')->where('designation', 'like', '%'.$req->search.'%')
             ->orderBy('designation','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $designations = Designation::with('Department:id,dept_name')
+            $designations = Designation::on('mysql')->with('Department:id,dept_name')
             ->whereHas('Department', function ($query) use ($req) {
                 $query->where('dept_name', 'like', '%' . $req->search . '%');
                 $query->orderBy('dept_name','asc');
@@ -116,7 +116,7 @@ class DesignationController extends Controller
     // Get Designation By Department
     public function Get(Request $req){
         if($req->department != ""){
-            $designations = Designation::where('designation', 'like', '%'.$req->designation.'%')
+            $designations = Designation::on('mysql')->where('designation', 'like', '%'.$req->designation.'%')
             ->where('dept_id', $req->department)
             ->orderBy('designation','asc')
             ->take(10)

@@ -1351,7 +1351,7 @@ $(document).ready(function () {
             within = 0;
         }
         let id = $(this).attr('data-id');
-        UserKeyUp(e, tranUserType, within, tranUser, id, '#user', '#user-list ul');
+        UserKeyUp(e, tranUserType, within, tranUser, id, '#user', '#user-list ul', '#name', "#phone", "#address");
         $('.due-grid tbody, .due-grid tfoot').html('');
     });
 
@@ -1360,7 +1360,7 @@ $(document).ready(function () {
     // User Key Down Event
     $(document).off('keydown', '#user').on('keydown', '#user', function (e) {
         let list = $('#user-list ul li');
-        UserKeyDown(e, list, '#user', '#user-list ul');
+        UserKeyDown(e, list, '#user', '#user-list ul', '#name', "#phone", "#address");
     });
 
 
@@ -1369,7 +1369,7 @@ $(document).ready(function () {
     $(document).off('keydown', '#user-list ul li').on('keydown', '#user-list ul li', function (e) {
         let list = $('#user-list ul li');
         let focused = $('#user-list ul li:focus');
-        UserListKeyDown(e, list, focused, '#user', '#user-list ul');
+        UserListKeyDown(e, list, focused, '#user', '#user-list ul', '#name', "#phone", "#address");
     });
 
 
@@ -1379,9 +1379,15 @@ $(document).ready(function () {
         let value = $(this).text();
         let id = $(this).data('id');
         let withs = $(this).data('with');
+        let name = $(this).data('name');
+        let phone = $(this).data('phone');
+        let address = $(this).data('address');
         $('#user').val(value);
         $('#user').attr('data-id', id);
         $('#user').attr('data-with', withs);
+        $('#name').val(name);
+        $('#phone').val(phone);
+        $('#address').val(address);
         $('#user-list ul').html('');
         getDueListByUserId(id, '.due-grid tbody');
         getPayrollByUserId(id, '.payroll-grid tbody');
@@ -1444,7 +1450,7 @@ $(document).ready(function () {
             within = 0;
         }
         let id = $(this).attr('data-id');
-        UserKeyUp(e, tranUserType, within, tranUser, id, '#updateUser', '#update-user ul');
+        UserKeyUp(e, tranUserType, within, tranUser, id, '#updateUser', '#update-user ul', '#updateName', "#updatePhone", "#updateAddress");
     });
 
 
@@ -1452,7 +1458,7 @@ $(document).ready(function () {
     // Update User Key Down Event
     $(document).off('keydown', '#updateUser').on('keydown', '#updateUser', function (e) {
         let list = $('#update-user ul li');
-        UserKeyDown(e, list, '#updateUser', '#update-user ul');
+        UserKeyDown(e, list, '#updateUser', '#update-user ul', '#updateName', "#updatePhone", "#updateAddress");
     });
 
 
@@ -1461,7 +1467,7 @@ $(document).ready(function () {
     $(document).off('keydown', '#update-user ul li').on('keydown', '#update-user ul li', function (e) {
         let list = $('#update-user ul li');
         let focused = $('#update-user ul li:focus');
-        UserListKeyDown(e, list, focused, '#updateUser', '#update-user ul');
+        UserListKeyDown(e, list, focused, '#updateUser', '#update-user ul', '#updateName', "#updatePhone", "#updateAddress");
     });
 
 
@@ -1471,9 +1477,15 @@ $(document).ready(function () {
         let value = $(this).text();
         let id = $(this).data('id');
         let withs = $(this).data('with');
+        let name = $(this).data('name');
+        let phone = $(this).data('phone');
+        let address = $(this).data('address');
         $('#updateUser').val(value);
         $('#updateUser').attr('data-id', id);
         $('#updateUser').attr('data-with', withs);
+        $('#updateName').val(name);
+        $('#updatePhone').val(phone);
+        $('#updateAddress').val(address);
         $('#update-user ul').html('');
         getDueListByUserId(id, '.due-grid tbody');
     });
@@ -1518,7 +1530,7 @@ $(document).ready(function () {
 
 
     // User Key Up Event Function
-    function UserKeyUp(e, tranUserType, within, tranUser, id, targetElement1, targetElement2){
+    function UserKeyUp(e, tranUserType, within, tranUser, id, targetElement1, targetElement2, targetElement3, targetElement4, targetElement5){
         if (e.keyCode === 13) { // Enter Key
             e.preventDefault();
         }
@@ -1526,6 +1538,9 @@ $(document).ready(function () {
             //keyCode 65 = a, keyCode 90 = z, keyCode 96 = 0, keyCode 105 = 9, keyCode 8 = backSpace
             $(targetElement1).removeAttr('data-id');
             $(targetElement1).removeAttr('data-with');
+            $(targetElement3).val('');
+            $(targetElement4).val('');
+            $(targetElement5).val('');
             getTransactionUser(tranUserType, within, tranUser, targetElement2);
         }
         else if (e.keyCode === 9) { // Tab key
@@ -1535,6 +1550,9 @@ $(document).ready(function () {
             else{
                 $(targetElement1).removeAttr('data-id');
                 $(targetElement1).removeAttr('data-with');
+                $(targetElement3).val('');
+                $(targetElement4).val('');
+                $(targetElement5).val('');
                 getTransactionUser(tranUserType, within, tranUser, targetElement2);
             }
         }
@@ -1543,7 +1561,7 @@ $(document).ready(function () {
 
 
     // User Key Down Event Function
-    function UserKeyDown(e, list, targetElement1, targetElement2) {
+    function UserKeyDown(e, list, targetElement1, targetElement2, targetElement3, targetElement4, targetElement5) {
         if (list.length > 0) {
             if (e.keyCode === 40) { // Down arrow key
                 e.preventDefault();
@@ -1551,6 +1569,9 @@ $(document).ready(function () {
                 $(targetElement1).val(list.first().text());
                 $(targetElement1).attr("data-id", list.data('id'));
                 $(targetElement1).attr("data-with", list.data('with'));
+                $(targetElement3).val(list.data('name'));
+                $(targetElement4).val(list.data('phone'));
+                $(targetElement5).val(list.data('address'));
             } 
             else if (e.keyCode === 38) { // Up arrow key
                 e.preventDefault();
@@ -1558,6 +1579,9 @@ $(document).ready(function () {
                 $(targetElement1).val(list.last().text());
                 $(targetElement1).attr("data-id", list.data('id'));
                 $(targetElement1).attr("data-with", list.data('with'));
+                $(targetElement3).val(list.data('name'));
+                $(targetElement4).val(list.data('phone'));
+                $(targetElement5).val(list.data('address'));
             } 
             else if (e.keyCode === 13) { // Enter key
                 e.preventDefault();
@@ -1571,7 +1595,7 @@ $(document).ready(function () {
 
 
     // User List Key Down Event function
-    function UserListKeyDown(e, list, focused, targetElement1, targetElement2) {
+    function UserListKeyDown(e, list, focused, targetElement1, targetElement2, targetElement3, targetElement4, targetElement5) {
         if (e.keyCode === 40) { // Down arrow key
             e.preventDefault();
             let nextIndex = focused.index() + 1;
@@ -1582,6 +1606,9 @@ $(document).ready(function () {
             $(targetElement1).val(list.eq(nextIndex).text());
             $(targetElement1).attr("data-id", list.eq(nextIndex).data('id'));
             $(targetElement1).attr("data-with", list.eq(nextIndex).data('with'));
+            $(targetElement3).val(list.eq(nextIndex).data('name'));
+            $(targetElement4).val(list.eq(nextIndex).data('phone'));
+            $(targetElement5).val(list.eq(nextIndex).data('address'));
         } 
         else if (e.keyCode === 38) { // Up arrow key
             e.preventDefault();
@@ -1593,6 +1620,9 @@ $(document).ready(function () {
             $(targetElement1).val(list.eq(prevIndex).text());
             $(targetElement1).attr("data-id", list.eq(prevIndex).data('id'));
             $(targetElement1).attr("data-with", list.eq(nextIndex).data('with'));
+            $(targetElement3).val(list.eq(nextIndex).data('name'));
+            $(targetElement4).val(list.eq(nextIndex).data('phone'));
+            $(targetElement5).val(list.eq(nextIndex).data('address'));
         } 
         else if (e.keyCode === 13) { // Enter key
             e.preventDefault();
@@ -3380,7 +3410,7 @@ $(document).ready(function () {
         $('#product').attr("data-batch",$(this).attr('data-batch'))
         $('#product').attr("data-quantity",$(this).attr('data-quantity'))
         $('#quantity').val($(this).attr('data-quantity'))
-        $('#price').val($(this).attr('data-cp'))
+        $('#price').val($(this).attr('data-price'))
         $('#totAmount').val($(this).attr('data-tot'))
         $('#quantity').focus();
     });
