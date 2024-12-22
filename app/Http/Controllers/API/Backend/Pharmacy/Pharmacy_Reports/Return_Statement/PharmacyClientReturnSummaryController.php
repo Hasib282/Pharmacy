@@ -11,7 +11,7 @@ class PharmacyClientReturnSummaryController extends Controller
 {
     // Show All Pharmacy Client Return Summary Statement
     public function ShowAll(Request $req){
-        $pharmacy = Transaction_Main::on('mysql')->with('User')
+        $pharmacy = Transaction_Main::on('mysql_second')->with('User')
         ->where('tran_method', 'Client Return')
         ->where('tran_type', 6)
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
@@ -29,7 +29,7 @@ class PharmacyClientReturnSummaryController extends Controller
     // Search Pharmacy Client Return Summary Statement
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $pharmacy = Transaction_Main::on('mysql')->with('User')
+            $pharmacy = Transaction_Main::on('mysql_second')->with('User')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
@@ -38,7 +38,7 @@ class PharmacyClientReturnSummaryController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $pharmacy = Transaction_Main::on('mysql')->with('User')
+            $pharmacy = Transaction_Main::on('mysql_second')->with('User')
             ->whereHas('User', function ($query) use ($req) {
                 $query->where('user_name', 'like', '%'.$req->search.'%');
                 $query->orderBy('user_name','asc');

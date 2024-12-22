@@ -15,13 +15,13 @@ class StoreSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/store.json");
-        $stores = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $stores->each(function($store){
-            Store::create([
-                "store_name"=>$store->store_name,
-                "division"=>$store->division,
-                "location_id"=>$store->location,
+        $data->each(function($item){
+            Store::on('mysql_second')->create([
+                "store_name"=>$item->store_name,
+                "division"=>$item->division,
+                "location_id"=>$item->location,
             ]);
         });
     }

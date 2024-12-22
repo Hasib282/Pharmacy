@@ -167,59 +167,12 @@ Route::controller(ForgetPasswordController::class)->group(function () {
     Route::post('/resetpassword',  'ResetPassword');
 });
 
-Route::post('/login', [AuthController::class, 'Login']);
-
-// Route::get('/sessions', function(){
-//     // return response()->json([
-//     //     "message"=>'hello', 
-//     //     'data'=>session()->all()
-//     // ], 200);
-//     // session()->put('key', 'value');
-
-//     // Retrieve session data
-//     // $value = session()->get('key');
-//     return response()->json([
-//         "message"=>'hello', 
-//         'data'=>session()->all()
-//     ], 200);
-// });
+Route::post('/login', [AuthController::class, 'Login'])->middleware(['web']);
 
 // Route::middleware(['auth:sanctum'])->group(function () {
 Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
-    Route::controller(AuthController::class)->group(function () {
-        Route::get('/sidebar', 'Sidebar');
+    Route::post('/logout', [AuthController::class, 'Logout'])->middleware(['web']);
 
-        Route::get('/authuser', 'AuthUserData');
-
-        Route::post('/logout', 'Logout');
-    });
-    
-
-    // Route::get('/get/currentuser', function () {
-    //     $user = Auth::user()->load([
-    //         'Department',
-    //         'Location',
-    //         'Designation',
-    //         'Withs',
-    //         'personalDetail',
-    //         'educationDetail',
-    //         'trainingDetail',
-    //         'experienceDetail',
-    //         'organizationDetail',
-    //         'transaction',
-    //         'permissions',
-    //         'role',
-    //     ]);
-        
-    //     // session(['currentUser' => $user]);
-    //     // session()->save();
-    //     // dd(session()->all());
-    //     // $user->can_access_mainhead = $user->hasPermissionMainHead($someId);
-    //     // $user->can_access_route = $user->hasPermissionToRoute($someRoute);
-    //     // $user->has_specific_permission = $user->hasPermission($somePermissionId);
-
-    //     return response()->json($user);
-    // });
 
     /////-----/////-----/////-----/////-----/////-----///// Admin Setup Routes Start /////-----/////-----/////-----/////-----/////-----/////
     
@@ -277,7 +230,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                     Route::put('/superadmins', 'Update');
                     Route::delete('/superadmins', 'Delete');
                     Route::get('/superadmins/search', 'Search');
-                    Route::get('/superadmins/details', 'Details');
                 });
             });
             

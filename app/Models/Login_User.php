@@ -2,32 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Login_User extends Authenticatable
 {
-    use Notifiable, HasFactory, HasApiTokens;
+    use HasFactory, HasApiTokens, Notifiable;
 
-    protected $connection = 'mysql_second';
+    protected $connection = 'mysql';
 
     protected $guarded = [];
     
     public $timestamps = false;
 
-    protected $table = 'login__users';
-
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 
+        'remember_token',
     ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
 
     public function Roles(){
         return $this->belongsTo(Role::class,'user_role','id');

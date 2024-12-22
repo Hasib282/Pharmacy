@@ -12,7 +12,7 @@ class InventoryItemFlowStatementController extends Controller
 {
     // Show All Inventory Item Flow Statement
     public function ShowAll(Request $req){
-        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '5')->orderBy('added_at','asc')->get();
+        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '5')->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => [],
@@ -34,7 +34,7 @@ class InventoryItemFlowStatementController extends Controller
         
 
         function getBalance($tranMethod, $startDate, $searchId) {
-            return Transaction_Detail::on('mysql')->with('Head')
+            return Transaction_Detail::on('mysql_second')->with('Head')
                 ->where('tran_type', 5)
                 ->where('tran_method', $tranMethod)
                 ->where('tran_date', '<', $startDate)
@@ -65,7 +65,7 @@ class InventoryItemFlowStatementController extends Controller
             $inventory = [];
         }
         else{
-            $inventory = Transaction_Detail::on('mysql')->with('Head')
+            $inventory = Transaction_Detail::on('mysql_second')->with('Head')
             ->where('tran_type', 5)
             ->whereRaw("tran_date BETWEEN ? AND ?", [$req->startDate, $req->endDate . ' 23:59:59'])
             ->where('tran_head_id', $req->search_id)

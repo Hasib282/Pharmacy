@@ -20,10 +20,10 @@ class PayrollProcessController extends Controller
     public function ShowAll(Request $req){
         $currentYear = Carbon::now()->year; 
         $currentMonth = Carbon::now()->month;
-        $payroll = Pay_Roll_Setup::on('mysql')->with('Employee')
+        $payroll = Pay_Roll_Setup::on('mysql_second')->with('Employee')
         ->select('emp_id', 'amount', \DB::raw('NULL as date'))
         ->unionall(
-            Pay_Roll_Middlewire::on('mysql')->select('emp_id', 'amount', 'date')
+            Pay_Roll_Middlewire::on('mysql_second')->select('emp_id', 'amount', 'date')
                 ->whereYear('date', $currentYear)
                 ->whereMonth('date', $currentMonth)
                 ->orWhereNull('date')
@@ -40,7 +40,7 @@ class PayrollProcessController extends Controller
         })
         ->values();
         
-        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
+        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
 
         return response()->json([
             'status'=> true,
@@ -53,7 +53,7 @@ class PayrollProcessController extends Controller
 
     // Insert Payroll Process
     public function Insert(Request $req){
-        $employees = User_Info::on('mysql')->select('user_id','user_name','tran_user_type')->where('user_role', 3)->orderBy('added_at','asc')->get();
+        $employees = User_Info::on('mysql_second')->select('user_id','user_name','tran_user_type')->where('user_role', 3)->orderBy('added_at','asc')->get();
 
         if(!$employees->isEmpty()){
             $currentYear = Carbon::now()->year; 
@@ -61,10 +61,10 @@ class PayrollProcessController extends Controller
 
             foreach ($employees as $employee) {
                 
-                $payrolls = Pay_Roll_Setup::on('mysql')->select('emp_id','head_id','amount',\DB::raw('0 as date'))
+                $payrolls = Pay_Roll_Setup::on('mysql_second')->select('emp_id','head_id','amount',\DB::raw('0 as date'))
                 ->where('emp_id', $employee->user_id)
                 ->unionall(
-                    Pay_Roll_Middlewire::on('mysql')->select('emp_id','head_id','amount','date')
+                    Pay_Roll_Middlewire::on('mysql_second')->select('emp_id','head_id','amount','date')
                     ->where('emp_id', $employee->user_id)
                     ->where(function ($query) use ($currentYear, $currentMonth) {
                         $query->whereYear('date', $currentYear)
@@ -75,7 +75,7 @@ class PayrollProcessController extends Controller
                 ->orderBy('emp_id')
                 ->get();
 
-                $transaction = Transaction_Main::on('mysql')->where('tran_type', '3')->latest('tran_id')->first();
+                $transaction = Transaction_Main::on('mysql_second')->where('tran_type', '3')->latest('tran_id')->first();
                 $id = ($transaction) ? 'PRP' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : 'PRP000000001';
                 
                 if($payrolls->count() > 0){
@@ -101,10 +101,10 @@ class PayrollProcessController extends Controller
                     }
 
 
-                    Transaction_Detail::on('mysql')->insert($transactionDetails);
+                    Transaction_Detail::on('mysql_second')->insert($transactionDetails);
 
 
-                    Transaction_Main::on('mysql')->insert([
+                    Transaction_Main::on('mysql_second')->insert([
                         'tran_id'=>$id,
                         'tran_type'=> '3',
                         'tran_method'=> 'Payment',
@@ -138,7 +138,7 @@ class PayrollProcessController extends Controller
     public function Edit(Request $req){
         $currentYear = $req->year;
         $currentMonth = $req->month;
-        $payrolls = Pay_Roll_Setup::on('mysql')->with('Employee')->select(
+        $payrolls = Pay_Roll_Setup::on('mysql_second')->with('Employee')->select(
             'emp_id',
             'head_id',
             'amount',
@@ -146,7 +146,7 @@ class PayrollProcessController extends Controller
         )
         ->where('emp_id', $req->id)
         ->union(
-            Pay_Roll_Middlewire::on('mysql')->select(
+            Pay_Roll_Middlewire::on('mysql_second')->select(
                 'emp_id',
                 'head_id',
                 'amount',
@@ -162,7 +162,7 @@ class PayrollProcessController extends Controller
         ->orderBy('emp_id')
         ->get();
         
-        $heads = Transaction_Head::on('mysql_second')->where('groupe_id','1')->get();
+        $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
         return response()->json([
             'status'=> 'success',
             'data'=> view('hr.payroll.details',compact('payrolls'))->render(),
@@ -213,14 +213,14 @@ class PayrollProcessController extends Controller
     public function Search(Request $req){
         $currentYear = $req->year;
         $currentMonth = $req->month;
-        $payroll = Pay_Roll_Setup::on('mysql')->with('Employee')
+        $payroll = Pay_Roll_Setup::on('mysql_second')->with('Employee')
         ->whereHas('Employee', function ($query) use ($req) {
             $query->where('user_name', 'like', '%'.$req->search.'%');
             $query->orWhere('user_id', 'like', '%'.$req->search.'%');
         })
         ->select('emp_id', 'amount', \DB::raw('NULL as date')) 
         ->unionall(
-            Pay_Roll_Middlewire::on('mysql')->select('emp_id', 'amount', 'date')
+            Pay_Roll_Middlewire::on('mysql_second')->select('emp_id', 'amount', 'date')
                 ->whereYear('date', $currentYear)
                 ->whereMonth('date', $currentMonth)
                 ->orWhereNull('date')
@@ -249,7 +249,7 @@ class PayrollProcessController extends Controller
     public function Get(Request $req){
         $currentYear = Carbon::now()->year;
         $currentMonth = Carbon::now()->month;
-        $payrolls = Pay_Roll_Setup::on('mysql')->with('Head')
+        $payrolls = Pay_Roll_Setup::on('mysql_second')->with('Head')
         ->select(
             'emp_id',
             'head_id',
@@ -258,7 +258,7 @@ class PayrollProcessController extends Controller
         )
         ->where('emp_id', $req->id)
         ->union(
-            Pay_Roll_Middlewire::on('mysql')->with('Head')
+            Pay_Roll_Middlewire::on('mysql_second')->with('Head')
             ->select(
                 'emp_id',
                 'head_id',
@@ -288,7 +288,7 @@ class PayrollProcessController extends Controller
     // public function GetByDate(Request $req){
     //     $currentYear = $req->year;
     //     $currentMonth = $req->month;
-    //     $payrolls = Pay_Roll_Setup::on('mysql')->with('Employee')->select(
+    //     $payrolls = Pay_Roll_Setup::on('mysql_second')->with('Employee')->select(
     //         'emp_id',
     //         'head_id',
     //         'amount',
@@ -296,7 +296,7 @@ class PayrollProcessController extends Controller
     //     )
     //     ->where('emp_id', $req->id)
     //     ->union(
-    //         Pay_Roll_Middlewire::on('mysql')->select(
+    //         Pay_Roll_Middlewire::on('mysql_second')->select(
     //             'emp_id',
     //             'head_id',
     //             'amount',

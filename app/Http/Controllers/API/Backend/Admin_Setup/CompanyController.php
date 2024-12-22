@@ -17,8 +17,8 @@ class CompanyController extends Controller
 {
     // Show All Companies
     public function ShowAll(Request $req){
-        $company = Company_Details::on('mysql_second')->with('Type')->orderBy('added_at','asc')->paginate(15);
-        $type = Company_Type::on('mysql_second')->get();
+        $company = Company_Details::on('mysql')->with('Type')->orderBy('added_at','asc')->paginate(15);
+        $type = Company_Type::on('mysql')->get();
         return response()->json([
             'status'=> true,
             'data' => $company,
@@ -32,15 +32,15 @@ class CompanyController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "name" => 'required',
-            "phone" => 'required|numeric|unique:mysql_second.company__details,company_phone',
-            "email" => 'required|email|unique:mysql_second.company__details,company_email',
+            "phone" => 'required|numeric|unique:mysql.company__details,company_phone',
+            "email" => 'required|email|unique:mysql.company__details,company_email',
             'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
 
         DB::transaction(function () use ($req) {
             // Generates Auto Increment Company Id
-            $latestId = Company_Details::on('mysql_second')->orderBy('company_id','desc')->first();
+            $latestId = Company_Details::on('mysql')->orderBy('company_id','desc')->first();
             $id = ($latestId) ? 'CO' . str_pad((intval(substr($latestId->company_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'CO000000001';
 
             if ($req->hasFile('image') && $req->file('image')->isValid()) {
@@ -53,7 +53,7 @@ class CompanyController extends Controller
                 $logoName = null;
             }
 
-            $company = Company_Details::on('mysql_second')->insert([
+            $company = Company_Details::on('mysql')->insert([
                 "company_id" => $id,
                 "company_type" => $req->type,
                 "company_name" => $req->name,
@@ -74,8 +74,8 @@ class CompanyController extends Controller
 
     // Edit Companies
     public function Edit(Request $req){
-        $company = Company_Details::on('mysql_second')->with('Type')->findOrFail($req->id);
-        $type = Company_Type::on('mysql_second')->get();
+        $company = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
+        $type = Company_Type::on('mysql')->get();
         return response()->json([
             'status'=> true,
             'company'=> $company,
@@ -87,16 +87,16 @@ class CompanyController extends Controller
 
     // Update Companies
     public function Update(Request $req){
-        $company = Company_Details::on('mysql_second')->findOrFail($req->id);
+        $company = Company_Details::on('mysql')->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
-            "phone" => ['required','numeric',Rule::unique('mysql_second.company__details', 'company_phone')->ignore($company->id)],
-            "email" => ['required','email',Rule::unique('mysql_second.company__details', 'company_email')->ignore($company->id)],
+            "phone" => ['required','numeric',Rule::unique('mysql.company__details', 'company_phone')->ignore($company->id)],
+            "email" => ['required','email',Rule::unique('mysql.company__details', 'company_email')->ignore($company->id)],
         ]);
 
         DB::transaction(function () use ($req) {
-            $company = Company_Details::on('mysql_second')->findOrFail($req->id);
+            $company = Company_Details::on('mysql')->findOrFail($req->id);
             $path = 'public/logos/'.$company->logo;
             
             if($req->image != null){
@@ -116,7 +116,7 @@ class CompanyController extends Controller
             }
 
 
-            $update = Company_Details::on('mysql_second')->findOrFail($req->id)->update([
+            $update = Company_Details::on('mysql')->findOrFail($req->id)->update([
                 "company_type" => $req->type,
                 "company_name" => $req->name,
                 "company_phone" => $req->phone,
@@ -137,7 +137,7 @@ class CompanyController extends Controller
 
     // Delete Companies
     public function Delete(Request $req){
-        $company = Company_Details::on('mysql_second')->findOrFail($req->id);
+        $company = Company_Details::on('mysql')->findOrFail($req->id);
         $path = 'public/logos/'.$company->logo;
         Storage::delete($path);
         $company->delete();
@@ -152,31 +152,31 @@ class CompanyController extends Controller
     // Search Companies
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $company = Company_Details::on('mysql_second')->with('Type')
+            $company = Company_Details::on('mysql')->with('Type')
             ->where('company_name', 'like', '%'.$req->search.'%')
             ->orderBy('company_name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $company = Company_Details::on('mysql_second')->with('Type')
+            $company = Company_Details::on('mysql')->with('Type')
             ->where('company_email', 'like', '%'.$req->search.'%')
             ->orderBy('company_email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){
-            $company = Company_Details::on('mysql_second')->with('Type')
+            $company = Company_Details::on('mysql')->with('Type')
             ->where('company_phone', 'like', '%'.$req->search.'%')
             ->orderBy('company_phone','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 4){
-            $company = Company_Details::on('mysql_second')->with('Type')
+            $company = Company_Details::on('mysql')->with('Type')
             ->where('address', 'like', '%'.$req->search.'%')
             ->orderBy('address','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 5){
-            $company = Company_Details::on('mysql_second')->with('Type')
+            $company = Company_Details::on('mysql')->with('Type')
             ->whereHas('Type', function ($query) use ($req) {
                 $query->where('name', 'like', '%'.$req->search.'%');
                 $query->orderBy('name','asc');
@@ -194,7 +194,7 @@ class CompanyController extends Controller
 
     // Get Companies
     public function Get(Request $req){
-        $companies = Company_Details::on('mysql_second')->select('company_name','company_id')
+        $companies = Company_Details::on('mysql')->select('company_name','company_id')
         ->where('company_name', 'like', '%'.$req->company.'%')
         ->orderBy('company_name')
         ->take(10)
@@ -218,7 +218,7 @@ class CompanyController extends Controller
     // Show Companies Details
     public function Details(Request $req){
         $apiUrl = Str::replaceLast('/api', '', env('API_URL'));
-        $company = Company_Details::on('mysql_second')->with('Type')->findOrFail($req->id);
+        $company = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'data'=>view('admin_setup.company.details', compact('company','apiUrl'))->render(),

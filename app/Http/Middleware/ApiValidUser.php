@@ -16,33 +16,6 @@ class ApiValidUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if ($request->bearerToken()) {
-        //     // Fetch user data from the API
-        //     $response = Http::withToken($request->bearerToken())
-        //         ->get(config('services.api.url') . '/get/currentuser');
-
-        //     if ($response->ok()) {
-        //         // Pass the user data to all views
-        //         view()->share('currentUser', $response->json());
-        //     }
-        // }
-        // else{
-            
-        // }
-
-        // return $next($request);
-
-
-
-
-
-
-
-
-
-
-
-
         if ($request->user()) {
             // Check if trying to access login route and already logged in
             if ($request->getRequestUri() == '/login' || $request->getRequestUri() == '/forgetpassword' || strpos($request->getRequestUri(), '/resetpassword') !== false) {

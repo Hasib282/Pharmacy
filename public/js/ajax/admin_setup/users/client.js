@@ -107,7 +107,7 @@ $(document).ready(function () {
         $('#updateLocation').val(res.client.location.upazila);
         $('#updateLocation').attr('data-id',res.client.loc_id);
         $('#updateAddress').val(res.client.address);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/profiles/${res.client.image}?${new Date().getTime()} `).show();
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/profiles/${res.client.image ? res.client.image : (res.client.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
         $('#updateType').focus();
     }; // End Method
 

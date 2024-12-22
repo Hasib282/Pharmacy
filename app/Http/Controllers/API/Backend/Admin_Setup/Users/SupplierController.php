@@ -18,7 +18,7 @@ class SupplierController extends Controller
 {
     // Show All Suppliers
     public function ShowAll(Request $req){
-        $supplier = User_Info::on('mysql')->with('Withs', 'Location')->where('user_role', 5)->orderBy('added_at', 'asc')->paginate(15);
+        $supplier = User_Info::on('mysql_second')->with('Withs', 'Location')->where('user_role', 5)->orderBy('added_at', 'asc')->paginate(15);
 
         return response()->json([
             'status'=> true,
@@ -43,7 +43,7 @@ class SupplierController extends Controller
 
         DB::transaction(function () use ($req) {
             // Generates Auto Increment Client Id
-            $latestEmployee = User_Info::on('mysql')->where('user_role', 5)->orderBy('user_id','desc')->first();
+            $latestEmployee = User_Info::on('mysql_second')->where('user_role', 5)->orderBy('user_id','desc')->first();
             $id = ($latestEmployee) ? 'S' . str_pad((intval(substr($latestEmployee->user_id, 1)) + 1), 9, '0', STR_PAD_LEFT) : 'S000000101';
 
             if ($req->hasFile('image') && $req->file('image')->isValid()) {
@@ -55,7 +55,7 @@ class SupplierController extends Controller
                 $imageName = null;
             }
             
-            User_Info::on('mysql')->insert([
+            User_Info::on('mysql_second')->insert([
                 "user_id" => $id,
                 "tran_user_type" => $req->type,
                 "user_name" => $req->name,
@@ -79,8 +79,8 @@ class SupplierController extends Controller
 
     // Edit Suppliers
     public function Edit(Request $req){
-        $supplier = User_Info::on('mysql')->with('Withs','Location')->findOrFail($req->id);
-        $tranwith = Transaction_With::on('mysql')->where('user_role','5')->get();
+        $supplier = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($req->id);
+        $tranwith = Transaction_With::on('mysql_second')->where('user_role','5')->get();
         return response()->json([
             'status'=> true,
             'supplier'=> $supplier,
@@ -92,7 +92,7 @@ class SupplierController extends Controller
 
     // Update Suppliers
     public function Update(Request $req){
-        $supplier = User_Info::on('mysql')->findOrFail($req->id);
+        $supplier = User_Info::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
@@ -105,7 +105,7 @@ class SupplierController extends Controller
         ]);
 
         DB::transaction(function () use ($req) {
-            $supplier = User_Info::on('mysql')->findOrFail($req->id);
+            $supplier = User_Info::on('mysql_second')->findOrFail($req->id);
             $path = 'public/profiles/'.$supplier->image;
             
             if($req->image != null){
@@ -124,7 +124,7 @@ class SupplierController extends Controller
                 $imageName = $supplier->image;
             }
 
-            $update = User_Info::on('mysql')->findOrFail($req->id)->update([
+            $update = User_Info::on('mysql_second')->findOrFail($req->id)->update([
                 "tran_user_type" => $req->type,
                 "user_name" => $req->name,
                 "user_email" => $req->email,
@@ -147,7 +147,7 @@ class SupplierController extends Controller
 
     // Delete Suppliers
     public function Delete(Request $req){
-        $admin = User_Info::on('mysql')->findOrFail($req->id);
+        $admin = User_Info::on('mysql_second')->findOrFail($req->id);
         $path = 'public/profiles/'.$admin->image;
         Storage::delete($path);
         $admin->delete();
@@ -161,7 +161,7 @@ class SupplierController extends Controller
 
     // Search Suppliers
     public function Search(Request $req){
-        $query = User_Info::on('mysql')->with('Withs', 'Location')->where('user_role', 5);
+        $query = User_Info::on('mysql_second')->with('Withs', 'Location')->where('user_role', 5);
 
         switch ($req->searchOption) {
             case 1: // Search User By Name
@@ -201,8 +201,8 @@ class SupplierController extends Controller
 
     // Show Supplier Details
     public function Details(Request $req){
-        $supplier = User_Info::on('mysql')->with('Location','Withs')->where('user_id', "=", $req->id)->first();
-        $transaction = Transaction_Main::on('mysql')->where('tran_user', "=", $req->id)->get();
+        $supplier = User_Info::on('mysql_second')->with('Location','Withs')->where('user_id', "=", $req->id)->first();
+        $transaction = Transaction_Main::on('mysql_second')->where('tran_user', "=", $req->id)->get();
         return response()->json([
             'status'=> true,
             'data'=>view('admin_setup.users.supplier.details', compact("supplier",'transaction'))->render(),

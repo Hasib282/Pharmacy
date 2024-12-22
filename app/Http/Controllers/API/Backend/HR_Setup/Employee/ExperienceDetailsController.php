@@ -14,8 +14,8 @@ class ExperienceDetailsController extends Controller
 {
     // Show All Employee Experience Details
     public function ShowAll(Request $req){
-        $employee = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
+        $employee = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
+        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'data' => $employee,
@@ -38,7 +38,7 @@ class ExperienceDetailsController extends Controller
             
         ]);
 
-        Employee_Experience_Detail::on('mysql')->insert([
+        Employee_Experience_Detail::on('mysql_second')->insert([
             'emp_id' =>  $req->user,
             "company_name" => $req->company_name,
             "designation" =>  $req->designation,
@@ -58,8 +58,8 @@ class ExperienceDetailsController extends Controller
 
     // Edit Employee Experience Details
     public function Edit(Request $req){
-        $employee = Employee_Experience_Detail::on('mysql')->where('id', $req->id)->first();
-        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
+        $employee = Employee_Experience_Detail::on('mysql_second')->where('id', $req->id)->first();
+        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'employee'=>$employee,
@@ -80,10 +80,10 @@ class ExperienceDetailsController extends Controller
             'end_date' => 'nullable|after:start_date',
         ]);
 
-        $employee = Employee_Experience_Detail::on('mysql')->findOrFail($req->id);
+        $employee = Employee_Experience_Detail::on('mysql_second')->findOrFail($req->id);
         
 
-        $update = Employee_Experience_Detail::on('mysql')->findOrFail($req->id)->update([
+        $update = Employee_Experience_Detail::on('mysql_second')->findOrFail($req->id)->update([
             "company_name" => $req->company_name,
             "designation" =>  $req->designation,
             "department" => $req->department,
@@ -105,7 +105,7 @@ class ExperienceDetailsController extends Controller
 
     // Delete Employee Experience Details
     public function Delete(Request $req){
-        Employee_Experience_Detail::on('mysql')->findOrFail($req->id)->delete();
+        Employee_Experience_Detail::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Employee Experience Details Deleted Successfully',
@@ -116,7 +116,7 @@ class ExperienceDetailsController extends Controller
 
     // Search Employee Experience Details
     public function Search(Request $req){
-        $query = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3); // Base query
+        $query = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3); // Base query
 
         if ($req->filled('search') && $req->searchOption) {
             switch ($req->searchOption) {

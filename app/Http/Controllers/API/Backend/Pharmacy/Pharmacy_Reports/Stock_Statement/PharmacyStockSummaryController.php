@@ -11,7 +11,7 @@ class PharmacyStockSummaryController extends Controller
 {
     // Show All Pharmacy Stock Summary Statement
     public function ShowAll(Request $req){
-        $pharmacy = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
+        $pharmacy = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
         ->whereHas('Groupe', function ($query){
             $query->where('tran_groupe_type', 6);
         })
@@ -29,7 +29,7 @@ class PharmacyStockSummaryController extends Controller
     // Search Pharmacy Stock Summary Statement
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $pharmacy = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
+            $pharmacy = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
             ->whereHas('Groupe', function ($query){
                 $query->where('tran_groupe_type', 6);
             })
@@ -38,7 +38,7 @@ class PharmacyStockSummaryController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $pharmacy = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
+            $pharmacy = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
             ->whereHas('Groupe', function ($query) use ($req){
                 $query->where('tran_groupe_type', 6);
                 $query->where('tran_groupe_name', 'like', '%' . $req->search . '%');
@@ -47,7 +47,7 @@ class PharmacyStockSummaryController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 3){
-            $pharmacy = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
+            $pharmacy = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
             ->whereHas('Groupe', function ($query){
                 $query->where('tran_groupe_type', 6);
             })
@@ -58,7 +58,7 @@ class PharmacyStockSummaryController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 4){
-            $pharmacy = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
+            $pharmacy = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
             ->whereHas('Groupe', function ($query){
                 $query->where('tran_groupe_type', 6);
             })
@@ -69,7 +69,7 @@ class PharmacyStockSummaryController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 5){
-            $pharmacy = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
+            $pharmacy = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
             ->whereHas('Groupe', function ($query){
                 $query->where('tran_groupe_type', 6);
             })

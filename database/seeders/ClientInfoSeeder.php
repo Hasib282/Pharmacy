@@ -15,19 +15,19 @@ class ClientInfoSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/client_info.json");
-        $clients = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $clients->each(function($client){
-            User_Info::on('mysql')->create([
-                "user_id" => $client->user_id,
-                "user_name" => $client->user_name,
-                "user_email" => $client->user_email,
-                "user_phone" => $client->user_phone,
+        $data->each(function($item){
+            User_Info::on('mysql_second')->create([
+                "user_id" => $item->user_id,
+                "user_name" => $item->user_name,
+                "user_email" => $item->user_email,
+                "user_phone" => $item->user_phone,
                 "gender" => "Male",
-                "loc_id" => $client->loc_id,
-                "address" => $client->address,
+                "loc_id" => $item->loc_id,
+                "address" => $item->address,
                 "user_role" => 4,
-                "tran_user_type" => $client->tran_user_type,
+                "tran_user_type" => $item->tran_user_type,
             ]);
         });
     }

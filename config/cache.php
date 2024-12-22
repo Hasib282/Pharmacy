@@ -15,9 +15,8 @@ return [
     |
     */
 
-    'default' => env('CACHE_DRIVER', 'file'),
-    // 'default' => env('CACHE_STORE', 'database'),
-    
+    'default' => env('CACHE_STORE', 'database'),
+
     /*
     |--------------------------------------------------------------------------
     | Cache Stores
@@ -104,6 +103,6 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', "Team Solutions BD"), '_').'_cache_'),
+    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
 
 ];

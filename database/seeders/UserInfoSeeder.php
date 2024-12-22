@@ -15,7 +15,7 @@ class UserInfoSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = [
+        $data = [
             [
                 'user_id' => 'SA000000001',
                 'user_name' => 'Hasibur Rahaman',
@@ -34,8 +34,6 @@ class UserInfoSeeder extends Seeder
             ],
         ];
 
-        Login_User::on('mysql_second')->insert($users);
-
-        // DB::on('mysql_second')->table('login__users')->insert($users);
+        Login_User::on('mysql')->insert($data);
     }
 }

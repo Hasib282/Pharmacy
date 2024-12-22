@@ -18,8 +18,8 @@ class EmployeeController extends Controller
 {
     // Show All Employee Details
     public function ShowAll(Request $req){
-        $employee = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
+        $employee = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
+        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'data' => $employee,
@@ -89,7 +89,7 @@ class EmployeeController extends Controller
 
     // Delete Employee Details
     public function Delete(Request $req){
-        User_Info::on('mysql')->findOrFail($req->id)->delete();
+        User_Info::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Employee Details Deleted Successfully',
@@ -100,7 +100,7 @@ class EmployeeController extends Controller
 
     // Search Employee Details
     public function Search(Request $req){
-        $query = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3); // Base query
+        $query = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3); // Base query
 
         if ($req->filled('search') && $req->searchOption) {
             switch ($req->searchOption) {

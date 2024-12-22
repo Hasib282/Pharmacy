@@ -23,7 +23,7 @@ class ForgetPasswordController extends Controller
     // Show Reset Form
     public function ResetPassword(Request $req){
         $token = $req->token;
-        $passwordReset = DB::table('password_resets')->where('email', $req->email)->first();
+        $passwordReset = DB::connection('mysql')->table('password_reset_tokens')->where('email', $req->email)->first();
 
         if (!$passwordReset) {
             return redirect()->route('login')->withErrors(['message' => 'Your Password reset token is expired.']);

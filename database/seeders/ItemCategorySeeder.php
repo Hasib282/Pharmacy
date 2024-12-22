@@ -15,12 +15,12 @@ class ItemCategorySeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/item_category.json");
-        $categories = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $categories->each(function($category){
-            Item_Category::create([
-                "category_name"=>$category->category_name,
-                "type_id"=>$category->type_id,
+        $data->each(function($item){
+            Item_Category::on('mysql')->create([
+                "category_name"=>$item->category_name,
+                "type_id"=>$item->type_id,
             ]);
         });
     }

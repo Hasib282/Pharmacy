@@ -15,12 +15,12 @@ class RoutePermissionSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/route_permission.json");
-        $route_permissions = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $route_permissions->each(function($route_permission){
-            Permission_Route::create([
-                "permission_id"=>$route_permission->permission_id,
-                "route_name"=>$route_permission->route_name,
+        $data->each(function($item){
+            Permission_Route::on('mysql')->create([
+                "permission_id"=>$item->permission_id,
+                "route_name"=>$item->route_name,
             ]);
         });
     }

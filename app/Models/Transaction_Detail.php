@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction_Detail extends Model
 {
-    use HasFactory;
-
-    protected $connection = 'mysql';
+    protected $connection = 'mysql_second';
 
     protected $guarded = [];
     
@@ -49,5 +46,4 @@ class Transaction_Detail extends Model
     public function Unit(){
         return $this->belongsTo(Item_Unit::class,'unit_id','id');
     }
-
 }

@@ -20,7 +20,7 @@ class ForgetPasswordController extends Controller
         $req->validate(['email' => 'required|email']);
         $frontendUrl = $req->frontend_url;
         
-        $user = Login_User::where('user_email', $req->email)->first();
+        $user = Login_User::on('mysql')->where('user_email', $req->email)->first();
 
         if (!$user) {
             return response()->json([
@@ -33,7 +33,7 @@ class ForgetPasswordController extends Controller
         $token = Str::random(60);
 
         // Store the token in the password_resets table
-        DB::table('password_resets')->updateOrInsert(
+        DB::connection('mysql')->table('password_reset_tokens')->updateOrInsert(
             ['email' => $req->email],
             ['token' => Hash::make($token), 'created_at' => now()]
         );
@@ -60,7 +60,7 @@ class ForgetPasswordController extends Controller
             'token' => 'required'
         ]);
 
-        $reset = DB::table('password_resets')->where('email', $req->email)->first();
+        $reset = DB::connection('mysql')->table('password_reset_tokens')->where('email', $req->email)->first();
 
         if (!$reset || !Hash::check($req->token, $reset->token)) {
             return response()->json([
@@ -69,12 +69,12 @@ class ForgetPasswordController extends Controller
             ], 404);
         }
 
-        $user = Login_User::where('user_email', $req->email)->first();
+        $user = Login_User::on('mysql')->where('user_email', $req->email)->first();
 
         $user->password = Hash::make($req->password);
         $user->save();
 
-        DB::table('password_resets')->where('email', $req->email)->delete();
+        DB::connection('mysql')->table('password_reset_tokens')->where('email', $req->email)->delete();
 
         return response()->json([
             'status' => true,

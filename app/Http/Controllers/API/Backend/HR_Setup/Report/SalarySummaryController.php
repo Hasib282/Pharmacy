@@ -11,7 +11,7 @@ class SalarySummaryController extends Controller
 {
     // Show All Salary Summary Report
     public function ShowAll(Request $req){
-        $salary = Transaction_Main::on('mysql')->with('User')
+        $salary = Transaction_Main::on('mysql_second')->with('User')
         ->where('tran_method','Payment')
         ->where('tran_type', 3)
         ->orderBy('id','asc')
@@ -29,7 +29,7 @@ class SalarySummaryController extends Controller
     public function Search(Request $req){
         $currentYear = $req->year;
         $currentMonth = $req->month;
-        $salary = Transaction_Main::on('mysql')->with('User')
+        $salary = Transaction_Main::on('mysql_second')->with('User')
         ->whereHas('User', function ($query) use ($req) {
             $query->where('user_name', 'like', '%'.$req->search.'%');
             $query->orWhere('user_id', 'like', '%'.$req->search.'%');

@@ -15,14 +15,14 @@ class TransactionWithSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/tran_with.json");
-        $tranwith = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $tranwith->each(function($withs){
-            Transaction_With::create([
-                "tran_with_name"=>$withs->tran_with_name,
-                "user_role"=>$withs->user_role,
-                "tran_type"=>$withs->tran_type,
-                "tran_method"=>$withs->tran_method,
+        $data->each(function($item){
+            Transaction_With::on('mysql_second')->create([
+                "tran_with_name"=>$item->tran_with_name,
+                "user_role"=>$item->user_role,
+                "tran_type"=>$item->tran_type,
+                "tran_method"=>$item->tran_method,
             ]);
         });
     }

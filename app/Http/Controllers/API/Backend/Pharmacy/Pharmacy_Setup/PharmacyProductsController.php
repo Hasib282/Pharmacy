@@ -15,7 +15,7 @@ class PharmacyProductsController extends Controller
     // Show All Pharmacy Item/Products
     public function ShowAll(Request $req){
         // Update Product Quantity
-        // DB::connection('mysql_second')
+        // DB::connection('mysql')
         // ->table('transaction__heads as h')
         // ->join(DB::raw("(SELECT tran_head_id, SUM(IF(tran_method = 'Purchase',quantity_actual,0)) 
         // -SUM(IF(tran_method = 'Issue',quantity_actual,0)) 
@@ -28,8 +28,8 @@ class PharmacyProductsController extends Controller
         // ) as x"),'h.id', '=', 'x.tran_head_id')
         // ->update(['h.quantity' => DB::raw('x.balance')]);
 
-        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '6')->orderBy('added_at','asc')->get();
-        $heads = Transaction_Head::on('mysql_second')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
+        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '6')->orderBy('added_at','asc')->get();
+        $heads = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
         ->whereHas('Groupe', function ($query){
             $query->where('tran_groupe_type', 6);
         })
@@ -48,7 +48,7 @@ class PharmacyProductsController extends Controller
     // Insert Pharmacy Item/Products
     public function Insert(Request $req){
         $req->validate([
-            "productName" => 'required|unique:mysql_second.transaction__heads,tran_head_name',
+            "productName" => 'required|unique:mysql.transaction__heads,tran_head_name',
             "groupe" => 'required|numeric',
             "category" => 'required|numeric',
             "manufacturer" => 'required|numeric',
@@ -56,7 +56,7 @@ class PharmacyProductsController extends Controller
             "unit" => 'required|numeric',
         ]);
 
-        Transaction_Head::on('mysql_second')->insert([
+        Transaction_Head::on('mysql')->insert([
             "tran_head_name" => $req->productName,
             "groupe_id" => $req->groupe,
             "category_id" => $req->category,
@@ -75,8 +75,8 @@ class PharmacyProductsController extends Controller
 
     // Edit Pharmacy Item/Products
     public function Edit(Request $req){
-        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '6')->orderBy('added_at','asc')->get();
-        $heads = Transaction_Head::on('mysql_second')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
+        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '6')->orderBy('added_at','asc')->get();
+        $heads = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'heads'=>$heads,
@@ -91,7 +91,7 @@ class PharmacyProductsController extends Controller
         $heads = Transaction_Head::findOrFail($req->id);
         
         $req->validate([
-            "productName" => ['required',Rule::unique('mysql_second.transaction__heads', 'tran_head_name')->ignore($heads->id)],
+            "productName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($heads->id)],
             "groupe" => 'required|numeric',
             "category" => 'numeric',
             "manufacturer" => 'numeric',
@@ -103,7 +103,7 @@ class PharmacyProductsController extends Controller
             "mrp" => 'required|numeric',
         ]);
 
-        $update = Transaction_Head::on('mysql_second')->findOrFail($req->id)->update([
+        $update = Transaction_Head::on('mysql')->findOrFail($req->id)->update([
             "tran_head_name" => $req->productName,
             "groupe_id" => $req->groupe,
             "category_id" => $req->category,
@@ -130,7 +130,7 @@ class PharmacyProductsController extends Controller
 
     // Delete Pharmacy Item/Products
     public function Delete(Request $req){
-        Transaction_Head::on('mysql_second')->findOrFail($req->id)->delete();
+        Transaction_Head::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Product Deleted Successfully',
@@ -141,7 +141,7 @@ class PharmacyProductsController extends Controller
 
     // Search Pharmacy Item/Products
     public function Search(Request $req){
-        $query = Transaction_Head::on('mysql_second')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
+        $query = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
                     ->whereHas('Groupe', function ($q){
                         $q->where('tran_groupe_type', 6);
                     }); // Base query
@@ -206,7 +206,7 @@ class PharmacyProductsController extends Controller
     // Get Pharmacy Product By Groupe
     public function Get(Request $req){
         // Update Product Quantity
-        // DB::connection('mysql_second')
+        // DB::connection('mysql')
         // ->table('transaction__heads as h')
         // ->join(DB::raw("(SELECT tran_head_id, SUM(IF(tran_method = 'Purchase',quantity_actual,0)) 
         // -SUM(IF(tran_method = 'Issue',quantity_actual,0)) 
@@ -219,7 +219,7 @@ class PharmacyProductsController extends Controller
         // ) as x"),'h.id', '=', 'x.tran_head_id')
         // ->update(['h.quantity' => DB::raw('x.balance')]);
 
-        $heads = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category")
+        $heads = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category")
         ->where('tran_head_name', 'like', '%'.$req->product.'%')
         ->whereIn('groupe_id', $req->groupe)
         ->orderBy('tran_head_name','asc')
@@ -252,7 +252,7 @@ class PharmacyProductsController extends Controller
 
     // Get Pharmacy Product List
     public function GetProductList(Request $req){
-        $heads = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category")
+        $heads = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category")
         ->where('tran_head_name', 'like', '%'.$req->product.'%')
         ->whereIn('groupe_id', $req->groupe)
         ->orderBy('tran_head_name','asc')

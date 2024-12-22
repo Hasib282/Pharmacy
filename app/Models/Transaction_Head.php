@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction_Head extends Model
 {
-    use HasFactory;
-
-    protected $connection = 'mysql_second';
+    protected $connection = 'mysql';
 
     protected $guarded = [];
     public $timestamps = false;

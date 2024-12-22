@@ -15,13 +15,13 @@ class TransactionGroupeSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/tran_groupe.json");
-        $groupes = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $groupes->each(function($groupe){
-            Transaction_Groupe::on('mysql_second')->create([
-                "tran_groupe_name"=>$groupe->tran_groupe_name,
-                "tran_groupe_type"=>$groupe->tran_groupe_type,
-                "tran_method"=>$groupe->tran_method,
+        $data->each(function($item){
+            Transaction_Groupe::on('mysql')->create([
+                "tran_groupe_name"=>$item->tran_groupe_name,
+                "tran_groupe_type"=>$item->tran_groupe_type,
+                "tran_method"=>$item->tran_method,
             ]);
         });
     }

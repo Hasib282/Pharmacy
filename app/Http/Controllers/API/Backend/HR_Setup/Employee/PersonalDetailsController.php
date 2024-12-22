@@ -16,8 +16,8 @@ class PersonalDetailsController extends Controller
 {
     // Show All Employee Personal Details
     public function ShowAll(Request $req){
-        $employee = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
+        $employee = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
+        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'data' => $employee,
@@ -39,9 +39,9 @@ class PersonalDetailsController extends Controller
             'marital_status' => 'required|in:Married,Unmarried',
             'nationality' => 'nullable',
             'nid_no' => 'nullable|numeric',
-            'phn_no' =>  'required|numeric|unique:mysql.user__infos,user_phone,phone',
+            'phn_no' =>  'required|numeric|unique:mysql_second.user__infos,user_phone,phone',
             'blood_group' => 'nullable|in:A+,A-,B+,B-,O+,O-,AB+,AB-',
-            'email' => 'required|email|unique:mysql.user__infos,user_email,email',
+            'email' => 'required|email|unique:mysql_second.user__infos,user_email,email',
             'location'  => 'required',
             'type'=> 'required',
             'password' => 'required|confirmed',
@@ -51,7 +51,7 @@ class PersonalDetailsController extends Controller
  
         
         DB::transaction(function () use ($req) {
-            $NewEmployee = Employee_Personal_Detail::on('mysql')->orderBy('employee_id','desc')->first();
+            $NewEmployee = Employee_Personal_Detail::on('mysql_second')->orderBy('employee_id','desc')->first();
             $id = ($NewEmployee) ? 'E' . str_pad((intval(substr($NewEmployee->employee_id, 1)) + 1), 9, '0', STR_PAD_LEFT) : 'E000000101';
     
             if ($req->hasFile('image') && $req->file('image')->isValid()) {
@@ -67,7 +67,7 @@ class PersonalDetailsController extends Controller
 
 
             // Insert Info to User__Info 
-            User_Info::on('mysql')->insert([
+            User_Info::on('mysql_second')->insert([
                 "user_id" => $id,
                 "user_name" => $req->name,
                 "user_email" => $req->email,
@@ -85,7 +85,7 @@ class PersonalDetailsController extends Controller
 
             
             // Insert Employee Personal Details
-            Employee_Personal_Detail::on('mysql')->insert([
+            Employee_Personal_Detail::on('mysql_second')->insert([
                 'employee_id' =>  $id,
                 'name' => $req->name,
                 "fathers_name" => $req->fathers_name,
@@ -118,8 +118,8 @@ class PersonalDetailsController extends Controller
 
     // Edit Employee Personal Details
     public function Edit(Request $req){
-        $employee = Employee_Personal_Detail::on('mysql')->with('Location')->where('employee_id', $req->id)->first();
-        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
+        $employee = Employee_Personal_Detail::on('mysql_second')->with('Location')->where('employee_id', $req->id)->first();
+        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'employee'=>$employee,
@@ -153,7 +153,7 @@ class PersonalDetailsController extends Controller
         ]);
 
         DB::transaction(function () use ($req) {
-            $employee = Employee_Personal_Detail::on('mysql')->where('employee_id', $req->employee_id)->first();
+            $employee = Employee_Personal_Detail::on('mysql_second')->where('employee_id', $req->employee_id)->first();
             $path = 'public/profiles/'.$employee->image;
             
             if($req->image != null){
@@ -172,7 +172,7 @@ class PersonalDetailsController extends Controller
                 $imageName = $employee->image;
             }
             
-            User_Info::on('mysql')->where('user_id', $req->employee_id)->update([
+            User_Info::on('mysql_second')->where('user_id', $req->employee_id)->update([
                 "user_name" => $req->name,
                 "user_email" => $req->email,
                 "user_phone" => $req->phn_no,
@@ -187,7 +187,7 @@ class PersonalDetailsController extends Controller
                 "updated_at" => now()
             ]);
 
-            Employee_Personal_Detail::on('mysql')->findOrFail($req->id)->update([
+            Employee_Personal_Detail::on('mysql_second')->findOrFail($req->id)->update([
                 'name' => $req->name,
                 "fathers_name" => $req->fathers_name,
                 "mothers_name" => $req->mothers_name,
@@ -222,7 +222,7 @@ class PersonalDetailsController extends Controller
 
     // Delete Employee Personal Details
     public function Delete(Request $req){
-        User_Info::on('mysql')->findOrFail($req->id)->delete();
+        User_Info::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Employee Personal Details Deleted Successfully',
@@ -233,7 +233,7 @@ class PersonalDetailsController extends Controller
 
     // Search Employee Personal Details
     public function Search(Request $req){
-        $query = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3); // Base query
+        $query = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3); // Base query
 
         if ($req->filled('search') && $req->searchOption) {
             switch ($req->searchOption) {

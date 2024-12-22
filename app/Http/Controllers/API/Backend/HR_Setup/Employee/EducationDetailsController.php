@@ -14,8 +14,8 @@ class EducationDetailsController extends Controller
 {
     // Show All Employee Education Details
     public function ShowAll(Request $req){
-        $employee = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
+        $employee = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
+        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'data' => $employee,
@@ -42,7 +42,7 @@ class EducationDetailsController extends Controller
         ]);
     
         // Create a new Education instance and save the data
-        Employee_Education_Detail::on('mysql')->insert([
+        Employee_Education_Detail::on('mysql_second')->insert([
             'emp_id' => $req->user,
             'level_of_education' => $req->level_of_education,
             'degree_title' => $req->degree_title,
@@ -66,8 +66,8 @@ class EducationDetailsController extends Controller
 
     // Edit Employee Education Details
     public function Edit(Request $req){
-        $employee = Employee_Education_Detail::on('mysql')->where('id', $req->id)->first();
-        $tranwith = Transaction_With::on('mysql')->where('user_role', 3)->get();
+        $employee = Employee_Education_Detail::on('mysql_second')->where('id', $req->id)->first();
+        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'employee'=>$employee,
@@ -92,10 +92,10 @@ class EducationDetailsController extends Controller
             'passing_year' => 'required|numeric',
         ]);
 
-        $employee = Employee_Education_Detail::on('mysql')->findOrFail($req->id);
+        $employee = Employee_Education_Detail::on('mysql_second')->findOrFail($req->id);
         
 
-        $update = Employee_Education_Detail::on('mysql')->findOrFail($req->id)->update([
+        $update = Employee_Education_Detail::on('mysql_second')->findOrFail($req->id)->update([
             'level_of_education' => $req->level_of_education,
             'degree_title' => $req->degree_title,
             'group' => $req->group,
@@ -121,7 +121,7 @@ class EducationDetailsController extends Controller
 
     // Delete Employee Education Details
     public function Delete(Request $req){
-        Employee_Education_Detail::on('mysql')->findOrFail($req->id)->delete();
+        Employee_Education_Detail::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Employee Education Details Deleted Successfully',
@@ -132,7 +132,7 @@ class EducationDetailsController extends Controller
 
     // Search Employee Education Details
     public function Search(Request $req){
-        $query = User_Info::on('mysql')->with('Withs','Location')->where('user_role', 3); // Base query
+        $query = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3); // Base query
 
         if ($req->filled('search') && $req->searchOption) {
             switch ($req->searchOption) {

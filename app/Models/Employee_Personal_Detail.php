@@ -2,43 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee_Personal_Detail extends Model
 {
-    use HasFactory;
+    protected $connection = 'mysql_second';
 
-    protected $connection = 'mysql';
-    
     protected $guarded = [];
 
-    public function educationDetail()
-    {
-        return $this->belongsTo(Employee_Education_Detail::class, 'employee_id', 'emp_id');
+    public function User(){
+        return $this->belongsTo(User_Info::class,'emp_id','user_id');
     }
 
-    public function trainingDetail()
-    {
-        return $this->belongsTo(Employee_Training_Detail::class, 'employee_id', 'emp_id');
-    }
-
-    public function experienceDetail()
-    {
-        return $this->belongsTo(Employee_Experience_Detail::class, 'employee_id', 'emp_id');
-    }
-
-    public function organizationDetail()
-    {
-        return $this->belongsTo(Employee_Organization_Detail::class, 'employee_id', 'emp_id');
+    public function Department(){
+        return $this->belongsTo(Department_Info::class,'department','id');
     }
 
     public function Location(){
-        return $this->belongsTo(Location_Info::class,'location_id','id');
+        return $this->belongsTo(Location_Info::class,'joining_location','id');
     }
 
-    public function Withs(){
-        return $this->belongsTo(Transaction_With::class,'tran_user_type','id');
+    public function Designation(){
+        return $this->belongsTo(Designation::class,'designation','id');
     }
-
+    
+    public function personalDetail()
+    {
+        return $this->belongsTo(Employee_Personal_Detail::class, 'emp_id', 'employee_id');
+    }
 }

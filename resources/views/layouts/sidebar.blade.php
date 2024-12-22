@@ -8,6 +8,7 @@
                 <strong>{{ auth()->user()->user_name }}</strong>
             </div>
         </div>
+        {{-- {{ auth()->user()}} --}}
     {{-- </a> --}}
     <hr>
     <!-- Sidebar menue starts -->

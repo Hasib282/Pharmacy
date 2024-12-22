@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee_Training_Detail extends Model
 {
-    use HasFactory;
-
-    protected $connection = 'mysql';
+    protected $connection = 'mysql_second';
 
     protected $guarded = [];
 
@@ -21,5 +18,4 @@ class Employee_Training_Detail extends Model
     {
         return $this->belongsTo(Employee_Personal_Detail::class, 'emp_id', 'employee_id');
     }
-
 }

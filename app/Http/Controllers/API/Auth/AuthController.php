@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -39,10 +39,15 @@ class AuthController extends Controller
             else{
                 setcookie("email","");
             }
+            // $user = Auth::user();
+            // session(['user' => $user]); // Store the user object or any data you want in the session
+
+            // Optional: regenerate session ID for security
+            $req->session()->regenerate();
 
             $user = Auth::user();
-
-            $token = $user->createToken('API Token')->plainTextToken;
+            $user->tokens()->delete(); // Clear existing tokens
+            $token = $user->createToken('API Token')->plainTextToken; // Create new api-token
             
             return response()->json([
                 'status' => true,
@@ -62,29 +67,23 @@ class AuthController extends Controller
 
     // Logout Function
     public function Logout(Request $req){
+        // dd(Auth::logout());
         $user = $req->user();
         
         Cache::forget("permission_mainheads_{$user->user_id}");
         Cache::forget("permission_ids_{$user->user_id}");
         Cache::forget("route_permissions_{$user->user_id}");
-
-        // session()->forget('api_token');
-        session()->flush();
-
+        Cache::flush();
+        
+        Auth::guard('web')->logout();
         $user->tokens()->delete();
+        session()->invalidate();
+        session()->regenerateToken();
+        // session()->flush();
+        
         return response()->json([
             'status' => true,
             'message' => 'Logged out Successfully',
-        ], 200);
-    } // End Method
-    
-
-
-    // Load Sidebar Function
-    public function Sidebar(Request $req){
-        return response()->json([
-            'status' => true,
-            'data' => view('layouts.sidebar')->render(),
         ], 200);
     } // End Method
 }

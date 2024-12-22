@@ -15,16 +15,16 @@ class BankInfoSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/bank_info.json");
-        $banks = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $banks->each(function($bank){
-            Bank::create([
-                "user_id" => $bank->user_id,
-                "name" => $bank->name,
-                "email" => $bank->email,
-                "phone" => $bank->phone,
-                "loc_id" => $bank->loc_id,
-                "address" => $bank->address,
+        $data->each(function($item){
+            Bank::on('mysql')->create([
+                "user_id" => $item->user_id,
+                "name" => $item->name,
+                "email" => $item->email,
+                "phone" => $item->phone,
+                "loc_id" => $item->loc_id,
+                "address" => $item->address,
             ]);
         });
     }

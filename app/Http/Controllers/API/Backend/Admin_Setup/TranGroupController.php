@@ -13,8 +13,8 @@ class TranGroupController extends Controller
 {
     // Show All Transaction Group
     public function ShowAll(Request $req){
-        $groupes = Transaction_Groupe::on('mysql_second')->whereNotIn('id', ['1','2','3','4','5'])->with('Type')->orderBy('added_at')->paginate(15);
-        $types = Transaction_Main_head::on('mysql_second')->orderBy('added_at')->get();
+        $groupes = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4','5'])->with('Type')->orderBy('added_at')->paginate(15);
+        $types = Transaction_Main_head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $groupes,
@@ -27,12 +27,12 @@ class TranGroupController extends Controller
     // Insert Transaction Group
     public function Insert(Request $req){
         $req->validate([
-            "groupeName" => 'required|unique:mysql_second.transaction__groupes,tran_groupe_name',
+            "groupeName" => 'required|unique:mysql.transaction__groupes,tran_groupe_name',
             "type" => 'required|numeric',
             "method" => 'required|in:Receive,Payment,Both',
         ]);
 
-        Transaction_Groupe::on('mysql_second')->insert([
+        Transaction_Groupe::on('mysql')->insert([
             "tran_groupe_name" => $req->groupeName,
             "tran_groupe_type" => $req->type,
             "tran_method" => $req->method,
@@ -48,8 +48,8 @@ class TranGroupController extends Controller
 
     // Edit Transaction Group
     public function Edit(Request $req){
-        $groupes = Transaction_Groupe::on('mysql_second')->whereNotIn('id', ['1','2','3','4','5'])->with('Type')->findOrFail($req->id);
-        $types = Transaction_Main_head::on('mysql_second')->orderBy('added_at')->get();
+        $groupes = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4','5'])->with('Type')->findOrFail($req->id);
+        $types = Transaction_Main_head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,            
             'groupes'=>$groupes,
@@ -61,15 +61,15 @@ class TranGroupController extends Controller
 
     // Update Transaction Group
     public function Update(Request $req){
-        $groupes = Transaction_Groupe::on('mysql_second')->whereNotIn('id', ['1','2','3','4','5'])->findOrFail($req->id);
+        $groupes = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4','5'])->findOrFail($req->id);
 
         $req->validate([
-            "groupeName" => ['required', Rule::unique('mysql_second.transaction__groupes', 'tran_groupe_name')->ignore($groupes->id)],
+            "groupeName" => ['required', Rule::unique('mysql.transaction__groupes', 'tran_groupe_name')->ignore($groupes->id)],
             "type" => 'required|numeric',
             "method" => 'required|in:Receive,Payment,Both',
         ]);
 
-        $update = Transaction_Groupe::on('mysql_second')->findOrFail($req->id)->update([
+        $update = Transaction_Groupe::on('mysql')->findOrFail($req->id)->update([
             "tran_groupe_name" => $req->groupeName,
             "tran_groupe_type" => $req->type,
             "tran_method" => $req->method,
@@ -88,7 +88,7 @@ class TranGroupController extends Controller
 
     // Delete Transaction Group
     public function Delete(Request $req){
-        Transaction_Groupe::on('mysql_second')->whereNotIn('id', ['1','2','3','4','5'])->findOrFail($req->id)->delete();
+        Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4','5'])->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Transaction Groupe Deleted Successfully',
@@ -99,7 +99,7 @@ class TranGroupController extends Controller
 
     // Search Transaction Group
     public function Search(Request $req){
-        $groupes = Transaction_Groupe::on('mysql_second')
+        $groupes = Transaction_Groupe::on('mysql')
         ->whereNotIn('id', ['1','2','3','4','5'])
         ->with('Type')
         ->where('tran_groupe_name', 'like', '%'.$req->search.'%')
@@ -118,7 +118,7 @@ class TranGroupController extends Controller
 
     // Get Transaction Groupes
     public function Get(Request $req){
-        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_name', 'like', '%'.$req->groupe.'%')
+        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_name', 'like', '%'.$req->groupe.'%')
         ->orderBy('tran_groupe_name')
         ->take(10)
         ->get();
@@ -140,7 +140,7 @@ class TranGroupController extends Controller
 
     // Get Transaction Groupes By Type
     public function GetByType(Request $req){
-        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', 'like', '%'.$req->type.'%')
+        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', 'like', '%'.$req->type.'%')
         ->orderBy('tran_groupe_type')
         ->get();
 

@@ -77,33 +77,7 @@ $(document).ready(function () {
         $('#updateName').val(res.superadmin.user_name);
         $('#updatePhone').val(res.superadmin.user_phone);
         $('#updateEmail').val(res.superadmin.user_email);
-
-        // Create options dynamically
-        // $('#updateDivision').empty();
-        // $('#updateDivision').append(`<option value="Dhaka" ${res.superadmin.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-        //     <option value="Chittagong" ${res.superadmin.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-        //     <option value="Rajshahi" ${res.superadmin.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-        //     <option value="Khulna" ${res.superadmin.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-        //     <option value="Sylhet" ${res.superadmin.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-        //     <option value="Barisal" ${res.superadmin.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
-        //     <option value="Rangpur" ${res.superadmin.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-        //     <option value="Mymensingh" ${res.superadmin.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-
-        // // Create options dynamically based on the status value
-        // $('#updateGender').empty();
-        // $('#updateGender').append(`<option value="Male" ${res.superadmin.gender === 'Male' ? 'selected' : ''}>Male</option>
-        //                             <option value="Female" ${res.superadmin.gender === 'Female' ? 'selected' : ''}>Female</option>
-        //                             <option value="Others" ${res.superadmin.gender === 'Others' ? 'selected' : ''}>Others</option>`);
-
-        // $('#updateLocation').val(res.superadmin.location.upazila);
-        // $('#updateLocation').attr('data-id',res.superadmin.loc_id);
-        // $('#updateAddress').val(res.superadmin.address);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/profiles/${res.superadmin.image}?${new Date().getTime()} `).show();
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/profiles/${res.superadmin.image ? res.superadmin.image : (res.superadmin.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
         $('#updateName').focus();
-
     }; // End Method
-
-
-    // Show Detals Ajax
-    DetailsAjax('admin/users/superadmins');
 });

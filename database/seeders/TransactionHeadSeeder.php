@@ -15,16 +15,16 @@ class TransactionHeadSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/tran_heads.json");
-        $heads = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $heads->each(function($head){
-            Transaction_Head::on('mysql_second')->create([
-                "tran_head_name" => $head->tran_head_name,
-                "groupe_id" => $head->groupe_id,
-                "category_id" => $head->category_id,
-                "manufacturer_id" => $head->manufacturer_id,
-                "form_id" => $head->form_id,
-                "unit_id" => $head->unit_id,
+        $data->each(function($item){
+            Transaction_Head::on('mysql')->create([
+                "tran_head_name" => $item->tran_head_name,
+                "groupe_id" => $item->groupe_id,
+                "category_id" => $item->category_id,
+                "manufacturer_id" => $item->manufacturer_id,
+                "form_id" => $item->form_id,
+                "unit_id" => $item->unit_id,
             ]);
         });
     }

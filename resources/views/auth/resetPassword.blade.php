@@ -80,7 +80,7 @@
             </div>
         </form>
         <script>
-            let apiUrl = "{{ env('API_URL') }}"
+            var apiUrl = "{{ config('app.api_url') }}";
             $(document).on('submit', '#change-pass', function(e){
                 e.preventDefault();
                 let formData = new FormData(this);

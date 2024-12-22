@@ -114,24 +114,24 @@
                             processData: false,
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                            // xhrFields: {
-                            //     withCredentials: true, // Send session cookies
-                            // },
+                            },
+                            xhrFields: {
+                                withCredentials: true, // Send session cookies
+                            },
                             success: function(response) {
                                 console.log('Hi');
                                 localStorage.setItem('token', response.token);
                                 window.location.href = '/dashboard';
                             },
                             error: function(response) {
+                                console.log('Login Failed', response);
                                 if (response.responseJSON && response.responseJSON.notice) {
                                     $('#error').html(response.responseJSON.notice)
                                 }
-                                if (response.responseJSON.redirect) {
+                                if (response.responseJSON && response.responseJSON.redirect) {
                                     sessionStorage.setItem('redirectMessage', response.responseJSON.message);
                                     window.location.href = response.responseJSON.redirect;
                                 }
-                                console.log('Login Failed', response);
                             }
                         });
                     }

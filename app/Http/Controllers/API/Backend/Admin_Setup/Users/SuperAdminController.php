@@ -17,7 +17,7 @@ class SuperAdminController extends Controller
 {
     // Show All SuperAdmins
     public function ShowAll(Request $req){
-        $superadmin = Login_User::on('mysql_second')->with('Withs','Location')->where('user_role', 1)->orderBy('added_at','asc')->paginate(15);
+        $superadmin = Login_User::on('mysql')->with('Withs','Location')->where('user_role', 1)->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $superadmin,
@@ -30,8 +30,8 @@ class SuperAdminController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "name" => 'required',
-            "phone" => 'required|numeric|unique:mysql_second.login__users,user_phone',
-            "email" => 'required|email|unique:mysql_second.login__users,user_email',
+            "phone" => 'required|numeric|unique:mysql.login__users,user_phone',
+            "email" => 'required|email|unique:mysql.login__users,user_email',
             'password' => 'required|confirmed',
             'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
         ]);
@@ -39,7 +39,7 @@ class SuperAdminController extends Controller
 
         DB::transaction(function () use ($req) {
             // Generates Auto Increment Super Admin Id
-            $latestEmployee = Login_User::on('mysql_second')->where('user_role', 1)->orderBy('user_id','desc')->first();
+            $latestEmployee = Login_User::on('mysql')->where('user_role', 1)->orderBy('user_id','desc')->first();
             $id = ($latestEmployee) ? 'SA' . str_pad((intval(substr($latestEmployee->user_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'SA000000001';
 
             if ($req->hasFile('image') && $req->file('image')->isValid()) {
@@ -51,7 +51,7 @@ class SuperAdminController extends Controller
                 $imageName = null;
             }
 
-            $superadmin = Login_User::on('mysql_second')->insert([
+            $superadmin = Login_User::on('mysql')->insert([
                 "user_id" => $id,
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
@@ -72,7 +72,7 @@ class SuperAdminController extends Controller
 
     // Edit SuperAdmins
     public function Edit(Request $req){
-        $superadmin = Login_User::on('mysql_second')->with('Withs','Location')->findOrFail($req->id);
+        $superadmin = Login_User::on('mysql')->with('Withs','Location')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'superadmin'=> $superadmin,
@@ -83,17 +83,17 @@ class SuperAdminController extends Controller
 
     // Update SuperAdmins
     public function Update(Request $req){
-        $superadmin = Login_User::on('mysql_second')->findOrFail($req->id);
+        $superadmin = Login_User::on('mysql')->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
-            "phone" => ['required','numeric',Rule::unique('mysql_second.login__users', 'user_phone')->ignore($superadmin->id)],
-            "email" => ['required','email',Rule::unique('mysql_second.login__users', 'user_email')->ignore($superadmin->id)],
+            "phone" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore($superadmin->id)],
+            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore($superadmin->id)],
         ]);
 
 
         DB::transaction(function () use ($req) {
-            $superadmin = Login_User::on('mysql_second')->findOrFail($req->id);
+            $superadmin = Login_User::on('mysql')->findOrFail($req->id);
             $path = 'public/profiles/'.$superadmin->image;
             
             if($req->image != null){
@@ -113,7 +113,7 @@ class SuperAdminController extends Controller
             }
 
 
-            $update = Login_User::on('mysql_second')->findOrFail($req->id)->update([
+            $update = Login_User::on('mysql')->findOrFail($req->id)->update([
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
                 "user_email" => $req->email,
@@ -132,7 +132,7 @@ class SuperAdminController extends Controller
 
     // Delete SuperAdmins
     public function Delete(Request $req){
-        $superadmin = Login_User::on('mysql_second')->findOrFail($req->id);
+        $superadmin = Login_User::on('mysql')->findOrFail($req->id);
         $path = 'public/profiles/'.$superadmin->image;
         Storage::delete($path);
         $superadmin->delete();
@@ -147,28 +147,28 @@ class SuperAdminController extends Controller
     // Search SuperAdmins
     public function Search(Request $req){
         if($req->searchOption == 1){ // Search by User Name and Id
-            $superadmin = Login_User::on('mysql_second')->with('Withs','Location')
+            $superadmin = Login_User::on('mysql')->with('Withs','Location')
             ->where('user_role', 1)
             ->where('user_name', 'like', '%'.$req->search.'%')
             ->orderBy('user_name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){ // Search by User Email
-            $superadmin = Login_User::on('mysql_second')->with('Withs','Location')
+            $superadmin = Login_User::on('mysql')->with('Withs','Location')
             ->where('user_role', 1)
             ->where('user_email', 'like', '%'.$req->search.'%')
             ->orderBy('user_email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search by User Phone
-            $superadmin = Login_User::on('mysql_second')->with('Withs','Location')
+            $superadmin = Login_User::on('mysql')->with('Withs','Location')
             ->where('user_role', 1)
             ->where('user_phone', 'like', '%'.$req->search.'%')
             ->orderBy('user_phone','asc')
             ->paginate(15);
         }
         // else if($req->searchOption == 4){ // Search by Location
-        //     $superadmin = Login_User::on('mysql_second')->with('Withs','Location')
+        //     $superadmin = Login_User::on('mysql')->with('Withs','Location')
         //     ->whereHas('Location', function ($query) use ($req) {
         //         $query->where('upazila', 'like', '%'.$req->search.'%');
         //         $query->orderBy('upazila','asc');
@@ -177,7 +177,7 @@ class SuperAdminController extends Controller
         //     ->paginate(15);
         // }
         // else if($req->searchOption == 5){ // Search by Adderss
-        //     $superadmin = Login_User::on('mysql_second')->with('Withs','Location')
+        //     $superadmin = Login_User::on('mysql')->with('Withs','Location')
         //     ->where('user_role', 1)
         //     ->where('address', 'like', '%'.$req->search.'%')
         //     ->orderBy('address','asc')
@@ -189,22 +189,4 @@ class SuperAdminController extends Controller
             'data' => $superadmin,
         ], 200);
     } // End Method
-
-
-
-    // Show Super Admin Details
-    public function Details(Request $req){
-        $superadmin = Login_User::on('mysql_second')->with('Location','Withs')->where('user_id', "=", $req->id)->first();
-        return response()->json([
-            'status'=> true,
-            'data'=>view('admin_setup.users.super_admin.details', compact('superadmin'))->render(),
-        ]);
-    } // End Method
-
-
-
-    public function GetCurrentUser(Request $request)
-    {
-        return response()->json(Auth::user());
-    }
 }

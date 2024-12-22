@@ -17,8 +17,8 @@ class InventoryPurchaseController extends Controller
 {
     // Show All Inventory Purchase
     public function ShowAll(Request $req){
-        $inventory = Transaction_Main::on('mysql')->with('User')->where('tran_method','Purchase')->where('tran_type','5')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '5')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
+        $inventory = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Purchase')->where('tran_type','5')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '5')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $inventory,
@@ -75,11 +75,11 @@ class InventoryPurchaseController extends Controller
         // Validation Part End
 
         // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Mains_Temp::on('mysql')->where('tran_type', $req->type)->where('tran_method', $req->method)->latest('tran_id')->first();
+        $transaction = Transaction_Mains_Temp::on('mysql_second')->where('tran_type', $req->type)->where('tran_method', $req->method)->latest('tran_id')->first();
         $id = ($transaction) ? 'IPP' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'IPP000000001';
 
         DB::transaction(function () use ($req, $id) {
-            Transaction_Mains_Temp::on('mysql')->insert([
+            Transaction_Mains_Temp::on('mysql_second')->insert([
                 "tran_id" => $id,
                 "tran_type" => $req->type,
                 "tran_method" => $req->method,
@@ -99,7 +99,7 @@ class InventoryPurchaseController extends Controller
             $billAdvance = $req->advance;
             $products = json_decode($req->products, true);
             foreach($products as $product){
-                $p = Transaction_Head::on('mysql_second')->findOrFail($product['product']);
+                $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
                 // Calculate Profit
                 $totalMrp = $product['quantity'] * $product['mrp'];
                 $totalCp = $product['quantity'] * $product['cp'];
@@ -116,7 +116,7 @@ class InventoryPurchaseController extends Controller
                     "updated_at" => now()
                 ]);
 
-                Transaction_Details_Temp::on('mysql')->insert([
+                Transaction_Details_Temp::on('mysql_second')->insert([
                     "tran_id" => $id,
                     "tran_type" => $req->type,
                     "tran_method" => $req->method,
@@ -156,14 +156,14 @@ class InventoryPurchaseController extends Controller
     // Edit Inventory Purchase
     public function Edit(Request $req){
         if($req->status == 1){
-            $inventory = Transaction_Main::on('mysql')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+            $inventory = Transaction_Main::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
             return response()->json([
                 'status'=> true,
                 'inventory'=> $inventory,
             ], 200);
         }
         else if($req->status == 2){
-            $inventory = Transaction_Mains_Temp::on('mysql')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+            $inventory = Transaction_Mains_Temp::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
             return response()->json([
                 'status'=> true,
                 'inventory'=> $inventory,
@@ -216,10 +216,10 @@ class InventoryPurchaseController extends Controller
 
 
         if($req->status == 1){
-            $transaction = Transaction_Main::on('mysql')->findOrfail($req->id);
+            $transaction = Transaction_Main::on('mysql_second')->findOrfail($req->id);
         }
         else if($req->status == 2){
-            $transaction = Transaction_Mains_Temp::on('mysql')->findOrfail($req->id);
+            $transaction = Transaction_Mains_Temp::on('mysql_second')->findOrfail($req->id);
         }
 
         DB::transaction(function () use ($req, $transaction) {
@@ -235,9 +235,9 @@ class InventoryPurchaseController extends Controller
             
             
             if($req->status == 1){
-                $details = Transaction_Detail::on('mysql')->where('tran_id', $req->tranid)->get();
+                $details = Transaction_Detail::on('mysql_second')->where('tran_id', $req->tranid)->get();
                 foreach($details as $item){
-                    $product = Transaction_Head::on('mysql_second')->findOrfail($item->tran_head_id);
+                    $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
                     if($product){
                         $quantity = $product->quantity - $item->quantity;
 
@@ -247,10 +247,10 @@ class InventoryPurchaseController extends Controller
                         ]);
                     }
                 }
-                Transaction_Detail::on('mysql')->where('tran_id', $req->tranid)->delete();
+                Transaction_Detail::on('mysql_second')->where('tran_id', $req->tranid)->delete();
             }
             else if($req->status == 2){
-                Transaction_Details_Temp::on('mysql')->where('tran_id', $req->tranid)->delete();
+                Transaction_Details_Temp::on('mysql_second')->where('tran_id', $req->tranid)->delete();
             }
 
     
@@ -261,7 +261,7 @@ class InventoryPurchaseController extends Controller
             $products = json_decode($req->products, true);
             
             foreach($products as $product) {
-                $p = Transaction_Head::on('mysql_second')->findOrFail($product['product']);
+                $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
                 $quantity = $p->quantity + $product['quantity'];
                 // Calculate Profit
                 $totalMrp = $product['quantity'] * $product['mrp'];
@@ -306,13 +306,13 @@ class InventoryPurchaseController extends Controller
     
                 // Update Product Details
                 if ($req->status == 1) {
-                    Transaction_Detail::on('mysql')->create($commonData);
+                    Transaction_Detail::on('mysql_second')->create($commonData);
                     $p->update([
                         "quantity" => $quantity,
                     ]);
                 } 
                 else if ($req->status == 2) {
-                    Transaction_Details_Temp::on('mysql')->create($commonData);
+                    Transaction_Details_Temp::on('mysql_second')->create($commonData);
                 }
                 
     
@@ -334,10 +334,10 @@ class InventoryPurchaseController extends Controller
     // Delete Inventory Purchase
     public function Delete(Request $req){
         if($req->status == 1){
-            $details = Transaction_Detail::on('mysql')->where("tran_id", $req->id)->get();
+            $details = Transaction_Detail::on('mysql_second')->where("tran_id", $req->id)->get();
 
             foreach($details as $item){
-                $product = Transaction_Head::on('mysql_second')->findOrfail($item->tran_head_id);
+                $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
                 if($product){
                     $quantity = $product->quantity - $item->quantity;
 
@@ -348,14 +348,14 @@ class InventoryPurchaseController extends Controller
                 }
             }
 
-            Transaction_Main::on('mysql')->where("tran_id", $req->id)->delete();
-            Transaction_Detail::on('mysql')->where("tran_id", $req->id)->delete();
+            Transaction_Main::on('mysql_second')->where("tran_id", $req->id)->delete();
+            Transaction_Detail::on('mysql_second')->where("tran_id", $req->id)->delete();
         }
         else if($req->status == 2){
-            $details = Transaction_Details_Temp::on('mysql')->where("tran_id", $req->id)->get();
+            $details = Transaction_Details_Temp::on('mysql_second')->where("tran_id", $req->id)->get();
 
-            Transaction_Mains_Temp::on('mysql')->where("tran_id", $req->id)->delete();
-            Transaction_Details_Temp::on('mysql')->where("tran_id", $req->id)->delete();
+            Transaction_Mains_Temp::on('mysql_second')->where("tran_id", $req->id)->delete();
+            Transaction_Details_Temp::on('mysql_second')->where("tran_id", $req->id)->delete();
         }
 
         return response()->json([
@@ -370,7 +370,7 @@ class InventoryPurchaseController extends Controller
     public function Search(Request $req){
         if($req->status == 1){
             if($req->searchOption == 1){
-                $inventory = Transaction_Main::on('mysql')->with('User')
+                $inventory = Transaction_Main::on('mysql_second')->with('User')
                 ->where('tran_id', "like", '%'. $req->search .'%')
                 ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
                 ->where('tran_method',$req->method)
@@ -379,7 +379,7 @@ class InventoryPurchaseController extends Controller
                 ->paginate(15);
             }
             else if($req->searchOption == 2){
-                $inventory = Transaction_Main::on('mysql')->with('User')
+                $inventory = Transaction_Main::on('mysql_second')->with('User')
                 ->whereHas('User', function ($query) use ($req) {
                     $query->where('user_name', 'like', '%'.$req->search.'%');
                     $query->orderBy('user_name','asc');
@@ -392,7 +392,7 @@ class InventoryPurchaseController extends Controller
         }
         else if($req->status == 2){
             if($req->searchOption == 1){
-                $inventory = Transaction_Mains_Temp::on('mysql')->with('User')
+                $inventory = Transaction_Mains_Temp::on('mysql_second')->with('User')
                 ->where('tran_id', "like", '%'. $req->search .'%')
                 ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
                 ->where('tran_method',$req->method)
@@ -401,7 +401,7 @@ class InventoryPurchaseController extends Controller
                 ->paginate(15);
             }
             else if($req->searchOption == 2){
-                $inventory = Transaction_Mains_Temp::on('mysql')->with('User')
+                $inventory = Transaction_Mains_Temp::on('mysql_second')->with('User')
                 ->whereHas('User', function ($query) use ($req) {
                     $query->where('user_name', 'like', '%'.$req->search.'%');
                     $query->orderBy('user_name','asc');
@@ -423,15 +423,15 @@ class InventoryPurchaseController extends Controller
 
     // Verify Inventory Purchase
     public function Verify(Request $req){
-        $details = Transaction_Details_Temp::on('mysql')->where("tran_id", $req->id)->get();
-        $mains = Transaction_Mains_Temp::on('mysql')->where("tran_id", $req->id)->first();
+        $details = Transaction_Details_Temp::on('mysql_second')->where("tran_id", $req->id)->get();
+        $mains = Transaction_Mains_Temp::on('mysql_second')->where("tran_id", $req->id)->first();
 
         // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Main::on('mysql')->where('tran_type', $mains->tran_type)->where('tran_method', $mains->tran_method)->latest('tran_id')->first();
+        $transaction = Transaction_Main::on('mysql_second')->where('tran_type', $mains->tran_type)->where('tran_method', $mains->tran_method)->latest('tran_id')->first();
         $id = ($transaction) ? 'IPP' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'IPP000000001';
 
 
-        Transaction_Main::on('mysql')->insert([
+        Transaction_Main::on('mysql_second')->insert([
             "tran_id" => $id,
             "tran_type" => $mains->tran_type,
             "tran_method" => $mains->tran_method,
@@ -451,7 +451,7 @@ class InventoryPurchaseController extends Controller
         
         
         foreach($details as $detail){
-            $p = Transaction_Head::on('mysql_second')->findOrFail($detail->tran_head_id);
+            $p = Transaction_Head::on('mysql')->findOrFail($detail->tran_head_id);
             $quantity = $p->quantity + $detail->quantity;
             $p->update([
                 "quantity" => $quantity, 
@@ -461,7 +461,7 @@ class InventoryPurchaseController extends Controller
                 "updated_at" => now()
             ]);
 
-            Transaction_Detail::on('mysql')->insert([
+            Transaction_Detail::on('mysql_second')->insert([
                 "tran_id" => $id,
                 "tran_type" => $detail->tran_type,
                 "tran_method" => $detail->tran_method,
@@ -488,8 +488,8 @@ class InventoryPurchaseController extends Controller
         }
 
 
-        Transaction_Details_Temp::on('mysql')->where("tran_id", $req->id)->delete();
-        Transaction_Mains_Temp::on('mysql')->where("tran_id", $req->id)->delete();
+        Transaction_Details_Temp::on('mysql_second')->where("tran_id", $req->id)->delete();
+        Transaction_Mains_Temp::on('mysql_second')->where("tran_id", $req->id)->delete();
 
         return response()->json([
             'status'=> true,

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 // Middlewares
-// use App\Http\Middleware\ValidUser;
+use App\Http\Middleware\ValidUser;
 use App\Http\Middleware\CheckPermission;
 // use App\Http\Middleware\SuperAdminAccess;
 use App\Http\Controllers\ProfileController;
@@ -78,18 +78,18 @@ use App\Http\Controllers\Frontend\Report\BalanceSheetController;
 
 
 // Don't Give Access to this routes if user is not valid
-Route::middleware([CheckPermission::class])->group(function () {
+Route::middleware([ValidUser::class, CheckPermission::class])->group(function () {
     // *************************************** Login Controller Routes Start *************************************** //
     Route::controller(AuthController::class)->group(function () {
         Route::get('/login', 'Login')->name('login')->withoutMiddleware(CheckPermission::class);
-        Route::get('/dashboard', 'Dashboard')->name('dashboard')->withoutMiddleware(CheckPermission::class);;
+        Route::get('/dashboard', 'Dashboard')->name('dashboard')->withoutMiddleware(CheckPermission::class);
     });
 
 
     // *************************************** Forget Password Controller Routes Start *************************************** //
     Route::controller(ForgetPasswordController::class)->group(function () {
-        Route::get('/forgotpassword', 'ForgotPassord')->name('forgotPassword');
-        Route::get('/resetpassword', 'ResetPassword')->name('resetPassword');
+        Route::get('/forgotpassword', 'ForgotPassord')->name('forgotPassword')->withoutMiddleware(CheckPermission::class);;
+        Route::get('/resetpassword', 'ResetPassword')->name('resetPassword')->withoutMiddleware(CheckPermission::class);;
     });
 
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Forget Password</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="{{ asset('js/jQuery-3.7.1.js') }}"></script>
@@ -73,7 +74,7 @@
             </div>
         </form>
         <script>
-            let apiUrl = "{{ env('API_URL') }}"
+            var apiUrl = "{{ config('app.api_url') }}";
             $(document).on('submit', '#forget-pass', function(e){
                 e.preventDefault();
 

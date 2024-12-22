@@ -15,12 +15,12 @@ class ItemFormSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/item_form.json");
-        $forms = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $forms->each(function($form){
-            Item_Form::create([
-                "form_name"=>$form->form_name,
-                "type_id"=>$form->type_id,
+        $data->each(function($item){
+            Item_Form::on('mysql')->create([
+                "form_name"=>$item->form_name,
+                "type_id"=>$item->type_id,
             ]);
         });
     }

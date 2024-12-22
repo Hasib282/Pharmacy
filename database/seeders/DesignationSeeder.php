@@ -15,12 +15,12 @@ class DesignationSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/designation.json");
-        $designations = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $designations->each(function($designation){
-            Designation::create([
-                "designation"=>$designation->designation,
-                "dept_id"=>$designation->dept_id,
+        $data->each(function($item){
+            Designation::on('mysql_second')->create([
+                "designation"=>$item->designation,
+                "dept_id"=>$item->dept_id,
             ]);
         });
     }

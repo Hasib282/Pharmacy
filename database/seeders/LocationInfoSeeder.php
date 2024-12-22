@@ -15,13 +15,13 @@ class LocationInfoSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/location_info.json");
-        $locations = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $locations->each(function($location){
-            Location_Info::create([
-                "division" => $location->division,
-                "district" => $location->district,
-                "upazila" => $location->upazila,
+        $data->each(function($item){
+            Location_Info::on('mysql')->create([
+                "division" => $item->division,
+                "district" => $item->district,
+                "upazila" => $item->upazila,
             ]);
         });
     }

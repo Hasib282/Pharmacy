@@ -15,11 +15,11 @@ class TransactionMainHeadSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/tran_main_head.json");
-        $types = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $types->each(function($type){
-            Transaction_Main_Head::create([
-                "type_name"=>$type->type_name,
+        $data->each(function($item){
+            Transaction_Main_Head::on('mysql')->create([
+                "type_name"=>$item->type_name,
             ]);
         });
     }

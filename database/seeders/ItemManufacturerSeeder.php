@@ -15,12 +15,12 @@ class ItemManufacturerSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/item_manufacturer.json");
-        $manufacturers = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $manufacturers->each(function($manufacturer){
-            Item_Manufacturer::create([
-                "manufacturer_name"=>$manufacturer->manufacturer_name,
-                "type_id"=>$manufacturer->type_id,
+        $data->each(function($item){
+            Item_Manufacturer::on('mysql')->create([
+                "manufacturer_name"=>$item->manufacturer_name,
+                "type_id"=>$item->type_id,
             ]);
         });
     }

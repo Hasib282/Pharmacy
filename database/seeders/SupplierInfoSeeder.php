@@ -15,19 +15,19 @@ class SupplierInfoSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/supplier_info.json");
-        $suppliers = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $suppliers->each(function($supplier){
-            User_Info::on('mysql')->create([
-                "user_id" => $supplier->user_id,
-                "user_name" => $supplier->user_name,
-                "user_email" => $supplier->user_email,
-                "user_phone" => $supplier->user_phone,
+        $data->each(function($item){
+            User_Info::on('mysql_second')->create([
+                "user_id" => $item->user_id,
+                "user_name" => $item->user_name,
+                "user_email" => $item->user_email,
+                "user_phone" => $item->user_phone,
                 "gender" => "Male",
-                "loc_id" => $supplier->loc_id,
-                "address" => $supplier->address,
+                "loc_id" => $item->loc_id,
+                "address" => $item->address,
                 "user_role" => 5,
-                "tran_user_type" => $supplier->tran_user_type,
+                "tran_user_type" => $item->tran_user_type,
             ]);
         });
     }

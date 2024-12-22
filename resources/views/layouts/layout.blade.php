@@ -38,7 +38,7 @@
     </head>
     <body>
         <div class="main-container">
-            {{-- {{dd(session()->all())}} --}}
+            {{-- {{dd(auth()->user())}} --}}
             {{-- @include('layouts.main_data') --}}
             <!-- Sidebar Container -->
             @include('layouts.sidebar')
@@ -57,7 +57,7 @@
 
 
                 <!-- Include Footer file --> 
-                @include('layouts.footer')
+                {{-- @include('layouts.footer') --}}
 
             </div>
         </div>
@@ -96,7 +96,7 @@
         <script src="{{ asset('js/modal.js') }}"></script> 
         {{-- brian2694/laravel-toastr js  --}}
         <script src="{{ asset('js/toastr.min.js') }}"></script> 
-        {!! Toastr::message() !!}
+        {{-- {!! Toastr::message() !!}
         <script>
             toastr.options = {
                 "closeButton": true,
@@ -115,13 +115,13 @@
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
             }
-        </script>
+        </script> --}}
         {{-- add extra script file if needed --}}
-        @if (session('message'))
+        {{-- @if (session('message'))
             <script>
                 toastr.error('{{ session('message') }}', 'Permission Denied!');
             </script>
-        @endif
+        @endif --}}
         {{-- <script>
             $(document).ready(function() {
                 SidebarListClick('#bank-details', '{{ route('show.banks') }}');

@@ -15,12 +15,12 @@ class ItemUnitSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/item_unit.json");
-        $units = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $units->each(function($unit){
-            Item_Unit::create([
-                "unit_name"=>$unit->unit_name,
-                "type_id"=>$unit->type_id,
+        $data->each(function($item){
+            Item_Unit::on('mysql')->create([
+                "unit_name"=>$item->unit_name,
+                "type_id"=>$item->type_id,
             ]);
         });
     }

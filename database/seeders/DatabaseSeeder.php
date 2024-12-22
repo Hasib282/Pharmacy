@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,42 +13,48 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
+        // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
 
         $this::call([
+            // Auth Seeders
+            CompanyTypeSeeder::class,
+            CompanyDetailsSeeder::class,
+            RoleSeeder::class,
+            UserInfoSeeder::class,
             
+            // Setup Data Seeders
             TransactionMainHeadSeeder::class,
-            DepartmentInfoSeeder::class,
-            DesignationSeeder::class,
-            LocationInfoSeeder::class,
-            ItemUnitSeeder::class,
-            ItemFormSeeder::class,
             ItemManufacturerSeeder::class,
             ItemCategorySeeder::class,
+            ItemUnitSeeder::class,
+            ItemFormSeeder::class,
+            LocationInfoSeeder::class,
+            TransactionGroupeSeeder::class,
+            TransactionHeadSeeder::class,
             
-            
-            StoreSeeder::class,
-            RoleSeeder::class,
+            // Bank + Permission Seeders
+            BankInfoSeeder::class,
             PermissionMainHeadSeeder::class,
             PermissionHeadSeeder::class,
             RoutePermissionSeeder::class,
-
             
+            // Client Side Setup Seeder
+            StoreSeeder::class,
             TransactionWithSeeder::class,
-            TransactionGroupeSeeder::class,
-            TransactionHeadSeeder::class,
-
+            DepartmentSeeder::class,
+            DesignationSeeder::class,
             
-            UserInfoSeeder::class,
             ClientInfoSeeder::class,
             SupplierInfoSeeder::class,
-            BankInfoSeeder::class,
-            
         ]);
+        
+        
+
+
     }
 }

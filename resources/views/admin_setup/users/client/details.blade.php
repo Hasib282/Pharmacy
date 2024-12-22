@@ -5,11 +5,12 @@
     <div class="general">
         <div class="details-head">
             <div class="image-round">
-                <img src="http://localhost:8001/storage/profiles/{{$client->image !== null ? $client->image : ($client->gender == 'female' ? 'female.png' : 'male.png') }}" alt="" height="100px" width="100px">
+                <img src="{{ asset('storage/profiles/' . ($client->image ? $client->image : ($client->gender == 'female' ? 'female.png' : 'male.png'))) }}" alt="" height="100px" width="100px">
             </div> 
             <div class="highlight">
                 <span class="name"> {{$client->user_name}} </span><br>
                 {{-- <span class="designation"> {{$client->designation->designation}} </span> --}}
+                <div class="designation">{{$client->Withs->tran_with_name}}</div>
             </div>   
         </div>
         <div class="details-table" style="">
@@ -25,41 +26,15 @@
                 <div class="c-2 bold">Client Type</div>
                 <div class="c-4">{{$client->Withs->tran_with_name}}</div>
             </div>
-            <div class="rows each-row"> 
-                <div class="c-2 bold">NID</div>
-                <div class="c-4">{{$client->nid}}</div>
-            </div>
-        </div>
-    </div>
-
-
-    {{-- contact info part starts --}}
-    <li data-id="2">Contact Information</li>
-    <div class="contact">
-        <div class="details-table" style="">
             <div class="rows each-row">
+                <div class="c-2 bold">Phone No</div>
+                <div class="c-4">{{$client->user_phone}}</div>
                 <div class="c-2 bold">Email</div>
                 <div class="c-4">{{$client->user_email}}</div>
             </div>
-            <div class="rows each-row">
-                <div class="c-2 bold">Contact No</div>
-                <div class="c-4">{{$client->user_phone}}</div>
-            </div>
-        </div>
-    </div>
-
-
-    {{-- Address info part starts --}}
-    <li data-id="3">Address Information</li>
-    <div class="address">
-        <div class="details-table" style="">
             <div class="rows each-row"> 
-                <div class="c-3 bold">Permanent Address</div>
-                <div class="c-9">{{$client->address}}</div>
-            </div>
-            <div class="rows each-row"> 
-                <div class="c-3 bold">Present Address</div>
-                {{-- <div class="c-9">{{$employee->user_phone}}</div> --}}
+                <div class="c-2 bold">Address</div>
+                <div class="c-10">{{$client->address}}</div>
             </div>
         </div>
     </div>
@@ -101,12 +76,5 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
-
-
-    {{-- Other info part starts --}}
-    <li data-id="5">Others Information</li>
-    <div class="others">
-            
     </div>
 </ul>

@@ -1,0 +1,8 @@
+[
+    { "name": "Pharmacy" },
+    { "name": "Inventory" },
+    { "name": "Hospital" },
+    { "name": "Diagnostic Center" },
+    { "name": "Resturant" }
+    
+]

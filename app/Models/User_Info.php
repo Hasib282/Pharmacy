@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
-class User_Info extends Authenticatable
+class User_Info extends Model
 {
-    use Notifiable, HasFactory, HasApiTokens;
+    use Notifiable;
 
-    protected $connection = 'mysql';
+    protected $connection = 'mysql_second';
 
     protected $guarded = [];
     

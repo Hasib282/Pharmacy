@@ -3,7 +3,6 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use App\Http\Middleware\Cors;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -14,16 +13,19 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->api(append: [
-            App\Http\Middleware\Cors::class,
-            App\Http\Middleware\SessionMiddleware::class,
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            // \Illuminate\Session\Middleware\StartSession::class,
+            // \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            // \App\Http\Middleware\Cors::class,
+            // \App\Http\Middleware\SessionMiddleware::class,
+            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \Illuminate\Session\Middleware\StartSession::class,
+            
         ]);
         $middleware->web(append: [
-            App\Http\Middleware\Cors::class,
-            \Illuminate\Session\Middleware\StartSession::class,
+            // \Illuminate\Session\Middleware\StartSession::class,
+            // \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            // \App\Http\Middleware\Cors::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

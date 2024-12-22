@@ -13,8 +13,8 @@ class PermissionHeadController extends Controller
 {
     // Show All Permission Head
     public function ShowAll(Request $req){
-        $permissions = Permission_Head::on('mysql_second')->with('mainhead')->orderBy('created_at','asc')->paginate(15);
-        $permissionMainhead = Permission_Main_Head::on('mysql_second')->orderBy('created_at','asc')->get();
+        $permissions = Permission_Head::on('mysql')->with('mainhead')->orderBy('created_at','asc')->paginate(15);
+        $permissionMainhead = Permission_Main_Head::on('mysql')->orderBy('created_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $permissions,
@@ -28,10 +28,10 @@ class PermissionHeadController extends Controller
     public function Insert(Request $req){
         $req->validate([
             'mainhead' => 'required|numeric',
-            "name" => 'required|unique:mysql_second.permission__heads,name',
+            "name" => 'required|unique:mysql.permission__heads,name',
         ]);
 
-        Permission_Head::insert([
+        Permission_Head::on('mysql')->insert([
             "permission_mainhead" => $req->mainhead,
             "name" => $req->name,
         ]);
@@ -46,8 +46,8 @@ class PermissionHeadController extends Controller
 
     // Edit Permission Head
     public function Edit(Request $req){
-        $permission = Permission_Head::on('mysql_second')->with('mainhead')->findOrFail($req->id);
-        $permissionMainhead = Permission_Main_Head::on('mysql_second')->orderBy('created_at','asc')->get();
+        $permission = Permission_Head::on('mysql')->with('mainhead')->findOrFail($req->id);
+        $permissionMainhead = Permission_Main_Head::on('mysql')->orderBy('created_at','asc')->get();
         return response()->json([
             'status'=> true,
             'permission'=>$permission,
@@ -59,14 +59,14 @@ class PermissionHeadController extends Controller
 
     // Update Permission Head
     public function Update(Request $req){
-        $permission = Permission_Head::on('mysql_second')->findOrFail($req->id);
+        $permission = Permission_Head::on('mysql')->findOrFail($req->id);
 
         $req->validate([
             'mainhead' => 'required|numeric',
-            "name" => ['required',Rule::unique('mysql_second.permission__heads', 'name')->ignore($req->id)],
+            "name" => ['required',Rule::unique('mysql.permission__heads', 'name')->ignore($req->id)],
         ]);
 
-        $update = Permission_Head::on('mysql_second')->findOrFail($req->id)->update([
+        $update = Permission_Head::on('mysql')->findOrFail($req->id)->update([
             "permission_mainhead" => $req->mainhead,
             "name" => $req->name
         ]);
@@ -83,7 +83,7 @@ class PermissionHeadController extends Controller
 
     // Delete Permission Head
     public function Delete(Request $req){
-        Permission_Head::on('mysql_second')->findOrFail($req->id)->delete();
+        Permission_Head::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Permission Head Deleted Successfully',
@@ -94,7 +94,7 @@ class PermissionHeadController extends Controller
 
     // Search Permission Head
     public function Search(Request $req){
-        $permissions = Permission_Head::on('mysql_second')->with('mainhead')
+        $permissions = Permission_Head::on('mysql')->with('mainhead')
         ->whereHas('mainhead', function ($query) use ($req) {
             $query->where('id', 'like', '%'.$req->searchHead.'%');
         })
@@ -112,7 +112,7 @@ class PermissionHeadController extends Controller
 
     // Get Permission Heads
     public function Get(){
-        $permissions = Permission_Head::on('mysql_second')->where('name', 'like', '%'.$req->role.'%')
+        $permissions = Permission_Head::on('mysql')->where('name', 'like', '%'.$req->role.'%')
         ->orderBy('name')
         ->take(10)
         ->get();

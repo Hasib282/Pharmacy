@@ -11,7 +11,7 @@ class InventoryStockDetailController extends Controller
 {
     // Show All Inventory Stock Details Statement
     public function ShowAll(Request $req){
-        $inventory = Transaction_Detail::on('mysql')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
+        $inventory = Transaction_Detail::on('mysql_second')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
         ->whereIn('tran_method', ['Purchase', 'Positive'])
         ->where('tran_type', 5)
         ->where('quantity', '>', 0)
@@ -29,7 +29,7 @@ class InventoryStockDetailController extends Controller
     // Search Inventory Stock Details Statement
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $inventory = Transaction_Detail::on('mysql')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
+            $inventory = Transaction_Detail::on('mysql_second')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
             ->whereHas('Head', function ($query) use ($req) {
                 $query->where('tran_head_name', 'like', '%' . $req->search . '%');
                 $query->orderBy('tran_head_name','asc');
@@ -40,7 +40,7 @@ class InventoryStockDetailController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $inventory = Transaction_Detail::on('mysql')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
+            $inventory = Transaction_Detail::on('mysql_second')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
             ->whereHas('Head.Category', function ($query) use ($req) {
                 $query->where('category_name', 'like', '%' . $req->search . '%');
                 $query->orderBy('category_name','asc');
@@ -51,7 +51,7 @@ class InventoryStockDetailController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 3){
-            $inventory = Transaction_Detail::on('mysql')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
+            $inventory = Transaction_Detail::on('mysql_second')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
             ->whereHas('Head.Manufecturer', function ($query) use ($req) {
                 $query->where('manufacturer_name', 'like', '%' . $req->search . '%');
                 $query->orderBy('manufacturer_name','asc');
@@ -62,7 +62,7 @@ class InventoryStockDetailController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 4){
-            $inventory = Transaction_Detail::on('mysql')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
+            $inventory = Transaction_Detail::on('mysql_second')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
             ->whereHas('Head.Form', function ($query) use ($req) {
                 $query->where('form_name', 'like', '%' . $req->search . '%');
                 $query->orderBy('form_name','asc');
@@ -73,7 +73,7 @@ class InventoryStockDetailController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 5){
-            $inventory = Transaction_Detail::on('mysql')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
+            $inventory = Transaction_Detail::on('mysql_second')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
             ->where('expiry_date', '<=', $req->search)
             ->whereIn('tran_method', ['Purchase', 'Positive'])
             ->where('tran_type', 5)

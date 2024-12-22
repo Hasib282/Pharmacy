@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Permission_Head extends Model
 {
-    use HasFactory;
-
-    protected $connection = 'mysql_second';
+    protected $connection = 'mysql';
 
     protected $guarded = [];
     
@@ -33,5 +30,4 @@ class Permission_Head extends Model
     public function users(){
         return $this->belongsToMany(User_Info::class, 'permission__users', 'permission_id', 'user_id', 'id', 'user_id');
     }
-
 }

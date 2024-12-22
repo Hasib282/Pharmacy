@@ -15,11 +15,11 @@ class PermissionMainHeadSeeder extends Seeder
     public function run(): void
     {
         $json = File::get("database/json/permission_mainheads.json");
-        $permission_mainheads = collect(json_decode($json));
+        $data = collect(json_decode($json));
 
-        $permission_mainheads->each(function($mainhead){
-            Permission_Main_Head::create([
-                "name"=>$mainhead->name,
+        $data->each(function($item){
+            Permission_Main_Head::on('mysql')->create([
+                "name"=>$item->name,
             ]);
         });
     }

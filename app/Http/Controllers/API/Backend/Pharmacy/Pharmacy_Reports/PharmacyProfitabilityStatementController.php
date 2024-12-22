@@ -11,7 +11,7 @@ class PharmacyProfitabilityStatementController extends Controller
 {
     // Show All Pharmacy Profitability Statement
     public function ShowAll(Request $req){
-        $pharmacy = Transaction_Detail::on('mysql')->With('User','Head')
+        $pharmacy = Transaction_Detail::on('mysql_second')->With('User','Head')
         ->where('tran_method', 'Issue')
         ->where('tran_type', 6)
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
@@ -29,7 +29,7 @@ class PharmacyProfitabilityStatementController extends Controller
     // Search Pharmacy Profitability Statement
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $pharmacy = Transaction_Detail::on('mysql')->With('User','Head')
+            $pharmacy = Transaction_Detail::on('mysql_second')->With('User','Head')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
@@ -38,7 +38,7 @@ class PharmacyProfitabilityStatementController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $pharmacy = Transaction_Detail::on('mysql')->With('User','Head')
+            $pharmacy = Transaction_Detail::on('mysql_second')->With('User','Head')
             ->whereHas('Head', function ($query) use ($req) {
                 $query->where('tran_head_name', 'like', '%' . $req->search . '%');
                 $query->orderBy('tran_head_name','asc');
@@ -49,7 +49,7 @@ class PharmacyProfitabilityStatementController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 3){
-            $pharmacy = Transaction_Detail::on('mysql')->With('User','Head')
+            $pharmacy = Transaction_Detail::on('mysql_second')->With('User','Head')
             ->whereHas('User', function ($query) use ($req) {
                 $query->where('user_name', 'like', '%' . $req->search . '%');
                 $query->orderBy('user_name','asc');
@@ -60,7 +60,7 @@ class PharmacyProfitabilityStatementController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 4){
-            $pharmacy = Transaction_Detail::on('mysql')->With('User','Head')
+            $pharmacy = Transaction_Detail::on('mysql_second')->With('User','Head')
             ->where('batch_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)

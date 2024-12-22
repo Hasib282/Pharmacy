@@ -18,7 +18,7 @@ class ClientController extends Controller
 {
     // Show All Clients
     public function ShowAll(Request $req){
-        $client = User_Info::on('mysql')->with('Withs', 'Location')->where('user_role', 4)->orderBy('added_at', 'asc')->paginate(15);
+        $client = User_Info::on('mysql_second')->with('Withs', 'Location')->where('user_role', 4)->orderBy('added_at', 'asc')->paginate(15);
         
         return response()->json([
             'status'=> true,
@@ -43,7 +43,7 @@ class ClientController extends Controller
 
         DB::transaction(function () use ($req) {
             // Generates Auto Increment Client Id
-            $latestEmployee = User_Info::on('mysql')->where('user_role', 4)->orderBy('user_id','desc')->first();
+            $latestEmployee = User_Info::on('mysql_second')->where('user_role', 4)->orderBy('user_id','desc')->first();
             $id = ($latestEmployee) ? 'C' . str_pad((intval(substr($latestEmployee->user_id, 1)) + 1), 9, '0', STR_PAD_LEFT) : 'C000000101';
 
             if ($req->hasFile('image') && $req->file('image')->isValid()) {
@@ -55,7 +55,7 @@ class ClientController extends Controller
                 $imageName = null;
             }
 
-            $client = User_Info::on('mysql')->insert([
+            $client = User_Info::on('mysql_second')->insert([
                 "user_id" => $id,
                 "tran_user_type" => $req->type,
                 "user_name" => $req->name,
@@ -79,8 +79,8 @@ class ClientController extends Controller
 
     // Edit Clients
     public function Edit(Request $req){
-        $client = User_Info::on('mysql')->with('Withs','Location')->findOrFail($req->id);
-        $tranwith = Transaction_With::on('mysql')->where('user_role', 4)->get();
+        $client = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($req->id);
+        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 4)->get();
         return response()->json([
             'status'=> true,
             'client'=> $client,
@@ -92,7 +92,7 @@ class ClientController extends Controller
 
     // Update Clients
     public function Update(Request $req){
-        $client = User_Info::on('mysql')->findOrFail($req->id);
+        $client = User_Info::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
             "type" => 'required',
@@ -104,7 +104,7 @@ class ClientController extends Controller
         ]);
 
         DB::transaction(function () use ($req) {
-            $client = User_Info::on('mysql')->findOrFail($req->id);
+            $client = User_Info::on('mysql_second')->findOrFail($req->id);
             $path = 'public/profiles/'.$client->image;
             
             if($req->image != null){
@@ -123,7 +123,7 @@ class ClientController extends Controller
                 $imageName = $client->image;
             }
 
-            $update = User_Info::on('mysql')->findOrFail($req->id)->update([
+            $update = User_Info::on('mysql_second')->findOrFail($req->id)->update([
                 "tran_user_type" => $req->type,
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
@@ -146,7 +146,7 @@ class ClientController extends Controller
 
     // Delete Clients
     public function Delete(Request $req){
-        $admin = User_Info::on('mysql')->findOrFail($req->id);
+        $admin = User_Info::on('mysql_second')->findOrFail($req->id);
         $path = 'public/profiles/'.$admin->image;
         Storage::delete($path);
         $admin->delete();
@@ -160,7 +160,7 @@ class ClientController extends Controller
 
     // Search Clients
     public function Search(Request $req){
-        $query = User_Info::on('mysql')->with('Withs', 'Location')->where('user_role', 4);
+        $query = User_Info::on('mysql_second')->with('Withs', 'Location')->where('user_role', 4);
 
         // Handle search options
         switch ($req->searchOption) {
@@ -201,8 +201,8 @@ class ClientController extends Controller
 
     // Show Client Details
     public function Details(Request $req){
-        $client = User_Info::on('mysql')->with('Location','Withs')->where('user_id', "=", $req->id)->first();
-        $transaction = Transaction_Main::on('mysql')->where('tran_user', "=", $req->id)->get();
+        $client = User_Info::on('mysql_second')->with('Location','Withs')->where('user_id', "=", $req->id)->first();
+        $transaction = Transaction_Main::on('mysql_second')->where('tran_user', "=", $req->id)->get();
         return response()->json([
             'status'=> true,
             'data'=>view('admin_setup.users.client.details', compact('client','transaction'))->render(),

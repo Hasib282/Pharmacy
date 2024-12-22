@@ -1,0 +1,12 @@
+[
+    {"id":"CO00000101", "name":"ABC Pharmacy",          "email":"abcpharmacy@gmail.com",         "phone":"01316754891",     "address":"Banasree, Dhaka",            "type":1},
+    {"id":"CO00000102", "name":"XYZ Pharmacy",          "email":"xyzpharmacy@gmail.com",         "phone":"01316754892",     "address":"Badda, Dhaka",               "type":1},
+    {"id":"CO00000103", "name":"ABC Inventory",         "email":"abcinventory@gmail.com",        "phone":"01316754893",     "address":"Dhanmondi, Dhaka",           "type":2},
+    {"id":"CO00000104", "name":"XYZ Inventory",         "email":"xyzinventory@gmail.com",        "phone":"01316754894",     "address":"Motijhil, Dhaka",            "type":2},
+    {"id":"CO00000105", "name":"ABC Diagnostic Center", "email":"abcdiagnostic@gmail.com",       "phone":"01316754895",     "address":"Arambag, Dhaka",             "type":3},
+    {"id":"CO00000106", "name":"XYZ Diagnostic Center", "email":"xyzdiagnostic@gmail.com",       "phone":"01316754896",     "address":"Valuka, Mymensingh",         "type":3},
+    {"id":"CO00000107", "name":"ABC Hospital",          "email":"abchospital@gmail.com",         "phone":"01316754897",     "address":"Norail, Mymensingh",         "type":4},
+    {"id":"CO00000108", "name":"XYZ Hospital",          "email":"xyzhospital@gmail.com",         "phone":"01316754898",     "address":"Sahrasti, Chandpur",         "type":4},
+    {"id":"CO00000109", "name":"ABC Resturant",         "email":"abcresturant@gmail.com",        "phone":"01316754899",     "address":"Kandirpar, Cumilla",         "type":5},
+    {"id":"CO00000110", "name":"XYZ Resturant",         "email":"xyzresturant@gmail.com",        "phone":"01316754810",     "address":"Kalibari more, Chandpur",    "type":5}
+]

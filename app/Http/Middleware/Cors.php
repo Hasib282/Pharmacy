@@ -11,24 +11,28 @@ class Cors
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next): Response
     {
-        try {
-            return $next($request)
-                ->header('Access-Control-Allow-Origin', '*')
-                ->header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
+        $origin = $request->header('Origin');
+
+        // Handle preflight requests
+        if ($request->isMethod('OPTIONS')) {
+            return response()->json(['status' => 'success'], 200)
+                ->header('Access-Control-Allow-Origin', $origin ?? '*')
+                ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
                 ->header('Access-Control-Allow-Headers', 'X-CSRF-Token, Accept, Authorization, Content-Type')
                 ->header('Access-Control-Allow-Credentials', 'true');
-        } 
-        catch (Exception $e) {
-            // Log the exception
-            Log::error('Error in middleware: ' . $e->getMessage());
-
-            // Return a custom response (for example, a 500 error page or JSON response)
-            return response()->json(['message' => 'Something went wrong!'], 500);
         }
-        
+
+        // Handle actual requests
+        return $next($request)
+            ->header('Access-Control-Allow-Origin', $origin ?? '*')
+            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+            ->header('Access-Control-Allow-Headers', 'X-CSRF-Token, Accept, Authorization, Content-Type')
+            ->header('Access-Control-Allow-Credentials', 'true');
     }
 }
