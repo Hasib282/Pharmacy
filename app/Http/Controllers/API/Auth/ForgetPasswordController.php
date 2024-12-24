@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\PasswordResetEmail;
+use App\Jobs\SendPasswordResetEmail;
 use Illuminate\Support\Str;
 
 use App\Models\Login_User;
@@ -41,7 +40,7 @@ class ForgetPasswordController extends Controller
         // Send the email with the reset link
         $resetLink = "{$frontendUrl}/resetpassword?token={$token}&email=" . urlencode($req->email);
 
-        Mail::to($req->email)->send(new PasswordResetEmail($resetLink));
+        dispatch(new SendPasswordResetEmail($req->email, $resetLink));
 
         return response()->json([
             'status' => true,

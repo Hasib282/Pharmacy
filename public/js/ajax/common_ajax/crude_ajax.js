@@ -45,13 +45,16 @@ function LoadBackendData(url, RenderData, queryParams) {
 
 
 // Add Button Click Functionality
-function AddModalFunctionality(focusVariable, AdditionalEvent){
+function AddModalFunctionality(focusVariable, AddClickEvent){
     $(document).off('click', '.add').on('click', '.add', function (e) {
         e.preventDefault();
+        $('#AddForm')[0].reset();
+        $('#previewImage').attr('src', "/images/male.png");
+        
         $(focusVariable).focus();
 
-        if(typeof AdditionalEvent === 'function'){
-            AdditionalEvent();
+        if(typeof AddClickEvent === 'function'){
+            AddClickEvent();
         }
     });
 }
@@ -61,12 +64,12 @@ function AddModalFunctionality(focusVariable, AdditionalEvent){
 
 
 /////////////// ------------------ Insert Ajax Part Start ---------------- /////////////////////////////
-function InsertAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
+function InsertAjax(link, RenderData, AddData = {}, AddSuccessEvent) {
     $(document).off('submit', '#AddForm').on('submit', '#AddForm', function (e) {
         e.preventDefault();
         let formData = new FormData(this);
 
-        $.each(AditionalData, function(key, value) {
+        $.each(AddData, function(key, value) {
             if (typeof value === 'object' && value.selector) {
                 let selectedValue = value.attribute ? $(value.selector).attr(value.attribute) : $(value.selector).val();
                 formData.append(key, selectedValue === undefined ? '' : selectedValue);
@@ -75,6 +78,8 @@ function InsertAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
             }
         });
 
+        // $submitButton = $(this).find('button[type="submit"]');
+        $('#Insert').prop('disabled', true);
         requestMethod = 'POST';
 
         $.ajax({
@@ -88,14 +93,18 @@ function InsertAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
                 if (res.status) {
                     $('#AddForm')[0].reset();
                     
-                    if(typeof AdditionalEvent === 'function'){
-                        AdditionalEvent();
+                    if(typeof AddSuccessEvent === 'function'){
+                        AddSuccessEvent();
                     }
+                    $('#previewImage').attr('src', "/images/male.png");
 
                     ReloadData(link, RenderData);
                     toastr.success(res.message, 'Added!');
                 }
-            }
+            },
+            complete: function () {
+                $('#Insert').prop('disabled', false);
+            },
         });
     });
 }; // End Method
@@ -105,14 +114,14 @@ function InsertAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
 
 
 ///////////// ------------------ Edit Location Ajax Part Start ---------------- /////////////////////////////
-function EditAjax(link, AdditionalEvent, AdditionalEvent2=undefined) {
+function EditAjax(link, AddSuccessEvent, AddClickEvent=undefined) {
     $(document).off('click', '#edit').on('click', '#edit', function () {
         let modalId = $(this).data('modal-id');
         let id = $(this).data('id');
         let status = $('#status').val();
         
-        if(typeof AdditionalEvent2 === 'function'){
-            AdditionalEvent2();
+        if(typeof AddClickEvent === 'function'){
+            AddClickEvent();
         }
         
         $.ajax({
@@ -120,8 +129,8 @@ function EditAjax(link, AdditionalEvent, AdditionalEvent2=undefined) {
             method: 'GET',
             data: { id, status },
             success: function (res) {
-                if(typeof AdditionalEvent === 'function'){
-                    AdditionalEvent(res);
+                if(typeof AddSuccessEvent === 'function'){
+                    AddSuccessEvent(res);
                 }
                 
                 var modal = document.getElementById(modalId);
@@ -150,6 +159,7 @@ function UpdateAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
             }
         });
 
+        $('#Update').prop('disabled', true);
         requestMethod = 'PUT';
 
         $.ajax({
@@ -171,7 +181,10 @@ function UpdateAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
                     ReloadData(link, RenderData);
                     toastr.success(res.message, 'Updated!');
                 }
-            }
+            },
+            complete: function () {
+                $('#Update').prop('disabled', false);
+            },
         });
     });
 }; // End Method
@@ -186,6 +199,7 @@ function DeleteAjax(link, RenderData) {
         e.preventDefault();
         let id = $(this).attr('data-id');
         let status = $('#status').val();
+        $('#confirm').prop('disabled', true);
         $.ajax({
             url: `${apiUrl}/${link}`,
             method: 'DELETE',
@@ -196,7 +210,10 @@ function DeleteAjax(link, RenderData) {
                     $('#deleteModal').hide();
                     toastr.success(res.message, 'Deleted!');
                 }
-            }
+            },
+            complete: function () {
+                $('#confirm').prop('disabled', false);
+            },
         });
     });
 }; // End Method

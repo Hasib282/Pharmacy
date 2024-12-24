@@ -1,4 +1,5 @@
 let requestMethod;
+let $submitButton;
 // For Globally Initialize Ajax Setup 
 function AjaxSetup(){
     var token = localStorage.getItem('token');
@@ -34,7 +35,7 @@ function AjaxSetup(){
                 }
 
                 // Redirect If Needed
-                if (response.responseJSON.redirect) {
+                if (response.responseJSON && response.responseJSON.redirect) {
                     sessionStorage.setItem('redirectMessage', response.responseJSON.message);
                     window.location.href = response.responseJSON.redirect;
                 }
@@ -54,19 +55,10 @@ function AjaxSetup(){
                 // toastr.error('An unexpected error occurred.', "Error");
             },
         });
-
-        // $.ajax({
-        //     url: `${apiUrl}/get/currentuser`,
-        //     method: 'GET',
-        //     success: function(response) {
-        //         window.currentUser = response;
-        //         console.log(window.currentUser);
-        //     }
-        // });
     } 
     else {
-        console.log('unauthorised')
-        // window.location.href = '/login';
+        // console.log('unauthorised')
+        window.location.href = '/login';
     }
 };
 
