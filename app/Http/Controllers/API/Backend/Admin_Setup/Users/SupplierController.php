@@ -42,18 +42,9 @@ class SupplierController extends Controller
         ]);
 
         DB::transaction(function () use ($req) {
-            // Generates Auto Increment Client Id
-            $latestEmployee = User_Info::on('mysql_second')->where('user_role', 5)->orderBy('user_id','desc')->first();
-            $id = ($latestEmployee) ? 'S' . str_pad((intval(substr($latestEmployee->user_id, 1)) + 1), 9, '0', STR_PAD_LEFT) : 'S000000101';
-
-            if ($req->hasFile('image') && $req->file('image')->isValid()) {
-                $originalName = $req->file('image')->getClientOriginalName();
-                $imageName = $id . '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-                $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-            }
-            else{
-                $imageName = null;
-            }
+            // Calling UserHelper Functions
+            $id = GenerateUserId(5, 'SU');
+            $imageName = StoreUserImage($req, $id);
             
             User_Info::on('mysql_second')->insert([
                 "user_id" => $id,
@@ -104,25 +95,8 @@ class SupplierController extends Controller
             "type" => 'required'
         ]);
 
-        DB::transaction(function () use ($req) {
-            $supplier = User_Info::on('mysql_second')->findOrFail($req->id);
-            $path = 'public/profiles/'.$supplier->image;
-            
-            if($req->image != null){
-                $req->validate([
-                    "image" => 'image|mimes:jpg,jpeg,png,gif|max:2048',
-                ]);
-
-                //process the image name and store it to storage/app/public/profiles directory
-                if ($req->hasFile('image') && $req->file('image')->isValid()) {
-                    Storage::delete($path);
-                    $imageName = $supplier->user_id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-                    $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-                }
-            }
-            else{
-                $imageName = $supplier->image;
-            }
+        DB::transaction(function () use ($req, $supplier) {
+            $imageName = UpdateUserImage($req, $supplier->image, null, $supplier->user_id);
 
             $update = User_Info::on('mysql_second')->findOrFail($req->id)->update([
                 "tran_user_type" => $req->type,
@@ -147,10 +121,11 @@ class SupplierController extends Controller
 
     // Delete Suppliers
     public function Delete(Request $req){
-        $admin = User_Info::on('mysql_second')->findOrFail($req->id);
-        $path = 'public/profiles/'.$admin->image;
-        Storage::delete($path);
-        $admin->delete();
+        $supplier = User_Info::on('mysql_second')->findOrFail($req->id);
+        if($supplier->image){
+            Storage::disk('public')->delete($supplier->image);
+        }
+        $supplier->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Supplier Details Deleted Successfully',

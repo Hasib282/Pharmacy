@@ -12,7 +12,7 @@ function ShowCompanies(data, startIndex) {
                     <td>${item.company_email}</td>
                     <td>${item.company_phone}</td>
                     <td>${item.address ? item.address : "" }</td>
-                    <td><img src="${apiUrl.replace('/api', '')}/storage/logos/${item.logo ? item.logo : 'tsbd.png'}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
+                    <td><img src="${apiUrl.replace('/api', '')}/storage/${item.logo ? item.logo : 'tsbd.png'}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
                     <td>
                         <div style="display: flex;gap:5px;">
                             
@@ -96,7 +96,7 @@ $(document).ready(function () {
         $('#updatePhone').val(res.company.company_phone);
         $('#updateEmail').val(res.company.company_email);
         $('#updateAddress').val(res.company.address);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/logos/${res.company.logo ? res.company.logo : 'tsbd.png'}?${new Date().getTime()} `).show();
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.company.logo ? res.company.logo : 'tsbd.png'}?${new Date().getTime()} `).show();
         $('#updateName').focus();
     }; // End Method
 

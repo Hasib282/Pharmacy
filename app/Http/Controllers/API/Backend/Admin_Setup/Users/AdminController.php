@@ -20,7 +20,6 @@ class AdminController extends Controller
     // Show All Admins
     public function ShowAll(Request $req){
         $admin = User_Info::on('mysql_second')
-        ->with('Withs', 'Location')
         ->where('user_role', 2)
         ->orderBy('added_at', 'asc')
         ->paginate(15);
@@ -46,21 +45,10 @@ class AdminController extends Controller
 
 
         DB::transaction(function () use ($req) {
-            // Generates Auto Increment Admin Id For Login
-            $latestAdmin = Login_User::on('mysql')->where('user_role', 2)->orderBy('user_id','desc')->first();
-            $adminId = ($latestAdmin) ? 'AD' . str_pad((intval(substr($latestAdmin->user_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'AD000000001';
-            // Generates Auto Increment Admin Id Company Wise
-            $latestAdminId = User_Info::on('mysql_second')->where('user_role', 2)->orderBy('user_id','desc')->first();
-            $id = ($latestAdminId) ? 'AD' . str_pad((intval(substr($latestAdminId->user_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'AD000000001';
-
-            if ($req->hasFile('image') && $req->file('image')->isValid()) {
-                $originalName = $req->file('image')->getClientOriginalName();
-                $imageName = '('. $req->company . ')'.$id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-                $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-            }
-            else{
-                $imageName = null;
-            }
+            // Calling UserHelper Functions
+            $adminId = GenerateLoginUserId(2, 'AD');
+            $id = GenerateUserId(2, 'AD');
+            $imageName = StoreUserImage($req, $id);
 
             Login_User::on('mysql')->insert([
                 "user_id" => $adminId,
@@ -96,7 +84,7 @@ class AdminController extends Controller
 
     // Edit Admins
     public function Edit(Request $req){
-        $admin = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($req->id);
+        $admin = User_Info::on('mysql_second')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'admin'=> $admin,
@@ -116,27 +104,21 @@ class AdminController extends Controller
         ]);
 
 
-        DB::transaction(function () use ($req) {
-            $admin = User_Info::on('mysql_second')->findOrFail($req->id);
-            $path = 'public/profiles/'.$admin->image;
+        DB::transaction(function () use ($req, $admin) {
+            $login_user = Login_User::on('mysql')->where('user_id', $admin->login_user_id)->first();
+            // Calling UserHelper Functions
+            $imageName = UpdateUserImage($req, $admin->image, $login_user->company_id, $admin->user_id);
+
+            $login_user->update([
+                "user_name" => $req->name,
+                "user_phone" => $req->phone,
+                "user_email" => $req->email,
+                "image" => $imageName,
+                "updated_at" => now(),
+            ]);
+
             
-            if($req->image != null){
-                $req->validate([
-                    "image" => 'image|mimes:jpg,jpeg,png,gif|max:2048',
-                ]);
-
-                //process the image name and store it to storage/app/public/profiles directory
-                if ($req->hasFile('image') && $req->file('image')->isValid()) {
-                    Storage::delete($path);
-                    $imageName = '('. $admin->company_id . ')' . $admin->user_id . '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-                    $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-                }
-            }
-            else{
-                $imageName = $admin->image;
-            }
-
-            $update = User_Info::on('mysql_second')->findOrFail($req->id)->update([
+            $admin->update([
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
                 "user_email" => $req->email,
@@ -156,8 +138,10 @@ class AdminController extends Controller
     // Delete Admins
     public function Delete(Request $req){
         $admin = User_Info::on('mysql_second')->findOrFail($req->id);
-        $path = 'public/profiles/'.$admin->image;
-        Storage::delete($path);
+        if($admin->image){
+            Storage::disk('public')->delete($admin->image);
+        }
+        Login_User::on('mysql')->where('user_id',$admin->login_user_id)->delete();
         $admin->delete();
         return response()->json([
             'status'=> true,
@@ -169,7 +153,7 @@ class AdminController extends Controller
 
     // Search Admins
     public function Search(Request $req){
-        $query = User_Info::on('mysql_second')->with('Withs', 'Location')->where('user_role', 2);
+        $query = User_Info::on('mysql_second')->where('user_role', 2);
 
         // Filter Data for Non-super-admin users
         if (Auth::user()->user_role != 1) {

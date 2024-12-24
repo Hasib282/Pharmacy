@@ -17,7 +17,7 @@ class SuperAdminController extends Controller
 {
     // Show All SuperAdmins
     public function ShowAll(Request $req){
-        $superadmin = Login_User::on('mysql')->with('Withs','Location')->where('user_role', 1)->orderBy('added_at','asc')->paginate(15);
+        $superadmin = Login_User::on('mysql')->where('user_role', 1)->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $superadmin,
@@ -38,20 +38,11 @@ class SuperAdminController extends Controller
 
 
         DB::transaction(function () use ($req) {
-            // Generates Auto Increment Super Admin Id
-            $latestEmployee = Login_User::on('mysql')->where('user_role', 1)->orderBy('user_id','desc')->first();
-            $id = ($latestEmployee) ? 'SA' . str_pad((intval(substr($latestEmployee->user_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'SA000000001';
+            // Calling UserHelper Functions
+            $id = GenerateLoginUserId(1, "SA");
+            $imageName = StoreUserImage($req, $id);
 
-            if ($req->hasFile('image') && $req->file('image')->isValid()) {
-                $originalName = $req->file('image')->getClientOriginalName();
-                $imageName = $id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-                $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-            }
-            else{
-                $imageName = null;
-            }
-
-            $superadmin = Login_User::on('mysql')->insert([
+            Login_User::on('mysql')->insert([
                 "user_id" => $id,
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
@@ -72,7 +63,7 @@ class SuperAdminController extends Controller
 
     // Edit SuperAdmins
     public function Edit(Request $req){
-        $superadmin = Login_User::on('mysql')->with('Withs','Location')->findOrFail($req->id);
+        $superadmin = Login_User::on('mysql')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'superadmin'=> $superadmin,
@@ -92,28 +83,11 @@ class SuperAdminController extends Controller
         ]);
 
 
-        DB::transaction(function () use ($req) {
-            $superadmin = Login_User::on('mysql')->findOrFail($req->id);
-            $path = 'public/profiles/'.$superadmin->image;
-            
-            if($req->image != null){
-                $req->validate([
-                    "image" => 'image|mimes:jpg,jpeg,png,gif|max:2048',
-                ]);
+        DB::transaction(function () use ($req, $superadmin) {
+            // Calling UserHelper Functions
+            $imageName = UpdateUserImage($req, $superadmin->image, null, $superadmin->user_id);
 
-                //process the image name and store it to storage/app/public/profiles directory
-                if ($req->hasFile('image') && $req->file('image')->isValid()) {
-                    Storage::delete($path);
-                    $imageName = $superadmin->user_id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-                    $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-                }
-            }
-            else{
-                $imageName = $superadmin->image;
-            }
-
-
-            $update = Login_User::on('mysql')->findOrFail($req->id)->update([
+            Login_User::on('mysql')->findOrFail($req->id)->update([
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
                 "user_email" => $req->email,
@@ -133,8 +107,9 @@ class SuperAdminController extends Controller
     // Delete SuperAdmins
     public function Delete(Request $req){
         $superadmin = Login_User::on('mysql')->findOrFail($req->id);
-        $path = 'public/profiles/'.$superadmin->image;
-        Storage::delete($path);
+        if($superadmin->image){
+            Storage::disk('public')->delete($superadmin->image);
+        }
         $superadmin->delete();
         return response()->json([
             'status'=> true,
@@ -147,42 +122,26 @@ class SuperAdminController extends Controller
     // Search SuperAdmins
     public function Search(Request $req){
         if($req->searchOption == 1){ // Search by User Name and Id
-            $superadmin = Login_User::on('mysql')->with('Withs','Location')
+            $superadmin = Login_User::on('mysql')
             ->where('user_role', 1)
             ->where('user_name', 'like', '%'.$req->search.'%')
             ->orderBy('user_name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){ // Search by User Email
-            $superadmin = Login_User::on('mysql')->with('Withs','Location')
+            $superadmin = Login_User::on('mysql')
             ->where('user_role', 1)
             ->where('user_email', 'like', '%'.$req->search.'%')
             ->orderBy('user_email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search by User Phone
-            $superadmin = Login_User::on('mysql')->with('Withs','Location')
+            $superadmin = Login_User::on('mysql')
             ->where('user_role', 1)
             ->where('user_phone', 'like', '%'.$req->search.'%')
             ->orderBy('user_phone','asc')
             ->paginate(15);
         }
-        // else if($req->searchOption == 4){ // Search by Location
-        //     $superadmin = Login_User::on('mysql')->with('Withs','Location')
-        //     ->whereHas('Location', function ($query) use ($req) {
-        //         $query->where('upazila', 'like', '%'.$req->search.'%');
-        //         $query->orderBy('upazila','asc');
-        //     })
-        //     ->where('user_role', 1)
-        //     ->paginate(15);
-        // }
-        // else if($req->searchOption == 5){ // Search by Adderss
-        //     $superadmin = Login_User::on('mysql')->with('Withs','Location')
-        //     ->where('user_role', 1)
-        //     ->where('address', 'like', '%'.$req->search.'%')
-        //     ->orderBy('address','asc')
-        //     ->paginate(15);
-        // }
         
         return response()->json([
             'status' => true,

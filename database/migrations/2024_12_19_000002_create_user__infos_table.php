@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::connection('mysql_second')->create('user__infos', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->unique();
-            $table->string('login_user_id')->nullable();
+            $table->string('login_user_id')->nullable()->comment('login__users');
             $table->string('user_name')->nullable();
             $table->string('user_email')->nullable();
             $table->string('user_phone')->nullable();

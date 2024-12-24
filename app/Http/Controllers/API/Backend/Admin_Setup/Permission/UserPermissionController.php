@@ -51,7 +51,7 @@ class UserPermissionController extends Controller
     // Update User Permissions
     public function Update(Request $req){
         $req->validate([
-            'user' => 'required|exists:mysql.user__infos,user_id',
+            'user' => 'required|exists:mysql.login__users,user_id',
             'permissions' => 'array',
             'permissions.*' => 'integer|exists:mysql.permission__heads,id',
         ]);

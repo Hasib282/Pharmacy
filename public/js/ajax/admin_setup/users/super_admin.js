@@ -10,7 +10,7 @@ function ShowAdmins(data, startIndex) {
                     <td>${item.user_name}</td>
                     <td>${item.user_email}</td>
                     <td>${item.user_phone}</td>
-                    <td><img src="${apiUrl.replace('/api', '')}/storage/profiles/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
+                    <td><img src="${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
                     <td>
                         <div style="display: flex;gap:5px;">
                             
@@ -77,7 +77,7 @@ $(document).ready(function () {
         $('#updateName').val(res.superadmin.user_name);
         $('#updatePhone').val(res.superadmin.user_phone);
         $('#updateEmail').val(res.superadmin.user_email);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/profiles/${res.superadmin.image ? res.superadmin.image : (res.superadmin.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.superadmin.image ? res.superadmin.image : (res.superadmin.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
         $('#updateName').focus();
     }; // End Method
 });

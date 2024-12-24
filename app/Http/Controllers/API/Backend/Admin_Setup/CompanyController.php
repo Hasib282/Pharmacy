@@ -42,25 +42,16 @@ class CompanyController extends Controller
             // Generates Auto Increment Company Id
             $latestId = Company_Details::on('mysql')->orderBy('company_id','desc')->first();
             $id = ($latestId) ? 'CO' . str_pad((intval(substr($latestId->company_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'CO000000001';
+            $imageName = StoreUserImage($req, $id);
 
-            if ($req->hasFile('image') && $req->file('image')->isValid()) {
-                $originalName = $req->file('image')->getClientOriginalName();
-                $logoName = $id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-                $imagePath = $req->file('image')->storeAs('logos', $logoName);
-                \Log::info("Image stored at: $imagePath");
-            }
-            else{
-                $logoName = null;
-            }
-
-            $company = Company_Details::on('mysql')->insert([
+            Company_Details::on('mysql')->insert([
                 "company_id" => $id,
                 "company_type" => $req->type,
                 "company_name" => $req->name,
                 "company_phone" => $req->phone,
                 "company_email" => $req->email,
                 "address" => $req->address,
-                "logo" => $logoName,
+                "logo" => $imageName,
             ]);
         });
         
@@ -95,34 +86,17 @@ class CompanyController extends Controller
             "email" => ['required','email',Rule::unique('mysql.company__details', 'company_email')->ignore($company->id)],
         ]);
 
-        DB::transaction(function () use ($req) {
-            $company = Company_Details::on('mysql')->findOrFail($req->id);
-            $path = 'public/logos/'.$company->logo;
-            
-            if($req->image != null){
-                $req->validate([
-                    "image" => 'image|mimes:jpg,jpeg,png,gif|max:2048',
-                ]);
+        DB::transaction(function () use ($req, $company) {
+            $path = 'company/logos/'.$company->logo;
+            $imageName = UpdateUserImage($req, $path, null, $company->company_id, $company->logo);
 
-                //process the image name and store it to storage/app/public/profiles directory
-                if ($req->hasFile('image') && $req->file('image')->isValid()) {
-                    Storage::delete($path);
-                    $logoName = $req->company_id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-                    $imagePath = $req->file('image')->storeAs('logos', $logoName);
-                }
-            }
-            else{
-                $logoName = $company->logo;
-            }
-
-
-            $update = Company_Details::on('mysql')->findOrFail($req->id)->update([
+            Company_Details::on('mysql')->findOrFail($req->id)->update([
                 "company_type" => $req->type,
                 "company_name" => $req->name,
                 "company_phone" => $req->phone,
                 "company_email" => $req->email,
                 "address" => $req->address,
-                "logo" => $logoName,
+                "logo" => $imageName,
                 "updated_at" => now(),
             ]);
         });
@@ -138,13 +112,12 @@ class CompanyController extends Controller
     // Delete Companies
     public function Delete(Request $req){
         $company = Company_Details::on('mysql')->findOrFail($req->id);
-        $path = 'public/logos/'.$company->logo;
-        Storage::delete($path);
+        Storage::disk('public')->delete($company->logo);
         $company->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Company Details Deleted Successfully',
-        ], 200); 
+        ], 200);
     } // End Method
 
 

@@ -19,7 +19,6 @@ class ClientController extends Controller
     // Show All Clients
     public function ShowAll(Request $req){
         $client = User_Info::on('mysql_second')->with('Withs', 'Location')->where('user_role', 4)->orderBy('added_at', 'asc')->paginate(15);
-        
         return response()->json([
             'status'=> true,
             'data' => $client,
@@ -42,20 +41,11 @@ class ClientController extends Controller
 
 
         DB::transaction(function () use ($req) {
-            // Generates Auto Increment Client Id
-            $latestEmployee = User_Info::on('mysql_second')->where('user_role', 4)->orderBy('user_id','desc')->first();
-            $id = ($latestEmployee) ? 'C' . str_pad((intval(substr($latestEmployee->user_id, 1)) + 1), 9, '0', STR_PAD_LEFT) : 'C000000101';
+            // Calling UserHelper Functions
+            $id = GenerateUserId(4, 'CL');
+            $imageName = StoreUserImage($req, $id);
 
-            if ($req->hasFile('image') && $req->file('image')->isValid()) {
-                $originalName = $req->file('image')->getClientOriginalName();
-                $imageName = $id . '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-                $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-            }
-            else{
-                $imageName = null;
-            }
-
-            $client = User_Info::on('mysql_second')->insert([
+            User_Info::on('mysql_second')->insert([
                 "user_id" => $id,
                 "tran_user_type" => $req->type,
                 "user_name" => $req->name,
@@ -103,25 +93,8 @@ class ClientController extends Controller
             "location" => 'required|numeric',
         ]);
 
-        DB::transaction(function () use ($req) {
-            $client = User_Info::on('mysql_second')->findOrFail($req->id);
-            $path = 'public/profiles/'.$client->image;
-            
-            if($req->image != null){
-                $req->validate([
-                    "image" => 'image|mimes:jpg,jpeg,png,gif|max:2048',
-                ]);
-
-                //process the image name and store it to storage/app/public/profiles directory
-                if ($req->hasFile('image') && $req->file('image')->isValid()) {
-                    Storage::delete($path);
-                    $imageName = $client->user_id. '('. $req->name . ').' . $req->file('image')->getClientOriginalExtension();
-                    $imagePath = $req->file('image')->storeAs('profiles', $imageName);
-                }
-            }
-            else{
-                $imageName = $client->image;
-            }
+        DB::transaction(function () use ($req, $client) {
+            $imageName = UpdateUserImage($req, $client->image, null, $client->user_id);
 
             $update = User_Info::on('mysql_second')->findOrFail($req->id)->update([
                 "tran_user_type" => $req->type,
@@ -146,10 +119,10 @@ class ClientController extends Controller
 
     // Delete Clients
     public function Delete(Request $req){
-        $admin = User_Info::on('mysql_second')->findOrFail($req->id);
-        $path = 'public/profiles/'.$admin->image;
-        Storage::delete($path);
-        $admin->delete();
+        $client = User_Info::on('mysql_second')->findOrFail($req->id);
+        if($client->image){
+            Storage::disk('public')->delete($client->image);
+        }
         return response()->json([
             'status'=> true,
             'message' => 'Client Details Deleted Successfully',
