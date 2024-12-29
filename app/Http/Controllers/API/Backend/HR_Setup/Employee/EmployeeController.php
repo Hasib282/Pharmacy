@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User_Info;
-use App\Models\Pay_Roll_Setup;
+use App\Models\Payroll_Setup;
 use App\Models\Transaction_With;
 use App\Models\Employee_Personal_Detail;
 use App\Models\Employee_Training_Detail;
@@ -167,7 +167,7 @@ class EmployeeController extends Controller
         $education = Employee_Education_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
         $training = Employee_Training_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
         $experience = Employee_Experience_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
-        $payroll = Pay_Roll_Setup::with('Head','Employee')->where('emp_id', $employee->user_id)->get();
+        $payroll = Payroll_Setup::with('Head','Employee')->where('emp_id', $employee->user_id)->get();
         
         return response()->json([
             'status' => true,

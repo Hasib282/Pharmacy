@@ -7,7 +7,7 @@ function ShowDesignations(data, startIndex) {
                 <tr>
                     <td>${startIndex + key + 1}</td>
                     <td>${item.designation}</td>
-                    <td>${item.department.dept_name}</td>
+                    <td>${item.department.name}</td>
                     <td>
                         <div style="display: flex;gap:5px;">
                             <button class="open-modal" data-modal-id="editModal" id="edit"
@@ -80,7 +80,7 @@ $(document).ready(function () {
         $('#id').val(res.designations.id);
         $('#updateDesignations').val(res.designations.designation);
         $('#updateDepartment').attr('data-id',res.designations.dept_id);
-        $('#updateDepartment').val(res.designations.department.dept_name);
+        $('#updateDepartment').val(res.designations.department.name);
         $('#updateDesignations').focus();
     }
 });

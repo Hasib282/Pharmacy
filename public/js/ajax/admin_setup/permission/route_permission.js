@@ -75,7 +75,7 @@ $(document).ready(function () {
                 <div class="c-4">
                     <label for="routes-${route['name']}">
                         <input type="checkbox" id="routes-${route['name']}" class="route" name="routes[]" value="${route['name']}" ${res.permissionroute.includes(route['name']) ? 'checked' : ''} } />
-                        ${route['name']}
+                        ${route['uri']}
                     </label>
                 </div>
             `);

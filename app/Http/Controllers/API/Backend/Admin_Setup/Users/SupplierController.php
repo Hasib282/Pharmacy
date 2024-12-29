@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User_Info;
 use App\Models\Transaction_With;
 use App\Models\Transaction_Main;
+use App\Models\Location_Info;
 
 class SupplierController extends Controller
 {
@@ -149,9 +150,13 @@ class SupplierController extends Controller
                 $query->where('user_phone', 'like', '%' . $req->search . '%')->orderBy('user_phone', 'asc');
                 break;
             case 4: // Search By Location
-                $query->whereHas('Location', function ($locationQuery) use ($req) {
-                    $locationQuery->where('upazila', 'like', '%' . $req->search . '%')->orderBy('upazila', 'asc');
-                });
+                // Fetch matching locations from the 'mysql' database
+                $locations = Location_Info::on('mysql')
+                ->where('upazila', 'like', $req->search.'%')
+                ->orderBy('upazila')
+                ->pluck('id');
+
+                $query->whereIn('loc_id', $locations);
                 break;
             case 5: // Search By Address
                 $query->where('address', 'like', '%' . $req->search . '%')->orderBy('address', 'asc');

@@ -14,7 +14,7 @@ function ShowEmployees(data, startIndex) {
                     <td>${item.user_email}</td>
                     <td>${item.user_phone}</td>
                     <td>${item.address}</td>
-                    <td><img src="${apiUrl.replace('/api', '')}/storage/profiles/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
+                    <td><img src="${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
                     <td>
                         <div style="display: flex;gap:5px;">
                         

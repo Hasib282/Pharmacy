@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $connection = 'mysql_second';
+    protected $connection = 'mysql';
 
     protected $guarded = [];
     

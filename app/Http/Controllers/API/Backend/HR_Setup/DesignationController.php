@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-use App\Models\Department_Info;
 use App\Models\Designation;
 
 class DesignationController extends Controller
 {
     // Show All Designations
     public function ShowAll(Request $req){
-        $designations = Designation::on('mysql_second')->with('Department:id,dept_name')->orderBy('added_at','asc')->paginate(15);
+        $designations = Designation::on('mysql_second')
+        ->with('Department:id,name')
+        ->orderBy('added_at','asc')
+        ->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $designations,
@@ -44,7 +46,7 @@ class DesignationController extends Controller
 
     // Edit Designations
     public function Edit(Request $req){
-        $designations = Designation::on('mysql_second')->with('Department:id,dept_name')->findOrFail($req->id);
+        $designations = Designation::on('mysql_second')->with('Department:id,name')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
             'designations'=> $designations,
@@ -92,15 +94,18 @@ class DesignationController extends Controller
     // Search Designations
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $designations = Designation::on('mysql_second')->with('Department:id,dept_name')->where('designation', 'like', '%'.$req->search.'%')
+            $designations = Designation::on('mysql_second')
+            ->with('Department:id,name')
+            ->where('designation', 'like', $req->search.'%')
             ->orderBy('designation','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $designations = Designation::on('mysql_second')->with('Department:id,dept_name')
+            $designations = Designation::on('mysql_second')
+            ->with('Department:id,name')
             ->whereHas('Department', function ($query) use ($req) {
-                $query->where('dept_name', 'like', '%' . $req->search . '%');
-                $query->orderBy('dept_name','asc');
+                $query->where('name', 'like', $req->search . '%');
+                $query->orderBy('name','asc');
             })
             ->paginate(15);
         }

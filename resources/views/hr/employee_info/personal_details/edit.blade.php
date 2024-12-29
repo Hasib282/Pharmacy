@@ -147,13 +147,13 @@
                             style="display: none; width:200px; height:200px;">
                     </div>
                 </div>
-                <div class="c-6">
+                {{-- <div class="c-6">
                     <div class="form-input-group">
                         <label for = "update_password">Password<span class="red">*</span></label>
                         <input type="password" name="password" id="update_password" class="form-input">
                         <span class="error" id="update_password_error"></span>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="center">
                 <button type="submit" id="Update" class="btn-blue">Save</button>

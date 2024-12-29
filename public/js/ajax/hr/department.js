@@ -6,7 +6,7 @@ function ShowDepartments(data, startIndex) {
             tableRows += `
                 <tr>
                     <td>${startIndex + key + 1}</td>
-                    <td>${item.dept_name}</td>
+                    <td>${item.name}</td>
                     <td>
                         <div style="display: flex;gap:5px;">
                         
@@ -36,7 +36,7 @@ function ShowDepartments(data, startIndex) {
 // Additional Edit Functionality
 function EditFormInputValue(res){
     $('#id').val(res.department.id);
-    $('#updateName').val(res.department.dept_name);
+    $('#updateName').val(res.department.name);
     $('#updateName').focus();
 }
 

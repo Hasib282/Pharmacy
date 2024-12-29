@@ -31,7 +31,7 @@ class RoutePermissionController extends Controller
 
 
         $routes = Route::getRoutes();
-
+        
         // $middlewareGroupe = ValidUser::class;
         $middlewareGroupe = 'auth:sanctum';
         $routeDetails = [];
@@ -48,6 +48,7 @@ class RoutePermissionController extends Controller
                 }
             }
         }
+        // dd($routeDetails);
 
         return response()->json([
             'status'=> true,

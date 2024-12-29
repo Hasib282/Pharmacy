@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 use App\Models\Transaction_With; 
 use App\Models\Transaction_Head; 
-use App\Models\Pay_Roll_Setup;
+use App\Models\Payroll_Setup;
 
 class PayrollSetupController extends Controller
 {
     // Show All Payroll Setup
     public function ShowAll(Request $req){
-        $payroll = Pay_Roll_Setup::on('mysql_second')->with('Employee','Head')->orderBy('emp_id','asc')->paginate(15);
+        $payroll = Payroll_Setup::on('mysql_second')->with('Employee','Head')->orderBy('emp_id','asc')->paginate(15);
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
         return response()->json([
@@ -36,7 +36,7 @@ class PayrollSetupController extends Controller
         ]);
 
         // Check If the Salary Component is Already Added or Not
-        $payroll = Pay_Roll_Setup::on('mysql_second')->where('emp_id', $req->user)
+        $payroll = Payroll_Setup::on('mysql_second')->where('emp_id', $req->user)
                 ->where('head_id', $req->head)
                 ->count();
 
@@ -49,7 +49,7 @@ class PayrollSetupController extends Controller
             ], 422);
         }
         else{
-            Pay_Roll_Setup::on('mysql_second')->insert([
+            Payroll_Setup::on('mysql_second')->insert([
                 "emp_id" => $req->user,
                 "head_id" => $req->head,
                 "amount" => $req->amount,
@@ -66,7 +66,7 @@ class PayrollSetupController extends Controller
 
     // Edit Payroll Setup
     public function Edit(Request $req){
-        $payroll = Pay_Roll_Setup::on('mysql_second')->with('Employee')->where('id',$req->id)->findOrFail($req->id);
+        $payroll = Payroll_Setup::on('mysql_second')->with('Employee')->where('id',$req->id)->findOrFail($req->id);
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
         return response()->json([
@@ -89,7 +89,7 @@ class PayrollSetupController extends Controller
         ]);
 
         // Check If the Salary Component is Already Added or Not
-        $payroll = Pay_Roll_Setup::on('mysql_second')->where('emp_id', $req->user)
+        $payroll = Payroll_Setup::on('mysql_second')->where('emp_id', $req->user)
                 ->where('head_id', $req->head)
                 ->where('id', '!=', $req->id)
                 ->count();
@@ -103,7 +103,7 @@ class PayrollSetupController extends Controller
             ], 422);
         }
         else{
-            $update = Pay_Roll_Setup::on('mysql_second')->findOrFail($req->id)->update([
+            $update = Payroll_Setup::on('mysql_second')->findOrFail($req->id)->update([
                 "emp_id" => $req->user,
                 "head_id" => $req->head,
                 "amount" => $req->amount,
@@ -122,7 +122,7 @@ class PayrollSetupController extends Controller
 
     // Delete Payroll Setup
     public function Delete(Request $req){
-        Pay_Roll_Setup::on('mysql_second')->findOrFail($req->id)->delete();
+        Payroll_Setup::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Payroll Setup Deleted Successfully',
@@ -133,7 +133,7 @@ class PayrollSetupController extends Controller
 
     // Search Payroll Setup
     public function Search(Request $req){
-        $payroll = Pay_Roll_Setup::on('mysql_second')->with('Employee','Head')
+        $payroll = Payroll_Setup::on('mysql_second')->with('Employee','Head')
         ->whereHas($req->searchOption == 1 ? 'Employee' : 'Head', function ($query) use ($req) {
             $query->where($req->searchOption == 1 ? 'user_name' : 'tran_head_name', 'like', '%'.$req->search.'%');
             $query->orderby($req->searchOption == 1 ? 'user_name' : 'tran_head_name');

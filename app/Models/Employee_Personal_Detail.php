@@ -19,7 +19,7 @@ class Employee_Personal_Detail extends Model
     }
 
     public function Location(){
-        return $this->belongsTo(Location_Info::class,'joining_location','id');
+        return $this->belongsTo(Location_Info::class,'location_id','id');
     }
 
     public function Designation(){

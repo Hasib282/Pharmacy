@@ -8,8 +8,8 @@ use Carbon\Carbon;
 
 use App\Models\Transaction_With;
 use App\Models\Transaction_Head;
-use App\Models\Pay_Roll_Setup;
-use App\Models\Pay_Roll_Middlewire;
+use App\Models\Payroll_Setup;
+use App\Models\Payroll_Middlewire;
 
 class PayrollMiddlewireController extends Controller
 {
@@ -17,7 +17,7 @@ class PayrollMiddlewireController extends Controller
     public function ShowAll(Request $req){
         $currentYear = Carbon::now()->year; 
         $currentMonth = Carbon::now()->month;
-        $payroll = Pay_Roll_Middlewire::on('mysql_second')->with('Employee','Head')
+        $payroll = Payroll_Middlewire::on('mysql_second')->with('Employee','Head')
             ->orderBy('emp_id','asc')
             ->whereYear('date', $currentYear)
             ->whereMonth('date', $currentMonth)
@@ -49,7 +49,7 @@ class PayrollMiddlewireController extends Controller
 
 
         // Check If the Salary Component is Already Added or Not
-        $middlewire = Pay_Roll_Middlewire::on('mysql_second')->where('emp_id', $req->user)
+        $middlewire = Payroll_Middlewire::on('mysql_second')->where('emp_id', $req->user)
                     ->where('head_id', $req->head)
                     ->where(function ($query) use ($currentYear, $currentMonth) {
                         $query->whereYear('date', $currentYear)
@@ -58,7 +58,7 @@ class PayrollMiddlewireController extends Controller
                     })
                     ->count();
 
-        $setup = Pay_Roll_Setup::on('mysql_second')->where('emp_id', $req->user)
+        $setup = Payroll_Setup::on('mysql_second')->where('emp_id', $req->user)
                     ->where('head_id', $req->head)
                     ->count();
 
@@ -71,7 +71,7 @@ class PayrollMiddlewireController extends Controller
             ], 422);
         }
         else{
-            Pay_Roll_Middlewire::on('mysql_second')->insert([
+            Payroll_Middlewire::on('mysql_second')->insert([
                 "emp_id" => $req->user,
                 "head_id" => $req->head,
                 "amount" => $req->amount,
@@ -89,7 +89,7 @@ class PayrollMiddlewireController extends Controller
 
     // Edit Payroll Middlewire
     public function Edit(Request $req){
-        $payroll = Pay_Roll_Middlewire::on('mysql_second')->with('Employee', 'Head')->where('id',$req->id)->findOrFail($req->id);
+        $payroll = Payroll_Middlewire::on('mysql_second')->with('Employee', 'Head')->where('id',$req->id)->findOrFail($req->id);
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
         return response()->json([
@@ -116,7 +116,7 @@ class PayrollMiddlewireController extends Controller
 
 
         // Check If the Salary Component is Already Added or Not
-        $middlewire = Pay_Roll_Middlewire::on('mysql_second')->where('emp_id', $req->user)
+        $middlewire = Payroll_Middlewire::on('mysql_second')->where('emp_id', $req->user)
                     ->where('head_id', $req->head)
                     ->where(function ($query) use ($currentYear, $currentMonth) {
                         $query->whereYear('date', $currentYear)
@@ -126,7 +126,7 @@ class PayrollMiddlewireController extends Controller
                     ->where('id', '!=', $req->id)
                     ->count();
 
-        $setup = Pay_Roll_Setup::on('mysql_second')->where('emp_id', $req->user)
+        $setup = Payroll_Setup::on('mysql_second')->where('emp_id', $req->user)
                     ->where('head_id', $req->head)
                     ->count();
 
@@ -139,7 +139,7 @@ class PayrollMiddlewireController extends Controller
             ], 422);
         }
         else{
-            $update = Pay_Roll_Middlewire::on('mysql_second')->findOrFail($req->id)->update([
+            $update = Payroll_Middlewire::on('mysql_second')->findOrFail($req->id)->update([
                 "emp_id" => $req->user,
                 "head_id" => $req->head,
                 "amount" => $req->amount,
@@ -159,7 +159,7 @@ class PayrollMiddlewireController extends Controller
 
     // Delete Payroll Middlewire
     public function Delete(Request $req){
-        Pay_Roll_Middlewire::on('mysql_second')->findOrFail($req->id)->delete();
+        Payroll_Middlewire::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Payroll Middlewire Deleted Successfully',
@@ -172,7 +172,7 @@ class PayrollMiddlewireController extends Controller
     public function Search(Request $req){
         $currentYear = $req->year;
         $currentMonth = $req->month;
-        $payroll = Pay_Roll_Middlewire::on('mysql_second')->with('Employee', 'Head')
+        $payroll = Payroll_Middlewire::on('mysql_second')->with('Employee', 'Head')
         ->whereHas($req->searchOption == 1 ? 'Employee' : 'Head', function ($query) use ($req) {
             $query->where($req->searchOption == 1 ? 'user_name' : 'tran_head_name', 'like', '%'.$req->search.'%');
             $query->orderby($req->searchOption == 1 ? 'user_name' : 'tran_head_name');

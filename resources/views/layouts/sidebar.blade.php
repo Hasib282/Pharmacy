@@ -162,6 +162,17 @@
                                     </div>
                                 </li>
                             @endif
+
+                            @if(auth()->user()->hasPermissionToRoute('show.rolePermissions'))
+                                <li class="sub-menu1-item" data-url="{{route('show.rolePermissions')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'rolepermissions') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-user-secret"></i>
+                                            Role Permissions
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
                     
                             @if(auth()->user()->hasPermissionToRoute('show.userPermissions'))
                                 <li class="sub-menu1-item" data-url="{{route('show.userPermissions')}}">
@@ -169,17 +180,6 @@
                                         <p>
                                             <i class="fa-solid fa-user-secret"></i>
                                             User Permissions
-                                        </p>
-                                    </div>
-                                </li>
-                            @endif
-                    
-                            @if(auth()->user()->hasPermissionToRoute('show.rolePermissions'))
-                                <li class="sub-menu1-item" data-url="{{route('show.rolePermissions')}}">
-                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'rolepermissions') ? 'active':''}}">
-                                        <p>
-                                            <i class="fa-solid fa-user-secret"></i>
-                                            Role Permissions
                                         </p>
                                     </div>
                                 </li>

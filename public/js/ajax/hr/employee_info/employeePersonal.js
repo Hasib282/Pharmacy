@@ -13,7 +13,7 @@ function ShowEmployeePersonalDetails(data, startIndex) {
                     <td>${item.user_email}</td>
                     <td>${item.user_phone}</td>
                     <td>${item.address}</td>
-                    <td><img src="${apiUrl.replace('/api', '')}/storage/profiles/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
+                    <td><img src="${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
                     <td>
                         ${item.status == 1 ?
                             `<button class="btn btn-success btn-sm toggle-status" data-id="{{$item.id}}" data-table="Inv_Client_Info" data-status="${item.status}" data-target=".client">Active</button>`
@@ -69,7 +69,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/employee/personal', ShowEmployeePersonalDetails, {location: { selector: '#location', attribute: 'data-id' }}, function() {
+    InsertAjax('hr/employee/personal', ShowEmployeePersonalDetails, {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }}, function() {
         $('#name').focus();
         $('#location').removeAttr('data-id');
         $('#previewImage').attr('src',`#`).hide();
@@ -149,7 +149,7 @@ $(document).ready(function () {
 
         $('#update_address').val(res.employee.address);
         $('#update_password').val(res.employee.password);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/profiles/${res.employee.image}?${new Date().getTime()} `).show();
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.employee.image ? res.employee.image : (res.employee.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
     }
 
 

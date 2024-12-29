@@ -1,24 +1,3 @@
-{{-- @section('style')
-    <style>
-        .modal-subject {
-            width: 75%;
-        }
-
-        label {
-            font-size: 16px !important;
-            font-weight: normal !important;
-        }
-        
-        .container {
-            background-color: #E8E8E8!important; 
-        }
-
-        .red {
-            color: red;
-        }
-    </style>
-@endsection --}}
-
 <div id="addModal" class="modal-container">
     <div class="modal-subject" style="width: 80%;">
         <div class="modal-heading banner">
@@ -197,6 +176,24 @@
                             style="display: none; width:200px; height:200px;">
                     </div>
                 </div>
+                @if (auth()->user()->user_role == 1)
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="company">Company <span class="required" title="Required">*</span></label>
+                            <input type="text" name="company" class="form-input" id="company" autocomplete="off">
+                            <div id="company-list">
+                                <ul>
+
+                                </ul>
+                            </div>
+                            <span class="error" id="company_error"></span>
+                        </div>
+                    </div>
+                @else
+                    <div class="c-4">
+                        <input type="text" name="company" class="form-input" id="company" data-id="{{auth()->user()->company_id}}" style="display: none">
+                    </div>
+                @endif
             </div>
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Save</button>

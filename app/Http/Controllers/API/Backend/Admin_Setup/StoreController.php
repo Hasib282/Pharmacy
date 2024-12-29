@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Store;
+use App\Models\Location_Info;
 
 class StoreController extends Controller
 {
@@ -25,7 +26,7 @@ class StoreController extends Controller
         $req->validate([
             'store_name' => 'required',
             'division' => 'required',
-            'location' => 'required|exists:mysql_second_second.location__infos,id',
+            'location' => 'required|exists:mysql.location__infos,id',
         ]);
  
         Store::on('mysql_second')->insert([
@@ -59,7 +60,7 @@ class StoreController extends Controller
         $req->validate([
             'store_name' => 'required',
             'division' => 'required',
-            'location' => 'required|exists:mysql_second_second.location__infos,id',
+            'location' => 'required|exists:mysql.location__infos,id',
         ]);
 
         $update = Store::on('mysql_second')->findOrFail($req->id)->update([
@@ -101,12 +102,17 @@ class StoreController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){ // Search By Upazila/Location
-            $store = Store::on('mysql_second')->with('Location')
-            ->whereHas('Location', function ($query) use ($req) {
-                $query->where('upazila', 'like', '%'.$req->search.'%');
-                $query->orderBy('upazila');
-            })
-            ->where('division', 'like','%'.$req->division.'%')
+            // Fetch matching locations from the 'mysql' database
+            $locations = Location_Info::on('mysql')
+            ->where('upazila', 'like', $req->search.'%')
+            ->orderBy('upazila')
+            ->pluck('id');
+
+            // Fetch stores from the 'mysql_second' database using the location IDs
+            $store = Store::on('mysql_second')
+            ->with('Location')
+            ->whereIn('location_id', $locations)
+            ->where('division', 'like', '%'.$req->division.'%')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search By Upazila/Location

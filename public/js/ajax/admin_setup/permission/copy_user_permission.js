@@ -176,7 +176,7 @@ $(document).ready(function () {
     // Search From User by Upazila
     function getFromUserByName(from, targetElement1) {
         $.ajax({
-            url: `${apiUrl}/admin/auth/permission/userpermissions/from`,
+            url: `${apiUrl}/admin/permission/userpermissions/from`,
             method: 'GET',
             data: { from },
             success: function (res) {
@@ -329,7 +329,7 @@ $(document).ready(function () {
     // Search To User by Upazila
     function getToUserByName(to, targetElement1) {
         $.ajax({
-            url: `${apiUrl}/admin/auth/permission/userpermissions/to`,
+            url: `${apiUrl}/admin/permission/userpermissions/to`,
             method: 'GET',
             data: { to },
             success: function (res) {

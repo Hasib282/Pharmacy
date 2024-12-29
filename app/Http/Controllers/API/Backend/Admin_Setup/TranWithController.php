@@ -70,7 +70,7 @@ class TranWithController extends Controller
     public function Update(Request $req){
         $tranwith = Transaction_With::on('mysql_second')->findOrFail($req->id);
         $req->validate([
-            "name" => ['required', Rule::unique('mysql.transaction__withs', 'tran_with_name')->ignore($tranwith->id)],
+            "name" => ['required', Rule::unique('mysql_second.transaction__withs', 'tran_with_name')->ignore($tranwith->id)],
             "role"  => 'required|exists:mysql.roles,id',
             "tranType" => 'required|exists:mysql.transaction__main__heads,id',
             "tranMethod" => 'required|in:Receive,Payment,Both',
