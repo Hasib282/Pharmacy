@@ -46,4 +46,8 @@ class Transaction_Detail extends Model
     public function Unit(){
         return $this->belongsTo(Item_Unit::class,'unit_id','id');
     }
+
+    public function Type(){
+        return $this->belongsTo(Transaction_Main_Head::class,'tran_type','id');
+    }
 }

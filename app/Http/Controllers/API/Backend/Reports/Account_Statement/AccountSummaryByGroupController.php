@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Transaction_Detail;
 use App\Models\Transaction_Main_Head;
+use App\Models\Transaction_Groupe;
 
 class AccountSummaryByGroupController extends Controller
 {
     // Create a Common Function for Getting Data Easily
     public function GetAccountSummaryGroupeStatement($tranType) {
-        return Transaction_Detail::on('mysql')->select(
+        return Transaction_Detail::on('mysql_second')->select(
                 'tran_groupe_id', 
                 DB::raw('SUM(receive) as total_receive'), 
                 DB::raw('SUM(payment) as total_payment')
@@ -37,14 +38,14 @@ class AccountSummaryByGroupController extends Controller
         $pharmacy = $this->GetAccountSummaryGroupeStatement(6);
         $michellaneous = $this->GetAccountSummaryGroupeStatement(7);
 
-        $opening = Transaction_Detail::on('mysql')->select(
+        $opening = Transaction_Detail::on('mysql_second')->select(
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
         )
         ->whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])
         ->first();
 
-        $type = Transaction_Main_Head::on('mysql_second')->get();
+        $type = Transaction_Main_Head::on('mysql')->get();
 
         $data = [       
             'opening'           =>      $opening,
@@ -68,16 +69,19 @@ class AccountSummaryByGroupController extends Controller
 
     // Create a Common Function for Getting Data Easily
     public function FindAccountSummaryGroupeStatement($tranType, $req) {
-        return Transaction_Detail::on('mysql')->with('Groupe')
-        ->whereHas('Groupe', function ($query) use ($req) {
-            $query->where('tran_groupe_name', 'like', '%'.$req->search.'%');
-            $query->orderBy('tran_groupe_name','asc');
-        })
+        $groupes = Transaction_Groupe::on('mysql')
+            ->where('tran_groupe_name', 'like', $req->search.'%')
+            ->orderBy('tran_groupe_name','asc')
+            ->pluck('id');
+
+        return Transaction_Detail::on('mysql_second')
+        ->with('Groupe')
         ->select(
             'tran_groupe_id', 
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
         )
+        ->whereIn('tran_groupe_id', $groupes)
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
         ->where('tran_type', $tranType)
         ->orderBy('tran_groupe_id', 'asc')
@@ -89,7 +93,7 @@ class AccountSummaryByGroupController extends Controller
 
     // Search Salary Details Report
     public function Search(Request $req){
-        $opening = Transaction_Detail::on('mysql')->select(
+        $opening = Transaction_Detail::on('mysql_second')->select(
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
         )
@@ -101,7 +105,7 @@ class AccountSummaryByGroupController extends Controller
             'opening' => $opening,
         ];
 
-        switch ($req->typeOption) {
+        switch ($req->type) {
             case 1:
                 $data['general'] = $this->FindAccountSummaryGroupeStatement(1, $req);
                 break;

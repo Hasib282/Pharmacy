@@ -5,7 +5,7 @@
         <div class="personal">
             <div class="details-head">
                 <div class="image-round">
-                    <img src="{{ rtrim(env('API_URL'), '/api') }}/storage/profiles/{{ $item->image !== null ? $item->image : ($item->gender == 'female' ? 'female.png' : 'male.png') }}" alt="" height="100px" width="100px">
+                    <img src="/storage/{{ $item->image !== null ? $item->image : ($item->gender == 'female' ? 'female.png' : 'male.png') }}" alt="" height="100px" width="100px">
                 </div> 
                 <div class="highlight">
                     <span class="name"> {{$item->name}} </span><br>

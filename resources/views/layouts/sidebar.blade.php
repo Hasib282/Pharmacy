@@ -772,7 +772,7 @@
                                     @endif
                                 
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyStockSummary'))
-                                        <li class="sub-menu2-item data-url="{{route('show.pharmacyStockSummary')}}"">
+                                        <li class="sub-menu2-item" data-url="{{route('show.pharmacyStockSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'stock' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
                                                     <i class="far fa-circle nav-icon"></i>

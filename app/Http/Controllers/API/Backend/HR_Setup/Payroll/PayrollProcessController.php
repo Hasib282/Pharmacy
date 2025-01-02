@@ -136,8 +136,8 @@ class PayrollProcessController extends Controller
 
     // Edit Payroll Process
     public function Edit(Request $req){
-        $currentYear = $req->year;
-        $currentMonth = $req->month;
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
         $payrolls = Payroll_Setup::on('mysql_second')->with('Employee')->select(
             'emp_id',
             'head_id',

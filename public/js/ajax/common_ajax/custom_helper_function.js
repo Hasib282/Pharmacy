@@ -1,3 +1,13 @@
+//////////////////// -------------------- Format Numbers Into comma-separated value -------------------- ////////////////////
+function formatNumber(value, locale = 'en-US', minimumFractionDigits = 0, maximumFractionDigits = 0) {
+    const formatter = new Intl.NumberFormat(locale, {
+        minimumFractionDigits: minimumFractionDigits,
+        maximumFractionDigits: maximumFractionDigits,
+    });
+    return formatter.format(value);
+}
+
+
 //////////////////// -------------------- Get the Query Parameters From the Current URL -------------------- ////////////////////
 function GetQueryParams() {
     let urlParams = new URLSearchParams(window.location.search);
@@ -65,3 +75,6 @@ function CreateSelectOptions(id, defaultText, data, selectedValue = null, fieldN
         selectElement.append(`<option value="${item.id}" ${ selectedValue == item.id ? 'selected' : '' } >${item[fieldName]}</option>`);
     });
 }; // End Method
+
+
+

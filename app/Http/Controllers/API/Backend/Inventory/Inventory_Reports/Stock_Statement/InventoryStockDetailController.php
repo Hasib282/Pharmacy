@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Transaction_Detail;
+use App\Models\Transaction_Head;
 
 class InventoryStockDetailController extends Controller
 {
@@ -28,12 +29,46 @@ class InventoryStockDetailController extends Controller
 
     // Search Inventory Stock Details Statement
     public function Search(Request $req){
+        $query = Transaction_Head::on('mysql')
+        ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
+        ->whereHas('Groupe', function ($q){
+            $q->where('tran_groupe_type', 5);
+        }); // Base query
+
+        if($req->searchOption == 1){
+            $query->where('tran_head_name', 'like', $req->search.'%')
+            ->orderBy('tran_head_name','asc');
+        }
+        else if($req->searchOption == 2){
+            $query->whereHas('Category', function ($q) use ($req) {
+                $q->where('category_name', 'like', $req->search . '%');
+                $q->orderBy('category_name','asc');
+            });
+        }
+        else if($req->searchOption == 3){
+            $query->whereHas('Manufecturer', function ($q) use ($req) {
+                $q->where('manufacturer_name', 'like', $req->search . '%');
+                $q->orderBy('manufacturer_name','asc');
+            });
+        }
+        else if($req->searchOption == 4){
+            $query->whereHas('Form', function ($q) use ($req) {
+                $q->where('form_name', 'like', $req->search . '%');
+                $q->orderBy('form_name','asc');
+            });
+        }
+        else if($req->searchOption == 6){
+            $query->whereHas('Store', function ($q) use ($req) {
+                $q->where('store_name', 'like', $req->search . '%');
+                $q->orderBy('store_name','asc');
+            });
+        }
+
+        $heads = $query->pluck('id');
+
         if($req->searchOption == 1){
             $inventory = Transaction_Detail::on('mysql_second')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
-            ->whereHas('Head', function ($query) use ($req) {
-                $query->where('tran_head_name', 'like', '%' . $req->search . '%');
-                $query->orderBy('tran_head_name','asc');
-            })
+            ->whereIn('tran_head_id', $heads)
             ->whereIn('tran_method', ['Purchase', 'Positive'])
             ->where('tran_type', 5)
             ->where('quantity', '>', 0)
@@ -41,10 +76,7 @@ class InventoryStockDetailController extends Controller
         }
         else if($req->searchOption == 2){
             $inventory = Transaction_Detail::on('mysql_second')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
-            ->whereHas('Head.Category', function ($query) use ($req) {
-                $query->where('category_name', 'like', '%' . $req->search . '%');
-                $query->orderBy('category_name','asc');
-            })
+            ->whereIn('tran_head_id', $heads)
             ->whereIn('tran_method', ['Purchase', 'Positive'])
             ->where('tran_type', 5)
             ->where('quantity', '>', 0)
@@ -52,10 +84,7 @@ class InventoryStockDetailController extends Controller
         }
         else if($req->searchOption == 3){
             $inventory = Transaction_Detail::on('mysql_second')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
-            ->whereHas('Head.Manufecturer', function ($query) use ($req) {
-                $query->where('manufacturer_name', 'like', '%' . $req->search . '%');
-                $query->orderBy('manufacturer_name','asc');
-            })
+            ->whereIn('tran_head_id', $heads)
             ->whereIn('tran_method', ['Purchase', 'Positive'])
             ->where('tran_type', 5)
             ->where('quantity', '>', 0)
@@ -63,10 +92,7 @@ class InventoryStockDetailController extends Controller
         }
         else if($req->searchOption == 4){
             $inventory = Transaction_Detail::on('mysql_second')->with(['Unit','Head','Head.Manufecturer', "Head.Category", "Head.Form"])
-            ->whereHas('Head.Form', function ($query) use ($req) {
-                $query->where('form_name', 'like', '%' . $req->search . '%');
-                $query->orderBy('form_name','asc');
-            })
+            ->whereIn('tran_head_id', $heads)
             ->whereIn('tran_method', ['Purchase', 'Positive'])
             ->where('tran_type', 5)
             ->where('quantity', '>', 0)

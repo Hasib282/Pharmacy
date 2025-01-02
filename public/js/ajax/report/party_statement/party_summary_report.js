@@ -74,13 +74,13 @@ $(document).ready(function () {
 
 
     // Search Ajax
-    SearchAjax('report/party/summary', ShowPartySummaryReports, {type: { selector: "#typeOption"}} );
+    SearchAjax('report/party/summary', ShowPartySummaryReports, {method: { selector: "#methodOption"}} );
 
 
     // Search By Date
-    SearchByDateAjax('report/party/summary', ShowPartySummaryReports, {type: { selector: "#typeOption"}} );
+    SearchByDateAjax('report/party/summary', ShowPartySummaryReports, {method: { selector: "#methodOption"}} );
 
 
     // Search By Methods, Roles, Types
-    SearchBySelect('report/party/summary', ShowPartySummaryReports, '#typeOption', {type: { selector: "#typeOption"}} );
+    SearchBySelect('report/party/summary', ShowPartySummaryReports, '#methodOption', {method: { selector: "#methodOption"}} );
 });

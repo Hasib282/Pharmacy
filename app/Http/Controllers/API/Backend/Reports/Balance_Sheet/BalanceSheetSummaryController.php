@@ -11,11 +11,11 @@ class BalanceSheetSummaryController extends Controller
 {
     // Show All Salary Details Report
     public function ShowAll(Request $req){
-        $receive = Transaction_Main::whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])->sum('receive');
-        $payment = Transaction_Main::whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])->sum('payment');
+        $receive = Transaction_Main::on('mysql_second')->whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])->sum('receive');
+        $payment = Transaction_Main::on('mysql_second')->whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])->sum('payment');
         $opening = $receive - $payment;
 
-        $transactions = Transaction_Main::whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $transactions = Transaction_Main::on('mysql')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
         
         return response()->json([
             'status'=> true,

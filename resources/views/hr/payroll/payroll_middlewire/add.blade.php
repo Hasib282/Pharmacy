@@ -6,37 +6,33 @@
                 <span class="close-modal" data-modal-id="addModal">&times;</span>
             </div>
         </div>
+
+        <div class="form-input-group">
+            <label for="with">Employee Type</label>
+            <select name="with" id="with">
+                {{-- options will be display dynamically --}}
+            </select>
+            <span class="error" id="with_error"></span>
+        </div>
+        <div class="form-input-group">
+            <label for="user">Employee Name</label>
+            <input type="text" name="user" class="form-input" id="user" autocomplete="off">
+            <div id="user-list">
+                <ul>
+
+                </ul>
+            </div>
+            <span class="error" id="user_error"></span>
+        </div>
+        
         <!-- form start -->
         <form id="AddForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="form-input-group">
-                <label for="with">Employee Type</label>
-                <select name="with" id="with">
-                    {{-- <option value="">Select employee Type</option>
-                    @foreach ($tranwith as $with)
-                    <option value="{{$with->id}}">{{$with->tran_with_name}}</option>
-                    @endforeach --}}
-                </select>
-                <span class="error" id="with_error"></span>
-            </div>
-            <div class="form-input-group">
-                <label for="user">Employee Name</label>
-                <input type="text" name="user" class="form-input" id="user" autocomplete="off">
-                <div id="user-list">
-                    <ul>
-
-                    </ul>
-                </div>
-                <span class="error" id="user_error"></span>
-            </div>
-            <div class="form-input-group">
                 <label for="head">Payroll Category</label>
                 <select name="head" id="head">
-                    {{-- <option value="">Select Payroll Category</option>
-                    @foreach ($heads as $head)
-                    <option value="{{$head->id}}">{{$head->tran_head_name}}</option>
-                    @endforeach --}}
+                    {{-- options will be display dynamically --}}
                 </select>
                 <span class="error" id="head_error"></span>
             </div>
@@ -70,8 +66,8 @@
             <div class="form-input-group">
                 <label for="year">Year</label>
                 <select name="year" id="year">
-                    @for ($year = date('Y'); $year >= 2000; $year--)
-                        <option value="{{ $year }}">{{ $year }}</option>
+                    @for ($year = date('Y')+10; $year >= 2000; $year--)
+                        <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
                     @endfor
                 </select>
                 <span class="error" id="year_error"></span>

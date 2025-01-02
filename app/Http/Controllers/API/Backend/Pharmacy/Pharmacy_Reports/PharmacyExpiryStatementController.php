@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Transaction_Detail;
+use App\Models\Transaction_Head;
 
 class PharmacyExpiryStatementController extends Controller
 {
@@ -30,19 +31,28 @@ class PharmacyExpiryStatementController extends Controller
     // Search Pharmacy Expiry Statement
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $pharmacy = Transaction_Detail::on('mysql_second')->with('Head')
-            ->whereHas('Head', function ($query) use ($req) {
-                $query->where('tran_head_name', 'like', '%' . $req->search . '%');
-                $query->orderBy('tran_head_name','asc');
+            $heads = Transaction_Head::on('mysql')
+            ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
+            ->whereHas('Groupe', function ($q){
+                $q->where('tran_groupe_type', 6);
             })
-            ->whereRaw("expiry_date BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+            ->where('tran_head_name', 'like', $req->search.'%')
+            ->orderBy('tran_head_name','asc')
+            ->pluck('id'); // Base query
+
+            $pharmacy = Transaction_Detail::on('mysql_second')
+            ->with('Head')
+            ->whereIn('tran_head_id', $heads)
+            ->where("expiry_date", '<=', $req->startDate)
             ->whereIn('tran_method', ['Purchase', 'Positive'])
             ->where('tran_type', 6)
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $pharmacy = Transaction_Detail::on('mysql_second')->where('tran_id', "like", '%'. $req->search .'%')
-            ->whereRaw("expiry_date BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+            $pharmacy = Transaction_Detail::on('mysql_second')
+            ->with('Head')
+            ->where('tran_id', "like", '%'. $req->search .'%')
+            ->where("expiry_date", '<=', $req->startDate)
             ->whereIn('tran_method', ['Purchase', 'Positive'])
             ->where('tran_type', 6)
             ->orderBy('tran_id','asc')

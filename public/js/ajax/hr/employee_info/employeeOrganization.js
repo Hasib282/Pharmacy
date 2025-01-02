@@ -118,7 +118,7 @@ $(document).ready(function () {
         $('#update_joining_date').val(res.employee.joining_date);
         $('#updateLocation').val(res.employee.location.upazila);
         $('#updateLocation').attr('data-id',res.employee.joining_location);
-        $('#updateDepartment').val(res.employee.department.dept_name);
+        $('#updateDepartment').val(res.employee.department.name);
         $('#updateDepartment').attr('data-id',res.employee.department.id);
         $('#updateDesignation').val(res.employee.designation.designation);
         $('#updateDesignation').attr('data-id',res.employee.designation.id);

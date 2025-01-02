@@ -15,8 +15,8 @@ class AccountStatementController extends Controller
     ///////////////////////// --------------------------- Accounts Summary Statement Part Start -------------------- /////////////////////////
     // Show Accounts Summary Statement
     public function ShowAccountSummaryStatement(Request $req) {
-        $name = "Positive Adjustment";
-        $js = 'pharmacy/adjustment/positive_adjustment';
+        $name = "Account Summary Statement";
+        $js = 'report/account_statement/summary';
         if ($req->ajax()) {
             return view('reports.account_statement.summary.ajaxBlade', compact('name', 'js'));
         }
@@ -29,8 +29,8 @@ class AccountStatementController extends Controller
     
     // Search Accounts Summary Statement
     public function SearchAccountSummaryStatement(Request $req) {
-        $name = "Positive Adjustment";
-        $js = 'pharmacy/adjustment/positive_adjustment';
+        $name = "Account Summary Statement";
+        $js = 'report/account_statement/summary';
         return view('reports.account_statement.summary.accountSummary', compact('name', 'js'));
     } // End Method
 
@@ -41,8 +41,8 @@ class AccountStatementController extends Controller
     ///////////////////////// --------------------------- Accounts Summary Groupe Statement Part Start -------------------- /////////////////////////
     // Show Accounts Summary Groupe Statement
     public function ShowAccountSummaryGroupeStatement(Request $req) {
-        $name = "Positive Adjustment";
-        $js = 'pharmacy/adjustment/positive_adjustment';
+        $name = "Account Summary By Groupe Statement";
+        $js = 'report/account_statement/summary_groupe';
         if ($req->ajax()) {
             return view('reports.account_statement.summary_groupe.ajaxBlade', compact('name', 'js'));
         }
@@ -55,8 +55,8 @@ class AccountStatementController extends Controller
 
     // Search Accounts Summary Groupe Statement
     public function SearchAccountSummaryGroupeStatement(Request $req) {
-        $name = "Positive Adjustment";
-        $js = 'pharmacy/adjustment/positive_adjustment';
+        $name = "Account Summary By Groupe Statement";
+        $js = 'report/account_statement/summary_groupe';
         return view('reports.account_statement.summary_groupe.accountSummaryGroupe', compact('name', 'js'));
     } // End Method
 
@@ -67,8 +67,8 @@ class AccountStatementController extends Controller
     ///////////////////////// --------------------------- Accounts Details Statement Part Start -------------------- /////////////////////////
     // Show Accounts Details Statement
     public function ShowAccountDetailsStatement(Request $req){
-        $name = "Positive Adjustment";
-        $js = 'pharmacy/adjustment/positive_adjustment';
+        $name = "Account Details Statement";
+        $js = 'report/account_statement/details';
         if ($req->ajax()) {
             return view('reports.account_statement.details.ajaxBlade', compact('name', 'js'));
         }
@@ -81,8 +81,8 @@ class AccountStatementController extends Controller
 
     // Search Accounts Details Statement
     public function SearchAccountDetailsStatement(Request $req) {
-        $name = "Positive Adjustment";
-        $js = 'pharmacy/adjustment/positive_adjustment';
+        $name = "Account Details Statement";
+        $js = 'report/account_statement/details';
         return view('reports.account_statement.details.accountDetails', compact('name', 'js'));
     } // End Method
 }

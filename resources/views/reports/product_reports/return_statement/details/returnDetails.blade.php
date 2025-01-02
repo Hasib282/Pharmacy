@@ -24,7 +24,6 @@
                         <option value="1" {{ $searchOptionValue=='1' ? 'selected' : '' }}>Transaction Id</option>
                         <option value="2" {{ $searchOptionValue=='2' ? 'selected' : '' }}>User</option>
                         <option value="3" {{ $searchOptionValue=='3' ? 'selected' : '' }}>Product Name</option>
-                        <option value="4" {{ $searchOptionValue=='4' ? 'selected' : '' }}>Expiry Date</option>
                     </select>
                 </div>
                 <div class="c-4">

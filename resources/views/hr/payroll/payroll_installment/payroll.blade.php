@@ -18,7 +18,7 @@
         <div class="rows">
             <div class="c-3">
                 {{-- @if(Auth::user()->hasPermissionToRoute('insert.payroll')) --}}
-                    <button class="add" id="PayrollProcess" data-modal-id="confirmModal"><i
+                    <button id="PayrollProcess" data-modal-id="confirmModal"><i
                         class="fa-solid fa-rotate"></i> Process Payroll</button>
                 {{-- @endif --}}
             </div>

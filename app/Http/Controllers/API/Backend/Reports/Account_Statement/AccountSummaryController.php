@@ -8,22 +8,26 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Transaction_Detail;
 use App\Models\Transaction_Main_Head;
+use App\Models\Transaction_Head;
+use App\Models\Transaction_Groupe;
 
 class AccountSummaryController extends Controller
 {
     // Create a Common Function for Getting Data Easily
     public function GetAccountSummaryStatement($tranType) {
-        return Transaction_Detail::on('mysql')->select(
-                'tran_head_id', 
-                'tran_groupe_id', 
-                DB::raw('SUM(receive) as total_receive'), 
-                DB::raw('SUM(payment) as total_payment')
-            )
-            ->where('tran_type', $tranType)
-            ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
-            ->orderBy('tran_groupe_id', 'asc')
-            ->groupBy('tran_head_id','tran_groupe_id')
-            ->get();
+        return Transaction_Detail::on('mysql_second')
+        ->with('Groupe', 'Head')
+        ->select(
+            'tran_head_id', 
+            'tran_groupe_id', 
+            DB::raw('SUM(receive) as total_receive'), 
+            DB::raw('SUM(payment) as total_payment')
+        )
+        ->where('tran_type', $tranType)
+        ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
+        ->orderBy('tran_groupe_id', 'asc')
+        ->groupBy('tran_head_id','tran_groupe_id')
+        ->get();
     } // End Method
 
 
@@ -39,24 +43,25 @@ class AccountSummaryController extends Controller
         $pharmacy = $this->GetAccountSummaryStatement(6);
         $michellaneous = $this->GetAccountSummaryStatement(7);
         
-        $opening = Transaction_Detail::on('mysql')->select(
+        $opening = Transaction_Detail::on('mysql_second')
+        ->select(
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
         )
         ->whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])
         ->first();
 
-        $type = Transaction_Main_Head::on('mysql_second')->get();
+        $type = Transaction_Main_Head::on('mysql')->get();
 
         $data = [       
             'opening'           =>      $opening,
-            'general'           =>      $general,
-            'party'             =>      $party,
-            'payroll'           =>      $payroll,
-            'bank'              =>      $bank,
-            'inventory'         =>      $inventory,
-            'pharmacy'          =>      $pharmacy,
-            'michellaneous'     =>      $michellaneous,
+            'General'           =>      $general,
+            'Party'             =>      $party,
+            'Payroll'           =>      $payroll,
+            'Bank'              =>      $bank,
+            'Inventory'         =>      $inventory,
+            'Pharmacy'          =>      $pharmacy,
+            'Michellaneous'     =>      $michellaneous,
         ];
         
         return response()->json([
@@ -71,11 +76,18 @@ class AccountSummaryController extends Controller
     // Create a Common Function for Getting Data Easily
     public function FindAccountSummaryStatement($tranType, $req) {
         if($req->searchOption == 1){
-            return Transaction_Detail::on('mysql')->with('Groupe')
-            ->whereHas('Groupe', function ($query) use ($req) {
-                $query->where('tran_groupe_name', 'like', '%'.$req->search.'%');
-                $query->orderBy('tran_groupe_name','asc');
-            })
+            $groupes = Transaction_Groupe::on('mysql')
+            ->where('tran_groupe_name', 'like', '%'.$req->search.'%')
+            ->orderBy('tran_groupe_name','asc')
+            ->pluck('id');
+
+            return Transaction_Detail::on('mysql_second')
+            ->with('Groupe', 'Head')
+            // ->whereHas('Groupe', function ($query) use ($req) {
+            //     $query->where('tran_groupe_name', 'like', '%'.$req->search.'%');
+            //     $query->orderBy('tran_groupe_name','asc');
+            // })
+            ->whereIn('tran_groupe_id', $groupes)
             ->select(
                 'tran_head_id', 
                 'tran_groupe_id', 
@@ -89,11 +101,17 @@ class AccountSummaryController extends Controller
             ->get();
         }
         else if($req->searchOption == 2){
-            return Transaction_Detail::on('mysql')->with('Head')
-            ->whereHas('Head', function ($query) use ($req) {
-                $query->where('tran_head_name', 'like', '%'.$req->search.'%');
-                $query->orderBy('tran_head_name','asc');
-            })
+            $heads = Transaction_Head::on('mysql')
+            ->where('tran_head_name', 'like', $req->search.'%')
+            ->orderBy('tran_head_name','asc')
+            ->pluck('id'); // Base query
+
+            return Transaction_Detail::on('mysql_second')->with('Groupe', 'Head')
+            // ->whereHas('Head', function ($query) use ($req) {
+            //     $query->where('tran_head_name', 'like', '%'.$req->search.'%');
+            //     $query->orderBy('tran_head_name','asc');
+            // })
+            ->whereIn('tran_head_id', $heads)
             ->select(
                 'tran_head_id', 
                 'tran_groupe_id', 
@@ -113,7 +131,7 @@ class AccountSummaryController extends Controller
 
     // Search Salary Details Report
     public function Search(Request $req){
-        $opening = Transaction_Detail::on('mysql')->select(
+        $opening = Transaction_Detail::on('mysql_second')->select(
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
         )
@@ -125,36 +143,36 @@ class AccountSummaryController extends Controller
             'opening' => $opening,
         ];
 
-        switch ($req->typeOption) {
+        switch ($req->type) {
             case 1:
-                $data['general'] = $this->FindAccountSummaryStatement(1, $req);
+                $data['General'] = $this->FindAccountSummaryStatement(1, $req);
                 break;
             case 2:
-                $data['party'] = $this->FindAccountSummaryStatement(2, $req);
+                $data['Party'] = $this->FindAccountSummaryStatement(2, $req);
                 break;
             case 3:
-                $data['payroll'] = $this->FindAccountSummaryStatement(3, $req);
+                $data['Payroll'] = $this->FindAccountSummaryStatement(3, $req);
                 break;
             case 4:
-                $data['bank'] = $this->FindAccountSummaryStatement(4, $req);
+                $data['Bank'] = $this->FindAccountSummaryStatement(4, $req);
                 break;
             case 5:
-                $data['inventory'] = $this->FindAccountSummaryStatement(5, $req);
+                $data['Inventory'] = $this->FindAccountSummaryStatement(5, $req);
                 break;
             case 6:
-                $data['pharmacy'] = $this->FindAccountSummaryStatement(6, $req);
+                $data['Pharmacy'] = $this->FindAccountSummaryStatement(6, $req);
                 break;
             case 7:
-                $data['michellaneous'] = $this->FindAccountSummaryStatement(7, $req);
+                $data['Michellaneous'] = $this->FindAccountSummaryStatement(7, $req);
                 break;
             default:
-                $data['general'] = $this->FindAccountSummaryStatement(1, $req);
-                $data['party'] = $this->FindAccountSummaryStatement(2, $req);
-                $data['payroll'] = $this->FindAccountSummaryStatement(3, $req);
-                $data['bank'] = $this->FindAccountSummaryStatement(4, $req);
-                $data['inventory'] = $this->FindAccountSummaryStatement(5, $req);
-                $data['pharmacy'] = $this->FindAccountSummaryStatement(6, $req);
-                $data['michellaneous'] = $this->FindAccountSummaryStatement(7, $req);
+                $data['General'] = $this->FindAccountSummaryStatement(1, $req);
+                $data['Party'] = $this->FindAccountSummaryStatement(2, $req);
+                $data['Payroll'] = $this->FindAccountSummaryStatement(3, $req);
+                $data['Bank'] = $this->FindAccountSummaryStatement(4, $req);
+                $data['Inventory'] = $this->FindAccountSummaryStatement(5, $req);
+                $data['Pharmacy'] = $this->FindAccountSummaryStatement(6, $req);
+                $data['Michellaneous'] = $this->FindAccountSummaryStatement(7, $req);
         }
         
         return response()->json([

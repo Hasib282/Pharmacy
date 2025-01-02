@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Transaction_Detail;
+use App\Models\Transaction_Head;
 
 class PharmacyProfitabilityStatementController extends Controller
 {
@@ -38,11 +39,21 @@ class PharmacyProfitabilityStatementController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $pharmacy = Transaction_Detail::on('mysql_second')->With('User','Head')
-            ->whereHas('Head', function ($query) use ($req) {
-                $query->where('tran_head_name', 'like', '%' . $req->search . '%');
-                $query->orderBy('tran_head_name','asc');
+            $heads = Transaction_Head::on('mysql')
+            ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
+            ->whereHas('Groupe', function ($q){
+                $q->where('tran_groupe_type', 6);
             })
+            ->where('tran_head_name', 'like', $req->search.'%')
+            ->orderBy('tran_head_name','asc')
+            ->pluck('id'); // Base query
+
+            $pharmacy = Transaction_Detail::on('mysql_second')->With('User','Head')
+            // ->whereHas('Head', function ($query) use ($req) {
+            //     $query->where('tran_head_name', 'like', '%' . $req->search . '%');
+            //     $query->orderBy('tran_head_name','asc');
+            // })
+            ->whereIn('tran_head_id', $heads)
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
             ->where('tran_type', $req->type)

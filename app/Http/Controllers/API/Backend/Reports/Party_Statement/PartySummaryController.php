@@ -12,8 +12,9 @@ class PartySummaryController extends Controller
 {
     // Show All Salary Details Report
     public function ShowAll(Request $req){
-        $transactions = Transaction_Main::with('User', 'Bank', 'Withs')
-        ->whereNotIn('tran_type',['2'])
+        $transactions = Transaction_Main::on('mysql_second')
+        ->with('User', 'Bank', 'Withs', 'Type')
+        ->whereNotIn('tran_type',['2','4'])
         ->select(
             'tran_type',
             'tran_method',
@@ -44,11 +45,12 @@ class PartySummaryController extends Controller
 
     // Search Salary Details Report
     public function Search(Request $req){
-        $transactions = Transaction_Main::with('User', 'Bank', 'Withs')
+        $transactions = Transaction_Main::on('mysql_second')
+        ->with('User', 'Bank', 'Withs', 'Type')
         ->whereHas($req->searchOption == 1 ? 'User' : 'Withs', function ($query) use ($req) {
-            $query->where($req->searchOption == 1 ? 'user_name' : 'tran_with_name', 'like', '%'.$req->search.'%');
+            $query->where($req->searchOption == 1 ? 'user_name' : 'tran_with_name', 'like', $req->search.'%');
         })
-        ->whereNotIn('tran_type',['2'])
+        ->whereNotIn('tran_type',['2','4'])
         ->select(
             'tran_type',
             'tran_method',
@@ -65,8 +67,8 @@ class PartySummaryController extends Controller
             DB::raw('SUM(due_col) as total_due_col')
         )
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-        ->when($req->type !== null, function ($query) use ($req) {
-            return $query->where('tran_method', $req->type);
+        ->when($req->method !== null, function ($query) use ($req) {
+            return $query->where('tran_method', $req->method);
         })
         ->groupBy('tran_type', 'tran_method', 'tran_type_with', 'tran_user', 'tran_bank')
         ->orderBy('tran_date','asc')

@@ -21,10 +21,10 @@
                 </div>
                 <div class="c-6">
                     <div id="groupein" style="display: none"></div>
-                    <label for="search">Search Here</label>
-                    <input type="text" name="search" id="search" class="form-input" placeholder="Search Product here..."
+                    <label for="product-search">Search Here</label>
+                    <input type="text" name="search" id="product-search" class="form-input" placeholder="Search Product here..."
                         value="{{ $searchValue ? $searchValue : '' }}" data-id="{{ $searchIdValue ? $searchIdValue : '' }}" autocomplete="off" style="width: 100%; margin: 0;">
-                    <div id="search-list">
+                    <div id="product-search-list">
                         <ul>
     
                         </ul>

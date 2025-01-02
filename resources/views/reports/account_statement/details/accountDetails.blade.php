@@ -48,46 +48,35 @@
 
     <!-- table show -->
     <div class="load-data" style="overflow-x:auto;">
-        <hr>
         <table class="show-table">
+            <caption class="caption">Accounts Details Statement</caption>
             <thead>
-                <caption class="caption">Accounts Detail Statement</caption>
+                <tr>
+                    <th style="text-align: right;">Opening Balance</th>
+                    <th></th>
+                    <th style="text-align: right; width:14%;" id="opening"></th>
+                </tr>
             </thead>
-        </table>
-
-        {{-- <table class="show-table">
+            <tbody>
+                
+            </tbody>
             <tfoot>
                 <tr>
-                    <td style="text-align: right;">Opening Balance</td>
-                    <td style="text-align: right; width:12%;">{{ number_format($opening->total_receive - $opening->total_payment, 0, '.', ',') }}</td>
+                    <td style="text-align: right;">Grand Total:</td>
+                    <td style="text-align: right; width:14%;" id="grandReceive"></td>
+                    <td style="text-align: right; width:14%;" id="grandPayment"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Closing Balance</td>
+                    <td></td>
+                    <td style="text-align: right; width:14%;" id="closing"></td>
                 </tr>
             </tfoot>
         </table>
 
-        @php
-            $grandReceive = 0;
-            $grandPayment = 0;
-        @endphp --}}
-
         {{-- general account part start --}}
         {{-- @isset($general)
-            @if($general->isNotEmpty())
-                <table class="show-table">
-                    <thead>
-                        <caption class="sub-caption">General Account</caption>
-                        <tr>
-                            <th style="width: 4%;">SL:</th>
-                            <th style="width: 10%;">Tran Id</th>
-                            <th style="text-align: center; width:20%;">Groupe</th>
-                            <th style="text-align: center; width:40%;">Product/Service</th>
-                            <th style="text-align: center; width:12%;">Receive</th>
-                            <th style="text-align: center; width:12%;">Payment</th>
-                        </tr>
-                    </thead>
-                    @php
-                        $lastGroupeId = null;
-                        $lastTranId = null;
-                    @endphp
+
                     <tbody>
                         @foreach ($general as $key => $item)
                             <tr>

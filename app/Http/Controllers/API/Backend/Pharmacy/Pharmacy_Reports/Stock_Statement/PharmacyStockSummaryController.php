@@ -33,7 +33,7 @@ class PharmacyStockSummaryController extends Controller
             ->whereHas('Groupe', function ($query){
                 $query->where('tran_groupe_type', 6);
             })
-            ->where('tran_head_name', 'like', '%'.$req->search.'%')
+            ->where('tran_head_name', 'like', $req->search.'%')
             ->orderBy('tran_head_name','asc')
             ->paginate(15);
         }
@@ -41,7 +41,7 @@ class PharmacyStockSummaryController extends Controller
             $pharmacy = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
             ->whereHas('Groupe', function ($query) use ($req){
                 $query->where('tran_groupe_type', 6);
-                $query->where('tran_groupe_name', 'like', '%' . $req->search . '%');
+                $query->where('tran_groupe_name', 'like', $req->search . '%');
                 $query->orderBy('tran_groupe_name','asc');
             })
             ->paginate(15);
@@ -52,7 +52,7 @@ class PharmacyStockSummaryController extends Controller
                 $query->where('tran_groupe_type', 6);
             })
             ->whereHas('Category', function ($query) use ($req) {
-                $query->where('category_name', 'like', '%' . $req->search . '%');
+                $query->where('category_name', 'like', $req->search . '%');
                 $query->orderBy('category_name','asc');
             })
             ->paginate(15);
@@ -63,7 +63,7 @@ class PharmacyStockSummaryController extends Controller
                 $query->where('tran_groupe_type', 6);
             })
             ->whereHas('Manufecturer', function ($query) use ($req) {
-                $query->where('manufacturer_name', 'like', '%' . $req->search . '%');
+                $query->where('manufacturer_name', 'like', $req->search . '%');
                 $query->orderBy('manufacturer_name','asc');
             })
             ->paginate(15);
@@ -74,7 +74,7 @@ class PharmacyStockSummaryController extends Controller
                 $query->where('tran_groupe_type', 6);
             })
             ->whereHas('Form', function ($query) use ($req) {
-                $query->where('form_name', 'like', '%' . $req->search . '%');
+                $query->where('form_name', 'like', $req->search . '%');
                 $query->orderBy('form_name','asc');
             })
             ->paginate(15);

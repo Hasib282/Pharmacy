@@ -133,12 +133,27 @@ class PayrollSetupController extends Controller
 
     // Search Payroll Setup
     public function Search(Request $req){
-        $payroll = Payroll_Setup::on('mysql_second')->with('Employee','Head')
-        ->whereHas($req->searchOption == 1 ? 'Employee' : 'Head', function ($query) use ($req) {
-            $query->where($req->searchOption == 1 ? 'user_name' : 'tran_head_name', 'like', '%'.$req->search.'%');
-            $query->orderby($req->searchOption == 1 ? 'user_name' : 'tran_head_name');
-        })
-        ->paginate(15);
+        if($req->searchOption == 1){
+            $payroll = Payroll_Setup::on('mysql_second')
+            ->with('Employee','Head')
+            ->whereHas('Employee', function ($query) use ($req) {
+                $query->where('user_name', 'like', '%'.$req->search.'%');
+                $query->orderby('user_name');
+            })
+            ->paginate(15);
+        }
+        else if($req->searchOption == 2){
+            $head = Transaction_Head::on('mysql')
+            ->where('tran_head_name', 'like', '%'.$req->search.'%')
+            ->orderby('tran_head_name')
+            ->pluck('id');
+
+            $payroll = Payroll_Setup::on('mysql_second')
+            ->with('Employee','Head')
+            ->whereIn('head_id', $head)
+            ->paginate(15);
+        }
+        
         
         return response()->json([
             'status' => true,

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Transaction_Detail;
+use App\Models\Transaction_Head;
 
 class InventoryPurchaseDetailController extends Controller
 {
@@ -29,7 +30,8 @@ class InventoryPurchaseDetailController extends Controller
     // Search Inventory Purchase Details Statement
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $inventory = Transaction_Detail::on('mysql_second')->with('User','Head')
+            $inventory = Transaction_Detail::on('mysql_second')
+            ->with('User','Head')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
@@ -38,9 +40,10 @@ class InventoryPurchaseDetailController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $inventory = Transaction_Detail::on('mysql_second')->with('User','Head')
+            $inventory = Transaction_Detail::on('mysql_second')
+            ->with('User','Head')
             ->whereHas('User', function ($query) use ($req) {
-                $query->where('user_name', 'like', '%'.$req->search.'%');
+                $query->where('user_name', 'like', $req->search.'%');
                 $query->orderBy('user_name','asc');
             })
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
@@ -49,11 +52,18 @@ class InventoryPurchaseDetailController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 3){
-            $inventory = Transaction_Detail::on('mysql_second')->with('User','Head')
-            ->whereHas('Head', function ($query) use ($req) {
-                $query->where('tran_head_name', 'like', '%'.$req->search.'%');
-                $query->orderBy('tran_head_name','asc');
+            $heads = Transaction_Head::on('mysql')
+            ->with('Groupe')
+            ->whereHas('Groupe', function ($q){
+                $q->where('tran_groupe_type', 5);
             })
+            ->where('tran_head_name', 'like', $req->search.'%')
+            ->orderBy('tran_head_name','asc')
+            ->pluck('id'); // Base query
+
+            $inventory = Transaction_Detail::on('mysql_second')
+            ->with('User','Head')
+            ->whereIn('tran_head_id', $heads)
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
             ->where('tran_type', $req->type)

@@ -141,7 +141,8 @@ class PharmacyProductsController extends Controller
 
     // Search Pharmacy Item/Products
     public function Search(Request $req){
-        $query = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
+        $query = Transaction_Head::on('mysql')
+                    ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
                     ->whereHas('Groupe', function ($q){
                         $q->where('tran_groupe_type', 6);
                     }); // Base query
@@ -220,7 +221,7 @@ class PharmacyProductsController extends Controller
         // ->update(['h.quantity' => DB::raw('x.balance')]);
 
         $heads = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category")
-        ->where('tran_head_name', 'like', '%'.$req->product.'%')
+        ->where('tran_head_name', 'like', $req->product.'%')
         ->whereIn('groupe_id', $req->groupe)
         ->orderBy('tran_head_name','asc')
         ->take(10)
@@ -253,7 +254,7 @@ class PharmacyProductsController extends Controller
     // Get Pharmacy Product List
     public function GetProductList(Request $req){
         $heads = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category")
-        ->where('tran_head_name', 'like', '%'.$req->product.'%')
+        ->where('tran_head_name', 'like', $req->product.'%')
         ->whereIn('groupe_id', $req->groupe)
         ->orderBy('tran_head_name','asc')
         ->take(10)

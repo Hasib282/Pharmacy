@@ -2,10 +2,11 @@ function ShowPartyDetailsReports(data, startIndex) {
     let groupedTransactions = {};
     $.each(data, function(key, item) {
         let tranId = item['tran_id'];
-        if (!groupedTransactions[tranId]) {
-            groupedTransactions[tranId] = [];
+        let tranMethod = item['tran_method'];
+        if (!groupedTransactions[tranId +"("+ tranMethod +")"]) {
+            groupedTransactions[tranId +"("+ tranMethod +")"] = [];
         }
-        groupedTransactions[tranId].push(item);
+        groupedTransactions[tranId +"("+ tranMethod +")"].push(item);
     });
     
 
@@ -17,8 +18,8 @@ function ShowPartyDetailsReports(data, startIndex) {
             let rows = `
                 <tr>
                     <td>
-                        <table>
-                            <caption class="sub-caption"> ${key} </caption>
+                        <table style="margin-top:30px;">
+                            <caption class="sub-caption" style="text-align:center;"> ${key} </caption>
                             <thead>
                                 <tr>
                                     <th>Transaction Id</th>
@@ -50,14 +51,14 @@ function ShowPartyDetailsReports(data, startIndex) {
                                                 <td>${item.due_receive + item.due_payment + item.due_discount}</td>
                                                 <td>${item.bill_amount - item.main_discount - item.main_receive - item.main_payment - item.due_discount - item.due_receive - item.due_payment}</td>
                                                 <td>${item.batch_id ? item.batch_id : item.tran_id}</td>
-                                                <td>${new Date(item.tran_date).toISOString().split('T')[0]}</td>
+                                                <td>${new Date(item.tran_date + 'Z').toISOString().split('T')[0]}</td>
                                             </tr>`;
                                 });
 
-            rows +=    `</tbody>
-                        </table>
-                    </td>
-                </tr>`;
+                rows +=    `</tbody>
+                            </table>
+                        </td>
+                    </tr>`;
 
             tableRows += rows
         });
@@ -83,13 +84,13 @@ $(document).ready(function () {
 
 
     // Search Ajax
-    SearchAjax('report/party/details', ShowPartyDetailsReports, {type: { selector: "#typeOption"}} );
+    SearchAjax('report/party/details', ShowPartyDetailsReports, {method: { selector: "#methodOption"}} );
 
 
     // Search By Date
-    SearchByDateAjax('report/party/details', ShowPartyDetailsReports, {type: { selector: "#typeOption"}} );
+    SearchByDateAjax('report/party/details', ShowPartyDetailsReports, {method: { selector: "#methodOption"}} );
 
 
     // Search By Methods, Roles, Types
-    SearchBySelect('report/party/details', ShowPartyDetailsReports, '#typeOption', {type: { selector: "#typeOption"}} );
+    SearchBySelect('report/party/details', ShowPartyDetailsReports, '#methodOption', {method: { selector: "#methodOption"}} );
 });

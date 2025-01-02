@@ -31,4 +31,9 @@ class Transaction_Main extends Model
     public function Store(){
         return $this->belongsTo(Store::class,'store_id','id');
     }
+
+
+    public function Type(){
+        return $this->belongsTo(Transaction_Main_Head::class,'tran_type','id');
+    }
 }

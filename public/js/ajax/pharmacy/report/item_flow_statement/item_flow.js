@@ -97,13 +97,13 @@ $(document).ready(function () {
 
 
     // Search By Month or Year
-    SearchByDateAjax('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#search', attribute: 'data-id' }})
+    SearchByDateAjax('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#product-search', attribute: 'data-id' }})
 
 
 
     /////////////// ------------------ Search Products By Name And Group add value to input ajax part start ---------------- /////////////////////////////
     // Head Keyup Event
-    $(document).off('keyup', '#search').on('keyup', '#search', function (e) {
+    $(document).off('keyup', '#product-search').on('keyup', '#product-search', function (e) {
         let product = $(this).val();
         let groupe;
         let groupein;
@@ -117,26 +117,26 @@ $(document).ready(function () {
             groupein = 0;
         }
         let id = $(this).attr('data-id');
-        ProductKeyUp(e, groupe, groupein, product, id, '#search', '#search-list ul');
+        ProductKeyUp(e, groupe, groupein, product, id, '#product-search', '#product-search-list ul');
     });
 
     // Product Key down Event
-    $(document).off('keydown', '#search').on('keydown', '#search', function (e) {
-        let list = $('#search-list ul li');
-        ProductKeyDown(e, list, '#search', '#search-list ul li');
+    $(document).off('keydown', '#product-search').on('keydown', '#product-search', function (e) {
+        let list = $('#product-search-list ul li');
+        ProductKeyDown(e, list, '#product-search', '#product-search-list ul li');
     });
 
 
     // Product List Key down Event
-    $(document).off('keydown', '#search-list ul li').on('keydown', '#search-list ul li', function (e) {
-        let list = $('#search-list ul li');
-        let focused = $('#search-list ul li:focus');
-        ProductListKeyDown(e, list, focused, '#search', '#search-list ul');
+    $(document).off('keydown', '#product-search-list ul li').on('keydown', '#product-search-list ul li', function (e) {
+        let list = $('#product-search-list ul li');
+        let focused = $('#product-search-list ul li:focus');
+        ProductListKeyDown(e, list, focused, '#product-search', '#product-search-list ul');
     });
 
 
     // Product Focus Event
-    $(document).off('focus', '#search').on('focus', '#search', function (e) {
+    $(document).off('focus', '#product-search').on('focus', '#product-search', function (e) {
         let product = $(this).val();
         let groupe;
         let groupein;
@@ -151,7 +151,7 @@ $(document).ready(function () {
         }
         let id = $(this).attr('data-id');
         if(id == undefined){
-            getProductByGroupe(groupe, groupein, product,  '#search-list ul');
+            getProductByGroupe(groupe, groupein, product,  '#product-search-list ul');
         }
         else{
             e.preventDefault();
@@ -160,12 +160,12 @@ $(document).ready(function () {
 
 
     // Product Focous out event
-    $(document).off('focusout', '#search').on('focusout', '#search', function (e) {
+    $(document).off('focusout', '#product-search').on('focusout', '#product-search', function (e) {
         let id = $(this).attr('data-id');
         if(id == undefined){
             $(document).on('click', function (e){
                 if($(e.target).attr('tabindex') == undefined){
-                    $('#search-list ul').html('');
+                    $('#product-search-list ul').html('');
                 }
             });
         }
@@ -173,16 +173,16 @@ $(document).ready(function () {
 
 
     // Product List Click Event
-    $(document).off('click', '#search-list ul li').on('click', '#search-list ul li', function () {
+    $(document).off('click', '#product-search-list ul li').on('click', '#product-search-list ul li', function () {
         let value = $(this).text();
         let id = $(this).data('id');
 
-        $('#search').val(value);
-        $('#search').attr('data-id', id);
-        $('#search-list ul').html('');
-        $('#search').focus();
+        $('#product-search').val(value);
+        $('#product-search').attr('data-id', id);
+        $('#product-search-list ul').html('');
+        $('#product-search').focus();
         
-        LoadSearchData('inventory/report/item/flow', ShowInventoryItemflowStatements, {search_id: { selector: '#search', attribute: 'data-id' }});
+        LoadSearchData('inventory/report/item/flow', ShowInventoryItemflowStatements, {search_id: { selector: '#product-search', attribute: 'data-id' }});
     });
 
 
@@ -218,7 +218,7 @@ $(document).ready(function () {
                 $(targetElement1).val(list.first().text());
                 $(targetElement1).attr("data-id", list.data('id'));
 
-                LoadSearchData('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#search', attribute: 'data-id' }});
+                LoadSearchData('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#product-search', attribute: 'data-id' }});
             } 
             else if (e.keyCode === 38) { // Up arrow key
                 e.preventDefault();
@@ -226,7 +226,7 @@ $(document).ready(function () {
                 $(targetElement1).val(list.last().text());
                 $(targetElement1).attr("data-id", list.data('id'));
 
-                LoadSearchData('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#search', attribute: 'data-id' }});
+                LoadSearchData('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#product-search', attribute: 'data-id' }});
             } 
             else if (e.keyCode === 13) { // Enter key
                 e.preventDefault();
@@ -250,7 +250,7 @@ $(document).ready(function () {
             $(targetElement1).val(list.eq(nextIndex).text());
             $(targetElement1).attr("data-id", list.eq(nextIndex).data('id'));
 
-            LoadSearchData('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#search', attribute: 'data-id' }});
+            LoadSearchData('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#product-search', attribute: 'data-id' }});
         } 
         else if (e.keyCode === 38) { // Up arrow key
             e.preventDefault();
@@ -262,7 +262,7 @@ $(document).ready(function () {
             $(targetElement1).val(list.eq(prevIndex).text());
             $(targetElement1).attr("data-id", list.eq(prevIndex).data('id'));
 
-            LoadSearchData('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#search', attribute: 'data-id' }});
+            LoadSearchData('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#product-search', attribute: 'data-id' }});
         } 
         else if (e.keyCode === 13) { // Enter key
             e.preventDefault();

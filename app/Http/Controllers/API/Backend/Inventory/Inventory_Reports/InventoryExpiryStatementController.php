@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Transaction_Detail;
+use App\Models\Transaction_Head;
 
 class InventoryExpiryStatementController extends Controller
 {
@@ -30,18 +31,27 @@ class InventoryExpiryStatementController extends Controller
     // Search Inventory Expiry Statement
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $inventory = Transaction_Detail::on('mysql_second')->with('Head')
-            ->whereHas('Head', function ($query) use ($req) {
-                $query->where('tran_head_name', 'like', '%' . $req->search . '%');
-                $query->orderBy('tran_head_name','asc');
+            $heads = Transaction_Head::on('mysql')
+            ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
+            ->whereHas('Groupe', function ($q){
+                $q->where('tran_groupe_type', 5);
             })
+            ->where('tran_head_name', 'like', $req->search.'%')
+            ->orderBy('tran_head_name','asc')
+            ->pluck('id'); // Base query
+
+            $inventory = Transaction_Detail::on('mysql_second')
+            ->with('Head')
+            ->whereIn('tran_head_id', $heads)
             ->whereRaw("expiry_date BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->whereIn('tran_method', ['Purchase', 'Positive'])
             ->where('tran_type', 5)
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $inventory = Transaction_Detail::on('mysql_second')->where('tran_id', "like", '%'. $req->search .'%')
+            $inventory = Transaction_Detail::on('mysql_second')
+            ->with('Head')
+            ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("expiry_date BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->whereIn('tran_method', ['Purchase', 'Positive'])
             ->where('tran_type', 5)

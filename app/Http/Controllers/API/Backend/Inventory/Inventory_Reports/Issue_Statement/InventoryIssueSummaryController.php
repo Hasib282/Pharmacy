@@ -40,7 +40,7 @@ class InventoryIssueSummaryController extends Controller
         else if($req->searchOption == 2){
             $inventory = Transaction_Main::on('mysql_second')->with('User')
             ->whereHas('User', function ($query) use ($req) {
-                $query->where('user_name', 'like', '%'.$req->search.'%');
+                $query->where('user_name', 'like', $req->search.'%');
                 $query->orderBy('user_name','asc');
             })
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])

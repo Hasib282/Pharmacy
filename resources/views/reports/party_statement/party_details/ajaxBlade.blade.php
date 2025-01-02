@@ -1,7 +1,7 @@
 @php
     $searchValue = request()->query('search');
     $searchOptionValue = request()->query('searchOption');
-    $searchTypeValue = request()->query('type');
+    $searchMethodValue = request()->query('method');
     $startDateValue = request()->query('startDate');
     $endDateValue = request()->query('endDate');
 @endphp
@@ -21,11 +21,15 @@
                 value="{{ $endDateValue ? $endDateValue : date('Y-m-d') }}">
         </div>
         <div class="c-2">
-            <label for="typeOption">Transaction Type</label>
-            <select name="typeOption" id="typeOption">
-                <option value="">Select type</option>
-                <option value="Receive" {{ $searchTypeValue=='Receive' ? 'selected' : '' }}>Receive</option>
-                <option value="Payment" {{ $searchTypeValue=='Payment' ? 'selected' : '' }}>Payment</option>
+            <label for="methodOption">Method</label>
+            <select name="methodOption" id="methodOption">
+                <option value="">Select Method</option>
+                <option value="Receive" {{ $searchMethodValue=='Receive' ? 'selected' : '' }}>Receive</option>
+                <option value="Payment" {{ $searchMethodValue=='Payment' ? 'selected' : '' }}>Payment</option>
+                <option value="Purchase" {{ $searchMethodValue=='Purchase' ? 'selected' : '' }}>Purchase</option>
+                <option value="Issue" {{ $searchMethodValue=='Issue' ? 'selected' : '' }}>Issue</option>
+                <option value="Client Return" {{ $searchMethodValue=='Client Return' ? 'selected' : '' }}>Client Return</option>
+                <option value="Supplier Return" {{ $searchMethodValue=='Supplier Return' ? 'selected' : '' }}>Supplier Return</option>
             </select>
         </div>
         <div class="c-2">
@@ -53,11 +57,6 @@
 <div class="load-data" style="overflow-x:auto;">
     <table class="show-table">
         <caption class="caption">Party Details Report</caption>
-        <thead>
-            <tr>
-                <td>Party Details Report</td>
-            </tr>
-        </thead>
         <tbody></tbody>
         <tfoot></tfoot>
     </table>

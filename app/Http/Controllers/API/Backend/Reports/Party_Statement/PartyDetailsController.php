@@ -13,8 +13,9 @@ class PartyDetailsController extends Controller
 {
     // Show All Salary Details Report
     public function ShowAll(Request $req){
-        $transactions = Transaction_Main::with('User', 'Bank', 'Withs')
-        ->whereNotIn('tran_type',['2'])
+        $transactions = Transaction_Main::on('mysql_second')
+        ->with('User', 'Bank', 'Withs', 'Type')
+        ->whereNotIn('tran_type',['2','4'])
         ->select(
             'tran_id',
             'tran_method',
@@ -35,7 +36,8 @@ class PartyDetailsController extends Controller
         )
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
         ->union(
-            Party_Payment_Receive::select(
+            Party_Payment_Receive::on('mysql_second')
+            ->select(
                 'batch_id as tran_id',
                 'tran_method',
                 'tran_type',
@@ -69,8 +71,9 @@ class PartyDetailsController extends Controller
 
     // Search Salary Details Report
     public function Search(Request $req){
-        $transactions = Transaction_Main::with('User', 'Bank', 'Withs')
-        ->whereNotIn('tran_type',['2'])
+        $transactions = Transaction_Main::on('mysql_second')
+        ->with('User', 'Bank', 'Withs', 'Type')
+        ->whereNotIn('tran_type',['2','4'])
         ->select(
             'tran_id',
             'tran_method',
@@ -95,9 +98,10 @@ class PartyDetailsController extends Controller
             $query->where('user_name', 'like', '%'.$req->search.'%');
         })
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-        ->where('tran_method', 'like', '%'.$req->type.'%')
+        ->where('tran_method', 'like', '%'.$req->method.'%')
         ->union(
-            Party_Payment_Receive::select(
+            Party_Payment_Receive::on('mysql_second')
+            ->select(
                 'batch_id as tran_id',
                 'tran_method',
                 'tran_type',
@@ -121,7 +125,7 @@ class PartyDetailsController extends Controller
                 $query->where('user_name', 'like', '%'.$req->search.'%');
             })
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method', 'like', '%'.$req->type.'%')
+            ->where('tran_method', 'like', '%'.$req->method.'%')
         )
         ->orderBy('tran_id')
         ->orderBy('tran_date')

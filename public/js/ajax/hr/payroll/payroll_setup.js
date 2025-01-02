@@ -1,96 +1,3 @@
-// $(document).ready(function () {
-    /////////////// ------------------ Add Payroll Setup ajax part start ---------------- /////////////////////////////
-    // $(document).on('submit', '#AddForm', function (e) {
-    //     e.preventDefault();
-    //     let user = $('#user').attr('data-id');
-    //     let formData = new FormData(this);
-    //     formData.append('user', user === undefined ? '' : user);
-    //     $.ajax({
-    //         url: urls.insert,
-    //         method: 'POST',
-    //         processData: false,
-    //         contentType: false,
-    //         cache: false,
-    //         data: formData,
-    //         beforeSend:function() {
-    //             $(document).find('span.error').text('');  
-    //         },
-    //         success: function (res) {
-    //             if (res.status == "success") {
-    //                 $('#head').val('');
-    //                 $('#amount').val('');
-    //                 $('#head').focus();
-    //                 $('#search').val('');
-    //                 $('.load-data').load(location.href + ' .load-data');
-    //                 getPayrollByUserId(user, '.payroll-grid tbody');
-    //                 toastr.success('Payroll Added Successfully', 'Added!');
-    //             }
-    //         },
-    //         error: function (err) {
-    //             console.log(err)
-    //             let error = err.responseJSON;
-    //             $.each(error.errors, function (key, value) {
-    //                 $('#' + key + "_error").text(value);
-    //             });
-    //         }
-    //     });
-    // });
-
-
-
-
-
-
-
-    /////////////// ------------------ Update Payroll Setup ajax part start ---------------- /////////////////////////////
-    // $(document).on('submit', '#EditForm', function (e) {
-    //     e.preventDefault();
-    //     let user = $('#updateUser').attr('data-id');
-    //     let formData = new FormData(this);
-    //     formData.append('user', user === undefined ? '' : user);
-    //     $.ajax({
-    //         url: urls.update,
-    //         method: 'POST',
-    //         processData: false,
-    //         contentType: false,
-    //         cache: false,
-    //         data:formData,
-    //         beforeSend:function() {
-    //             $(document).find('span.error').text('');  
-    //         },
-    //         success: function (res) {
-    //             if (res.status == "success") {
-    //                 $('#editModal').hide();
-    //                 $('#EditForm')[0].reset();
-    //                 $('#search').val('');
-    //                 $('.load-data').load(location.href + ' .load-data');
-    //                 toastr.success('Payroll Setup Updated Successfully', 'Updated!');
-    //             }
-    //         },
-    //         error: function (err) {
-    //             let error = err.responseJSON;
-    //             $.each(error.errors, function (key, value) {
-    //                 $('#update_' + key + "_error").text(value);
-    //             })
-    //         }
-    //     });
-    // });
-
-    // DeleteAjax('Payroll Middlewire Details Deleted', 'Deleted!');
-
-    // PaginationAjax({  });
-
-    // SearchAjax({  });
-
-    // SearchPaginationAjax({  });
-
-    
-// });
-
-
-
-
-
 function ShowPayrollSetup(data, startIndex) {
     let tableRows = '';
     let lastEmpId = null;
@@ -152,15 +59,19 @@ $(document).ready(function () {
     
 
     // Add Modal Open Functionality
-    AddModalFunctionality("#with");
+    AddModalFunctionality("#with", function () {
+        $('#with').val('');
+        $('#user').removeAttr('data-id');
+        $('#user').val('');
+        $('.payroll-grid tbody').html('');
+    });
 
 
     // Insert Ajax
-    InsertAjax('hr/payroll/setup', ShowPayrollSetup, {user: { selector: '#user', attribute: 'data-id' }}, function() {
-        $('#with').focus();
-        $('#user').removeAttr('data-id');
-        $('.payroll-grid tbody').html('');
-        // getPayrollByUserId(user, '.payroll-grid tbody');
+    InsertAjax('hr/payroll/setup', ShowPayrollSetup, {user: { selector: '#user', attribute: 'data-id' }, with:{ selector: '#with' }}, function() {
+        $('#head').focus();
+        let user = $('#user').attr('data-id');
+        getPayrollByUserId(user, '.payroll-grid tbody');
     });
 
 
@@ -206,24 +117,4 @@ $(document).ready(function () {
         $('#updateWith').focus();
     }
 
-
-
-
-
-    // Get Payroll Data By User Id
-    function getPayrollByUserId(id, grid) {
-        $.ajax({
-            url: urls.getuser,
-            method: 'GET',
-            data: { id:id },
-            success: function (res) {
-                if(res.status === 'success'){
-                    $(grid).html(res.data);
-                }
-                else{
-                    $(grid).html('');
-                }
-            }
-        });
-    }
 });

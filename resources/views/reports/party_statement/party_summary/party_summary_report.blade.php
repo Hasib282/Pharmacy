@@ -1,7 +1,7 @@
 @php
     $searchValue = request()->query('search');
     $searchOptionValue = request()->query('searchOption');
-    $searchTypeValue = request()->query('type');
+    $searchMethodValue = request()->query('method');
     $startDateValue = request()->query('startDate');
     $endDateValue = request()->query('endDate');
 @endphp
@@ -20,18 +20,22 @@
                 <input type="date" name="endDate" id="endDate" class="form-input" value="{{ $endDateValue ? $endDateValue : date('Y-m-d') }}">
             </div>
             <div class="c-2">
-                <label for="typeOption">Transaction Type</label>
-                <select name="typeOption" id="typeOption">
-                    <option value="">Select type</option>
-                    <option value="Receive" {{ $searchTypeValue == 'Receive' ? 'selected' : '' }}>Receive</option>
-                    <option value="Payment" {{ $searchTypeValue == 'Payment' ? 'selected' : '' }}>Payment</option>
+                <label for="methodOption">Method</label>
+                <select name="methodOption" id="methodOption">
+                    <option value="">Select Method</option>
+                    <option value="Receive" {{ $searchMethodValue=='Receive' ? 'selected' : '' }}>Receive</option>
+                    <option value="Payment" {{ $searchMethodValue=='Payment' ? 'selected' : '' }}>Payment</option>
+                    <option value="Purchase" {{ $searchMethodValue=='Purchase' ? 'selected' : '' }}>Purchase</option>
+                    <option value="Issue" {{ $searchMethodValue=='Issue' ? 'selected' : '' }}>Issue</option>
+                    <option value="Client Return" {{ $searchMethodValue=='Client Return' ? 'selected' : '' }}>Client Return</option>
+                    <option value="Supplier Return" {{ $searchMethodValue=='Supplier Return' ? 'selected' : '' }}>Supplier Return</option>
                 </select>
             </div>
             <div class="c-2">
                 <label for="searchOption">Search Option</label>
                 <select name="searchOption" id="searchOption">
-                    <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Transaction User</option>
-                    <option value="2" {{ $searchOptionValue == '2' ? 'selected' : '' }}>Transaction With</option>
+                    <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>User</option>
+                    <option value="2" {{ $searchOptionValue == '2' ? 'selected' : '' }}>User Type</option>
                 </select>
             </div>
             <div class="c-3">
@@ -55,8 +59,8 @@
             <thead>
                 <tr>
                     <th>SL:</th>
-                    <th>Tran With</th>
-                    <th>Tran User</th>
+                    <th>User Type</th>
+                    <th>User Name</th>
                     <th>Bill Amount</th>
                     <th>Discount</th>
                     <th>Net Amount</th>
