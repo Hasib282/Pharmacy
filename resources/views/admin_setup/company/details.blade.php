@@ -4,7 +4,7 @@
     <div class="general">
         <div class="details-head">
             <div class="image-round">
-                <img src="http://localhost:8000/storage/logos/{{$company->logo !== null ? $company->logo : 'tsbd.png' }}" alt="" height="100px" width="100px">
+                <img src="/storage/logos/{{$company->logo !== null ? $company->logo : 'tsbd.png' }}" alt="" height="100px" width="100px">
             </div> 
             <div class="highlight">
                 <span class="name"> {{$company->company_name}} </span><br>

@@ -37,7 +37,16 @@
                                 <span class="error" id="update_user_error"></span>
                             </div>
                         </div>
-                        <div class="c-12">
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="updateDivision">Division <span class="required" title="Required">*</span></label>
+                                <select name="division" id="updateDivision">
+                
+                                </select>
+                                <span class="error" id="update_division_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
                             <div class="form-input-group">
                                 <label for="updateLocation">Location</label>
                                 <input type="text" name="location" class="form-input" id="updateLocation"

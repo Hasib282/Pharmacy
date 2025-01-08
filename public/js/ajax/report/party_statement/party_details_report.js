@@ -3,10 +3,10 @@ function ShowPartyDetailsReports(data, startIndex) {
     $.each(data, function(key, item) {
         let tranId = item['tran_id'];
         let tranMethod = item['tran_method'];
-        if (!groupedTransactions[tranId +"("+ tranMethod +")"]) {
-            groupedTransactions[tranId +"("+ tranMethod +")"] = [];
+        if (!groupedTransactions[tranId]) {
+            groupedTransactions[tranId] = [];
         }
-        groupedTransactions[tranId +"("+ tranMethod +")"].push(item);
+        groupedTransactions[tranId].push(item);
     });
     
 

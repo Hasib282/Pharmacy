@@ -61,7 +61,7 @@ class InventoryItemFlowStatementController extends Controller
                         + $openingPositiveBalance 
                         - $openingNegativeBalance;
         
-        if($req->search == ""){
+        if($req->search_id == ""){
             $inventory = [];
         }
         else{

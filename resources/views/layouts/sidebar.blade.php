@@ -2,7 +2,7 @@
     {{-- <a href="{{ route('show.profile', auth()->user()->id) }}"> --}}
         <div class="user-details">
             <div class="user-image">
-                <img src="{{ rtrim(env('API_URL'), '/api') }}/storage/profiles/{{ auth()->user()->image != null ? auth()->user()->image : (auth()->user()->gender == 'female' ? 'female.png' : 'male.png') }}" alt="">
+                <img src="{{ rtrim(env('API_URL'), '/api') }}/storage/{{ auth()->user()->image != null ? auth()->user()->image : (auth()->user()->gender == 'female' ? 'female.png' : 'male.png') }}" alt="">
             </div>
             <div class="user-name">
                 <strong>{{ auth()->user()->user_name }}</strong>

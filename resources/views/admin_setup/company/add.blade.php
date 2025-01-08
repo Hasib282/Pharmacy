@@ -51,7 +51,7 @@
                 
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="image">Image<span class="red">*</span></label>
+                        <label for="image">Image</label>
                         <input type="file" name="image" id="image" class="form-input">
                         <span class="error" id="image_error"></span>
                         <img src="/images/male.png" alt="Selected Image" id="previewImage"

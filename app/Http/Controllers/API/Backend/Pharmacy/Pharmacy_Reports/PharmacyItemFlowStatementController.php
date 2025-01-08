@@ -62,7 +62,7 @@ class PharmacyItemFlowStatementController extends Controller
                         + $openingPositiveBalance 
                         - $openingNegativeBalance;
         
-        if($req->search == ""){
+        if($req->search_id == ""){
             $pharmacy = [];
         }
         else{
