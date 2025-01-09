@@ -216,7 +216,7 @@ class InventoryProductsController extends Controller
         // ->update(['h.quantity' => DB::raw('x.balance')]);
 
         $heads = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category")
-        ->where('tran_head_name', 'like', '%'.$req->product.'%')
+        ->where('tran_head_name', 'like', $req->product.'%')
         ->whereIn('groupe_id', $req->groupe)
         ->orderBy('tran_head_name','asc')
         ->take(10)
@@ -250,7 +250,7 @@ class InventoryProductsController extends Controller
     // Get Inventory Product List
     public function GetProductList(Request $req){
         $heads = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category")
-        ->where('tran_head_name', 'like', '%'.$req->product.'%')
+        ->where('tran_head_name', 'like', $req->product.'%')
         ->whereIn('groupe_id', $req->groupe)
         ->orderBy('tran_head_name','asc')
         ->take(10)

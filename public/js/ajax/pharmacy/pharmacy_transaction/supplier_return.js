@@ -27,8 +27,7 @@ function ShowPharmacySupplierReturns(data, startIndex) {
                     <td>
                         <div style="display: flex;gap:5px;">
                             
-                            <button class="open-modal" data-modal-id="printDetails" id="invoice"
-                                data-id="${item.tran_id}"><i class="fa-solid fa-circle-info"></i></button>
+                            <a class="print-btn" href="/api/get/invoice?id=${item.tran_id}&status=1"> <i class="fa-solid fa-circle-info"></i></a>
                         
                             <button class="open-modal" data-modal-id="editModal" id="edit"
                                 data-id="${item.tran_id}"><i class="fas fa-edit"></i></button>

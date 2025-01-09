@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Backend\Transactions;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\Transaction_Groupe;
 use App\Models\Transaction_Detail;
@@ -370,10 +371,13 @@ class GeneralTransactionController extends Controller
             ->get();
         }
         
-        return response()->json([
-            'status' => true,
-            'data' => view('transaction.invoice', compact('transactionMain', 'transDetailsInvoice'))->render(),
-        ]);
+        $pdf = Pdf::loadView('transaction.invoice', compact('transactionMain', 'transDetailsInvoice'));
+        return $pdf->setPaper('a4', 'landscape')->stream();
+        // return PDF::loadHTML('Hello World!')->stream('download.pdf');
+        // return response()->json([
+        //     'status' => true,
+        //     'data' => view('transaction.invoice', compact('transactionMain', 'transDetailsInvoice'))->render(),
+        // ]);
     } // End Method
 
 

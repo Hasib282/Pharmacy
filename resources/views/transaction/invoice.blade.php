@@ -1,47 +1,51 @@
-<div class="row">
-    <div class="col-md-6">
-        <div class="mt-3">
-            <h4><b>Hello,</b>
-                <p>{{ $transactionMain->User->user_name }}</p>
-            </h4>
-        </div>
-    </div><!-- end col -->
-    <div class="col-md-4 offset-md-2">
-        <div class="mt-3 float-end">
-            <p><strong>Order Date : </strong> <span class="float-end">
-                    {{ date("Y-m-d", strtotime($transactionMain->tran_date)) }}</span></p>
-            <p><strong>Order Status : </strong> <span class="float-end"><span
-                        class="badge bg-success">{{ $transactionMain->tran_type }}</span></span>
-            </p>
-            <p><strong>Invoice No. : </strong> <span class="float-end"> {{ $transactionMain->tran_id }}</span></p>
-        </div>
-    </div><!-- end col -->
-</div>
-<!-- end row -->
-
-<div class="row mt-3">
-    <div class="col-sm-6">
-        <h6>Billing Address</h6>
-        <address>
-            {{ $transactionMain->User->address }}
-            <br>
-            <span title="Phone">Phone:</span> {{ $transactionMain->User->user_phone }}<br>
-            <span title="Email">Email:</span> {{ $transactionMain->User->user_email }}<br>
-        </address>
-    </div>
+{{-- company Details Part --}}
+<div style="text-align: center; width: 100%; margin: 0 auto;">
+    <p style="margin-bottom: 10px;font-size:25px;">
+        <strong>{{ auth()->user()->company ? auth()->user()->company->company_name : 'Team-Solutions-Bangladesh' }}</strong>
+    </p>
+    <p style="margin: 0 auto; max-width: 35%;">
+        {{ auth()->user()->company ? auth()->user()->company->address : '12th floor, 28 Kazi Nazrul Islam Ave, Banglamotor, Dhaka 1000' }} <br>
+        Phone no: {{ auth()->user()->company ? auth()->user()->company->phone : '01314353560' }}
+    </p>
+    <p style="margin-top: 10px;">
+        <strong style="font-size: 25px;">Retail Invoice</strong> <br>
+        {{$transactionMain->store->store_name}}
+    </p>
 </div>
 
 
 
-<table class="show-table">
-    <thead>
-        <caption class="caption">Invoice Details</caption>
+{{-- Customer Details Part --}}
+<p><strong>Bill No:</strong> {{ $transactionMain->tran_id }}</p>
+
+<table style="width: 100%; border-collapse: collapse;">
+    <tr>
+        <td style="width: 60%; vertical-align: top;">
+            <p><strong>Invoice To:</strong> <br>
+            <strong>Name:</strong> {{ $transactionMain->user->user_name }} <br>
+            <strong>Address:</strong> {{ $transactionMain->user->address }} <br>
+            <strong>Email:</strong> {{ $transactionMain->user->user_email }} <br>
+            <strong>Phone:</strong> {{ $transactionMain->user->user_phone }}</p>
+        </td>
+        <td style="width: 40%; vertical-align: top;">
+            <p><strong>Invoice Date:</strong> {{ $transactionMain->tran_date }} <br>
+            <strong>Sales By:</strong> TSBD</p>
+        </td>
+    </tr>
+</table>
+
+
+
+{{-- product details part --}}
+<table style="width: 100%; border-collapse: collapse;">
+    <caption class="caption">Invoice Details</caption>
+    <thead style="border-top: 1px dashed; border-bottom: 1px dashed;">
         <tr>
-            <th>#SL:</th>
-            <th>Product:</th>
-            <th>Quantity</th>
-            <th>Amount</th>
-            <th>Total Amount</th>
+            <th style="text-align:left;width:5%;">#SL:</th>
+            <th style="text-align:left;width:50%;">Product:</th>
+            <th style="text-align:right;width:15%;">Qty</th>
+            <th style="text-align:right;width:15%;">Unit Price</th>
+            <th style="text-align:right;width:15%;">Total</th>
         </tr>
     </thead>
     <tbody>
@@ -49,50 +53,44 @@
         <tr>
             <td>{{ $key+1 }}</td>
             <td> {{ $item->head->tran_head_name }} </td>
-            <td> {{ $item->sum_quantity_actual }} </td>
-            <td> {{ $item->amount }} </td>
-            <td> {{ $item->sum_tot_amount }} </td>
+            <td style="text-align:right"> {{ $item->sum_quantity_actual }} </td>
+            <td style="text-align:right"> {{ number_format($item->amount) }} </td>
+            <td style="text-align:right"> {{ number_format($item->sum_tot_amount) }} </td>
         </tr>
         @endforeach
     </tbody>
+    <tfoot style="border-top:1px dashed;">
+        <tr>
+            <td style="text-align:right" colspan="4">Total:</td>
+            <td style="text-align:right">{{ number_format($transactionMain->bill_amount) }}</td>
+        </tr>
+        <tr>
+            <td style="text-align:right" colspan="4">(-) Discount:</td>
+            <td style="text-align:right">{{ number_format($transactionMain->discount) }}</td>
+        </tr>
+        <tr >
+            <td style="text-align:right;" colspan="4">Net Total:</td>
+            <td style="text-align:right">{{ number_format($transactionMain->net_amount) }}</td>
+        </tr>
+        <tr>
+            <td style="text-align:right" colspan="4">Advance:</td>
+            <td style="text-align:right">
+                {{ number_format($transactionMain->receive != null ? $transactionMain->receive : $transactionMain->payment ) }}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right" colspan="4">Due:</td>
+            <td style="text-align:right">
+                {{ number_format($transactionMain->net_amount-$transactionMain->receive- $transactionMain->payment) }}
+            </td>
+        </tr>
+    </tfoot>
 </table>
 
+<p>Payment Mode: Cash</p>
 
-<div class="row">
-    <div class="col-md-9"></div>
-    <div class="col-md-3 mt-4 float-end">
-        <table class="invoice-table">
-            <tbody>
-                <tr>
-                    <td width>Bill amount:</td>
-                    <td class="float-end">{{ number_format($transactionMain->bill_amount) }}</td>
-                </tr>
-                <tr>
-                    <td>Discount:</td>
-                    <td class="float-end">{{ number_format($transactionMain->discount) }}</td>
-                </tr>
-                <tr>
-                    <td>Net Amount:</td>
-                    <td class="float-end">{{ number_format($transactionMain->net_amount) }}</td>
-                </tr>
-                <tr>
-                    <td>Advance:</td>
-                    <td class="float-end">
-                        {{ number_format($transactionMain->receive != null ? $transactionMain->receive : $transactionMain->payment ) }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>Total Due:</td>
-                    <td class="float-end">
-                        {{ number_format($transactionMain->net_amount-$transactionMain->receive- $transactionMain->payment) }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+    
 
-
-<div class="center">
-    <button class="btn btn-primary waves-effect waves-light" id="print"><i class="fa-solid fa-print"></i> Print</button>
+<div style="border-bottom: 1px dashed;">
+    <p style="text-align: center;">Thank you, come again</p>
 </div>

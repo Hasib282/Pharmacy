@@ -81,8 +81,6 @@
 
 @include('transaction.purchase.verify')
 
-@include('transaction.printDetails')
-
 
 <!-- ajax part start from here -->
 <script src="{{ asset('js/ajax/common_ajax/common_transaction_calculations.js') }}"></script>

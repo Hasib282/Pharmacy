@@ -463,7 +463,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
 
 
             // Common Transaction Related Routes
-            Route::get('/get/invoice', 'Invoice');
             Route::get('/get/user', 'GetUser');
             Route::get('/get/transactiongrid', 'GetTransactionGrid');
             Route::get('/get/batch', 'GetBatch');
@@ -1360,3 +1359,4 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
     /////-----/////-----/////-----/////-----/////-----///// Report Routes End /////-----/////-----/////-----/////-----/////-----/////
 });
 
+Route::get('/get/invoice', [GeneralTransactionController::class, 'Invoice'])->middleware('web');

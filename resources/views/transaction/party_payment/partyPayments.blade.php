@@ -64,23 +64,6 @@
 
     @include('common_modals.delete')
 
-
-    <!-- ajax part start from here -->
-    {{-- <script>
-        const urls = {
-            insert:     "{{ route('insert.party') }}",
-            edit:       "{{ route('edit.party') }}",
-            update:     "{{ route('update.party') }}",
-            delete:     "{{ route('delete.party') }}",
-            search:     "{{ route('search.party') }}",
-            paginate:   "{{ route('pagination.party') }}",
-            print:      "{{ route('print.transaction') }}",
-            with:       "{{ route('get.transactionWith') }}",
-            user:       "{{ route('get.transactionUser') }}",
-            grid:       "{{ route('get.transactionGrid') }}",
-            due:        "{{ route('get.partyDue') }}",
-        };
-    </script> --}}
     <script src="{{ asset('js/ajax/transaction/party_payment').'/' . $js . '.js' }}"></script>
     <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
 @endsection
