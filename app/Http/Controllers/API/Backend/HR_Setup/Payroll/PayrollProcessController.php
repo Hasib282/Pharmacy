@@ -59,6 +59,24 @@ class PayrollProcessController extends Controller
             $currentYear = Carbon::now()->year; 
             $currentMonth = Carbon::now()->month;
 
+            Transaction_Main::on('mysql_second')
+            ->where('tran_type', '3')
+            ->where(function ($query) use ($currentYear, $currentMonth) {
+                $query->whereYear('tran_date', $currentYear)
+                    ->whereMonth('tran_date', $currentMonth)
+                    ->orWhereNull('tran_date');
+            })
+            ->delete();
+
+            Transaction_Detail::on('mysql_second')
+            ->where('tran_type', '3')
+            ->where(function ($query) use ($currentYear, $currentMonth) {
+                $query->whereYear('tran_date', $currentYear)
+                    ->whereMonth('tran_date', $currentMonth)
+                    ->orWhereNull('tran_date');
+            })
+            ->delete();
+
             foreach ($employees as $employee) {
                 
                 $payrolls = Payroll_Setup::on('mysql_second')->select('emp_id','head_id','amount',\DB::raw('0 as date'))

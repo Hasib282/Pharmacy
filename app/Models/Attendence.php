@@ -12,7 +12,7 @@ class Attendence extends Model
 
     public $timestamps = false;
 
-    public function employee(){
-        return $this->belongsTo(User_Info::class,'employee_id','id');
+    public function User(){
+        return $this->belongsTo(User_Info::class,'emp_id','user_id');
     }
 }

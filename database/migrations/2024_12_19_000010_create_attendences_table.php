@@ -13,11 +13,16 @@ return new class extends Migration
     {
         Schema::connection('mysql_second')->create('attendences', function (Blueprint $table) {
             $table->id();
-            $table->integer('employee_id');
+            $table->string('emp_id');
             $table->date('date');
-            $table->string('attend_status');
-            $table->timestamp('entry_at')->useCurrent();
+            $table->time('in');
+            $table->time('out')->nullable();
+            $table->timestamp('insert_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
+
+            $table->foreign('emp_id')->references('employee_id')->on('employee__personal__details')
+                    ->cascadeOnUpdate()
+                    ->cascadeOnDelete();
         });
     }
 

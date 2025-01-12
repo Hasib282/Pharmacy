@@ -644,14 +644,14 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
             
 
             ///////////// --------------- Employee Attendence Details Routes ----------- ///////////////////
-            // Route::controller(AttendenceController::class)->group(function () {
-            //     Route::get('/designations', 'ShowAll');
-            //     Route::post('/designations', 'Insert');
-            //     Route::get('/designations/edit', 'Edit');
-            //     Route::put('/designations', 'Update');
-            //     Route::delete('/designations', 'Delete');
-            //     Route::get('/designations/search', 'Search');
-            // });
+            Route::controller(AttendenceController::class)->group(function () {
+                Route::get('/attendence', 'ShowAll');
+                Route::post('/attendence', 'Insert');
+                Route::get('/attendence/edit', 'Edit');
+                Route::put('/attendence', 'Update');
+                // Route::delete('/attendence', 'Delete');
+                Route::get('/attendence/search', 'Search');
+            });
         }); // End Hr Employee Routes
 
 

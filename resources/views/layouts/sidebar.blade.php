@@ -358,14 +358,14 @@
                 <ul class="sub-menu {{ Request::segment(1) == 'hr' ? 'show':''}}">
                     <!-- EMPLOYEE -->
                     <li class="sub-menu-item">
-                        <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee') ? 'active':''}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) != 'attendence') ? 'active':''}}">
                             <p>
                                 <i class="fa-solid fa-users"></i>
                                 Employee
                             </p>
                             <i class="fas fa-angle-right"></i>
                         </div>
-                        <ul class=" sub-menu1 {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee') ? 'show':''}}">
+                        <ul class=" sub-menu1 {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) != 'attendence') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.employees'))
                                 <li class="sub-menu1-item" data-url="{{route('show.employees')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'all') ? 'active':''}}">
@@ -431,17 +431,6 @@
                                     </div>
                                 </li>
                             @endif
-                                
-                            @if(auth()->user()->hasPermissionToRoute('show.employeeAttendence'))
-                                <li class="sub-menu1-item" data-url="{{ route('show.employeeAttendence') }}">
-                                    <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'attendence') ? 'active':''}}">
-                                        <p>
-                                            <i class="far fa-circle nav-icon"></i>
-                                            Attendence List
-                                        </p>
-                                    </div>
-                                </li>
-                            @endif
                         </ul>
                     </li>
                     <!-- PAYROLL -->
@@ -488,6 +477,17 @@
                             @endif
                         </ul>
                     </li>
+                    
+                    @if(auth()->user()->hasPermissionToRoute('show.employeeAttendence'))
+                        <li class="sub-menu-item" data-url="{{route('show.employeeAttendence')}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(3) == 'attendence') ? 'active':''}}">
+                                <p>
+                                    <i class="fa-solid fa-clipboard-user"></i>
+                                    Attendence
+                                </p>
+                            </div>
+                        </li>
+                    @endif
                     
                     @if(auth()->user()->hasPermissionToRoute('show.departments'))
                         <li class="sub-menu-item" data-url="{{route('show.departments')}}">

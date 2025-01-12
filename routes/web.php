@@ -346,11 +346,14 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
 
 
                 ///////////// --------------- Attendence Routes ----------- ///////////////////
-                Route::get('/attendence/list','EmployeeAttendenceList')->name('show.employeeAttendence'); 
-                Route::get('/attendence/add','AddEmployeeAttendence')->name('add.employeeAttendence'); 
-                Route::post('/attendence/insert','EmployeeAttendenceStore')->name('insert.employeeAttendence'); 
-                Route::get('/attendence/edit/{date}','EditEmployeeAttendence')->name('edit.employeeAttendence'); 
-                Route::get('/attendence/view/{date}','ViewEmployeeAttendence')->name('view.employeeAttendence');
+                Route::get('/attendence','ShowEmployeeAttendence')->name('show.employeeAttendence'); 
+                Route::get('/attendence/search','SearchEmployeeAttendence')->name('search.employeeAttendence'); 
+                
+                // Route::get('/attendence/list','EmployeeAttendenceList')->name('show.employeeAttendence'); 
+                // Route::get('/attendence/add','AddEmployeeAttendence')->name('add.employeeAttendence'); 
+                // Route::post('/attendence/insert','EmployeeAttendenceStore')->name('insert.employeeAttendence'); 
+                // Route::get('/attendence/edit/{date}','EditEmployeeAttendence')->name('edit.employeeAttendence'); 
+                // Route::get('/attendence/view/{date}','ViewEmployeeAttendence')->name('view.employeeAttendence');
             });
         }); // End Hr Employee Routes
 

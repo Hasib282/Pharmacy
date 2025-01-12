@@ -228,4 +228,30 @@ class EmployeeInfoController extends Controller
     } // End Method
 
     /////////////////////////// --------------- Employee Organization Details Table Methods Start---------- //////////////////////////
+    
+    
+    
+    
+    
+    /////////////////////////// --------------- Employee Organization Details Table Methods Start---------- //////////////////////////
+    // Show All Employee Details
+    public function ShowEmployeeAttendence(Request $req){
+        $name = "Attendence";
+        if ($req->ajax()) {
+            return view('hr.attendence.ajaxBlade', compact('name'));
+        }
+        else{
+            return view('hr.attendence.attendence', compact('name'));
+        }
+    } // End Method
+
+
+
+    // Search Employee by Name
+    public function SearchEmployeeAttendence(Request $req){
+        $name = "Attendence";
+        return view('hr.attendence.attendence', compact('name'));
+    } // End Method
+
+    /////////////////////////// --------------- Employee Organization Details Table Methods Start---------- //////////////////////////
 }

@@ -128,10 +128,12 @@ class OrganizationDetailsController extends Controller
                     break;
 
                 case 4: // Search By Location
-                    $query->whereHas('Location', function ($q) use ($req) {
-                            $q->where('upazila', 'like', '%' . $req->search . '%');
-                            $q->orderBy('upazila');
-                        });
+                    $locations = Location_Info::on('mysql')
+                    ->where('upazila', 'like', $req->search.'%')
+                    ->orderBy('upazila')
+                    ->pluck('id');
+
+                    $query->whereIn('loc_id', $locations);
                     break;
 
                 case 5: // Search By Address
