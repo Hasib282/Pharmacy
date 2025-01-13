@@ -52,7 +52,7 @@ $(document).ready(function () {
 
     // Add Modal Open Functionality
     AddModalFunctionality("#date", function(){
-        GetTransactionWith(null, 'Payment', '#within', 5)
+        GetTransactionWith(1, 'Payment', '#within')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
     });
@@ -94,11 +94,11 @@ $(document).ready(function () {
 
 
     // Search Ajax
-    SearchAjax('transaction/party/payment', ShowPaymentToSuppliers, { type: 2, method: 'Payment' });
+    SearchAjax('transaction/party/payment', ShowPaymentToSuppliers);
 
 
     // Search By Date
-    SearchByDateAjax('transaction/party/payment', ShowPaymentToSuppliers, {type: 2, method: 'Payment'});
+    SearchByDateAjax('transaction/party/payment', ShowPaymentToSuppliers);
 
 
     // Additional Edit Functionality
@@ -115,7 +115,7 @@ $(document).ready(function () {
 
     // Edit Modal Open Functionality
     function EditModalOn(){
-        GetTransactionWith(null, 'Payment', '#within', 5)
+        GetTransactionWith(1, 'Payment', '#within')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
     }

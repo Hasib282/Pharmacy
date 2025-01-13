@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="center">
-                        <button type="submit" id="Insert" class="btn-blue">Add</button>
+                        <button type="submit" id="InsertTransaction" class="btn-blue">Add</button>
                     </div>
                 </div>
                 <div class="c-6">

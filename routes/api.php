@@ -501,7 +501,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
         Route::controller(PartyTransactionController::class)->group(function () {
             Route::prefix('/party')->group(function () {
                 ///////////// --------------- Receive From Client Routes ----------- ///////////////////
-                Route::get('/receive', 'ShowAllReceive');
+                Route::get('/receive', 'ShowAll');
                 Route::post('/receive', 'Insert');
                 Route::get('/receive/edit', 'Edit');
                 // Route::put('/receive', 'Update');
@@ -510,7 +510,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
 
 
                 ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
-                Route::get('/payment', 'ShowAllPayment');
+                Route::get('/payment', 'ShowAll');
                 Route::post('/payment', 'Insert');
                 Route::get('/payment/edit', 'Edit');
                 // Route::put('/payment', 'Update');
@@ -697,6 +697,33 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
 
 
 
+        // *************************************** Party Transaction Routes Start *************************************** //
+        Route::controller(PartyTransactionController::class)->group(function () {
+            Route::prefix('/party')->group(function () {
+                ///////////// --------------- Receive From Client Routes ----------- ///////////////////
+                Route::get('/receive', 'ShowAll');
+                Route::post('/receive', 'Insert');
+                Route::get('/receive/edit', 'Edit');
+                // Route::put('/receive', 'Update');
+                // Route::delete('/receive', 'Delete');
+                Route::get('/receive/search', 'Search');
+
+
+                ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
+                Route::get('/payment', 'ShowAll');
+                Route::post('/payment', 'Insert');
+                Route::get('/payment/edit', 'Edit');
+                // Route::put('/payment', 'Update');
+                // Route::delete('/payment', 'Delete');
+                Route::get('/payment/search', 'Search');
+
+                // Common Routes
+                Route::get('/get/due', 'GetDueList');
+            });
+        }); // End PartyTransactionController
+
+
+
         // *************************************** Hr Report Routes Start *************************************** //
         Route::prefix('/report/salary')->group(function () {
             ///////////// --------------- Salary Summary Report Routes ----------- ///////////////////
@@ -870,6 +897,33 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::get('/negative/search', 'Search');
             });
         }); // End Inventory Adjustment Routes
+
+
+
+        // *************************************** Party Transaction Routes Start *************************************** //
+        Route::controller(PartyTransactionController::class)->group(function () {
+            Route::prefix('/party')->group(function () {
+                ///////////// --------------- Receive From Client Routes ----------- ///////////////////
+                Route::get('/receive', 'ShowAll');
+                Route::post('/receive', 'Insert');
+                Route::get('/receive/edit', 'Edit');
+                // Route::put('/receive', 'Update');
+                // Route::delete('/receive', 'Delete');
+                Route::get('/receive/search', 'Search');
+
+
+                ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
+                Route::get('/payment', 'ShowAll');
+                Route::post('/payment', 'Insert');
+                Route::get('/payment/edit', 'Edit');
+                // Route::put('/payment', 'Update');
+                // Route::delete('/payment', 'Delete');
+                Route::get('/payment/search', 'Search');
+
+                // Common Routes
+                Route::get('/get/due', 'GetDueList');
+            });
+        }); // End PartyTransactionController
 
 
 
@@ -1146,6 +1200,33 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::get('/negative/search', 'Search');
             });
         }); // End Pharmacy Adjustment Routes
+
+
+
+        // *************************************** Party Transaction Routes Start *************************************** //
+        Route::controller(PartyTransactionController::class)->group(function () {
+            Route::prefix('/party')->group(function () {
+                ///////////// --------------- Receive From Client Routes ----------- ///////////////////
+                Route::get('/receive', 'ShowAll');
+                Route::post('/receive', 'Insert');
+                Route::get('/receive/edit', 'Edit');
+                // Route::put('/receive', 'Update');
+                // Route::delete('/receive', 'Delete');
+                Route::get('/receive/search', 'Search');
+
+
+                ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
+                Route::get('/payment', 'ShowAll');
+                Route::post('/payment', 'Insert');
+                Route::get('/payment/edit', 'Edit');
+                // Route::put('/payment', 'Update');
+                // Route::delete('/payment', 'Delete');
+                Route::get('/payment/search', 'Search');
+
+                // Common Routes
+                Route::get('/get/due', 'GetDueList');
+            });
+        }); // End PartyTransactionController
 
 
 

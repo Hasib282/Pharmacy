@@ -156,7 +156,7 @@
                         </div>
                     </div>
                     <div class="center">
-                        <button id="UpdateMainTransaction" class="btn-blue">Submit</button>
+                        <button id="UpdateMain" class="btn-blue">Submit</button>
                     </div>
                 </div>
             </div>

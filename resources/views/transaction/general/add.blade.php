@@ -160,7 +160,7 @@
                         </div>
                     </div>
                     <div class="center">
-                        <button id="InsertMainTransaction" class="btn-blue">Submit</button>
+                        <button id="InsertMain" class="btn-blue">Submit</button>
                     </div>
                 </div>
             </div>

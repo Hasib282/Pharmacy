@@ -20,7 +20,7 @@
                         <i class="fa-solid fa-house"></i>
                         ADMINISTRATOR
                     </p>
-                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-angle-right {{ Request::segment(1) == 'admin' ? 'rotate':''}}"></i>
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'admin' ? 'show':''}}">
                     {{-- Company Menu --}}
@@ -31,7 +31,7 @@
                                     <i class="fa-solid fa-building"></i>
                                     Company
                                 </p>
-                                <i class="fas fa-angle-right"></i>
+                                <i class="fas fa-angle-right {{ (Request::segment(1) == 'admin' && (Request::segment(2) == 'companytype' || Request::segment(2) == 'companies')) ? 'rotate' : '' }}"></i>
                             </div>
                             <ul class="sub-menu1 {{ (Request::segment(1) == 'admin' && (Request::segment(2) == 'companytype' || Request::segment(2) == 'companies')) ? 'show':''}}">
                                 <li class="sub-menu1-item" data-url="{{route('show.companytype')}}">
@@ -62,7 +62,7 @@
                                 <i class="fa-solid fa-users"></i>
                                 Users
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'users') ? 'show':''}}">
                             @if(auth()->user()->user_role == 1)
@@ -127,7 +127,7 @@
                                 <i class="fa-solid fa-user-lock"></i>
                                 Permissions
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.permissionMainheads'))
@@ -272,14 +272,14 @@
         <!-- General Transaction Menue -->
         @if(auth()->user()->hasPermissionMainHead('2'))
             <li class="menu-item">
-                <div class="menu-title {{ Request::segment(1) == 'transaction' ? 'active':''}}">
+                <div class="menu-title {{ (Request::segment(1) == 'transaction' && (Request::segment(2) == 'receive' || Request::segment(2) == 'payment' || Request::segment(2) == 'party')) ? 'active':''}}">
                     <p>
                         <i class="fa-solid fa-arrow-right-arrow-left"></i>
                         GENERAL TRANSACTION
                     </p>
-                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'transaction' && (Request::segment(2) == 'receive' || Request::segment(2) == 'payment' || Request::segment(2) == 'party')) ? 'rotate':''}}"></i>
                 </div>
-                <ul class="sub-menu {{ Request::segment(1) == 'transaction' ? 'show':''}}">
+                <ul class="sub-menu {{ (Request::segment(1) == 'transaction' && (Request::segment(2) == 'receive' || Request::segment(2) == 'payment' || Request::segment(2) == 'party')) ? 'show':''}}">
                     @if(auth()->user()->hasPermissionToRoute('show.transactionReceive'))
                         <li class="sub-menu-item" data-url="{{route('show.transactionReceive')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'receive') ? 'active':''}}">
@@ -301,6 +301,40 @@
                             </div>
                         </li>
                     @endif
+
+                    {{-- Party Payments --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'party') ? 'active':''}}">
+                            <p>
+                                <i class="fa-brands fa-cc-amazon-pay"></i>
+                                PARTY PAYMENT
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'party') ? 'show':''}}">
+                            @if(auth()->user()->hasPermissionToRoute('show.partyReceive'))
+                                <li class="sub-menu1-item" data-url="{{route('show.partyReceive')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'party' && Request::segment(3) == 'receive') ? 'active':''}}">
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Receive from Client
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                                        
+                            @if(auth()->user()->hasPermissionToRoute('show.partyPayment'))
+                                <li class="sub-menu1-item" data-url="{{route('show.partyPayment')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'party' && Request::segment(3) == 'payment') ? 'active':''}}">
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Payment to Supplier
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
                 </ul>
             </li>
 
@@ -310,17 +344,17 @@
         <!-- Transaction With Bank -->
         @if(auth()->user()->hasPermissionMainHead('3'))
             <li class="menu-item">
-                <div class="menu-title {{ Request::segment(1) == 'bank' ? 'active':''}}">
+                <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'bank') ? 'active':''}}">
                     <p>
                         <i class="fa-solid fa-building-columns"></i>
                         BANK TRANSACTION
                     </p>
-                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'bank') ? 'rotate':''}}"></i>
                 </div>
-                <ul class="sub-menu {{ Request::segment(1) == 'bank' ? 'show':''}}">
+                <ul class="sub-menu {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'bank') ? 'show':''}}">
                     @if(auth()->user()->hasPermissionToRoute('show.withdraws'))
                         <li class="sub-menu-item" data-url="{{route('show.withdraws')}}">
-                            <div class="menu-title {{ (Request::segment(1) == 'bank' && Request::segment(2) == 'withdraw') ? 'active':''}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(3) == 'withdraw') ? 'active':''}}">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
                                     Withdraw from Bank
@@ -331,7 +365,7 @@
                     
                     @if(auth()->user()->hasPermissionToRoute('show.deposits'))
                         <li class="sub-menu-item" data-url="{{route('show.deposits')}}">
-                            <div class="menu-title {{ (Request::segment(1) == 'bank' && Request::segment(2) == 'deposit') ? 'active':''}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(3) == 'deposit') ? 'active':''}}">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
                                     Deposit to Bank
@@ -353,7 +387,7 @@
                         <i class="fa-solid fa-house"></i>
                         HR & PAYROLL
                     </p>
-                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-angle-right {{ Request::segment(1) == 'hr' ? 'rotate':''}}"></i>
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'hr' ? 'show':''}}">
                     <!-- EMPLOYEE -->
@@ -363,7 +397,7 @@
                                 <i class="fa-solid fa-users"></i>
                                 Employee
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) != 'attendence') ? 'rotate':''}}"></i>
                         </div>
                         <ul class=" sub-menu1 {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) != 'attendence') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.employees'))
@@ -440,7 +474,7 @@
                                 <i class="fa-solid fa-envelope"></i>
                                 Payroll
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'payroll') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'payroll') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.payrollSetup'))
@@ -510,6 +544,40 @@
                             </div>
                         </li>
                     @endif
+
+                    {{-- Party Payments --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'party') ? 'active':''}}">
+                            <p>
+                                <i class="fa-brands fa-cc-amazon-pay"></i>
+                                PARTY PAYMENT
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'party') ? 'show':''}}">
+                            @if(auth()->user()->hasPermissionToRoute('show.hrPartyReceive'))
+                                <li class="sub-menu1-item" data-url="{{route('show.hrPartyReceive')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'party' && Request::segment(3) == 'receive') ? 'active':''}}">
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Receive from Client
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                                        
+                            @if(auth()->user()->hasPermissionToRoute('show.hrPartyPayment'))
+                                <li class="sub-menu1-item" data-url="{{route('show.hrPartyPayment')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'party' && Request::segment(3) == 'payment') ? 'active':''}}">
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Payment to Supplier
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
                     
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'report') ? 'active':''}}">
@@ -517,7 +585,7 @@
                                 <i class="fa-solid fa-file-invoice-dollar"></i>
                                 Report
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'report') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'report') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.salarySummaryReport'))
@@ -556,7 +624,7 @@
                         <i class="fa-solid fa-house-chimney-medical"></i>
                         PHARMACY
                     </p>
-                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-angle-right {{ Request::segment(1) == 'pharmacy' ? 'rotate':''}}"></i>
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'pharmacy' ? 'show':''}}">
                     {{-- Pharmacy Setup Sub Menu --}}
@@ -566,7 +634,7 @@
                                 <i class="fas fa-prescription-bottle"></i>
                                 Pharmacy Setup
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'setup') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'setup') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyManufacturer'))
@@ -633,7 +701,7 @@
                                 <i class="fa-solid fa-arrow-right-arrow-left"></i>
                                 Pharmacy Transactions
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'transaction') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'transaction') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyPurchase'))
@@ -664,7 +732,7 @@
                                         <i class="far fa-circle nav-icon"></i>
                                         Pharmacy Return
                                     </p>
-                                    <i class="fas fa-angle-right"></i>
+                                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'transaction' && Request::segment(3) == 'return') ? 'rotate':''}}"></i>
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'transaction' && Request::segment(3) == 'return' ) ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyClientReturn'))
@@ -701,7 +769,7 @@
                                 <i class="fa-solid fa-hand-holding-dollar"></i>
                                 Adjustment
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'adjustment') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'adjustment') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.pharmacyPosAdjustment'))
@@ -728,6 +796,40 @@
                         </ul>
                     </li>
 
+                    {{-- Party Payments --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'party') ? 'active':''}}">
+                            <p>
+                                <i class="fa-brands fa-cc-amazon-pay"></i>
+                                PARTY PAYMENT
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'party') ? 'show':''}}">
+                            @if(auth()->user()->hasPermissionToRoute('show.pharmacyPartyReceive'))
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyPartyReceive')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'party' && Request::segment(3) == 'receive') ? 'active':''}}">
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Receive from Client
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                                        
+                            @if(auth()->user()->hasPermissionToRoute('show.pharmacyPartyPayment'))
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyPartyPayment')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'party' && Request::segment(3) == 'payment') ? 'active':''}}">
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Payment to Supplier
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+
                     {{-- Pharmacy Reports Sub menu --}}
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report') ? 'active':''}}">
@@ -735,7 +837,7 @@
                             <i class="fa-solid fa-sheet-plastic"></i>
                                 Pharmacy Reports
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report') ? 'show':''}}">
                             {{-- Item Flow statement start --}}
@@ -757,7 +859,7 @@
                                         <i class="fa-solid fa-cubes"></i>
                                         Stock Statement
                                     </p>
-                                    <i class="fas fa-angle-right"></i>
+                                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'stock') ? 'rotate':''}}"></i>
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'stock') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyStockDetails'))
@@ -818,7 +920,7 @@
                                         <i class="fa-solid fa-cart-plus"></i>
                                         Purchase Statement
                                     </p>
-                                    <i class="fas fa-angle-right"></i>
+                                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase') ? 'rotate':''}}"></i>
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyPurchaseDetails'))
@@ -852,7 +954,7 @@
                                         <i class="fa-solid fa-list-check"></i>
                                         Issue Statement
                                     </p>
-                                    <i class="fas fa-angle-right"></i>
+                                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'issue') ? 'rotate':''}}"></i>
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'issue') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyIssueDetails'))
@@ -885,7 +987,7 @@
                                         <i class="fa-solid fa-hand-holding-hand"></i>
                                         Return Statement
                                     </p>
-                                    <i class="fas fa-angle-right"></i>
+                                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return') ? 'rotate':''}}"></i>
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.pharmacyClientReturnDetails'))
@@ -949,7 +1051,7 @@
                         <i class="fa-solid fa-truck-ramp-box"></i>
                         INVENTORY
                     </p>
-                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-angle-right {{ Request::segment(1) == 'inventory' ? 'rotate':''}}"></i>
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'inventory' ? 'show':''}}">
                     {{-- Inventory Setup Sub Menu --}}
@@ -959,7 +1061,7 @@
                                 <i class="fa-solid fa-cart-flatbed"></i>
                                 Inventory Setup
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'setup') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'setup') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.invManufacturer'))
@@ -1026,7 +1128,7 @@
                                 <i class="fa-solid fa-arrow-right-arrow-left"></i>
                                 Inventory Transactions
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'transaction') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'transaction') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.invPurchase'))
@@ -1057,7 +1159,7 @@
                                         <i class="far fa-circle nav-icon"></i>
                                         Inventory Return
                                     </p>
-                                    <i class="fas fa-angle-right"></i>
+                                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'transaction' && Request::segment(3) == 'return') ? 'rotate':''}}"></i>
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'transaction' && Request::segment(3) == 'return' ) ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.invClientReturn'))
@@ -1093,7 +1195,7 @@
                                 <i class="fa-solid fa-hand-holding-dollar"></i>
                                 Adjustment
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'adjustment') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'adjustment') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.invPosAdjustment'))
@@ -1120,6 +1222,40 @@
                         </ul>
                     </li>
 
+                    {{-- Party Payments --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'party') ? 'active':''}}">
+                            <p>
+                                <i class="fa-brands fa-cc-amazon-pay"></i>
+                                PARTY PAYMENT
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'party') ? 'show':''}}">
+                            @if(auth()->user()->hasPermissionToRoute('show.invPartyReceive'))
+                                <li class="sub-menu1-item" data-url="{{route('show.invPartyReceive')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'party' && Request::segment(3) == 'receive') ? 'active':''}}">
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Receive from Client
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                                        
+                            @if(auth()->user()->hasPermissionToRoute('show.invPartyPayment'))
+                                <li class="sub-menu1-item" data-url="{{route('show.invPartyPayment')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'party' && Request::segment(3) == 'payment') ? 'active':''}}">
+                                        <p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            Payment to Supplier
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+
                     {{-- Inventory Reports Sub menu --}}
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report') ? 'active':''}}">
@@ -1127,7 +1263,7 @@
                             <i class="fa-solid fa-sheet-plastic"></i>
                                 Inventory Reports
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report') ? 'show':''}}">
                             {{-- Item Flow statement start --}}
@@ -1149,7 +1285,7 @@
                                         <i class="fa-solid fa-cubes"></i>
                                         Stock Statement
                                     </p>
-                                    <i class="fas fa-angle-right"></i>
+                                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'stock') ? 'rotate':''}}"></i>
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'stock') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.invStockDetails'))
@@ -1207,7 +1343,7 @@
                                         <i class="fa-solid fa-cart-plus"></i>
                                         Purchase Statement
                                     </p>
-                                    <i class="fas fa-angle-right"></i>
+                                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase') ? 'rotate':''}}"></i>
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.invPurchaseDetails'))
@@ -1241,7 +1377,7 @@
                                         <i class="fa-solid fa-list-check"></i>
                                         Issue Statement
                                     </p>
-                                    <i class="fas fa-angle-right"></i>
+                                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'issue') ? 'rotate':''}}"></i>
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'issue') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.invIssueDetails'))
@@ -1275,7 +1411,7 @@
                                         <i class="fa-solid fa-hand-holding-hand"></i>
                                         Return Statement
                                     </p>
-                                    <i class="fas fa-angle-right"></i>
+                                    <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return') ? 'rotate':''}}"></i>
                                 </div>
                                 <ul class="sub-menu2 {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return') ? 'show':''}}">
                                     @if(auth()->user()->hasPermissionToRoute('show.invClientReturnDetails'))
@@ -1331,7 +1467,7 @@
         @endif
 
         <!-- Party Payments -->
-        @if(auth()->user()->hasPermissionMainHead('7'))
+        {{-- @if(auth()->user()->hasPermissionMainHead('7'))
             <li class="menu-item">
                 <div class="menu-title {{ Request::segment(1) == 'party' ? 'active':''}}">
                     <p>
@@ -1365,7 +1501,7 @@
                 </ul>
             </li>
             <hr>
-        @endif
+        @endif --}}
         
         {{-- Reports and Querrys  --}}
         @if(auth()->user()->hasPermissionMainHead('8'))
@@ -1375,7 +1511,7 @@
                         <i class="fa-solid fa-book-open"></i>
                         REPORTS & QUERIES
                     </p>
-                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-angle-right {{ Request::segment(1) == 'report' ? 'rotate':''}}"></i>
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'report' ? 'show':''}}">
                     {{-- <li class="sub-menu-item">
@@ -1418,7 +1554,7 @@
                                 <i class="fa-solid fa-file-invoice"></i>
                                 Account Statement
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.accountSummary'))
@@ -1463,7 +1599,7 @@
                                 <i class="fa-solid fa-file-invoice"></i>
                                 Party Statement
                             </p>
-                            <i class="fas fa-angle-right"></i>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'report' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'party') ? 'show':''}}">
                             @if(auth()->user()->hasPermissionToRoute('show.partyDetails'))

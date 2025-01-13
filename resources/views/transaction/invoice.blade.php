@@ -9,7 +9,7 @@
     </p>
     <p style="margin-top: 10px;">
         <strong style="font-size: 25px;">Retail Invoice</strong> <br>
-        {{$transactionMain->store->store_name}}
+        {{-- {{$transactionMain->store->store_name}} --}}
     </p>
 </div>
 

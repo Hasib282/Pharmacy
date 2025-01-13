@@ -399,6 +399,20 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 Route::get('/salary/details/search', 'SearchSalaryDetailsReport')->name('search.salaryDetailsReport');
             });
         }); // End Hr Report Routes
+
+
+
+
+        // *************************************** HR Party Transaction Routes Start *************************************** //
+        Route::controller(PartyTransactionController::class)->group(function () {
+            Route::prefix('/party')->group(function () {
+                Route::get('/receive', 'ShowPartyReceive')->name('show.hrPartyReceive');
+                Route::get('/receive/search', 'SearchParty')->name('search.hrPartyReceive');
+
+                Route::get('/payment', 'ShowPartyPayment')->name('show.hrPartyPayment');
+                Route::get('/payment/search', 'SearchParty')->name('search.hrPartyPayment');
+            }); // End Party Transaction Routres
+        }); // End PartyTransactionController
     }); // End HR Routes 
 
     /////-----/////-----/////-----/////-----/////-----///// HR Controllers End /////-----/////-----/////-----/////-----/////-----/////
@@ -500,6 +514,18 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 Route::get('/negative/search', 'SearchNegativeAdjustment')->name('search.invNegAdjustment');
             }); // End Inventory Adjustment Controller 
         }); // End Inventory Adjustment Routes
+
+
+        // *************************************** Inventory Party Transaction Routes Start *************************************** //
+        Route::controller(PartyTransactionController::class)->group(function () {
+            Route::prefix('/party')->group(function () {
+                Route::get('/receive', 'ShowPartyReceive')->name('show.invPartyReceive');
+                Route::get('/receive/search', 'SearchParty')->name('search.invPartyReceive');
+
+                Route::get('/payment', 'ShowPartyPayment')->name('show.invPartyPayment');
+                Route::get('/payment/search', 'SearchParty')->name('search.invPartyPayment');
+            }); // End Party Transaction Routres
+        }); // End PartyTransactionController
 
 
 
@@ -688,6 +714,19 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 Route::get('/negative/search', 'SearchNegativeAdjustment')->name('search.pharmacyNegAdjustment');
             }); // End Pharmacy Adjustment Controller 
         }); // End Pharmacy Adjustment Routes
+
+
+
+        // *************************************** Party Transaction Routes Start *************************************** //
+        Route::controller(PartyTransactionController::class)->group(function () {
+            Route::prefix('/party')->group(function () {
+                Route::get('/receive', 'ShowPartyReceive')->name('show.pharmacyPartyReceive');
+                Route::get('/receive/search', 'SearchParty')->name('search.pharmacyPartyReceive');
+
+                Route::get('/payment', 'ShowPartyPayment')->name('show.pharmacyPartyPayment');
+                Route::get('/payment/search', 'SearchParty')->name('search.pharmacyPartyPayment');
+            }); // End Party Transaction Routres
+        }); // End PartyTransactionController
 
 
 

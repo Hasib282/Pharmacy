@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div class="center">
-                        <button type="submit" id="Update" class="btn-blue">Add</button>
+                        <button type="submit" id="UpdateTransaction" class="btn-blue">Add</button>
                     </div>
                 </div>
                 <div class="c-6">

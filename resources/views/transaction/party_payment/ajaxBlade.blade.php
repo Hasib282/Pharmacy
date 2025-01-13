@@ -68,5 +68,5 @@
 
 
 <!-- ajax part start from here -->
-<script src="{{ asset('js/ajax/transaction/party_payment').'/' . $js . '.js' }}"></script>
+<script src="{{ asset('js/ajax/' . Request::segment(1) . '/party_payment/' . $js . '.js') }}"></script>
 <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>

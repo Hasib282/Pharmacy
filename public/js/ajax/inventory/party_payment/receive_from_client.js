@@ -47,19 +47,19 @@ function ShowReceiveFromClients(data, startIndex) {
 
 $(document).ready(function () {
     // Load Data on Hard Reload
-    ReloadData('transaction/party/receive', ShowReceiveFromClients);
+    ReloadData('inventory/party/receive', ShowReceiveFromClients);
     
 
     // Add Modal Open Functionality
     AddModalFunctionality("#date", function(){
-        GetTransactionWith(1, 'Receive', '#within');
+        GetTransactionWith(5, 'Receive', '#within')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
     });
 
 
     // Insert Ajax
-    InsertAjax('transaction/party/receive', ShowReceiveFromClients, 
+    InsertAjax('inventory/party/receive', ShowReceiveFromClients, 
         {
             user: { selector: '#user', attribute: 'data-id' },
             withs: { selector: '#user', attribute: 'data-with' },
@@ -78,15 +78,15 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('transaction/party/receive', EditFormInputValue, EditModalOn);
+    EditAjax('inventory/party/receive', EditFormInputValue, EditModalOn);
 
 
     // Update Ajax
-    // UpdateAjax('transaction/party/receive', ShowReceiveFromClients);
+    // UpdateAjax('inventory/party/receive', ShowReceiveFromClients);
     
 
     // Delete Ajax
-    // DeleteAjax('transaction/party/receive', ShowReceiveFromClients);
+    // DeleteAjax('inventory/party/receive', ShowReceiveFromClients);
 
 
     // Pagination Ajax
@@ -94,11 +94,11 @@ $(document).ready(function () {
 
 
     // Search Ajax
-    SearchAjax('transaction/party/receive', ShowReceiveFromClients);
+    SearchAjax('inventory/party/receive', ShowReceiveFromClients);
 
 
     // Search By Date
-    SearchByDateAjax('transaction/party/receive', ShowReceiveFromClients);
+    SearchByDateAjax('inventory/party/receive', ShowReceiveFromClients);
 
 
     // Additional Edit Functionality
@@ -115,7 +115,7 @@ $(document).ready(function () {
 
     // Edit Modal Open Functionality
     function EditModalOn(){
-        GetTransactionWith(1, 'Receive', '#within');
+        GetTransactionWith(5, 'Receive', '#within')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
     }

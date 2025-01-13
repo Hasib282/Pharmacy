@@ -372,7 +372,7 @@ class GeneralTransactionController extends Controller
         }
         
         $pdf = Pdf::loadView('transaction.invoice', compact('transactionMain', 'transDetailsInvoice'));
-        return $pdf->setPaper('a4', 'landscape')->stream();
+        return $pdf->stream();
         // return PDF::loadHTML('Hello World!')->stream('download.pdf');
         // return response()->json([
         //     'status' => true,

@@ -244,6 +244,387 @@ function DetailsAjax(link) {
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////// ----------------- Add Transaction Details Into Local Storage Start ----------------- //////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////// ------------------ Get Transaction Grid By Transaction Id Ajax Part Start ---------------- /////////////////////////////
+function getTransactionGrid(tranId) {
+    let status = $('#status').length ? $('#status').val() : 1;
+    $.ajax({
+        url: `${apiUrl}/transaction/get/transactiongrid`,
+        method: 'GET',
+        data: { tranId, status },
+        success: function (res) {
+            if(res.status){
+                let transactions = res.transaction;
+
+                // Retrieve existing productGrids from local storage
+                let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
+
+                transactions.forEach(transaction => {
+                    let productGrid = {
+                        product: transaction.tran_head_id,
+                        name: transaction.head.tran_head_name,
+                        groupe: transaction.tran_groupe_id,
+                        quantity: transaction.quantity_actual,
+                        amount: transaction.amount,
+                        unit: transaction.unit_id,
+                        cp: transaction.cp,
+                        mrp: transaction.mrp,
+                        totAmount: transaction.total_amount,
+                        expiry: transaction.expiry_date
+                    };
+                    
+                    // Add the new productGrids to the list
+                    productGrids.push(productGrid);
+                });
+                // Save updated productGrids back to local storage
+                localStorage.setItem('transactionData', JSON.stringify(productGrids));
+
+                DisplayTransactionGrid();
+            }
+        }
+    });
+}; // End Method
+
+
+
+/////////////// ------------------ Display ProductGrids in The Transaction Grid Table Functionality Ajax Part Start ---------------- /////////////////////////////
+function DisplayTransactionGrid() {
+    let pathSegments = window.location.pathname.split('/');
+    let segment1 = pathSegments[1];
+    let segment3 = pathSegments[3];
+    let productIssues = JSON.parse(localStorage.getItem('transactionData')) || [];
+    $('.transaction_grid tbody').html("");
+
+    let total = 0;
+    productIssues.forEach((products, index) => {
+        let dynamicColumn = '';
+
+        // Set the value of dynamicColumn based on conditions
+        if (segment1 === 'transaction') {
+            dynamicColumn = `<td>${products.amount}</td>`;
+        } else if (segment3 === 'purchase') {
+            dynamicColumn = `<td>${products.cp}</td>`;
+        } else if (segment3 === 'issue') {
+            dynamicColumn = `<td>${products.mrp}</td>`;
+        }
+
+
+        $('.transaction_grid tbody').append(`
+            <tr>
+                <td>${index + 1}</td>
+                <td>${products.name}</td>
+                <td>${products.quantity}</td>
+                ${dynamicColumn}
+                <td>${products.totAmount}</td>
+                <td><div class="center"><button class="remove" data-index="${index}"><i class="fas fa-trash"></i></button></div></td>
+            </tr>`
+        );
+
+        total = total + Number(products.totAmount);
+    });
+    
+
+    // Calculate Add Modal Bill
+    $("#amountRP").val(total);
+    let discount = Number($("#totalDiscount").val());
+    let netAmount = total - discount;
+    $("#netAmount").val(netAmount);
+    let advance = Number($("#advance").val());
+    let balance = netAmount - advance;
+    $("#balance").val(balance);
+
+    // Calculate Edit Modal Bill
+    $("#updateAmountRP").val(total);
+    let updateDiscount = Number($("#updateTotalDiscount").val());
+    let updateNetAmount = total - updateDiscount;
+    $("#updateNetAmount").val(updateNetAmount);
+    let updateAdvance = Number($("#updateAdvance").val());
+    let updateBalance = updateNetAmount - updateAdvance;
+    $("#updateBalance").val(updateBalance);
+} // End Method
+
+
+
+/////////////// ------------------ Transaction Form Validation Functionality Ajax Part Start ---------------- /////////////////////////////
+function validateFormData(isEdit = false, issue = false) {
+    let isValid = true;
+    let errors = {};
+
+    let head = $(isEdit ? '#updateHead' : '#head').attr('data-id');
+    let product = $(isEdit ? '#updateProduct' : '#product').attr('data-id');
+    let quantity = $(isEdit ? '#updateQuantity' : '#quantity').val();
+    let totAmount = $(isEdit ? '#updateTotAmount' : '#totAmount').val();
+
+    let mrp = $(isEdit ? '#updateMrp' : '#mrp').val();
+    let cp = $(isEdit ? '#updateCp' : '#cp').val();
+    let amount = $(isEdit ? '#updateAmount' : '#amount').val();
+    
+
+    // Validate Product
+    if (!head && !product) {
+        isValid = false;
+        errors.product = "Service/Product name is required.";
+    }
+    else if (isProductDuplicate(head || product)) {
+        isValid = false;
+        errors.product = "This service/product has already been added.";
+    }
+
+    // Check Product Stock Before Issue
+    if(issue){
+        $.ajax({
+            url: `${apiUrl}/transaction/get/product/stock`,
+            method: 'GET',
+            data: { product, quantity },
+            async: false,
+            success: function (res) {
+                if(res.result){
+                    isValid = false;
+                    errors.product = `Product stock is low. \n only ${res.totQuantity} product left.`;
+                }
+                displayErrors(errors,isEdit);
+                return isValid;
+            }
+        });
+    }
+
+    // Validate Quantity
+    if (!quantity || isNaN(quantity) || quantity <= 0) {
+        isValid = false;
+        errors.quantity = "Quantity must be a positive number.";
+    }
+
+    // Validate Total Amount
+    if (!totAmount || isNaN(totAmount) || totAmount <= 0) {
+        isValid = false;
+        errors.totAmount = "Total amount must be a positive number.";
+    }
+
+
+    // Validate Cost Price
+    if (cp != undefined && (!cp || isNaN(cp) || cp <= 0)) {
+        isValid = false;
+        errors.cp = "CP must be a positive number.";
+    }
+    
+
+    // Validate MRP
+    if (mrp != undefined && (!mrp || isNaN(mrp) || mrp <= 0)) {
+        isValid = false;
+        errors.mrp = "MRP must be a positive number.";
+    }
+    
+
+    // Validate amount
+    if (amount != undefined && (!amount || isNaN(amount) || amount <= 0)) {
+        isValid = false;
+        errors.amount = "Amount must be a positive number.";
+    }
+    
+
+    displayErrors(errors, isEdit);
+    return isValid;
+} // End Method
+
+
+
+/////////////// ------------------ Check Duplicate Product Functionality Ajax Part Start ---------------- /////////////////////////////
+function isProductDuplicate(product) {
+    let productIssues = JSON.parse(localStorage.getItem('transactionData')) || [];
+    return productIssues.some(products => products.product == product);
+} // End Method
+
+
+
+/////////////// ------------------ Display Errors Functionality Ajax Part Start ---------------- /////////////////////////////
+function displayErrors(errors, isEdit = false) {
+    const prefix = isEdit ? "update_" : "";
+    $(`#${prefix}quantity_error`).html(errors.quantity || '');
+    $(`#${prefix}totAmount_error`).html(errors.totAmount || '');
+
+    $(`#${prefix}head_error`).html(errors.product || '');
+    $(`#${prefix}product_error`).html(errors.product || '');
+    $(`#${prefix}mrp_error`).html(errors.mrp || '');
+    $(`#${prefix}cp_error`).html(errors.cp || '');
+    $(`#${prefix}amount_error`).html(errors.amount || '');
+} // End Method
+
+
+
+/////////////// ------------------ Insert or Update Product Details Into Local Storage Ajax Part Start ---------------- /////////////////////////////
+function InsertLocalStorage(isIssue = false) {
+    $(document).off('click', '#InsertTransaction, #UpdateTransaction').on('click', '#InsertTransaction, #UpdateTransaction', function (e) {
+        e.preventDefault();
+
+        const isUpdate = $(this).is('#UpdateTransaction')
+
+        if (!validateFormData(isUpdate, isIssue)) {
+            return;
+        }
+
+        let product = isUpdate ? ($('#updateProduct').attr('data-id') || $('#updateHead').attr('data-id')) :($('#product').attr('data-id') || $('#head').attr('data-id'));
+        let name = isUpdate ? ($('#updateProduct').val() || $('#updateHead').val()) : ($('#product').val() || $('#head').val());
+        let groupe = isUpdate ? ($('#updateProduct').attr('data-groupe') || $('#updateHead').attr('data-groupe')) : ($('#product').attr('data-groupe') || $('#head').attr('data-groupe'));
+        let quantity = isUpdate ? $('#updateQuantity').val() : $('#quantity').val();
+        let mrp = isUpdate ? $('#updateMrp').val() : $('#mrp').val();
+        let totAmount = isUpdate ? $('#updateTotAmount').val() : $('#totAmount').val();
+
+
+        let unit = isUpdate ? $('#updateUnit').attr('data-id') : $('#unit').attr('data-id');
+        let cp = isUpdate ? $('#updateCp').val() : $('#cp').val();
+        let expiry = isUpdate ? $('#updateExpiry').val() : $('#expiry').val();
+        let amount = isUpdate ? $('#updateAmount').val() : $('#amount').val();
+        
+
+
+        let productIssue = {
+            product,
+            name,
+            groupe,
+            quantity,
+            mrp,
+            totAmount,
+
+            unit,
+            cp,
+            expiry,
+            amount
+        };
+
+        // Retrieve existing productIssue from local storage
+        let productIssues = JSON.parse(localStorage.getItem('transactionData')) || [];
+
+        // Add the new productIssue to the list
+        productIssues.push(productIssue);
+
+        // Save updated productIssue back to local storage
+        localStorage.setItem('transactionData', JSON.stringify(productIssues));
+
+        DisplayTransactionGrid();
+
+
+        isUpdate ? $('#updateProduct').val('') : $('#product').val('') ;
+        isUpdate ? $('#updateProduct').removeAttr('data-id') : $('#product').removeAttr('data-id');
+        isUpdate ? $('#updateProduct').removeAttr('data-groupe') : $('#product').removeAttr('data-groupe');
+        isUpdate ? $('#updateHead').val('') : $('#head').val('');
+        isUpdate ? $('#updateHead').removeAttr('data-id') : $('#head').removeAttr('data-id');
+        isUpdate ? $('#updateHead').removeAttr('data-groupe') : $('#head').removeAttr('data-groupe');
+        
+        isUpdate ? $('#updateQuantity').val('1') :$('#quantity').val('1');
+        isUpdate ? $('#updateMrp').val('') :$('#mrp').val('');
+        isUpdate ? $('#updateTotAmount').val('') :$('#totAmount').val('');
+        isUpdate ? $("#updateHead").focus() :$("#head").focus();
+        isUpdate ? $("#updateProduct").focus() :$("#product").focus();
+
+        isUpdate ? $('#updateUnit').val('') : $('#unit').val('');
+        isUpdate ? $('#updateUnit').removeAttr('data-id') : $('#unit').removeAttr('data-id');
+        isUpdate ? $('#updateCp').val('') : $('#cp').val('');
+        isUpdate ? $('#updateAmount').val('') : $('#amount').val('');
+        let currentDate = new Date().toISOString().split('T')[0];
+        isUpdate ? $('#updateExpiry').val(currentDate) : $('#expiry').val(currentDate);
+    }); // End Method
+} // End Function
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////// ----------------- Add Transaction Details Into Local Storage End ----------------- //////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function InsertTransaction(url, RenderData, method, type, AddSuccessEvent) {
+    $(document).off('click', '#InsertMain').on('click', '#InsertMain', function (e) {
+        e.preventDefault();
+        let products = localStorage.getItem('transactionData');
+        if (!products) {
+            $('#message_error').html('No product added' || '');
+            return;
+        }
+
+        products = JSON.parse(products);
+
+        let withs = $('#user').attr('data-with');
+        let user = $('#user').attr('data-id');
+        let locations = $('#location').attr('data-id');
+        let name = $('#name').val();
+        let phone = $('#phone').val();
+        let address = $('#address').val();
+        let store = $('#store').attr('data-id');
+        let amountRP = $('#amountRP').val();
+        let discount = $('#totalDiscount').val();
+        let netAmount = $('#netAmount').val();
+        let advance = $('#advance').val();
+        let balance = $('#balance').val();
+        let company = $('#company').attr('data-id');
+        $.ajax({
+            url: `${apiUrl}/${url}`,
+            method: 'POST',
+            data: { products:JSON.stringify(products), name, phone, address, locations, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
+            success: function (res) {
+                if (res.status) {
+                    $('#AddForm')[0].reset();
+
+                    if(typeof AddSuccessEvent === 'function'){
+                        AddSuccessEvent();
+                    }
+
+                    ReloadData(url, RenderData);
+                    toastr.success(res.message, 'Added!');
+                }
+            }
+        });
+    });
+};
+
+
+
+function UpdateTransaction(url, RenderData, method, type, AddSuccessEvent = undefined) {
+    $(document).off('click', '#UpdateMain').on('click', '#UpdateMain', function (e) {
+        e.preventDefault();
+        let products = localStorage.getItem('transactionData');
+        if (!products) {
+            $('#update_message_error').html('No product added' || '');
+            return;
+        }
+
+        products = JSON.parse(products);
+
+        let tranid = $('#updateTranId').val();
+        let id = $('#id').val();
+        let amountRP = $('#updateAmountRP').val();
+        let totalDiscount = $('#updateTotalDiscount').val();
+        let netAmount = $('#updateNetAmount').val();
+        let advance = $('#updateAdvance').val();
+        let balance = $('#updateBalance').val();
+        let name = $('#updateName').val();
+        let phone = $('#updatePhone').val();
+        let address = $('#updateAddress').val();
+        let status = $('#status').val();
+        $.ajax({
+            url: `${apiUrl}/${url}`,
+            method: 'PUT',
+            data: { products:JSON.stringify(products), name, phone, address, id, tranid, type, method, amountRP, totalDiscount, netAmount, advance, balance, status },
+            beforeSend:function() {
+                $(document).find('span.error').text('');  
+            },
+            success: function (res) {
+                if (res.status) {
+                    $('#editModal').hide();
+
+                    if(typeof AddSuccessEvent === 'function'){
+                        AddSuccessEvent();
+                    }
+
+                    localStorage.removeItem('transactionData');
+                    ReloadData(url, RenderData);
+                    toastr.success(res.message, 'Updated!');
+                }
+            }
+        });
+    });
+}
 
 $(document).ready(function () {
     //////////////////// -------------------- Delete Ajax Part Start -------------------- ////////////////////
@@ -267,7 +648,17 @@ $(document).ready(function () {
 
 
 
+    //////////////////// -------------------- Remove Product From Local Storage Part Start -------------------- ////////////////////
+    $(document).off("click", '.remove').on("click", '.remove', function (e){
+        e.preventDefault();
+        let index = $(this).attr('data-index');
+        let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
 
+        productGrids.splice(index, 1);
+        localStorage.setItem('transactionData', JSON.stringify(productGrids));
+        DisplayTransactionGrid();
+    })
+    //////////////////// -------------------- Remove Product From Local Storage Part End -------------------- ////////////////////
 
     
 });

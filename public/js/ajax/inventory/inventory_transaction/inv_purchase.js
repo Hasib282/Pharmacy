@@ -194,6 +194,25 @@ $(document).ready(function () {
         $('.transaction_grid tbody').html('');
     }
 
+    
+    // Insert Into Local Storage
+    InsertLocalStorage();
+
+
+    // Insert Inventory Purchase ajax
+    InsertTransaction('inventory/transaction/purchase', ShowInventoryPurchases, 'Purchase', '5', function() {
+        $('#location').removeAttr('data-id');
+        $('#user').removeAttr('data-id');
+        $('#user').removeAttr('data-with');
+        $('#store').removeAttr('data-id');
+        $('#status').val('1');
+        $('.transaction_grid tbody').html('');
+        localStorage.removeItem('transactionData');
+    });
+
+
+    // Update Inventory Purchase ajax
+    UpdateTransaction('inventory/transaction/purchase', ShowInventoryPurchases, 'Purchase', "5");
 
 
     /////////////// ------------------ Verify Inventory Purchase Ajax Part Start ---------------- /////////////////////////////
@@ -260,431 +279,22 @@ $(document).ready(function () {
 
 
 
-    //Get Inserted Transacetion Grid By Transaction Id Function
-    function getTransactionGrid(tranId) {
-        let status = $('#status').length ? $('#status').val() : 1;
-        $.ajax({
-            url: `${apiUrl}/transaction/get/transactiongrid`,
-            method: 'GET',
-            data: { tranId, status },
-            success: function (res) {
-                if(res.status){
-                    let transactions = res.transaction;
+
+
+
+
+
+
     
-                    // Retrieve existing productGrids from local storage
-                    let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
+
+
+
+
+
+
+
+
     
-                    transactions.forEach(transaction => {
-                        let productGrid = {
-                            product: transaction.tran_head_id,
-                            name: transaction.head.tran_head_name,
-                            groupe: transaction.tran_groupe_id,
-                            quantity: transaction.quantity_actual,
-                            amount: transaction.amount,
-                            unit: transaction.unit_id,
-                            cp: transaction.cp,
-                            mrp: transaction.mrp,
-                            totAmount: transaction.total_amount,
-                            expiry: transaction.expiry_date
-                        };
-                        
-                        // Add the new productGrids to the list
-                        productGrids.push(productGrid);
-                    });
-                    // Save updated productGrids back to local storage
-                    localStorage.setItem('transactionData', JSON.stringify(productGrids));
-    
-                    DisplayTransactionGrid();
-                }
-            }
-        });
-    };
-
-
-
-    // Remove Product from Local Storage
-    $(document).off("click", '.remove').on("click", '.remove', function (e){
-        let index = $(this).attr('data-index');
-        let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
-
-        productGrids.splice(index, 1);
-        localStorage.setItem('transactionData', JSON.stringify(productGrids));
-        DisplayTransactionGrid();
-    })
-
-
-
-    // Function to Display ProductGrids in The Transaction Grid Table
-    function DisplayTransactionGrid() {
-        let productIssues = JSON.parse(localStorage.getItem('transactionData')) || [];
-        $('.transaction_grid tbody').html("");
-
-        let total = 0;
-        productIssues.forEach((products, index) => {
-            $('.transaction_grid tbody').append(`
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${products.name}</td>
-                    <td>${products.quantity}</td>
-                    <td>${products.cp}</td>
-                    <td>${products.totAmount}</td>
-                    <td><div class="center"><button class="remove" data-index="${index}"><i class="fas fa-trash"></i></button></div></td>
-                </tr>`
-            );
-
-            total = total + Number(products.totAmount);
-        });
-        
-
-        // Calculate Add Modal Bill
-        $("#amountRP").val(total);
-        let discount = Number($("#totalDiscount").val());
-        let netAmount = total - discount;
-        $("#netAmount").val(netAmount);
-        let advance = Number($("#advance").val());
-        let balance = netAmount - advance;
-        $("#balance").val(balance);
-
-        // Calculate Edit Modal Bill
-        $("#updateAmountRP").val(total);
-        let updateDiscount = Number($("#updateTotalDiscount").val());
-        let updateNetAmount = total - updateDiscount;
-        $("#updateNetAmount").val(updateNetAmount);
-        let updateAdvance = Number($("#updateAdvance").val());
-        let updateBalance = updateNetAmount - updateAdvance;
-        $("#updateBalance").val(updateBalance);
-    }
-
-
-
-
-
-
-
-
-    /////////////// ------------------ Add and Delete Purchase Product Details Into Local Storage Ajax Part Start ---------------- /////////////////////////////
-    // Function to validate form data
-    function validateAddFormData() {
-        let isValid = true;
-        let errors = {};
-
-        let product = $('#product').attr('data-id');
-        let quantity = $('#quantity').val();
-        let unit = $('#unit').attr('data-id');
-        let mrp = $('#mrp').val();
-        let cp = $('#cp').val();
-        let totAmount = $('#totAmount').val();
-
-        // Validate Product
-        if (!product) {
-            isValid = false;
-            errors.product = "Product name is required.";
-        }
-        else if (isProductDuplicate(product)) {
-            isValid = false;
-            errors.product = "This product has already been added.";
-        }
-
-        
-        // Validate Quantity
-        if (!quantity || isNaN(quantity) || quantity <= 0) {
-            isValid = false;
-            errors.quantity = "Quantity must be a positive number.";
-        }
-
-        // Validate Cost Price
-        if (!cp || isNaN(cp) || cp <= 0) {
-            isValid = false;
-            errors.cp = "CP must be a positive number.";
-        }
-
-        // Validate MRP
-        if (!mrp || isNaN(mrp) || mrp <= 0) {
-            isValid = false;
-            errors.mrp = "MRP must be a positive number.";
-        }
-
-        // Validate Total Amount
-        if (!totAmount || isNaN(totAmount) || totAmount <= 0) {
-            isValid = false;
-            errors.totAmount = "Total amount must be a positive number.";
-        }
-
-        // Validate Unit
-        if (!unit) {
-            isValid = false;
-            errors.unit = "Unit is required.";
-        }
-
-        displayErrors(errors);
-        return isValid;
-    }
-
-
-    // Function to check for duplicate products
-    function isProductDuplicate(product) {
-        let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
-        return productGrids.some(products => products.product === product);
-    }
-
-    // Function to display error messages
-    function displayErrors(errors) {
-        $('#product_error').html(errors.product || '');
-        $('#quantity_error').html(errors.quantity || '');
-        $('#unit_error').html(errors.unit || '');
-        $('#mrp_error').html(errors.mrp || '');
-        $('#cp_error').html(errors.cp || '');
-        $('#totAmount_error').html(errors.totAmount || '');
-        $('#expiry_error').html(errors.expiry || '');
-    }
-    
-    
-    
-    // Insert Product Into Local Storage
-    $(document).off('click', '#Insert').on('click', '#Insert', function (e) {
-        e.preventDefault();
-        // Validate form data
-        if (!validateAddFormData()) {
-            return;
-        }
-
-        let product = Number($('#product').attr('data-id'));
-        let name = $('#product').val();
-        let groupe = $('#product').attr('data-groupe');
-        let quantity = $('#quantity').val();
-        let unit = $('#unit').attr('data-id');
-        let mrp = $('#mrp').val();
-        let cp = $('#cp').val();
-        let totAmount = $('#totAmount').val();
-        let expiry = $('#expiry').val();
-
-
-        let productGrid = {
-            product,
-            name,
-            groupe,
-            quantity,
-            unit,
-            cp,
-            mrp,
-            totAmount, 
-            expiry
-        };
-
-        // Retrieve existing productGrids from local storage
-        let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
-
-        // Add the new productGrids to the list
-        productGrids.push(productGrid);
-
-        // Save updated productGrids back to local storage
-        localStorage.setItem('transactionData', JSON.stringify(productGrids));
-
-        DisplayTransactionGrid();
-
-
-        $('#product').val('');
-        $('#product').removeAttr('data-id');
-        $('#product').removeAttr('data-groupe');
-        $('#unit').val('');
-        $('#unit').removeAttr('data-id');
-        $('#quantity').val('1');
-        $('#cp').val('');
-        $('#mrp').val('');
-        let currentDate = new Date().toISOString().split('T')[0];
-        $('#expiry').val(currentDate);
-        $('#totAmount').val('');
-        $("#product").focus();
-
-    });
-
-    /////////////// ------------------ Add and Delete Purchase Product Details Into Local Storage Ajax Part End ---------------- /////////////////////////////
-    
-    
-    
-    
-    
-    /////////////// ------------------ Edit and Delete Purchase Product Details Into Local Storage Ajax Part Start ---------------- /////////////////////////////
-    // Function to validate form data
-    function validateEditFormData() {
-        let isValid = true;
-        let errors = {};
-
-        let product = Number($('#updateProduct').attr('data-id'));
-        let quantity = $('#updateQuantity').val();
-        let unit = $('#updateUnit').attr('data-id');
-        let mrp = $('#updateMrp').val();
-        let cp = $('#updateCp').val();
-        let totAmount = $('#updateTotAmount').val();
-
-        // Validate Product
-        if (!product) {
-            isValid = false;
-            errors.product = "Product name is required.";
-        }
-        else if (isEditProductDuplicate(product)) {
-            isValid = false;
-            errors.product = "This product has already been added.";
-        }
-
-        
-        // Validate Quantity
-        if (!quantity || isNaN(quantity) || quantity <= 0) {
-            isValid = false;
-            errors.quantity = "Quantity must be a positive number.";
-        }
-
-        // Validate Cost Price
-        if (!cp || isNaN(cp) || cp <= 0) {
-            isValid = false;
-            errors.cp = "CP must be a positive number.";
-        }
-
-        // Validate MRP
-        if (!mrp || isNaN(mrp) || mrp <= 0) {
-            isValid = false;
-            errors.mrp = "MRP must be a positive number.";
-        }
-
-        // Validate Total Amount
-        if (!totAmount || isNaN(totAmount) || totAmount <= 0) {
-            isValid = false;
-            errors.totAmount = "Total amount must be a positive number.";
-        }
-
-        // Validate Unit
-        if (!unit) {
-            isValid = false;
-            errors.unit = "Unit is required.";
-        }
-
-        displayEditErrors(errors);
-        return isValid;
-    }
-
-
-    // Function to check for duplicate products
-    function isEditProductDuplicate(product) {
-        let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
-        return productGrids.some(products => products.product === product);
-    }
-
-    // Function to display error messages
-    function displayEditErrors(errors) {
-        $('#update_product_error').html(errors.product || '');
-        $('#update_quantity_error').html(errors.quantity || '');
-        $('#update_unit_error').html(errors.unit || '');
-        $('#update_mrp_error').html(errors.mrp || '');
-        $('#update_cp_error').html(errors.cp || '');
-        $('#update_totAmount_error').html(errors.totAmount || '');
-    }
-    
-    
-    
-    // Insert Edit Product Into Local Storage
-    $(document).off('click', '#Update').on('click', '#Update', function (e) {
-        e.preventDefault();
-        // Validate form data
-        if (!validateEditFormData()) {
-            return;
-        }
-
-        let product = $('#updateProduct').attr('data-id');
-        let name = $('#updateProduct').val();
-        let groupe = $('#updateProduct').attr('data-groupe');
-        let quantity = $('#updateQuantity').val();
-        let unit = $('#updateUnit').attr('data-id');
-        let mrp = $('#updateMrp').val();
-        let cp = $('#updateCp').val();
-        let totAmount = $('#updateTotAmount').val();
-        let expiry = $('#updateExpiry').val();
-
-
-        let productGrid = {
-            product,
-            name,
-            groupe,
-            quantity,
-            unit,
-            cp,
-            mrp,
-            totAmount, 
-            expiry
-        };
-
-        // Retrieve existing productGrids from local storage
-        let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
-
-        // Add the new productGrids to the list
-        productGrids.push(productGrid);
-
-        // Save updated productGrids back to local storage
-        localStorage.setItem('transactionData', JSON.stringify(productGrids));
-
-        DisplayTransactionGrid();
-
-
-        $('#updateProduct').val('');
-        $('#updateProduct').removeAttr('data-id');
-        $('#updateProduct').removeAttr('data-groupe');
-        $('#updateUnit').val('');
-        $('#updateUnit').removeAttr('data-id');
-        $('#updateQuantity').val('1');
-        $('#updateCp').val('');
-        $('#updateMrp').val('');
-        let currentDate = new Date().toISOString().split('T')[0];
-        $('#updateExpiry').val(currentDate);
-        $('#updateTotAmount').val('');
-        $("#updateProduct").focus();
-
-    });
-
-    /////////////// ------------------ Edit and Delete Purchase Product Details Into Local Storage Ajax Part End ---------------- /////////////////////////////
-
-
-
-    /////////////// ------------------ Add Inventory Purchase Ajax Part Start ---------------- /////////////////////////////
-    $(document).off('click', '#InsertMain').on('click', '#InsertMain', function (e) {
-        e.preventDefault();
-        let products = localStorage.getItem('transactionData');
-        if (!products) {
-            $('#message_error').html('No product added' || '');
-            return;
-        }
-
-        products = JSON.parse(products);
-
-        let method = 'Purchase';
-        let type = '5';
-        let withs = $('#user').attr('data-with');
-        let user = $('#user').attr('data-id');
-        let store = $('#store').attr('data-id');
-        let amountRP = $('#amountRP').val();
-        let discount = $('#totalDiscount').val();
-        let netAmount = $('#netAmount').val();
-        let advance = $('#advance').val();
-        let balance = $('#balance').val();
-        let company = $('#company').attr('data-id');
-        $.ajax({
-            url: `${apiUrl}/inventory/transaction/purchase`,
-            method: 'POST',
-            data: { products:JSON.stringify(products), type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
-            success: function (res) {
-                if (res.status) {
-                    $('#AddForm')[0].reset();
-                    $('#location').removeAttr('data-id');
-                    $('#user').removeAttr('data-id');
-                    $('#user').removeAttr('data-with');
-                    $('#store').removeAttr('data-id');
-                    $('#status').val('1');
-                    $('.transaction_grid tbody').html('');
-                    ReloadData('inventory/transaction/purchase', ShowInventoryPurchases);
-                    localStorage.removeItem('transactionData');
-                    toastr.success(res.message, 'Added!');
-                }
-            }
-        });
-    });
 
 
     /////////////// ------------------ Update Inventory Purchase ajax part start ---------------- /////////////////////////////

@@ -24,45 +24,6 @@ function GetTransactionWith(type, method, targetElement, user = null, Additional
 
 
 
-// Get Inserted Transacetion Grid By Transaction Id Function
-// function getTransactionGrid(tranId) {
-//     let status = $('#status').length ? $('#status').val() : 1;
-//     $.ajax({
-//         url: `${apiUrl}/transaction/get/transactiongrid`,
-//         method: 'GET',
-//         data: { tranId, status },
-//         success: function (res) {
-//             if(res.status){
-//                 let transactions = res.transaction;
-
-//                 // Retrieve existing productGrids from local storage
-//                 let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
-
-//                 transactions.forEach(transaction => {
-//                     let productGrid = {
-//                         product: transaction.tran_head_id,
-//                         name: transaction.head.tran_head_name,
-//                         groupe: transaction.tran_groupe_id,
-//                         quantity: transaction.quantity_actual,
-//                         amount: transaction.amount,
-//                         unit: transaction.unit_id,
-//                         cp: transaction.cp,
-//                         mrp: transaction.mrp,
-//                         totAmount: transaction.total_amount,
-//                         expiry: transaction.expiry_date
-//                     };
-                    
-//                     // Add the new productGrids to the list
-//                     productGrids.push(productGrid);
-//                 });
-//                 // Save updated productGrids back to local storage
-//                 localStorage.setItem('transactionData', JSON.stringify(productGrids));
-
-//                 DisplayEditTransactionGrid();
-//             }
-//         }
-//     });
-// };
 
 
 

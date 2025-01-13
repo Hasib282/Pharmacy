@@ -15,23 +15,38 @@ use App\Models\Party_Payment_Receive;
 
 class PartyTransactionController extends Controller
 {
-    // Show All Party Receive Collection
-    public function ShowAllReceive(Request $req){
-        $transaction = Transaction_Main::on('mysql_second')->with('User')->where('tran_method', "Receive")->where('tran_type', "2")->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+    // Show All Party Collection
+    public function ShowAll(Request $req){
+        $segments = [
+            'transaction' => 1,
+            'hr' => 3,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+        
+        $type = $segments[$req->segment(2)] ?? null;
+        $method = ucfirst($req->segment(4)); // Capitalize the first letter
+
+        $transaction = Transaction_Main::on('mysql_second')
+        ->with('User','Withs')
+        ->whereHas('Withs', function ($query) use ($type) {
+            $query->where('tran_type', $type);
+        })
+        ->where('tran_method', $method)
+        ->where('tran_type', 2)
+        ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
+        ->orderBy('tran_date','asc')
+        ->paginate(15);
+        
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '2')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
-        return response()->json([
-            'status'=> true,
-            'data' => $transaction,
-            'groupes' => $groupes,
-        ], 200);
-    } // End Method
-    
-    
-    
-    // Show All Party Payment Collection
-    public function ShowAllPayment(Request $req){
-        $transaction = Transaction_Main::on('mysql_second')->with('User')->where('tran_method', "Payment")->where('tran_type', "2")->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '2')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
+        
+        
+        if (!isset($segments[$req->segment(2)])) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You hit the Wrong Url',
+            ], 400);
+        }
         return response()->json([
             'status'=> true,
             'data' => $transaction,
@@ -328,27 +343,42 @@ class PartyTransactionController extends Controller
 
     // Search Party Collection
     public function Search(Request $req){
-        if($req->searchOption == 1){
-            $transaction = Transaction_Main::on('mysql_second')->with('User')
-            ->where('tran_id', "like", '%'. $req->search .'%')
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', 2)
-            ->orderBy('tran_id','asc')
-            ->paginate(15);
+        $segments = [
+            'transaction' => 1,
+            'hr' => 3,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+        $method = ucfirst($req->segment(4)); // Capitalize the first letter
+
+        $data = Transaction_Main::on('mysql_second')
+        ->with('User', 'Withs')
+        ->whereHas('Withs', function ($query) use ($req, $type) {
+            $query->where('tran_type', $type);
+        })
+        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        ->where('tran_method', $method)
+        ->where('tran_type', 2);
+
+        if ($req->searchOption == 1) {
+            $data->where('tran_id', 'like', '%' . $req->search . '%')->orderBy('tran_id');
+        } 
+        else if ($req->searchOption == 2) {
+            $data->whereHas('User', function ($query) use ($req) {
+                $query->where('user_name', 'like', '%' . $req->search . '%')->orderBy('user_name');
+            });
         }
-        else if($req->searchOption == 2){
-            $transaction = Transaction_Main::on('mysql_second')->with('User')
-            ->whereHas('User', function ($query) use ($req) {
-                $query->where('user_name', 'like', '%'.$req->search.'%');
-                $query->orderBy('user_name','asc');
-            })
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', 2)
-            ->paginate(15);
-        }
+
+        $transaction = $data->paginate(15);
         
+        if (!isset($segments[$req->segment(2)])) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You hit the Wrong Url',
+            ], 400);
+        }
         return response()->json([
             'status' => true,
             'data' => $transaction,
