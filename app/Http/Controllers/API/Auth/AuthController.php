@@ -46,7 +46,7 @@ class AuthController extends Controller
             $req->session()->regenerate();
 
             $user = Auth::user();
-            $user->tokens()->delete(); // Clear existing tokens
+            // $user->tokens()->delete(); // Clear existing tokens
             $token = $user->createToken('API Token')->plainTextToken; // Create new api-token
             
             return response()->json([
@@ -68,15 +68,24 @@ class AuthController extends Controller
     // Logout Function
     public function Logout(Request $req){
         // dd(Auth::logout());
-        $user = $req->user();
         
+        $user = $req->user();
+        $currentToken = $req->bearerToken();
+        $tokenId = explode('|', $currentToken)[0];
+        // dd($tokenId);
+        if ($currentToken) {
+            
+            $user->tokens()->where('id', $tokenId)->delete();
+        }
         Cache::forget("permission_mainheads_{$user->user_id}");
         Cache::forget("permission_ids_{$user->user_id}");
         Cache::forget("route_permissions_{$user->user_id}");
         Cache::flush();
         
         Auth::guard('web')->logout();
-        $user->tokens()->delete();
+
+        
+        // $user->tokens()->delete();
         session()->invalidate();
         session()->regenerateToken();
         // session()->flush();

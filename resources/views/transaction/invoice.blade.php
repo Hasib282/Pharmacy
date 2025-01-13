@@ -5,7 +5,7 @@
     </p>
     <p style="margin: 0 auto; max-width: 35%;">
         {{ auth()->user()->company ? auth()->user()->company->address : '12th floor, 28 Kazi Nazrul Islam Ave, Banglamotor, Dhaka 1000' }} <br>
-        Phone no: {{ auth()->user()->company ? auth()->user()->company->phone : '01314353560' }}
+        Phone no: {{ auth()->user()->company ? auth()->user()->company->company_phone : '01314353560' }}
     </p>
     <p style="margin-top: 10px;">
         <strong style="font-size: 25px;">Retail Invoice</strong> <br>

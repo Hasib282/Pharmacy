@@ -1062,6 +1062,12 @@ select {
     margin: 15px 0;
     padding: 5px 20px;
 }
+
+
+.print-receipt i{
+    font-size: 30px;
+    border: 1px dotted blue;
+}
 /* -------------------------------------- Buttons custom design end ----------------------------------------------------- */
 
 

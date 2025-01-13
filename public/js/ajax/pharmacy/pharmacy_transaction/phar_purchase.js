@@ -32,7 +32,7 @@ function ShowPharmacyPurchases(data, startIndex) {
                                 ""
                             }
 
-                            <a class="print-btn" href="/api/get/invoice?id=${item.tran_id}&status=1"> <i class="fa-solid fa-circle-info"></i></a>
+                            <a class="print-receipt" href="/api/get/invoice?id=${item.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
 
 
                             
