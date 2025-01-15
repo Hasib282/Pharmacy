@@ -22,6 +22,7 @@ function ShowPharmacyClientReturnSummarys(data, startIndex) {
                     <td style="text-align: right">${item.due_col.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
                     <td style="text-align: right">${item.due_disc.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
                     <td style="text-align: right">${item.due.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+                    <td>${new Date(item.tran_date).toLocaleDateString('en-CA')}</td>    
                 </tr>
             `;
 
@@ -46,6 +47,7 @@ function ShowPharmacyClientReturnSummarys(data, startIndex) {
                 <td style="text-align: right">${totalDueCol.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
                 <td style="text-align: right">${totalDueDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
                 <td style="text-align: right">${totalDue.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+                <td></td>    
             </tr>`
         );
     }

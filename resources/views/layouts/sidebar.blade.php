@@ -285,7 +285,7 @@
                             <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'receive') ? 'active':''}}">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
-                                    Transaction Receive
+                                    Transaction With Client
                                 </p>
                             </div>
                         </li>
@@ -296,7 +296,7 @@
                             <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'payment') ? 'active':''}}">
                                 <p>
                                     <i class="far fa-circle nav-icon"></i>
-                                    Transaction Payment
+                                    Transaction With Supplier
                                 </p>
                             </div>
                         </li>

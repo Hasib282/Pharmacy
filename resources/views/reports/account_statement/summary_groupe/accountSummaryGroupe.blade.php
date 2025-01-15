@@ -37,9 +37,7 @@
                     value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%; margin: 0;">
             </div>
             <div class="c-1">
-                <div class="print-button">
-                    <button class="btn btn-primary waves-effect waves-light" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
-                </div>
+                <a class="btn-blue" id="print"><i class="fa-solid fa-print"></i> Print</a>
             </div>
         </div>
     </div>

@@ -25,8 +25,15 @@ function UpdateSearchParameters(data) {
 //////////////////// -------------------- Update The Search Parameters Value Ajax Part Start -------------------- ////////////////////
 function LoadSearchData(url, RenderData, data) {
     let updatedData = UpdateSearchParameters(data);
-    let newUrl = `${window.location.origin}/${url}/search?${$.param(updatedData)}`;
-    history.pushState(null, '', newUrl);
+    // let newUrl = `${window.location.origin}/${url}/search?${$.param(updatedData)}`;
+    // history.pushState(null, '', newUrl);
+    // if($('#print').length){
+    //     let parsedUrl = new URL(newUrl);
+    //     let pathname = parsedUrl.pathname;
+    //     pathname = pathname.replace(/\/search$/, '/print');
+    //     newUrl = `${parsedUrl.origin}/api${pathname}${parsedUrl.search}`;
+    //     $('#print').attr('href', newUrl)
+    // }
     LoadBackendData(`${apiUrl}/${url}/search`, RenderData, updatedData);
 } // End Method
 

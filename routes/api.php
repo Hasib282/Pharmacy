@@ -1440,4 +1440,52 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
     /////-----/////-----/////-----/////-----/////-----///// Report Routes End /////-----/////-----/////-----/////-----/////-----/////
 });
 
-Route::get('/get/invoice', [GeneralTransactionController::class, 'Invoice'])->middleware('web');
+
+
+
+
+Route::middleware(['web'])->group(function () {
+    Route::get('/get/invoice', [GeneralTransactionController::class, 'Invoice']);
+
+    Route::get('/hr/report/salary/summary/print', [SalarySummaryController::class, 'Print']);
+    Route::get('/hr/report/salary/details/print', [SalaryDetailController::class, 'Print']);
+
+
+    Route::get('/pharmacy/report/item/flow/print', [PharmacyItemFlowStatementController::class, 'Print']);
+    Route::get('/pharmacy/report/stock/details/print', [PharmacyStockDetailController::class, 'Print']);
+    Route::get('/pharmacy/report/stock/summary/print', [PharmacyStockSummaryController::class, 'Print']);
+    Route::get('/pharmacy/report/profitability/statement/print', [PharmacyProfitabilityStatementController::class, 'Print']);
+    Route::get('/pharmacy/report/expiry/statement/print', [PharmacyExpiryStatementController::class, 'Print']);
+    Route::get('/pharmacy/report/purchase/details/print', [PharmacyPurchaseDetailController::class, 'Print']);
+    Route::get('/pharmacy/report/purchase/summary/print', [PharmacyPurchaseSummaryController::class, 'Print']);
+    Route::get('/pharmacy/report/issue/details/print', [PharmacyIssueDetailController::class, 'Print']);
+    Route::get('/pharmacy/report/issue/summary/print', [PharmacyIssueSummaryController::class, 'Print']);
+    Route::get('/pharmacy/report/return/client/details/print', [PharmacyClientReturnDetailController::class, 'Print']);
+    Route::get('/pharmacy/report/return/client/summary/print', [PharmacyClientReturnSummaryController::class, 'Print']);
+    Route::get('/pharmacy/report/return/supplier/details/print', [PharmacySupplierReturnDetailController::class, 'Print']);
+    Route::get('/pharmacy/report/return/supplier/summary/print', [PharmacySupplierReturnSummaryController::class, 'Print']);
+
+
+    Route::get('/inventory/report/item/flow/print', [InventoryItemFlowStatementController::class, 'Print']);
+    Route::get('/inventory/report/stock/details/print', [InventoryStockDetailController::class, 'Print']);
+    Route::get('/inventory/report/stock/summary/print', [InventoryStockSummaryController::class, 'Print']);
+    Route::get('/inventory/report/profitability/statement/print', [InventoryProfitabilityStatementController::class, 'Print']);
+    Route::get('/inventory/report/expiry/statement/print', [InventoryExpiryStatementController::class, 'Print']);
+    Route::get('/inventory/report/purchase/details/print', [InventoryPurchaseDetailController::class, 'Print']);
+    Route::get('/inventory/report/purchase/summary/print', [InventoryPurchaseSummaryController::class, 'Print']);
+    Route::get('/inventory/report/issue/details/print', [InventoryIssueDetailController::class, 'Print']);
+    Route::get('/inventory/report/issue/summary/print', [InventoryIssueSummaryController::class, 'Print']);
+    Route::get('/inventory/report/return/client/details/print', [InventoryClientReturnDetailController::class, 'Print']);
+    Route::get('/inventory/report/return/client/summary/print', [InventoryClientReturnSummaryController::class, 'Print']);
+    Route::get('/inventory/report/return/supplier/details/print', [InventorySupplierReturnDetailController::class, 'Print']);
+    Route::get('/inventory/report/return/supplier/summary/print', [InventorySupplierReturnSummaryController::class, 'Print']);
+    
+
+    Route::get('/report/account/summary/print', [AccountSummaryController::class, 'Print']);
+    Route::get('/report/account/summarygroupe/print', [AccountSummaryByGroupController::class, 'Print']);
+    Route::get('/report/account/details/print', [AccountDetailsController::class, 'Print']);
+    
+    Route::get('/report/party/details/print', [PartyDetailsController::class, 'Print']);
+    Route::get('/report/party/summary/print', [PartySummaryController::class, 'Print']);
+
+});

@@ -59,6 +59,25 @@ function UpdateUrl(url, queryParams) {
     let separator = baseURL.includes('?') ? '&' : '?';
     let newUrl = (!$.isEmptyObject(queryParams) && queryParams != undefined ) ? `${baseURL}${separator}${$.param(queryParams)}` : baseURL;
     history.pushState(null, '', newUrl);
+
+    // Update the Print Button href
+    if($('#print').length){
+        let urlObj = new URL(newUrl);
+
+        
+        urlObj.searchParams.delete('page'); // remove 'page' query parameter
+
+        let pathname = urlObj.pathname;
+        // Check if the pathname ends with '/search'
+        if (pathname.endsWith('/search')) {
+            pathname = pathname.replace(/\/search$/, '/print'); // Replace '/search' with '/print'
+        } else {
+            pathname = pathname.replace(/\/$/, '') + '/print'; // Append '/print' to the pathname
+        }
+
+        // Update #print href
+        $('#print').attr('href', `${urlObj.origin}/api${pathname}${urlObj.search}`);
+    }
 }; // End Function
 
 

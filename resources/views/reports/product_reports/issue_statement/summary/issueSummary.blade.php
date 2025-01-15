@@ -1,3 +1,10 @@
+@php
+    $searchValue = request()->query('search');
+    $searchOptionValue = request()->query('searchOption');
+    $startDateValue = request()->query('startDate');
+    $endDateValue = request()->query('endDate');
+@endphp
+
 @extends('layouts.layout')
 @section('main-content')
     <div class="add-search">
@@ -24,9 +31,7 @@
                         value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%; margin: 0;">
                 </div>
                 <div class="c-2">
-                    <div class="print-button">
-                        <button class="btn btn-primary waves-effect waves-light" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
-                    </div>
+                    <a class="btn-blue" id="print"><i class="fa-solid fa-print"></i> Print</a>
                 </div>
             </div>
         </div>

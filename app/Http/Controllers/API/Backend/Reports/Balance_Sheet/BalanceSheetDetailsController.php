@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Backend\Reports\Balance_Sheet;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\Transaction_Main;
 
@@ -47,4 +48,26 @@ class BalanceSheetDetailsController extends Controller
     //         'data' => $salary,
     //     ], 200);
     // } // End Method
+
+
+
+    // Print Balance Sheet Details
+    public function Print(Request $req){
+        if ($req->query()) {
+
+        }
+        else {
+            $receive = Transaction_Main::on('mysql_second')->whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])->sum('receive');
+            $payment = Transaction_Main::on('mysql_second')->whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])->sum('payment');
+            $opening = $receive - $payment;
+
+            $data = Transaction_Main::on('mysql')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
+        }
+        
+        $report_name = 'Balance Sheet Details';
+        $start_date = $req->startDate ? $req->startDate : date('d/m/Y');
+        $end_date = $req->endDate ? $req->endDate : date('d/m/Y');
+        $pdf = Pdf::loadView('reports.balance_sheet.details.print', compact('report_name', 'start_date', 'end_date', 'data', 'opening'))->setPaper('a4', 'portrait');
+        return $pdf->stream();
+    } // End Method
 }

@@ -32,7 +32,9 @@ function LoadBackendData(url, RenderData, queryParams) {
                 window.location.href = response.redirect;
                 return;
             }
-            
+            // if($('#print').length){
+
+            // }
             let startIndex = (response.data.current_page - 1) * response.data.per_page;
             RenderData(response.data.data ? response.data.data : response.data, startIndex, response);
             response.data.path ? RenderPagination(response.data, response.data.path) : null;

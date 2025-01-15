@@ -39,7 +39,7 @@
                     <input type="text" name="search" id="search" class="form-input" placeholder="Search Employee here..." value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%;margin: 0;">
                 </div>
                 <div class="c-2 center">
-                    <button onclick="window.print()" class="btn-blue"> <i class="fa-solid fa-print"></i> Print</button>
+                    <a class="btn-blue" id="print"><i class="fa-solid fa-print"></i> Print</a>
                 </div>
             </div>
             
