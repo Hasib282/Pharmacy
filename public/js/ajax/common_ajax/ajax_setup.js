@@ -1,5 +1,6 @@
 let requestMethod;
 let $submitButton;
+
 // For Globally Initialize Ajax Setup 
 function AjaxSetup(){
     var token = localStorage.getItem('token');
@@ -61,44 +62,6 @@ function AjaxSetup(){
         window.location.href = '/login';
     }
 };
-
-
-
-
-
-// function LoadSidebar() {
-//     $.ajax({
-//         url: `${apiUrl}/sidebar`,
-//         type: 'GET',
-//         success: function(response) {
-//             if (response.redirect) {
-//                 window.location.href = response.redirect;
-//             }
-
-//             $('.main-container').prepend(response.data);
-//             SidebarAjax();
-//             // setupAjaxHeaders();
-//         },
-//         error: function(error) {
-//             console.log('Failed to load dashboard data:', error);
-
-//             if (error.responseJSON.redirect) {
-//                 sessionStorage.setItem('redirectMessage', error.responseJSON.message);
-//                 window.location.href = error.responseJSON.redirect;
-//             }
-//             if (error.responseJSON.message == "Unauthenticated.") {
-//                 sessionStorage.setItem('redirectMessage', 'You need to login First');
-//                 window.location.href = '/login';
-//             }
-//         }
-//     });
-// };
-
-
-
-
-
-
 
 
 function sendAjaxRequest(url, method, data, success, beforeSend, error, processData, contentType) {
@@ -164,5 +127,4 @@ function sendAjaxRequest(url, method, data, success, beforeSend, error, processD
 $(document).ready(function () {
     AjaxSetup();
     SidebarAjax();
-    // LoadSidebar();
 });

@@ -19,7 +19,7 @@
                     <option value="Rajshahi">Rajshahi</option>
                     <option value="Khulna">Khulna</option>
                     <option value="Sylhet">Sylhet</option>
-                    <option value="Barishal">Barisal</option>
+                    <option value="Barishal">Barishal</option>
                     <option value="Rangpur">Rangpur</option>
                     <option value="Mymensingh">Mymensingh</option>
                 </select>

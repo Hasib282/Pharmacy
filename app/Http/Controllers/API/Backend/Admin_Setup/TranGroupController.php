@@ -13,7 +13,26 @@ class TranGroupController extends Controller
 {
     // Show All Transaction Group
     public function ShowAll(Request $req){
-        $groupes = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4','5'])->with('Type')->orderBy('added_at')->paginate(15);
+        $segments = [
+            'transaction' => 1,
+            'hr' => 3,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
+        if($type != null){
+            $groupes = Transaction_Groupe::on('mysql')
+            ->with('Type')
+            ->whereIn('tran_groupe_type', [$type])
+            ->orderBy('added_at')
+            ->paginate(15);
+        }
+        else{
+            $groupes = Transaction_Groupe::on('mysql')->with('Type')->orderBy('added_at')->paginate(15);
+        }
+        
         $types = Transaction_Main_head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
@@ -48,7 +67,7 @@ class TranGroupController extends Controller
 
     // Edit Transaction Group
     public function Edit(Request $req){
-        $groupes = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4','5'])->with('Type')->findOrFail($req->id);
+        $groupes = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($req->id);
         $types = Transaction_Main_head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,            
@@ -100,7 +119,7 @@ class TranGroupController extends Controller
     // Search Transaction Group
     public function Search(Request $req){
         $groupes = Transaction_Groupe::on('mysql')
-        ->whereNotIn('id', ['1','2','3','4','5'])
+        
         ->with('Type')
         ->where('tran_groupe_name', 'like', '%'.$req->search.'%')
         ->where('tran_groupe_type', 'like', '%'.$req->type.'%')

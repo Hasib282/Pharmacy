@@ -34,36 +34,6 @@
                                 <span class="error" id="user_error"></span>
                             </div>
                         </div>
-                        <div class="c-6">
-                            <div class="form-input-group">
-                                <label for="division">Division <span class="required" title="Required">*</span></label>
-                                <select name="division" id="division">
-                                    <option value="">Select Division</option>
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Rajshahi">Rajshahi</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Sylhet">Sylhet</option>
-                                    <option value="Barisal">Barisal</option>
-                                    <option value="Rangpur">Rangpur</option>
-                                    <option value="Mymensingh">Mymensingh</option>
-                                </select>
-                                <span class="error" id="division_error"></span>
-                            </div>
-                        </div>    
-                        <div class="c-6">
-                            <div class="form-input-group">
-                                <label for="location">Location</label>
-                                <input type="text" name="location" class="form-input" id="location" autocomplete="off">
-                                <div id="location-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
-                                <span class="error" id="location_error"></span>
-                            </div>
-                        </div>
-
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="head">Transaction Head</label>

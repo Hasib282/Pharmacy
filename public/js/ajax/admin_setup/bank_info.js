@@ -91,7 +91,7 @@ $(document).ready(function () {
             <option value="Rajshahi" ${res.bank.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
             <option value="Khulna" ${res.bank.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
             <option value="Sylhet" ${res.bank.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barisal" ${res.bank.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
+            <option value="Barishal" ${res.bank.location.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
             <option value="Rangpur" ${res.bank.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
             <option value="Mymensingh" ${res.bank.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
 

@@ -86,7 +86,7 @@ $(document).ready(function () {
             <option value="Rajshahi" ${res.store.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
             <option value="Khulna" ${res.store.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
             <option value="Sylhet" ${res.store.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barisal" ${res.store.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
+            <option value="Barishal" ${res.store.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
             <option value="Rangpur" ${res.store.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
             <option value="Mymensingh" ${res.store.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
 

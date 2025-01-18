@@ -171,41 +171,6 @@ $(document).ready(function () {
         }
     }); // End Toggle  Event
     /////////////// ------------------ User Details List Toggle Functionality Ajax Part End ---------------- /////////////////////////////
-    
-    
-    
-
-    
-    /////////////// ------------------ Show Invoice And Print Functionality Ajax Part End ---------------- /////////////////////////////
-    // Show Transaction Print Details 
-    // $(document).off('click','#invoice').on('click','#invoice', function(e){
-    //     let modalId = $(this).data('modal-id');
-    //     let id = $(this).data('id');
-    //     let status = $('#status').length ? $('#status').val() : 1;
-    //     $.ajax({
-    //         url: `${apiUrl}/transaction/get/invoice`,
-    //         method: 'GET',
-    //         data: { id, status },
-    //         success: function (res) {
-    //             $('.print-details').html(res.data);
-
-    //             var modal = document.getElementById(modalId);
-    //             modal.style.display = 'block';
-    //         }
-    //     });
-    // });
-
-
-
-    // // Print Transaction Details 
-    // $(document).off('click','#print').on('click','#print', function(){
-    //     var printContent = document.getElementById("print-part").innerHTML;
-    //     var originalContent = document.body.innerHTML;
-    //     document.body.innerHTML = printContent;
-    //     window.print();
-    //     document.body.innerHTML = originalContent;
-    // });
-    /////////////// ------------------ Show Invoice And Print Functionality Ajax Part End ---------------- /////////////////////////////
 
 
 

@@ -17,7 +17,7 @@
                     <input type="hidden" name="id" id="id">
                     <input type="hidden" name="dId" id="dId">
                     <input type="hidden" name="tranId" id="updateTranId">
-                    <div class="row">
+                    <div class="rows">
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="updateDate">Date</label>
@@ -37,29 +37,6 @@
                                 <span class="error" id="update_user_error"></span>
                             </div>
                         </div>
-                        <div class="c-6">
-                            <div class="form-input-group">
-                                <label for="updateDivision">Division <span class="required" title="Required">*</span></label>
-                                <select name="division" id="updateDivision">
-                
-                                </select>
-                                <span class="error" id="update_division_error"></span>
-                            </div>
-                        </div>
-                        <div class="c-6">
-                            <div class="form-input-group">
-                                <label for="updateLocation">Location</label>
-                                <input type="text" name="location" class="form-input" id="updateLocation"
-                                    autocomplete="off">
-                                <div id="update-location">
-                                    <ul>
-
-                                    </ul>
-                                </div>
-                                <span class="error" id="update_location_error"></span>
-                            </div>
-                        </div>
-
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="updateHead">Transaction Head</label>

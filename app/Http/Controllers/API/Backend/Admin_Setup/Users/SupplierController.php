@@ -19,7 +19,22 @@ class SupplierController extends Controller
 {
     // Show All Suppliers
     public function ShowAll(Request $req){
-        $supplier = User_Info::on('mysql_second')->with('Withs', 'Location')->where('user_role', 5)->orderBy('added_at', 'asc')->paginate(15);
+        $segments = [
+            'transaction' => 1,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
+        $supplier = User_Info::on('mysql_second')
+        ->with('Withs', 'Location')
+        ->whereHas('Withs', function ($q) use ($type) {
+            $q->where('tran_type', $type);
+        })
+        ->where('user_role', 5)
+        ->orderBy('added_at', 'asc')
+        ->paginate(15);
 
         return response()->json([
             'status'=> true,
@@ -71,8 +86,16 @@ class SupplierController extends Controller
 
     // Edit Suppliers
     public function Edit(Request $req){
+        $segments = [
+            'transaction' => 1,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
         $supplier = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($req->id);
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role','5')->get();
+        $tranwith = Transaction_With::on('mysql_second')->where('tran_type', $type)->where('user_role','5')->get();
         return response()->json([
             'status'=> true,
             'supplier'=> $supplier,
@@ -137,7 +160,20 @@ class SupplierController extends Controller
 
     // Search Suppliers
     public function Search(Request $req){
-        $query = User_Info::on('mysql_second')->with('Withs', 'Location')->where('user_role', 5);
+        $segments = [
+            'transaction' => 1,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
+        $query = User_Info::on('mysql_second')
+        ->with('Withs', 'Location')
+        ->where('user_role', 5)
+        ->whereHas('Withs', function ($q) use ($type) {
+            $q->where('tran_type', $type);
+        });
 
         switch ($req->searchOption) {
             case 1: // Search User By Name

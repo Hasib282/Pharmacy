@@ -13,8 +13,30 @@ class TranHeadController extends Controller
 {
     // Show All Transaction Heads
     public function ShowAll(Request $req){
-        $groupes = Transaction_Groupe::on('mysql')->orderBy('added_at')->get();
-        $heads = Transaction_Head::on('mysql')->whereNotIn('id', ['1','2','3','4','5','6'])->with('Groupe')->orderBy('added_at')->paginate(15);
+        $segments = [
+            'transaction' => 1,
+            'hr' => 3,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
+        if($type != null){
+            $heads = Transaction_Head::on('mysql')
+            ->with('Groupe')
+            ->whereHas('Groupe', function ($query) use ($req, $type) {
+                $query->whereIn('tran_groupe_type', [$type]);
+            })
+            ->orderBy('added_at')
+            ->paginate(15);
+            $groupes = Transaction_Groupe::on('mysql')->whereIn('tran_groupe_type', [$type])->orderBy('added_at')->get();
+        }
+        else{
+            $heads = Transaction_Head::on('mysql')->with('Groupe')->orderBy('added_at')->paginate(15);
+            $groupes = Transaction_Groupe::on('mysql')->orderBy('added_at')->get();
+        }
+        
         return response()->json([
             'status'=> true,
             'data' => $heads,
@@ -46,8 +68,23 @@ class TranHeadController extends Controller
 
     // Edit Transaction Heads
     public function Edit(Request $req){
-        $groupes = Transaction_Groupe::on('mysql')->orderBy('added_at')->get();
-        $heads = Transaction_Head::on('mysql')->whereNotIn('id', ['1','2','3','4','5','6'])->with('Groupe')->findOrFail($req->id);
+        $segments = [
+            'transaction' => 1,
+            'hr' => 3,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
+        if($type != null){
+            $groupes = Transaction_Groupe::on('mysql')->whereIn('tran_groupe_type', [$type])->orderBy('added_at')->get();
+        }
+        else{
+            $groupes = Transaction_Groupe::on('mysql')->orderBy('added_at')->get();
+        }
+
+        $heads = Transaction_Head::on('mysql')->with('Groupe')->findOrFail($req->id);
         return response()->json([
             'status'=> true,            
             'heads'=>$heads,
@@ -66,7 +103,7 @@ class TranHeadController extends Controller
             "groupe"  => 'required|numeric'
         ]);
 
-        $update = Transaction_Head::on('mysql')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id)->update([
+        $update = Transaction_Head::on('mysql')->findOrFail($req->id)->update([
             "tran_head_name" => $req->headName,
             "groupe_id" => $req->groupe,
             "updated_at" => now()
@@ -97,7 +134,6 @@ class TranHeadController extends Controller
     public function Search(Request $req){
         if($req->searchOption == 1){
             $heads = Transaction_Head::on('mysql')
-            ->whereNotIn('id', ['1','2','3','4','5','6'])
             ->with('Groupe')
             ->where('tran_head_name', 'like', '%'.$req->search.'%')
             ->orderBy('tran_head_name')
@@ -105,7 +141,6 @@ class TranHeadController extends Controller
         }
         else if($req->searchOption == 2){
             $heads = Transaction_Head::on('mysql')
-            ->whereNotIn('id', ['1','2','3','4','5','6'])
             ->with('Groupe')
             ->whereHas('Groupe', function ($query) use ($req) {
                 $query->where('tran_groupe_name', 'like', '%' . $req->search . '%');

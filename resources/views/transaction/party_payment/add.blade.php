@@ -13,7 +13,7 @@
             <div class="rows">
                 <div class="c-6">
                     <div id="within" style="display: none"> </div>
-                    <div class="row">
+                    <div class="rows">
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="date">Date</label>
@@ -34,14 +34,14 @@
                                 <span class="error" id="user_error"></span>
                             </div>
                         </div>
-                        <div class="c-4">
+                        <div class="c-6">
                             <div class="form-input-group">
                                 <label for="discount">Discount</label>
                                 <input type="text" name="discount" class="form-input" id="discount" value="0">
                                 <span class="error" id="discount_error"></span>
                             </div>
                         </div>
-                        <div class="c-4">
+                        <div class="c-6">
                             <div class="form-input-group">
                                 <label for="amount">Amount</label>
                                 <input type="text" name="amount" class="form-input" id="amount">

@@ -549,7 +549,6 @@ function InsertTransaction(url, RenderData, method, type, AddSuccessEvent) {
 
         let withs = $('#user').attr('data-with');
         let user = $('#user').attr('data-id');
-        let locations = $('#location').attr('data-id');
         let name = $('#name').val();
         let phone = $('#phone').val();
         let address = $('#address').val();
@@ -563,7 +562,7 @@ function InsertTransaction(url, RenderData, method, type, AddSuccessEvent) {
         $.ajax({
             url: `${apiUrl}/${url}`,
             method: 'POST',
-            data: { products:JSON.stringify(products), name, phone, address, locations, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
+            data: { products:JSON.stringify(products), name, phone, address, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
             success: function (res) {
                 if (res.status) {
                     $('#AddForm')[0].reset();

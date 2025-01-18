@@ -42,5 +42,5 @@ function EditFormInputValue(res){
 
 
 $(document).ready(function () {
-    SingleInputDataCrudeAjax('hr/departments', ShowDepartments);
+    SingleInputDataCrudeAjax('hr/setup/departments', ShowDepartments);
 });

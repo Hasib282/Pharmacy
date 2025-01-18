@@ -15,13 +15,17 @@
                 <input type="text" name="headName" class="form-input" id="headName">
                 <span class="error" id="headName_error"></span>
             </div>
-            <div class="form-input-group">
-                <label for="groupe">Transaction Groupe <span class="required" title="Required">*</span></label>
-                <select name="groupe" id="groupe">
-                    {{-- options will be display dynamically --}}
-                </select>
-                <span class="error" id="groupe_error"></span>
-            </div>
+
+            @if (Request::segment(1) != 'hr')
+                <div class="form-input-group">
+                    <label for="groupe">Transaction Groupe <span class="required" title="Required">*</span></label>
+                    <select name="groupe" id="groupe">
+                        {{-- options will be display dynamically --}}
+                    </select>
+                    <span class="error" id="groupe_error"></span>
+                </div>
+            @endif
+
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Submit</button>
             </div>

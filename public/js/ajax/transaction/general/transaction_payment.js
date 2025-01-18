@@ -111,18 +111,27 @@ $(document).ready(function () {
     });
 
 
-    // // Insert Ajax
-    // InsertAjax('transaction/payment', ShowTransactionPayments, {}, function() {
-    //     $('#division').focus();
-    // });
+    // Insert Into Local Storage
+    InsertLocalStorage();
+    
+
+    // Insert Transaction Payment ajax
+    InsertTransaction('transaction/payment', ShowTransactionPayments, 'Payment', '1', function() {
+        $('#location').removeAttr('data-id');
+        $('#user').removeAttr('data-id');
+        $('#user').removeAttr('data-with');
+        $('#date').focus();
+        $('.transaction_grid tbody').html('');
+        localStorage.removeItem('transactionData');
+    });
 
 
     //Edit Ajax
     EditAjax('transaction/payment', EditFormInputValue, EditModalOn);
 
 
-    // // Update Ajax
-    // UpdateAjax('transaction/payment', ShowTransactionPayments);
+    // Update Transaction Payment ajax
+    UpdateTransaction('transaction/payment', ShowTransactionPayments, 'Payment', '1');
     
 
     // Delete Ajax
@@ -152,9 +161,6 @@ $(document).ready(function () {
         var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
         $('#updateDate').val(formattedDate);
         
-        $('#updateLocation').val(res.transaction.location.upazila);
-        $('#updateLocation').attr('data-id', res.transaction.loc_id);
-        
         $('#updateUser').attr('data-id',res.transaction.tran_user);
         $('#updateUser').attr('data-with',res.transaction.tran_type_with);
         $('#updateUser').val(res.transaction.user.user_name);
@@ -181,23 +187,4 @@ $(document).ready(function () {
         localStorage.removeItem('transactionData');
         $('.transaction_grid tbody').html('');
     }
-
-
-    // Insert Into Local Storage
-    InsertLocalStorage();
-    
-
-    // Insert Transaction Payment ajax
-    InsertTransaction('transaction/payment', ShowTransactionPayments, 'Payment', '1', function() {
-        $('#location').removeAttr('data-id');
-        $('#user').removeAttr('data-id');
-        $('#user').removeAttr('data-with');
-        $('#date').focus();
-        $('.transaction_grid tbody').html('');
-        localStorage.removeItem('transactionData');
-    });
-    
-
-    // Update Transaction Payment ajax
-    UpdateTransaction('transaction/payment', ShowTransactionPayments, 'Payment', '1');
 });

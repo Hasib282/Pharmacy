@@ -49,7 +49,6 @@ class GeneralTransactionController extends Controller
             "type" => 'required',
             "withs" => 'required',
             "user" => 'required',
-            "locations" => 'required',
             "amountRP" => 'required',
             "discount" => 'required',
             "netAmount" => 'required',
@@ -106,7 +105,6 @@ class GeneralTransactionController extends Controller
                 "tran_method" => $req->method,
                 "tran_type_with" => $req->withs,
                 "tran_user" => $req->user,
-                "loc_id" => $req->locations,
                 "bill_amount" => $req->amountRP,
                 "discount" => $req->discount,
                 "net_amount" => $req->netAmount,
@@ -261,7 +259,6 @@ class GeneralTransactionController extends Controller
 
                 $update = Transaction_Detail::on('mysql_second')->insert([
                     "tran_id" => $req->tranid,
-                    "loc_id" => $req->location,
                     "tran_type" => 1,
                     "tran_method" => $req->method,
                     "tran_type_with" => $req->withs,

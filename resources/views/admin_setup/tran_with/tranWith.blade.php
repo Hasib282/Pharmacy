@@ -1,6 +1,7 @@
 @php
     $searchValue = request()->query('search');
     $searchMethod = request()->query('method');
+    $searchRole = request()->query('role');
 @endphp
 
 @extends('layouts.layout')
@@ -12,32 +13,64 @@
                 <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
                 {{-- @endif --}}
             </div>
-            <div class="c-2">
-                <label for="roles">User Role</label>
-                <select name="roles" id="roles">
-                    {{-- options will be display dynamically --}}
-                </select>
-            </div>
-            <div class="c-2">
-                <label for="types">Tran Type</label>
-                <select name="types" id="types">
-                    {{-- options will be display dynamically --}}
-                </select>
-            </div>
-            <div class="c-2">
-                <label for="methods">Method</label>
-                <select name="methods" id="methods">
-                    <option value="">Select Method</option>
-                    <option value="Receive" {{ $searchMethod == 'Receive' ? 'selected' : '' }}>Receive</option>
-                    <option value="Payment"{{ $searchMethod == 'Payment' ? 'selected' : '' }}>Payment</option>
-                    <option value="Both" {{ $searchMethod == 'Both' ? 'selected' : '' }}>Both</option>
-                </select>
-            </div>
-            <div class="c-4">
-                <label for="search">Search</label>
-                <input type="text" name="search" id="search" class="form-input" placeholder="Search here..."
-                    value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%; margin: 0;">
-            </div>
+
+            @if(Request::segment(1) == 'hr')
+                <div class="c-9">
+                    <label for="search">Search</label>
+                    <input type="text" name="search" id="search" class="form-input" placeholder="Search here..."
+                        value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%; margin: 0;">
+                </div>
+            @elseif(Request::segment(1) == 'transaction' || Request::segment(1) == 'inventory' || Request::segment(1) == 'pharmacy')
+                <div class="c-2">
+                    <label for="roles">User Role</label>
+                    <select name="roles" id="roles">
+                        <option value="">All</option>
+                        <option value="4" {{ $searchRole == '4' ? 'selected' : '' }}>Client</option>
+                        <option value="5"{{ $searchRole == '5' ? 'selected' : '' }}>Supplier</option>
+                    </select>
+                </div>
+                <div class="c-2">
+                    <label for="methods">Method</label>
+                    <select name="methods" id="methods">
+                        <option value="">All</option>
+                        <option value="Receive" {{ $searchMethod == 'Receive' ? 'selected' : '' }}>Receive</option>
+                        <option value="Payment"{{ $searchMethod == 'Payment' ? 'selected' : '' }}>Payment</option>
+                        <option value="Both" {{ $searchMethod == 'Both' ? 'selected' : '' }}>Both</option>
+                    </select>
+                </div>
+                <div class="c-6">
+                    <label for="search">Search</label>
+                    <input type="text" name="search" id="search" class="form-input" placeholder="Search here..."
+                        value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%; margin: 0;">
+                </div>
+            @else
+                <div class="c-2">
+                    <label for="roles">User Role</label>
+                    <select name="roles" id="roles">
+                        {{-- options will be display dynamically --}}
+                    </select>
+                </div>
+                <div class="c-2">
+                    <label for="types">Tran Type</label>
+                    <select name="types" id="types">
+                        {{-- options will be display dynamically --}}
+                    </select>
+                </div>
+                <div class="c-2">
+                    <label for="methods">Method</label>
+                    <select name="methods" id="methods">
+                        <option value="">All</option>
+                        <option value="Receive" {{ $searchMethod == 'Receive' ? 'selected' : '' }}>Receive</option>
+                        <option value="Payment"{{ $searchMethod == 'Payment' ? 'selected' : '' }}>Payment</option>
+                        <option value="Both" {{ $searchMethod == 'Both' ? 'selected' : '' }}>Both</option>
+                    </select>
+                </div>
+                <div class="c-4">
+                    <label for="search">Search</label>
+                    <input type="text" name="search" id="search" class="form-input" placeholder="Search here..."
+                        value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%; margin: 0;">
+                </div>
+            @endif
         </div>
     </div>
 
@@ -49,10 +82,14 @@
             <thead>
                 <tr>
                     <th>SL:</th>
-                    <th>Transaction With Name</th>
-                    <th>User Type</th>
-                    <th>Transaction Main Head</th>
-                    <th>Transaction Method</th>
+                    <th>Tran With Name</th>
+                    @if (Request::segment(1) != 'hr')
+                        <th>User Type</th>
+                        <th>Transaction Method</th>
+                    @endif
+                    @if (Request::segment(1) == 'admin')
+                        <th>Transaction Type</th>
+                    @endif
                     <th>Action</th>
                 </tr>
             </thead>
@@ -72,5 +109,5 @@
 
 
     <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/admin_setup/tran_with.js') }}"></script>
+    <script src="{{ asset('js/ajax/' . (Request::segment(1) == 'admin' ? 'admin_setup' : Request::segment(1)) . (Request::segment(1) == 'hr' ? '/employee_info' : '/users') .'/tran_with.js') }}"></script>
 @endsection

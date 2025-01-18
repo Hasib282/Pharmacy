@@ -35,7 +35,7 @@ function ShowDesignations(data, startIndex) {
 
 $(document).ready(function () {
     // Load Data on Hard Reload
-    ReloadData('hr/designations', ShowDesignations);
+    ReloadData('hr/setup/designations', ShowDesignations);
     
 
     // Add Modal Open Functionality
@@ -47,24 +47,24 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/designations', ShowDesignations, {department: { selector: '#department', attribute: 'data-id' }}, function() {
+    InsertAjax('hr/setup/designations', ShowDesignations, {department: { selector: '#department', attribute: 'data-id' }}, function() {
         $("#designations").focus();
         $('#department').removeAttr('data-id');
     });
 
 
     //Edit Ajax
-    EditAjax('hr/designations', EditFormInputValue);
+    EditAjax('hr/setup/designations', EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hr/designations', ShowDesignations, {department: { selector: '#updateDepartment', attribute: 'data-id' }}, function(){
+    UpdateAjax('hr/setup/designations', ShowDesignations, {department: { selector: '#updateDepartment', attribute: 'data-id' }}, function(){
         $('#updateDepartment').removeAttr('data-id');
     });
     
 
     // Delete Ajax
-    DeleteAjax('hr/designations', ShowDesignations);
+    DeleteAjax('hr/setup/designations', ShowDesignations);
 
 
     // Pagination Ajax
@@ -72,7 +72,7 @@ $(document).ready(function () {
 
 
     // Search Ajax
-    SearchAjax('hr/designations', ShowDesignations, {  });
+    SearchAjax('hr/setup/designations', ShowDesignations, {  });
 
 
     // Additional Edit Functionality

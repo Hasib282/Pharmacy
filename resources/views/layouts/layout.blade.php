@@ -12,21 +12,19 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
         
         <!-- Bootstrap cdn -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> --}}
         
-        <!-- Font Awesome cdn -->
+        <!-- Font Awesome CDN -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
         
-        <!-- jquery link -->
+        <!-- jQuery Link -->
         <script src="{{ asset('js/jQuery-3.7.1.js') }}"></script>
-        <script>
-            let apiUrl = "{{ config('app.api_url') }}";
-            // console.log(apiUrl);
-            
-        </script>
-        <script src="{{ asset('js/ajax/common_ajax_requests.js') }}"></script>
+        <!--  Api Url  -->
+        <script>let apiUrl = "{{ config('app.api_url') }}";</script>
+        <!-- Common Ajax File Load -->
+        <script src="{{ asset('js/ajax/common_ajax/ajax_setup.js') }}"></script>
         
         <!-- including custom style sheet -->
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -38,8 +36,6 @@
     </head>
     <body>
         <div class="main-container">
-            {{-- {{dd(auth()->user())}} --}}
-            {{-- @include('layouts.main_data') --}}
             <!-- Sidebar Container -->
             @include('layouts.sidebar')
 
@@ -51,14 +47,12 @@
 
                 <!-- Dynamic Content will be added here -->
                 <div class="main-content">
-                    @yield('admin')
                     @yield('main-content')
                 </div>
 
 
                 <!-- Include Footer file --> 
                 @include('layouts.footer')
-
             </div>
         </div>
 
@@ -77,11 +71,7 @@
                 }
             });
         </script> --}}
-        {{-- <script>
-            let apiUrl = "{{ env('API_URL') }}";
-        </script> --}}
         {{-- common ajax Request file --}}
-        {{-- <script src="{{ asset('js/ajax/common_ajax_requests.js') }}"></script> --}}
         <script src="{{ asset('js/ajax/common_ajax/common_events.js') }}"></script>
         <script src="{{ asset('js/ajax/common_ajax/custom_helper_function.js') }}"></script>
         <script src="{{ asset('js/ajax/common_ajax/get_data.js') }}"></script>

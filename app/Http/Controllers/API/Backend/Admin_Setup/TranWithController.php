@@ -14,7 +14,29 @@ class TranWithController extends Controller
 {
     // Show All Tranwith
     public function ShowAll(Request $req){
-        $tranwith = Transaction_With::on('mysql_second')->with('Role','Type')->orderBy('added_at')->paginate(15);
+        $segments = [
+            'transaction' => 1,
+            'hr' => 3,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
+        if($type != null){
+            $tranwith = Transaction_With::on('mysql_second')
+            ->with('Role','Type')
+            ->where('tran_type', $type)
+            ->orderBy('added_at')
+            ->paginate(15);
+        }
+        else{
+            $tranwith = Transaction_With::on('mysql_second')
+            ->with('Role','Type')
+            ->orderBy('added_at')
+            ->paginate(15);
+        }
+
         $types = Transaction_Main_head::on('mysql')->orderBy('added_at')->get();
         $roles = Role::on('mysql')->whereNotIn('name', ['Super Admin','Admin'])->orderBy('added_at')->get();
         return response()->json([
@@ -130,6 +152,9 @@ class TranWithController extends Controller
         }
         else if ($req->type == null && $req->method == null) { // Find Transaction With For User Entry
             $tranwith = Transaction_With::on('mysql_second')->where('user_role', $req->user)->get();
+        }
+        else if ($req->type != null && $req->method == null) { // Find Transaction With For User Entry
+            $tranwith = Transaction_With::on('mysql_second')->where('tran_type',$req->type)->where('user_role', $req->user)->get();
         }
         else {  // Find Transaction With For Transactions
             $tranwith = Transaction_With::on('mysql_second')->whereIn('tran_method', [$req->method, 'Both'])->where('tran_type',$req->type)->get();

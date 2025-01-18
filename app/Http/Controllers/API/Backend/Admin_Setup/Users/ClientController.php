@@ -19,7 +19,24 @@ class ClientController extends Controller
 {
     // Show All Clients
     public function ShowAll(Request $req){
-        $client = User_Info::on('mysql_second')->with('Withs', 'Location')->where('user_role', 4)->orderBy('added_at', 'asc')->paginate(15);
+        $segments = [
+            'transaction' => 1,
+            'hr' => 3,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
+        $client = User_Info::on('mysql_second')
+        ->with('Withs', 'Location')
+        ->whereHas('Withs', function ($q) use ($type) {
+            $q->where('tran_type', $type);
+        })
+        ->where('user_role', 4)
+        ->orderBy('added_at', 'asc')
+        ->paginate(15);
+
         return response()->json([
             'status'=> true,
             'data' => $client,
@@ -70,8 +87,16 @@ class ClientController extends Controller
 
     // Edit Clients
     public function Edit(Request $req){
+        $segments = [
+            'transaction' => 1,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
         $client = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($req->id);
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 4)->get();
+        $tranwith = Transaction_With::on('mysql_second')->where('tran_type', $type)->where('user_role', 4)->get();
         return response()->json([
             'status'=> true,
             'client'=> $client,
@@ -134,7 +159,20 @@ class ClientController extends Controller
 
     // Search Clients
     public function Search(Request $req){
-        $query = User_Info::on('mysql_second')->with('Withs', 'Location')->where('user_role', 4);
+        $segments = [
+            'transaction' => 1,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
+        $query = User_Info::on('mysql_second')
+        ->with('Withs', 'Location')
+        ->where('user_role', 4)
+        ->whereHas('Withs', function ($q) use ($type) {
+            $q->where('tran_type', $type);
+        });
 
         // Handle search options
         switch ($req->searchOption) {

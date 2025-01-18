@@ -441,6 +441,71 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
     /////-----/////-----/////-----/////-----/////-----///// Transaction Routes Start /////-----/////-----/////-----/////-----/////-----/////
 
     Route::prefix('/transaction')->group(function () {
+        Route::prefix('/setup')->group(function () {
+            // *************************************** Transaction Groupe Routes Start *************************************** //
+            Route::controller(TranGroupController::class)->group(function () {
+                Route::get('/groupes', 'ShowAll');
+                Route::post('/groupes', 'Insert');
+                Route::get('/groupes/edit', 'Edit');
+                Route::put('/groupes', 'Update');
+                Route::delete('/groupes', 'Delete');
+                Route::get('/groupes/search', 'Search');
+            });
+
+
+
+            // *************************************** Transaction Head Routes Start *************************************** //
+            Route::controller(TranHeadController::class)->group(function () {
+                Route::get('/heads', 'ShowAll');
+                Route::post('/heads', 'Insert');
+                Route::get('/heads/edit', 'Edit');
+                Route::put('/heads', 'Update');
+                Route::delete('/heads', 'Delete');
+                Route::get('/heads/search', 'Search');
+            });
+        });
+
+
+        Route::prefix('/users')->group(function () {
+            // *************************************** Transaction User Type Routes Start *************************************** //
+            Route::controller(TranWithController::class)->group(function () {
+                Route::get('/usertype', 'ShowAll');
+                Route::post('/usertype', 'Insert');
+                Route::get('/usertype/edit', 'Edit');
+                Route::put('/usertype', 'Update');
+                Route::delete('/usertype', 'Delete');
+                Route::get('/usertype/search', 'Search');
+            });
+
+
+
+            ///////////// --------------- Client Routes ----------- ///////////////////
+            Route::controller(ClientController::class)->group(function () {
+                Route::get('/clients', 'ShowAll');
+                Route::post('/clients', 'Insert');
+                Route::get('/clients/edit', 'Edit');
+                Route::put('/clients', 'Update');
+                Route::delete('/clients', 'Delete');
+                Route::get('/clients/search', 'Search');
+                Route::get('/clients/details', 'Details');
+            });
+            
+            
+
+            ///////////// --------------- Supplier Routes ----------- ///////////////////
+            Route::controller(SupplierController::class)->group(function () {
+                Route::get('/suppliers', 'ShowAll');
+                Route::post('/suppliers', 'Insert');
+                Route::get('/suppliers/edit', 'Edit');
+                Route::put('/suppliers', 'Update');
+                Route::delete('/suppliers', 'Delete');
+                Route::get('/suppliers/search', 'Search');
+                Route::get('/suppliers/details', 'Details');
+            });
+        });
+
+
+
         // *************************************** General Transaction Routes Start *************************************** //
         Route::controller(GeneralTransactionController::class)->group(function () {
             ///////////// --------------- Transaction Receive Routes ----------- ///////////////////
@@ -532,34 +597,48 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
     /////-----/////-----/////-----/////-----/////-----///// HR Routes Starts /////-----/////-----/////-----/////-----/////-----/////
     
     Route::prefix('/hr')->group(function () {
-        // *************************************** Department Routes Start *************************************** //
-        Route::controller(DepartmentController::class)->group(function () {
-            Route::get('/departments', 'ShowAll');
-            Route::post('/departments', 'Insert');
-            Route::get('/departments/edit', 'Edit');
-            Route::put('/departments', 'Update');
-            Route::delete('/departments', 'Delete');
-            Route::get('/departments/search', 'Search');
-            Route::get('/department/get', 'Get');
-        });
+        Route::prefix('/setup')->group(function () {
+            // *************************************** Department Routes Start *************************************** //
+            Route::controller(DepartmentController::class)->group(function () {
+                Route::get('/departments', 'ShowAll');
+                Route::post('/departments', 'Insert');
+                Route::get('/departments/edit', 'Edit');
+                Route::put('/departments', 'Update');
+                Route::delete('/departments', 'Delete');
+                Route::get('/departments/search', 'Search');
+                Route::get('/department/get', 'Get');
+            });
 
 
 
-        // *************************************** Designation Routes Start *************************************** //
-        Route::controller(DesignationController::class)->group(function () {
-            Route::get('/designations', 'ShowAll');
-            Route::post('/designations', 'Insert');
-            Route::get('/designations/edit', 'Edit');
-            Route::put('/designations', 'Update');
-            Route::delete('/designations', 'Delete');
-            Route::get('/designations/search', 'Search');
-            Route::get('/designation/get', 'Get');
+            // *************************************** Designation Routes Start *************************************** //
+            Route::controller(DesignationController::class)->group(function () {
+                Route::get('/designations', 'ShowAll');
+                Route::post('/designations', 'Insert');
+                Route::get('/designations/edit', 'Edit');
+                Route::put('/designations', 'Update');
+                Route::delete('/designations', 'Delete');
+                Route::get('/designations/search', 'Search');
+                Route::get('/designation/get', 'Get');
+            });
         });
 
 
 
         // *************************************** Employee Routes Start *************************************** //
         Route::prefix('/employee')->group(function () {
+            // *************************************** Employee Type Routes Start *************************************** //
+            Route::controller(TranWithController::class)->group(function () {
+                Route::get('/usertype', 'ShowAll');
+                Route::post('/usertype', 'Insert');
+                Route::get('/usertype/edit', 'Edit');
+                Route::put('/usertype', 'Update');
+                Route::delete('/usertype', 'Delete');
+                Route::get('/usertype/search', 'Search');
+            });
+
+
+
             ///////////// --------------- All Employeee Routes ----------- ///////////////////
             Route::controller(EmployeeController::class)->group(function () {
                 Route::get('/all', 'ShowAll');
@@ -658,6 +737,18 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
 
         // *************************************** Payroll Routes Start *************************************** //
         Route::prefix('/payroll')->group(function () {
+            // *************************************** HR Head Routes Start *************************************** //
+            Route::controller(TranHeadController::class)->group(function () {
+                Route::get('/heads', 'ShowAll');
+                Route::post('/heads', 'Insert');
+                Route::get('/heads/edit', 'Edit');
+                Route::put('/heads', 'Update');
+                Route::delete('/heads', 'Delete');
+                Route::get('/heads/search', 'Search');
+            });
+
+
+            
             ///////////// --------------- Payroll Setup Routes ----------- ///////////////////
             Route::controller(PayrollSetupController::class)->group(function () {
                 Route::get('/setup', 'ShowAll');
@@ -753,6 +844,18 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
     Route::prefix('/inventory')->group(function () {
         // *************************************** Inventory Setup Routes Start *************************************** //
         Route::prefix('/setup')->group(function () {
+            // *************************************** Inventory User Type Routes Start *************************************** //
+            // Route::controller(TranWithController::class)->group(function () {
+            //     Route::get('/usertype', 'ShowAll');
+            //     Route::post('/usertype', 'Insert');
+            //     Route::get('/usertype/edit', 'Edit');
+            //     Route::put('/usertype', 'Update');
+            //     Route::delete('/usertype', 'Delete');
+            //     Route::get('/usertype/search', 'Search');
+            // });
+
+
+
             ///////////// --------------- Inventory Manufacturer Routes ----------- ///////////////////
             Route::controller(InventoryManufacturerController::class)->group(function () {
                 Route::get('/manufacturer', 'ShowAll');
@@ -805,6 +908,18 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
     
     
 
+            // *************************************** Item Groupe Routes Start *************************************** //
+            Route::controller(TranGroupController::class)->group(function () {
+                Route::get('/groupes', 'ShowAll');
+                Route::post('/groupes', 'Insert');
+                Route::get('/groupes/edit', 'Edit');
+                Route::put('/groupes', 'Update');
+                Route::delete('/groupes', 'Delete');
+                Route::get('/groupes/search', 'Search');
+            });
+
+
+
             ///////////// --------------- Inventory Products Routes ----------- ///////////////////
             Route::controller(InventoryProductsController::class)->group(function () {
                 Route::get('/product', 'ShowAll');
@@ -817,6 +932,47 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::get('/product/get/list', 'GetProductList');
             });
         }); // End Inventory Setup Routes
+
+
+
+
+        Route::prefix('/users')->group(function () {
+            // *************************************** Transaction User Type Routes Start *************************************** //
+            Route::controller(TranWithController::class)->group(function () {
+                Route::get('/usertype', 'ShowAll');
+                Route::post('/usertype', 'Insert');
+                Route::get('/usertype/edit', 'Edit');
+                Route::put('/usertype', 'Update');
+                Route::delete('/usertype', 'Delete');
+                Route::get('/usertype/search', 'Search');
+            });
+
+
+
+            ///////////// --------------- Client Routes ----------- ///////////////////
+            Route::controller(ClientController::class)->group(function () {
+                Route::get('/clients', 'ShowAll');
+                Route::post('/clients', 'Insert');
+                Route::get('/clients/edit', 'Edit');
+                Route::put('/clients', 'Update');
+                Route::delete('/clients', 'Delete');
+                Route::get('/clients/search', 'Search');
+                Route::get('/clients/details', 'Details');
+            });
+            
+            
+
+            ///////////// --------------- Supplier Routes ----------- ///////////////////
+            Route::controller(SupplierController::class)->group(function () {
+                Route::get('/suppliers', 'ShowAll');
+                Route::post('/suppliers', 'Insert');
+                Route::get('/suppliers/edit', 'Edit');
+                Route::put('/suppliers', 'Update');
+                Route::delete('/suppliers', 'Delete');
+                Route::get('/suppliers/search', 'Search');
+                Route::get('/suppliers/details', 'Details');
+            });
+        });
 
 
 
@@ -1056,6 +1212,18 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
     Route::prefix('/pharmacy')->group(function () {
         // *************************************** Pharmacy Setup Routes Start *************************************** //
         Route::prefix('/setup')->group(function () {
+            // *************************************** Pharmacy User Type Routes Start *************************************** //
+            Route::controller(TranWithController::class)->group(function () {
+                Route::get('/usertype', 'ShowAll');
+                Route::post('/usertype', 'Insert');
+                Route::get('/usertype/edit', 'Edit');
+                Route::put('/usertype', 'Update');
+                Route::delete('/usertype', 'Delete');
+                Route::get('/usertype/search', 'Search');
+            });
+
+
+            
             ///////////// --------------- Pharmacy Manufacturer Routes ----------- ///////////////////
             Route::controller(PharmacyManufacturerController::class)->group(function () {
                 Route::get('/manufacturer', 'ShowAll');
@@ -1108,6 +1276,18 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
     
     
 
+            // *************************************** Item Groupe Routes Start *************************************** //
+            Route::controller(TranGroupController::class)->group(function () {
+                Route::get('/groupes', 'ShowAll');
+                Route::post('/groupes', 'Insert');
+                Route::get('/groupes/edit', 'Edit');
+                Route::put('/groupes', 'Update');
+                Route::delete('/groupes', 'Delete');
+                Route::get('/groupes/search', 'Search');
+            });
+
+
+
             ///////////// --------------- Pharmacy Products Routes ----------- ///////////////////
             Route::controller(PharmacyProductsController::class)->group(function () {
                 Route::get('/product', 'ShowAll');
@@ -1120,6 +1300,46 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::get('/product/get/list', 'GetProductList');
             });
         }); // End Pharmacy Setup Routes
+
+
+
+        Route::prefix('/users')->group(function () {
+            // *************************************** Transaction User Type Routes Start *************************************** //
+            Route::controller(TranWithController::class)->group(function () {
+                Route::get('/usertype', 'ShowAll');
+                Route::post('/usertype', 'Insert');
+                Route::get('/usertype/edit', 'Edit');
+                Route::put('/usertype', 'Update');
+                Route::delete('/usertype', 'Delete');
+                Route::get('/usertype/search', 'Search');
+            });
+
+
+
+            ///////////// --------------- Client Routes ----------- ///////////////////
+            Route::controller(ClientController::class)->group(function () {
+                Route::get('/clients', 'ShowAll');
+                Route::post('/clients', 'Insert');
+                Route::get('/clients/edit', 'Edit');
+                Route::put('/clients', 'Update');
+                Route::delete('/clients', 'Delete');
+                Route::get('/clients/search', 'Search');
+                Route::get('/clients/details', 'Details');
+            });
+            
+            
+
+            ///////////// --------------- Supplier Routes ----------- ///////////////////
+            Route::controller(SupplierController::class)->group(function () {
+                Route::get('/suppliers', 'ShowAll');
+                Route::post('/suppliers', 'Insert');
+                Route::get('/suppliers/edit', 'Edit');
+                Route::put('/suppliers', 'Update');
+                Route::delete('/suppliers', 'Delete');
+                Route::get('/suppliers/search', 'Search');
+                Route::get('/suppliers/details', 'Details');
+            });
+        });
 
 
 

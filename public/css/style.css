@@ -8,7 +8,6 @@
     box-sizing: border-box;
 }
 
-
 ul li{
     list-style: none;
 }
@@ -39,6 +38,7 @@ ol, ul, p {
     height: 3em; /* Approximate height for three lines */
 }
 /* ----------------------------- Common Design ends here ----------------------------------------- */
+
 
 
 /* ----------------------------- Common Grid Design Starts here ----------------------------------------- */
@@ -120,7 +120,6 @@ ol, ul, p {
     padding: 0 10px;
 }
 
-
 .center {
     display: flex;
     align-items: center;
@@ -133,11 +132,11 @@ ol, ul, p {
     align-items: center;
     justify-content: center;
 }
-
 /* ----------------------------- Common Grid Design ends here ----------------------------------------- */
 
 
-/* Main container design start */
+
+/* --------------------------- Main container design start --------------------------- */
 .main-container{
     display: flex;
     width: 100%;
@@ -172,7 +171,6 @@ ol, ul, p {
     margin: 0;
 }
 
-
 .company-logo, .user-image{
     display: flex;
     align-items: center;
@@ -180,7 +178,6 @@ ol, ul, p {
     border: 1px solid #6c757d;
     border-radius: 50%;
 }
-
 
 .company-logo img{
     padding: 2px;
@@ -220,11 +217,11 @@ ol, ul, p {
 .navbar-menu ul li{
     padding: 0 5px;
 }
-/* Main container design end */
+/* --------------------------- Main container design end --------------------------- */
 
 
 
-/* --------------------------- sidebar design start here ------------------------------------ */
+/* --------------------------- Sidebar Design Start From Here ------------------------------------ */
 .toggle-sidebar, .logout i{
     font-size: 28px;
     cursor: pointer;
@@ -235,12 +232,11 @@ ol, ul, p {
 }
 
 .sidenav {
-    /* height: 100%; */
     width: 260px;
     background-color: #343a40;
     overflow: auto;
     padding: 8px;
-    transition: width 0.3s ease-in-out;
+    transition: width 0.3s;
     box-sizing: border-box;
 }
 
@@ -249,7 +245,7 @@ ol, ul, p {
 }
 
 .sidenav hr{
-    border: 1px solid gray;
+    border: 1px solid #80808026;
     margin: 2px 0;
 }
 
@@ -270,12 +266,8 @@ ol, ul, p {
     transform: rotate(+90deg);
 }
   
-.sidenav a:hover, .sidenav li:hover {
-    color: #f1f1f1;
-    background: gray;
-}
-
-.sidenav a:active, .sidenav li:active {
+.sidenav a:hover, .sidenav li:hover,
+.sidenav a:active, .sidenav li:active  {
     color: #f1f1f1;
     background: gray;
 }
@@ -285,7 +277,7 @@ ol, ul, p {
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    padding: 5px 4px;
+    padding: 8px 4px;
     color: #fff;
     font-size: 14px;
 }
@@ -298,7 +290,6 @@ ol, ul, p {
 
 .menu-title p i{
     width: 20px;
-    height: 100%;
     font-size: 18px;
 }
 
@@ -322,9 +313,6 @@ ol, ul, p {
     background: #00caff99;
 }
 
-
-
-
 .sub-menu-item {
     padding-left: 25px;
     background-color: #343a40;
@@ -347,8 +335,6 @@ ol, ul, p {
     cursor: pointer;
 }
 
-
-
 .sub-menu2-item {
     padding-left: 25px;
     background-color: #5a5a5a;
@@ -356,201 +342,11 @@ ol, ul, p {
     cursor: pointer;
 }
 
-
-
-/* .active {
-    background-color: #0088cc;
-} */
-
-/* .fas.fa-angle-right {
-    transition: transform 0.3s;
-}
-
-.menu-item.active .fas.fa-angle-right {
-    transform: rotate(90deg);
-} */
-
-hr {
+/* hr {
     border: 1px solid #ccc;
-}
-
-
-/* .sidenav ul ul {
-    margin-left: 20px;
-    border-left: 1px solid white;
-    max-height: 0;
-    overflow: hidden;
-    display: none;
-    transition: max-height 0.3s ease-in-out;
 } */
 
-/* .sidenav ul ul.show {
-    max-height: 100%;
-    display: block;
-} */
-
-/* .fa-angle-left {
-    transition: transform 0.3s ease-in-out;
-}
-
-
-.navbar-tree.active, .navbar-tree.active:hover {
-    color: #f1f1f1;
-    background: rgb(0, 123, 255);
-}
-
-
-.navbar-link.active, .navbar-link.active:hover, .sub-tree.active, .sub-tree.active:hover  {
-    background-color: rgba(255, 255, 255, .9);
-    color: #343a40;
-}
-
-
-.sub-link.active, .sub-link.active:hover {
-    background-color: rgba(255, 255, 255, 0.596);
-    color: #343a40f3;
-} */
-
-
-
-/* .menu-item {
-    color: #ecf0f1;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    position: relative;
-    border-bottom: 1px solid #34495e;
-}
-
-.menu-item:hover {
-    background-color: #34495e;
-}
-
-.sub-menu {
-    list-style-type: none;
-    padding: 0 15px;
-    margin: 0;
-    display: none;
-}
-
-.sub-menu-item {
-    color: #bdc3c7;
-    padding: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    border-bottom: 1px solid #7f8c8d;
-}
-
-.sub-menu-item:hover {
-    background-color: #7f8c8d;
-}
-
-.sub-sub-menu {
-    list-style-type: none;
-    padding: 0 15px;
-    margin: 0;
-    display: none;
-}
-
-.sub-sub-menu-item {
-    color: #95a5a6;
-    padding: 6px;
-    font-size: 13px;
-    cursor: pointer;
-}
-
-.sub-sub-menu-item:hover {
-    background-color: #95a5a6;
-}
-
-.menu-item.active .sub-menu,
-.sub-menu-item.active .sub-sub-menu {
-    display: block;
-} */
-
-
-
-/* navbar link and tree design */
-/* .navbar-tree, .navbar-link
-{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 8px;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 5px;
-    margin-bottom: 2px;
-}
-
-.navbar-tree p, .navbar-link p
-{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.navbar-tree p i, .navbar-link p i{
-    width: 20px;
-    height: 100%;
-    font-size: 18px;
-}
-
-.menu-title{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.menu-title p{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.menu-title p i{
-    width: 20px;
-    height: 100%;
-    font-size: 18px;
-}
-
-
-.sidenav ul ul {
-    margin-left: 15px;
-    border-left: 1px solid white;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
-}
-
-.sidenav ul ul.show {
-    max-height: 100%;
-}
-
-.fa-angle-left {
-    transition: transform 0.3s ease-in-out;
-}
-
-
-.navbar-tree.active, .navbar-tree.active:hover {
-    color: #f1f1f1;
-    background: rgb(0, 123, 255);
-}
-
-
-.navbar-link.active, .navbar-link.active:hover, .sub-tree.active, .sub-tree.active:hover  {
-    background-color: rgba(255, 255, 255, .9);
-    color: #343a40;
-}
-
-
-.sub-link.active, .sub-link.active:hover {
-    background-color: rgba(255, 255, 255, 0.596);
-    color: #343a40f3;
-} */
-
-/* --------------------------- sidebar design end here ------------------------------------ */
+/* --------------------------- Sidebar Design End At Here ------------------------------------ */
 
 
 
@@ -658,7 +454,6 @@ footer{
         margin: 0.1rem;
     }
 }
-
 /* -------------------------- Pagination Design part end here ------------------------------- */
 
 
@@ -677,10 +472,6 @@ footer{
     margin: 15px 12px;
 }
 
-
-
-
-
 .hidden {
     display: none;
 }
@@ -688,76 +479,6 @@ footer{
 #paginate {
     margin-top: 20px;
 }
-
-
-/* ------------------------------------- Button Custom Design Starts --------------------------------------------------- */
-.add {
-    background-color: green;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 15px;
-}
-
-
-#delete{
-    color:white;
-    background: red;
-    border: none;
-    border-radius: 10%;
-    padding: 5px 10px;
-}
-
-#delete:hover{
-    background: #f13f13;
-}
-
-#edit, #assign{
-    color:white;
-    background: #00a7ffd9;
-    border: none;
-    border-radius: 10%;
-    padding: 5px 10px;
-}
-
-#edit:hover, #assign:hover{
-    background: #2ae1f4d9;
-}
-
-#details{
-    color:black;
-    background: #20c997;
-    border: none;
-    border-radius: 10%;
-    padding: 5px 10px;
-}
-
-#details:hover{
-    background: #1ce0a6;
-}
-
-#verify{
-    color:white;
-    background: #0072ffe3;
-    border: none;
-    border-radius: 10%;
-    padding: 5px 10px;
-}
-
-#verify:hover{
-    background: #0088ffbd;
-}
-
-
-.remove{
-    color: red;
-    cursor: pointer;
-    padding: 2px 10px;
-    border: none;
-}
-/* ------------------------------------- Button Custom Design Ends --------------------------------------------------- */
-
-
 
 
 /* -------------------------------------- Table custom design starts --------------------------------------------------- */
@@ -776,8 +497,6 @@ footer{
     padding: 5px 0;
 }
 
-
-
 .sub-caption {
     caption-side: top;
     background: #198754;
@@ -786,9 +505,6 @@ footer{
     padding: 4px 0;
     padding-left: 10px;
 }
-
-
-
 
 .show-table td, th {
     border: 1px solid #dddddd;
@@ -799,7 +515,6 @@ footer{
 .show-table tbody tr:nth-child(odd) {
     background-color: #F2F2F2;
 }
-
 
 .invoice-table{
     width: 80%;
@@ -814,7 +529,6 @@ thead tr{
     background: #20c997;
 }
 
-
 .product-table, .batch-table{
     font-family: arial, sans-serif;
     font-size: 14px;
@@ -822,12 +536,7 @@ thead tr{
     width: 100%;
 }
 
-.product-table td, th {
-    border: 1px solid #dddddd;
-    font-size: 14px;
-    padding: 1px 4px;
-}
-
+.product-table td, th,
 .batch-table td, th {
     border: 1px solid #dddddd;
     font-size: 14px;
@@ -844,15 +553,11 @@ thead tr{
 }
 
 input[type=checkbox]{
-    transform: scale(1.5); /* Adjust the scale as needed */
-    -webkit-transform: scale(1.5); /* For Safari */
-    margin: 5px; /* Adjust the margin as needed */
+    transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    margin: 5px;
 }
-
 /* ---------------------------------------- Table custom design end ----------------------------------------------------- */
-
-
-
 
 
 
@@ -894,13 +599,11 @@ input[type=checkbox]{
     box-sizing: border-box;
 }
 
-
 .modal-heading h3{
     margin: 0;
     padding: 0;
     font-size: 25px;
 }
-
 
 .close-modal {
     color: #1a1818;
@@ -914,9 +617,7 @@ input[type=checkbox]{
 .close-modal:hover {
     color: #aaa;
 }
-
 /* -------------------------------------- Modal part css end here --------------------------------------------------- */
-
 
 
 
@@ -975,7 +676,6 @@ label{
     border-radius: 4px;
 }
 
-
 .input-small:focus{
     color: #212529;
     background-color: #fff;
@@ -983,7 +683,6 @@ label{
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
 }
-
 
 /* Hide the default dropdown arrow and add background image in it*/
 select {
@@ -1002,7 +701,6 @@ select {
     width: 50%;
     margin-left: 5px;
 }
-
 /* -------------------------------------- Form inputs custom design end ----------------------------------------------------- */
 
 
@@ -1032,7 +730,6 @@ select {
     border-color: #0a58ca;
 }
 
-
 .btn-red{
     padding: 6px 12px;
     color: #fff;
@@ -1047,7 +744,6 @@ select {
     border-color: #fc1717de;
 }
 
-/* Delete modal button design start */
 .button{
     margin-top: 20px;
     gap: 80px;
@@ -1056,26 +752,84 @@ select {
 .button .btn-red, .button .btn-blue{
     width: 100px
 }
-/* Delete modal button design end */
-
 
 .addButton{
     margin: 15px 0;
     padding: 5px 20px;
 }
 
-
 .print-receipt i{
     font-size: 30px;
     border: 1px dotted blue;
+}
+
+.add {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+}
+
+#delete{
+    color:white;
+    background: red;
+    border: none;
+    border-radius: 10%;
+    padding: 5px 10px;
+}
+
+#delete:hover{
+    background: #f13f13;
+}
+
+#edit, #assign{
+    color:white;
+    background: #00a7ffd9;
+    border: none;
+    border-radius: 10%;
+    padding: 5px 10px;
+}
+
+#edit:hover, #assign:hover{
+    background: #2ae1f4d9;
+}
+
+#details{
+    color:black;
+    background: #20c997;
+    border: none;
+    border-radius: 10%;
+    padding: 5px 10px;
+}
+
+#details:hover{
+    background: #1ce0a6;
+}
+
+#verify{
+    color:white;
+    background: #0072ffe3;
+    border: none;
+    border-radius: 10%;
+    padding: 5px 10px;
+}
+
+#verify:hover{
+    background: #0088ffbd;
+}
+
+.remove{
+    color: red;
+    cursor: pointer;
+    padding: 2px 10px;
+    border: none;
 }
 /* -------------------------------------- Buttons custom design end ----------------------------------------------------- */
 
 
 
-
 /* -------------------------------------- Search by input css start here -------------------------------------------------*/
-
 /* select all the div ends with id '-list' and all the div starts with id 'update-' */
 div[id$="-list"], div[id^="update-"] {
     position: absolute;
@@ -1124,7 +878,6 @@ div[id$="-list"] li:focus, div[id^="update-"] li:focus {
     font-size: 10px; 
 }
 
-
 #product-list tbody tr:focus, #update-product tbody tr:focus{
     background-color: #00afffb0;
     border: none;
@@ -1134,19 +887,7 @@ div[id$="-list"] li:focus, div[id^="update-"] li:focus {
     background-color: #00afffb0;
     cursor: pointer;
 }
-
 /* -------------------------------------- Search by input css end here -------------------------------------------------*/
-
-
-.grid{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.transaction_grid, .update_transaction_grid {
-    margin-top: 10px
-}
 
 
 
@@ -1170,14 +911,10 @@ div[id$="-list"] li:focus, div[id^="update-"] li:focus {
     border-radius: 50%;
 }
 
-
 .name{
     color: aqua;
     font-size: 30px;
 }
-
-
-
 
 .details-table{
     border:1px solid #00e3f7; 
@@ -1203,7 +940,6 @@ div[id$="-list"] li:focus, div[id^="update-"] li:focus {
     font-weight: 600;
 }
 
-
 .details ul li,
 .employeeeducationdetails ul li, 
 .employeetrainingdetails ul li, 
@@ -1223,7 +959,6 @@ div[id$="-list"] li:focus, div[id^="update-"] li:focus {
     display: none;
 }
 
-
 .transaction{
     margin: 20px 0;
 }
@@ -1234,72 +969,15 @@ div[id$="-list"] li:focus, div[id^="update-"] li:focus {
     color: blue;
 }
 
-
-
-
-/* ---------------------------------- HR Employee Design -------------------------------------------------*/
-
-div.col-md-4 label {
-    font-size: 16px;
-    font-weight: normal;
-}
-.row {
+.grid{
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
-.col-md-4 {
-    flex: 0 0 33.33%;
-    max-width: 33.33%;
-    padding: 0 15px;
-    box-sizing: border-box;
+.transaction_grid, .update_transaction_grid {
+    margin-top: 10px
 }
-
-.col-md-4 label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.col-md-4 input,
-.col-md-4 select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 15px;
-}
-
-.col-md-4 input[type="file"] {
-    padding: 4px;
-}
-
-/* Add a class to style the hide button */
-.hideButton {
-    background-color: red;
-    color: white;
-}
-
-
-.fa-chevron-circle-right {
-    transition: transform 0.3s ease; /* Add a transition effect */
-}
-
-.fa-chevron-circle-right.rotate {
-    transform: rotate(90deg); /* Rotate the icon */
-}
-  
-
-
-/* -------------------------- Old Styles part end here ------------------------------- */
-
-
-
-
-
-
-
 
 .print-button{
     width: 100%;
@@ -1308,63 +986,4 @@ div.col-md-4 label {
     align-items: center;
     justify-content: center;
 }
-
-
-
-@media print {
-    .sidenav {
-        display: none;
-    }
-
-    @page {
-        size: auto;
-        margin: 0;
-    }
-
-    html, body {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-    }
-
-    body * {
-        visibility: hidden;
-    }
-
-    .show-table, .show-table * {
-        visibility: visible;
-    }
-
-    .show-table {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100vw;
-        /* Full viewport width */
-        height: auto;
-        border-collapse: collapse;
-        border: 1px solid #000;
-    }
-
-    .show-table th, .show-table td {
-        border: 1px solid #000;
-        padding: 8px;
-    }
-
-    .caption {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.5em;
-        margin-bottom: 10px;
-    }
-
-    .paginate {
-        display: none;
-    }
-
-    .print-button {
-        display: none;
-    }
-}
+/* -------------------------- Old Styles part end here ------------------------------- */

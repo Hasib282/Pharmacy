@@ -12,12 +12,19 @@
                     <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
                 {{-- @endif --}}
             </div>
+
             <div class="c-9 search">
-                <select name="searchOption" id="searchOption" class="select-small">
-                    <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Head</option>
-                    <option value="2" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Groupe</option>
-                </select>
-                <input type="text" name="search" id="search" class="input-small" placeholder="Search here..." value="{{ $searchValue ? $searchValue : '' }}">
+                @if (Request::segment(1) == 'hr')
+                    <input type="text" name="search" id="search" class="form-input" placeholder="Search here..."
+                        value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%; margin: 0;">
+                @else
+                    <select name="searchOption" id="searchOption" class="select-small">
+                        <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Head</option>
+                        <option value="2" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Groupe</option>
+                    </select>
+                    <input type="text" name="search" id="search" class="input-small" placeholder="Search here..."
+                        value="{{ $searchValue ? $searchValue : '' }}">
+                @endif
             </div>
         </div>
     </div>
@@ -31,7 +38,9 @@
                 <tr>
                     <th>SL:</th>
                     <th>Transaction Head Name</th>
-                    <th>Transaction Groupe</th>
+                    @if (Request::segment(1) != 'hr')
+                        <th>Transaction Groupe</th>
+                    @endif
                     <th>Action</th>
                 </tr>
             </thead>
@@ -51,6 +60,7 @@
 
 
     <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/admin_setup/tran_head.js') }}"></script>
+    <script src="{{ asset('js/ajax/' . (Request::segment(1) == 'admin' ? 'admin_setup' : Request::segment(1)) . '/tran_head.js') }}"></script>
+    {{-- <script src="{{ asset('js/ajax/admin_setup/tran_head.js') }}"></script> --}}
     <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
 @endsection

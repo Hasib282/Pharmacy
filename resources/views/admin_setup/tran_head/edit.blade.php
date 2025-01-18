@@ -17,13 +17,17 @@
                 <input type="text" name="headName" class="form-input" id="updateHeadName">
                 <span class="error" id="update_headName_error"></span>
             </div>
-            <div class="form-input-group">
-                <label for="updateGroupe">Transaction Groupe <span class="required" title="Required">*</span></label>
-                <select name="groupe" id="updateGroupe">
-                    {{-- options will be display dynamically --}}
-                </select>
-                <span class="error" id="update_groupe_error"></span>
-            </div>
+
+            @if (Request::segment(1) != 'hr')
+                <div class="form-input-group">
+                    <label for="updateGroupe">Transaction Groupe <span class="required" title="Required">*</span></label>
+                    <select name="groupe" id="updateGroupe">
+                        {{-- options will be display dynamically --}}
+                    </select>
+                    <span class="error" id="update_groupe_error"></span>
+                </div>
+            @endif
+
             <div class="center">
                 <button type="submit" id="Update" class="btn-blue">Update</button>
             </div>

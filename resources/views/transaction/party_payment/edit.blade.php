@@ -13,7 +13,7 @@
             <div class="rows">
                 <div class="c-6">
                     <input type="text" name="tranId" class="form-input" id="updateTranId" style="display: none">
-                    <div class="row">
+                    <div class="rows">
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="updateDate">Date</label>
@@ -34,14 +34,14 @@
                                 <span class="error" id="update_user_error"></span>
                             </div>
                         </div>
-                        <div class="c-4">
+                        <div class="c-6">
                             <div class="form-input-group">
                                 <label for="updateDiscount">Discount</label>
                                 <input type="text" name="discount" class="form-input" id="updateDiscount" value="0">
                                 <span class="error" id="update_discount_error"></span>
                             </div>
                         </div>
-                        <div class="c-4">
+                        <div class="c-6">
                             <div class="form-input-group">
                                 <label for="updateAmount">Amount</label>
                                 <input type="text" name="amount" class="form-input" id="updateAmount">
