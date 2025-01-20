@@ -458,7 +458,7 @@ $(document).ready(function () {
     // Search Department by Name
     function getDepartmentByName(department, targetElement1) {
         $.ajax({
-            url: `${apiUrl}/hr/department/get`,
+            url: `${apiUrl}/hr/setup/department/get`,
             method: 'GET',
             data: { department:department },
             success: function (res) {
@@ -673,7 +673,7 @@ $(document).ready(function () {
     // Search Designation by Name and Department
     function getDesignationByNameAndDepartment(designation, targetElement1, department = "") {
         $.ajax({
-            url: `${apiUrl}/hr/designation/get`,
+            url: `${apiUrl}/hr/setup/designation/get`,
             method: 'GET',
             data: { designation, department },
             success: function (res) {

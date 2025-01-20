@@ -8,8 +8,9 @@ function SingleInputDataCrudeAjax(link, RenderData){
 
 
     // Insert Ajax
-    InsertAjax(link, RenderData, {}, function() {
+    InsertAjax(link, RenderData, {company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#name').focus();
+        $('#company').removeAttr('data-id');
     });
 
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('company_phone')->unique()->nullable();
             $table->unsignedBigInteger('company_type')->nullable();
             $table->string('address')->nullable();
+            $table->string('website')->nullable();
             $table->string('logo')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');
             $table->timestamp('added_at')->useCurrent();

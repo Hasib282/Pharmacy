@@ -52,6 +52,13 @@
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
+                        <label for="updateWebsite">Website</label>
+                        <input type="text" name="website" class="form-input" id="updateWebsite">
+                        <span class="error" id="update_website_error"></span>
+                    </div>
+                </div>
+                <div class="c-6">
+                    <div class="form-input-group">
                         <label for="updateImage">Image</label>
                         <input type="file" name="image" class="form-input" id="updateImage">
                         <span class="error" id="update_image_error"></span>

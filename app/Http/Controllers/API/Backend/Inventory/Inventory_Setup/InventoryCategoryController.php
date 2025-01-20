@@ -28,6 +28,7 @@ class InventoryCategoryController extends Controller
 
         Item_Category::on('mysql')->insert([
             'category_name' => $req->name,
+            'company_id' => $req->company,
             'type_id'=> '5',
         ]);
         

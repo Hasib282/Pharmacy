@@ -79,7 +79,6 @@ class AuthController extends Controller
         }
         Cache::forget("permission_mainheads_{$user->user_id}");
         Cache::forget("permission_ids_{$user->user_id}");
-        Cache::forget("route_permissions_{$user->user_id}");
         Cache::flush();
         
         Auth::guard('web')->logout();

@@ -3,86 +3,84 @@
     { "permission_mainhead":"1", "name":"Add Admin" },
     { "permission_mainhead":"1", "name":"Edit Admin" },
     { "permission_mainhead":"1", "name":"Delete Admin" },
-    { "permission_mainhead":"1", "name":"Details Admin" },
-    
-    { "permission_mainhead":"1", "name":"Show Clients" },
-    { "permission_mainhead":"1", "name":"Add Clients" },
-    { "permission_mainhead":"1", "name":"Edit Clients" },
-    { "permission_mainhead":"1", "name":"Delete Clients" },
-    { "permission_mainhead":"1", "name":"Details Clients" },
-    
-    { "permission_mainhead":"1", "name":"Show Suppliers" },
-    { "permission_mainhead":"1", "name":"Add Suppliers" },
-    { "permission_mainhead":"1", "name":"Edit Suppliers" },
-    { "permission_mainhead":"1", "name":"Delete Suppliers" },
-    { "permission_mainhead":"1", "name":"Details Suppliers" },
-    
-    { "permission_mainhead":"1", "name":"Show Roles" },
-    { "permission_mainhead":"1", "name":"Add Roles" },
-    { "permission_mainhead":"1", "name":"Edit Roles" },
-    { "permission_mainhead":"1", "name":"Delete Roles" },
-
-    { "permission_mainhead":"1", "name":"Show Role Permissions" },
-    { "permission_mainhead":"1", "name":"Assign Role Permissions" },
 
     { "permission_mainhead":"1", "name":"Show User Permissions" },
     { "permission_mainhead":"1", "name":"Assign User Permissions" },
 
-
-
-
-
     { "permission_mainhead":"1", "name":"Show Banks" },
-    { "permission_mainhead":"1", "name":"Add Banks" },
-    { "permission_mainhead":"1", "name":"Edit Banks" },
-    { "permission_mainhead":"1", "name":"Delete Banks" },
-    { "permission_mainhead":"1", "name":"Details Banks" },
 
     { "permission_mainhead":"1", "name":"Show Locations" },
-    { "permission_mainhead":"1", "name":"Add Locations" },
-    { "permission_mainhead":"1", "name":"Edit Locations" },
-    { "permission_mainhead":"1", "name":"Delete Locations" },
     
     { "permission_mainhead":"1", "name":"Show Stores" },
     { "permission_mainhead":"1", "name":"Add Stores" },
     { "permission_mainhead":"1", "name":"Edit Stores" },
     { "permission_mainhead":"1", "name":"Delete Stores" },
+
+
+
+
+
+
+
+
+
+
+    { "permission_mainhead":"2", "name":"Show Groupes" },
+    { "permission_mainhead":"2", "name":"Add Groupes" },
+    { "permission_mainhead":"2", "name":"Edit Groupes" },
+    { "permission_mainhead":"2", "name":"Delete Groupes" },
     
-    { "permission_mainhead":"1", "name":"Show TranWith" },
-    { "permission_mainhead":"1", "name":"Add TranWith" },
-    { "permission_mainhead":"1", "name":"Edit TranWith" },
-    { "permission_mainhead":"1", "name":"Delete TranWith" },
+    { "permission_mainhead":"2", "name":"Show Service / Product" },
+    { "permission_mainhead":"2", "name":"Add Service / Product" },
+    { "permission_mainhead":"2", "name":"Edit Service / Product" },
+    { "permission_mainhead":"2", "name":"Delete Service / Product" },
+
+
+
+
+
+    { "permission_mainhead":"2", "name":"Show Client/Supplier Type" },
+    { "permission_mainhead":"2", "name":"Add Client/Supplier Type" },
+    { "permission_mainhead":"2", "name":"Edit Client/Supplier Type" },
+    { "permission_mainhead":"2", "name":"Delete Client/Supplier Type" },
+
+    { "permission_mainhead":"2", "name":"Show Clients" },
+    { "permission_mainhead":"2", "name":"Add Clients" },
+    { "permission_mainhead":"2", "name":"Edit Clients" },
+    { "permission_mainhead":"2", "name":"Delete Clients" },
     
-    { "permission_mainhead":"1", "name":"Show Tran Groupe" },
-    { "permission_mainhead":"1", "name":"Add Tran Groupe" },
-    { "permission_mainhead":"1", "name":"Edit Tran Groupe" },
-    { "permission_mainhead":"1", "name":"Delete Tran Groupe" },
+    { "permission_mainhead":"2", "name":"Show Suppliers" },
+    { "permission_mainhead":"2", "name":"Add Suppliers" },
+    { "permission_mainhead":"2", "name":"Edit Suppliers" },
+    { "permission_mainhead":"2", "name":"Delete Suppliers" },
+
+
+
+
+
+    { "permission_mainhead":"2", "name":"Show Transaction With Client" },
+    { "permission_mainhead":"2", "name":"Add Transaction With Client" },
+    { "permission_mainhead":"2", "name":"Edit Transaction With Client" },
+    { "permission_mainhead":"2", "name":"Delete Transaction With Client" },
     
-    { "permission_mainhead":"1", "name":"Show Tran Head" },
-    { "permission_mainhead":"1", "name":"Add Tran Head" },
-    { "permission_mainhead":"1", "name":"Edit Tran Head" },
-    { "permission_mainhead":"1", "name":"Delete Tran Head" },
+    { "permission_mainhead":"2", "name":"Show Transaction With Supplier" },
+    { "permission_mainhead":"2", "name":"Add Transaction With Supplier" },
+    { "permission_mainhead":"2", "name":"Edit Transaction With Supplier" },
+    { "permission_mainhead":"2", "name":"Delete Transaction With Supplier" },
 
 
 
 
 
-
-
-
-
-
-    { "permission_mainhead":"2", "name":"Show Transaction Receive" },
-    { "permission_mainhead":"2", "name":"Add Transaction Receive" },
-    { "permission_mainhead":"2", "name":"Edit Transaction Receive" },
-    { "permission_mainhead":"2", "name":"Delete Transaction Receive" },
-    { "permission_mainhead":"2", "name":"Print Transaction Receive" },
+    { "permission_mainhead":"2", "name":"Show Party Receive From Client" },
+    { "permission_mainhead":"2", "name":"Add Party Receive From Client" },
+    { "permission_mainhead":"2", "name":"Edit Party Receive From Client" },
+    { "permission_mainhead":"2", "name":"Delete Party Receive From Client" },
     
-    { "permission_mainhead":"2", "name":"Show Transaction Payment" },
-    { "permission_mainhead":"2", "name":"Add Transaction Payment" },
-    { "permission_mainhead":"2", "name":"Edit Transaction Payment" },
-    { "permission_mainhead":"2", "name":"Delete Transaction Payment" },
-    { "permission_mainhead":"2", "name":"Print Transaction Payment" },
+    { "permission_mainhead":"2", "name":"Show Party Payment To Supplier" },
+    { "permission_mainhead":"2", "name":"Add Party Payment To Supplier" },
+    { "permission_mainhead":"2", "name":"Edit Party Payment To Supplier" },
+    { "permission_mainhead":"2", "name":"Delete Party Payment To Supplier" },
 
 
 
@@ -97,81 +95,17 @@
     { "permission_mainhead":"3", "name":"Add Bank Deposits" },
     { "permission_mainhead":"3", "name":"Edit Bank Deposits" },
     { "permission_mainhead":"3", "name":"Delete Bank Deposits" },
-    { "permission_mainhead":"3", "name":"Print Bank Deposits" },
     
     { "permission_mainhead":"3", "name":"Show Bank Withdraws" },
     { "permission_mainhead":"3", "name":"Add Bank Withdraws" },
     { "permission_mainhead":"3", "name":"Edit Bank Withdraws" },
     { "permission_mainhead":"3", "name":"Delete Bank Withdraws" },
-    { "permission_mainhead":"3", "name":"Print Bank Withdraws" },
 
 
 
 
 
 
-
-
-
-
-    { "permission_mainhead":"4", "name":"Show All Employee" },
-    { "permission_mainhead":"4", "name":"Add All Employee" },
-    { "permission_mainhead":"4", "name":"Edit All Employee" },
-    { "permission_mainhead":"4", "name":"Delete All Employee" },
-    { "permission_mainhead":"4", "name":"Details All Employee" },
-    
-    { "permission_mainhead":"4", "name":"Show Employee Personal Details" },
-    { "permission_mainhead":"4", "name":"Add Employee Personal Details" },
-    { "permission_mainhead":"4", "name":"Edit Employee Personal Details" },
-    { "permission_mainhead":"4", "name":"Delete Employee Personal Details" },
-    { "permission_mainhead":"4", "name":"Details Employee Personal Details" },
-    
-    { "permission_mainhead":"4", "name":"Show Employee Education Details" },
-    { "permission_mainhead":"4", "name":"Add Employee Education Details" },
-    { "permission_mainhead":"4", "name":"Edit Employee Education Details" },
-    { "permission_mainhead":"4", "name":"Delete Employee Education Details" },
-    { "permission_mainhead":"4", "name":"Details Employee Education Details" },
-    
-    { "permission_mainhead":"4", "name":"Show Employee Trainning Details" },
-    { "permission_mainhead":"4", "name":"Add Employee Trainning Details" },
-    { "permission_mainhead":"4", "name":"Edit Employee Trainning Details" },
-    { "permission_mainhead":"4", "name":"Delete Employee Trainning Details" },
-    { "permission_mainhead":"4", "name":"Details Employee Trainning Details" },
-    
-    { "permission_mainhead":"4", "name":"Show Employee Experience Details" },
-    { "permission_mainhead":"4", "name":"Add Employee Experience Details" },
-    { "permission_mainhead":"4", "name":"Edit Employee Experience Details" },
-    { "permission_mainhead":"4", "name":"Delete Employee Experience Details" },
-    { "permission_mainhead":"4", "name":"Details Employee Experience Details" },
-    
-    { "permission_mainhead":"4", "name":"Show Employee Organization Details" },
-    { "permission_mainhead":"4", "name":"Add Employee Organization Details" },
-    { "permission_mainhead":"4", "name":"Edit Employee Organization Details" },
-    { "permission_mainhead":"4", "name":"Delete Employee Organization Details" },
-    { "permission_mainhead":"4", "name":"Details Employee Organization Details" },
-    
-    { "permission_mainhead":"4", "name":"Show Employee Attandence Details" },
-    { "permission_mainhead":"4", "name":"Add Employee Attandence Details" },
-    { "permission_mainhead":"4", "name":"Edit Employee Attandence Details" },
-    { "permission_mainhead":"4", "name":"View Employee Attandence Details" },
-    
-
-
-
-
-    { "permission_mainhead":"4", "name":"Show Payroll Setup" },
-    { "permission_mainhead":"4", "name":"Add Payroll Setup" },
-    { "permission_mainhead":"4", "name":"Edit Payroll Setup" },
-    { "permission_mainhead":"4", "name":"Delete Payroll Setup" },
-    
-    { "permission_mainhead":"4", "name":"Show Payroll Middleware" },
-    { "permission_mainhead":"4", "name":"Add Payroll Middleware" },
-    { "permission_mainhead":"4", "name":"Edit Payroll Middleware" },
-    { "permission_mainhead":"4", "name":"Delete Payroll Middleware" },
-    
-    { "permission_mainhead":"4", "name":"Show Payroll Process" },
-    { "permission_mainhead":"4", "name":"Add Payroll Process" },
-    
 
 
 
@@ -185,12 +119,79 @@
     { "permission_mainhead":"4", "name":"Add Designation Details" },
     { "permission_mainhead":"4", "name":"Edit Designation Details" },
     { "permission_mainhead":"4", "name":"Delete Designation Details" },
+
+
+
+
+
+    { "permission_mainhead":"4", "name":"Show Employee Type" },
+    { "permission_mainhead":"4", "name":"Add Employee Type" },
+    { "permission_mainhead":"4", "name":"Edit Employee Type" },
+    { "permission_mainhead":"4", "name":"Delete Employee Type" },
     
+    { "permission_mainhead":"4", "name":"Show All Employee" },
+    { "permission_mainhead":"4", "name":"Add All Employee" },
+    { "permission_mainhead":"4", "name":"Edit All Employee" },
+    { "permission_mainhead":"4", "name":"Delete All Employee" },
+    
+    { "permission_mainhead":"4", "name":"Show Employee Personal Details" },
+    { "permission_mainhead":"4", "name":"Add Employee Personal Details" },
+    { "permission_mainhead":"4", "name":"Edit Employee Personal Details" },
+    { "permission_mainhead":"4", "name":"Delete Employee Personal Details" },
+    
+    { "permission_mainhead":"4", "name":"Show Employee Education Details" },
+    { "permission_mainhead":"4", "name":"Add Employee Education Details" },
+    { "permission_mainhead":"4", "name":"Edit Employee Education Details" },
+    { "permission_mainhead":"4", "name":"Delete Employee Education Details" },
+    
+    { "permission_mainhead":"4", "name":"Show Employee Trainning Details" },
+    { "permission_mainhead":"4", "name":"Add Employee Trainning Details" },
+    { "permission_mainhead":"4", "name":"Edit Employee Trainning Details" },
+    { "permission_mainhead":"4", "name":"Delete Employee Trainning Details" },
+    
+    { "permission_mainhead":"4", "name":"Show Employee Experience Details" },
+    { "permission_mainhead":"4", "name":"Add Employee Experience Details" },
+    { "permission_mainhead":"4", "name":"Edit Employee Experience Details" },
+    { "permission_mainhead":"4", "name":"Delete Employee Experience Details" },
+    
+    { "permission_mainhead":"4", "name":"Show Employee Organization Details" },
+    { "permission_mainhead":"4", "name":"Add Employee Organization Details" },
+    { "permission_mainhead":"4", "name":"Edit Employee Organization Details" },
+    { "permission_mainhead":"4", "name":"Delete Employee Organization Details" },
+    
+    { "permission_mainhead":"4", "name":"Show Employee Attandence Details" },
+    { "permission_mainhead":"4", "name":"Add Employee Attandence Details" },
+    { "permission_mainhead":"4", "name":"Edit Employee Attandence Details" },
+    
+
+
+
+
+    { "permission_mainhead":"4", "name":"Show Payroll Category" },
+    { "permission_mainhead":"4", "name":"Add Payroll Category" },
+    { "permission_mainhead":"4", "name":"Edit Payroll Category" },
+    { "permission_mainhead":"4", "name":"Delete Payroll Category" },
+    
+    { "permission_mainhead":"4", "name":"Show Payroll Setup" },
+    { "permission_mainhead":"4", "name":"Add Payroll Setup" },
+    { "permission_mainhead":"4", "name":"Edit Payroll Setup" },
+    { "permission_mainhead":"4", "name":"Delete Payroll Setup" },
+    
+    { "permission_mainhead":"4", "name":"Show Payroll Middleware" },
+    { "permission_mainhead":"4", "name":"Add Payroll Middleware" },
+    { "permission_mainhead":"4", "name":"Edit Payroll Middleware" },
+    { "permission_mainhead":"4", "name":"Delete Payroll Middleware" },
+    
+    { "permission_mainhead":"4", "name":"Show Payroll Process" },
+    { "permission_mainhead":"4", "name":"Add Payroll Process" },
+
+
+
+
+
     { "permission_mainhead":"4", "name":"Show Salary Summary Report" },
-    { "permission_mainhead":"4", "name":"Print Salary Summary Report" },
 
     { "permission_mainhead":"4", "name":"Show Salary Details Report" },
-    { "permission_mainhead":"4", "name":"Print Salary Details Report" },
 
 
 
@@ -201,57 +202,79 @@
 
 
 
-    { "permission_mainhead":"5", "name":"Show Pharmacy Manufacturer Setup" },
-    { "permission_mainhead":"5", "name":"Add Pharmacy Manufacturer Setup" },
-    { "permission_mainhead":"5", "name":"Edit Pharmacy Manufacturer Setup" },
-    { "permission_mainhead":"5", "name":"Delete Pharmacy Manufacturer Setup" },
+    { "permission_mainhead":"5", "name":"Show Pharmacy Manufacturer" },
+    { "permission_mainhead":"5", "name":"Add Pharmacy Manufacturer" },
+    { "permission_mainhead":"5", "name":"Edit Pharmacy Manufacturer" },
+    { "permission_mainhead":"5", "name":"Delete Pharmacy Manufacturer" },
     
-    { "permission_mainhead":"5", "name":"Show Pharmacy Category Setup" },
-    { "permission_mainhead":"5", "name":"Add Pharmacy Category Setup" },
-    { "permission_mainhead":"5", "name":"Edit Pharmacy Category Setup" },
-    { "permission_mainhead":"5", "name":"Delete Pharmacy Category Setup" },
+    { "permission_mainhead":"5", "name":"Show Pharmacy Category" },
+    { "permission_mainhead":"5", "name":"Add Pharmacy Category" },
+    { "permission_mainhead":"5", "name":"Edit Pharmacy Category" },
+    { "permission_mainhead":"5", "name":"Delete Pharmacy Category" },
     
-    { "permission_mainhead":"5", "name":"Show Pharmacy Unit Setup" },
-    { "permission_mainhead":"5", "name":"Add Pharmacy Unit Setup" },
-    { "permission_mainhead":"5", "name":"Edit Pharmacy Unit Setup" },
-    { "permission_mainhead":"5", "name":"Delete Pharmacy Unit Setup" },
+    { "permission_mainhead":"5", "name":"Show Pharmacy Unit" },
+    { "permission_mainhead":"5", "name":"Add Pharmacy Unit" },
+    { "permission_mainhead":"5", "name":"Edit Pharmacy Unit" },
+    { "permission_mainhead":"5", "name":"Delete Pharmacy Unit" },
     
-    { "permission_mainhead":"5", "name":"Show Pharmacy Form  Setup" },
-    { "permission_mainhead":"5", "name":"Add Pharmacy Form  Setup" },
-    { "permission_mainhead":"5", "name":"Edit Pharmacy Form  Setup" },
-    { "permission_mainhead":"5", "name":"Delete Pharmacy Form  Setup" },
+    { "permission_mainhead":"5", "name":"Show Pharmacy Form" },
+    { "permission_mainhead":"5", "name":"Add Pharmacy Form" },
+    { "permission_mainhead":"5", "name":"Edit Pharmacy Form" },
+    { "permission_mainhead":"5", "name":"Delete Pharmacy Form" },
     
-    { "permission_mainhead":"5", "name":"Show Pharmacy Product  Setup" },
-    { "permission_mainhead":"5", "name":"Add Pharmacy Product  Setup" },
-    { "permission_mainhead":"5", "name":"Edit Pharmacy Product  Setup" },
-    { "permission_mainhead":"5", "name":"Delete Pharmacy Product  Setup" },
+    { "permission_mainhead":"5", "name":"Show Pharmacy Groupe" },
+    { "permission_mainhead":"5", "name":"Add Pharmacy Groupe" },
+    { "permission_mainhead":"5", "name":"Edit Pharmacy Groupe" },
+    { "permission_mainhead":"5", "name":"Delete Pharmacy Groupe" },
+    
+    { "permission_mainhead":"5", "name":"Show Pharmacy Product" },
+    { "permission_mainhead":"5", "name":"Add Pharmacy Product" },
+    { "permission_mainhead":"5", "name":"Edit Pharmacy Product" },
+    { "permission_mainhead":"5", "name":"Delete Pharmacy Product" },
 
 
 
 
+    
+    { "permission_mainhead":"5", "name":"Show Client/Supplier Type" },
+    { "permission_mainhead":"5", "name":"Add Client/Supplier Type" },
+    { "permission_mainhead":"5", "name":"Edit Client/Supplier Type" },
+    { "permission_mainhead":"5", "name":"Delete Client/Supplier Type" },
 
-    { "permission_mainhead":"5", "name":"Show Pharmacy Purchase Transaction" },
-    { "permission_mainhead":"5", "name":"Add Pharmacy Purchase Transaction" },
-    { "permission_mainhead":"5", "name":"Edit Pharmacy Purchase Transaction" },
-    { "permission_mainhead":"5", "name":"Delete Pharmacy Purchase Transaction" },
-    { "permission_mainhead":"5", "name":"Verify Pharmacy Purchase Transaction" },
+    { "permission_mainhead":"5", "name":"Show Clients" },
+    { "permission_mainhead":"5", "name":"Add Clients" },
+    { "permission_mainhead":"5", "name":"Edit Clients" },
+    { "permission_mainhead":"5", "name":"Delete Clients" },
     
-    { "permission_mainhead":"5", "name":"Show Pharmacy Issue  Transaction" },
-    { "permission_mainhead":"5", "name":"Add Pharmacy Issue  Transaction" },
-    { "permission_mainhead":"5", "name":"Edit Pharmacy Issue  Transaction" },
-    { "permission_mainhead":"5", "name":"Delete Pharmacy Issue  Transaction" },
+    { "permission_mainhead":"5", "name":"Show Suppliers" },
+    { "permission_mainhead":"5", "name":"Add Suppliers" },
+    { "permission_mainhead":"5", "name":"Edit Suppliers" },
+    { "permission_mainhead":"5", "name":"Delete Suppliers" },
     
-    { "permission_mainhead":"5", "name":"Show Pharmacy Client Return Transaction" },
-    { "permission_mainhead":"5", "name":"Add Pharmacy Client Return Transaction" },
-    { "permission_mainhead":"5", "name":"Edit Pharmacy Client Return Transaction" },
-    { "permission_mainhead":"5", "name":"Delete Pharmacy Client Return Transaction" },
     
-    { "permission_mainhead":"5", "name":"Show Pharmacy Supplier Return  Transaction" },
-    { "permission_mainhead":"5", "name":"Add Pharmacy Supplier Return  Transaction" },
-    { "permission_mainhead":"5", "name":"Edit Pharmacy Supplier Return  Transaction" },
-    { "permission_mainhead":"5", "name":"Delete Pharmacy Supplier Return  Transaction" },
-
-    { "permission_mainhead":"5", "name":"Print Pharmacy Invoice" },
+    
+    
+    
+    { "permission_mainhead":"5", "name":"Show Pharmacy Purchase" },
+    { "permission_mainhead":"5", "name":"Add Pharmacy Purchase" },
+    { "permission_mainhead":"5", "name":"Edit Pharmacy Purchase" },
+    { "permission_mainhead":"5", "name":"Delete Pharmacy Purchase" },
+    { "permission_mainhead":"5", "name":"Verify Pharmacy Purchase" },
+    
+    { "permission_mainhead":"5", "name":"Show Pharmacy Issue" },
+    { "permission_mainhead":"5", "name":"Add Pharmacy Issue" },
+    { "permission_mainhead":"5", "name":"Edit Pharmacy Issue" },
+    { "permission_mainhead":"5", "name":"Delete Pharmacy Issue" },
+    
+    { "permission_mainhead":"5", "name":"Show Pharmacy Client Return" },
+    { "permission_mainhead":"5", "name":"Add Pharmacy Client Return" },
+    { "permission_mainhead":"5", "name":"Edit Pharmacy Client Return" },
+    { "permission_mainhead":"5", "name":"Delete Pharmacy Client Return" },
+    
+    { "permission_mainhead":"5", "name":"Show Pharmacy Supplier Return" },
+    { "permission_mainhead":"5", "name":"Add Pharmacy Supplier Return" },
+    { "permission_mainhead":"5", "name":"Edit Pharmacy Supplier Return" },
+    { "permission_mainhead":"5", "name":"Delete Pharmacy Supplier Return" },
     
 
 
@@ -271,44 +294,45 @@
 
 
     
+    { "permission_mainhead":"5", "name":"Show Party Receive From Client" },
+    { "permission_mainhead":"5", "name":"Add Party Receive From Client" },
+    { "permission_mainhead":"5", "name":"Edit Party Receive From Client" },
+    { "permission_mainhead":"5", "name":"Delete Party Receive From Client" },
+    
+    { "permission_mainhead":"5", "name":"Show Party Payment To Supplier" },
+    { "permission_mainhead":"5", "name":"Add Party Payment To Supplier" },
+    { "permission_mainhead":"5", "name":"Edit Party Payment To Supplier" },
+    { "permission_mainhead":"5", "name":"Delete Party Payment To Supplier" },
+    
+    
+    
+    
+    
     { "permission_mainhead":"5", "name":"Show Pharmacy Item Flow Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Item Flow Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Stock Summary Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Stock Summary Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Stock Details Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Stock Details Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Profitability Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Profitability Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Item Expiry Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Item Expiry Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Purchase Summary Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Purchase Summary Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Purchase Details Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Purchase Details Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Issue Summary Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Issue Summary Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Issue Details Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Issue Details Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Client Return Summary Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Client Return Summary Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Client Return Details Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Client Return Details Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Supplier Return Summary Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Supplier Return Summary Report" },
     
     { "permission_mainhead":"5", "name":"Show Pharmacy Supplier Return Details Report" },
-    { "permission_mainhead":"5", "name":"Print Pharmacy Supplier Return Details Report" },
 
 
 
@@ -319,57 +343,79 @@
 
 
 
-    { "permission_mainhead":"6", "name":"Show Inventory Manufacturer Setup" },
-    { "permission_mainhead":"6", "name":"Add Inventory Manufacturer Setup" },
-    { "permission_mainhead":"6", "name":"Edit Inventory Manufacturer Setup" },
-    { "permission_mainhead":"6", "name":"Delete Inventory Manufacturer Setup" },
+    { "permission_mainhead":"6", "name":"Show Inventory Manufacturer" },
+    { "permission_mainhead":"6", "name":"Add Inventory Manufacturer" },
+    { "permission_mainhead":"6", "name":"Edit Inventory Manufacturer" },
+    { "permission_mainhead":"6", "name":"Delete Inventory Manufacturer" },
     
-    { "permission_mainhead":"6", "name":"Show Inventory Category Setup" },
-    { "permission_mainhead":"6", "name":"Add Inventory Category Setup" },
-    { "permission_mainhead":"6", "name":"Edit Inventory Category Setup" },
-    { "permission_mainhead":"6", "name":"Delete Inventory Category Setup" },
+    { "permission_mainhead":"6", "name":"Show Inventory Category" },
+    { "permission_mainhead":"6", "name":"Add Inventory Category" },
+    { "permission_mainhead":"6", "name":"Edit Inventory Category" },
+    { "permission_mainhead":"6", "name":"Delete Inventory Category" },
     
-    { "permission_mainhead":"6", "name":"Show Inventory Unit Setup" },
-    { "permission_mainhead":"6", "name":"Add Inventory Unit Setup" },
-    { "permission_mainhead":"6", "name":"Edit Inventory Unit Setup" },
-    { "permission_mainhead":"6", "name":"Delete Inventory Unit Setup" },
+    { "permission_mainhead":"6", "name":"Show Inventory Unit" },
+    { "permission_mainhead":"6", "name":"Add Inventory Unit" },
+    { "permission_mainhead":"6", "name":"Edit Inventory Unit" },
+    { "permission_mainhead":"6", "name":"Delete Inventory Unit" },
     
-    { "permission_mainhead":"6", "name":"Show Inventory Form  Setup" },
-    { "permission_mainhead":"6", "name":"Add Inventory Form  Setup" },
-    { "permission_mainhead":"6", "name":"Edit Inventory Form  Setup" },
-    { "permission_mainhead":"6", "name":"Delete Inventory Form  Setup" },
+    { "permission_mainhead":"6", "name":"Show Inventory Form" },
+    { "permission_mainhead":"6", "name":"Add Inventory Form" },
+    { "permission_mainhead":"6", "name":"Edit Inventory Form" },
+    { "permission_mainhead":"6", "name":"Delete Inventory Form" },
     
-    { "permission_mainhead":"6", "name":"Show Inventory Product  Setup" },
-    { "permission_mainhead":"6", "name":"Add Inventory Product  Setup" },
-    { "permission_mainhead":"6", "name":"Edit Inventory Product  Setup" },
-    { "permission_mainhead":"6", "name":"Delete Inventory Product  Setup" },
+    { "permission_mainhead":"6", "name":"Show Inventory Groupe" },
+    { "permission_mainhead":"6", "name":"Add Inventory Groupe" },
+    { "permission_mainhead":"6", "name":"Edit Inventory Groupe" },
+    { "permission_mainhead":"6", "name":"Delete Inventory Groupe" },
+    
+    { "permission_mainhead":"6", "name":"Show Inventory Product" },
+    { "permission_mainhead":"6", "name":"Add Inventory Product" },
+    { "permission_mainhead":"6", "name":"Edit Inventory Product" },
+    { "permission_mainhead":"6", "name":"Delete Inventory Product" },
 
 
 
-    
 
-    { "permission_mainhead":"6", "name":"Show Inventory Purchase Transaction" },
-    { "permission_mainhead":"6", "name":"Add Inventory Purchase Transaction" },
-    { "permission_mainhead":"6", "name":"Edit Inventory Purchase Transaction" },
-    { "permission_mainhead":"6", "name":"Delete Inventory Purchase Transaction" },
-    { "permission_mainhead":"6", "name":"Verify Inventory Purchase Transaction" },
     
-    { "permission_mainhead":"6", "name":"Show Inventory Issue  Transaction" },
-    { "permission_mainhead":"6", "name":"Add Inventory Issue  Transaction" },
-    { "permission_mainhead":"6", "name":"Edit Inventory Issue  Transaction" },
-    { "permission_mainhead":"6", "name":"Delete Inventory Issue  Transaction" },
-    
-    { "permission_mainhead":"6", "name":"Show Inventory Client Return Transaction" },
-    { "permission_mainhead":"6", "name":"Add Inventory Client Return Transaction" },
-    { "permission_mainhead":"6", "name":"Edit Inventory Client Return Transaction" },
-    { "permission_mainhead":"6", "name":"Delete Inventory Client Return Transaction" },
-    
-    { "permission_mainhead":"6", "name":"Show Inventory Supplier Return  Transaction" },
-    { "permission_mainhead":"6", "name":"Add Inventory Supplier Return  Transaction" },
-    { "permission_mainhead":"6", "name":"Edit Inventory Supplier Return  Transaction" },
-    { "permission_mainhead":"6", "name":"Delete Inventory Supplier Return  Transaction" },
+    { "permission_mainhead":"6", "name":"Show Client/Supplier Type" },
+    { "permission_mainhead":"6", "name":"Add Client/Supplier Type" },
+    { "permission_mainhead":"6", "name":"Edit Client/Supplier Type" },
+    { "permission_mainhead":"6", "name":"Delete Client/Supplier Type" },
 
-    { "permission_mainhead":"6", "name":"Print Inventory Invoice" },
+    { "permission_mainhead":"6", "name":"Show Clients" },
+    { "permission_mainhead":"6", "name":"Add Clients" },
+    { "permission_mainhead":"6", "name":"Edit Clients" },
+    { "permission_mainhead":"6", "name":"Delete Clients" },
+    
+    { "permission_mainhead":"6", "name":"Show Suppliers" },
+    { "permission_mainhead":"6", "name":"Add Suppliers" },
+    { "permission_mainhead":"6", "name":"Edit Suppliers" },
+    { "permission_mainhead":"6", "name":"Delete Suppliers" },
+    
+    
+    
+    
+    
+    { "permission_mainhead":"6", "name":"Show Inventory Purchase" },
+    { "permission_mainhead":"6", "name":"Add Inventory Purchase" },
+    { "permission_mainhead":"6", "name":"Edit Inventory Purchase" },
+    { "permission_mainhead":"6", "name":"Delete Inventory Purchase" },
+    { "permission_mainhead":"6", "name":"Verify Inventory Purchase" },
+    
+    { "permission_mainhead":"6", "name":"Show Inventory Issue" },
+    { "permission_mainhead":"6", "name":"Add Inventory Issue" },
+    { "permission_mainhead":"6", "name":"Edit Inventory Issue" },
+    { "permission_mainhead":"6", "name":"Delete Inventory Issue" },
+    
+    { "permission_mainhead":"6", "name":"Show Inventory Client Return" },
+    { "permission_mainhead":"6", "name":"Add Inventory Client Return" },
+    { "permission_mainhead":"6", "name":"Edit Inventory Client Return" },
+    { "permission_mainhead":"6", "name":"Delete Inventory Client Return" },
+    
+    { "permission_mainhead":"6", "name":"Show Inventory Supplier Return" },
+    { "permission_mainhead":"6", "name":"Add Inventory Supplier Return" },
+    { "permission_mainhead":"6", "name":"Edit Inventory Supplier Return" },
+    { "permission_mainhead":"6", "name":"Delete Inventory Supplier Return" },
     
 
 
@@ -388,66 +434,46 @@
 
 
 
-
+    
+    { "permission_mainhead":"6", "name":"Show Party Receive From Client" },
+    { "permission_mainhead":"6", "name":"Add Party Receive From Client" },
+    { "permission_mainhead":"6", "name":"Edit Party Receive From Client" },
+    { "permission_mainhead":"6", "name":"Delete Party Receive From Client" },
+    
+    { "permission_mainhead":"6", "name":"Show Party Payment To Supplier" },
+    { "permission_mainhead":"6", "name":"Add Party Payment To Supplier" },
+    { "permission_mainhead":"6", "name":"Edit Party Payment To Supplier" },
+    { "permission_mainhead":"6", "name":"Delete Party Payment To Supplier" },
+    
+    
+    
+    
+    
     { "permission_mainhead":"6", "name":"Show Inventory Item Flow Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Item Flow Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Stock Summary Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Stock Summary Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Stock Details Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Stock Details Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Profitability Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Profitability Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Item Expiry Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Item Expiry Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Purchase Summary Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Purchase Summary Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Purchase Details Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Purchase Details Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Issue Summary Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Issue Summary Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Issue Details Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Issue Details Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Client Return Summary Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Client Return Summary Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Client Return Details Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Client Return Details Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Supplier Return Summary Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Supplier Return Summary Report" },
     
     { "permission_mainhead":"6", "name":"Show Inventory Supplier Return Details Report" },
-    { "permission_mainhead":"6", "name":"Print Inventory Supplier Return Details Report" },
-    
-
-
-
-
-
-
-
-
-
-    { "permission_mainhead":"7", "name":"Show Receive From Client" },
-    { "permission_mainhead":"7", "name":"Add Receive From Client" },
-    { "permission_mainhead":"7", "name":"Edit Receive From Client" },
-    { "permission_mainhead":"7", "name":"Delete Receive From Client" },
-    { "permission_mainhead":"7", "name":"Print Receive From Client" },
-    
-    { "permission_mainhead":"7", "name":"Show Payment To Supplier" },
-    { "permission_mainhead":"7", "name":"Add Payment To Supplier" },
-    { "permission_mainhead":"7", "name":"Edit Payment To Supplier" },
-    { "permission_mainhead":"7", "name":"Delete Payment To Supplier" },
-    { "permission_mainhead":"7", "name":"Print Payment To Supplier" },
 
 
     
@@ -458,30 +484,13 @@
 
 
     
-    { "permission_mainhead":"8", "name":"Show Balance Sheet Details Report" },
-    { "permission_mainhead":"8", "name":"Print Balance Sheet Details Details Report" },
+    { "permission_mainhead":"7", "name":"Show Account Statement Summary Report" },
     
-    { "permission_mainhead":"8", "name":"Show Balance Sheet Summary Report" },
-    { "permission_mainhead":"8", "name":"Print Balance Sheet Summary Report" },
+    { "permission_mainhead":"7", "name":"Show Account Statement By Groupe Report" },
     
-    { "permission_mainhead":"8", "name":"Show Account Statement Summary Report" },
-    { "permission_mainhead":"8", "name":"Print Account Statement Summary Report" },
+    { "permission_mainhead":"7", "name":"Show Account Statement Details Report" },
     
-    { "permission_mainhead":"8", "name":"Show Account Statement By Groupe Report" },
-    { "permission_mainhead":"8", "name":"Print Account Statement By Groupe Report" },
+    { "permission_mainhead":"7", "name":"Show Party Statement Summary Report" },
     
-    { "permission_mainhead":"8", "name":"Show Account Statement Details Report" },
-    { "permission_mainhead":"8", "name":"Print Account Statement Details Report" },
-    
-    { "permission_mainhead":"8", "name":"Show Party Statement Summary Report" },
-    { "permission_mainhead":"8", "name":"Print Party Statement Summary Report" },
-    
-    { "permission_mainhead":"8", "name":"Show Party Statement Details Report" },
-    { "permission_mainhead":"8", "name":"Print Party Statement Details Report" },
-    
-    { "permission_mainhead":"8", "name":"Show Report By Groupe Report" },
-    { "permission_mainhead":"8", "name":"Print Report By Groupe Report" },
-    
-    { "permission_mainhead":"8", "name":"Show Summary Report" },
-    { "permission_mainhead":"8", "name":"Print Summary Report" }
+    { "permission_mainhead":"7", "name":"Show Party Statement Details Report" }
 ]

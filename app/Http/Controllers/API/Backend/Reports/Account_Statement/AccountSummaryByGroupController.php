@@ -16,14 +16,15 @@ class AccountSummaryByGroupController extends Controller
     // Create a Common Function for Getting Data Easily
     public function GetAccountSummaryGroupeStatement($tranType) {
         return Transaction_Detail::on('mysql_second')->select(
+                'tran_date', 
                 'tran_groupe_id', 
                 DB::raw('SUM(receive) as total_receive'), 
                 DB::raw('SUM(payment) as total_payment')
             )
             ->where('tran_type', $tranType)
             ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
-            ->orderBy('tran_groupe_id', 'asc')
-            ->groupBy('tran_groupe_id')
+            ->orderBy('tran_date', 'asc')
+            ->groupBy('tran_groupe_id', 'tran_date')
             ->get();
     } // End Method
 
@@ -78,6 +79,7 @@ class AccountSummaryByGroupController extends Controller
         return Transaction_Detail::on('mysql_second')
         ->with('Groupe')
         ->select(
+            'tran_date', 
             'tran_groupe_id', 
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
@@ -85,8 +87,8 @@ class AccountSummaryByGroupController extends Controller
         ->whereIn('tran_groupe_id', $groupes)
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
         ->where('tran_type', $tranType)
-        ->orderBy('tran_groupe_id', 'asc')
-        ->groupBy('tran_groupe_id')
+        ->orderBy('tran_date', 'asc')
+        ->groupBy('tran_groupe_id', 'tran_date')
         ->get();
     } // End Method
 

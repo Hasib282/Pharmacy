@@ -59,56 +59,56 @@ class PermissionController extends Controller
 
 
 
-    /////////////////////////// --------------- Route Permission Methods Start ---------- //////////////////////////
-    // Show Route Permission
-    public function ShowRoutePermissions(Request $req){
-        $name = "Route Permission";
+    /////////////////////////// --------------- Copmany Type Permission Methods Start ---------- //////////////////////////
+    // Show Copmany Type Permission
+    public function ShowCompanyTypePermissions(Request $req){
+        $name = "Copmany Type Permission";
         if ($req->ajax()) {
-            return view('admin_setup.permission.route_permission.ajaxBlade', compact('name'));
+            return view('admin_setup.permission.company_type_permission.ajaxBlade', compact('name'));
         }
         else{
-            return view('admin_setup.permission.route_permission.routePermission', compact('name'));
+            return view('admin_setup.permission.company_type_permission.companyTypePermission', compact('name'));
         }
     } // End Method
 
 
 
-    // Search Route Permissions 
-    public function SearchRoutePermissions(){
-        $name = "Route Permission";
-        return view('admin_setup.permission.route_permission.routePermission', compact('name'));
+    // Search CopmanyType Permissions 
+    public function SearchCompanyTypePermissions(){
+        $name = "CopmanyType Permission";
+        return view('admin_setup.permission.company_type_permission.companyTypePermission', compact('name'));
     } // End Method
-    /////////////////////////// --------------- Route Permission Methods End ---------- //////////////////////////
+    /////////////////////////// --------------- Copmany Type Permission Methods End ---------- //////////////////////////
 
-    
-    
-    
 
-    /////////////////////////// --------------- Role Permission Methods Start ---------- //////////////////////////
-    // Show Role Permission
-    public function ShowRolePermissions(Request $req){
-        $name = "Role Permission";
+
+
+
+    /////////////////////////// --------------- Company Permission Methods Start ---------- //////////////////////////
+    // Show Company Permission
+    public function ShowCompanyPermissions(Request $req){
+        $name = "Company Permission";
         if ($req->ajax()) {
-            return view('admin_setup.permission.role_permission.ajaxBlade', compact('name'));
+            return view('admin_setup.permission.company_permission.ajaxBlade', compact('name'));
         }
         else{
-            return view('admin_setup.permission.role_permission.rolePermission', compact('name'));
+            return view('admin_setup.permission.company_permission.companyPermission', compact('name'));
         }
     } // End Method
 
 
 
-    // Search Role Permissions 
-    public function SearchRolePermissions(){
-        $name = "Role Permission";
-        return view('admin_setup.permission.role_permission.rolePermission', compact('name'));
+    // Search Company Permissions 
+    public function SearchCompanyPermissions(){
+        $name = "Company Permission";
+        return view('admin_setup.permission.company_permission.companyPermission', compact('name'));
     } // End Method
-    /////////////////////////// --------------- Role Permission Methods End ---------- //////////////////////////
-
-
-
-
-
+    /////////////////////////// --------------- Company Permission Methods End ---------- //////////////////////////
+    
+    
+    
+    
+    
     /////////////////////////// --------------- User Permission Methods Start ---------- //////////////////////////
     // Show User Permission
     public function ShowUserPermissions(Request $req){

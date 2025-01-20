@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\ApiValidUser;
 use App\Http\Middleware\SuperAdminAccess;
+use App\Http\Middleware\CheckPermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -20,8 +21,8 @@ use App\Http\Controllers\API\Backend\Admin_Setup\Users\SupplierController;
 // Admin Setup Permission Controllers
 use App\Http\Controllers\API\Backend\Admin_Setup\Permission\PermissionMainHeadController;
 use App\Http\Controllers\API\Backend\Admin_Setup\Permission\PermissionHeadController;
-use App\Http\Controllers\API\Backend\Admin_Setup\Permission\RoutePermissionController;
-use App\Http\Controllers\API\Backend\Admin_Setup\Permission\RolePermissionController;
+use App\Http\Controllers\API\Backend\Admin_Setup\Permission\CompanyTypePermissionController;
+use App\Http\Controllers\API\Backend\Admin_Setup\Permission\CompanyPermissionController;
 use App\Http\Controllers\API\Backend\Admin_Setup\Permission\UserPermissionController;
 
 // Admin Setup Controllers
@@ -170,8 +171,8 @@ Route::controller(ForgetPasswordController::class)->group(function () {
 Route::post('/login', [AuthController::class, 'Login'])->middleware(['web']);
 
 // Route::middleware(['auth:sanctum'])->group(function () {
-Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
-    Route::post('/logout', [AuthController::class, 'Logout'])->middleware(['web']);
+Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])->group(function () {
+    Route::post('/logout', [AuthController::class, 'Logout'])->middleware(['web'])->withoutMiddleware(CheckPermission::class);
 
 
     /////-----/////-----/////-----/////-----/////-----///// Admin Setup Routes Start /////-----/////-----/////-----/////-----/////-----/////
@@ -186,7 +187,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/companytype', 'Update');
                 Route::delete('/companytype', 'Delete');
                 Route::get('/companytype/search', 'Search');
-                Route::get('/companytype/get', 'Get');
+                Route::get('/companytype/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
 
@@ -199,7 +200,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/companies', 'Update');
                 Route::delete('/companies', 'Delete');
                 Route::get('/companies/search', 'Search');
-                Route::get('/companies/get', 'Get')->withoutMiddleware(SuperAdminAccess::class);
+                Route::get('/companies/get', 'Get')->withoutMiddleware(SuperAdminAccess::class)->withoutMiddleware(CheckPermission::class);
                 Route::get('/companies/details', 'Details');
             });
         });
@@ -217,7 +218,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                     Route::put('/roles', 'Update');
                     Route::delete('/roles', 'Delete');
                     Route::get('/roles/search', 'Search');
-                    Route::get('/roles/get', 'Get')->withoutMiddleware(SuperAdminAccess::class);
+                    Route::get('/roles/get', 'Get')->withoutMiddleware(SuperAdminAccess::class)->withoutMiddleware(CheckPermission::class);
                 });
 
 
@@ -244,32 +245,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::get('/admins/search', 'Search');
                 Route::get('/admins/details', 'Details');
             });
-            
-            
-
-            ///////////// --------------- Client Routes ----------- ///////////////////
-            Route::controller(ClientController::class)->group(function () {
-                Route::get('/clients', 'ShowAll');
-                Route::post('/clients', 'Insert');
-                Route::get('/clients/edit', 'Edit');
-                Route::put('/clients', 'Update');
-                Route::delete('/clients', 'Delete');
-                Route::get('/clients/search', 'Search');
-                Route::get('/clients/details', 'Details');
-            });
-            
-            
-
-            ///////////// --------------- Supplier Routes ----------- ///////////////////
-            Route::controller(SupplierController::class)->group(function () {
-                Route::get('/suppliers', 'ShowAll');
-                Route::post('/suppliers', 'Insert');
-                Route::get('/suppliers/edit', 'Edit');
-                Route::put('/suppliers', 'Update');
-                Route::delete('/suppliers', 'Delete');
-                Route::get('/suppliers/search', 'Search');
-                Route::get('/suppliers/details', 'Details');
-            });
         }); // End User Routes
 
 
@@ -285,7 +260,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                     Route::put('/mainhead', 'Update');
                     Route::delete('/mainhead', 'Delete');
                     Route::get('/mainhead/search', 'Search');
-                    Route::get('/mainhead/get', 'Get')->withoutMiddleware(SuperAdminAccess::class);
+                    Route::get('/mainhead/get', 'Get')->withoutMiddleware(SuperAdminAccess::class)->withoutMiddleware(CheckPermission::class);
                 });
                 
                 
@@ -298,32 +273,36 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                     Route::put('/', 'Update');
                     Route::delete('/', 'Delete');
                     Route::get('/search', 'Search');
-                    Route::get('/get', 'Get')->withoutMiddleware(SuperAdminAccess::class);
+                    Route::get('/get', 'Get')->withoutMiddleware(SuperAdminAccess::class)->withoutMiddleware(CheckPermission::class);
                 });
                 
                 
                 
-                ///////////// --------------- Route Permission Routes ----------- ///////////////////
-                Route::controller(RoutePermissionController::class)->group(function () {
-                    Route::get('/routepermissions', 'ShowAll');
-                    Route::get('/routepermissions/edit', 'Edit');
-                    Route::put('/routepermissions', 'Update');
-                    Route::get('/routepermissions/search', 'Search');
+                ///////////// --------------- Company Type Permissions Routes ----------- ///////////////////
+                Route::controller(CompanyTypePermissionController::class)->group(function () {
+                    Route::get('/company_type_permissions', 'ShowAll');
+                    Route::get('/company_type_permissions/edit', 'Edit');
+                    Route::put('/company_type_permissions', 'Update');
+                    Route::get('/company_type_permissions/search', 'Search');
+                });
+                
+                
+                
+                ///////////// --------------- Company Permissions Routes ----------- ///////////////////
+                Route::controller(CompanyPermissionController::class)->group(function () {
+                    Route::get('/company_permissions', 'ShowAll');
+                    Route::get('/company_permissions/edit', 'Edit');
+                    Route::put('/company_permissions', 'Update');
+                    Route::get('/company_permissions/search', 'Search');
+                    // Copy Permission
+                    Route::put('/company_permissions/copy', 'Copy');
+                    Route::get('/company_permissions/from', 'UserFrom');
+                    Route::get('/company_permissions/to', 'UserTo');
                 });
             });
             
             
             
-            ///////////// --------------- Role Permission Routes ----------- ///////////////////
-            Route::controller(RolePermissionController::class)->group(function () {
-                Route::get('/rolepermissions', 'ShowAll');
-                Route::get('/rolepermissions/edit', 'Edit');
-                Route::put('/rolepermissions', 'Update');
-                Route::get('/rolepermissions/search', 'Search');
-            });
-
-
-
             ///////////// --------------- User Permission Routes ----------- ///////////////////
             Route::controller(UserPermissionController::class)->group(function () {
                 Route::get('/userpermissions', 'ShowAll');
@@ -342,12 +321,12 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
         // *************************************** Bank Controller Start *************************************** //
         Route::controller(BankController::class)->group(function () {
             Route::get('/banks', 'ShowAll');
-            Route::post('/banks', 'Insert');
-            Route::get('/banks/edit', 'Edit');
-            Route::put('/banks', 'Update');
-            Route::delete('/banks', 'Delete');
+            Route::post('/banks', 'Insert')->middleware(SuperAdminAccess::class);
+            Route::get('/banks/edit', 'Edit')->middleware(SuperAdminAccess::class);
+            Route::put('/banks', 'Update')->middleware(SuperAdminAccess::class);
+            Route::delete('/banks', 'Delete')->middleware(SuperAdminAccess::class);
             Route::get('/banks/search', 'Search');
-            Route::get('/banks/get', 'Get');
+            Route::get('/banks/get', 'Get')->withoutMiddleware(CheckPermission::class);
             Route::get('/banks/details', 'Details');
         });
 
@@ -356,28 +335,29 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
         // *************************************** Location Controller Start *************************************** //
         Route::controller(LocationController::class)->group(function () {
             Route::get('/locations', 'ShowAll');
-            Route::post('/locations', 'Insert');
-            Route::get('/locations/edit', 'Edit');
-            Route::put('/locations', 'Update');
-            Route::delete('/locations', 'Delete');
+            Route::post('/locations', 'Insert')->middleware(SuperAdminAccess::class);
+            Route::get('/locations/edit', 'Edit')->middleware(SuperAdminAccess::class);
+            Route::put('/locations', 'Update')->middleware(SuperAdminAccess::class);
+            Route::delete('/locations', 'Delete')->middleware(SuperAdminAccess::class);
             Route::get('/locations/search', 'Search');
-            Route::get('/locations/get', 'Get');
-            Route::get('/locations/get/division', 'GetLocationByDivision');
+            Route::get('/locations/get', 'Get')->withoutMiddleware(CheckPermission::class);
+            Route::get('/locations/get/division', 'GetLocationByDivision')->withoutMiddleware(CheckPermission::class);
         });
         
 
 
-        // *************************************** Main Head Routes Start *************************************** //
-        Route::controller(MainHeadController::class)->group(function () {
-            Route::get('/mainheads', 'ShowAll');
-            Route::post('/mainheads', 'Insert');
-            Route::get('/mainheads/edit', 'Edit');
-            Route::put('/mainheads', 'Update');
-            Route::delete('/mainheads', 'Delete');
-            Route::get('/mainheads/search', 'Search');
-            Route::get('/mainheads/get', 'Get');
+        Route::middleware([SuperAdminAccess::class])->group(function () {
+            // *************************************** Main Head Routes Start *************************************** //
+            Route::controller(MainHeadController::class)->group(function () {
+                Route::get('/mainheads', 'ShowAll');
+                Route::post('/mainheads', 'Insert');
+                Route::get('/mainheads/edit', 'Edit');
+                Route::put('/mainheads', 'Update');
+                Route::delete('/mainheads', 'Delete');
+                Route::get('/mainheads/search', 'Search');
+                Route::get('/mainheads/get', 'Get')->withoutMiddleware(SuperAdminAccess::class)->withoutMiddleware(CheckPermission::class);
+            });
         });
-        
         
 
         // *************************************** Store Routes Start *************************************** //
@@ -388,47 +368,41 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
             Route::put('/stores', 'Update');
             Route::delete('/stores', 'Delete');
             Route::get('/stores/search', 'Search');
-            Route::get('/stores/get', 'Get');
+            Route::get('/stores/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
         
 
 
         // *************************************** Tranwith Routes Start *************************************** //
         Route::controller(TranWithController::class)->group(function () {
-            Route::get('/tranwith', 'ShowAll');
-            Route::post('/tranwith', 'Insert');
-            Route::get('/tranwith/edit', 'Edit');
-            Route::put('/tranwith', 'Update');
-            Route::delete('/tranwith', 'Delete');
-            Route::get('/tranwith/search', 'Search');
-            Route::get('/tranwith/get', 'Get');
+            Route::get('/tranwith/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
         
 
 
         // *************************************** TranGroupe Routes Start *************************************** //
         Route::controller(TranGroupController::class)->group(function () {
-            Route::get('/trangroupes', 'ShowAll');
-            Route::post('/trangroupes', 'Insert');
-            Route::get('/trangroupes/edit', 'Edit');
-            Route::put('/trangroupes', 'Update');
-            Route::delete('/trangroupes', 'Delete');
-            Route::get('/trangroupes/search', 'Search');
-            Route::get('/trangroupes/get', 'Get');
-            Route::get('/trangroupes/get/type', 'GetByType');
+            Route::get('/trangroupes', 'ShowAll')->middleware(SuperAdminAccess::class);
+            Route::post('/trangroupes', 'Insert')->middleware(SuperAdminAccess::class);
+            Route::get('/trangroupes/edit', 'Edit')->middleware(SuperAdminAccess::class);
+            Route::put('/trangroupes', 'Update')->middleware(SuperAdminAccess::class);
+            Route::delete('/trangroupes', 'Delete')->middleware(SuperAdminAccess::class);
+            Route::get('/trangroupes/search', 'Search')->middleware(SuperAdminAccess::class);
+            Route::get('/trangroupes/get', 'Get')->withoutMiddleware(CheckPermission::class);
+            Route::get('/trangroupes/get/type', 'GetByType')->withoutMiddleware(CheckPermission::class);
         });
         
 
 
         // *************************************** TranHead Routes Start *************************************** //
         Route::controller(TranHeadController::class)->group(function () {
-            Route::get('/tranheads', 'ShowAll');
-            Route::post('/tranheads', 'Insert');
-            Route::get('/tranheads/edit', 'Edit');
-            Route::put('/tranheads', 'Update');
-            Route::delete('/tranheads', 'Delete');
-            Route::get('/tranheads/search', 'Search');
-            Route::get('/tranheads/get', 'Get');
+            Route::get('/tranheads', 'ShowAll')->middleware(SuperAdminAccess::class);
+            Route::post('/tranheads', 'Insert')->middleware(SuperAdminAccess::class);
+            Route::get('/tranheads/edit', 'Edit')->middleware(SuperAdminAccess::class);
+            Route::put('/tranheads', 'Update')->middleware(SuperAdminAccess::class);
+            Route::delete('/tranheads', 'Delete')->middleware(SuperAdminAccess::class);
+            Route::get('/tranheads/search', 'Search')->middleware(SuperAdminAccess::class);
+            Route::get('/tranheads/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
     });
 
@@ -528,37 +502,12 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
 
 
             // Common Transaction Related Routes
-            Route::get('/get/user', 'GetUser');
-            Route::get('/get/transactiongrid', 'GetTransactionGrid');
-            Route::get('/get/batch', 'GetBatch');
-            Route::get('/get/batch/details', 'GetBatchDetails');
-            Route::get('/get/product/stock', 'GetProductStock');
-        }); // End GeneralTransactionController 
-
-
-
-        // *************************************** Bank Transaction Routes Start *************************************** //
-        Route::controller(BankTransactionController::class)->group(function () {
-            Route::prefix('/bank')->group(function () {
-                ///////////// --------------- Bank Withdraw Routes ----------- ///////////////////
-                Route::get('/withdraw', 'ShowAllWithdraws');
-                Route::post('/withdraw', 'Insert');
-                Route::get('/withdraw/edit', 'Edit');
-                Route::put('/withdraw', 'Update');
-                Route::delete('/withdraw', 'Delete');
-                Route::get('/withdraw/search', 'Search');
-
-
-
-                ///////////// --------------- Bank Deposit Routes ----------- ///////////////////
-                Route::get('/deposit', 'ShowAllDeposits');
-                Route::post('/deposit', 'Insert');
-                Route::get('/deposit/edit', 'Edit');
-                Route::put('/deposit', 'Update');
-                Route::delete('/deposit', 'Delete');
-                Route::get('/deposit/search', 'Search');
-            });
-        }); // End BankTransactionController 
+            Route::get('/get/user', 'GetUser')->withoutMiddleware(CheckPermission::class);
+            Route::get('/get/transactiongrid', 'GetTransactionGrid')->withoutMiddleware(CheckPermission::class);
+            Route::get('/get/batch', 'GetBatch')->withoutMiddleware(CheckPermission::class);
+            Route::get('/get/batch/details', 'GetBatchDetails')->withoutMiddleware(CheckPermission::class);
+            Route::get('/get/product/stock', 'GetProductStock')->withoutMiddleware(CheckPermission::class);
+        }); // End GeneralTransactionController  
 
 
 
@@ -583,9 +532,34 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::get('/payment/search', 'Search');
 
                 // Common Routes
-                Route::get('/get/due', 'GetDueList');
+                Route::get('/get/due', 'GetDueList')->withoutMiddleware(CheckPermission::class);
             });
         }); // End PartyTransactionController
+
+
+
+        // *************************************** Bank Transaction Routes Start *************************************** //
+        Route::controller(BankTransactionController::class)->group(function () {
+            Route::prefix('/bank')->group(function () {
+                ///////////// --------------- Bank Withdraw Routes ----------- ///////////////////
+                Route::get('/withdraw', 'ShowAllWithdraws');
+                Route::post('/withdraw', 'Insert');
+                Route::get('/withdraw/edit', 'Edit');
+                Route::put('/withdraw', 'Update');
+                Route::delete('/withdraw', 'Delete');
+                Route::get('/withdraw/search', 'Search');
+
+
+
+                ///////////// --------------- Bank Deposit Routes ----------- ///////////////////
+                Route::get('/deposit', 'ShowAllDeposits');
+                Route::post('/deposit', 'Insert');
+                Route::get('/deposit/edit', 'Edit');
+                Route::put('/deposit', 'Update');
+                Route::delete('/deposit', 'Delete');
+                Route::get('/deposit/search', 'Search');
+            });
+        }); // End BankTransactionController
     }); // End Transaction Routes
 
     /////-----/////-----/////-----/////-----/////-----///// Transaction Routes End /////-----/////-----/////-----/////-----/////-----/////
@@ -606,7 +580,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/departments', 'Update');
                 Route::delete('/departments', 'Delete');
                 Route::get('/departments/search', 'Search');
-                Route::get('/department/get', 'Get');
+                Route::get('/department/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
 
@@ -619,7 +593,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/designations', 'Update');
                 Route::delete('/designations', 'Delete');
                 Route::get('/designations/search', 'Search');
-                Route::get('/designation/get', 'Get');
+                Route::get('/designation/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
         });
 
@@ -781,37 +755,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 // Route::put('/process', 'Update');
                 // Route::delete('/process', 'Delete');
                 Route::get('/process/search', 'Search');
-                Route::get('/get', 'Get');
+                Route::get('/get', 'Get')->withoutMiddleware(CheckPermission::class);
                 // Route::get('/get/data', 'GetByDate');
             });
         }); // End HR Payroll Routes
-
-
-
-        // *************************************** Party Transaction Routes Start *************************************** //
-        Route::controller(PartyTransactionController::class)->group(function () {
-            Route::prefix('/party')->group(function () {
-                ///////////// --------------- Receive From Client Routes ----------- ///////////////////
-                Route::get('/receive', 'ShowAll');
-                Route::post('/receive', 'Insert');
-                Route::get('/receive/edit', 'Edit');
-                // Route::put('/receive', 'Update');
-                // Route::delete('/receive', 'Delete');
-                Route::get('/receive/search', 'Search');
-
-
-                ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
-                Route::get('/payment', 'ShowAll');
-                Route::post('/payment', 'Insert');
-                Route::get('/payment/edit', 'Edit');
-                // Route::put('/payment', 'Update');
-                // Route::delete('/payment', 'Delete');
-                Route::get('/payment/search', 'Search');
-
-                // Common Routes
-                Route::get('/get/due', 'GetDueList');
-            });
-        }); // End PartyTransactionController
 
 
 
@@ -844,18 +791,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
     Route::prefix('/inventory')->group(function () {
         // *************************************** Inventory Setup Routes Start *************************************** //
         Route::prefix('/setup')->group(function () {
-            // *************************************** Inventory User Type Routes Start *************************************** //
-            // Route::controller(TranWithController::class)->group(function () {
-            //     Route::get('/usertype', 'ShowAll');
-            //     Route::post('/usertype', 'Insert');
-            //     Route::get('/usertype/edit', 'Edit');
-            //     Route::put('/usertype', 'Update');
-            //     Route::delete('/usertype', 'Delete');
-            //     Route::get('/usertype/search', 'Search');
-            // });
-
-
-
             ///////////// --------------- Inventory Manufacturer Routes ----------- ///////////////////
             Route::controller(InventoryManufacturerController::class)->group(function () {
                 Route::get('/manufacturer', 'ShowAll');
@@ -864,7 +799,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/manufacturer', 'Update');
                 Route::delete('/manufacturer', 'Delete');
                 Route::get('/manufacturer/search', 'Search');
-                Route::get('/manufacturer/get',  'Get');
+                Route::get('/manufacturer/get',  'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
@@ -877,7 +812,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/category', 'Update');
                 Route::delete('/category', 'Delete');
                 Route::get('/category/search', 'Search');
-                Route::get('/category/get', 'Get');
+                Route::get('/category/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
@@ -890,7 +825,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/unit', 'Update');
                 Route::delete('/unit', 'Delete');
                 Route::get('/unit/search', 'Search');
-                Route::get('/unit/get', 'Get');
+                Route::get('/unit/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
@@ -903,7 +838,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/form', 'Update');
                 Route::delete('/form', 'Delete');
                 Route::get('/form/search', 'Search');
-                Route::get('/form/get', 'Get');
+                Route::get('/form/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
@@ -928,8 +863,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/product', 'Update');
                 Route::delete('/product', 'Delete');
                 Route::get('/product/search', 'Search');
-                Route::get('/product/get', 'Get');
-                Route::get('/product/get/list', 'GetProductList');
+                Route::get('/product/get', 'Get')->withoutMiddleware(CheckPermission::class);
+                Route::get('/product/get/list', 'GetProductList')->withoutMiddleware(CheckPermission::class);
             });
         }); // End Inventory Setup Routes
 
@@ -1077,7 +1012,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::get('/payment/search', 'Search');
 
                 // Common Routes
-                Route::get('/get/due', 'GetDueList');
+                Route::get('/get/due', 'GetDueList')->withoutMiddleware(CheckPermission::class);
             });
         }); // End PartyTransactionController
 
@@ -1232,7 +1167,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/manufacturer', 'Update');
                 Route::delete('/manufacturer', 'Delete');
                 Route::get('/manufacturer/search', 'Search');
-                Route::get('/manufacturer/get', 'Get');
+                Route::get('/manufacturer/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
@@ -1245,7 +1180,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/category', 'Update');
                 Route::delete('/category', 'Delete');
                 Route::get('/category/search', 'Search');
-                Route::get('/category/get', 'Get');
+                Route::get('/category/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
@@ -1258,7 +1193,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/unit', 'Update');
                 Route::delete('/unit', 'Delete');
                 Route::get('/unit/search', 'Search');
-                Route::get('/unit/get', 'Get');
+                Route::get('/unit/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
@@ -1271,7 +1206,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/form', 'Update');
                 Route::delete('/form', 'Delete');
                 Route::get('/form/search', 'Search');
-                Route::get('/form/get', 'Get');
+                Route::get('/form/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
@@ -1296,8 +1231,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::put('/product', 'Update');
                 Route::delete('/product', 'Delete');
                 Route::get('/product/search', 'Search');
-                Route::get('/product/get', 'Get');
-                Route::get('/product/get/list', 'GetProductList');
+                Route::get('/product/get', 'Get')->withoutMiddleware(CheckPermission::class);
+                Route::get('/product/get/list', 'GetProductList')->withoutMiddleware(CheckPermission::class);
             });
         }); // End Pharmacy Setup Routes
 
@@ -1444,7 +1379,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class])->group(function () {
                 Route::get('/payment/search', 'Search');
 
                 // Common Routes
-                Route::get('/get/due', 'GetDueList');
+                Route::get('/get/due', 'GetDueList')->withoutMiddleware(CheckPermission::class);
             });
         }); // End PartyTransactionController
 

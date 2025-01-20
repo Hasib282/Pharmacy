@@ -56,6 +56,7 @@ class TranHeadController extends Controller
         Transaction_Head::on('mysql')->insert([
             "tran_head_name" => $req->headName,
             "groupe_id" => $req->groupe,
+            "company_id" => $req->company,
         ]);
         
         return response()->json([

@@ -125,28 +125,28 @@ class Login_User extends Authenticatable
     }
 
     // Check If User has permission to the routes
-    public function hasPermissionToRoute($route){
-        if($this->user_role == 1){
-            return true;
-        }
+    // public function hasPermissionToRoute($route){
+    //     if($this->user_role == 1){
+    //         return true;
+    //     }
 
-        $cacheKey = "route_permissions_{$this->user_id}";
+    //     $cacheKey = "route_permissions_{$this->user_id}";
 
-        $permissions = Cache::get($cacheKey);
+    //     $permissions = Cache::get($cacheKey);
 
-        // If not cached, fetch from the database and store in cache
-        if (!$permissions) {
-            $permissions = Permission_User::where('user_id', $this->user_id)
-                ->with('permission.routes') // Fetch related routes if needed
-                ->get()
-                ->flatMap(function ($permission) {
-                    return $permission->permission->routes->pluck('route_name');
-                })->unique()->toArray();
+    //     // If not cached, fetch from the database and store in cache
+    //     if (!$permissions) {
+    //         $permissions = Permission_User::where('user_id', $this->user_id)
+    //             ->with('permission.routes') // Fetch related routes if needed
+    //             ->get()
+    //             ->flatMap(function ($permission) {
+    //                 return $permission->permission->routes->pluck('route_name');
+    //             })->unique()->toArray();
 
-            Cache::put($cacheKey, $permissions, now()->addHours(3000));
-        }
-        return in_array($route, $permissions);
-    } // End Method
+    //         Cache::put($cacheKey, $permissions, now()->addHours(3000));
+    //     }
+    //     return in_array($route, $permissions);
+    // } // End Method
 
 
     // Check If User has specific permission id

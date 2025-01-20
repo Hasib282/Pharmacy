@@ -125,6 +125,21 @@
                             style="width:150px; height:150px;">
                     </div>
                 </div>
+
+                @if ($name == "Admin") 
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="store">Store <span class="required" title="Required">*</span></label>
+                            <input type="text" name="store" class="form-input" id="store" autocomplete="off">
+                            <div id="store-list">
+                                <ul>
+
+                                </ul>
+                            </div>
+                            <span class="error" id="store_error"></span>
+                        </div>
+                    </div>
+                @endif
                 
                 @if ($name == "Admin")
                     @if (auth()->user()->user_role == 1)

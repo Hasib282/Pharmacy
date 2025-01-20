@@ -64,6 +64,7 @@ class PersonalDetailsController extends Controller
                 "password" => Hash::make($req->password),
                 "image" => $imageName,
                 "company_id" =>  $req->company,
+                "store_id" =>  $req->store,
             ]);
 
 
@@ -83,6 +84,7 @@ class PersonalDetailsController extends Controller
                 "password" => Hash::make($req->password),
                 "address" => $req->address,
                 "image" => $imageName,
+                "store_id" =>  $req->store,
             ]); 
 
             

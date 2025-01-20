@@ -53,8 +53,9 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('admin/tranheads', ShowTranHead, {}, function() {
+    InsertAjax('admin/tranheads', ShowTranHead, {company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#headName').focus();
+        $('#company').removeAttr('data-id');
     });
 
 

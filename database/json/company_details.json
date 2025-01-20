@@ -1,12 +1,14 @@
 [
-    {"id":"CO000000001", "name":"ABC Pharmacy",          "email":"abcpharmacy@gmail.com",         "phone":"01316754891",     "address":"Banasree, Dhaka",            "type":1},
-    {"id":"CO000000002", "name":"XYZ Pharmacy",          "email":"xyzpharmacy@gmail.com",         "phone":"01316754892",     "address":"Badda, Dhaka",               "type":1},
-    {"id":"CO000000003", "name":"ABC Inventory",         "email":"abcinventory@gmail.com",        "phone":"01316754893",     "address":"Dhanmondi, Dhaka",           "type":2},
-    {"id":"CO000000004", "name":"XYZ Inventory",         "email":"xyzinventory@gmail.com",        "phone":"01316754894",     "address":"Motijhil, Dhaka",            "type":2},
-    {"id":"CO000000005", "name":"ABC Diagnostic Center", "email":"abcdiagnostic@gmail.com",       "phone":"01316754895",     "address":"Arambag, Dhaka",             "type":3},
-    {"id":"CO000000006", "name":"XYZ Diagnostic Center", "email":"xyzdiagnostic@gmail.com",       "phone":"01316754896",     "address":"Valuka, Mymensingh",         "type":3},
-    {"id":"CO000000007", "name":"ABC Hospital",          "email":"abchospital@gmail.com",         "phone":"01316754897",     "address":"Norail, Mymensingh",         "type":4},
-    {"id":"CO000000008", "name":"XYZ Hospital",          "email":"xyzhospital@gmail.com",         "phone":"01316754898",     "address":"Sahrasti, Chandpur",         "type":4},
-    {"id":"CO000000009", "name":"ABC Resturant",         "email":"abcresturant@gmail.com",        "phone":"01316754899",     "address":"Kandirpar, Cumilla",         "type":5},
-    {"id":"CO000000010", "name":"XYZ Resturant",         "email":"xyzresturant@gmail.com",        "phone":"01316754810",     "address":"Kalibari more, Chandpur",    "type":5}
+    {"id":"CO000000001", "name":"Bank Bima Arthonity",   "email":"bankbimaarthonity@gmail.com",   "phone":"01316754881",     "address":"Banasree, Dhaka",            "type":1},
+    {"id":"CO000000002", "name":"General Company",       "email":"generalcompany@gmail.com",      "phone":"01316754871",     "address":"Banasree, Dhaka",            "type":1},
+    {"id":"CO000000003", "name":"ABC Pharmacy",          "email":"abcpharmacy@gmail.com",         "phone":"01316754891",     "address":"Banasree, Dhaka",            "type":2},
+    {"id":"CO000000004", "name":"XYZ Pharmacy",          "email":"xyzpharmacy@gmail.com",         "phone":"01316754892",     "address":"Badda, Dhaka",               "type":2},
+    {"id":"CO000000005", "name":"ABC Inventory",         "email":"abcinventory@gmail.com",        "phone":"01316754893",     "address":"Dhanmondi, Dhaka",           "type":3},
+    {"id":"CO000000006", "name":"XYZ Inventory",         "email":"xyzinventory@gmail.com",        "phone":"01316754894",     "address":"Motijhil, Dhaka",            "type":3},
+    {"id":"CO000000007", "name":"ABC Diagnostic Center", "email":"abcdiagnostic@gmail.com",       "phone":"01316754895",     "address":"Arambag, Dhaka",             "type":4},
+    {"id":"CO000000008", "name":"XYZ Diagnostic Center", "email":"xyzdiagnostic@gmail.com",       "phone":"01316754896",     "address":"Valuka, Mymensingh",         "type":4},
+    {"id":"CO000000009", "name":"ABC Hospital",          "email":"abchospital@gmail.com",         "phone":"01316754897",     "address":"Norail, Mymensingh",         "type":5},
+    {"id":"CO000000010", "name":"XYZ Hospital",          "email":"xyzhospital@gmail.com",         "phone":"01316754898",     "address":"Sahrasti, Chandpur",         "type":5},
+    {"id":"CO000000011", "name":"ABC Resturant",         "email":"abcresturant@gmail.com",        "phone":"01316754899",     "address":"Kandirpar, Cumilla",         "type":6},
+    {"id":"CO000000012", "name":"XYZ Resturant",         "email":"xyzresturant@gmail.com",        "phone":"01316754810",     "address":"Kalibari more, Chandpur",    "type":6}
 ]

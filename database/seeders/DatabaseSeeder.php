@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             BankInfoSeeder::class,
             PermissionMainHeadSeeder::class,
             PermissionHeadSeeder::class,
-            RoutePermissionSeeder::class,
+            // RoutePermissionSeeder::class,
             
             // Client Side Setup Seeder
             StoreSeeder::class,

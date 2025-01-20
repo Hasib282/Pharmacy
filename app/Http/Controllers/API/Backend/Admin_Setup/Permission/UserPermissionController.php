@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Backend\Admin_Setup\Permission;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Cache;
 
 use App\Models\Role;
 use App\Models\Login_User;
@@ -59,6 +60,20 @@ class UserPermissionController extends Controller
         $user = Login_User::on('mysql')->where('user_id',$req->user)->first();
 
         $user->permissions()->sync($req->permissions);
+
+        // Update User Pemissions Cache
+        $user_data = Login_User::on('mysql')->with('permissions')->where('user_id',$req->user)->first();
+
+        Cache::forget("permission_mainheads_{$req->user}");
+        Cache::forget("permission_ids_{$req->user}");
+
+        Cache::rememberForever("permission_mainheads_{$req->user}", function () use ($user_data) {
+            return $user_data->permissions->pluck('permission_mainhead')->unique()->toArray();
+        });
+        
+        Cache::rememberForever("permission_ids_{$req->user}", function () use ($user_data) {
+            return $user_data->permissions->pluck('id')->unique()->toArray();
+        });
         
         return response()->json([
             'status'=> true,

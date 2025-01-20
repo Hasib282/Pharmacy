@@ -17,7 +17,10 @@ class SuperAdminAccess
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user()->user_role != 1) {
-            return back()->with('message', 'You don\'t have permisson to this route.')->with('status', 403);
+            return response()->json([
+                'status' => false,
+                'message' => 'You don\'t have permisson to this route.',
+            ], 403);
         }
         else {
             return $next($request);

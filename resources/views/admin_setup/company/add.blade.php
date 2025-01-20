@@ -48,6 +48,13 @@
                         <span class="error" id="address_error"></span>
                     </div>
                 </div>
+                <div class="c-6">
+                    <div class="form-input-group">
+                        <label for="website">Website</label>
+                        <input type="text" name="website" class="form-input" id="website">
+                        <span class="error" id="website_error"></span>
+                    </div>
+                </div>
                 
                 <div class="c-6">
                     <div class="form-input-group">

@@ -19,6 +19,7 @@ class AccountSummaryController extends Controller
         return Transaction_Detail::on('mysql_second')
         ->with('Groupe', 'Head')
         ->select(
+            'tran_date', 
             'tran_head_id', 
             'tran_groupe_id', 
             DB::raw('SUM(receive) as total_receive'), 
@@ -26,8 +27,8 @@ class AccountSummaryController extends Controller
         )
         ->where('tran_type', $tranType)
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
-        ->orderBy('tran_groupe_id', 'asc')
-        ->groupBy('tran_head_id','tran_groupe_id')
+        ->orderBy('tran_date', 'asc')
+        ->groupBy('tran_head_id','tran_groupe_id','tran_date')
         ->get();
     } // End Method
 
@@ -90,6 +91,7 @@ class AccountSummaryController extends Controller
             // })
             ->whereIn('tran_groupe_id', $groupes)
             ->select(
+                'tran_date', 
                 'tran_head_id', 
                 'tran_groupe_id', 
                 DB::raw('SUM(receive) as total_receive'), 
@@ -97,8 +99,8 @@ class AccountSummaryController extends Controller
             )
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_type', $tranType)
-            ->orderBy('tran_groupe_id', 'asc')
-            ->groupBy('tran_head_id','tran_groupe_id')
+            ->orderBy('tran_date', 'asc')
+            ->groupBy('tran_head_id','tran_groupe_id','tran_date')
             ->get();
         }
         else if($req->searchOption == 2){
@@ -114,6 +116,7 @@ class AccountSummaryController extends Controller
             // })
             ->whereIn('tran_head_id', $heads)
             ->select(
+                'tran_date', 
                 'tran_head_id', 
                 'tran_groupe_id', 
                 DB::raw('SUM(receive) as total_receive'), 
@@ -121,8 +124,8 @@ class AccountSummaryController extends Controller
             )
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_type', $tranType)
-            ->orderBy('tran_groupe_id', 'asc')
-            ->groupBy('tran_head_id','tran_groupe_id')
+            ->orderBy('tran_date', 'asc')
+            ->groupBy('tran_head_id','tran_groupe_id', 'tran_date')
             ->get();
         }
         

@@ -42,8 +42,9 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('pharmacy/setup/groupes', ShowTranGroupe, {type: 6, method: 'Both'}, function() {
+    InsertAjax('pharmacy/setup/groupes', ShowTranGroupe, {company: { selector: "#company", attribute: 'data-id' }, type: 6, method: 'Both'}, function() {
         $('#groupeName').focus();
+        $('#company').removeAttr('data-id');
     });
 
 

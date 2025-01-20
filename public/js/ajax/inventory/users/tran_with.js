@@ -44,8 +44,9 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('inventory/users/usertype', ShowTranWith, {tranType: 5}, function() {
+    InsertAjax('inventory/users/usertype', ShowTranWith, {tranType: 5, company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#name').focus();
+        $('#company').removeAttr('data-id');
     });
 
 

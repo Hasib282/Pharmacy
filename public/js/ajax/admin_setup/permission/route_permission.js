@@ -51,7 +51,7 @@ $(document).ready(function () {
 
 
     // Update Ajax
-    UpdateAjax('admin/permission/routepermissions', ShowPermissionMainheads, {}, function() {
+    UpdateAjax('admin/permission/routepermissions', ShowPermissionMainheads, { }, function() {
         $('#select-all').prop('checked', false);
     });
 
@@ -74,8 +74,8 @@ $(document).ready(function () {
             $('#route-container').append(`
                 <div class="c-4">
                     <label for="routes-${route['name']}">
-                        <input type="checkbox" id="routes-${route['name']}" class="route" name="routes[]" value="${route['name']}" ${res.permissionroute.includes(route['name']) ? 'checked' : ''} } />
-                        ${route['uri']}
+                        <input type="checkbox" id="routes-${route['name']}" class="route" name="routes[]" value="${route['uri']}" data-methods="${route['methods']}" ${res.permissionroute.includes(route['uri']) ? 'checked' : ''} } />
+                        [${route['methods']}] ${route['uri']} 
                     </label>
                 </div>
             `);

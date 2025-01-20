@@ -28,6 +28,7 @@ class PharmacyFormController extends Controller
  
         Item_Form::on('mysql')->insert([
             'form_name' => $req->name,
+            'company_id' => $req->company,
             'type_id'=> '6',
         ]);
         

@@ -42,8 +42,9 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/payroll/heads', ShowTranHead, {groupe: 1}, function() {
+    InsertAjax('hr/payroll/heads', ShowTranHead, {groupe: 1, company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#headName').focus();
+        $('#company').removeAttr('data-id');
     });
 
 

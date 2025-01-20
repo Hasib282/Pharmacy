@@ -35,6 +35,7 @@ return new class extends Migration
             $table->float('party_amount')->nullable();
             $table->string('batch_id')->nullable();
             $table->timestamp('tran_date')->useCurrent();
+            $table->unsignedBigInteger('store_id')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');
             $table->timestamp('updated_at')->nullable();
             
@@ -46,6 +47,8 @@ return new class extends Migration
         //     $table->foreign('tran_head_id')->references('id')->on('transaction__heads')
         //             ->onUpdate('cascade');
             $table->foreign('tran_user')->references('user_id')->on('user__infos')
+                    ->onUpdate('cascade');
+            $table->foreign('store_id')->references('id')->on('stores')
                     ->onUpdate('cascade');
         });
     }

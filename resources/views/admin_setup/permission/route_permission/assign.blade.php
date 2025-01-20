@@ -18,7 +18,7 @@
             </label>
             <input type="hidden" name="permission" id="permission">
             <div class="form-input-group">
-                <div class="row" id="route-container">
+                <div class="rows" id="route-container">
 
                 </div>
             </div>

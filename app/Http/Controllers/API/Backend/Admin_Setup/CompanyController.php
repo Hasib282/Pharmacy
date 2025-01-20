@@ -51,6 +51,7 @@ class CompanyController extends Controller
                 "company_phone" => $req->phone,
                 "company_email" => $req->email,
                 "address" => $req->address,
+                "website" => $req->website,
                 "logo" => $imageName,
             ]);
         });
@@ -96,6 +97,7 @@ class CompanyController extends Controller
                 "company_phone" => $req->phone,
                 "company_email" => $req->email,
                 "address" => $req->address,
+                "website" => $req->website,
                 "logo" => $imageName,
                 "updated_at" => now(),
             ]);

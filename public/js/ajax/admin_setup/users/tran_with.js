@@ -59,8 +59,9 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('admin/tranwith', ShowTranWith, {}, function() {
+    InsertAjax('admin/tranwith', ShowTranWith, { company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#name').focus();
+        $('#company').removeAttr('data-id');
     });
 
 

@@ -46,7 +46,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('admin/users/admins', ShowAdmins, {company: { selector: '#company', attribute: 'data-id' }}, function() {
+    InsertAjax('admin/users/admins', ShowAdmins, {company: { selector: '#company', attribute: 'data-id' }, store: { selector: '#store', attribute: 'data-id' }}, function() {
         $('#name').focus();
         $('#location').removeAttr('data-id');
     });

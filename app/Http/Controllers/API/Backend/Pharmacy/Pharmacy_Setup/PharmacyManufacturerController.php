@@ -28,6 +28,7 @@ class PharmacyManufacturerController extends Controller
  
         Item_Manufacturer::on('mysql')->insert([
             'manufacturer_name' => $req->name,
+            'company_id' => $req->company,
             'type_id'=> '6',
         ]);
         

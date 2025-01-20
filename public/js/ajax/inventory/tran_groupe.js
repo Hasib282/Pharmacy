@@ -42,8 +42,9 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('inventory/setup/groupes', ShowTranGroupe, {type: 5, method: 'Both'}, function() {
+    InsertAjax('inventory/setup/groupes', ShowTranGroupe, {company: { selector: "#company", attribute: 'data-id' }, type: 5, method: 'Both'}, function() {
         $('#groupeName').focus();
+        $('#company').removeAttr('data-id');
     });
 
 

@@ -42,8 +42,9 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/employee/usertype', ShowTranWith, {tranType: 3, tranMethod: 'Both', role: 3}, function() {
+    InsertAjax('hr/employee/usertype', ShowTranWith, {company: { selector: "#company", attribute: 'data-id' }, tranType: 3, tranMethod: 'Both', role: 3}, function() {
         $('#name').focus();
+        $('#company').removeAttr('data-id');
     });
 
 

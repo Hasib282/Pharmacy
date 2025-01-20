@@ -145,18 +145,18 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
 
 
 
-                ///////////// --------------- Role Permission routes ----------- ///////////////////
-                Route::get('/rolepermissions', 'ShowRolePermissions')->name('show.rolePermissions');
-                Route::get('/rolepermissions/search', 'SearchRolePermissions')->name('search.rolePermissions');
-
-
-
-                ///////////// --------------- Route Permission routes ----------- ///////////////////
-                Route::get('/routepermissions', 'ShowRoutePermissions')->name('show.routePermissions');
-                Route::get('/routepermissions/search', 'SearchRoutePermissions')->name('search.routePermissions');
+                ///////////// --------------- Company Type Permission routes ----------- ///////////////////
+                Route::get('/company_type_permissions', 'ShowCompanyTypePermissions')->name('show.companyTypePermissions');
+                Route::get('/company_type_permissions/search', 'SearchCompanyTypePermissions')->name('search.companyTypePermissions');
                 
-
-
+                
+                
+                ///////////// --------------- Company Permission routes ----------- ///////////////////
+                Route::get('/company_permissions', 'ShowCompanyPermissions')->name('show.companyPermissions');
+                Route::get('/company_permissions/search', 'SearchCompanyPermissions')->name('search.companyPermissions');
+                
+                
+                
                 ///////////// --------------- User Permission routes ----------- ///////////////////
                 Route::get('/userpermissions', 'ShowUserPermissions')->name('show.userPermissions');
                 Route::get('/userpermissions/search', 'SearchUserPermissions')->name('search.userPermissions');
@@ -277,20 +277,7 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
 
             Route::get('/payment', 'ShowTransactionPayment')->name('show.transactionPayment');
             Route::get('/payment/search', 'SearchTransaction')->name('search.transactionPayment');
-        }); // End GeneralTransactionController 
-
-
-
-        // *************************************** Bank Transaction Routes Start *************************************** //
-        Route::controller(BankTransactionController::class)->group(function () {
-            Route::prefix('/bank')->group(function () {
-                Route::get('/withdraw', 'ShowBankWithdraws')->name('show.withdraws');
-                Route::get('/withdraw/search', 'SearchBankTransactions')->name('search.withdraws');
-
-                Route::get('/deposit', 'ShowBankDeposits')->name('show.deposits');
-                Route::get('/deposit/search', 'SearchBankTransactions')->name('search.deposits');
-            }); // End Bank Transaction Route
-        }); // End BankTransactionController 
+        }); // End GeneralTransactionController  
 
 
 
@@ -304,6 +291,19 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 Route::get('/payment/search', 'SearchParty')->name('search.partyPayment');
             }); // End Party Transaction Routres
         }); // End PartyTransactionController
+
+
+
+        // *************************************** Bank Transaction Routes Start *************************************** //
+        Route::controller(BankTransactionController::class)->group(function () {
+            Route::prefix('/bank')->group(function () {
+                Route::get('/withdraw', 'ShowBankWithdraws')->name('show.withdraws');
+                Route::get('/withdraw/search', 'SearchBankTransactions')->name('search.withdraws');
+
+                Route::get('/deposit', 'ShowBankDeposits')->name('show.deposits');
+                Route::get('/deposit/search', 'SearchBankTransactions')->name('search.deposits');
+            }); // End Bank Transaction Route
+        }); // End BankTransactionController
     }); // End Transaction Routes
 
     /////-----/////-----/////-----/////-----/////-----///// Transaction Controllers End /////-----/////-----/////-----/////-----/////-----/////
@@ -438,20 +438,6 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 Route::get('/salary/details/search', 'SearchSalaryDetailsReport')->name('search.salaryDetailsReport');
             });
         }); // End Hr Report Routes
-
-
-
-
-        // *************************************** HR Party Transaction Routes Start *************************************** //
-        Route::controller(PartyTransactionController::class)->group(function () {
-            Route::prefix('/party')->group(function () {
-                Route::get('/receive', 'ShowPartyReceive')->name('show.hrPartyReceive');
-                Route::get('/receive/search', 'SearchParty')->name('search.hrPartyReceive');
-
-                Route::get('/payment', 'ShowPartyPayment')->name('show.hrPartyPayment');
-                Route::get('/payment/search', 'SearchParty')->name('search.hrPartyPayment');
-            }); // End Party Transaction Routres
-        }); // End PartyTransactionController
     }); // End HR Routes 
 
     /////-----/////-----/////-----/////-----/////-----///// HR Controllers End /////-----/////-----/////-----/////-----/////-----/////

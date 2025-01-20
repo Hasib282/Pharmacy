@@ -15,6 +15,22 @@
                 <input type="text" name="name" class="form-input" id="name">
                 <span class="error" id="name_error"></span>
             </div>
+
+            @if ( auth()->user()->user_role == 1 && (Request::segment(1) == 'pharmacy' || Request::segment(1) == 'inventory') )
+                <div class="form-input-group">
+                    <label for="company">Company <span class="required" title="Required">*</span></label>
+                    <input type="text" name="company" class="form-input" id="company" autocomplete="off">
+                    <div id="company-list">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <span class="error" id="company_error"></span>
+                </div>
+            @elseif(Request::segment(1) == 'pharmacy' || Request::segment(1) == 'inventory')
+                <input type="text" name="company" class="form-input" id="company" data-id="{{auth()->user()->company_id}}" style="display: none">
+            @endif
+
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Submit</button>
             </div>

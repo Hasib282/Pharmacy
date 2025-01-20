@@ -28,6 +28,7 @@ class PharmacyUnitController extends Controller
 
         Item_Unit::on('mysql')->insert([
             'unit_name' => $req->name,
+            'company_id' => $req->company,
             'type_id'=> '6',
         ]);
         

@@ -67,6 +67,7 @@ $(document).ready(function () {
             form : { selector: '#form', attribute: 'data-id' },
             unit : { selector: '#unit', attribute: 'data-id' },
             store : { selector: '#store', attribute: 'data-id' },
+            company: { selector: "#company", attribute: 'data-id' },
         },
         function() {
             $('#productName').focus();
@@ -75,6 +76,7 @@ $(document).ready(function () {
             $('#form').removeAttr('data-id');
             $('#unit').removeAttr('data-id');
             $('#store').removeAttr('data-id');
+            $('#company').removeAttr('data-id');
         }
     );
 

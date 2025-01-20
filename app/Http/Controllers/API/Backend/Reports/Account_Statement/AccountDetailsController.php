@@ -18,7 +18,7 @@ class AccountDetailsController extends Controller
             ->with('Groupe', 'Head')
             ->where('tran_type', $tranType)
             ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
-            ->orderBy('tran_id', 'asc')
+            ->orderBy('tran_date', 'asc')
             ->get();
     } // End Method
 
@@ -69,7 +69,7 @@ class AccountDetailsController extends Controller
         ->with('Groupe', 'Head')
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
         ->where('tran_type', $tranType)
-        ->orderBy('tran_id', 'asc')
+        ->orderBy('tran_date', 'asc')
         ->get();
     } // End Method
 

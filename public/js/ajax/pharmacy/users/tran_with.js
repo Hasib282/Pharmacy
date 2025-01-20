@@ -44,8 +44,9 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('pharmacy/users/usertype', ShowTranWith, {tranType: 6}, function() {
+    InsertAjax('pharmacy/users/usertype', ShowTranWith, {company: { selector: "#company", attribute: 'data-id' }, tranType: 6}, function() {
         $('#name').focus();
+        $('#company').removeAttr('data-id');
     });
 
 

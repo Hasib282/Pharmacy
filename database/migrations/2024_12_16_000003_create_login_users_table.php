@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('image')->nullable();
             $table->string('company_id')->nullable();
+            $table->unsignedBigInteger('store_id')->nullable()->comment('stores');
             $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken()->nullable();

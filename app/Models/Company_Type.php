@@ -11,4 +11,8 @@ class Company_Type extends Model
     protected $guarded = [];
     
     public $timestamps = false;
+
+    public function permissions(){
+        return $this->belongsToMany(Permission_Head::class, 'permission__company__types', 'company_type_id', 'permission_id', 'id', 'id');
+    }
 }

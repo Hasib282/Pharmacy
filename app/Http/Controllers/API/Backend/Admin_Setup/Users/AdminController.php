@@ -58,6 +58,7 @@ class AdminController extends Controller
                 "user_role" =>  2,
                 "password" => Hash::make($req->password),
                 "image" => $imageName,
+                "store_id" =>  $req->store,
                 "company_id" =>  $req->company,
             ]);
             
@@ -71,6 +72,7 @@ class AdminController extends Controller
                 "user_role" =>  2,
                 "password" => Hash::make($req->password),
                 "image" => $imageName,
+                "store_id" =>  $req->store,
             ]);
         });
         

@@ -46,6 +46,21 @@
                     <span class="error" id="method_error"></span>
                 </div>
             @endif
+            
+            @if (auth()->user()->user_role == 1)
+                <div class="form-input-group">
+                    <label for="company">Company <span class="required" title="Required">*</span></label>
+                    <input type="text" name="company" class="form-input" id="company" autocomplete="off">
+                    <div id="company-list">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <span class="error" id="company_error"></span>
+                </div>
+            @else
+                <input type="text" name="company" class="form-input" id="company" data-id="{{auth()->user()->company_id}}" style="display: none">
+            @endif
 
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Submit</button>

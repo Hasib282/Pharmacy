@@ -1,4 +1,5 @@
 [
+    { "name": "General Company" },
     { "name": "Pharmacy" },
     { "name": "Inventory" },
     { "name": "Hospital" },

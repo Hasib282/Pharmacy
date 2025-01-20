@@ -194,6 +194,19 @@
                         <input type="text" name="company" class="form-input" id="company" data-id="{{auth()->user()->company_id}}" style="display: none">
                     </div>
                 @endif
+                
+                <div class="c-4">
+                    <div class="form-input-group">
+                        <label for="store">Store <span class="required" title="Required">*</span></label>
+                        <input type="text" name="store" class="form-input" id="store" autocomplete="off">
+                        <div id="store-list">
+                            <ul>
+
+                            </ul>
+                        </div>
+                        <span class="error" id="store_error"></span>
+                    </div>
+                </div>
             </div>
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Save</button>

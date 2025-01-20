@@ -63,6 +63,7 @@ class PharmacyProductsController extends Controller
             "manufacturer_id" => $req->manufacturer,
             "form_id" => $req->form,
             "unit_id" => $req->unit,
+            'company_id' => $req->company,
         ]);
         
         return response()->json([

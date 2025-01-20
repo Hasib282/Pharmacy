@@ -27,12 +27,15 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('password')->nullable();
             $table->string('image')->nullable();
+            $table->unsignedBigInteger('store_id')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
             
             // Foreignkey Decleration
             $table->foreign('tran_user_type')->references('id')->on('transaction__withs')
+                    ->onUpdate('cascade');
+            $table->foreign('store_id')->references('id')->on('stores')
                     ->onUpdate('cascade');
         });
     }
