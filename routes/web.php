@@ -74,7 +74,9 @@ use App\Http\Controllers\Frontend\Report\BalanceSheetController;
 // Route::get('/', function () {
 //     return view('layouts.layout')->name('dashboard');
 // });
-
+Route::get('/link', function(){
+    Artisan::call('storage:link');
+});
 
 
 // Don't Give Access to this routes if user is not valid
