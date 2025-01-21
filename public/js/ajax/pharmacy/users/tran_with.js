@@ -35,6 +35,8 @@ function ShowTranWith(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+
     // Load Data on Hard Reload
     ReloadData('pharmacy/users/usertype', ShowTranWith);
     
@@ -44,7 +46,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('pharmacy/users/usertype', ShowTranWith, {company: { selector: "#company", attribute: 'data-id' }, tranType: 6}, function() {
+    InsertAjax('pharmacy/users/usertype', ShowTranWith, {tranType: 6}, function() {
         $('#name').focus();
         $('#company').removeAttr('data-id');
     });

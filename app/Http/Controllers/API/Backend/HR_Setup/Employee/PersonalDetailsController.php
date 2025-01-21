@@ -57,6 +57,7 @@ class PersonalDetailsController extends Controller
 
             Login_User::on('mysql')->insert([
                 "user_id" => $empId,
+                "company_user_id" => $id,
                 "user_name" => $req->name,
                 "user_phone" => $req->phn_no,
                 "user_email" => $req->email,

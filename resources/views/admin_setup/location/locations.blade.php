@@ -8,9 +8,9 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                {{-- @if(auth()->user()->hasPermissionToRoute('insert.locations')) --}}
-                <button class="open-modal add" data-modal-id="addModal">Add Location</button>
-                {{-- @endif --}}
+                @if (Auth::user()->user_role == 1)
+                    <button class="open-modal add" data-modal-id="addModal">Add Location</button>
+                @endif
             </div>
             <div class="c-9 search">
                 <select name="searchOption" id="searchOption" class="select-small">
@@ -42,11 +42,12 @@
 
         <div class="center paginate" id="paginate"></div>
     </div>
+    @if (Auth::user()->user_role == 1)
+        @include('admin_setup.location.add')
 
-    @include('admin_setup.location.add')
-
-    @include('admin_setup.location.edit')
-
+        @include('admin_setup.location.edit')
+    @endif
+    
     @include('common_modals.delete')
 
     {{-- ajax part start from here --}}

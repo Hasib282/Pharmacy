@@ -35,6 +35,8 @@ function ShowStores(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+    
     // Load Data on Hard Reload
     ReloadData('admin/stores', ShowStores);
     

@@ -8,9 +8,9 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                {{-- @if(Auth::user()->hasPermissionToRoute('insert.banks')) --}}
+                @if (Auth::user()->user_role == 1)
                     <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
-                {{-- @endif --}}
+                @endif
             </div>
             <div class="c-9 search">
                 <select name="searchOption" id="searchOption" class="select-small">
@@ -50,9 +50,11 @@
     </div>
 
 
-    @include('admin_setup.bank.add')
+    @if (Auth::user()->user_role == 1)
+        @include('admin_setup.bank.add')
 
-    @include('admin_setup.bank.edit')
+        @include('admin_setup.bank.edit')
+    @endif
 
     @include('admin_setup.bank.bankDetails')
     

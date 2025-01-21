@@ -63,7 +63,6 @@ class TranWithController extends Controller
             "user_role" => $req->role,
             "tran_type" => $req->tranType,
             "tran_method" => $req->tranMethod,
-            "company_id" => $req->company,
         ]);
         
         return response()->json([

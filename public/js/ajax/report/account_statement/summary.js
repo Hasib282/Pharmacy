@@ -84,6 +84,8 @@ function ShowSummaryReports(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+    
     // Creating Select Options Dynamically
     $.ajax({
         url: `${apiUrl}/report/account/summary`,

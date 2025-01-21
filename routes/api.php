@@ -200,7 +200,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::put('/companies', 'Update');
                 Route::delete('/companies', 'Delete');
                 Route::get('/companies/search', 'Search');
-                Route::get('/companies/get', 'Get')->withoutMiddleware(SuperAdminAccess::class)->withoutMiddleware(CheckPermission::class);
+                Route::get('/companies/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 Route::get('/companies/details', 'Details');
             });
         });
@@ -218,7 +218,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::put('/roles', 'Update');
                     Route::delete('/roles', 'Delete');
                     Route::get('/roles/search', 'Search');
-                    Route::get('/roles/get', 'Get')->withoutMiddleware(SuperAdminAccess::class)->withoutMiddleware(CheckPermission::class);
+                    Route::get('/roles/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 });
 
 
@@ -260,7 +260,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::put('/mainhead', 'Update');
                     Route::delete('/mainhead', 'Delete');
                     Route::get('/mainhead/search', 'Search');
-                    Route::get('/mainhead/get', 'Get')->withoutMiddleware(SuperAdminAccess::class)->withoutMiddleware(CheckPermission::class);
+                    Route::get('/mainhead/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 });
                 
                 
@@ -273,7 +273,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::put('/', 'Update');
                     Route::delete('/', 'Delete');
                     Route::get('/search', 'Search');
-                    Route::get('/get', 'Get')->withoutMiddleware(SuperAdminAccess::class)->withoutMiddleware(CheckPermission::class);
+                    Route::get('/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 });
                 
                 
@@ -345,21 +345,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         });
         
 
-
-        Route::middleware([SuperAdminAccess::class])->group(function () {
-            // *************************************** Main Head Routes Start *************************************** //
-            Route::controller(MainHeadController::class)->group(function () {
-                Route::get('/mainheads', 'ShowAll');
-                Route::post('/mainheads', 'Insert');
-                Route::get('/mainheads/edit', 'Edit');
-                Route::put('/mainheads', 'Update');
-                Route::delete('/mainheads', 'Delete');
-                Route::get('/mainheads/search', 'Search');
-                Route::get('/mainheads/get', 'Get')->withoutMiddleware(SuperAdminAccess::class)->withoutMiddleware(CheckPermission::class);
-            });
-        });
-        
-
         // *************************************** Store Routes Start *************************************** //
         Route::controller(StoreController::class)->group(function () {
             Route::get('/stores', 'ShowAll');
@@ -373,36 +358,51 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         
 
 
-        // *************************************** Tranwith Routes Start *************************************** //
-        Route::controller(TranWithController::class)->group(function () {
-            Route::get('/tranwith/get', 'Get')->withoutMiddleware(CheckPermission::class);
-        });
-        
+        Route::middleware([SuperAdminAccess::class])->group(function () {
+            // *************************************** Main Head Routes Start *************************************** //
+            Route::controller(MainHeadController::class)->group(function () {
+                Route::get('/mainheads', 'ShowAll');
+                Route::post('/mainheads', 'Insert');
+                Route::get('/mainheads/edit', 'Edit');
+                Route::put('/mainheads', 'Update');
+                Route::delete('/mainheads', 'Delete');
+                Route::get('/mainheads/search', 'Search');
+                Route::get('/mainheads/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
+            });
 
 
-        // *************************************** TranGroupe Routes Start *************************************** //
-        Route::controller(TranGroupController::class)->group(function () {
-            Route::get('/trangroupes', 'ShowAll')->middleware(SuperAdminAccess::class);
-            Route::post('/trangroupes', 'Insert')->middleware(SuperAdminAccess::class);
-            Route::get('/trangroupes/edit', 'Edit')->middleware(SuperAdminAccess::class);
-            Route::put('/trangroupes', 'Update')->middleware(SuperAdminAccess::class);
-            Route::delete('/trangroupes', 'Delete')->middleware(SuperAdminAccess::class);
-            Route::get('/trangroupes/search', 'Search')->middleware(SuperAdminAccess::class);
-            Route::get('/trangroupes/get', 'Get')->withoutMiddleware(CheckPermission::class);
-            Route::get('/trangroupes/get/type', 'GetByType')->withoutMiddleware(CheckPermission::class);
-        });
-        
+
+            // *************************************** Tranwith Routes Start *************************************** //
+            Route::controller(TranWithController::class)->group(function () {
+                Route::get('/tranwith/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
+            });
 
 
-        // *************************************** TranHead Routes Start *************************************** //
-        Route::controller(TranHeadController::class)->group(function () {
-            Route::get('/tranheads', 'ShowAll')->middleware(SuperAdminAccess::class);
-            Route::post('/tranheads', 'Insert')->middleware(SuperAdminAccess::class);
-            Route::get('/tranheads/edit', 'Edit')->middleware(SuperAdminAccess::class);
-            Route::put('/tranheads', 'Update')->middleware(SuperAdminAccess::class);
-            Route::delete('/tranheads', 'Delete')->middleware(SuperAdminAccess::class);
-            Route::get('/tranheads/search', 'Search')->middleware(SuperAdminAccess::class);
-            Route::get('/tranheads/get', 'Get')->withoutMiddleware(CheckPermission::class);
+
+            // *************************************** TranGroupe Routes Start *************************************** //
+            Route::controller(TranGroupController::class)->group(function () {
+                Route::get('/trangroupes', 'ShowAll');
+                Route::post('/trangroupes', 'Insert');
+                Route::get('/trangroupes/edit', 'Edit');
+                Route::put('/trangroupes', 'Update');
+                Route::delete('/trangroupes', 'Delete');
+                Route::get('/trangroupes/search', 'Search');
+                Route::get('/trangroupes/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
+                Route::get('/trangroupes/get/type', 'GetByType')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
+            });
+            
+
+
+            // *************************************** TranHead Routes Start *************************************** //
+            Route::controller(TranHeadController::class)->group(function () {
+                Route::get('/tranheads', 'ShowAll');
+                Route::post('/tranheads', 'Insert');
+                Route::get('/tranheads/edit', 'Edit');
+                Route::put('/tranheads', 'Update');
+                Route::delete('/tranheads', 'Delete');
+                Route::get('/tranheads/search', 'Search');
+                Route::get('/tranheads/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
+            });
         });
     });
 

@@ -85,16 +85,16 @@ class CompanyPermissionController extends Controller
 
     // Search User Permissions
     public function Search(Request $req){
-        $userpermission = Company_Details::on('mysql')
-        ->where('user_name', 'like', '%'.$req->search.'%')
-        ->where('user_role', 'like', '%'.$req->role.'%')
+        $companypermission = Company_Details::on('mysql')
+        ->where('company_name', 'like', $req->search.'%')
+        ->where('company_type', 'like', '%'.$req->type.'%')
         ->with('permissions')
-        ->orderBy('user_name')
+        ->orderBy('company_name')
         ->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $userpermission,
+            'data' => $companypermission,
         ], 200);
     } // End Method
     
@@ -102,9 +102,10 @@ class CompanyPermissionController extends Controller
     
     // Get The User From whom you get the permission
     public function UserFrom(Request $req){
-        $froms = Company_Details::on('mysql')->select('user_name','user_id')
-        ->where('user_name', 'like', '%'.$req->from.'%')
-        ->orderBy('user_name')
+        $froms = Company_Details::on('mysql')
+        ->select('company_name','company_id')
+        ->where('company_name', 'like', $req->from.'%')
+        ->orderBy('company_name')
         ->take(10)
         ->get();
 
@@ -112,7 +113,7 @@ class CompanyPermissionController extends Controller
         if($froms->count() > 0){
             $list = "";
             foreach($froms as $index => $from) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$from->user_id.'">'.$from->user_name.'('.$from->user_id.')'.'</li>';
+                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$from->company_id.'">'.$from->company_name.'('.$from->company_id.')'.'</li>';
             }
         }
         else{
@@ -126,9 +127,10 @@ class CompanyPermissionController extends Controller
     
     // Get The User To whom you assing the permission
     public function UserTo(Request $req){
-        $tos = Company_Details::on('mysql')->select('user_name','user_id')
-        ->where('user_name', 'like', '%'.$req->to.'%')
-        ->orderBy('user_name')
+        $tos = Company_Details::on('mysql')
+        ->select('company_name','company_id')
+        ->where('company_name', 'like', $req->to.'%')
+        ->orderBy('company_name')
         ->take(10)
         ->get();
 
@@ -136,7 +138,7 @@ class CompanyPermissionController extends Controller
         if($tos->count() > 0){
             $list = "";
             foreach($tos as $index => $to) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$to->user_id.'">'.$to->user_name.'('.$to->user_id.')'.'</li>';
+                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$to->company_id.'">'.$to->company_name.'('.$to->company_id.')'.'</li>';
             }
         }
         else{
@@ -153,12 +155,12 @@ class CompanyPermissionController extends Controller
     // Copy User Permissions
     public function Copy(Request $req){
         $req->validate([
-            'from' => 'required|exists:mysql.user__infos,user_id',
-            'to' => 'required|exists:mysql.user__infos,user_id',
+            'from' => 'required|exists:mysql.company__details,company_id',
+            'to' => 'required|exists:mysql.company__details,company_id',
         ]);
 
-        $from = Company_Details::on('mysql')->where('user_id', $req->from)->first();
-        $to = Company_Details::on('mysql')->where('user_id', $req->to)->first();
+        $from = Company_Details::on('mysql')->where('company_id', $req->from)->first();
+        $to = Company_Details::on('mysql')->where('company_id', $req->to)->first();
 
         $fromPermissions = $from->permissions->pluck('id')->toArray();
 
@@ -166,7 +168,7 @@ class CompanyPermissionController extends Controller
         
         return response()->json([
             'status' => true,
-            'message' => 'User Permissions Copied Successfully'
+            'message' => 'Company Permissions Copied Successfully'
         ], 200);
     } // End Method
 }

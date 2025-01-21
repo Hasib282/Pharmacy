@@ -19,10 +19,19 @@ class AdminController extends Controller
 {
     // Show All Admins
     public function ShowAll(Request $req){
-        $admin = User_Info::on('mysql_second')
-        ->where('user_role', 2)
-        ->orderBy('added_at', 'asc')
-        ->paginate(15);
+        if(Auth::user()->user_role == 1) {
+            $admin = User_Info::on('mysql_second')
+            ->where('user_role', 2)
+            ->orderBy('added_at', 'asc')
+            ->paginate(15);
+        }
+        else{
+            $admin = User_Info::on('mysql_second')
+            ->where('company_id', Auth::user()->company_id)
+            ->where('user_role', 2)
+            ->orderBy('added_at', 'asc')
+            ->paginate(15);
+        }
 
         return response()->json([
             'status'=> true,
@@ -52,6 +61,7 @@ class AdminController extends Controller
 
             Login_User::on('mysql')->insert([
                 "user_id" => $adminId,
+                "company_user_id" => $id,
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
                 "user_email" => $req->email,
@@ -176,7 +186,13 @@ class AdminController extends Controller
         }
 
         // Execute query and paginate
-        $admins = $query->paginate(15);
+        if(Auth::user()->user_role = 1){
+            $admins = $query->paginate(15);
+        }
+        else{
+            $admins = $query->where('company_id', Auth::user()->company_id)->paginate(15);
+        }
+        
 
         return response()->json([
             'status' => true,

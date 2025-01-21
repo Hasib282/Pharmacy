@@ -12,7 +12,7 @@ class RoleController extends Controller
 {
     // Show All User Roles
     public function ShowAll(Request $req){
-        $roles = Role::on('mysql')->whereNotIn('id', ['1'])->orderBy('added_at','asc')->paginate(15);
+        $roles = Role::on('mysql')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $roles,
@@ -85,7 +85,7 @@ class RoleController extends Controller
 
     // Search User Roles
     public function Search(Request $req){
-        $roles = Role::on('mysql')->whereNotIn('id', ['1'])->where('name', 'like', '%'.$req->search.'%')
+        $roles = Role::on('mysql')->where('name', 'like', '%'.$req->search.'%')
         ->orderBy('name','asc')
         ->paginate(15);
         
@@ -99,7 +99,8 @@ class RoleController extends Controller
 
     // Get Roles
     public function Get(){
-        $roles = Role::on('mysql')->whereNotIn('id', ['1'])
+        $roles = Role::on('mysql')
+        ->whereNotIn('id', ['1'])
         ->where('name', 'like', '%'.$req->role.'%')
         ->orderBy('name')
         ->take(10)

@@ -34,6 +34,8 @@ function ShowTranHead(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+
     // Creating Select Options Dynamically
     $.ajax({
         url: `${apiUrl}/transaction/setup/heads`,
@@ -53,7 +55,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('transaction/setup/heads', ShowTranHead, {}, function() {
+    InsertAjax('transaction/setup/heads', ShowTranHead, {company: { selector: "#company", attribute: 'data-id' },}, function() {
         $('#headName').focus();
     });
 

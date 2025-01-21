@@ -41,13 +41,15 @@ function ShowCompanies(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+    
     // Creating Select Options Dynamically
     $.ajax({
         url: `${apiUrl}/admin/companies`,
         method: "GET",
         success: function (res) {
-            // let queryParams = GetQueryParams();
-            // CreateSelectOptions('#types', 'All', res.types, queryParams['type'], 'type_name')
+            let queryParams = GetQueryParams();
+            CreateSelectOptions('#companyType', 'All', res.type, queryParams['type'], 'name')
             CreateSelectOptions('#type', 'Select Company Type', res.type, null, 'name')
         },
     });
@@ -83,7 +85,11 @@ $(document).ready(function () {
 
 
     // Search Ajax
-    SearchAjax('admin/companies', ShowCompanies);
+    SearchAjax('admin/companies', ShowCompanies, {type: { selector: "#companyType"}});
+
+
+    // Search By Methods, Roles, Types
+    SearchBySelect('admin/companies', ShowCompanies, '#companyType', {type: { selector: "#companyType"}});
 
 
     // Additional Edit Functionality

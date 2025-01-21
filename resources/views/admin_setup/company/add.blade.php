@@ -61,7 +61,7 @@
                         <label for="image">Image</label>
                         <input type="file" name="image" id="image" class="form-input">
                         <span class="error" id="image_error"></span>
-                        <img src="/images/male.png" alt="Selected Image" id="previewImage"
+                        <img src="/storage/tsbd.png" alt="Selected Image" id="previewImage"
                             style="width:150; height:150;">
                     </div>
                 </div>

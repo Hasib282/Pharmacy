@@ -96,4 +96,6 @@ function CreateSelectOptions(id, defaultText, data, selectedValue = null, fieldN
 }; // End Method
 
 
-
+function CleanupEvents(eventNamespace) {
+    $(document).off(`.${eventNamespace}`);
+}

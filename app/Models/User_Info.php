@@ -94,74 +94,11 @@ class User_Info extends Model
 
     // Creating many to many relationship with permission table by creating a pivot table connection
     public function permissions(){
-        return $this->belongsToMany(Permission_Head::class, 'permission__users', 'user_id', 'permission_id', 'user_id', 'id');
+        return $this->belongsToMany(Permission_Head::class, 'permission__users', 'user_id', 'permission_id', 'login_user_id', 'id');
     }
 
     
     public function role(){
         return $this->hasOne(Role::class, 'id', 'user_role');
-    }
-    
-
-    // Check if User has Permission To the Sidebar Main Heads
-    public function hasPermissionMainHead($id){
-        if ($this->user_role == 1) {
-            return true;
-        }
-
-        $cacheKey = "permission_mainheads_{$this->user_id}";
-
-        $mainheads = Cache::get($cacheKey);
-
-        if (!$mainheads) {
-            $mainheads = $this->permissions->pluck('permission_mainhead')->unique()->toArray();
-            
-            Cache::put($cacheKey, $mainheads, now()->addHours(3000));
-        }
-        return in_array($id, $mainheads);
-    }
-
-    // Check If User has permission to the routes
-    public function hasPermissionToRoute($route){
-        if($this->user_role == 1){
-            return true;
-        }
-
-        $cacheKey = "route_permissions_{$this->user_id}";
-
-        $permissions = Cache::get($cacheKey);
-
-        // If not cached, fetch from the database and store in cache
-        if (!$permissions) {
-            $permissions = Permission_User::where('user_id', $this->user_id)
-                ->with('permission.routes') // Fetch related routes if needed
-                ->get()
-                ->flatMap(function ($permission) {
-                    return $permission->permission->routes->pluck('route_name');
-                })->unique()->toArray();
-
-            Cache::put($cacheKey, $permissions, now()->addHours(3000));
-        }
-        return in_array($route, $permissions);
-    } // End Method
-
-
-    // Check If User has specific permission id
-    public function hasPermission($id){
-        if ($this->user_role == 1) {
-            return true;
-        }
-
-        $cacheKey = "permission_ids_{$this->user_id}";
-
-        $permission = Cache::get($cacheKey);
-
-        // If not cached, fetch from the database and store in cache
-        if (!$permission) {
-            $permission = $this->permissions->pluck('id')->unique()->toArray();
-
-            Cache::put($cacheKey, $permission, now()->addHours(3000));
-        }
-        return in_array($id, $permission);
     }
 }

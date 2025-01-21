@@ -129,33 +129,29 @@ class CompanyController extends Controller
         if($req->searchOption == 1){
             $company = Company_Details::on('mysql')->with('Type')
             ->where('company_name', 'like', '%'.$req->search.'%')
+            ->where('company_type', 'like', $req->type.'%')
             ->orderBy('company_name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){
             $company = Company_Details::on('mysql')->with('Type')
             ->where('company_email', 'like', '%'.$req->search.'%')
+            ->where('company_type', 'like', $req->type.'%')
             ->orderBy('company_email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){
             $company = Company_Details::on('mysql')->with('Type')
             ->where('company_phone', 'like', '%'.$req->search.'%')
+            ->where('company_type', 'like', $req->type.'%')
             ->orderBy('company_phone','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 4){
             $company = Company_Details::on('mysql')->with('Type')
             ->where('address', 'like', '%'.$req->search.'%')
+            ->where('company_type', 'like', $req->type.'%')
             ->orderBy('address','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 5){
-            $company = Company_Details::on('mysql')->with('Type')
-            ->whereHas('Type', function ($query) use ($req) {
-                $query->where('name', 'like', '%'.$req->search.'%');
-                $query->orderBy('name','asc');
-            })
             ->paginate(15);
         }
         

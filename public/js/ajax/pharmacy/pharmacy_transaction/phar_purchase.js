@@ -32,7 +32,7 @@ function ShowPharmacyPurchases(data, startIndex) {
                                 ""
                             }
 
-                            <a class="print-receipt" href="/api/get/invoice?id=${item.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
+                            <a class="print-receipt" href="/api/get/invoice?id=${item.tran_id}&status=${params['status'] ? params['status'] : 1}"> <i class="fa-solid fa-receipt"></i></a>
 
 
                             
@@ -80,6 +80,8 @@ function ShowPharmacyPurchases(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+
     // Creating Select Options Dynamically
     $.ajax({
         url: `${apiUrl}/pharmacy/transaction/purchase`,

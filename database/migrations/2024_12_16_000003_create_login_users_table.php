@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::connection('mysql')->create('login__users', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->unique();
+            $table->string('company_user_id')->nullable();
             $table->string('user_name')->nullable();
             $table->string('user_email')->nullable();
             $table->string('user_phone')->nullable();

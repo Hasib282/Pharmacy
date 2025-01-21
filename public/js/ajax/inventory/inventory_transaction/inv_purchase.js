@@ -31,7 +31,7 @@ function ShowInventoryPurchases(data, startIndex) {
                                 :
                                 ""
                             }
-                            <a class="print-receipt" href="/api/get/invoice?id=${item.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
+                            <a class="print-receipt" href="/api/get/invoice?id=${item.tran_id}&status=${params['status'] ? params['status'] : 1}"> <i class="fa-solid fa-receipt"></i></a>
                             
                             <button class="open-modal" data-modal-id="editModal" id="edit"
                                     data-id="${item.tran_id}"><i class="fas fa-edit"></i></button>
@@ -77,6 +77,8 @@ function ShowInventoryPurchases(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+
     // Creating Select Options Dynamically
     $.ajax({
         url: `${apiUrl}/inventory/transaction/purchase`,

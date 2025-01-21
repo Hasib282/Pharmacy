@@ -7,8 +7,8 @@
 <div class="add-search">
     <div class="rows center">
         <div class="c-3">
-            <label for="role">Select Role</label>
-            <select name="role" id="role">
+            <label for="type">Select Type</label>
+            <select name="type" id="type">
                 
             </select>
         </div>

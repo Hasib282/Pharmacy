@@ -15,7 +15,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="from">From</label>
-                        <input type="text" name="from" id="from" class="form-input" placeholder="select the user from whom you want to copy" autocomplete="off">
+                        <input type="text" name="from" id="from" class="form-input" placeholder="select the company from whom you want to copy" autocomplete="off">
                         <div id='from-list'>
                             <ul>
         
@@ -27,7 +27,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="to">To</label>
-                        <input type="text" name="to" id="to" class="form-input" placeholder="select the user whom you want to assign" autocomplete="off">
+                        <input type="text" name="to" id="to" class="form-input" placeholder="select the company whom you want to assign" autocomplete="off">
                         <div id='to-list'>
                             <ul>
         

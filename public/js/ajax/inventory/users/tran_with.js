@@ -35,6 +35,8 @@ function ShowTranWith(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+
     // Load Data on Hard Reload
     ReloadData('inventory/users/usertype', ShowTranWith);
     
@@ -44,7 +46,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('inventory/users/usertype', ShowTranWith, {tranType: 5, company: { selector: "#company", attribute: 'data-id' }}, function() {
+    InsertAjax('inventory/users/usertype', ShowTranWith, {tranType: 5}, function() {
         $('#name').focus();
         $('#company').removeAttr('data-id');
     });

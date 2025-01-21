@@ -22,30 +22,12 @@ function UpdateSearchParameters(data) {
 
 
 
-//////////////////// -------------------- Update The Search Parameters Value Ajax Part Start -------------------- ////////////////////
-function LoadSearchData(url, RenderData, data) {
-    let updatedData = UpdateSearchParameters(data);
-    // let newUrl = `${window.location.origin}/${url}/search?${$.param(updatedData)}`;
-    // history.pushState(null, '', newUrl);
-    // if($('#print').length){
-    //     let parsedUrl = new URL(newUrl);
-    //     let pathname = parsedUrl.pathname;
-    //     pathname = pathname.replace(/\/search$/, '/print');
-    //     newUrl = `${parsedUrl.origin}/api${pathname}${parsedUrl.search}`;
-    //     $('#print').attr('href', newUrl)
-    // }
-    LoadBackendData(`${apiUrl}/${url}/search`, RenderData, updatedData);
-} // End Method
-
-
-
-
-
 //////////////////// -------------------- Search Ajax Part Start -------------------- ////////////////////
 function SearchAjax(url, RenderData, data={}){
     $(document).off('keyup', '#search').on('keyup', '#search', function (e) {
         e.preventDefault();
-        LoadSearchData(url, RenderData, data);
+        let updatedData = UpdateSearchParameters(data);
+        LoadBackendData(`${apiUrl}/${url}/search`, RenderData, updatedData);
     });
 }; // End Method
 
@@ -57,7 +39,8 @@ function SearchAjax(url, RenderData, data={}){
 function SearchByDateAjax(url, RenderData, data={}){
     $(document).off('change', '#startDate, #endDate').on('change', '#startDate, #endDate', function(e){
         e.preventDefault();
-        LoadSearchData(url, RenderData, data);
+        let updatedData = UpdateSearchParameters(data);
+        LoadBackendData(`${apiUrl}/${url}/search`, RenderData, updatedData);
     });
 }; // End Method
 
@@ -67,9 +50,10 @@ function SearchByDateAjax(url, RenderData, data={}){
 
 //////////////////// -------------------- Search By Select Input Change Ajax Part Start -------------------- ////////////////////
 function SearchBySelect(url, RenderData, id, data={}){
-    $(document).off('change', id).on('change', id, function(e){
+    $(document).off('change.SearchBySelect', id).on('change.SearchBySelect', id, function(e){
         e.preventDefault();
-        LoadSearchData(url, RenderData, data);
+        let updatedData = UpdateSearchParameters(data);
+        LoadBackendData(`${apiUrl}/${url}/search`, RenderData, updatedData);
     });
 }; // End Method
 

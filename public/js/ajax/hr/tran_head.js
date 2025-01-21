@@ -33,6 +33,8 @@ function ShowTranHead(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+    
     // Load Data on Hard Reload
     ReloadData('hr/payroll/heads', ShowTranHead);
     

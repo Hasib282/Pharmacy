@@ -36,6 +36,8 @@ function ShowTranWith(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+    
     // Creating Select Options Dynamically
     $.ajax({
         url: `${apiUrl}/admin/tranwith`,

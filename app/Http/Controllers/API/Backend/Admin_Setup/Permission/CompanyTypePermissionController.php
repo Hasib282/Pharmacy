@@ -32,7 +32,7 @@ class CompanyTypePermissionController extends Controller
         ->get()
         ->groupBy('permission_mainhead');
 
-        dd(Cache::get("permission_ids_{$req->id}"));
+        // dd(Cache::get("permission_ids_{$req->id}"));
 
         return response()->json([
             'status'=> true,
@@ -81,7 +81,7 @@ class CompanyTypePermissionController extends Controller
     // Search Role Permissions
     public function Search(Request $req){
         $companytypepermission = Company_Type::on('mysql')
-        ->where('name', 'like', '%'.$req->search.'%')
+        ->where('name', 'like', $req->search.'%')
         ->with('permissions')
         ->orderBy('name')
         ->get();

@@ -13,7 +13,7 @@ $(document).ready(function () {
         let from = $('#from').attr('data-id');
         let to = $('#to').attr('data-id');
         $.ajax({
-            url: `${apiUrl}/admin/permission/userpermissions/copy`,
+            url: `${apiUrl}/admin/permission/company_permissions/copy`,
             method: 'PUT',
             data: { from, to },
             beforeSend:function() {
@@ -26,7 +26,7 @@ $(document).ready(function () {
                     $('#to').removeAttr('data-id');
                     $('#from').focus();
                     $('#search').val('');
-                    ReloadData('admin/permission/userpermissions', ShowUserPermissions);
+                    ReloadData('admin/permission/company_permissions', ShowCompanyPermissions);
                     toastr.success(res.message, 'Copy!');
                 }
             }
@@ -176,7 +176,7 @@ $(document).ready(function () {
     // Search From User by Upazila
     function getFromUserByName(from, targetElement1) {
         $.ajax({
-            url: `${apiUrl}/admin/permission/companypermissions/from`,
+            url: `${apiUrl}/admin/permission/company_permissions/from`,
             method: 'GET',
             data: { from },
             success: function (res) {
@@ -329,7 +329,7 @@ $(document).ready(function () {
     // Search To User by Upazila
     function getToUserByName(to, targetElement1) {
         $.ajax({
-            url: `${apiUrl}/admin/permission/companypermissions/to`,
+            url: `${apiUrl}/admin/permission/company_permissions/to`,
             method: 'GET',
             data: { to },
             success: function (res) {

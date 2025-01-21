@@ -34,6 +34,8 @@ function ShowTranGroupe(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+
     // Load Data on Hard Reload
     ReloadData('transaction/setup/groupes', ShowTranGroupe);
     
@@ -43,7 +45,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('transaction/setup/groupes', ShowTranGroupe, {type: 1}, function() {
+    InsertAjax('transaction/setup/groupes', ShowTranGroupe, {company: { selector: "#company", attribute: 'data-id' },type: 1}, function() {
         $('#groupeName').focus();
     });
 

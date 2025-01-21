@@ -1,4 +1,4 @@
-function ShowUserPermissions(data, startIndex) {
+function ShowCompanyPermissions(data, startIndex) {
     let tableRows = '';
 
     if(data.length > 0){
@@ -43,6 +43,8 @@ function ShowUserPermissions(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+    
     // Creating Select Options Dynamically
     $.ajax({
         url: `${apiUrl}/admin/permission/company_permissions`,
@@ -55,7 +57,7 @@ $(document).ready(function () {
 
 
     // Load Data on Hard Reload
-    ReloadData('admin/permission/company_permissions', ShowUserPermissions);
+    ReloadData('admin/permission/company_permissions', ShowCompanyPermissions);
 
 
     //Edit Ajax
@@ -63,21 +65,21 @@ $(document).ready(function () {
 
 
     // Update Ajax
-    UpdateAjax('admin/permission/company_permissions', ShowUserPermissions, {}, function() {
+    UpdateAjax('admin/permission/company_permissions', ShowCompanyPermissions, {}, function() {
         $('#select-all').prop('checked', false);
     });
 
 
     // Pagination Ajax
-    PaginationAjax(ShowUserPermissions);
+    PaginationAjax(ShowCompanyPermissions);
 
 
     // Search Ajax
-    SearchAjax('admin/permission/company_permissions', ShowUserPermissions, {type: { selector: "#type"}});
+    SearchAjax('admin/permission/company_permissions', ShowCompanyPermissions, {type: { selector: "#type"}});
 
 
     // Search By Methods, Roles, Types
-    SearchBySelect('admin/permission/company_permissions', ShowUserPermissions, '#type', {type: { selector: "#type"}});
+    SearchBySelect('admin/permission/company_permissions', ShowCompanyPermissions, '#type', {type: { selector: "#type"}});
 
 
     // Additional Edit Functionality

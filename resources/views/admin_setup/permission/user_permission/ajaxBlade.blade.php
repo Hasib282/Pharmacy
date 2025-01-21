@@ -34,6 +34,9 @@
             <tr>
                 <th>SL:</th>
                 <th>User Id</th>
+                @if (Auth::user()->user_role == 1)
+                    <th>Company Name</th>
+                @endif
                 <th>User Name</th>
                 <th>Permissions</th>
                 <th>Action</th>

@@ -62,7 +62,7 @@
                         <label for="updateImage">Image</label>
                         <input type="file" name="image" class="form-input" id="updateImage">
                         <span class="error" id="update_image_error"></span>
-                        <img src="/images/male.png" alt="Selected Image" id="updatePreviewImage"
+                        <img src="/storage/tsbd.png" alt="Selected Image" id="updatePreviewImage"
                             style="width:150px; height:150px;">
                     </div>
                 </div>

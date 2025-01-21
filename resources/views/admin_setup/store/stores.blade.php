@@ -28,7 +28,7 @@
                 </select>
             </div>
             <div class="c-2">
-                <label for="searchOption">Option</label>
+                <label for="searchOption">Search Option</label>
                 <select name="searchOption" id="searchOption">
                     <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Store Name</option>
                     <option value="2" {{ $searchOptionValue == '2' ? 'selected' : '' }}>Location </option>

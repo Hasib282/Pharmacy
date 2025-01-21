@@ -26,18 +26,12 @@ class TranGroupController extends Controller
             $groupes = Transaction_Groupe::on('mysql')
             ->with('Type')
             ->whereIn('tran_groupe_type', [$type])
-            ->where(function ($query) {
-                $query->whereNull('company_id')->orWhere('company_id', auth()->user()->company_id);
-            })
             ->orderBy('added_at')
             ->paginate(15);
         }
         else{
             $groupes = Transaction_Groupe::on('mysql')
             ->with('Type')
-            ->where(function ($query) {
-                $query->whereNull('company_id')->orWhere('company_id', auth()->user()->company_id);
-            })
             ->orderBy('added_at')
             ->paginate(15);
         }
@@ -129,7 +123,6 @@ class TranGroupController extends Controller
     // Search Transaction Group
     public function Search(Request $req){
         $groupes = Transaction_Groupe::on('mysql')
-        
         ->with('Type')
         ->where('tran_groupe_name', 'like', '%'.$req->search.'%')
         ->where('tran_groupe_type', 'like', '%'.$req->type.'%')

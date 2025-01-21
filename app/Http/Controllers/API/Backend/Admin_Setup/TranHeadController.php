@@ -133,9 +133,21 @@ class TranHeadController extends Controller
 
     // Search Transaction Heads
     public function Search(Request $req){
+        $segments = [
+            'transaction' => 1,
+            'hr' => 3,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        $type = $segments[$req->segment(2)] ?? null;
+
         if($req->searchOption == 1){
             $heads = Transaction_Head::on('mysql')
             ->with('Groupe')
+            ->whereHas('Groupe', function ($query) use ($req, $type) {
+                $query->whereIn('tran_groupe_type', [$type]);
+            })
             ->where('tran_head_name', 'like', '%'.$req->search.'%')
             ->orderBy('tran_head_name')
             ->paginate(15);
@@ -143,7 +155,11 @@ class TranHeadController extends Controller
         else if($req->searchOption == 2){
             $heads = Transaction_Head::on('mysql')
             ->with('Groupe')
-            ->whereHas('Groupe', function ($query) use ($req) {
+            ->whereHas('Groupe', function ($query) use ($req, $type) {
+                
+            })
+            ->whereHas('Groupe', function ($query) use ($req, $type) {
+                $query->whereIn('tran_groupe_type', [$type]);
                 $query->where('tran_groupe_name', 'like', '%' . $req->search . '%');
                 $query->orderBy('tran_groupe_name');
             })

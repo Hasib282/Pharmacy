@@ -75,6 +75,8 @@ function ShowPartyDetailsReports(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+    
     // Load Data on Hard Reload
     ReloadData('report/party/details', ShowPartyDetailsReports);
 

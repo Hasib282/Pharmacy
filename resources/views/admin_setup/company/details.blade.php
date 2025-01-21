@@ -4,7 +4,7 @@
     <div class="general">
         <div class="details-head">
             <div class="image-round">
-                <img src="/storage/logos/{{$company->logo !== null ? $company->logo : 'tsbd.png' }}" alt="" height="100px" width="100px">
+                <img src="/storage/{{$company->logo !== null ? $company->logo : 'tsbd.png' }}" alt="" height="100px" width="100px">
             </div> 
             <div class="highlight">
                 <span class="name"> {{$company->company_name}} </span><br>
@@ -30,6 +30,10 @@
             <div class="rows each-row"> 
                 <div class="c-2 bold">Address</div>
                 <div class="c-10">{{$company->address}}</div>
+            </div>
+            <div class="rows each-row"> 
+                <div class="c-2 bold">Website</div>
+                <div class="c-10">{{$company->website}}</div>
             </div>
         </div>
     </div>

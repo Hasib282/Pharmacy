@@ -15,7 +15,13 @@ function ShowUserPermissions(data, startIndex) {
             tableRows += `
                 <tr>
                     <td style="width: 4%;">${startIndex + key + 1}</td>
-                    <td style="width: 10%;">${item.user_id}</td>
+                    ${item.auth_user_role == 1 ? 
+                        `<td style="width: 10%;">${item.user_id}</td>` : `<td style="width: 10%;">${item.company_user_id}</td>`
+                    }
+                    
+                    ${item.auth_user_role == 1 ? 
+                        `<td style="width: 10%;">${item.company.company_name}</td>` : ""
+                    }
                     <td style="width: 20%;">${item.user_name}</td>
                     <td class="truncate-text">
                         ${permissionNames}
@@ -43,6 +49,8 @@ function ShowUserPermissions(data, startIndex) {
 
 
 $(document).ready(function () {
+    CleanupEvents('SearchBySelect');
+    
     // Creating Select Options Dynamically
     $.ajax({
         url: `${apiUrl}/admin/permission/userpermissions`,

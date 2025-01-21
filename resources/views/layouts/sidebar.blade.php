@@ -5,7 +5,8 @@
                 <img src="{{ rtrim(env('API_URL'), '/api') }}/storage/{{ auth()->user()->image != null ? auth()->user()->image : (auth()->user()->gender == 'female' ? 'female.png' : 'male.png') }}" alt="">
             </div>
             <div class="user-name">
-                <strong>{{ auth()->user()->user_name }}</strong>
+                <strong>{{ auth()->user()->user_name }}</strong> <br>
+                <strong style="color:#00aaffcf;">{{ auth()->user()->role->name }}</strong>
             </div>
         </div>
     {{-- </a> --}}
@@ -112,7 +113,7 @@
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'mainhead') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-user-secret"></i>
-                                            Permission Main Head
+                                            Main Head
                                         </p>
                                     </div>
                                 </li>
@@ -121,7 +122,7 @@
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == '') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-user-secret"></i>
-                                            Permission Heads
+                                            Heads
                                         </p>
                                     </div>
                                 </li>
@@ -130,7 +131,7 @@
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'company_type_permissions') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-user-secret"></i>
-                                            Company Type Permissions
+                                            Company Type
                                         </p>
                                     </div>
                                 </li>
@@ -139,7 +140,7 @@
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'company_permissions') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-user-secret"></i>
-                                            Company Permissions
+                                            Company
                                         </p>
                                     </div>
                                 </li>
@@ -182,7 +183,7 @@
                             
                     @if(auth()->user()->hasPermission(9))
                         <li class="sub-menu-item" data-url="{{route('show.stores')}}">
-                            <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'store') ? 'active':''}}">
+                            <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'stores') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-shop"></i>
                                     Store Details
