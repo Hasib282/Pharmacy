@@ -21,7 +21,7 @@ class AccountStatementController extends Controller
             return view('reports.account_statement.summary.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.account_statement.summary.accountSummary', compact('name', 'js'));
+            return view('reports.account_statement.summary.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -31,7 +31,7 @@ class AccountStatementController extends Controller
     public function SearchAccountSummaryStatement(Request $req) {
         $name = "Account Summary Statement";
         $js = 'report/account_statement/summary';
-        return view('reports.account_statement.summary.accountSummary', compact('name', 'js'));
+        return view('reports.account_statement.summary.main', compact('name', 'js'));
     } // End Method
 
 
@@ -47,7 +47,7 @@ class AccountStatementController extends Controller
             return view('reports.account_statement.summary_groupe.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.account_statement.summary_groupe.accountSummaryGroupe', compact('name', 'js'));
+            return view('reports.account_statement.summary_groupe.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -57,7 +57,7 @@ class AccountStatementController extends Controller
     public function SearchAccountSummaryGroupeStatement(Request $req) {
         $name = "Account Summary By Groupe Statement";
         $js = 'report/account_statement/summary_groupe';
-        return view('reports.account_statement.summary_groupe.accountSummaryGroupe', compact('name', 'js'));
+        return view('reports.account_statement.summary_groupe.main', compact('name', 'js'));
     } // End Method
 
 
@@ -73,7 +73,7 @@ class AccountStatementController extends Controller
             return view('reports.account_statement.details.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.account_statement.details.accountDetails', compact('name', 'js'));
+            return view('reports.account_statement.details.main', compact('name', 'js'));
         }
     } //End Method
 
@@ -83,6 +83,6 @@ class AccountStatementController extends Controller
     public function SearchAccountDetailsStatement(Request $req) {
         $name = "Account Details Statement";
         $js = 'report/account_statement/details';
-        return view('reports.account_statement.details.accountDetails', compact('name', 'js'));
+        return view('reports.account_statement.details.main', compact('name', 'js'));
     } // End Method
 }

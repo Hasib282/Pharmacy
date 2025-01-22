@@ -37,7 +37,7 @@ function ShowSalarySummary(data, startIndex) {
 
 
 $(document).ready(function () {
-    CleanupEvents('SearchBySelect');
+    $(document).off(`.${'SearchBySelect'}`);
     
     // Load Data on Hard Reload
     ReloadData('hr/report/salary/summary', ShowSalarySummary);

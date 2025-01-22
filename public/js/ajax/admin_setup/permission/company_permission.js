@@ -43,7 +43,7 @@ function ShowCompanyPermissions(data, startIndex) {
 
 
 $(document).ready(function () {
-    CleanupEvents('SearchBySelect');
+    $(document).off(`.${'SearchBySelect'}`);
     
     // Creating Select Options Dynamically
     $.ajax({

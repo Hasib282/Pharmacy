@@ -1,36 +1,3 @@
-{{-- @section('style')
-    <style>
-        .modal-subject {
-            width: 80%;
-        }
-
-        .designation {
-            color: #0af7b7f5;
-            font-size: 20px;
-        }
-
-        .payroll table {
-            margin: 20px 0;
-        }
-
-        .show-table td,
-        th {
-            border: 1px solid #4f4a4a63;
-        }
-
-        .add-search .row {
-            justify-content: center;
-        }
-
-        .search {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-    </style>
-@endsection --}}
-
-
 @php
     $searchValue = request()->query('search');
     $searchOptionValue = request()->query('searchOption');
@@ -81,7 +48,7 @@
 </div>
 
 
-@include('hr.employee_info.employeeDetails')
+@include('common_modals.detailsModal')
 
 @include('common_modals.delete')
 

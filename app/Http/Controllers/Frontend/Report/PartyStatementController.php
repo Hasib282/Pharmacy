@@ -20,7 +20,7 @@ class PartyStatementController extends Controller
             return view('reports.party_statement.party_summary.ajaxBlade');
         }
         else{
-            return view('reports.party_statement.party_summary.party_summary_report');
+            return view('reports.party_statement.party_summary.main');
         }
     }
 
@@ -30,7 +30,7 @@ class PartyStatementController extends Controller
     public function SearchPartySummaryReport(Request $req){
         $name = "Positive Adjustment";
         $js = 'pharmacy/adjustment/positive_adjustment';
-        return view('reports.party_statement.party_summary.party_summary_report');
+        return view('reports.party_statement.party_summary.main');
     }
 
 
@@ -46,7 +46,7 @@ class PartyStatementController extends Controller
             return view('reports.party_statement.party_details.ajaxBlade');
         }
         else{
-            return view('reports.party_statement.party_details.party_details_report');
+            return view('reports.party_statement.party_details.main');
         }
     }
 
@@ -56,6 +56,6 @@ class PartyStatementController extends Controller
     public function SearchPartyDetailsReport(Request $req){
         $name = "Positive Adjustment";
         $js = 'pharmacy/adjustment/positive_adjustment';
-        return view('reports.party_statement.party_details.party_details_report');
+        return view('reports.party_statement.party_details.main');
     }
 }

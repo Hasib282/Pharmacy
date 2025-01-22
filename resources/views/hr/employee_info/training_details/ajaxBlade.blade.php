@@ -56,7 +56,7 @@
 
 @include('hr.employee_info.training_details.add')
 
-@include('hr.employee_info.employeeDetails')
+@include('common_modals.detailsModal')
 
 @include('hr.employee_info.training_details.edit')
 

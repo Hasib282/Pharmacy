@@ -53,7 +53,7 @@
     @include('admin_setup.bank.edit')
 @endif
 
-@include('admin_setup.bank.bankDetails')
+@include('common_modals.detailsModal')
 
 @include('common_modals.delete')
 

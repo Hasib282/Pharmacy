@@ -16,7 +16,7 @@ class AdminSetupController extends Controller
             return view('admin_setup.company.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.company.company', compact('name', 'js'));
+            return view('admin_setup.company.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -26,7 +26,7 @@ class AdminSetupController extends Controller
     public function SearchCompanies(Request $request){
         $name = "Company Details";
         $js = "company";
-        return view('admin_setup.company.company', compact('name', 'js'));
+        return view('admin_setup.company.main', compact('name', 'js'));
     } // End Method
 
 
@@ -42,7 +42,7 @@ class AdminSetupController extends Controller
             return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('common_modals.single_input.singleData', compact('name', 'js'));
+            return view('common_modals.single_input.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -52,7 +52,7 @@ class AdminSetupController extends Controller
     public function SearchCompanyType(Request $req){
         $name = "Company Type";
         $js = 'admin_setup/main_head';
-        return view('common_modals.single_input.singleData', compact('name', 'js'));
+        return view('common_modals.single_input.main', compact('name', 'js'));
     } // End Method
 
 
@@ -67,7 +67,7 @@ class AdminSetupController extends Controller
             return view('admin_setup.bank.ajaxBlade', compact('name'));
         }
         else{
-            return view('admin_setup.bank.banks', compact('name'));
+            return view('admin_setup.bank.main', compact('name'));
         }
     } // End Method
 
@@ -76,7 +76,7 @@ class AdminSetupController extends Controller
     // Search Bank Details
     public function SearchBanks(Request $request){
         $name = "Bank Details";
-        return view('admin_setup.bank.banks', compact('name'));
+        return view('admin_setup.bank.main', compact('name'));
     } // End Method
 
 
@@ -91,7 +91,7 @@ class AdminSetupController extends Controller
             return view('admin_setup.location.ajaxBlade', compact('name'));
         }
         else{
-            return view('admin_setup.location.locations', compact('name'));
+            return view('admin_setup.location.main', compact('name'));
         }
     } // End Method
 
@@ -100,7 +100,7 @@ class AdminSetupController extends Controller
     // Search Locations
     public function SearchLocations(Request $req){
         $name = "Location";
-        return view('admin_setup.location.locations', compact('name'));
+        return view('admin_setup.location.main', compact('name'));
     } // End Method
 
 
@@ -115,7 +115,7 @@ class AdminSetupController extends Controller
             return view('admin_setup.store.ajaxBlade', compact('name'));
         }
         else{
-            return view('admin_setup.store.stores', compact('name'));
+            return view('admin_setup.store.main', compact('name'));
         }
     } // End Method
 
@@ -124,7 +124,7 @@ class AdminSetupController extends Controller
     // Search Stores
     public function SearchStores(Request $req){
         $name = "Store Details";
-        return view('admin_setup.store.stores', compact('name'));
+        return view('admin_setup.store.main', compact('name'));
     } // End Method
 
 
@@ -140,7 +140,7 @@ class AdminSetupController extends Controller
             return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('common_modals.single_input.singleData', compact('name', 'js'));
+            return view('common_modals.single_input.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -150,7 +150,7 @@ class AdminSetupController extends Controller
     public function SearchTransactionMainHead(Request $req){
         $name = "Transaction Main Head";
         $js = 'admin_setup/main_head';
-        return view('common_modals.single_input.singleData', compact('name', 'js'));
+        return view('common_modals.single_input.main', compact('name', 'js'));
     } // End Method
 
 
@@ -165,7 +165,7 @@ class AdminSetupController extends Controller
             return view('admin_setup.tran_with.ajaxBlade', compact('name'));
         }
         else{
-            return view('admin_setup.tran_with.tranWith', compact('name'));
+            return view('admin_setup.tran_with.main', compact('name'));
         }
     } // End Method
 
@@ -174,7 +174,7 @@ class AdminSetupController extends Controller
     // Search Transaction With
     public function SearchTranWith(Request $req){
         $name = "User Type";
-        return view('admin_setup.tran_with.tranWith', compact('name'));
+        return view('admin_setup.tran_with.main', compact('name'));
     } // End Method
 
 
@@ -189,7 +189,7 @@ class AdminSetupController extends Controller
             return view('admin_setup.tran_groupe.ajaxBlade', compact('name'));
         }
         else{
-            return view('admin_setup.tran_groupe.transactionGroupes', compact('name'));
+            return view('admin_setup.tran_groupe.main', compact('name'));
         }
     } // End Method
 
@@ -198,7 +198,7 @@ class AdminSetupController extends Controller
     // Transaction Groupes Search
     public function SearchTransactionGroupes(Request $req){
         $name = "Transaction Groupe";
-        return view('admin_setup.tran_groupe.transactionGroupes', compact('name'));
+        return view('admin_setup.tran_groupe.main', compact('name'));
     } // End Method
 
 
@@ -213,7 +213,7 @@ class AdminSetupController extends Controller
             return view('admin_setup.tran_head.ajaxBlade', compact('name'));
         }
         else{
-            return view('admin_setup.tran_head.transactionHeads', compact('name'));
+            return view('admin_setup.tran_head.main', compact('name'));
         }
     } // End Method
 
@@ -222,6 +222,6 @@ class AdminSetupController extends Controller
     // Transaction Heads Search
     public function SearchTransactionHeads(Request $req){
         $name = "Transaction Head";
-        return view('admin_setup.tran_head.transactionHeads', compact('name'));
+        return view('admin_setup.tran_head.main', compact('name'));
     } // End Method
 }

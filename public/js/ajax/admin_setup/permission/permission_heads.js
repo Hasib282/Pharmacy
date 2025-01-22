@@ -35,7 +35,7 @@ function ShowPermissions(data, startIndex) {
 
 
 $(document).ready(function () {
-    CleanupEvents('SearchBySelect');
+    $(document).off(`.${'SearchBySelect'}`);
     
     // Creating Select Options Dynamically
     $.ajax({

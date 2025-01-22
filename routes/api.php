@@ -622,6 +622,11 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::delete('/all', 'Delete');
                 Route::get('/all/search', 'Search');
                 Route::get('/all/details', 'Details');
+                Route::get('/personal/details', 'Details');
+                Route::get('/education/details', 'Details');
+                Route::get('/training/details', 'Details');
+                Route::get('/experience/details', 'Details');
+                Route::get('/organization/details', 'Details');
             });
 
 
@@ -634,7 +639,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::put('/personal', 'Update');
                 Route::delete('/personal', 'Delete');
                 Route::get('/personal/search', 'Search');
-                Route::get('/personal/details', 'Details');
+                // Route::get('/personal/details', 'Details');
             });
 
 
@@ -647,7 +652,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::put('/education', 'Update');
                 Route::delete('/education', 'Delete');
                 Route::get('/education/search', 'Search');
-                Route::get('/education/details', 'Details');
+                // Route::get('/education/details', 'Details');
                 Route::get('/education/grid', 'Grid');
             });
 
@@ -661,7 +666,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::put('/training', 'Update');
                 Route::delete('/training', 'Delete');
                 Route::get('/training/search', 'Search');
-                Route::get('/training/details', 'Details');
+                // Route::get('/training/details', 'Details');
                 Route::get('/training/grid', 'Grid');
             });
 
@@ -675,7 +680,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::put('/experience', 'Update');
                 Route::delete('/experience', 'Delete');
                 Route::get('/experience/search', 'Search');
-                Route::get('/experience/details', 'Details');
+                // Route::get('/experience/details', 'Details');
                 Route::get('/experience/grid', 'Grid');
             });
 
@@ -689,7 +694,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::put('/organization', 'Update');
                 Route::delete('/organization', 'Delete');
                 Route::get('/organization/search', 'Search');
-                Route::get('/organization/details', 'Details');
+                // Route::get('/organization/details', 'Details');
                 Route::get('/organization/grid', 'Grid');
             });
             

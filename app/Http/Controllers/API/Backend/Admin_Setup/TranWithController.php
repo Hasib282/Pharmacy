@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 use App\Models\Transaction_With;
-use App\Models\Transaction_Main_head;
+use App\Models\Transaction_Main_Head;
 use App\Models\Role;
 
 class TranWithController extends Controller
@@ -37,7 +37,7 @@ class TranWithController extends Controller
             ->paginate(15);
         }
 
-        $types = Transaction_Main_head::on('mysql')->orderBy('added_at')->get();
+        $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
         $roles = Role::on('mysql')->whereNotIn('name', ['Super Admin','Admin'])->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
@@ -76,7 +76,7 @@ class TranWithController extends Controller
     // Edit Tranwith
     public function Edit(Request $req){
         $tranwith = Transaction_With::on('mysql_second')->with('Role','Type')->findOrFail($req->id);
-        $types = Transaction_Main_head::on('mysql')->orderBy('added_at')->get();
+        $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
         $roles = Role::on('mysql')->whereNotIn('name', ['Super Admin','Admin'])->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,            

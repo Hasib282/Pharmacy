@@ -66,7 +66,7 @@
 
 @include('admin_setup.users.edit')
 
-@include('admin_setup.users.showDetails')
+@include('common_modals.detailsModal')
 
 @include('common_modals.delete')
 

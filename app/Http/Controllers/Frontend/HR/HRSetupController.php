@@ -20,7 +20,7 @@ class HRSetupController extends Controller
             return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('common_modals.single_input.singleData', compact('name', 'js'));
+            return view('common_modals.single_input.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -30,7 +30,7 @@ class HRSetupController extends Controller
     public function SearchDepartments(Request $req){
         $name = "Department";
         $js = 'hr/department';
-        return view('common_modals.single_input.singleData', compact('name', 'js'));
+        return view('common_modals.single_input.main', compact('name', 'js'));
     } // End Method
 
     /////////////////////////// --------------- Department Table Methods End---------- //////////////////////////
@@ -45,7 +45,7 @@ class HRSetupController extends Controller
             return view('hr.designation.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.designation.designations', compact('name'));
+            return view('hr.designation.main', compact('name'));
         }
     } // End Method
 
@@ -54,7 +54,7 @@ class HRSetupController extends Controller
     // Designation Search
     public function SearchDesignations(Request $req){
         $name = "Designation";
-        return view('hr.designation.designations', compact('name'));
+        return view('hr.designation.main', compact('name'));
     } // End Method
 
     /////////////////////////// --------------- Designations Table Methods End ---------- //////////////////////////

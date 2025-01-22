@@ -16,7 +16,7 @@ class InventoryAdjustmentController extends Controller
             return view('transaction.adjustment.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.adjustment.adjustments', compact('name', 'js'));
+            return view('transaction.adjustment.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -27,7 +27,7 @@ class InventoryAdjustmentController extends Controller
     public function SearchPositiveAdjustment(Request $req){
         $name = "Positive Adjustment";
         $js = 'inventory/adjustment/positive_adjustment';
-        return view('transaction.adjustment.adjustments', compact('name', 'js'));
+        return view('transaction.adjustment.main', compact('name', 'js'));
     } // End Method
 
     
@@ -41,7 +41,7 @@ class InventoryAdjustmentController extends Controller
             return view('transaction.adjustment.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.adjustment.adjustments', compact('name', 'js'));
+            return view('transaction.adjustment.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -51,6 +51,6 @@ class InventoryAdjustmentController extends Controller
     public function SearchNegativeAdjustment(Request $req){
         $name = "Negative Adjustment";
         $js = 'inventory/adjustment/negative_adjustment';
-        return view('transaction.adjustment.adjustments', compact('name', 'js'));
+        return view('transaction.adjustment.main', compact('name', 'js'));
     } // End Method
 }

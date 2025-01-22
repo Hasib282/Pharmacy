@@ -16,7 +16,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.item_flow_statement.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.item_flow_statement.itemflow', compact('name', 'js'));
+            return view('reports.product_reports.item_flow_statement.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -26,7 +26,7 @@ class InventoryReportController extends Controller
     public function SearchItemFlowStatement(Request $req){
         $name = "Inventory Item Flow";
         $js = 'inventory/report/item_flow_statement/item_flow';
-        return view('reports.product_reports.item_flow_statement.itemflow', compact('name', 'js'));
+        return view('reports.product_reports.item_flow_statement.main', compact('name', 'js'));
     } // End Method
 
 
@@ -42,7 +42,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.stock_statement.summary.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.stock_statement.summary.stockSummary', compact('name', 'js'));
+            return view('reports.product_reports.stock_statement.summary.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -52,7 +52,7 @@ class InventoryReportController extends Controller
     public function SearchStockSummaryStatement(Request $req){
         $name = "Inventory Stock Summary";
         $js = 'inventory/report/stock_statement/stock_summary';
-        return view('reports.product_reports.stock_statement.summary.stockSummary', compact('name', 'js'));
+        return view('reports.product_reports.stock_statement.summary.main', compact('name', 'js'));
     } // End Method
 
 
@@ -68,7 +68,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.stock_statement.details.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.stock_statement.details.stockDetails', compact('name', 'js'));
+            return view('reports.product_reports.stock_statement.details.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -78,7 +78,7 @@ class InventoryReportController extends Controller
     public function SearchStockDetailsStatement(Request $req){
         $name = "Inventory Stock Details";
         $js = 'inventory/report/stock_statement/stock_details';
-        return view('reports.product_reports.stock_statement.details.stockDetails', compact('name', 'js'));
+        return view('reports.product_reports.stock_statement.details.main', compact('name', 'js'));
     } // End Method
 
 
@@ -94,7 +94,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.profitability_statement.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.profitability_statement.profitabilityDetails', compact('name', 'js'));
+            return view('reports.product_reports.profitability_statement.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -104,7 +104,7 @@ class InventoryReportController extends Controller
     public function SearchProfitabilityStatement(Request $req){
         $name = "Inventory Profitability";
         $js = 'inventory/report/profitibility_statement/profitability_details';
-        return view('reports.product_reports.profitability_statement.profitabilityDetails', compact('name', 'js'));
+        return view('reports.product_reports.profitability_statement.main', compact('name', 'js'));
     } // End Method
 
 
@@ -120,7 +120,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.expiry_statement.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.expiry_statement.expiryDetails', compact('name', 'js'));
+            return view('reports.product_reports.expiry_statement.main', compact('name', 'js'));
         }
     } // End Method
     
@@ -130,7 +130,7 @@ class InventoryReportController extends Controller
     public function SearchExpiryStatement(Request $req){
         $name = "Inventory Expiry";
         $js = 'inventory/report/expiry_statement/expiry_details';
-        return view('reports.product_reports.expiry_statement.expiryDetails', compact('name', 'js'));
+        return view('reports.product_reports.expiry_statement.main', compact('name', 'js'));
     } // End Method
 
 
@@ -146,7 +146,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.purchase_statement.summary.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.purchase_statement.summary.purchaseSummary', compact('name', 'js'));
+            return view('reports.product_reports.purchase_statement.summary.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -156,7 +156,7 @@ class InventoryReportController extends Controller
     public function SearchPurchaseSummaryStatement(Request $req){
         $name = "Inventory Purchase Summary";
         $js = 'inventory/report/purchase_statement/purchase_summary';
-        return view('reports.product_reports.purchase_statement.summary.purchaseSummary', compact('name', 'js'));
+        return view('reports.product_reports.purchase_statement.summary.main', compact('name', 'js'));
     } // End Method
 
 
@@ -172,7 +172,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.purchase_statement.details.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.purchase_statement.details.purchaseDetails', compact('name', 'js'));
+            return view('reports.product_reports.purchase_statement.details.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -182,7 +182,7 @@ class InventoryReportController extends Controller
     public function SearchPurchaseDetailsStatement(Request $req){
         $name = "Inventory Purchase Details";
         $js = 'inventory/report/purchase_statement/purchase_details';
-        return view('reports.product_reports.purchase_statement.details.purchaseDetails', compact('name', 'js'));
+        return view('reports.product_reports.purchase_statement.details.main', compact('name', 'js'));
     } // End Method
 
     
@@ -198,7 +198,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.issue_statement.summary.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.issue_statement.summary.issueSummary', compact('name', 'js'));
+            return view('reports.product_reports.issue_statement.summary.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -208,7 +208,7 @@ class InventoryReportController extends Controller
     public function SearchIssueSummaryStatement(Request $req){
         $name = "Inventory Issue Summary";
         $js = 'inventory/report/issue_statement/issue_summary';
-        return view('reports.product_reports.issue_statement.summary.issueSummary', compact('name', 'js'));
+        return view('reports.product_reports.issue_statement.summary.main', compact('name', 'js'));
     } // End Method
 
 
@@ -224,7 +224,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.issue_statement.details.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.issue_statement.details.issueDetails', compact('name', 'js'));
+            return view('reports.product_reports.issue_statement.details.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -234,7 +234,7 @@ class InventoryReportController extends Controller
     public function SearchIssueDetailsStatement(Request $req){
         $name = "Inventory Issue Details";
         $js = 'inventory/report/issue_statement/issue_summary';
-        return view('reports.product_reports.issue_statement.details.issueDetails', compact('name', 'js'));
+        return view('reports.product_reports.issue_statement.details.main', compact('name', 'js'));
     } // End Method
 
     
@@ -250,7 +250,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.return_statement.summary.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.return_statement.summary.returnSummary', compact('name', 'js'));
+            return view('reports.product_reports.return_statement.summary.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -260,7 +260,7 @@ class InventoryReportController extends Controller
     public function SearchSupplierReturnSummaryStatement(Request $req){
         $name = "Inventory Supplier Return Summary";
         $js = 'inventory/report/return_statement/supplier/return_summary';
-        return view('reports.product_reports.return_statement.summary.returnSummary', compact('name', 'js'));
+        return view('reports.product_reports.return_statement.summary.main', compact('name', 'js'));
     } // End Method
 
 
@@ -276,7 +276,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.return_statement.details.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.return_statement.details.returnDetails', compact('name', 'js'));
+            return view('reports.product_reports.return_statement.details.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -286,7 +286,7 @@ class InventoryReportController extends Controller
     public function SearchSupplierReturnDetailsStatement(Request $req){
         $name = "Inventory Supplier Return Details";
         $js = 'inventory/report/return_statement/supplier/return_details';
-        return view('reports.product_reports.return_statement.details.returnDetails', compact('name', 'js'));
+        return view('reports.product_reports.return_statement.details.main', compact('name', 'js'));
     } // End Method
 
 
@@ -302,7 +302,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.return_statement.summary.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.return_statement.summary.returnSummary', compact('name', 'js'));
+            return view('reports.product_reports.return_statement.summary.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -312,7 +312,7 @@ class InventoryReportController extends Controller
     public function SearchClientReturnSummaryStatement(Request $req){
         $name = "Inventory Client Return Summary";
         $js = 'inventory/report/return_statement/client/return_summary';
-        return view('reports.product_reports.return_statement.summary.returnSummary', compact('name', 'js'));
+        return view('reports.product_reports.return_statement.summary.main', compact('name', 'js'));
     } // End Method
     
 
@@ -328,7 +328,7 @@ class InventoryReportController extends Controller
             return view('reports.product_reports.return_statement.details.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.product_reports.return_statement.details.returnDetails', compact('name', 'js'));
+            return view('reports.product_reports.return_statement.details.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -338,6 +338,6 @@ class InventoryReportController extends Controller
     public function SearchClientReturnDetailsStatement(Request $req){
         $name = "Inventory Client Return Details";
         $js = 'inventory/report/return_statement/client/return_details';
-        return view('reports.product_reports.return_statement.details.returnDetails', compact('name', 'js'));
+        return view('reports.product_reports.return_statement.details.main', compact('name', 'js'));
     } // End Method
 }

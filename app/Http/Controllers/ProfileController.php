@@ -12,6 +12,6 @@ class ProfileController extends Controller
         Gate::authorize('view-profile', $userid);
 
         $profile = User_Info::findorfail($userid);
-        return view('profile.showProfile', compact('profile'));
+        return view('profile.main', compact('profile'));
     }
 }

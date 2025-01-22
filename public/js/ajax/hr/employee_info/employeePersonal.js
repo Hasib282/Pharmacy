@@ -69,7 +69,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/employee/personal', ShowEmployeePersonalDetails, {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }}, function() {
+    InsertAjax('hr/employee/personal', ShowEmployeePersonalDetails, {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }, store: { selector: '#store', attribute: 'data-id' }}, function() {
         $('#name').focus();
         $('#location').removeAttr('data-id');
         $('#previewImage').attr('src',`#`).hide();
@@ -152,64 +152,7 @@ $(document).ready(function () {
         $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.employee.image ? res.employee.image : (res.employee.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
     }
 
-
-
-
-
-
-
-
-    //////////////////// --------------------- Show Image When Select File ---------------- /////////////////////
-    $(document).on('change','#image', function (e){
-        let path = $(this).val();
-        let extension = path.substring(path.lastIndexOf('.')+1).toLowerCase();
-        
-        if(extension == 'jpg' || extension == 'jpeg' || extension == 'png' || extension == 'gif'){
-            var file = e.target.files[0];
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#previewImage').attr('src', e.target.result).show();
-                };
-                reader.readAsDataURL(file);
-            }
-            else{
-                $('#previewImage').attr('src', " ").hide();
-            }
-        }
-        else{
-            $('#previewImage').attr('src', " ").hide();
-        }
-    });
-
-
-
-    $(document).on('change','#updateImage', function (e){
-        console.log(e);
-        let path = $(this).val();
-        let extension = path.substring(path.lastIndexOf('.')+1).toLowerCase();
-        
-        if(extension == 'jpg' || extension == 'jpeg' || extension == 'png' || extension == 'gif'){
-            var file = e.target.files[0];
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#updatePreviewImage').attr('src', " ");
-                    $('#updatePreviewImage').attr('src', e.target.result).show();
-                };
-                reader.readAsDataURL(file);
-            }
-            else{
-                $('#updatePreviewImage').attr('src', " ").hide();
-            }
-        }
-        else{
-            $('#updatePreviewImage').attr('src', " ").hide();
-        }
-    });
-
-
-
+    
     // Show Detals Ajax
     DetailsAjax('hr/employee/personal');
 });

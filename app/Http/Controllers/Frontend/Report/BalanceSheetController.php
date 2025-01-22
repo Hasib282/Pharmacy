@@ -18,7 +18,7 @@ class BalanceSheetController extends Controller
             return view('reports.balance_sheet.summary.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.balance_sheet.summary.summaryBalanceSheet', compact('name', 'js'));
+            return view('reports.balance_sheet.summary.main', compact('name', 'js'));
         }
     } //End Method
     
@@ -35,7 +35,7 @@ class BalanceSheetController extends Controller
             return view('reports.balance_sheet.details.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.balance_sheet.details.detailsBalanceSheet', compact('name', 'js'));
+            return view('reports.balance_sheet.details.main', compact('name', 'js'));
         }
     } //End Method
 }

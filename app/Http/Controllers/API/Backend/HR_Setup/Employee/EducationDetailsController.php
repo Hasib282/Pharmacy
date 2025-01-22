@@ -193,26 +193,13 @@ class EducationDetailsController extends Controller
 
 
 
-    // Show Employee Education Details
-    public function Details(Request $req){
-        $employeeeducation = Employee_Education_Detail::with('personalDetail')->where('emp_id', $req->id)->get();
-        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
-
-        return response()->json([
-            'status' => true,
-            'data'=>view('hr.employee_info.education_details.details', compact('employeeeducation', 'personaldetail'))->render(),
-        ]);
-    } // End Method
-
-
-
     // Employee Education Details Grid
     public function Grid(Request $req){
         $employeeeducation = Employee_Education_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data'=>view('hr.employee_info.education_details.detailsEducation', compact('employeeeducation'))->render(),
+            'data'=>view('hr.employee_info.education_details.grid', compact('employeeeducation'))->render(),
         ]);
     } // End Method
 }

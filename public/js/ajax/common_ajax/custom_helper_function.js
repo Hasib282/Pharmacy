@@ -94,8 +94,3 @@ function CreateSelectOptions(id, defaultText, data, selectedValue = null, fieldN
         selectElement.append(`<option value="${item.id}" ${ selectedValue == item.id ? 'selected' : '' } >${item[fieldName]}</option>`);
     });
 }; // End Method
-
-
-function CleanupEvents(eventNamespace) {
-    $(document).off(`.${eventNamespace}`);
-}

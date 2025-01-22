@@ -34,7 +34,7 @@ function ShowTranGroupe(data, startIndex) {
 
 
 $(document).ready(function () {
-    CleanupEvents('SearchBySelect');
+    $(document).off(`.${'SearchBySelect'}`);
 
     // Load Data on Hard Reload
     ReloadData('transaction/setup/groupes', ShowTranGroupe);

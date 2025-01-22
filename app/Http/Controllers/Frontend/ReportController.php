@@ -25,7 +25,7 @@ class ReportController extends Controller
             return view('reports.report_by_groupe.ajaxBlade');
         }
         else{
-            return view('reports.report_by_groupe.report_by_groupe');
+            return view('reports.report_by_groupe.main');
         }
     }
 
@@ -33,7 +33,7 @@ class ReportController extends Controller
 
     // Search Report By groupe 
     public function SearchReportByGroupeDate(Request $req){
-        return view('reports.report_by_groupe.report_by_groupe');
+        return view('reports.report_by_groupe.main');
     } 
 
 
@@ -47,7 +47,7 @@ class ReportController extends Controller
             return view('reports.summary_report.ajaxBlade');
         }
         else{
-            return view('reports.summary_report.summary_report');
+            return view('reports.summary_report.main');
         }
     }
 
@@ -55,24 +55,6 @@ class ReportController extends Controller
 
     // Search Summary Report
     public function SearchSummaryReport(Request $req){
-        return view('reports.summary_report.summary_report');
+        return view('reports.summary_report.main');
     }
-
-
-    
-
-
-    ///////////////////////// --------------------------- Common Methods Start -------------------- /////////////////////////
-    // Report Invoice Details
-    public function ReportInvoiceDetails(Request $req)
-    {
-        $transDetailsInvoice = Transaction_Detail::where('tran_id', $req->id)->get();
-        $transSum = Transaction_Detail::where('tran_id', $req->id)->sum('tot_amount');
-        $transactionMain = Transaction_Main::where('tran_id', $req->id)->first();
-
-        return response()->json([
-            'status'=>'success',
-            'data'=> view('reports.report_by_groupe.details', compact('transactionMain', 'transDetailsInvoice', 'transSum'))->render(),
-        ]);
-    } // End Method
 }

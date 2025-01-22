@@ -77,7 +77,7 @@ class SalarySummaryController extends Controller
         $report_name = 'Salary Summary Report';
         $start_date = $req->startDate ? $req->startDate : date('d/m/Y');
         $end_date = $req->endDate ? $req->endDate : date('d/m/Y');
-        $pdf = Pdf::loadView('hr.reports.salary_summary_report.print', compact('report_name', 'start_date', 'end_date', 'data'))->setPaper('a4', 'portrait');
+        $pdf = Pdf::loadView('reports.salary_statement.summary.print', compact('report_name', 'start_date', 'end_date', 'data'))->setPaper('a4', 'portrait');
         return $pdf->stream();
     } // End Method
 }

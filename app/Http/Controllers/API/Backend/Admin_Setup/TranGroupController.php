@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 use App\Models\Transaction_Groupe;
-use App\Models\Transaction_Main_head;
+use App\Models\Transaction_Main_Head;
 
 class TranGroupController extends Controller
 {
@@ -36,7 +36,7 @@ class TranGroupController extends Controller
             ->paginate(15);
         }
         
-        $types = Transaction_Main_head::on('mysql')->orderBy('added_at')->get();
+        $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $groupes,
@@ -72,7 +72,7 @@ class TranGroupController extends Controller
     // Edit Transaction Group
     public function Edit(Request $req){
         $groupes = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($req->id);
-        $types = Transaction_Main_head::on('mysql')->orderBy('added_at')->get();
+        $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,            
             'groupes'=>$groupes,

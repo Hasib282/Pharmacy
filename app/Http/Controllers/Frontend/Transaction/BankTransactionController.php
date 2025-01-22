@@ -16,7 +16,7 @@ class BankTransactionController extends Controller
             return view('transaction.bank.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.bank.bankTransactions', compact('name', 'js'));
+            return view('transaction.bank.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -30,7 +30,7 @@ class BankTransactionController extends Controller
             return view('transaction.bank.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.bank.bankTransactions', compact('name', 'js'));
+            return view('transaction.bank.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -42,12 +42,12 @@ class BankTransactionController extends Controller
         if (strpos($requestPath, 'withdraw') !== false) {
             $name = "Bank Withdraw";
             $js = "withdraw";
-            return view('transaction.bank.bankTransactions', compact('name', 'js'));
+            return view('transaction.bank.main', compact('name', 'js'));
         }
         else if(strpos($requestPath, 'deposit') !== false){
             $name = "Bank Deposit";
             $js = "deposit";
-            return view('transaction.bank.bankTransactions', compact('name', 'js'));
+            return view('transaction.bank.main', compact('name', 'js'));
         }
     } // End Method
 

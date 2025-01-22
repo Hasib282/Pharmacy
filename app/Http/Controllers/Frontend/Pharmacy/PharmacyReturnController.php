@@ -16,7 +16,7 @@ class PharmacyReturnController extends Controller
             return view('transaction.return.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.return.return', compact('name', 'js'));
+            return view('transaction.return.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -26,7 +26,7 @@ class PharmacyReturnController extends Controller
     public function SearchClientReturn(Request $req){
         $name = "Client Return";
         $js = 'pharmacy/pharmacy_transaction/client_return';
-        return view('transaction.return.return', compact('name', 'js'));
+        return view('transaction.return.main', compact('name', 'js'));
     } // End Method
 
 
@@ -42,7 +42,7 @@ class PharmacyReturnController extends Controller
             return view('transaction.return.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.return.return', compact('name', 'js'));
+            return view('transaction.return.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -52,6 +52,6 @@ class PharmacyReturnController extends Controller
     public function SearchSupplierReturn(Request $req){
         $name = "Supplier Return";
         $js = 'pharmacy/pharmacy_transaction/supplier_return';
-        return view('transaction.return.return', compact('name', 'js'));
+        return view('transaction.return.main', compact('name', 'js'));
     } // End Method
 }

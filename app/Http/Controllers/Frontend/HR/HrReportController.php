@@ -11,10 +11,10 @@ class HrReportController extends Controller
     // Show Salary Summary Report
     public function SalarySummaryReport(Request $req){
         if ($req->ajax()) {
-            return view('hr.reports.salary_summary_report.ajaxBlade');
+            return view('reports.salary_statement.summary.ajaxBlade');
         }
         else{
-            return view('hr.reports.salary_summary_report.salarySummaryReports');
+            return view('reports.salary_statement.summary.main');
         }
     } // End Method
 
@@ -22,7 +22,7 @@ class HrReportController extends Controller
 
     // Search Salary Summary Report by user
     public function SearchSalarySummaryReport(Request $req){
-        return view('hr.reports.salary_summary_report.salarySummaryReports');
+        return view('reports.salary_statement.summary.main');
     } // End Method
 
 
@@ -33,10 +33,10 @@ class HrReportController extends Controller
     // Show Salary Details Report
     public function SalaryDetailsReport(Request $req){
         if ($req->ajax()) {
-            return view('hr.reports.salary_details_report.ajaxBlade');
+            return view('reports.salary_statement.details.ajaxBlade');
         }
         else{
-            return view('hr.reports.salary_details_report.salaryDetailsReports');
+            return view('reports.salary_statement.details.main');
         }
     } // End Method
 
@@ -44,7 +44,7 @@ class HrReportController extends Controller
 
     // Search Salary Details Report by user
     public function SearchSalaryDetailsReport(Request $req){
-        return view('hr.reports.salary_details_report.salaryDetailsReports');
+        return view('reports.salary_statement.details.main');
     } // End Method
 
 }

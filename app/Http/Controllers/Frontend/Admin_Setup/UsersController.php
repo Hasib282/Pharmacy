@@ -16,7 +16,7 @@ class UsersController extends Controller
             return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('common_modals.single_input.singleData', compact('name', 'js'));
+            return view('common_modals.single_input.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -26,7 +26,7 @@ class UsersController extends Controller
     public function SearchRoles(Request $req){
         $name = "User Role";
         $js = 'admin_setup/users/roles';
-        return view('common_modals.single_input.singleData', compact('name', 'js'));
+        return view('common_modals.single_input.main', compact('name', 'js'));
     } // End Method
     /////////////////////////// --------------- Roles Methods End ---------- //////////////////////////
 
@@ -43,7 +43,7 @@ class UsersController extends Controller
             return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.users.users', compact('name', 'js'));
+            return view('admin_setup.users.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -53,7 +53,7 @@ class UsersController extends Controller
     public function SearchAdmins(Request $request){
         $name = "Admin";
         $js = "admin";
-        return view('admin_setup.users.users', compact('name', 'js'));
+        return view('admin_setup.users.main', compact('name', 'js'));
     } // End Method
 
 
@@ -69,7 +69,7 @@ class UsersController extends Controller
             return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.users.users', compact('name', 'js'));
+            return view('admin_setup.users.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -79,7 +79,7 @@ class UsersController extends Controller
     public function SearchSuperAdmins(Request $request){
         $name = "Super Admin";
         $js = "super_admin";
-        return view('admin_setup.users.users', compact('name', 'js'));
+        return view('admin_setup.users.main', compact('name', 'js'));
     } // End Method
 
 
@@ -95,7 +95,7 @@ class UsersController extends Controller
             return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.users.users', compact('name', 'js'));
+            return view('admin_setup.users.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -104,7 +104,7 @@ class UsersController extends Controller
     public function SearchClients(Request $request){
         $name = "Client";
         $js = "client";
-        return view('admin_setup.users.users', compact('name', 'js'));
+        return view('admin_setup.users.main', compact('name', 'js'));
     } // End Method
 
 
@@ -120,7 +120,7 @@ class UsersController extends Controller
             return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.users.users', compact('name', 'js'));
+            return view('admin_setup.users.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -130,6 +130,6 @@ class UsersController extends Controller
     public function SearchSuppliers(Request $request){
         $name = "Supplier";
         $js = "supplier";
-        return view('admin_setup.users.users', compact('name', 'js'));
+        return view('admin_setup.users.main', compact('name', 'js'));
     } // End Method
 }

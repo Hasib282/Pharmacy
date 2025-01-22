@@ -165,15 +165,31 @@ class EmployeeController extends Controller
 
     // Show Employee Details
     public function Details(Request $req){
-        $employee = User_Info::with('Designation','Department','Location','Withs','personalDetail','educationDetail','trainingDetail','experienceDetail','organizationDetail')->where('user_id', "=", $req->id)->first();
-        $education = Employee_Education_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
-        $training = Employee_Training_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
-        $experience = Employee_Experience_Detail::where('emp_id', $req->id)->orderBy('created_at','asc')->get();
-        $payroll = Payroll_Setup::with('Head','Employee')->where('emp_id', $employee->user_id)->get();
+        $education = $training = $experience = $organization = null;
+        // Check the value of the 4th segment
+        $segment = $req->segment(4);
+
+        // Load data based on the segment value
+        if ($segment === 'all' || $segment === 'education') {
+            $education = Employee_Education_Detail::where('emp_id', $req->id)->orderBy('created_at', 'asc')->get();
+        }
+        if ($segment === 'all' || $segment === 'training') {
+            $training = Employee_Training_Detail::where('emp_id', $req->id)->orderBy('created_at', 'asc')->get();
+        }
+        if ($segment === 'all' || $segment === 'experience') {
+            $experience = Employee_Experience_Detail::where('emp_id', $req->id)->orderBy('created_at', 'asc')->get();
+        }
+        if ($segment === 'all' || $segment === 'organization') {
+            $organization = Employee_Organization_Detail::where('emp_id', $req->id)->get();
+        }
+
+        // Fetch additional details
+        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
+        $payroll = Payroll_Setup::with('Head', 'Employee')->where('emp_id', $req->id)->get();
         
         return response()->json([
             'status' => true,
-            'data'=>view('hr.employee_info.employees.details', compact('employee','education','training','experience','payroll'))->render(),
+            'data' => view('common_modals.employeeDetails', compact('personaldetail', 'education', 'training', 'experience', 'organization', 'payroll'))->render(),
         ]);
     } // End Method
 }

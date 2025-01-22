@@ -15,7 +15,7 @@ class GeneralTransactionController extends Controller
             return view('transaction.general.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.general.generalTransactions', compact('name', 'js'));
+            return view('transaction.general.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -29,7 +29,7 @@ class GeneralTransactionController extends Controller
             return view('transaction.general.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.general.generalTransactions', compact('name', 'js'));
+            return view('transaction.general.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -41,12 +41,12 @@ class GeneralTransactionController extends Controller
         if (strpos($requestPath, 'receive') !== false) {
             $name = "Transaction Payment";
             $js = "transaction_payment";
-            return view('transaction.general.generalTransactions', compact('name', 'js'));
+            return view('transaction.general.main', compact('name', 'js'));
         }
         else if(strpos($requestPath, 'payment') !== false){
             $name = "Transaction Receive";
             $js = "transaction_receive";
-            return view('transaction.general.generalTransactions', compact('name', 'js'));
+            return view('transaction.general.main', compact('name', 'js'));
         }
     } // End Method
 }

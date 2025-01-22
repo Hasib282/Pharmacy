@@ -15,7 +15,7 @@ class PartyTransactionController extends Controller
             return view('transaction.party_payment.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.party_payment.partyPayments', compact('name', 'js'));
+            return view('transaction.party_payment.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -29,7 +29,7 @@ class PartyTransactionController extends Controller
             return view('transaction.party_payment.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.party_payment.partyPayments', compact('name', 'js'));
+            return view('transaction.party_payment.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -41,12 +41,12 @@ class PartyTransactionController extends Controller
         if (strpos($requestPath, 'receive') !== false) {
             $name = "Receive from Client";
             $js = "receive_from_client";
-            return view('transaction.party_payment.partyPayments', compact('name', 'js'));
+            return view('transaction.party_payment.main', compact('name', 'js'));
         }
         else if(strpos($requestPath, 'payment') !== false){
             $name = "Payment to Supplier";
             $js = "payment_to_supplier";
-            return view('transaction.party_payment.partyPayments', compact('name', 'js'));
+            return view('transaction.party_payment.main', compact('name', 'js'));
         }
     } // End Method
 

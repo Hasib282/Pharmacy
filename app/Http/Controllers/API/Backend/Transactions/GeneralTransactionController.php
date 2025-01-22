@@ -368,7 +368,7 @@ class GeneralTransactionController extends Controller
             ->get();
         }
         
-        $pdf = Pdf::loadView('transaction.invoice', compact('transactionMain', 'transDetailsInvoice'));
+        $pdf = Pdf::loadView('common_modals.invoice', compact('transactionMain', 'transDetailsInvoice'));
         return $pdf->stream();
     } // End Method
 

@@ -35,7 +35,7 @@ function ShowTranWith(data, startIndex) {
 
 
 $(document).ready(function () {
-    CleanupEvents('SearchBySelect');
+    $(document).off(`.${'SearchBySelect'}`);
 
     // Load Data on Hard Reload
     ReloadData('pharmacy/users/usertype', ShowTranWith);

@@ -170,26 +170,13 @@ class OrganizationDetailsController extends Controller
 
 
 
-    // Show Employee Organization Details
-    public function Details(Request $req){
-        $employeeorganization = Employee_Organization_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
-        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
-
-        return response()->json([
-            'status' => true,
-            'data'=>view('hr.employee_info.organization_details.details', compact('employeeorganization', 'personaldetail'))->render(),
-        ]);
-    } // End Method
-
-
-
     // Show Employee Organization Details Grid
     public function Grid(Request $req){
         $employeeorganization = Employee_Organization_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data'=>view('hr.employee_info.organization_details.detailsOrganizations', compact('employeeorganization'))->render(),
+            'data'=>view('hr.employee_info.organization_details.grid', compact('employeeorganization'))->render(),
         ]);
     } // End Method
 }

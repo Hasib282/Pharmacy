@@ -1,12 +1,3 @@
-@section('style')
-    <style>
-        #search {
-            width: 100%;
-            margin: 0;
-        }
-    </style>
-@endsection
-
 @php
     $searchValue = request()->query('search');
     $searchOptionValue = request()->query('searchOption');

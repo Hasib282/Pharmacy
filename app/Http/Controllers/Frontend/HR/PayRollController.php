@@ -26,7 +26,7 @@ class PayRollController extends Controller
             return view('hr.payroll.payroll_setup.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.payroll.payroll_setup.payrollSetup', compact('name'));
+            return view('hr.payroll.payroll_setup.main', compact('name'));
         }
     } // End Method 
 
@@ -35,7 +35,7 @@ class PayRollController extends Controller
     // Search Payroll Setup by user
     public function SearchPayrollSetup(Request $req){
         $name = "Payroll Setup";
-        return view('hr.payroll.payroll_setup.payrollSetup', compact('name'));
+        return view('hr.payroll.payroll_setup.main', compact('name'));
     } // End Method
 
     /////////////// ----------------------- Payroll Setup Part End Here ------------------- ////////////////
@@ -51,7 +51,7 @@ class PayRollController extends Controller
             return view('hr.payroll.payroll_middlewire.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.payroll.payroll_middlewire.payrollMiddlewire', compact('name'));
+            return view('hr.payroll.payroll_middlewire.main', compact('name'));
         }
     } // End Method
 
@@ -60,7 +60,7 @@ class PayRollController extends Controller
     // Search Payroll Middlewire by user
     public function SearchPayrollMiddlewire(Request $req){
         $name = "Payroll Middlewire";
-        return view('hr.payroll.payroll_middlewire.payrollMiddlewire', compact('name'));
+        return view('hr.payroll.payroll_middlewire.main', compact('name'));
     } // End Method
 
     /////////////// ----------------------- Payroll Middlewire Part End Here ------------------- ////////////////
@@ -76,7 +76,7 @@ class PayRollController extends Controller
             return view('hr.payroll.payroll_installment.ajaxBlade');
         }
         else{
-            return view('hr.payroll.payroll_installment.payroll');
+            return view('hr.payroll.payroll_installment.main');
         }
     } // End Method 
 
@@ -84,7 +84,7 @@ class PayRollController extends Controller
 
     // Search Payroll by user
     public function SearchPayroll(Request $req){
-        return view('hr.payroll.payroll_installment.payroll');
+        return view('hr.payroll.payroll_installment.main');
     } // End Method
 
     ////////////// ------------------------ Payroll Part End Here --------------------- ////////////////////////////

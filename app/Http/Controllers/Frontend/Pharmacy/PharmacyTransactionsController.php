@@ -16,7 +16,7 @@ class PharmacyTransactionsController extends Controller
             return view('transaction.purchase.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.purchase.purchase', compact('name', 'js'));
+            return view('transaction.purchase.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -26,7 +26,7 @@ class PharmacyTransactionsController extends Controller
     public function SearchPharmacyPurchase(Request $req){
         $name = "Pharmacy Purchase";
         $js = 'pharmacy/pharmacy_transaction/phar_purchase';
-        return view('transaction.purchase.purchase', compact('name', 'js'));
+        return view('transaction.purchase.main', compact('name', 'js'));
     } // End Method
     
 
@@ -42,7 +42,7 @@ class PharmacyTransactionsController extends Controller
             return view('transaction.issue.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.issue.issue', compact('name', 'js'));
+            return view('transaction.issue.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -52,6 +52,6 @@ class PharmacyTransactionsController extends Controller
     public function SearchPharmacyIssue(Request $req){
         $name = "Pharmacy Issue";
         $js = 'pharmacy/pharmacy_transaction/phar_issue';
-        return view('transaction.issue.issue', compact('name', 'js'));
+        return view('transaction.issue.main', compact('name', 'js'));
     } // End Method
 }

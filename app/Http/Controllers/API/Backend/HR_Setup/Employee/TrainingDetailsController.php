@@ -179,26 +179,13 @@ class TrainingDetailsController extends Controller
 
 
 
-    // Show Employee Training Details
-    public function Details(Request $req){
-        $employeetraining = Employee_Training_Detail::with('personalDetail')->where('emp_id', "=", $req->id)->get();
-        $personaldetail = Employee_Personal_Detail::where('employee_id', $req->id)->get();
-
-        return response()->json([
-            'status' => true,
-            'data'=>view('hr.employee_info.training_details.details', compact('employeetraining', 'personaldetail'))->render(),
-        ]);
-    } // End Method
-
-
-
     // Show Employee Training Details Grid
     public function Grid(Request $req){
         $employeetraining = Employee_Training_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data'=>view('hr.employee_info.training_details.detailsTraining', compact('employeetraining'))->render(),
+            'data'=>view('hr.employee_info.training_details.grid', compact('employeetraining'))->render(),
         ]);
     } // End Method
 }

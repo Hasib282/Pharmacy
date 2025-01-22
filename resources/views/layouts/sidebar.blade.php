@@ -402,7 +402,7 @@
                         <li class="sub-menu-item" data-url="{{route('show.withdraws')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(3) == 'withdraw') ? 'active':''}}">
                                 <p>
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fa-solid fa-sack-dollar"></i>
                                     Withdraw from Bank
                                 </p>
                             </div>
@@ -413,7 +413,7 @@
                         <li class="sub-menu-item" data-url="{{route('show.deposits')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(3) == 'deposit') ? 'active':''}}">
                                 <p>
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fa-solid fa-hand-holding-dollar"></i>
                                     Deposit to Bank
                                 </p>
                             </div>
@@ -639,7 +639,7 @@
                                 <li class="sub-menu1-item" data-url="{{route('show.salarySummaryReport')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'report' && Request::segment(4) == 'summary') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fa-solid fa-file-invoice"></i>
                                             Summary
                                         </p>
                                     </div>
@@ -650,7 +650,7 @@
                                 <li class="sub-menu1-item" data-url="{{route('show.salaryDetailsReport')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'report' && Request::segment(4) == 'details') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fa-solid fa-file-invoice"></i>
                                             Details
                                         </p>
                                     </div>
@@ -969,7 +969,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.pharmacyStockDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'stock' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Stock Details
                                                 </p>
                                             </div>
@@ -980,7 +980,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.pharmacyStockSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'stock' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Stock Summary
                                                 </p>
                                             </div>
@@ -1030,7 +1030,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.pharmacyPurchaseDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Purchase Details
                                                 </p>
                                             </div>
@@ -1041,7 +1041,7 @@
                                         <li  class="sub-menu2-item"data-url="{{route('show.pharmacyPurchaseSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Purchase Summary
                                                 </p>
                                             </div>
@@ -1064,7 +1064,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.pharmacyIssueDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'issue' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Issue Details
                                                 </p>
                                             </div>
@@ -1075,7 +1075,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.pharmacyIssueSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'issue' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Issue Summary
                                                 </p>
                                             </div>
@@ -1097,7 +1097,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.pharmacyClientReturnDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'client' && Request::segment(5) == 'details') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Client Details
                                                 </p>
                                             </div>
@@ -1108,7 +1108,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.pharmacyClientReturnSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'client' && Request::segment(5) == 'summary') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Client Summary
                                                 </p>
                                             </div>
@@ -1119,7 +1119,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.pharmacySupplierReturnDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'supplier' && Request::segment(5) == 'details') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Supplier Details
                                                 </p>
                                             </div>
@@ -1130,7 +1130,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.pharmacySupplierReturnSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'supplier' && Request::segment(5) == 'summary') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Supplier Summary
                                                 </p>
                                             </div>
@@ -1451,7 +1451,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.invStockDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'stock' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Stock Details
                                                 </p>
                                             </div>
@@ -1462,7 +1462,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.invStockSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'stock' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Stock Summary
                                                 </p>
                                             </div>
@@ -1509,7 +1509,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.invPurchaseDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Purchase Details
                                                 </p>
                                             </div>
@@ -1520,7 +1520,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.invPurchaseSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'purchase' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Purchase Summary
                                                 </p>
                                             </div>
@@ -1543,7 +1543,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.invIssueDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'issue' && Request::segment(4) == 'details') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Issue Details
                                                 </p>
                                             </div>
@@ -1554,7 +1554,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.invIssueSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'issue' && Request::segment(4) == 'summary') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Issue Summary
                                                 </p>
                                             </div>
@@ -1577,7 +1577,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.invClientReturnDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'client' && Request::segment(5) == 'details') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Client Details
                                                 </p>
                                             </div>
@@ -1588,7 +1588,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.invClientReturnSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'client' && Request::segment(5) == 'summary') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Client Summary
                                                 </p>
                                             </div>
@@ -1599,7 +1599,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.invSupplierReturnDetails')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'supplier' && Request::segment(5) == 'details') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Supplier Details
                                                 </p>
                                             </div>
@@ -1610,7 +1610,7 @@
                                         <li class="sub-menu2-item" data-url="{{route('show.invSupplierReturnSummary')}}">
                                             <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'report' && Request::segment(3) == 'return' && Request::segment(4) == 'supplier' && Request::segment(5) == 'summary') ? 'active':''}}">
                                                 <p>
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="fa-solid fa-file-invoice"></i>
                                                     Supplier Summary
                                                 </p>
                                             </div>
@@ -1673,7 +1673,7 @@
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account') ? 'active':''}}">
                             <p>
-                                <i class="fa-solid fa-file-invoice"></i>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
                                 Account Statement
                             </p>
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account') ? 'rotate':''}}"></i>
@@ -1683,7 +1683,7 @@
                                 <li class="sub-menu1-item" data-url="{{ route('show.accountSummary') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account' && Request::segment(3) == 'summary') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fa-solid fa-file-invoice"></i>
                                             Summary
                                         </p>
                                     </div>
@@ -1694,7 +1694,7 @@
                                 <li class="sub-menu1-item" data-url="{{ route('show.accountSummaryByGroupe') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account' && Request::segment(3) == 'summarygroupe') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fa-solid fa-file-invoice"></i>
                                             Summary(By Groupe)
                                         </p>
                                     </div>
@@ -1705,7 +1705,7 @@
                                 <li class="sub-menu1-item" data-url="{{ route('show.accountDetails') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account' && Request::segment(3) == 'details') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fa-solid fa-file-invoice"></i>
                                             Details
                                         </p>
                                     </div>
@@ -1718,7 +1718,7 @@
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'party') ? 'active':''}}">
                             <p>
-                                <i class="fa-solid fa-file-invoice"></i>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
                                 Party Statement
                             </p>
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'report' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
@@ -1728,7 +1728,7 @@
                                 <li class="sub-menu1-item" data-url="{{ route('show.partyDetails') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'party' && Request::segment(3) == 'details') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fa-solid fa-file-invoice"></i>
                                             Details
                                         </p>
                                     </div>
@@ -1739,7 +1739,7 @@
                                 <li class="sub-menu1-item" data-url="{{ route('show.partySummary') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'party' && Request::segment(3) == 'summary') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fa-solid fa-file-invoice"></i>
                                             Summary
                                         </p>
                                     </div>
