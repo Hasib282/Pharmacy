@@ -26,8 +26,8 @@ use App\Http\Controllers\API\Backend\Admin_Setup\Permission\CompanyPermissionCon
 use App\Http\Controllers\API\Backend\Admin_Setup\Permission\UserPermissionController;
 
 // Admin Setup Controllers
-use App\Http\Controllers\API\Backend\Admin_Setup\CompanyController;
-use App\Http\Controllers\API\Backend\Admin_Setup\CompanyTypeController;
+use App\Http\Controllers\API\Backend\Admin_Setup\Company\CompanyController;
+use App\Http\Controllers\API\Backend\Admin_Setup\Company\CompanyTypeController;
 use App\Http\Controllers\API\Backend\Admin_Setup\BankController;
 use App\Http\Controllers\API\Backend\Admin_Setup\LocationController;
 use App\Http\Controllers\API\Backend\Admin_Setup\MainHeadController;

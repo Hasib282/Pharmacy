@@ -29,24 +29,38 @@ class ExperienceDetailsController extends Controller
     public function Insert(Request $req){
         $req->validate([
             'user' => 'required',
-            'company_name' => 'required',
-            'designation' => 'required',
-            'department' => 'required',
-            'company_location' => 'required',
-            'start_date' => 'nullable',
-            'end_date' => 'nullable|after:start_date',
+            'company_name.*' => 'required',
+            'designation.*' => 'required',
+            'department.*' => 'required',
+            'company_location.*' => 'required',
+            'start_date.*' => 'nullable',
+            'end_date.*' => 'nullable|after:start_date.*',
             
+        ],
+        [
+            'company_name.*.required' => 'This field is required',
+            'designation.*.required' => 'This field is required',
+            'department.*.required' => 'This field is required',
+            'company_location.*.required' => 'This field is required',
+            'start_date.*.required' => 'This field is required',
+            'end_date.*.required' => 'This field is required',
         ]);
 
-        Employee_Experience_Detail::on('mysql_second')->insert([
-            'emp_id' =>  $req->user,
-            "company_name" => $req->company_name,
-            "designation" =>  $req->designation,
-            "department" => $req->department,
-            "company_location" => $req->company_location,
-            "start_date" => $req->start_date,
-            "end_date" => $req->end_date,
-        ]);
+
+        $experienceDetails = [];
+        foreach ($req->company_name as $key => $value) {
+            $experienceDetails[] = [
+                'emp_id' =>  $req->user,
+                "company_name" => $req->company_name[$key],
+                "designation" =>  $req->designation[$key],
+                "department" => $req->department[$key],
+                "company_location" => $req->company_location[$key],
+                "start_date" => $req->start_date[$key] ?? null,
+                "end_date" => $req->end_date[$key] ?? null,
+            ];
+        }
+
+        Employee_Experience_Detail::on('mysql_second')->insert($experienceDetails);
         
         return response()->json([
             'status'=> true,

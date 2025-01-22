@@ -55,6 +55,13 @@
                         <span class="error" id="website_error"></span>
                     </div>
                 </div>
+                <div class="c-6">
+                    <div class="form-input-group">
+                        <label for="domain">Domain</label>
+                        <input type="text" name="domain" class="form-input" id="domain">
+                        <span class="error" id="domain_error"></span>
+                    </div>
+                </div>
                 
                 <div class="c-6">
                     <div class="form-input-group">

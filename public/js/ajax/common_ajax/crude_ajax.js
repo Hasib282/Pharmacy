@@ -66,7 +66,7 @@ function AddModalFunctionality(focusVariable, AddClickEvent){
 
 
 /////////////// ------------------ Insert Ajax Part Start ---------------- /////////////////////////////
-function InsertAjax(link, RenderData, AddData = {}, AddSuccessEvent) {
+function InsertAjax(link, RenderData, AddData = {}, AddSuccessEvent, method ="POST") {
     $(document).off('submit', '#AddForm').on('submit', '#AddForm', function (e) {
         e.preventDefault();
         let formData = new FormData(this);
@@ -82,7 +82,7 @@ function InsertAjax(link, RenderData, AddData = {}, AddSuccessEvent) {
 
         // $submitButton = $(this).find('button[type="submit"]');
         $('#Insert').prop('disabled', true);
-        requestMethod = 'POST';
+        requestMethod = method;
 
         $.ajax({
             url: `${apiUrl}/${link}`,

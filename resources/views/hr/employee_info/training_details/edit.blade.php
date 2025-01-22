@@ -2,7 +2,7 @@
     <div class="modal-subject" style="width: 80%;">
         <div class="modal-heading banner">
             <div class="center">
-                <h3>Edit Employee Training Detail</h3>
+                <h3>Edit Training Detail</h3>
                 <span class="close-modal" data-modal-id="editModal">&times;</span>
             </div>
         </div>

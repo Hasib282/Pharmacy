@@ -61,14 +61,21 @@ $(document).ready(function () {
     ReloadData('hr/employee/training', ShowEmployeeTrainingDetails);
     
 
-    // // Add Modal Open Functionality
-    // AddModalFunctionality("#division");
+    // Add Modal Open Functionality
+    AddModalFunctionality("#with", function () {
+        $('#user').removeAttr('data-id');
+        formIndex = 1;
+        $('#formContainer').html('');
+    });
 
 
-    // // Insert Ajax
-    // InsertAjax('hr/employee/training', ShowEmployeeTrainingDetails, {}, function() {
-    //     $('#division').focus();
-    // });
+    // Insert Ajax
+    InsertAjax('hr/employee/training', ShowEmployeeTrainingDetails, {user: { selector: '#user', attribute: 'data-id' }}, function() {
+        $('#with').focus();
+        $('#user').removeAttr('data-id');
+        formIndex = 1;
+        $('#formContainer').html('');
+    }, 'Multi POST');
 
 
     //Edit Ajax
@@ -91,6 +98,14 @@ $(document).ready(function () {
     SearchAjax('hr/employee/training', ShowEmployeeTrainingDetails, {  });
 
 
+    // Show Detals Ajax
+    DetailsAjax('hr/employee/training');
+
+
+    // Show Grid
+    GridAjax('hr/employee/training');
+
+
     // Additional Edit Functionality
     function EditFormInputValue(res){
         $('#id').val(res.employee.id);
@@ -103,225 +118,64 @@ $(document).ready(function () {
         $('#update_end_date').val(res.employee.end_date);
         $('#update_training_year').val(res.employee.training_year);
     }
-
-
-
-
-
-
     
 
-
-
-
-
-
-
-
-
-
-    var formIndex = 2; // Initialize form index
+    var formIndex = 1;
 
     $('#addTraining').click(function() {
-        var form = createForm(formIndex); // Create a new form
-        $('#formContainer').append(form); // Append the form to the container
-        formIndex++; // Increment form index
+        let form = `<div class="rows">
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for = "training_title_${formIndex}">Training Title <span class="required" title="Required">*</span></label>
+                                <input type="text" name="training_title[]" id="training_title_${formIndex}" class="form-input">
+                                <span class="error" id="training_title_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for = "country_${formIndex}">Country</label>
+                                <input type="text" name="country[]" id="country_${formIndex}" class="form-input">
+                                <span class="error" id="country_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for = "topic_${formIndex}">Topic <span class="required" title="Required">*</span></label>
+                                <input type="text" name="topic[]" id="topic_${formIndex}" class="form-input">
+                                <span class="error" id="topic_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for = "institution_name_${formIndex}">Institution Name <span class="required" title="Required">*</span></label>
+                                <input type="text" name="institution_name[]" id="institution_name_${formIndex}" class="form-input">
+                                <span class="error" id="institution_name_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="start_date_${formIndex}">Start Date</label>
+                                <input type="date" name="start_date[]" id="start_date_${formIndex}" class="form-input">
+                                <span class="error" id="start_date_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="end_date_${formIndex}">End Date</label>
+                                <input type="date" name="end_date[]" id="end_date_${formIndex}" class="form-input">
+                                <span class="error" id="end_date_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for = "training_year_${formIndex}">Training Year <span class="required" title="Required">*</span></label>
+                                <input type="integer" name="training_year[]" id="training_year_${formIndex}" class="form-input">
+                                <span class="error" id="training_year_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                    </div>`;
+
+        $('#formContainer').append(form);
+        formIndex++;
     });
-
-    // Function to create a new form
-    function createForm(index) {
-        var form = $('<form>', {
-            id: 'form' + index,
-            class: 'training-form'
-        });
-    
-        // Add form fields
-        form.append(`
-            <div class="rows">
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for = "training_title_${index}">Training Title<span class="red">*</span></label>
-                        <input type="text" name="training_title" id="training_title_${index}" class="form-input">
-                        <span class="error" id="training_title_error_${index}"></span>
-                    </div>
-                </div>
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for = "country_${index}">Country</label>
-                        <input type="text" name="country" id="country_${index}" class="form-input">
-                        <span class="error" id="country_error_${index}"></span>
-                    </div>
-                </div>
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for = "topic_${index}">Topic<span class="red">*</span></label>
-                        <input type="text" name="topic" id="topic_${index}" class="form-input">
-                        <span class="error" id="topic_error_${index}"></span>
-                    </div>
-                </div>
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for = "institution_name_${index}">Institution Name<span class="red">*</span></label>
-                        <input type="text" name="institution_name" id="institution_name_${index}" class="form-input">
-                        <span class="error" id="institution_name_error_${index}"></span>
-                    </div>
-                </div>
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="start_date_${index}">Start Date</label>
-                        <input type="date" name="start_date" id="start_date_${index}" class="form-input">
-                        <span class="error" id="start_date_error_${index}"></span>
-                    </div>
-                </div>
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="end_date_${index}">End Date</label>
-                        <input type="date" name="end_date" id="end_date_${index}" class="form-input">
-                        <span class="error" id="end_date_error_${index}"></span>
-                    </div>
-                </div>
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for = "training_year_${index}">Training Year<span class="red">*</span></label>
-                        <input type="integer" name="training_year" id="training_year_${index}" class="form-input">
-                        <span class="error" id="training_year_error_${index}"></span>
-                    </div>
-                </div>
-            </div>`);
-        return form;
-    }
-
-
-
-    // Function to validate a single form
-    function validateForm(index) {
-        var isValid = true;
-
-        // Get input fields by ID
-        var title = $('#training_title_' + index);
-        // var country = $('#country_' + index);
-        var topic = $('#topic_' + index);
-        var institution = $('#institution_name_' + index);
-        var startdate = $('#start_date_' + index);
-        var enddate = $('#end_date_' + index);
-        var trainingyear = $('#training_year_' + index);
-
-        
-
-        // Validate required fields
-        if (title.val() === '') {
-            $('#training_title_error_' + index).text('This field is required');
-            isValid = false;
-        }
-        // if (country.val() === '') {
-        //     $('#country_error_' + index).text('This field is required');
-        //     isValid = false;
-        // }
-        if (topic.val() === '') {
-            $('#topic_error_' + index).text('This field is required');
-            isValid = false;
-        }
-        if (institution.val() === '') {
-            $('#institution_name_error_' + index).text('This field is required');
-            isValid = false;
-        }
-
-        if (startdate.val() === '') {
-            $('#start_date_error_' + index).text('This field is required');
-            isValid = false;
-        }
-        
-        if (enddate.val() === '') {
-            $('#end_date_error_' + index).text('This field is required');
-            isValid = false;
-        }
-        
-        if (trainingyear.val() === '') {
-            $('#training_year_error_' + index).text('This field is required');
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-
-
-    // Handle form submission
-    $('#Insert').on('click', function() {
-        $('.error').text('');
-
-        var withs = $('#with').val();
-        var name = $('#user').attr('data-id');
-
-
-        var isValid = true;
-        var allFormsValid = true;
-
-        if (withs === '') {
-            $('#with_error').text('This field is required');
-            isValid = false;
-        }
-        if (name === '' || name === undefined) {
-            $('#user_error').text('This field is required');
-            isValid = false;
-        }
-
-        if (isValid){
-            // Loop through all forms
-            for (var i = 1; i < formIndex; i++) {
-                if (!validateForm(i)) {
-                    allFormsValid = false;
-                }
-            }
-
-            // If all forms are valid, submit one by one
-            if (allFormsValid) {
-                submitForm(1);
-            }
-        }
-    });
-
-    
-
-    // Function to submit forms sequentially
-    function submitForm(index) {
-        let user = $('#user').attr('data-id') || '';
-        let formElement = $(`#form${index}`);
-
-        // Check if the form exists
-        if (!formElement.length) {
-            $('#user').removeAttr('data-id');
-            $('#with').val('');
-            $('#user').val('');
-            $('.training-form').not(':first').remove();
-            toastr.success('Employee Training Details Added Successfully', 'Added!');
-            formIndex = 2;
-            return;
-        }
-
-        let formData = new FormData(formElement.get(0));
-        formData.append('user', user);
-        formElement.find('.error').text('');
-        $.ajax({
-            url: `${apiUrl}/hr/employee/training`,
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            cache: false,
-            data: formData,
-            success: function(res) {
-                if (res.status) {
-                    formElement[0].reset();
-                    submitForm(index + 1);
-                }
-            },
-        });
-    }
-
-    // Show Detals Ajax
-    DetailsAjax('hr/employee/training');
-
-
-    // Show Grid
-    GridAjax('hr/employee/training');
 });

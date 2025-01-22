@@ -5,7 +5,7 @@
 
 
 <div class="add-search">
-    <div class="row">
+    <div class="rows">
         <div class="c-3">
             {{-- @if(Auth::user()->hasPermissionToRoute('insert.employeeExperience')) --}}
             <button class="open-modal add" data-modal-id="addModal">Add Experience Detail</button>

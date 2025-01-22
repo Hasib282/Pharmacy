@@ -62,14 +62,21 @@ $(document).ready(function () {
     ReloadData('hr/employee/education', ShowEmployeeEducationDetails);
     
 
-    // // Add Modal Open Functionality
-    // AddModalFunctionality("#division");
+    // Add Modal Open Functionality
+    AddModalFunctionality("#with", function () {
+        $('#user').removeAttr('data-id');
+        formIndex = 1;
+        $('#formContainer').html('');
+    });
 
 
-    // // Insert Ajax
-    // InsertAjax('hr/employee/education', ShowEmployeeEducationDetails, {}, function() {
-    //     $('#division').focus();
-    // });
+    // Insert Ajax
+    InsertAjax('hr/employee/education', ShowEmployeeEducationDetails, {user: { selector: '#user', attribute: 'data-id' }}, function() {
+        $('#with').focus();
+        $('#user').removeAttr('data-id');
+        formIndex = 1;
+        $('#formContainer').html('');
+    }, 'Multi POST');
 
 
     //Edit Ajax
@@ -90,6 +97,14 @@ $(document).ready(function () {
 
     // Search Ajax
     SearchAjax('hr/employee/education', ShowEmployeeEducationDetails, {  });
+
+
+    // Show Detals Ajax
+    DetailsAjax('hr/employee/education');
+
+
+    // Show Grid
+    GridAjax('hr/employee/education');
 
 
     // Additional Edit Functionality
@@ -158,271 +173,10 @@ $(document).ready(function () {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    var formIndex = 2; // Initialize form index
-
-    // Add new form on button click
-    $('#addEducation').on('click', function() {
-        var form = createForm(formIndex); // Create a new form
-        $('#formContainer').append(form); // Append the form to the container
-        formIndex++; // Increment form index
-    });
-
-
-    function createForm(index) {
-        var form = $('<form>', {
-            id: 'form' + index,
-            class: 'education-form'
-        });
-
-        form.append(`
-        <div class="rows">  
-            <div class="c-6">
-                <div class="form-input-group">
-                    <label for="level_of_education_${index}">Level of Education<span class="red">*</span></label>
-                    <input type="text" name="level_of_education" id="level_of_education_${index}" class="form-input">
-                    <span class="error" id="level_of_education_error_${index}"></span>
-                </div>
-            </div>
-            <div class="c-6">
-                <div class="form-input-group">
-                    <label for="degree_title_${index}">Degree Title<span class="red">*</span></label>
-                    <input type="text" name="degree_title" id="degree_title_${index}" class="form-input">
-                    <span class="error" id="degree_title_error_${index}"></span>
-                </div>
-            </div>
-            <div class="c-6">
-                <div class="form-input-group">
-                    <label for="group_${index}">Group</label>
-                    <select name="group" id="group_${index}" class="group-dropdown">
-                        <option value="">Select</option>
-                        <option value="Science">Science</option>
-                        <option value="Commerce">Commerce</option>
-                        <option value="Arts">Arts</option>
-                    </select>
-                    <span class="error" id="group_error_${index}"></span>
-                </div>
-            </div>
-            <div class="c-6">
-                <div class="form-input-group">
-                    <label for="institution_name_${index}">Institution Name<span class="red">*</span></label>
-                    <input type="text" name="institution_name" id="institution_name_${index}" class="form-input">
-                    <span class="error" id="institution_name_error_${index}"></span>
-                </div>
-            </div>
-            <div class="c-6">
-                <div class="form-input-group">
-                    <label for="result_${index}">Result<span class="red">*</span></label>
-                    <select name="result" id="result_${index}" class="result-dropdown">
-                        <option value="">Select</option>
-                        <option value="First Division/Class">First Division/Class</option>
-                        <option value="Second Division/Class">Second Division/Class</option>
-                        <option value="Third Division/Class">Third Division/Class</option>
-                        <option value="Grade">Grade</option>
-                    </select>
-                    <span class="error" id="result_error_${index}"></span>
-                </div>
-            </div>
-           <div class="c-6 hidden" id="scale-group_${index}">
-                <div class="form-input-group">
-                    <label for="scale_${index}">Scale<span class="red">*</span></label>
-                    <input type="decimal" step="0.01" name="scale" id="scale_${index}" class="form-input">
-                    <span class="error" id="scale_error_${index}"></span>
-                </div>
-            </div>
-            <div class="c-6 hidden" id="cgpa-group_${index}">
-                <div class="form-input-group">
-                    <label for="cgpa_${index}">CGPA<span class="red">*</span></label>
-                    <input type="decimal" step="0.01" name="cgpa" id="cgpa_${index}" class="form-input">
-                    <span class="error" id="cgpa_error_${index}"></span>
-                </div>
-            </div>
-            <div class="c-6 hidden" id="marks-group_${index}">
-                <div class="form-input-group">
-                    <label for="marks_${index}">Marks<span class="red">*</span></label>
-                    <input type="number" name="marks" id="marks_${index}" class="form-input">
-                    <span class="error" id="marks_error_${index}"></span>
-                </div>
-            </div>
-            <div class="c-6">
-                <div class="form-input-group">
-                    <label for="batch_${index}">Batch</label>
-                    <input type="integer" name="batch" id="batch_${index}" class="form-input">
-                    <span class="error" id="batch_error_${index}"></span>
-                </div>
-            </div>
-            <div class="c-6">
-                <div class="form-input-group">
-                    <label for="passing_year_${index}">Passing Year<span class="red">*</span></label>
-                    <input type="integer" name="passing_year" id="passing_year_${index}" class="form-input">
-                    <span class="error" id="passing_year_error_${index}"></span>
-                </div>
-            </div>
-        </div>`);
-        return form;
-    }
-
-
-
-
-
-
-    // Function to validate a single form
-    function validateForm(index) {
-        var isValid = true;
-
-        // Get input fields by ID
-        var levelOfEducation = $('#level_of_education_' + index);
-        var degreeTitle = $('#degree_title_' + index);
-        var institutionName = $('#institution_name_' + index);
-        var result = $('#result_' + index);
-        var passingYear = $('#passing_year_' + index);
-
-        
-
-        // Validate required fields
-        if (levelOfEducation.val() === '') {
-            $('#level_of_education_error_' + index).text('This field is required');
-            isValid = false;
-        }
-        if (degreeTitle.val() === '') {
-            $('#degree_title_error_' + index).text('This field is required');
-            isValid = false;
-        }
-        if (institutionName.val() === '') {
-            $('#institution_name_error_' + index).text('This field is required');
-            isValid = false;
-        }
-        if (result.val() === '') {
-            $('#result_error_' + index).text('This field is required');
-            isValid = false;
-        }
-
-        if (result.val() === "Grade") {
-            const scale = $(`#scale_${index}`).val();
-            const cgpa = $(`#cgpa_${index}`).val();
-            if (!scale) {
-                $(`#scale_error_${index}`).text("Scale is required");
-                isValid = false;
-            }
-            if (!cgpa) {
-                $(`#cgpa_error_${index}`).text("CGPA is required");
-                isValid = false;
-            }
-        } 
-        else {
-            const marks = $(`#marks_${index}`).val();
-            if (!marks) {
-                $(`#marks_error_${index}`).text("Marks are required");
-                isValid = false;
-            }
-        }
-
-        if (passingYear.val() === '') {
-            $('#passing_year_error_' + index).text('This field is required');
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-
-
-    // Handle form submission
-    $('#Insert').on('click', function() {
-        $('.error').text('');
-
-        var withs = $('#with').val();
-        var name = $('#user').attr('data-id');
-
-
-        var isValid = true;
-        var allFormsValid = true;
-
-        if (withs === '') {
-            $('#with_error').text('This field is required');
-            isValid = false;
-        }
-        if (name === '' || name === undefined) {
-            $('#user_error').text('This field is required');
-            isValid = false;
-        }
-
-        if (isValid){
-            // Loop through all forms
-            for (var i = 1; i < formIndex; i++) {
-                if (!validateForm(i)) {
-                    allFormsValid = false;
-                }
-            }
-
-            // If all forms are valid, submit one by one
-            if (allFormsValid) {
-                submitForm(1);
-            }
-        }
-    });
-
-    
-
-    // Function to submit forms sequentially
-    function submitForm(index) {
-        let user = $('#user').attr('data-id') || '';
-        let formElement = $(`#form${index}`);
-
-        // Check if the form exists
-        if (!formElement.length) {
-            $('#user').removeAttr('data-id');
-            $('#with').val('');
-            $('#user').val('');
-            $('.education-form').not(':first').remove();
-            toastr.success('Employee Education Details Added Successfully', 'Added!');
-            formIndex = 2;
-            return;
-        }
-
-        let formData = new FormData(formElement.get(0));
-        formData.append('user', user);
-        formElement.find('.error').text('');
-        $.ajax({
-            url: `${apiUrl}/hr/employee/education`,
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            cache: false,
-            data: formData,
-            success: function(res) {
-                if (res.status) {
-                    formElement[0].reset();
-                    submitForm(index + 1);
-                }
-            },
-        });
-    }
-
-    
     // Event delegation for dynamically created result dropdowns
     $(document).on('change', '.result-dropdown', function() {
-        var form = $(this).closest('form');
-        handleResultChange(form, $(this).val());
-    });
-
-
-    // Function to handle result change
-    function handleResultChange(form, result) {
-        var index = form.attr('id').replace('form', '');
+        var index = $(this).attr('id').replace('result_', '');
+        var result = $(this).val();
         var scaleGroup = $('#scale-group_' + index);
         var cgpaGroup = $('#cgpa-group_' + index);
         var marksGroup = $('#marks-group_' + index);
@@ -440,13 +194,98 @@ $(document).ready(function () {
             cgpaGroup.addClass('hidden');
             marksGroup.addClass('hidden');
         }
-    }
+    });
 
 
-    // Show Detals Ajax
-    DetailsAjax('hr/employee/education');
+    let formIndex = 1;
 
-
-    // Show Grid
-    GridAjax('hr/employee/education');
+    // Add new form on button click
+    $('#addEducation').on('click', function() {
+        let form = `<div class="rows">  
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="level_of_education_${formIndex}">Level of Education <span class="required" title="Required">*</span></label>
+                                <input type="text" name="level_of_education[]" id="level_of_education_${formIndex}" class="form-input">
+                                <span class="error" id="level_of_education_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="degree_title_${formIndex}">Degree Title <span class="required" title="Required">*</span></label>
+                                <input type="text" name="degree_title[]" id="degree_title_${formIndex}" class="form-input">
+                                <span class="error" id="degree_title_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="group_${formIndex}">Group</label>
+                                <select name="group[]" id="group_${formIndex}" class="group-dropdown">
+                                    <option value="">Select</option>
+                                    <option value="Science">Science</option>
+                                    <option value="Commerce">Commerce</option>
+                                    <option value="Arts">Arts</option>
+                                </select>
+                                <span class="error" id="group_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="institution_name_${formIndex}">Institution Name <span class="required" title="Required">*</span></label>
+                                <input type="text" name="institution_name[]" id="institution_name_${formIndex}" class="form-input">
+                                <span class="error" id="institution_name_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="result_${formIndex}">Result <span class="required" title="Required">*</span></label>
+                                <select name="result[]" id="result_${formIndex}" class="result-dropdown">
+                                    <option value="">Select</option>
+                                    <option value="First Division/Class">First Division/Class</option>
+                                    <option value="Second Division/Class">Second Division/Class</option>
+                                    <option value="Third Division/Class">Third Division/Class</option>
+                                    <option value="Grade">Grade</option>
+                                </select>
+                                <span class="error" id="result_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6 hidden" id="scale-group_${formIndex}">
+                            <div class="form-input-group">
+                                <label for="scale_${formIndex}">Scale <span class="required" title="Required">*</span></label>
+                                <input type="decimal" step="0.01" name="scale[]" id="scale_${formIndex}" class="form-input">
+                                <span class="error" id="scale_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6 hidden" id="cgpa-group_${formIndex}">
+                            <div class="form-input-group">
+                                <label for="cgpa_${formIndex}">CGPA <span class="required" title="Required">*</span></label>
+                                <input type="decimal" step="0.01" name="cgpa[]" id="cgpa_${formIndex}" class="form-input">
+                                <span class="error" id="cgpa_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6 hidden" id="marks-group_${formIndex}">
+                            <div class="form-input-group">
+                                <label for="marks_${formIndex}">Marks <span class="required" title="Required">*</span></label>
+                                <input type="number" name="marks[]" id="marks_${formIndex}" class="form-input">
+                                <span class="error" id="marks_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="batch_${formIndex}">Batch</label>
+                                <input type="integer" name="batch[]" id="batch_${formIndex}" class="form-input">
+                                <span class="error" id="batch_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="passing_year_${formIndex}">Passing Year <span class="required" title="Required">*</span></label>
+                                <input type="integer" name="passing_year[]" id="passing_year_${formIndex}" class="form-input">
+                                <span class="error" id="passing_year_${formIndex}_error"></span>
+                            </div>
+                        </div>
+                    </div>`;
+ 
+        $('#formContainer').append(form);
+        formIndex++;
+    });
 });

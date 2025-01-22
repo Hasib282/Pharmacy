@@ -12,6 +12,7 @@ function ShowCompanies(data, startIndex) {
                     <td>${item.company_email}</td>
                     <td>${item.company_phone}</td>
                     <td>${item.address ? item.address : "" }</td>
+                    <td>${item.domain}</td>
                     <td><img src="${apiUrl.replace('/api', '')}/storage/${item.logo ? item.logo : 'tsbd.png'}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
                     <td>
                         <div style="display: flex;gap:5px;">

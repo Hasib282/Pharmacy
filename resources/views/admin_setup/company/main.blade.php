@@ -48,6 +48,7 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Address</th>
+                    <th>Domain</th>
                     <th>Logo</th>
                     <th>Action</th>
                 </tr>

@@ -108,7 +108,15 @@ $(document).ready(function () {
 
 
     // Search Ajax
-    SearchAjax('hr/employee/organization', ShowEmployeeOrganizationDetails, {  });
+    SearchAjax('hr/employee/organization', ShowEmployeeOrganizationDetails);
+
+
+    // Show Detals Ajax
+    DetailsAjax('hr/employee/organization');
+
+
+    // Show Grid
+    GridAjax('hr/employee/organization');
 
 
     // Additional Edit Functionality
@@ -123,13 +131,4 @@ $(document).ready(function () {
         $('#updateDesignation').val(res.employee.designation.designation);
         $('#updateDesignation').attr('data-id',res.employee.designation.id);
     }
-    
-
-
-    // Show Detals Ajax
-    DetailsAjax('hr/employee/organization');
-
-
-    // Show Grid
-    GridAjax('hr/employee/organization');
 });

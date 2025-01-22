@@ -29,24 +29,35 @@ class TrainingDetailsController extends Controller
     public function Insert(Request $req){
         $req->validate([
             'user' => 'required',
-            'training_title' => 'required',
-            'country' => 'nullable',
-            'topic' => 'required',
-            'institution_name' => 'required',
-            'training_year' => 'required|numeric',
+            'training_title.*' => 'required',
+            'country.*' => 'nullable',
+            'topic.*' => 'required',
+            'institution_name.*' => 'required',
+            'training_year.*' => 'required|numeric',
+        ],
+        [
+            'training_title.*.required' => 'This field is required',
+            'country.*.required' => 'This field is required',
+            'topic.*required' => 'This field is required',
+            'institution_name.*required' => 'This field is required',
+            'training_year.*required' => 'This field is required',
         ]);
 
+        $trainingDetails = [];
+        foreach ($req->training_title as $key => $value) {
+            $trainingDetails[] = [
+                'emp_id' => $req->user,
+                'training_title' => $req->training_title[$key],
+                'country' => $req->country[$key],
+                'topic' => $req->topic[$key],
+                'institution_name' => $req->institution_name[$key],
+                'start_date' => $req->start_date[$key],
+                'end_date' => $req->end_date[$key],
+                'training_year' => $req->training_year[$key],
+            ];
+        }
 
-        Employee_Training_Detail::on('mysql_second')->insert([
-            'emp_id' => $req->user,
-            'training_title' => $req->training_title,
-            'country' => $req->country,
-            'topic' => $req->topic,
-            'institution_name' => $req->institution_name,
-            'start_date' => $req->start_date,
-            'end_date' => $req->end_date,
-            'training_year' => $req->training_year,
-        ]);
+        Employee_Training_Detail::on('mysql_second')->insert($trainingDetails);
         
         return response()->json([
             'status'=> true,

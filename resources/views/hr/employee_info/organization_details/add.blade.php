@@ -1,21 +1,3 @@
-{{-- @section('style')
-<style>
-    .modal-subject {
-        width: 75%;
-    }
-
-    label {
-        font-size: 16px !important;
-        font-weight: normal !important;
-    }
-
-    .container {
-        background-color: #E8E8E8 !important;
-    }
-</style>
-@endsection --}}
-
-
 <div id="addModal" class="modal-container">
     <div class="modal-subject" style="width: 80%;">
         <div class="modal-heading banner">
@@ -26,18 +8,16 @@
         </div>
         <br>
         <!-- form start -->
-        <form id="AddForm" method="POST" enctype="multipart/form-data">
+        <form id="AddForm" enctype="multipart/form-data">
             @csrf
-            <!-- Insert Organization Details Section -->
+            @method('POST')
+
             <div class="rows">
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="with">Employee Type</label>
                         <select name="with" id="with">
-                            {{-- <option value="">Select Employee Type</option>
-                            @foreach ($tranwith as $with)
-                            <option value="{{$with->id}}">{{$with->tran_with_name}}</option>
-                            @endforeach --}}
+                            
                         </select>
                         <span class="error" id="with_error"></span>
                     </div>

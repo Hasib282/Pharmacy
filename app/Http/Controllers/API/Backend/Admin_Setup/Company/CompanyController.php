@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Backend\Admin_Setup;
+namespace App\Http\Controllers\API\Backend\Admin_Setup\Company;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -35,6 +35,7 @@ class CompanyController extends Controller
             "phone" => 'required|numeric|unique:mysql.company__details,company_phone',
             "email" => 'required|email|unique:mysql.company__details,company_email',
             'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
+            "domain" => 'required',
         ]);
 
 
@@ -52,6 +53,7 @@ class CompanyController extends Controller
                 "company_email" => $req->email,
                 "address" => $req->address,
                 "website" => $req->website,
+                "domain" => $req->domain,
                 "logo" => $imageName,
             ]);
         });
@@ -85,6 +87,7 @@ class CompanyController extends Controller
             "name" => 'required',
             "phone" => ['required','numeric',Rule::unique('mysql.company__details', 'company_phone')->ignore($company->id)],
             "email" => ['required','email',Rule::unique('mysql.company__details', 'company_email')->ignore($company->id)],
+            "domain" => 'required',
         ]);
 
         DB::transaction(function () use ($req, $company) {
@@ -98,6 +101,7 @@ class CompanyController extends Controller
                 "company_email" => $req->email,
                 "address" => $req->address,
                 "website" => $req->website,
+                "domain" => $req->domain,
                 "logo" => $imageName,
                 "updated_at" => now(),
             ]);
@@ -128,29 +132,29 @@ class CompanyController extends Controller
     public function Search(Request $req){
         if($req->searchOption == 1){
             $company = Company_Details::on('mysql')->with('Type')
-            ->where('company_name', 'like', '%'.$req->search.'%')
-            ->where('company_type', 'like', $req->type.'%')
+            ->where('company_name', 'like', $req->search.'%')
+            ->where('company_type', 'like', $req->type)
             ->orderBy('company_name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){
             $company = Company_Details::on('mysql')->with('Type')
-            ->where('company_email', 'like', '%'.$req->search.'%')
-            ->where('company_type', 'like', $req->type.'%')
+            ->where('company_email', 'like', $req->search.'%')
+            ->where('company_type', 'like', $req->type)
             ->orderBy('company_email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){
             $company = Company_Details::on('mysql')->with('Type')
-            ->where('company_phone', 'like', '%'.$req->search.'%')
-            ->where('company_type', 'like', $req->type.'%')
+            ->where('company_phone', 'like', $req->search.'%')
+            ->where('company_type', 'like', $req->type)
             ->orderBy('company_phone','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 4){
             $company = Company_Details::on('mysql')->with('Type')
-            ->where('address', 'like', '%'.$req->search.'%')
-            ->where('company_type', 'like', $req->type.'%')
+            ->where('address', 'like', $req->search.'%')
+            ->where('company_type', 'like', $req->type)
             ->orderBy('address','asc')
             ->paginate(15);
         }
@@ -166,7 +170,7 @@ class CompanyController extends Controller
     // Get Companies
     public function Get(Request $req){
         $companies = Company_Details::on('mysql')->select('company_name','company_id')
-        ->where('company_name', 'like', '%'.$req->company.'%')
+        ->where('company_name', 'like', $req->company.'%')
         ->orderBy('company_name')
         ->take(10)
         ->get();

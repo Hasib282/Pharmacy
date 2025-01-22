@@ -29,32 +29,50 @@ class EducationDetailsController extends Controller
     public function Insert(Request $req){
         $req->validate([
             'user' => 'required',
-            'level_of_education' => 'required|string|max:255',
-            'degree_title' => 'required|string|max:255',
-            'group' => 'nullable|in:Science,Commerce,Arts',
-            'institution_name' => 'required|string|max:255',
-            'result' => 'required|in:First Division/Class,Second Division/Class,Third Division/Class,Grade',
-            'scale' => 'nullable|numeric',
-            'cgpa' => 'nullable|numeric',
-            'marks' => 'nullable|numeric',
-            'batch' => 'nullable|numeric',
-            'passing_year' => 'required|numeric',
+            'level_of_education.*' => 'required|string|max:255',
+            'degree_title.*' => 'required|string|max:255',
+            'group.*' => 'nullable|in:Science,Commerce,Arts',
+            'institution_name.*' => 'required|string|max:255',
+            'result.*' => 'required|in:First Division/Class,Second Division/Class,Third Division/Class,Grade',
+            'scale.*' => 'nullable|numeric',
+            'cgpa.*' => 'nullable|numeric',
+            'marks.*' => 'nullable|numeric',
+            'batch.*' => 'nullable|numeric',
+            'passing_year.*' => 'required|numeric',
+        ],
+        [
+            'level_of_education.*.required' => "This field is required",
+            'degree_title.*.required' => "This field is required",
+            'group.*.required' => "This field is required",
+            'institution_name.*.required' => "This field is required",
+            'result.*.required' => "This field is required",
+            'scale.*.required' => "This field is required",
+            'cgpa.*.required' => "This field is required",
+            'marks.*.required' => "This field is required",
+            'batch.*.required' => "This field is required",
+            'passing_year.*.required' => "This field is required",
         ]);
+
+
+
+        $educationDetails = [];
+        foreach ($req->level_of_education as $key => $value) {
+            $educationDetails[] = [
+                'emp_id' => $req->user,
+                'level_of_education' => $req->level_of_education[$key],
+                'degree_title' => $req->degree_title[$key],
+                'group' => $req->group[$key] ?? null,
+                'institution_name' => $req->institution_name[$key],
+                'result' => $req->result[$key],
+                'scale' => $req->scale[$key] ?? null,
+                'cgpa' => $req->cgpa[$key] ?? null,
+                'marks' => $req->marks[$key] ?? null,
+                'batch' => $req->batch[$key] ?? null,
+                'passing_year' => $req->passing_year[$key],
+            ];
+        }
     
-        // Create a new Education instance and save the data
-        Employee_Education_Detail::on('mysql_second')->insert([
-            'emp_id' => $req->user,
-            'level_of_education' => $req->level_of_education,
-            'degree_title' => $req->degree_title,
-            'group' => $req->group,
-            'institution_name' => $req->institution_name,
-            'result' => $req->result,
-            'scale' => $req->scale,
-            'cgpa' => $req->cgpa,
-            'marks' => $req->marks,
-            'batch' => $req->batch,
-            'passing_year' => $req->passing_year,
-        ]);
+        Employee_Education_Detail::on('mysql_second')->insert($educationDetails);
         
         return response()->json([
             'status'=> true,

@@ -30,6 +30,20 @@ class AuthController extends Controller
                     'notice' => 'Your account is not active. Please contact support.',
                 ], 401);
             }
+
+            $host = $req->getHost();
+            $subdomain = explode('.', $host)[0];
+            
+            if (Auth::user()->user_role != 1) {
+                $userDomain = Auth::user()->company->domain;
+                Auth::logout();
+                if($subdomain == $userDomain){
+                    return response()->json([
+                        'status' => false,
+                        'domain' => $userDomain,
+                    ], 401);
+                }
+            }
             
             // Remember me funtionality
             $remember_time = time() + (180 * 24 * 60 * 60); // 6 Month
@@ -67,14 +81,13 @@ class AuthController extends Controller
 
     // Logout Function
     public function Logout(Request $req){
-        // dd(Auth::logout());
+        // Auth::logout();
         
         $user = $req->user();
         $currentToken = $req->bearerToken();
         $tokenId = explode('|', $currentToken)[0];
         // dd($tokenId);
         if ($currentToken) {
-            
             $user->tokens()->where('id', $tokenId)->delete();
         }
         Cache::forget("permission_mainheads_{$user->user_id}");

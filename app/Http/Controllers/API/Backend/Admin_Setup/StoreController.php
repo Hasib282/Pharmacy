@@ -112,13 +112,13 @@ class StoreController extends Controller
             $store = Store::on('mysql_second')
             ->with('Location')
             ->whereIn('location_id', $locations)
-            ->where('division', 'like', '%'.$req->division.'%')
+            ->where('division', 'like', $req->division.'%')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search By Upazila/Location
             $store = Store::on('mysql_second')->with('Location')
-            ->where('address', 'like', '%'.$req->search.'%')
-            ->where('division', 'like','%'.$req->division.'%')
+            ->where('address', 'like', $req->search.'%')
+            ->where('division', 'like', $req->division.'%')
             ->orderBy('store_name')
             ->paginate(15);
         }
@@ -133,7 +133,7 @@ class StoreController extends Controller
 
     // Get Store By Name
     public function Get(Request $req){
-        $stores = Store::on('mysql_second')->where('store_name', 'like', '%'.$req->store.'%')
+        $stores = Store::on('mysql_second')->where('store_name', 'like', $req->store.'%')
         ->orderBy('store_name')
         ->take(10)
         ->get();

@@ -130,7 +130,7 @@
                                 <li class="sub-menu1-item" data-url="{{route('show.companyTypePermissions')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'company_type_permissions') ? 'active':''}}">
                                         <p>
-                                            <i class="fa-solid fa-user-secret"></i>
+                                            <i class="fa-solid fa-house-circle-exclamation"></i>
                                             Company Type
                                         </p>
                                     </div>
@@ -139,7 +139,7 @@
                                 <li class="sub-menu1-item" data-url="{{route('show.companyPermissions')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'company_permissions') ? 'active':''}}">
                                         <p>
-                                            <i class="fa-solid fa-user-secret"></i>
+                                            <i class="fa-solid fa-house-user"></i>
                                             Company
                                         </p>
                                     </div>
@@ -150,7 +150,7 @@
                                 <li class="sub-menu1-item" data-url="{{route('show.userPermissions')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'userpermissions') ? 'active':''}}">
                                         <p>
-                                            <i class="fa-solid fa-user-secret"></i>
+                                            <i class="fa-solid fa-user-shield"></i>
                                             User Permissions
                                         </p>
                                     </div>
@@ -274,7 +274,7 @@
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'users') ? 'active':''}}">
                             <p>
-                                <i class="fa-solid fa-users"></i>
+                                <i class="fa-solid fa-users-gear"></i>
                                 USERS
                             </p>
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
@@ -284,7 +284,7 @@
                                 <li class="sub-menu1-item" data-url="{{route('show.tranUserType')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'transaction' && Request::segment(2) == 'users' && Request::segment(3) == 'usertype') ? 'active':''}}">
                                         <p>
-                                            <i class="fa-solid fa-dice-six"></i>
+                                            <i class="fa-solid fa-user-tag"></i>
                                             Client/Supplier Type
                                         </p>
                                     </div>
@@ -474,7 +474,7 @@
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee') ? 'active':''}}">
                             <p>
-                                <i class="fa-solid fa-users"></i>
+                                <i class="fa-solid fa-users-gear"></i>
                                 Employee
                             </p>
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee') ? 'rotate':''}}"></i>
@@ -484,7 +484,7 @@
                                 <li class="sub-menu1-item" data-url="{{route('show.hrUserType')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'usertype') ? 'active':''}}">
                                         <p>
-                                            <i class="fa-solid fa-dice-one"></i>
+                                            <i class="fa-solid fa-user-tag"></i>
                                             Employee Type
                                         </p>
                                     </div>
@@ -495,7 +495,7 @@
                                 <li class="sub-menu1-item" data-url="{{route('show.employees')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'all') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fa-solid fa-users"></i>
                                             All Employee
                                         </p>
                                     </div>
@@ -506,8 +506,8 @@
                                 <li class="sub-menu1-item" data-url="{{ route('show.employeePersonal') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'personal') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
-                                            Add Personal Details
+                                            <i class="fa-solid fa-user-plus"></i>
+                                            Personal Details
                                         </p>
                                     </div>
                                 </li>
@@ -517,8 +517,8 @@
                                 <li class="sub-menu1-item" data-url="{{ route('show.employeeEducation') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'education') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
-                                            Add Education Details
+                                            <i class="fa-solid fa-address-book"></i>
+                                            Education Details
                                         </p>
                                     </div>
                                 </li>
@@ -528,8 +528,8 @@
                                 <li class="sub-menu1-item" data-url="{{ route('show.employeeTraining') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'training') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
-                                            Add Training Details
+                                            <i class="fa-solid fa-user-gear"></i>
+                                            Training Details
                                         </p>
                                     </div>
                                 </li>
@@ -539,8 +539,8 @@
                                 <li class="sub-menu1-item" data-url="{{ route('show.employeeExperience') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'experience') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
-                                            Add Experience Details
+                                            <i class="fa-solid fa-user-tie"></i>
+                                            Experience Details
                                         </p>
                                     </div>
                                 </li>
@@ -550,8 +550,8 @@
                                 <li class="sub-menu1-item" data-url="{{ route('show.employeeOrganization') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'organization') ? 'active':''}}">
                                         <p>
-                                            <i class="far fa-circle nav-icon"></i>
-                                            Add Organization Details
+                                            <i class="fa-solid fa-building-user"></i>
+                                            Organization Details
                                         </p>
                                     </div>
                                 </li>
@@ -756,7 +756,7 @@
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'users') ? 'active':''}}">
                             <p>
-                                <i class="fa-solid fa-users"></i>
+                                <i class="fa-solid fa-users-gear"></i>
                                 USERS
                             </p>
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
@@ -766,7 +766,7 @@
                                 <li class="sub-menu-item" data-url="{{route('show.pharmacyUserType')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'users' && Request::segment(3) == 'usertype') ? 'active':''}}">
                                         <p>
-                                            <i class="fa-solid fa-dice-six"></i>
+                                            <i class="fa-solid fa-user-tag"></i>
                                             Client/Supplier Type
                                         </p>
                                     </div>
@@ -1239,7 +1239,7 @@
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'users') ? 'active':''}}">
                             <p>
-                                <i class="fa-solid fa-users"></i>
+                                <i class="fa-solid fa-users-gear"></i>
                                 USERS
                             </p>
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
@@ -1249,7 +1249,7 @@
                                 <li class="sub-menu1-item" data-url="{{route('show.invUserType')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'inventory' && Request::segment(2) == 'users' && Request::segment(3) == 'usertype') ? 'active':''}}">
                                         <p>
-                                            <i class="fa-solid fa-dice-six"></i>
+                                            <i class="fa-solid fa-user-tag"></i>
                                             Client/Supplier Type
                                         </p>
                                     </div>

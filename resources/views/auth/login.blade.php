@@ -124,7 +124,10 @@
                                 window.location.href = '/dashboard';
                             },
                             error: function(response) {
-                                console.log('Login Failed', response);
+                                if (response.responseJSON && response.responseJSON.domain) {
+                                    window.location.href = 'https://' + response.responseJSON.domain +'.teamsolutionsbangladesh.com/login';
+                                }
+
                                 if (response.responseJSON && response.responseJSON.notice) {
                                     $('#error').html(response.responseJSON.notice)
                                 }

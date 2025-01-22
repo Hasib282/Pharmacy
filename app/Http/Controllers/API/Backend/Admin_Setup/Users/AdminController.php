@@ -45,8 +45,8 @@ class AdminController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "name" => 'required',
-            "phone" => 'required|numeric|unique:mysql_second.user__infos,user_phone',
-            "email" => 'required|email|unique:mysql_second.user__infos,user_email',
+            "phone" => 'required|numeric|unique:mysql.login__users,user_phone',
+            "email" => 'required|email|unique:mysql.login__users,user_email',
             'password' => 'required|confirmed',
             'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
             'company' => 'required',
@@ -83,6 +83,7 @@ class AdminController extends Controller
                 "password" => Hash::make($req->password),
                 "image" => $imageName,
                 "store_id" =>  $req->store,
+                "company_id" =>  $req->company,
             ]);
         });
         
@@ -111,8 +112,8 @@ class AdminController extends Controller
 
         $req->validate([
             "name" => 'required',
-            "phone" => ['required','numeric',Rule::unique('mysql_second.user__infos', 'user_phone')->ignore($admin->id)],
-            "email" => ['required','email',Rule::unique('mysql_second.user__infos', 'user_email')->ignore($admin->id)],
+            "phone" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore($admin->id)],
+            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore($admin->id)],
         ]);
 
 

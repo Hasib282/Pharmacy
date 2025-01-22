@@ -124,21 +124,21 @@ class SuperAdminController extends Controller
         if($req->searchOption == 1){ // Search by User Name and Id
             $superadmin = Login_User::on('mysql')
             ->where('user_role', 1)
-            ->where('user_name', 'like', '%'.$req->search.'%')
+            ->where('user_name', 'like', $req->search.'%')
             ->orderBy('user_name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){ // Search by User Email
             $superadmin = Login_User::on('mysql')
             ->where('user_role', 1)
-            ->where('user_email', 'like', '%'.$req->search.'%')
+            ->where('user_email', 'like', $req->search.'%')
             ->orderBy('user_email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search by User Phone
             $superadmin = Login_User::on('mysql')
             ->where('user_role', 1)
-            ->where('user_phone', 'like', '%'.$req->search.'%')
+            ->where('user_phone', 'like', $req->search.'%')
             ->orderBy('user_phone','asc')
             ->paginate(15);
         }

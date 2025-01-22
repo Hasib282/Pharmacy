@@ -32,6 +32,14 @@ function AjaxSetup(){
                         else if(requestMethod == "PUT"){
                             $('#update_' + key + "_error").text(value);
                         }
+                        else if(requestMethod == "Multi POST"){
+                            let keys = key.replace('.', '_');
+                            $('#' + keys + "_error").text(value[0]);
+                        }
+                        else if(requestMethod == "Multi PUT"){
+                            let keys = key.replace('.', '_');
+                            $('#update_' + keys + "_error").text(value[0]);
+                        }
                     });
                 }
 
