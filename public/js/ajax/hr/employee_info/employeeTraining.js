@@ -123,7 +123,7 @@ $(document).ready(function () {
     var formIndex = 1;
 
     $('#addTraining').click(function() {
-        let form = `<div class="rows">
+        let form = `<div class="rows add-form">
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for = "training_title_${formIndex}">Training Title <span class="required" title="Required">*</span></label>

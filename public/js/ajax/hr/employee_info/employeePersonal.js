@@ -138,6 +138,17 @@ $(document).ready(function () {
 
         $('#update_email').val(res.employee.email);
 
+        // Create options dynamically
+        $('#updateDivision').empty();
+        $('#updateDivision').append(`<option value="Dhaka" ${res.employee.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
+            <option value="Chittagong" ${res.employee.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
+            <option value="Rajshahi" ${res.employee.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
+            <option value="Khulna" ${res.employee.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
+            <option value="Sylhet" ${res.employee.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
+            <option value="Barisal" ${res.employee.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
+            <option value="Rangpur" ${res.employee.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
+            <option value="Mymensingh" ${res.employee.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
+
         $('#updateLocation').val(res.employee.location.upazila);
         $('#updateLocation').attr('data-id',res.employee.location_id);
 

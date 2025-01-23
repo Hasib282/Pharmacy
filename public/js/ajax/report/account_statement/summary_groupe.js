@@ -67,7 +67,7 @@ function ShowSummaryGroupeReports(data, startIndex) {
 
         $('#grandReceive').text(formatNumber(grandReceive));
         $('#grandPayment').text(formatNumber(grandPayment));
-        $('#closing').text(formatNumber(opening - (grandReceive - grandPayment)));
+        $('#closing').text(formatNumber(opening + grandReceive - grandPayment));
 
         // Inject the generated rows into the table body
         $('.load-data .show-table tbody').html(tableRows);

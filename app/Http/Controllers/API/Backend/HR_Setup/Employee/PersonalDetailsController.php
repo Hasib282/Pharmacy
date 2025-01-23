@@ -37,15 +37,15 @@ class PersonalDetailsController extends Controller
             'gender' => 'in:Male,Female,Others',
             'religion' => 'in:Islam,Hinduism,Christianity,Buddhism,Judaism',
             'marital_status' => 'in:Married,Unmarried',
-            'nid_no' => 'numeric',
-            'phn_no' =>  'required|numeric|unique:mysql_second.user__infos,user_phone',
-            'blood_group' => 'in:A+,A-,B+,B-,O+,O-,AB+,AB-',
-            'email' => 'required|email|unique:mysql_second.user__infos,user_email',
+            'nid_no' => 'nullable|numeric',
+            'phn_no' =>  'required|numeric|unique:mysql.login__users,user_phone',
+            'email' => 'required|email|unique:mysql.login__users,user_email',
             'location'  => 'required',
             'type'=> 'required',
             'password' => 'required|confirmed',
-            'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
-            'company' => 'required'
+            'image' => 'nullable|mimes:jpg,jpeg,png,gif|max:2048',
+            'company' => 'required',
+            'store' => 'required',
         ]);
  
         

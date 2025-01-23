@@ -557,6 +557,11 @@ input[type=checkbox]{
     -webkit-transform: scale(1.5);
     margin: 5px;
 }
+
+.add-form{
+    padding-top: 10px;
+    border-top: 1px solid #8080808c;
+}
 /* ---------------------------------------- Table custom design end ----------------------------------------------------- */
 
 

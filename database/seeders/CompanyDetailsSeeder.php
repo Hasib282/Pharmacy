@@ -25,6 +25,7 @@ class CompanyDetailsSeeder extends Seeder
                 "company_phone"=>$item->phone,
                 "address"=>$item->address,
                 "company_type"=>$item->type,
+                "domain"=>$item->domain,
             ]);
         });
     }

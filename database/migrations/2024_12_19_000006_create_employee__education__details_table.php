@@ -14,16 +14,14 @@ return new class extends Migration
         Schema::connection('mysql_second')->create('employee__education__details', function (Blueprint $table) {
             $table->id();
             $table->string('emp_id');
-            $table->string('level_of_education');
-            $table->string('degree_title');
+            $table->string('degree');
             $table->string('group')->nullable();
-            $table->string('institution_name');
+            $table->string('institution');
             $table->string('result')->nullable();
             $table->decimal('scale')->nullable();
             $table->decimal('cgpa')->nullable();
             $table->decimal('marks')->nullable();
-            $table->integer('batch')->nullable();
-            $table->integer('passing_year');
+            $table->integer('batch');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 

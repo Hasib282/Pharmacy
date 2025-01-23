@@ -3,14 +3,13 @@
         <thead>
             <tr>
                 <th>SL:</th>
-                <th>Level of Education</th>
                 <th>Degree Title</th>
                 <th>Group</th>
                 <th>Institution Name</th>
                 <th>Result</th>
                 <th>Marks</th>
                 <th>CGPA</th>
-                <th>Passing Year</th>
+                <th>Batch</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -18,10 +17,9 @@
             @foreach ($employeeeducation as $key => $item)
             <tr>
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $item->level_of_education}}</td>
-                <td>{{ $item->degree_title }}</td>
+                <td>{{ $item->degree }}</td>
                 <td>{{ $item->group }}</td>
-                <td>{{ $item->institution_name }}</td>
+                <td>{{ $item->institution }}</td>
                 <td>{{ $item->result }}</td>
                 <td>@isset($item->marks)
                     {{ $item->marks }}
@@ -35,7 +33,7 @@
                     N/A
                     @endisset
                 </td>
-                <td>{{ $item->passing_year }}</td>
+                <td>{{ $item->batch }}</td>
                 <td>
                     <div style="display: flex;gap:5px;">
                         {{-- @if(Auth::user()->hasPermissionToRoute('update.employeeEducation')) --}}

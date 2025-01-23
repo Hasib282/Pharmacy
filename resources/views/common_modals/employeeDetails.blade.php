@@ -88,56 +88,44 @@
             @foreach($education as $employees)
                 <div class="education">
                     <div class="details-table">
-                    <div class="rows each-row">
-                            <div class="c-2 bold">Level of Education</div> 
-                            <div class="c-4">{{ $employees->level_of_education }}</div>
+                        <div class="rows each-row">
                             <div class="c-2 bold">Degree Title</div> 
-                            <div class="c-4">{{ $employees->degree_title }}</div>
+                            <div class="c-4">{{ $employees->degree }}</div>
+                            <div class="c-2 bold">Institution Name</div> 
+                            <div class="c-4">{{ $employees->institution }}</div>
                         </div>
                         <div class="rows each-row">
                             <div class="c-2 bold">Group</div> 
-                            <div class="c-4">@isset($employees->group)
-                                                    {{ $employees->group }}
-                                                @else
-                                                    Group unavailable
-                                                @endisset</div>
-                            <div class="c-2 bold">Institution Name</div> 
-                            <div class="c-4">{{ $employees->institution_name }}</div>
-                        </div>
-                        <div class="rows each-row">
+                            <div class="c-4">
+                                @isset($employees->group)
+                                    {{ $employees->group }}
+                                @else
+                                    Group unavailable
+                                @endisset
+                            </div>
                             <div class="c-2 bold">Result</div> 
                             <div class="c-4">{{ $employees->result }}</div>
-                            @if($employees->scale !== null)
-                                <div class="c-2 bold">Scale</div>
-                                <div class="c-4">{{ $employees->scale }}</div>
-                            @endif
+                        </div>
+                        @if($employees->scale !== null)
+                            <div class="rows each-row">
+                                @if($employees->scale !== null)
+                                    <div class="c-2 bold">Scale</div>
+                                    <div class="c-4">{{ $employees->scale }}</div>
+                                @endif
+                                @if($employees->cgpa !== null)
+                                    <div class="c-2 bold">CGPA</div>
+                                    <div class="c-4">{{ $employees->cgpa }}</div>
+                                @endif
+                            </div>
+                        @endif
+                        <div class="rows each-row">
                             @if($employees->marks !== null)
                                 <div class="c-2 bold">Marks</div>
                                 <div class="c-4">{{ $employees->marks }}</div>
                             @endif
-                        </div>
-                        <div class="rows each-row">
-                            @if($employees->cgpa !== null)
-                                <div class="c-2 bold">CGPA</div>
-                                <div class="c-4">{{ $employees->cgpa }}</div>
-                            @endif
                             <div class="c-2 bold">Batch</div> 
-                            <div class="c-4">@isset($employees->batch)
-                                                    {{ $employees->batch }}
-                                                @else
-                                                    Batch unavailable
-                                                @endisset</div>
-                            @if($employees->marks !== null)
-                                <div class="c-2 bold">Passing Year</div> 
-                                <div class="c-4">{{ $employees->passing_year }}</div>
-                            @endif             
+                            <div class="c-4">{{ $employees->batch }}</div>         
                         </div>
-                        @if($employees->cgpa !== null)
-                        <div class="rows each-row">
-                                <div class="c-2 bold">Passing Year</div> 
-                                <div class="c-4">{{ $employees->passing_year }}</div>
-                        </div>
-                        @endif
                     </div>
                 </div>
             @endforeach

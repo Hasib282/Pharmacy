@@ -29,28 +29,24 @@ class EducationDetailsController extends Controller
     public function Insert(Request $req){
         $req->validate([
             'user' => 'required',
-            'level_of_education.*' => 'required|string|max:255',
-            'degree_title.*' => 'required|string|max:255',
+            'degree.*' => 'required|string|max:255',
             'group.*' => 'nullable|in:Science,Commerce,Arts',
-            'institution_name.*' => 'required|string|max:255',
+            'institution.*' => 'required|string|max:255',
             'result.*' => 'required|in:First Division/Class,Second Division/Class,Third Division/Class,Grade',
             'scale.*' => 'nullable|numeric',
             'cgpa.*' => 'nullable|numeric',
             'marks.*' => 'nullable|numeric',
-            'batch.*' => 'nullable|numeric',
-            'passing_year.*' => 'required|numeric',
+            'batch.*' => 'numeric',
         ],
         [
-            'level_of_education.*.required' => "This field is required",
-            'degree_title.*.required' => "This field is required",
+            'degree.*.required' => "This field is required",
             'group.*.required' => "This field is required",
-            'institution_name.*.required' => "This field is required",
+            'institution.*.required' => "This field is required",
             'result.*.required' => "This field is required",
             'scale.*.required' => "This field is required",
             'cgpa.*.required' => "This field is required",
             'marks.*.required' => "This field is required",
             'batch.*.required' => "This field is required",
-            'passing_year.*.required' => "This field is required",
         ]);
 
 
@@ -59,16 +55,14 @@ class EducationDetailsController extends Controller
         foreach ($req->level_of_education as $key => $value) {
             $educationDetails[] = [
                 'emp_id' => $req->user,
-                'level_of_education' => $req->level_of_education[$key],
-                'degree_title' => $req->degree_title[$key],
+                'degree' => $req->degree_title[$key],
                 'group' => $req->group[$key] ?? null,
-                'institution_name' => $req->institution_name[$key],
+                'institution' => $req->institution_name[$key],
                 'result' => $req->result[$key],
                 'scale' => $req->scale[$key] ?? null,
                 'cgpa' => $req->cgpa[$key] ?? null,
                 'marks' => $req->marks[$key] ?? null,
                 'batch' => $req->batch[$key] ?? null,
-                'passing_year' => $req->passing_year[$key],
             ];
         }
     
@@ -98,32 +92,28 @@ class EducationDetailsController extends Controller
     // Update Employee Education Details
     public function Update(Request $req){
         $req->validate([
-            'level_of_education' => 'required|string|max:255',
-            'degree_title' => 'required|string|max:255',
+            'degree' => 'required|string|max:255',
             'group' => 'nullable|in:Science,Arts,Commerce',
-            'institution_name' => 'required|string|max:255',
+            'institution' => 'required|string|max:255',
             'result' => 'required|in:First Division/Class,Second Division/Class,Third Division/Class,Grade',
             'scale' => 'nullable|numeric',
             'cgpa' => 'nullable|numeric',
             'marks' => 'nullable|numeric',
-            'batch' => 'nullable|numeric',
-            'passing_year' => 'required|numeric',
+            'batch' => 'numeric',
         ]);
 
         $employee = Employee_Education_Detail::on('mysql_second')->findOrFail($req->id);
         
 
         $update = Employee_Education_Detail::on('mysql_second')->findOrFail($req->id)->update([
-            'level_of_education' => $req->level_of_education,
-            'degree_title' => $req->degree_title,
+            'degree' => $req->degree,
             'group' => $req->group,
-            'institution_name' => $req->institution_name,
+            'institution' => $req->institution,
             'result' => $req->result,
             'scale' => $req->scale,
             'cgpa' => $req->cgpa,
             'marks' => $req->marks,
             'batch' => $req->batch,
-            'passing_year' => $req->passing_year,
             'updated_at' => now()
         ]);
 

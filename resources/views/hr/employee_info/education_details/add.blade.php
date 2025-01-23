@@ -7,8 +7,6 @@
             </div>
         </div>
 
-        
-            
 
         <!-- form start -->
         <form id='AddForm' enctype="multipart/form-data">
@@ -40,16 +38,9 @@
 
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="level_of_education_0">Level of Education <span class="required" title="Required">*</span></label>
-                        <input type="text" name="level_of_education[]" id="level_of_education_0" class="form-input">
-                        <span class="error" id="level_of_education_0_error"></span>
-                    </div>
-                </div>
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="degree_title_0">Degree Title <span class="required" title="Required">*</span></label>
-                        <input type="text" name="degree_title[]" id="degree_title_0" class="form-input">
-                        <span class="error" id="degree_title_0_error"></span>
+                        <label for="degree_0">Degree Title <span class="required" title="Required">*</span></label>
+                        <input type="text" name="degree[]" id="degree_0" class="form-input">
+                        <span class="error" id="degree_0_error"></span>
                     </div>
                 </div>
                 <div class="c-6">
@@ -66,9 +57,9 @@
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="institution_name_0">Institution Name <span class="required" title="Required">*</span></label>
-                        <input type="text" name="institution_name[]" id="institution_name_0" class="form-input">
-                        <span class="error" id="institution_name_0_error"></span>
+                        <label for="institution_0">Institution Name <span class="required" title="Required">*</span></label>
+                        <input type="text" name="institution[]" id="institution_0" class="form-input">
+                        <span class="error" id="institution_0_error"></span>
                     </div>
                 </div>
                 <div class="c-6">
@@ -86,53 +77,44 @@
                 </div>
                 <div class="c-6 hidden" id="scale-group_0">
                     <div class="form-input-group">
-                        <label for="scale_0">Scale <span class="required" title="Required">*</span></label>
+                        <label for="scale_0">Scale </label>
                         <input type="decimal" step="0.01" name="scale[]" id="scale_0" class="form-input">
                         <span class="error" id="scale_0_error"></span>
                     </div>
                 </div>
                 <div class="c-6 hidden" id="cgpa-group_0">
                     <div class="form-input-group">
-                        <label for="cgpa_0">CGPA <span class="required" title="Required">*</span></label>
+                        <label for="cgpa_0">CGPA </label>
                         <input type="decimal" step="0.01" name="cgpa[]" id="cgpa_0" class="form-input">
                         <span class="error" id="cgpa_0_error"></span>
                     </div>
                 </div>
                 <div class="c-6 hidden" id="marks-group_0">
                     <div class="form-input-group">
-                        <label for="marks_0">Marks <span class="required" title="Required">*</span></label>
+                        <label for="marks_0">Marks</label>
                         <input type="number" name="marks[]" id="marks_0" class="form-input">
                         <span class="error" id="marks_0_error"></span>
                     </div>
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="batch_0">Batch</label>
+                        <label for="batch_0">Batch <span class="required" title="Required">*</span></label>
                         <input type="integer" name="batch[]" id="batch_0" class="form-input">
                         <span class="error" id="batch_0_error"></span>
                     </div>
                 </div>
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="passing_year_0">Passing Year <span class="required" title="Required">*</span></label>
-                        <input type="integer" name="passing_year[]" id="passing_year_0" class="form-input">
-                        <span class="error" id="passing_year_0_error"></span>
-                    </div>
-                </div>
+            </div>
+
+            <div id="formContainer">
                 <!-- Forms will be dynamically added here -->
             </div>
-            <div id="formContainer"></div>
 
-            
+            <div>
+                <button type="button" name="addEducation" id="addEducation" class="btn-blue">Add+</button>
+            </div>
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Save</button>
             </div>
         </form>
-        <div>
-            <button type="button" name="addEducation" id="addEducation" class="btn-blue">Add+</button>
-        </div>
-        
-        
-        
     </div>
 </div>

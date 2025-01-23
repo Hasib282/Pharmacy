@@ -38,9 +38,9 @@ class TrainingDetailsController extends Controller
         [
             'training_title.*.required' => 'This field is required',
             'country.*.required' => 'This field is required',
-            'topic.*required' => 'This field is required',
-            'institution_name.*required' => 'This field is required',
-            'training_year.*required' => 'This field is required',
+            'topic.*.required' => 'This field is required',
+            'institution_name.*.required' => 'This field is required',
+            'training_year.*.required' => 'This field is required',
         ]);
 
         $trainingDetails = [];

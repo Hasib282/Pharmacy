@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('company_type')->nullable();
             $table->string('address')->nullable();
             $table->string('website')->nullable();
+            $table->string('domain')->nullable();
             $table->string('logo')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');
             $table->timestamp('added_at')->useCurrent();
@@ -33,7 +34,7 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     */
+    */
     public function down(): void
     {
         Schema::connection('mysql')->dropIfExists('company__details');

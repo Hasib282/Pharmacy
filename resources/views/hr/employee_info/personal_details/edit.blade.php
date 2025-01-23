@@ -17,7 +17,16 @@
                 <input type="hidden" name="employee_id" id="employee_id">
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="update_name">Name</label>
+                        <label for="update_type">Employee Type <span class="required" title="Required">*</span></label>
+                        <select name="type" id="update_type">
+                            
+                        </select>
+                        <span class="error" id="update_type_error"></span>
+                    </div>
+                </div>
+                <div class="c-6">
+                    <div class="form-input-group">
+                        <label for="update_name">Name <span class="required" title="Required">*</span></label>
                         <input type="text" name="name" id="update_name" class="form-input">
                         <span class="error" id="update_name_error"></span>
                     </div>
@@ -45,7 +54,7 @@
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="update_gender">Gender</label>
+                        <label for="update_gender">Gender <span class="required" title="Required">*</span></label>
                         <select name="gender" id="update_gender">
 
                         </select>
@@ -54,7 +63,7 @@
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="update_religion">Religion</label>
+                        <label for="update_religion">Religion <span class="required" title="Required">*</span></label>
                         <select name="religion" id="update_religion">
 
                         </select>
@@ -63,7 +72,7 @@
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="update_marital_status">Marital Status</label>
+                        <label for="update_marital_status">Marital Status <span class="required" title="Required">*</span></label>
                         <select name="marital_status" id="update_marital_status">
 
                         </select>
@@ -79,37 +88,37 @@
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="update_nid_no">Nid No.</label>
+                        <label for="update_nid_no">Nid No</label>
                         <input type="text" name="nid_no" id="update_nid_no" class="form-input">
                         <span class="error" id="update_nid_no_error"></span>
                     </div>
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="update_phn_no">Phone No.</label>
+                        <label for="update_phn_no">Phone No <span class="required" title="Required">*</span></label>
                         <input type="text" name="phn_no" id="update_phn_no" class="form-input">
                         <span class="error" id="update_phn_no_error"></span>
                     </div>
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="update_blood_group">Blood Group</label>
-                        <select name="blood_group" id="update_blood_group">
-
-                        </select>
-                        <span class="error" id="update_blood_group_error"></span>
-                    </div>
-                </div>
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="update_email">Email</label>
+                        <label for="update_email">Email <span class="required" title="Required">*</span></label>
                         <input type="email" name="email" id="update_email" class="form-input">
                         <span class="error" id="update_email_error"></span>
                     </div>
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="updateLocation">Location</label>
+                        <label for="updateDivision">Division <span class="required" title="Required">*</span></label>
+                        <select name="division" id="updateDivision">
+        
+                        </select>
+                        <span class="error" id="update_division_error"></span>
+                    </div>
+                </div>
+                <div class="c-6">
+                    <div class="form-input-group">
+                        <label for="updateLocation">Location <span class="required" title="Required">*</span></label>
                         <input type="text" name="location" id="updateLocation" class="form-input">
                         <div id="update-location">
                             <ul>
@@ -121,21 +130,18 @@
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="update_type">Employee Type</label>
-                        <select name="type" id="update_type">
-                            {{-- <option value="">Select Employee Type</option>
-                            @foreach ($tranwith as $with)
-                            <option value="{{$with->id}}">{{$with->tran_with_name}}</option>
-                            @endforeach --}}
-                        </select>
-                        <span class="error" id="update_type_error"></span>
+                        <label for="update_address">Address</label>
+                        <input type="text" name="address" id="update_address" class="form-input">
+                        <span class="error" id="update_address_error"></span>
                     </div>
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="update_address">Address</label>
-                        <input type="text" name="address" id="update_address" class="form-input">
-                        <span class="error" id="update_address_error"></span>
+                        <label for="update_blood_group">Blood Group</label>
+                        <select name="blood_group" id="update_blood_group">
+
+                        </select>
+                        <span class="error" id="update_blood_group_error"></span>
                     </div>
                 </div>
                 <div class="c-6">

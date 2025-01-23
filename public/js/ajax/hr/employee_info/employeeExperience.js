@@ -122,7 +122,7 @@ $(document).ready(function () {
     var formIndex = 1;
 
     $('#addExperience').click(function() {
-        var form = `<div class="rows"> 
+        var form = `<div class="rows add-form"> 
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for = "company_name_${formIndex}">Company Name<span class="red">*</span></label>

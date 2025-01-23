@@ -111,8 +111,7 @@ $(document).ready(function () {
     function EditFormInputValue(res){
         $('#id').val(res.employee.id);
         $('#empId').val(res.employee.emp_id);
-        $('#update_level_of_education').val(res.employee.level_of_education);
-        $('#update_degree_title').val(res.employee.degree_title);
+        $('#update_degree').val(res.employee.degree);
         // Create options dynamically
         $('#update_group').empty();
         $('#update_group').append(`
@@ -121,7 +120,7 @@ $(document).ready(function () {
             <option value="Arts" ${res.employee.group === 'Arts' ? 'selected' : ''}>Arts</option>
         `);
 
-        $('#update_institution_name').val(res.employee.institution_name);
+        $('#update_institution').val(res.employee.institution);
 
         // Create options dynamically
         $('#update_result').empty();
@@ -136,7 +135,6 @@ $(document).ready(function () {
         $('#update_scale').val(res.employee.scale);
         $('#update_cgpa').val(res.employee.cgpa);
         $('#update_batch').val(res.employee.batch);
-        $('#update_passing_year').val(res.employee.passing_year);
         
         // Show or hide fields based on result
         handleResultUpdate(res.employee.result);
@@ -201,19 +199,12 @@ $(document).ready(function () {
 
     // Add new form on button click
     $('#addEducation').on('click', function() {
-        let form = `<div class="rows">  
+        let form = `<div class="rows add-form">  
                         <div class="c-6">
                             <div class="form-input-group">
-                                <label for="level_of_education_${formIndex}">Level of Education <span class="required" title="Required">*</span></label>
-                                <input type="text" name="level_of_education[]" id="level_of_education_${formIndex}" class="form-input">
-                                <span class="error" id="level_of_education_${formIndex}_error"></span>
-                            </div>
-                        </div>
-                        <div class="c-6">
-                            <div class="form-input-group">
-                                <label for="degree_title_${formIndex}">Degree Title <span class="required" title="Required">*</span></label>
-                                <input type="text" name="degree_title[]" id="degree_title_${formIndex}" class="form-input">
-                                <span class="error" id="degree_title_${formIndex}_error"></span>
+                                <label for="degree_${formIndex}">Degree Title <span class="required" title="Required">*</span></label>
+                                <input type="text" name="degree[]" id="degree_${formIndex}" class="form-input">
+                                <span class="error" id="degree_${formIndex}_error"></span>
                             </div>
                         </div>
                         <div class="c-6">
@@ -230,9 +221,9 @@ $(document).ready(function () {
                         </div>
                         <div class="c-6">
                             <div class="form-input-group">
-                                <label for="institution_name_${formIndex}">Institution Name <span class="required" title="Required">*</span></label>
-                                <input type="text" name="institution_name[]" id="institution_name_${formIndex}" class="form-input">
-                                <span class="error" id="institution_name_${formIndex}_error"></span>
+                                <label for="institution_${formIndex}">Institution Name <span class="required" title="Required">*</span></label>
+                                <input type="text" name="institution[]" id="institution_${formIndex}" class="form-input">
+                                <span class="error" id="institution_${formIndex}_error"></span>
                             </div>
                         </div>
                         <div class="c-6">
@@ -250,37 +241,30 @@ $(document).ready(function () {
                         </div>
                         <div class="c-6 hidden" id="scale-group_${formIndex}">
                             <div class="form-input-group">
-                                <label for="scale_${formIndex}">Scale <span class="required" title="Required">*</span></label>
+                                <label for="scale_${formIndex}">Scale </label>
                                 <input type="decimal" step="0.01" name="scale[]" id="scale_${formIndex}" class="form-input">
                                 <span class="error" id="scale_${formIndex}_error"></span>
                             </div>
                         </div>
                         <div class="c-6 hidden" id="cgpa-group_${formIndex}">
                             <div class="form-input-group">
-                                <label for="cgpa_${formIndex}">CGPA <span class="required" title="Required">*</span></label>
+                                <label for="cgpa_${formIndex}">CGPA </label>
                                 <input type="decimal" step="0.01" name="cgpa[]" id="cgpa_${formIndex}" class="form-input">
                                 <span class="error" id="cgpa_${formIndex}_error"></span>
                             </div>
                         </div>
                         <div class="c-6 hidden" id="marks-group_${formIndex}">
                             <div class="form-input-group">
-                                <label for="marks_${formIndex}">Marks <span class="required" title="Required">*</span></label>
+                                <label for="marks_${formIndex}">Marks </label>
                                 <input type="number" name="marks[]" id="marks_${formIndex}" class="form-input">
                                 <span class="error" id="marks_${formIndex}_error"></span>
                             </div>
                         </div>
                         <div class="c-6">
                             <div class="form-input-group">
-                                <label for="batch_${formIndex}">Batch</label>
+                                <label for="batch_${formIndex}">Batch <span class="required" title="Required">*</span></label>
                                 <input type="integer" name="batch[]" id="batch_${formIndex}" class="form-input">
                                 <span class="error" id="batch_${formIndex}_error"></span>
-                            </div>
-                        </div>
-                        <div class="c-6">
-                            <div class="form-input-group">
-                                <label for="passing_year_${formIndex}">Passing Year <span class="required" title="Required">*</span></label>
-                                <input type="integer" name="passing_year[]" id="passing_year_${formIndex}" class="form-input">
-                                <span class="error" id="passing_year_${formIndex}_error"></span>
                             </div>
                         </div>
                     </div>`;
