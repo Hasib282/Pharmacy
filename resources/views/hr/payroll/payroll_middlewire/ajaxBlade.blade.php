@@ -36,24 +36,20 @@
                 @endfor
             </select>
         </div>
-        <div class="c-6">
-            <div class="rows">
-                <div class="c-2">
-                    <div class="form-group">
-                        <label for="searchOption">Search Option</label>
-                        <select name="searchOption" id="searchOption" style="width: 100%;margin: 0;">
-                            <option value="1" {{ $searchOptionValue=='1' ? 'selected' : '' }}>User Name</option>
-                            <option value="2" {{ $searchOptionValue=='2' ? 'selected' : '' }}>Head</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="c-10">
-                    <div class="form-group">
-                        <label for="search">Search</label>
-                        <input type="text" name="search" id="search" class="form-input" placeholder="Search here..."
-                            value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%;margin: 0;">
-                    </div>
-                </div>
+        <div class="c-2">
+            <div class="form-group">
+                <label for="searchOption">Search Option</label>
+                <select name="searchOption" id="searchOption" style="width: 100%;margin: 0;">
+                    <option value="1" {{ $searchOptionValue=='1' ? 'selected' : '' }}>User Name</option>
+                    <option value="2" {{ $searchOptionValue=='2' ? 'selected' : '' }}>Head</option>
+                </select>
+            </div>
+        </div>
+        <div class="c-4">
+            <div class="form-group">
+                <label for="search">Search</label>
+                <input type="text" name="search" id="search" class="form-input" placeholder="Search here..."
+                    value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%;margin: 0;">
             </div>
         </div>
     </div>
