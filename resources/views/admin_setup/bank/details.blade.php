@@ -3,14 +3,6 @@
     {{-- General Info Part Starts --}}
     <li data-id="1">General Information</li>
     <div class="general">
-        <div class="details-head">
-            <div class="image-round">
-                <img src="/storage/profiles/{{$bank->logo !== null ? $bank->logo : 'male.png' }}" alt="" height="100px" width="100px">
-            </div> 
-            <div class="highlight">
-                <span class="name"> {{$bank->name}} </span><br>
-            </div>   
-        </div>
         <div class="details-table" style="">
             <div class="rows each-row"> 
                 <div class="c-2 bold">Name</div>
