@@ -42,10 +42,10 @@ class PharmacyAdjustmentController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "method" => 'required',
-            "store" => 'required|numeric',
-            "type" => 'required',
-            "groupe" => 'required',
-            "product" => 'required',
+            "store" => 'required|exists:mysql_second.stores,id',
+            "type" => 'required|exists:mysql.transaction__main__heads,id',
+            "groupe" => 'required|exists:mysql.transaction__groupes,id',
+            "product" => 'required|exists:mysql.transaction__heads,id',
         ]);
 
         $prefixes = [
@@ -149,10 +149,10 @@ class PharmacyAdjustmentController extends Controller
     public function Update(Request $req){
         $req->validate([
             "method" => 'required',
-            "store" => 'required|numeric',
-            "type" => 'required',
-            "groupe" => 'required',
-            "product" => 'required',
+            "store" => 'required|exists:mysql_second.stores,id',
+            "type" => 'required|exists:mysql.transaction__main__heads,id',
+            "groupe" => 'required|exists:mysql.transaction__groupes,id',
+            "product" => 'required|exists:mysql.transaction__heads,id',
             "quantity" => 'required|numeric'
         ]);
     

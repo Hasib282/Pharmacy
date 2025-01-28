@@ -49,7 +49,7 @@ class AdminController extends Controller
             "email" => 'required|email|unique:mysql.login__users,user_email',
             'password' => 'required|confirmed',
             'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
-            'company' => 'required',
+            'company' => 'required|exists:mysql.company__details,company_id',
         ]);
 
 
@@ -112,8 +112,8 @@ class AdminController extends Controller
 
         $req->validate([
             "name" => 'required',
-            "phone" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore($admin->id)],
-            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore($admin->id)],
+            "phone" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore('user_id',$admin->login_user_id)],
+            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore('user_id',$admin->login_user_id)],
         ]);
 
 

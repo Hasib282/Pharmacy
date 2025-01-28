@@ -49,8 +49,8 @@ class BankTransactionController extends Controller
     // Insert Bank Transactions
     public function Insert(Request $req){
         $req->validate([
-            "bank"  => 'required',
-            "head"  => 'required',
+            "bank"  => 'required|exists:mysql.banks,user_id',
+            "head"  => 'required|exists:mysql.transaction__heads,id',
             "amount"  => 'required|numeric',
         ]);
 
@@ -119,8 +119,8 @@ class BankTransactionController extends Controller
     // Update Bank Transactions
     public function Update(Request $req){
         $req->validate([
-            "bank"  => 'required',
-            "head"  => 'required|numeric',
+            "bank"  => 'required|exists:mysql.banks,id',
+            "head"  => 'required|exists:mysql.transaction__heads,id',
             "amount"  => 'required|numeric',
         ]);
 

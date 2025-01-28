@@ -48,12 +48,12 @@ class ClientController extends Controller
     // Insert Clients
     public function Insert(Request $req){
         $req->validate([
-            "name" => 'required',
+            "name" => 'required|exists:mysql_second.transaction__withs,id',
             "type" => 'required',
             "phone" => 'required|numeric',
             "email" => 'required|email',
             "gender" => 'required',
-            "location" => 'required|numeric',
+            "location" => 'required|exists:mysql.location__infos,id',
             'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
@@ -111,12 +111,12 @@ class ClientController extends Controller
         $client = User_Info::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
-            "type" => 'required',
+            "type" => 'required|exists:mysql_second.tranaction__withs,id',
             "name" => 'required',
             "phone" => 'required|numeric',
             "email" => 'required|email',
             "gender" => 'required',
-            "location" => 'required|numeric',
+            "location" => 'required|exists:mysql.location__infos,id',
         ]);
 
         DB::transaction(function () use ($req, $client) {

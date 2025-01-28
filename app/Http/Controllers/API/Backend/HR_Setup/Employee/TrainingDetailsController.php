@@ -28,7 +28,7 @@ class TrainingDetailsController extends Controller
     // Insert Employee Training Details
     public function Insert(Request $req){
         $req->validate([
-            'user' => 'required',
+            'user' => 'required|exists:mysql_second.employee__personal__details,employee_id',
             'training_title.*' => 'required',
             'country.*' => 'nullable',
             'topic.*' => 'required',

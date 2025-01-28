@@ -37,7 +37,7 @@ class AttendenceController extends Controller
     // Insert Attendence
     public function Insert(Request $req){
         $req->validate([
-            "user" => 'required',
+            "user" => 'required|exists:mysql_second.employee__personal__details,employee_id',
             "date" => 'required|date',
             "in" => 'required',
         ]);

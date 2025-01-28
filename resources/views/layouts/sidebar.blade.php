@@ -119,7 +119,7 @@
                                 </li>
                                 
                                 <li class="sub-menu1-item" data-url="{{route('show.permissions')}}">
-                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == '') ? 'active':''}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'permission' && Request::segment(3) == 'heads') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-user-secret"></i>
                                             Heads
@@ -763,7 +763,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'users') ? 'show':''}}">
                             @if(auth()->user()->hasPermission(136))
-                                <li class="sub-menu-item" data-url="{{route('show.pharmacyUserType')}}">
+                                <li class="sub-menu1-item" data-url="{{route('show.pharmacyUserType')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'pharmacy' && Request::segment(2) == 'users' && Request::segment(3) == 'usertype') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-user-tag"></i>

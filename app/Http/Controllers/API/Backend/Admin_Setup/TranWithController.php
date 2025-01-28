@@ -130,7 +130,7 @@ class TranWithController extends Controller
     // Search Tranwith
     public function Search(Request $req){
         $tranwith = Transaction_With::on('mysql_second')->with('Role','Type')
-        ->where('tran_with_name', 'like', '%'.$req->search.'%')
+        ->where('tran_with_name', 'like', $req->search.'%')
         ->where('tran_method', 'like', '%'.$req->method.'%')
         ->where('tran_type', 'like', '%'.$req->type.'%')
         ->where('user_role', 'like', '%'.$req->role.'%')

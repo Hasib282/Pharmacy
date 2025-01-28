@@ -31,14 +31,14 @@ class PharmacyIssueController extends Controller
         // Validation Part Start
         $req->validate([
             "method" => 'required',
-            "type" => 'required',
-            "user" => 'required',
+            "type" => 'required|exists:mysql.transaction__main_heads,id',
+            "user" => 'required|exists:mysql_second.user__infos,user_id',
             "amountRP" => 'required',
             "discount" => 'required',
             "netAmount" => 'required',
             "advance" => 'required',
             "balance" => 'required',
-            "store" => 'required',
+            "store" => 'required|exists:mysql_second.stores,id',
         ]);
 
 

@@ -29,10 +29,9 @@ class PayrollSetupController extends Controller
     // Insert Payroll Setup
     public function Insert(Request $req){
         $req->validate([
-            "with" => 'required',
-            "user" => 'required',
-            "head" => 'required',
-            "amount" => 'required',
+            "user" => 'required|exists:mysql_second.employee__personal__details,employee_id',
+            "head" => 'required|exists:mysql.transaction__heads,id',
+            "amount" => 'required|numeric',
         ]);
 
         // Check If the Salary Component is Already Added or Not
@@ -82,10 +81,9 @@ class PayrollSetupController extends Controller
     // Update Payroll Setup
     public function Update(Request $req){
         $req->validate([
-            "with" => 'required',
-            "user" => 'required',
-            "head" => 'required',
-            "amount" => 'required',
+            "user" => 'required|exists:mysql_second.employee__personal__details,employee_id',
+            "head" => 'required|exists:mysql.transaction__heads,id',
+            "amount" => 'required|numeric',
         ]);
 
         // Check If the Salary Component is Already Added or Not

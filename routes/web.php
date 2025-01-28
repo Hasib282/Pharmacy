@@ -142,8 +142,8 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 
                 
                 ///////////// --------------- Permission Heads routes ----------- ///////////////////
-                Route::get('/', 'ShowPermissions')->name('show.permissions');
-                Route::get('/search', 'SearchPermissions')->name('search.permissions');
+                Route::get('/heads', 'ShowPermissions')->name('show.permissions');
+                Route::get('/heads/search', 'SearchPermissions')->name('search.permissions');
 
 
 

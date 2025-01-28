@@ -267,13 +267,13 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 ///////////// --------------- Permission Heads Routes ----------- ///////////////////
                 Route::controller(PermissionHeadController::class)->group(function () {
-                    Route::get('/', 'ShowAll');
-                    Route::post('/', 'Insert');
-                    Route::get('/edit', 'Edit');
-                    Route::put('/', 'Update');
-                    Route::delete('/', 'Delete');
-                    Route::get('/search', 'Search');
-                    Route::get('/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
+                    Route::get('/heads', 'ShowAll');
+                    Route::post('/heads', 'Insert');
+                    Route::get('/heads/edit', 'Edit');
+                    Route::put('/heads', 'Update');
+                    Route::delete('/heads', 'Delete');
+                    Route::get('/heads/search', 'Search');
+                    Route::get('/heads/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 });
                 
                 

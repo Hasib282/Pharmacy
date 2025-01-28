@@ -8,20 +8,20 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                {{-- @if(Auth::user()->hasPermissionToRoute('insert.permissions')) --}}
-                    <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
-                {{-- @endif --}}
+                <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
             </div>
             <div class="c-2">
-                <label for="searchHead">Main Head</label>
-                <select name="searchHead" id="searchHead">
-                    {{-- options will be display dynamically --}}
-                </select>
+                <div class="form-input-group">
+                    <label for="searchHead">Main Head</label>
+                    <select name="searchHead" id="searchHead">
+                        {{-- options will be display dynamically --}}
+                    </select>
+                </div>
             </div>
             <div class="c-7">
                 <div class="form-input-group">
                     <label for="search">Search</label>
-                    <input type="text" name="search" id="search" class="form-input" placeholder="Search here..." value="{{ $searchValue ? $searchValue : '' }}">
+                    <input type="text" name="search" id="search" class="form-input" placeholder="Search here..." value="{{ $searchValue ? $searchValue : '' }}" style="width: 100%;margin:0;">
                 </div>
                 
             </div>

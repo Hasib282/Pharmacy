@@ -39,7 +39,7 @@ $(document).ready(function () {
     
     // Creating Select Options Dynamically
     $.ajax({
-        url: `${apiUrl}/admin/permission`,
+        url: `${apiUrl}/admin/permission/heads`,
         method: "GET",
         success: function (res) {
             let queryParams = GetQueryParams();
@@ -49,7 +49,7 @@ $(document).ready(function () {
     });
 
     // Load Data on Hard Reload
-    ReloadData('admin/permission', ShowPermissions);
+    ReloadData('admin/permission/heads', ShowPermissions);
     
 
     // Add Modal Open Functionality
@@ -57,21 +57,21 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('admin/permission', ShowPermissions, {}, function() {
+    InsertAjax('admin/permission/heads', ShowPermissions, {}, function() {
         $('#mainhead').focus();
     });
 
 
     //Edit Ajax
-    EditAjax('admin/permission', EditFormInputValue);
+    EditAjax('admin/permission/heads', EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('admin/permission', ShowPermissions);
+    UpdateAjax('admin/permission/heads', ShowPermissions);
     
 
     // Delete Ajax
-    DeleteAjax('admin/permission', ShowPermissions);
+    DeleteAjax('admin/permission/heads', ShowPermissions);
 
 
     // Pagination Ajax
@@ -79,11 +79,11 @@ $(document).ready(function () {
 
 
     // Search Ajax
-    SearchAjax('admin/permission', ShowPermissions, {searchHead: { selector: "#searchHead"}});
+    SearchAjax('admin/permission/heads', ShowPermissions, {searchHead: { selector: "#searchHead"}});
 
 
     // Search By Methods, Roles, Types
-    SearchBySelect('admin/permission', ShowPermissions, '#searchHead', {searchHead: { selector: "#searchHead"}} );
+    SearchBySelect('admin/permission/heads', ShowPermissions, '#searchHead', {searchHead: { selector: "#searchHead"}} );
 
 
     // Additional Edit Functionality

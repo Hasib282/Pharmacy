@@ -28,7 +28,7 @@ class EducationDetailsController extends Controller
     // Insert Employee Education Details
     public function Insert(Request $req){
         $req->validate([
-            'user' => 'required',
+            'user' => 'required|exists:mysql_second.employee__personal__details,employee_id',
             'degree.*' => 'required|string|max:255',
             'group.*' => 'nullable|in:Science,Commerce,Arts',
             'institution.*' => 'required|string|max:255',

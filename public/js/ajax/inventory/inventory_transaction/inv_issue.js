@@ -105,7 +105,7 @@ $(document).ready(function () {
         $('#store').val("Store 1")
         $('#store').attr("data-id", '1');
         $('#user').val('General Customer')
-        $('#user').attr('data-id', 'C000000101')
+        $('#user').attr('data-id', 'CL000000001')
         $('#user').attr('data-with', 4);
         localStorage.removeItem('transactionData');
         $('.transaction_grid tbody').html('');
@@ -187,7 +187,7 @@ $(document).ready(function () {
         $('#store').val("Store 1")
         $('#store').attr("data-id", '1');
         $('#user').val('General Customer')
-        $('#user').attr('data-id', 'C000000101')
+        $('#user').attr('data-id', 'CL000000001')
         $('#user').attr('data-with', 4);
         $('.transaction_grid tbody').html('');
         $('#product').focus();

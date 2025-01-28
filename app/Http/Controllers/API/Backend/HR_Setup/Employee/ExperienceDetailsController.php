@@ -28,7 +28,7 @@ class ExperienceDetailsController extends Controller
     // Insert Employee Experience Details
     public function Insert(Request $req){
         $req->validate([
-            'user' => 'required',
+            'user' => 'required|exists:mysql_second.employee__personal__details,employee_id',
             'company_name.*' => 'required',
             'designation.*' => 'required',
             'department.*' => 'required',

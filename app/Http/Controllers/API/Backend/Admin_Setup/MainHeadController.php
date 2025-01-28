@@ -86,7 +86,7 @@ class MainHeadController extends Controller
 
     // Search MainHeads
     public function Search(Request $req){
-        $mainhead = Transaction_Main_Head::on('mysql')->where('type_name', 'like', '%'.$req->search.'%')
+        $mainhead = Transaction_Main_Head::on('mysql')->where('type_name', 'like', $req->search.'%')
         ->orderBy('type_name')
         ->paginate(15);
         

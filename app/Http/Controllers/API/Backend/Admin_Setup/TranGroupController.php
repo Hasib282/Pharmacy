@@ -50,7 +50,7 @@ class TranGroupController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "groupeName" => 'required|unique:mysql.transaction__groupes,tran_groupe_name',
-            "type" => 'required|numeric',
+            "type" => 'required|exists:mysql.transaction__main__heads,id',
             "method" => 'required|in:Receive,Payment,Both',
         ]);
 
@@ -88,7 +88,7 @@ class TranGroupController extends Controller
 
         $req->validate([
             "groupeName" => ['required', Rule::unique('mysql.transaction__groupes', 'tran_groupe_name')->ignore($groupes->id)],
-            "type" => 'required|numeric',
+            "type" => 'required|exists:mysql.transaction__main__heads,id',
             "method" => 'required|in:Receive,Payment,Both',
         ]);
 
@@ -124,7 +124,7 @@ class TranGroupController extends Controller
     public function Search(Request $req){
         $groupes = Transaction_Groupe::on('mysql')
         ->with('Type')
-        ->where('tran_groupe_name', 'like', '%'.$req->search.'%')
+        ->where('tran_groupe_name', 'like', $req->search.'%')
         ->where('tran_groupe_type', 'like', '%'.$req->type.'%')
         ->where('tran_method', 'like', '%'.$req->method.'%')
         ->orderBy('tran_groupe_name')
@@ -140,7 +140,7 @@ class TranGroupController extends Controller
 
     // Get Transaction Groupes
     public function Get(Request $req){
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_name', 'like', '%'.$req->groupe.'%')
+        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_name', 'like', $req->groupe.'%')
         ->orderBy('tran_groupe_name')
         ->take(10)
         ->get();

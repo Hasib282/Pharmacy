@@ -28,7 +28,7 @@ class DesignationController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "designations" => 'required|unique:mysql_second.designations,designation',
-            "department" => 'required|numeric'
+            "department" => 'required|exists:mysql_second.departments,id'
         ]);
 
         Designation::on('mysql_second')->insert([
@@ -61,7 +61,7 @@ class DesignationController extends Controller
 
         $req->validate([
             "designations" => ['required',Rule::unique('mysql_second.designations', 'designation')->ignore($designations->id)],
-            "department"  => 'required|numeric'
+            "department"  => 'required|exists:mysql_second.departments,id'
         ]);
 
         $update = Designation::on('mysql_second')->findOrFail($req->id)->update([

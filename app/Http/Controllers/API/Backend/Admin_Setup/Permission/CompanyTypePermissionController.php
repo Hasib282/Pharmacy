@@ -49,7 +49,7 @@ class CompanyTypePermissionController extends Controller
         $type = Company_Type::on('mysql')->findOrFail($req->type);
 
         $req->validate([
-            'type' => 'required',
+            'type' => 'required|exists:mysql.company__types,id',
             'permissions' => 'array',
             'permissions.*' => 'integer|exists:mysql.permission__heads,id',
         ]);

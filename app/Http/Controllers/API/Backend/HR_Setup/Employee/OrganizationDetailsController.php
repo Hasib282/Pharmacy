@@ -28,7 +28,7 @@ class OrganizationDetailsController extends Controller
     // Insert Employee Organization Details
     public function Insert(Request $req){
         $req->validate([
-            'user' => 'required',
+            'user' => 'required|exists:mysql_second.employee__personal__details,employee_id',
             'joining_date' => 'required',
             'location' => 'required',
             'department' => 'required',

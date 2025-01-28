@@ -42,9 +42,9 @@ class PayrollMiddlewireController extends Controller
         $date = $req->year."-".$req->month."-01";
 
         $req->validate([
-            "user" => 'required',
-            "head" => 'required',
-            "amount" => 'required',
+            "user" => 'required|exists:mysql_second.employee__personal__details,employee_id',
+            "head" => 'required|exists:mysql.transaction__heads,id',
+            "amount" => 'required|numeric',
         ]);
 
 
@@ -108,10 +108,9 @@ class PayrollMiddlewireController extends Controller
         $currentMonth = $req->month;
 
         $req->validate([
-            "with" => 'required',
-            "user" => 'required',
-            "head" => 'required',
-            "amount" => 'required',
+            "user" => 'required|exists:mysql_second.employee__personal__details,employee_id',
+            "head" => 'required|exists:mysql.transaction__heads,id',
+            "amount" => 'required|numeric',
         ]);
 
 

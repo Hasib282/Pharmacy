@@ -85,7 +85,7 @@ class PermissionMainHeadController extends Controller
 
     // Search Permission Mainheads
     public function Search(Request $req){
-        $permissionMainhead = Permission_Main_Head::on('mysql')->where('name', 'like', '%'.$req->search.'%')
+        $permissionMainhead = Permission_Main_Head::on('mysql')->where('name', 'like', $req->search.'%')
         ->orderBy('name')
         ->paginate(15);
         
@@ -99,7 +99,7 @@ class PermissionMainHeadController extends Controller
 
     // Get Permission Mainheads
     public function Get(){
-        $permissionMainhead = Permission_Main_Head::on('mysql')->where('name', 'like', '%'.$req->role.'%')
+        $permissionMainhead = Permission_Main_Head::on('mysql')->where('name', 'like', $req->role.'%')
         ->orderBy('name')
         ->take(10)
         ->get();

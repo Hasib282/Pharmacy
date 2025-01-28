@@ -31,6 +31,7 @@ class CompanyController extends Controller
     // Insert Companies
     public function Insert(Request $req){
         $req->validate([
+            "type" => 'required|exists:mysql.company__types,id',
             "name" => 'required',
             "phone" => 'required|numeric|unique:mysql.company__details,company_phone',
             "email" => 'required|email|unique:mysql.company__details,company_email',
@@ -84,6 +85,7 @@ class CompanyController extends Controller
         $company = Company_Details::on('mysql')->findOrFail($req->id);
 
         $req->validate([
+            "type" => 'required|exists:mysql.company__types,id',
             "name" => 'required',
             "phone" => ['required','numeric',Rule::unique('mysql.company__details', 'company_phone')->ignore($company->id)],
             "email" => ['required','email',Rule::unique('mysql.company__details', 'company_email')->ignore($company->id)],
@@ -133,28 +135,28 @@ class CompanyController extends Controller
         if($req->searchOption == 1){
             $company = Company_Details::on('mysql')->with('Type')
             ->where('company_name', 'like', $req->search.'%')
-            ->where('company_type', 'like', $req->type)
+            ->where('company_type', 'like', '%'.$req->type.'%')
             ->orderBy('company_name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){
             $company = Company_Details::on('mysql')->with('Type')
             ->where('company_email', 'like', $req->search.'%')
-            ->where('company_type', 'like', $req->type)
+            ->where('company_type', 'like', '%'.$req->type.'%')
             ->orderBy('company_email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){
             $company = Company_Details::on('mysql')->with('Type')
             ->where('company_phone', 'like', $req->search.'%')
-            ->where('company_type', 'like', $req->type)
+            ->where('company_type', 'like', '%'.$req->type.'%')
             ->orderBy('company_phone','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 4){
             $company = Company_Details::on('mysql')->with('Type')
-            ->where('address', 'like', $req->search.'%')
-            ->where('company_type', 'like', $req->type)
+            ->where('address', 'like', '%'.$req->search.'%')
+            ->where('company_type', 'like', '%'.$req->type.'%')
             ->orderBy('address','asc')
             ->paginate(15);
         }

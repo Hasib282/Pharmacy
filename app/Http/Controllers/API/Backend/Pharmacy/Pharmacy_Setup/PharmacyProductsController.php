@@ -49,11 +49,11 @@ class PharmacyProductsController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "productName" => 'required|unique:mysql.transaction__heads,tran_head_name',
-            "groupe" => 'required|numeric',
-            "category" => 'required|numeric',
-            "manufacturer" => 'required|numeric',
-            "form" => 'required|numeric',
-            "unit" => 'required|numeric',
+            "groupe" => 'required|exists:mysql.transaction__groupes,id',
+            "category" => 'nullable|exists:mysql.item__categories,id',
+            "manufacturer" => 'nullable|exists:mysql.item__manufacturers,id',
+            "form" => 'nullable|exists:mysql.item__forms,id',
+            "unit" => 'nullable|exists:mysql.item__units,id',
         ]);
 
         Transaction_Head::on('mysql')->insert([
@@ -93,12 +93,11 @@ class PharmacyProductsController extends Controller
         
         $req->validate([
             "productName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($heads->id)],
-            "groupe" => 'required|numeric',
-            "category" => 'numeric',
-            "manufacturer" => 'numeric',
-            "form" => 'numeric',
-            "unit" => 'required|numeric',
-            "store" => 'required|numeric',
+            "groupe" => 'required|exists:mysql.transaction__groupes,id',
+            "category" => 'nullable|exists:mysql.item__categories,id',
+            "manufacturer" => 'nullable|exists:mysql.item__manufacturers,id',
+            "form" => 'nullable|exists:mysql.item__forms,id',
+            "unit" => 'nullable|exists:mysql.item__units,id',
             "quantity" => 'required|numeric',
             "cp" => 'required|numeric',
             "mrp" => 'required|numeric',
@@ -111,7 +110,6 @@ class PharmacyProductsController extends Controller
             "manufacturer_id" => $req->manufacturer,
             "form_id" => $req->form,
             "unit_id" => $req->unit,
-            "store_id" => $req->store,
             "quantity" => $req->quantity,
             "cp" => $req->cp,
             "mrp" => $req->mrp,

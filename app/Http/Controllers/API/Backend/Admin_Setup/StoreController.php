@@ -115,9 +115,9 @@ class StoreController extends Controller
             ->where('division', 'like', $req->division.'%')
             ->paginate(15);
         }
-        else if($req->searchOption == 3){ // Search By Upazila/Location
+        else if($req->searchOption == 3){ // Search By Address
             $store = Store::on('mysql_second')->with('Location')
-            ->where('address', 'like', $req->search.'%')
+            ->where('address', 'like', '%'.$req->search.'%')
             ->where('division', 'like', $req->division.'%')
             ->orderBy('store_name')
             ->paginate(15);

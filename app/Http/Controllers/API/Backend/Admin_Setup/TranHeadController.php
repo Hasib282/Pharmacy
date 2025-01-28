@@ -50,7 +50,7 @@ class TranHeadController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "headName" => 'required|unique:mysql.transaction__heads,tran_head_name',
-            "groupe" => 'required|numeric'
+            "groupe" => 'required|exists:mysql.transaction__groupes,id'
         ]);
 
         Transaction_Head::on('mysql')->insert([
@@ -101,7 +101,7 @@ class TranHeadController extends Controller
 
         $req->validate([
             "headName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($heads->id)],
-            "groupe"  => 'required|numeric'
+            "groupe"  => 'required|exists:mysql.transaction__groupes,id'
         ]);
 
         $update = Transaction_Head::on('mysql')->findOrFail($req->id)->update([
@@ -148,7 +148,7 @@ class TranHeadController extends Controller
             ->whereHas('Groupe', function ($query) use ($req, $type) {
                 $query->whereIn('tran_groupe_type', [$type]);
             })
-            ->where('tran_head_name', 'like', '%'.$req->search.'%')
+            ->where('tran_head_name', 'like', $req->search.'%')
             ->orderBy('tran_head_name')
             ->paginate(15);
         }
@@ -160,7 +160,7 @@ class TranHeadController extends Controller
             })
             ->whereHas('Groupe', function ($query) use ($req, $type) {
                 $query->whereIn('tran_groupe_type', [$type]);
-                $query->where('tran_groupe_name', 'like', '%' . $req->search . '%');
+                $query->where('tran_groupe_name', 'like', $req->search . '%');
                 $query->orderBy('tran_groupe_name');
             })
             ->paginate(15);
@@ -176,7 +176,7 @@ class TranHeadController extends Controller
 
     // Get Transaction Heads By Name And Groupe
     public function Get(Request $req){
-        $query = Transaction_Head::on('mysql')->where('tran_head_name', 'like', '%' . $req->head . '%')
+        $query = Transaction_Head::on('mysql')->where('tran_head_name', 'like', $req->head . '%')
         ->orderBy('tran_head_name')
         ->take(10);
 

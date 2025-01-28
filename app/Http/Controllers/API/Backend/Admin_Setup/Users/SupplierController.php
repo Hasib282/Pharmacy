@@ -48,11 +48,11 @@ class SupplierController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "name" => 'required',
-            "type" => 'required',
+            "type" => 'required|exists:mysql_second.transaction__withs,id',
             "email" => 'required|email',
             "phone" => 'required|numeric',
             "gender" => 'required',
-            "location" => 'required',
+            "location" => 'required|exists:mysql.location__infos,id',
             "address" => 'required',
             'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
         ]);
@@ -115,8 +115,8 @@ class SupplierController extends Controller
             "phone" => 'required|numeric',
             "gender" => 'required',
             "address" => 'required',
-            "location" => 'required',
-            "type" => 'required'
+            "location" => 'required|exists:mysql.location__infos,id',
+            "type" => 'required|exists:mysql_second.transaction__withs,id'
         ]);
 
         DB::transaction(function () use ($req, $supplier) {

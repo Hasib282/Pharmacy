@@ -36,8 +36,8 @@ class AuthController extends Controller
             
             if (Auth::user()->user_role != 1) {
                 $userDomain = Auth::user()->company->domain;
-                Auth::logout();
-                if($subdomain == $userDomain){
+                if($subdomain != $userDomain){
+                    Auth::logout();
                     return response()->json([
                         'status' => false,
                         'domain' => $userDomain,
@@ -81,8 +81,6 @@ class AuthController extends Controller
 
     // Logout Function
     public function Logout(Request $req){
-        // Auth::logout();
-        
         $user = $req->user();
         $currentToken = $req->bearerToken();
         $tokenId = explode('|', $currentToken)[0];

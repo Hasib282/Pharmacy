@@ -8,6 +8,7 @@
             </div> 
             <div class="highlight">
                 <span class="name"> {{$company->company_name}} </span><br>
+                <span> {{$company->company_type ? $company->Type->name : ""}} </span><br>
             </div>   
         </div>
         <div class="details-table" style="">
@@ -24,16 +25,16 @@
                 <div class="c-10">{{$company->company_phone}}</div>
             </div>
             <div class="rows each-row"> 
-                <div class="c-2 bold">Company Type</div>
-                <div class="c-10">{{$company->company_type ? $company->Type->name : ""}}</div>
-            </div>
-            <div class="rows each-row"> 
                 <div class="c-2 bold">Address</div>
                 <div class="c-10">{{$company->address}}</div>
             </div>
             <div class="rows each-row"> 
                 <div class="c-2 bold">Website</div>
                 <div class="c-10">{{$company->website}}</div>
+            </div>
+            <div class="rows each-row"> 
+                <div class="c-2 bold">Domain</div>
+                <div class="c-10">{{$company->domain}}</div>
             </div>
         </div>
     </div>

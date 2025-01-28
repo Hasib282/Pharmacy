@@ -86,7 +86,7 @@ class CompanyTypeController extends Controller
 
     // Search Company Types
     public function Search(Request $req){
-        $type = Company_Type::on('mysql')->where('name', 'like', '%'.$req->search.'%')
+        $type = Company_Type::on('mysql')->where('name', 'like', $req->search.'%')
         ->orderBy('name')
         ->paginate(15);
         

@@ -104,7 +104,7 @@ $(document).ready(function () {
         $('#update_name').focus();
         $('#update_fathers_name').val(res.employee.fathers_name);
         $('#update_mothers_name').val(res.employee.mothers_name);
-        $('#update_date_of_birth').val(res.employee.date_of_birth);
+        $('#update_dob').val(res.employee.dob);
 
         // Create options dynamically
         $('#update_gender').empty();

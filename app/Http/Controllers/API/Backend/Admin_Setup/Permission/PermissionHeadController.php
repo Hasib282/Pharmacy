@@ -27,7 +27,7 @@ class PermissionHeadController extends Controller
     // Insert Permission Head
     public function Insert(Request $req){
         $req->validate([
-            'mainhead' => 'required|numeric',
+            'mainhead' => 'required|exists:mysql.permission__main__heads,id',
             "name" => 'required|unique:mysql.permission__heads,name',
         ]);
 
@@ -62,7 +62,7 @@ class PermissionHeadController extends Controller
         $permission = Permission_Head::on('mysql')->findOrFail($req->id);
 
         $req->validate([
-            'mainhead' => 'required|numeric',
+            'mainhead' => 'required|exists:mysql.permission__main__heads,id',
             "name" => ['required',Rule::unique('mysql.permission__heads', 'name')->ignore($req->id)],
         ]);
 

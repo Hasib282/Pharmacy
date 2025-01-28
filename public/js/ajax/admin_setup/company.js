@@ -103,6 +103,7 @@ $(document).ready(function () {
         $('#updatePhone').val(res.company.company_phone);
         $('#updateEmail').val(res.company.company_email);
         $('#updateAddress').val(res.company.address);
+        $('#updateDomain').val(res.company.domain);
         $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.company.logo ? res.company.logo : 'tsbd.png'}?${new Date().getTime()} `).show();
         $('#updateName').focus();
     }; // End Method

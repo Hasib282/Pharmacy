@@ -60,10 +60,10 @@ class PartyTransactionController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "method" => 'required',
-            "groupe" => 'required',
-            "head" => 'required',
-            "with" => 'required',
-            "user" => 'required',
+            "groupe" => 'required|exists:mysql.transaction__groupes,id',
+            "head" => 'required|exists:mysql.transaction__heads,id',
+            "with" => 'required|exists:mysql_second.transaction__withs,id',
+            "user" => 'required|exists:mysql_second.user__infos,user_id',
             "amount" => 'required',
         ]);
 

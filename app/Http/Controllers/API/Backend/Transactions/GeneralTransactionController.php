@@ -46,9 +46,9 @@ class GeneralTransactionController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "method" => 'required',
-            "type" => 'required',
-            "withs" => 'required',
-            "user" => 'required',
+            "type" => 'required|exists:mysql.transaction__main__heads,id',
+            "withs" => 'required|exists:mysql_second.transaction__withs,id',
+            "user" => 'required|exists:mysql_second.user__infos,user_id',
             "amountRP" => 'required',
             "discount" => 'required',
             "netAmount" => 'required',

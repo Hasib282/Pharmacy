@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('fathers_name')->nullable();
             $table->string('mothers_name')->nullable();
-            $table->date('date_of_birth');
+            $table->date('dob')->nullable();
             $table->string('gender');
             $table->string('religion');
             $table->string('marital_status');

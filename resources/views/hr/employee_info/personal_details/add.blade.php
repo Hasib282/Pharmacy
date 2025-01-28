@@ -47,9 +47,9 @@
                 </div>
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for = "date_of_birth">Date of Birth </label>
-                        <input type="date" name="date_of_birth" id="date_of_birth" class="form-input">
-                        <span class="error" id="date_of_birth_error"></span>
+                        <label for = "dob">Date of Birth </label>
+                        <input type="date" name="dob" id="dob" class="form-input">
+                        <span class="error" id="dob_error"></span>
                     </div>
                 </div>
                 <div class="c-6">
