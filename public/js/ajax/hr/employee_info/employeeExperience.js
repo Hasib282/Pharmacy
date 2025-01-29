@@ -48,14 +48,8 @@ function ShowEmployeeExperienceDetails(data, startIndex) {
 
 
 $(document).ready(function () {
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/hr/employee/experience`,
-        method: "GET",
-        success: function (res) {
-            CreateSelectOptions('#with', 'Select Employee Type', res.tranwith, null, 'tran_with_name');
-        },
-    });
+    // Get Transaction With / User Type 
+    GetTransactionWith(3, '', '#with', 3, 'Ok');
 
     // Load Data on Hard Reload
     ReloadData('hr/employee/experience', ShowEmployeeExperienceDetails);

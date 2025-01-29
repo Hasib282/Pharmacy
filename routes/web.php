@@ -52,10 +52,8 @@ use App\Http\Controllers\Frontend\Pharmacy\PharmacyReportController;
 
 
 // Report Controllers
-use App\Http\Controllers\Frontend\ReportController;
 use App\Http\Controllers\Frontend\Report\AccountStatementController;
 use App\Http\Controllers\Frontend\Report\PartyStatementController;
-use App\Http\Controllers\Frontend\Report\BalanceSheetController;
 
 
 /*
@@ -967,42 +965,6 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 Route::get('/details/search', 'SearchPartyDetailsReport')->name('search.partyDetails');
             });
         }); // End Party Statement Routes
-        
-        
-        
-        // *************************************** Balancesheet Routes Start *************************************** //
-        Route::prefix('/balancesheet')->group(function () {
-            Route::controller(BalanceSheetController::class)->group(function () {
-                ///////////// --------------- Balancesheet Summary Report Routes ----------- ///////////////////
-                Route::get('/summary', 'BalanceSheetSummaryReport')->name('show.balanceSheetSummary');
-                Route::get('/summary/search', 'SearchBalanceSheetSummaryReport')->name('search.balanceSheetSummary');
-            
-            
-            
-                ///////////// --------------- Balancesheet Detail Report Routes ----------- ///////////////////
-                Route::get('/details', 'BalanceSheetDetailsReport')->name('show.balanceSheetDetails');
-                Route::get('/details/search', 'SearchBalanceSheetDetailsReport')->name('search.balanceSheetDetails');
-            });
-        }); // End Balancesheet Statement Routes
-
-
-
-        
-        Route::controller(ReportController::class)->group(function () {
-            // *************************************** Report By Groupe Routes Start *************************************** //
-            Route::get('/groupe', 'ReportByGroupe')->name('show.groupeReport');
-            Route::get('/groupe/search', 'SearchReportByGroupeDate')->name('search.groupeReport');
-
-
-
-            // *************************************** Summary Report Routes Start *************************************** //
-            Route::get('/summary', 'SummaryReport')->name('show.summaryReport');
-            Route::get('/summary/search', 'SearchSummaryReport')->name('search.summaryReport');
-
-
-            // Common Routes
-            Route::get('/invoice/details', 'ReportInvoiceDetails')->name('show.reportInvoiceDetails');
-        });
     }); // End Report Routes 
     
     /////-----/////-----/////-----/////-----/////-----///// Report Routes End /////-----/////-----/////-----/////-----/////-----/////

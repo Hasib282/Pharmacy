@@ -24,7 +24,7 @@
             </div>
             <div class="form-input-group">
                 <label for="category">Category Name</label>
-                <input type="text" name="category" class="form-input" id="category"  data-url="{{ env('API_URL') }}/pharmacy/setup/category/get" autocomplete="off">
+                <input type="text" name="category" class="form-input" id="category"  data-url="{{ env('API_URL') }}/{{Request::segment(1)}}/setup/category/get" autocomplete="off">
                 <div id='category-list'>
                     <ul>
 
@@ -34,7 +34,7 @@
             </div>
             <div class="form-input-group">
                 <label for="manufacturer">Manufacture Name</label>
-                <input type="text" name="manufacturer" class="form-input" id="manufacturer"  data-url="{{ env('API_URL') }}/pharmacy/setup/manufacturer/get" autocomplete="off">
+                <input type="text" name="manufacturer" class="form-input" id="manufacturer"  data-url="{{ env('API_URL') }}/{{Request::segment(1)}}/setup/manufacturer/get" autocomplete="off">
                 <div id='manufacturer-list'>
                     <ul>
 
@@ -44,7 +44,7 @@
             </div>
             <div class="form-input-group">
                 <label for="form">Product Form Name</label>
-                <input type="text" name="form" class="form-input" id="form"  data-url="{{ env('API_URL') }}/pharmacy/setup/form/get" autocomplete="off">
+                <input type="text" name="form" class="form-input" id="form"  data-url="{{ env('API_URL') }}/{{Request::segment(1)}}/setup/form/get" autocomplete="off">
                 <div id='form-list'>
                     <ul>
 
@@ -54,7 +54,7 @@
             </div>
             <div class="form-input-group">
                 <label for="unit">Product Unit Name</label>
-                <input type="text" name="unit" class="form-input" id="unit"  data-url="{{ env('API_URL') }}/pharmacy/setup/unit/get" autocomplete="off">
+                <input type="text" name="unit" class="form-input" id="unit"  data-url="{{ env('API_URL') }}/{{Request::segment(1)}}/setup/unit/get" autocomplete="off">
                 <div id='unit-list'>
                     <ul>
 

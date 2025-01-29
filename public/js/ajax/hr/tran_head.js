@@ -7,6 +7,7 @@ function ShowTranHead(data, startIndex) {
                 <tr>
                     <td>${startIndex + key + 1}</td>
                     <td>${item.tran_head_name }</td>
+                    ${role == 1 ? `<td>${item.company_id }</td>`: ''}
                     <td>
                         <div style="display: flex;gap:5px;">
                             

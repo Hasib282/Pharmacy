@@ -70,29 +70,8 @@ function ShowPharmacyIssues(data, startIndex) {
 
 
 $(document).ready(function () {
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/pharmacy/transaction/issue`,
-        method: "GET",
-        success: function (res) {
-            let groupein = "";
-            let updategroupein = "";
-
-            // Groupin chedckbox
-            $.each(res.groupes, function(key, groupe) {
-                groupein += `<input type="checkbox" id="groupe[]" name="groupe" class="groupe-checkbox"
-                value="${groupe.id}" checked>`
-            });
-            $('#groupein').html(groupein);
-
-            // Update Groupin chedckbox
-            $.each(res.groupes, function(key, groupe) {
-                updategroupein += `<input type="checkbox" id="groupe[]" name="groupe" class="updategroupe-checkbox"
-                    value="${groupe.id}" checked>`
-            });
-            $('#updategroupein').html(updategroupein);
-        },
-    });
+    // Load Transaction Groupe
+    GetTransactionGroupe(6, "Receive");
 
 
     // Load Data on Hard Reload
@@ -144,23 +123,23 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        getTransactionGrid(res.pharmacy.tran_id);
-        $('#id').val(res.pharmacy.id);
+        getTransactionGrid(res.issue.tran_id);
+        $('#id').val(res.issue.id);
         
-        $('#updateTranId').val(res.pharmacy.tran_id);
-        var timestamps = new Date(res.pharmacy.tran_date);
+        $('#updateTranId').val(res.issue.tran_id);
+        var timestamps = new Date(res.issue.tran_date);
         var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
         $('#updateDate').val(formattedDate);
-        $('#updateStore').val(res.pharmacy.store.store_name);
-        $('#updateStore').attr('data-id', res.pharmacy.store_id);
-        $('#updateUser').attr('data-id',res.pharmacy.tran_user);
-        $('#updateUser').attr('data-with',res.pharmacy.tran_type_with);
-        $('#updateUser').val(res.pharmacy.user.user_name);
-        $('#updateTotalDiscount').val(res.pharmacy.discount);
-        $('#updateAdvance').val(res.pharmacy.receive);
-        $('#updateName').val(res.pharmacy.user_name);
-        $('#updatePhone').val(res.pharmacy.user_phone);
-        $('#updateAddress').val(res.pharmacy.user_address);
+        $('#updateStore').val(res.issue.store.store_name);
+        $('#updateStore').attr('data-id', res.issue.store_id);
+        $('#updateUser').attr('data-id',res.issue.tran_user);
+        $('#updateUser').attr('data-with',res.issue.tran_type_with);
+        $('#updateUser').val(res.issue.user.user_name);
+        $('#updateTotalDiscount').val(res.issue.discount);
+        $('#updateAdvance').val(res.issue.receive);
+        $('#updateName').val(res.issue.user_name);
+        $('#updatePhone').val(res.issue.user_phone);
+        $('#updateAddress').val(res.issue.user_address);
         $("#updateProduct").focus();
     }
 

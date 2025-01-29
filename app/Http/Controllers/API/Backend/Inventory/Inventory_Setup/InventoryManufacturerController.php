@@ -11,7 +11,7 @@ class InventoryManufacturerController extends Controller
 {
     // Show All Item/Product Manufacturer
     public function ShowAll(Request $req){
-        $manufacturer = Item_Manufacturer::on('mysql')->where('type_id', '5')->orderBy('added_at','asc')->paginate(15);
+        $manufacturer = filterByCompany(Item_Manufacturer::on('mysql')->where('type_id', '5'))->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $manufacturer,
@@ -85,10 +85,13 @@ class InventoryManufacturerController extends Controller
 
     // Search Item/Product Manufacturer
     public function Search(Request $req){
-        $manufacturer = Item_Manufacturer::on('mysql')->where('type_id', '5')
-        ->where('manufacturer_name', 'like', '%'.$req->search.'%')
-        ->orderBy('manufacturer_name','asc')
-        ->paginate(15);
+        $manufacturer = filterByCompany(
+                        Item_Manufacturer::on('mysql')
+                        ->where('type_id', '5')
+                        ->where('manufacturer_name', 'like', '%'.$req->search.'%')
+                    )
+                    ->orderBy('manufacturer_name','asc')
+                    ->paginate(15);
         
         return response()->json([
             'status' => true,
@@ -100,11 +103,14 @@ class InventoryManufacturerController extends Controller
 
     // Get Manufacturer
     public function Get(Request $req){
-        $manufacturers = Item_Manufacturer::on('mysql')->where('type_id', '5')
-        ->where('manufacturer_name', 'like', '%'.$req->manufacturer.'%')
-        ->orderBy('manufacturer_name','asc')
-        ->take(10)
-        ->get();
+        $manufacturers = filterByCompany(
+                            Item_Manufacturer::on('mysql')
+                            ->where('type_id', '5')
+                            ->where('manufacturer_name', 'like', '%'.$req->manufacturer.'%')
+                        )
+                        ->orderBy('manufacturer_name','asc')
+                        ->take(10)
+                        ->get();
 
         if($manufacturers->count() > 0){
             $list = "";

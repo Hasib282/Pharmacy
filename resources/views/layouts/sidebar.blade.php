@@ -1636,39 +1636,6 @@
                     <i class="fas fa-angle-right {{ Request::segment(1) == 'report' ? 'rotate':''}}"></i>
                 </div>
                 <ul class="sub-menu {{ Request::segment(1) == 'report' ? 'show':''}}">
-                    {{-- <li class="sub-menu-item">
-                        <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'balancesheet') ? 'active':''}}">
-                            <p>
-                            <i class="fa-solid fa-sheet-plastic"></i>
-                                Balance Sheet
-                            </p>
-                            <i class="fas fa-angle-right"></i>
-                        </div>
-                        <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'balancesheet') ? 'show':''}}">
-                            @if(auth()->user()->hasPermission('show.balanceSheetDetails'))
-                                <li class="sub-menu1-item" data-url="{{route('show.balanceSheetDetails')}}">
-                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'balancesheet' && Request::segment(3) == 'details') ? 'active':''}}">
-                                        <p>
-                                            <i class="far fa-circle nav-icon"></i>
-                                            Details
-                                        </p>
-                                    </div>
-                                </li>
-                            @endif
-                                
-                            @if(auth()->user()->hasPermission('show.balanceSheetSummary'))
-                                <li class="sub-menu1-item" data-url="{{route('show.balanceSheetSummary')}}">
-                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'balancesheet' && Request::segment(3) == 'summary') ? 'active':''}}">
-                                        <p>
-                                            <i class="far fa-circle nav-icon"></i>
-                                            Summary
-                                        </p>
-                                    </div>
-                                </li>
-                            @endif
-                        </ul>
-                    </li> --}}
-
                     {{-- accounts statement part start --}}
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'account') ? 'active':''}}">
@@ -1747,28 +1714,6 @@
                             @endif
                         </ul>
                     </li>
-                                
-                    {{-- @if(auth()->user()->hasPermission('show.groupeReport'))
-                        <li class="sub-menu-item" data-url="{{route('show.groupeReport')}}">
-                            <div class="menu-title">
-                                <p>
-                                    <i class="far fa-circle nav-icon"></i>
-                                    Report By Groupe
-                                </p>
-                            </div>
-                        </li>
-                    @endif
-                                
-                    @if(auth()->user()->hasPermission('show.summaryReport'))
-                        <li class="sub-menu-item" data-url="{{route('show.summaryReport')}}">
-                            <div class="menu-title">
-                                <p>
-                                    <i class="far fa-circle nav-icon"></i>
-                                    Summary Report
-                                </p>
-                            </div>
-                        </li>
-                    @endif --}}
                 </ul>
             </li>
         @endif

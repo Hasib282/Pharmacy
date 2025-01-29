@@ -17,14 +17,7 @@ class PartyTransactionController extends Controller
 {
     // Show All Party Collection
     public function ShowAll(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'hr' => 3,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
-        
-        $type = $segments[$req->segment(2)] ?? null;
+        $type = GetTranType($req->segment(2));
         $method = ucfirst($req->segment(4)); // Capitalize the first letter
 
         $transaction = Transaction_Main::on('mysql_second')

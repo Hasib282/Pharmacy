@@ -81,9 +81,10 @@
         <script src="{{ asset('js/modal.js') }}"></script> 
         {{-- brian2694/laravel-toastr js  --}}
         <script src="{{ asset('js/toastr.min.js') }}"></script> 
-        {{-- {!! Toastr::message() !!}
-        
-        {{-- add extra script file if needed --}}
+        {{-- {!! Toastr::message()  --}}
+        <script>
+            let role = @json(UserRole());
+        </script>
         {{-- @if (session('message'))
             <script>
                 toastr.error('{{ session('message') }}', 'Permission Denied!');

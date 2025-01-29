@@ -1,33 +1,38 @@
 <?php
 
-namespace App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Transaction\Return;
+namespace App\Http\Controllers\API\Backend\Transactions;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Transaction_Groupe;
 use App\Models\Transaction_Head;
 use App\Models\Transaction_Detail;
 use App\Models\Transaction_Main;
 
-class PharmacyClientReturnController extends Controller
+class SupplierReturnController extends Controller
 {
-    // Show All Client Return
+    // Show All Supplier Return
     public function ShowAll(Request $req){
-        $return = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Client Return')->where('tran_type','6')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '6')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
-        
+        $type = GetTranType($req->segment(2));
+
+        $return = Transaction_Main::on('mysql_second')
+        ->with('User')
+        ->where('tran_method','Supplier Return')
+        ->where('tran_type', $type)
+        ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
+        ->orderBy('tran_date','asc')
+        ->paginate(15);
+
         return response()->json([
             'status'=> true,
             'data' => $return,
-            'groupes' => $groupes,
         ], 200);
     } // End Method
 
 
 
-    // Insert Client Return
+    // Insert Supplier Return
     public function Insert(Request $req){
         // Validation Part Start
         $req->validate([
@@ -74,101 +79,105 @@ class PharmacyClientReturnController extends Controller
         }
         // Validation Part End
 
-        // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Main::on('mysql_second')->where('tran_type', $req->type)->where('tran_method', $req->method)->latest('tran_id')->first();
-        $id = ($transaction) ? 'PCR' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'PCR000000001';
 
-        DB::transaction(function () use ($req, $id) {
-            $batchDetails = Transaction_Main::on('mysql_second')->where('tran_id', $req->batch)->first();
-            Transaction_Main::on('mysql_second')->insert([
-                "tran_id" => $id,
-                "tran_type" => $req->type,
-                "tran_method" => $req->method,
-                "tran_type_with" => $req->withs,
-                "tran_user" => $req->user,
-                "user_name" => $batchDetails->user_name,
-                "user_phone" => $batchDetails->user_phone,
-                "user_address" => $batchDetails->user_address,
-                "bill_amount" => $req->amountRP,
-                "discount" => $req->discount,
-                "net_amount" => $req->netAmount,
-                "payment" => $req->advance,
-                "due" => $req->balance,
-                "store_id" => $req->store,
-            ]);
+        $prefixes = [
+            '5' => ['Supplier Return' => 'ISR'],
+            '6' => ['Supplier Return' => 'PSR'],
+        ];
 
-            $billDiscount = $req->discount;
-            $billAmount = $req->amountRP;
-            $products = json_decode($req->products, true);
-            foreach($products as $product){
-                // Update Quantity in Product Table
-                $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
-                $quantity = $p->quantity + $product['quantity'];
-                $p->update([
-                    "quantity" => $quantity
-                ]);
+        if ($req->type && isset($prefixes[$req->type])) {
+            $prefix = $prefixes[$req->type][$req->method] ?? null;
+            if ($prefix) {
+                $transaction = Transaction_Main::on('mysql_second')
+                ->where('tran_type', $req->type)
+                ->where('tran_method', $req->method)
+                ->latest('tran_id')
+                ->first();
+    
+                $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
 
-                $discount = round( ($billDiscount * $product['totAmount']) / $billAmount);
-
-                // Update Quantity and Return Quantity Acording to Batch Id
-                $batch = Transaction_Detail::on('mysql_second')->where('tran_id', $req->batch)->where('tran_head_id', $product['product'])->where('batch_id', $product['batch'])->first();
-                $rem_quantity = $batch->quantity - $product['quantity'];
-                $ret_quantity = $batch->quantity_return + $product['quantity'];
-                $batch->update([
-                    'quantity' => $rem_quantity,
-                    'quantity_return' => $ret_quantity
-                ]);
-
-
-                // Update Purchase Quantity Acording to Batch Id
-                $batch = Transaction_Detail::on('mysql_second')->where('tran_id', $product['batch'])->where('tran_head_id', $product['product'])->first();
-                $rem_quantity = $batch->quantity + $product['quantity'];
-                $rem_issue = $batch->quantity_issue - $product['quantity'];
-                $batch->update([
-                    'quantity' => $rem_quantity,
-                    'quantity_issue' => $rem_issue,
-                ]);
-
-
-
-                Transaction_Detail::on('mysql_second')->insert([
-                    "tran_id" => $id,
-                    "tran_type" => $req->type,
-                    "tran_method" => $req->method,
-                    "tran_type_with" => $req->withs,
-                    "tran_user" => $req->user,
-                    "user_name" => $batchDetails->user_name,
-                    "user_phone" => $batchDetails->user_phone,
-                    "user_address" => $batchDetails->user_address,
-                    "tran_groupe_id" => $product['groupe'],
-                    "tran_head_id" => $product['product'],
-                    "amount" => $product['mrp'],
-                    "quantity_actual" => $product['quantity'],
-                    "quantity" => $product['quantity'],
-                    "unit_id" => $p->unit_id,
-                    "tot_amount" => $product['totAmount'],
-                    "discount" => $discount,
-                    "mrp" => $product['mrp'],
-                    "cp" => $p->cp,
-                    "expiry_date" => $p->expiry_date,
-                    "store_id" => $req->store,
-                    "batch_id" => $req->batch,
-                ]);
-
-                $billDiscount -= $discount;
-                $billAmount -= $product['totAmount'];
-           }
-        });
+                DB::transaction(function () use ($req, $id) {
+                    Transaction_Main::on('mysql_second')->insert([
+                        "tran_id" => $id,
+                        "tran_type" => $req->type,
+                        "tran_method" => $req->method,
+                        "tran_type_with" => $req->withs,
+                        "tran_user" => $req->user,
+                        "bill_amount" => $req->amountRP,
+                        "discount" => $req->discount,
+                        "net_amount" => $req->netAmount,
+                        "payment" => $req->advance,
+                        "due" => $req->balance,
+                        "store_id" => $req->store,
+                    ]);
+        
+                    $billDiscount = $req->discount;
+                    $billAmount = $req->amountRP;
+                    $products = json_decode($req->products, true);
+                    foreach($products as $product){
+                        // Update Quantity in Product Table
+                        $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
+                        $quantity = $p->quantity - $product['quantity'];
+                        $p->update([
+                            "quantity" => $quantity
+                        ]);
+        
+                        $discount = round( ($billDiscount * $product['totAmount']) / $billAmount);
+        
+                        // Update Quantity and Return Quantity Acording to Batch Id
+                        $batch = Transaction_Detail::on('mysql_second')->where('tran_id', $req->batch)->where('tran_head_id', $product['product'])->first();
+                        $rem_quantity = $batch->quantity - $product['quantity'];
+                        $ret_quantity = $batch->quantity_return + $product['quantity'];
+                        $batch->update([
+                            'quantity' => $rem_quantity,
+                            'quantity_return' => $ret_quantity
+                        ]);
+        
+        
+        
+                        Transaction_Detail::on('mysql_second')->insert([
+                            "tran_id" => $id,
+                            "tran_type" => $req->type,
+                            "tran_method" => $req->method,
+                            "tran_type_with" => $req->withs,
+                            "tran_user" => $req->user,
+                            "tran_groupe_id" => $product['groupe'],
+                            "tran_head_id" => $product['product'],
+                            "amount" => $product['cp'],
+                            "quantity_actual" => $product['quantity'],
+                            "quantity" => $product['quantity'],
+                            "unit_id" => $p->unit_id,
+                            "tot_amount" => $product['totAmount'],
+                            "discount" => $discount,
+                            "mrp" => $p->mrp,
+                            "cp" => $product['cp'],
+                            "expiry_date" => $p->expiry_date,
+                            "store_id" => $req->store,
+                            "batch_id" => $req->batch,
+                        ]);
+        
+                        $billDiscount -= $discount;
+                        $billAmount -= $product['totAmount'];
+                   }
+                });
+                
+                return response()->json([
+                    'status'=> true,
+                    'message' => 'Supplier Return Details Added Successfully'
+                ], 200);
+            }
+        }
         
         return response()->json([
-            'status'=> true,
-            'message' => 'Client Return Details Added Successfully'
-        ], 200);  
+            'status'=> false,
+            'message' => 'Something is wrong!'
+        ], 200); 
+
     } // End Method
 
 
 
-    // // Edit Client Return
+    // // Edit Supplier Return
     // public function Edit(Request $req){
     //     $location = Location_Info::findOrFail($req->id);
     //     return response()->json([
@@ -179,7 +188,7 @@ class PharmacyClientReturnController extends Controller
 
 
 
-    // // Update Client Return
+    // // Update Supplier Return
     // public function Update(Request $req){
     //     $req->validate([
     //         "division" => 'required',
@@ -197,21 +206,21 @@ class PharmacyClientReturnController extends Controller
     //     if($update){
     //         return response()->json([
     //             'status'=>true,
-    //             'message' => 'Client Return Details Updated Successfully',
+    //             'message' => 'Supplier Return Details Updated Successfully',
     //         ], 200); 
     //     }
     // } // End Method
 
 
 
-    // Delete Client Return
+    // Delete Supplier Return
     public function Delete(Request $req){
         $details = Transaction_Detail::on('mysql_second')->where("tran_id", $req->id)->get();
         DB::transaction(function () use ($req, $details) {
             foreach($details as $item){
                 $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
                 if($product){
-                    $quantity = $product->quantity - $item->quantity;
+                    $quantity = $product->quantity + $item->quantity;
 
                     $product->update([
                         "quantity" => $quantity
@@ -235,13 +244,13 @@ class PharmacyClientReturnController extends Controller
 
         return response()->json([
             'status'=> true,
-            'message' => 'Client Return Details Deleted Successfully',
+            'message' => 'Supplier Return Details Deleted Successfully',
         ], 200); 
     } // End Method
 
 
 
-    // Search Client Return
+    // Search Supplier Return
     public function Search(Request $req){
         if($req->searchOption == 1){
             $return = Transaction_Main::on('mysql_second')->with('User')

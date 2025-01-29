@@ -40,6 +40,11 @@ use App\Http\Controllers\API\Backend\Admin_Setup\TranHeadController;
 use App\Http\Controllers\API\Backend\Transactions\GeneralTransactionController;
 use App\Http\Controllers\API\Backend\Transactions\BankTransactionController;
 use App\Http\Controllers\API\Backend\Transactions\PartyTransactionController;
+use App\Http\Controllers\API\Backend\Transactions\PurchaseController;
+use App\Http\Controllers\API\Backend\Transactions\IssueController;
+use App\Http\Controllers\API\Backend\Transactions\ClientReturnController;
+use App\Http\Controllers\API\Backend\Transactions\SupplierReturnController;
+use App\Http\Controllers\API\Backend\Transactions\AdjustmentController;
 
 
 // HR Setup Controllers
@@ -76,17 +81,6 @@ use App\Http\Controllers\API\Backend\Inventory\Inventory_Setup\InventoryUnitCont
 use App\Http\Controllers\API\Backend\Inventory\Inventory_Setup\InventoryProductsController;
 
 
-// Inventory Transaction Controllers
-use App\Http\Controllers\API\Backend\Inventory\Inventory_Transaction\InventoryIssueController;
-use App\Http\Controllers\API\Backend\Inventory\Inventory_Transaction\InventoryPurchaseController;
-use App\Http\Controllers\API\Backend\Inventory\Inventory_Transaction\Return\InventoryClientReturnController;
-use App\Http\Controllers\API\Backend\Inventory\Inventory_Transaction\Return\InventorySupplierReturnController;
-
-
-// Inventory Adjustment Controllers
-use App\Http\Controllers\API\Backend\Inventory\Inventory_Adjustment\InventoryAdjustmentController;
-
-
 // Inventory Report Controllers
 use App\Http\Controllers\API\Backend\Inventory\Inventory_Reports\InventoryItemFlowStatementController;
 use App\Http\Controllers\API\Backend\Inventory\Inventory_Reports\Purchase_Statement\InventoryPurchaseDetailController;
@@ -111,17 +105,6 @@ use App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Setup\PharmacyUnitControl
 use App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Setup\PharmacyProductsController;
 
 
-// Pharmacy Transaction Controllers
-use App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Transaction\PharmacyIssueController;
-use App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Transaction\PharmacyPurchaseController;
-use App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Transaction\Return\PharmacyClientReturnController;
-use App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Transaction\Return\PharmacySupplierReturnController;
-
-
-// Pharmacy Adjustment Controllers
-use App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Adjustment\PharmacyAdjustmentController;
-
-
 // Pharmacy Report Controllers
 use App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Reports\PharmacyItemFlowStatementController;
 use App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Reports\Purchase_Statement\PharmacyPurchaseDetailController;
@@ -144,19 +127,10 @@ use App\Http\Controllers\API\Backend\Reports\Account_Statement\AccountSummaryByG
 use App\Http\Controllers\API\Backend\Reports\Account_Statement\AccountSummaryController;
 
 
-// Report Balance Sheet Controllers
-use App\Http\Controllers\API\Backend\Reports\Balance_Sheet\BalanceSheetDetailsController;
-use App\Http\Controllers\API\Backend\Reports\Balance_Sheet\BalanceSheetSummaryController;
-
-
 // Report Party Statement Controllers
 use App\Http\Controllers\API\Backend\Reports\Party_Statement\PartyDetailsController;
 use App\Http\Controllers\API\Backend\Reports\Party_Statement\PartySummaryController;
 
-
-// Report Controllers
-use App\Http\Controllers\API\Backend\Reports\ReportsByGroupController;
-use App\Http\Controllers\API\Backend\Reports\ReportsBySummaryController;
 
 
 
@@ -919,7 +893,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         // *************************************** Inventory Transaction Routes Start *************************************** //
         Route::prefix('/transaction')->group(function () {
             ///////////// --------------- Inventory Purchase Routes ----------- ///////////////////
-            Route::controller(InventoryPurchaseController::class)->group(function () {
+            Route::controller(PurchaseController::class)->group(function () {
                 Route::get('/purchase', 'ShowAll');
                 Route::post('/purchase', 'Insert');
                 Route::get('/purchase/edit', 'Edit');
@@ -932,7 +906,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
             ///////////// --------------- Inventory Issue Routes ----------- ///////////////////
-            Route::controller(InventoryIssueController::class)->group(function () {
+            Route::controller(IssueController::class)->group(function () {
                 Route::get('/issue', 'ShowAll');
                 Route::post('/issue', 'Insert');
                 Route::get('/issue/edit', 'Edit');
@@ -946,7 +920,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             ///////////// --------------- Inventory Return Routes ----------- ///////////////////
             Route::prefix('/return')->group(function () {
                 // *************** Inventory Supplier Return Routes *************** //
-                Route::controller(InventorySupplierReturnController::class)->group(function () {
+                Route::controller(SupplierReturnController::class)->group(function () {
                     Route::get('/supplier', 'ShowAll');
                     Route::post('/supplier', 'Insert');
                     // Route::get('/supplier/edit', 'Edit');
@@ -958,7 +932,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 
                 // *************** Inventory Client Return Routes *************** //
-                Route::controller(InventoryClientReturnController::class)->group(function () {
+                Route::controller(ClientReturnController::class)->group(function () {
                     Route::get('/client', 'ShowAll');
                     Route::post('/client', 'Insert');
                     // Route::get('/client/edit', 'Edit');
@@ -973,9 +947,9 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
         // *************************************** Inventory Adjustment Routes Start *************************************** //
         Route::prefix('/adjustment')->group(function () {
-            Route::controller(InventoryAdjustmentController::class)->group(function () {
+            Route::controller(AdjustmentController::class)->group(function () {
                 ///////////// --------------- Inventory Positive Adjustment Routes ----------- ///////////////////
-                Route::get('/positive', 'ShowAllPositive');
+                Route::get('/positive', 'ShowAll');
                 Route::post('/positive', 'Insert');
                 Route::get('/positive/edit', 'Edit');
                 Route::put('/positive', 'Update');
@@ -985,7 +959,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
                 ///////////// --------------- Inventory Negative Adjustment Routes ----------- ///////////////////
-                Route::get('/negative', 'ShowAllNegative');
+                Route::get('/negative', 'ShowAll');
                 Route::post('/negative', 'Insert');
                 Route::get('/negative/edit', 'Edit');
                 Route::put('/negative', 'Update');
@@ -1286,7 +1260,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         // *************************************** Pharmacy Transaction Routes Start *************************************** //
         Route::prefix('/transaction')->group(function () {
             ///////////// --------------- Pharmacy Purchase Routes ----------- ///////////////////
-            Route::controller(PharmacyPurchaseController::class)->group(function () {
+            Route::controller(PurchaseController::class)->group(function () {
                 Route::get('/purchase', 'ShowAll');
                 Route::post('/purchase', 'Insert');
                 Route::get('/purchase/edit', 'Edit');
@@ -1299,7 +1273,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
             ///////////// --------------- Pharmacy Issue Routes ----------- ///////////////////
-            Route::controller(PharmacyIssueController::class)->group(function () {
+            Route::controller(IssueController::class)->group(function () {
                 Route::get('/issue', 'ShowAll');
                 Route::post('/issue', 'Insert');
                 Route::get('/issue/edit', 'Edit');
@@ -1313,7 +1287,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             ///////////// --------------- Pharmacy Return Routes ----------- ///////////////////
             Route::prefix('/return')->group(function () {
                 // *************** Pharmacy Supplier Return Routes *************** //
-                Route::controller(PharmacySupplierReturnController::class)->group(function () {
+                Route::controller(SupplierReturnController::class)->group(function () {
                     Route::get('/supplier', 'ShowAll');
                     Route::post('/supplier', 'Insert');
                     Route::get('/supplier/edit', 'Edit');
@@ -1325,7 +1299,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 
                 // *************** Pharmacy Client Return Routes *************** //
-                Route::controller(PharmacyClientReturnController::class)->group(function () {
+                Route::controller(ClientReturnController::class)->group(function () {
                     Route::get('/client', 'ShowAll');
                     Route::post('/client', 'Insert');
                     Route::get('/client/edit', 'Edit');
@@ -1340,9 +1314,9 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
         // *************************************** Pharmacy Adjustment Routes Start *************************************** //
         Route::prefix('/adjustment')->group(function () {
-            Route::controller(PharmacyAdjustmentController::class)->group(function () {
+            Route::controller(AdjustmentController::class)->group(function () {
                 ///////////// --------------- Pharmacy Positive Adjustment Routes ----------- ///////////////////
-                Route::get('/positive', 'ShowAllPositive');
+                Route::get('/positive', 'ShowAll');
                 Route::post('/positive', 'Insert');
                 Route::get('/positive/edit', 'Edit');
                 Route::put('/positive', 'Update');
@@ -1352,7 +1326,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
                 ///////////// --------------- Pharmacy Negative Adjustment Routes ----------- ///////////////////
-                Route::get('/negative', 'ShowAllNegative');
+                Route::get('/negative', 'ShowAll');
                 Route::post('/negative', 'Insert');
                 Route::get('/negative/edit', 'Edit');
                 Route::put('/negative', 'Update');
@@ -1560,41 +1534,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/details/search', 'Search');
             });
         }); // End Party Statement Routes
-        
-        
-        
-        // *************************************** Balancesheet Routes Start *************************************** //
-        Route::prefix('/balancesheet')->group(function () {
-            ///////////// --------------- Balancesheet Summary Report Routes ----------- ///////////////////
-            Route::controller(BalanceSheetSummaryController::class)->group(function () {
-                Route::get('/summary', 'ShowAll');
-                Route::get('/summary/search', 'Search');
-            });
-            
-            
-            
-            ///////////// --------------- Balancesheet Detail Report Routes ----------- ///////////////////
-            Route::controller(BalanceSheetDetailsController::class)->group(function () {
-                Route::get('/details', 'ShowAll');
-                Route::get('/details/search', 'Search');
-            });
-        }); // End Balancesheet Statement Routes
-
-
-
-        // *************************************** Report By Groupe Routes Start *************************************** //
-        Route::controller(ReportsByGroupController::class)->group(function () {
-            Route::get('/groupe', 'ShowAll');
-            Route::get('/groupe/search', 'Search');
-        });
-
-
-
-        // *************************************** Summary Report Routes Start *************************************** //
-        Route::controller(ReportsBySummaryController::class)->group(function () {
-            Route::get('/summary', 'ShowAll');
-            Route::get('/summary/search', 'Search');
-        });
     }); // End Report Routes 
     
     /////-----/////-----/////-----/////-----/////-----///// Report Routes End /////-----/////-----/////-----/////-----/////-----/////

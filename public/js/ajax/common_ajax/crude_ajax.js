@@ -2,17 +2,23 @@
 //////////////////// -------------------- Reload Content in Current Pagination Page After Successful Add/Update/Delete -------------------- ////////////////////
 function ReloadData(link, RenderData){
     const queryParams = GetQueryParams();
-    CheckIfLastPage(function(isLastPage) {
-        if(isLastPage){
-            queryParams['page'] = GetCurrentPageFromURL() - 1;
-        }
-        if (window.location.href.includes('/search')) {
-            LoadBackendData(`${apiUrl}/${link}/search`, RenderData, queryParams);
-        }
-        else{
-            LoadBackendData(`${apiUrl}/${link}`, RenderData, queryParams); 
-        }
-    });
+    const url = window.location.href.includes('/search')
+        ? `${apiUrl}/${link}/search`
+        : `${apiUrl}/${link}`;
+        
+    LoadBackendData(url, RenderData, queryParams);
+
+    // CheckIfLastPage(function(isLastPage) {
+    //     if(isLastPage){
+    //         queryParams['page'] = GetCurrentPageFromURL() - 1;
+    //     }
+    //     if (window.location.href.includes('/search')) {
+    //         LoadBackendData(`${apiUrl}/${link}/search`, RenderData, queryParams);
+    //     }
+    //     else{
+    //         LoadBackendData(`${apiUrl}/${link}`, RenderData, queryParams); 
+    //     }
+    // });
 }; // End Method
 
 
@@ -26,18 +32,21 @@ function LoadBackendData(url, RenderData, queryParams) {
         type: 'GET',
         data: queryParams,
         success: function(response) {
-            UpdateUrl(url, queryParams);
+            if (response.status) {
+                UpdateUrl(url, queryParams);
 
-            if (response.redirect) {
-                window.location.href = response.redirect;
-                return;
+                if (response.redirect) {
+                    window.location.href = response.redirect;
+                    return;
+                }
+                
+                let startIndex = (response.data.current_page - 1) * response.data.per_page;
+                RenderData(response.data.data ? response.data.data : response.data, startIndex, response);
+                response.data.path ? RenderPagination(response.data, response.data.path) : null;
             }
-            // if($('#print').length){
-
-            // }
-            let startIndex = (response.data.current_page - 1) * response.data.per_page;
-            RenderData(response.data.data ? response.data.data : response.data, startIndex, response);
-            response.data.path ? RenderPagination(response.data, response.data.path) : null;
+            else{
+                toastr.error(response.message, "Wrong Command!");
+            }
         }
     });
 }; // End Method

@@ -48,7 +48,9 @@
                 <th>CP</th>
                 <th>MRP</th>
                 <th>Expiry</th>
-                <th>Store</th>
+                @if ( UserRole() == 1 )
+                    <th style="width:12%;">Company Id</th>
+                @endif
                 <th>Action</th>
             </tr>
         </thead>

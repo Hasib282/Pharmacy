@@ -8,6 +8,7 @@ function ShowTranHead(data, startIndex) {
                     <td>${startIndex + key + 1}</td>
                     <td>${item.tran_head_name }</td>
                     <td>${item.groupe.tran_groupe_name }</td>
+                    <td>${item.company_id}</td>
                     <td>
                         <div style="display: flex;gap:5px;">
                             
@@ -36,14 +37,15 @@ function ShowTranHead(data, startIndex) {
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
 
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/admin/tranheads`,
-        method: "GET",
-        success: function (res) {
-            CreateSelectOptions('#groupe', 'Select Transaction Groupe', res.groupes, null, 'tran_groupe_name')
-        },
-    });
+    GetTransactionGroupe(null, null, "Ok");
+    // // Creating Select Options Dynamically
+    // $.ajax({
+    //     url: `${apiUrl}/admin/tranheads`,
+    //     method: "GET",
+    //     success: function (res) {
+    //         CreateSelectOptions('#groupe', 'Select Transaction Groupe', res.groupes, null, 'tran_groupe_name')
+    //     },
+    // });
 
     
     // Load Data on Hard Reload
@@ -79,10 +81,6 @@ $(document).ready(function () {
 
     // Search Ajax
     SearchAjax('admin/tranheads', ShowTranHead, {type: { selector: "#types"}, method: { selector: "#methods"}, role: { selector: "#roles"}});
-
-
-    // Search By Methods, Roles, Types
-    SearchBySelect('admin/tranheads', ShowTranHead, '#methods, #roles, #types', {type: { selector: "#types"},    method: { selector: "#methods"}, role: { selector: "#roles"}} );
 
 
     // Additional Edit Functionality

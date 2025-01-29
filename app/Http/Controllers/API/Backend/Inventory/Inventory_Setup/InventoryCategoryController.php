@@ -11,7 +11,7 @@ class InventoryCategoryController extends Controller
 {
     // Show All Item/Product Category
     public function ShowAll(Request $req){
-        $category = Item_Category::on('mysql')->where('type_id', '5')->orderBy('added_at','asc')->paginate(15);
+        $category = filterByCompany(Item_Category::on('mysql')->where('type_id', '5'))->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $category,
@@ -85,10 +85,13 @@ class InventoryCategoryController extends Controller
 
     // Search Item/Product Category
     public function Search(Request $req){
-        $category = Item_Category::on('mysql')->where('type_id', '5')
-        ->where('category_name', 'like', '%'.$req->search.'%')
-        ->orderBy('category_name','asc')
-        ->paginate(15);
+        $category = filterByCompany(
+                    Item_Category::on('mysql')
+                    ->where('type_id', '5')
+                    ->where('category_name', 'like', '%'.$req->search.'%')
+                )
+                ->orderBy('category_name','asc')
+                ->paginate(15);
         
         return response()->json([
             'status' => true,
@@ -100,11 +103,14 @@ class InventoryCategoryController extends Controller
 
     // Get Item/Product Category
     public function Get(Request $req){
-        $categories = Item_Category::on('mysql')->where('type_id', '5')
-        ->where('category_name', 'like', '%'.$req->category.'%')
-        ->orderBy('category_name','asc')
-        ->take(10)
-        ->get();
+        $categories = filterByCompany(
+                        Item_Category::on('mysql')
+                        ->where('type_id', '5')
+                        ->where('category_name', 'like', '%'.$req->category.'%')
+                    )
+                    ->orderBy('category_name','asc')
+                    ->take(10)
+                    ->get();
 
 
         if($categories->count() > 0){

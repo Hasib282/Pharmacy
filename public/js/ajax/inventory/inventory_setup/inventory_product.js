@@ -16,7 +16,7 @@ function ShowInventoryProducts(data, startIndex) {
                     <td>${item.cp}</td>
                     <td>${item.mrp}</td>
                     <td>${item.expiry_date}</td>
-                    <td>${item.store_id == null ? '': item.store.store_name}</td>
+                    ${role == 1 ? `<td>${item.company_id }</td>`: ''}
                     <td>
                         <div style="display: flex;gap:5px;">
                             <button class="open-modal" data-modal-id="editModal" id="edit"
@@ -41,14 +41,8 @@ function ShowInventoryProducts(data, startIndex) {
 
 
 $(document).ready(function () {
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/inventory/setup/product`,
-        method: "GET",
-        success: function (res) {
-            CreateSelectOptions('#groupe', 'Select Transaction Groupe', res.groupes, null, 'tran_groupe_name')
-        },
-    });
+    // Load Transaction Groupe
+    GetTransactionGroupe(5, null, "Ok");
 
 
     // Load Data on Hard Reload

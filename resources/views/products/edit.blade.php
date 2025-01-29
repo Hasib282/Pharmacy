@@ -26,7 +26,7 @@
             </div>
             <div class="form-input-group">
                 <label for="updateCategory">Category Name</label>
-                <input type="text" name="category" class="form-input" id="updateCategory" data-url="{{ env('API_URL') }}/pharmacy/setup/category/get" autocomplete="off">
+                <input type="text" name="category" class="form-input" id="updateCategory" data-url="{{ env('API_URL') }}/{{Request::segment(1)}}/setup/category/get" autocomplete="off">
                 <div id='update-category'>
                     <ul>
 
@@ -36,7 +36,7 @@
             </div>
             <div class="form-input-group">
                 <label for="updateManufacturer">Manufacture Name</label>
-                <input type="text" name="manufacturer" class="form-input" id="updateManufacturer" data-url="{{ env('API_URL') }}/pharmacy/setup/manufacturer/get" autocomplete="off">
+                <input type="text" name="manufacturer" class="form-input" id="updateManufacturer" data-url="{{ env('API_URL') }}/{{Request::segment(1)}}/setup/manufacturer/get" autocomplete="off">
                 <div id='update-manufacturer'>
                     <ul>
 
@@ -46,7 +46,7 @@
             </div>
             <div class="form-input-group">
                 <label for="updateForm">Item Form Name</label>
-                <input type="text" name="form" class="form-input" id="updateForm" data-url="{{ env('API_URL') }}/pharmacy/setup/form/get" autocomplete="off">
+                <input type="text" name="form" class="form-input" id="updateForm" data-url="{{ env('API_URL') }}/{{Request::segment(1)}}/setup/form/get" autocomplete="off">
                 <div id='update-form'>
                     <ul>
 
@@ -56,7 +56,7 @@
             </div>
             <div class="form-input-group">
                 <label for="updateUnit">Unit Name</label>
-                <input type="text" name="unit" class="form-input" id="updateUnit" data-url="{{ env('API_URL') }}/pharmacy/setup/unit/get" autocomplete="off">
+                <input type="text" name="unit" class="form-input" id="updateUnit" data-url="{{ env('API_URL') }}/{{Request::segment(1)}}/setup/unit/get" autocomplete="off">
                 <div id='update-unit'>
                     <ul>
 

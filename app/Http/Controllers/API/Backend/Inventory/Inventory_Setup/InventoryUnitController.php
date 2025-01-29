@@ -11,7 +11,7 @@ class InventoryUnitController extends Controller
 {
     // Show All Item/Product Unit
     public function ShowAll(Request $req){
-        $unit = Item_Unit::on('mysql')->where('type_id', '5')->orderBy('added_at','asc')->paginate(15);
+        $unit = filterByCompany(Item_Unit::on('mysql')->where('type_id', '5'))->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $unit,
@@ -85,10 +85,13 @@ class InventoryUnitController extends Controller
 
     // Search Item/Product Unit
     public function Search(Request $req){
-        $unit = Item_Unit::on('mysql')->where('unit_name', 'like', '%'.$req->search.'%')
-        ->where('type_id', 5)
-        ->orderBy('unit_name','asc')
-        ->paginate(15);
+        $unit = filterByCompany(
+                    Item_Unit::on('mysql')
+                    ->where('unit_name', 'like', '%'.$req->search.'%')
+                    ->where('type_id', 5)
+                )
+                ->orderBy('unit_name','asc')
+                ->paginate(15);
         
         return response()->json([
             'status' => true,
@@ -100,11 +103,14 @@ class InventoryUnitController extends Controller
 
     // Get Unit
     public function Get(Request $req){
-        $units = Item_Unit::on('mysql')->where('type_id', '5')
-        ->where('unit_name', 'like', '%'.$req->unit.'%')
-        ->orderBy('unit_name','asc')
-        ->take(10)
-        ->get();
+        $units = filterByCompany(
+                    Item_Unit::on('mysql')
+                    ->where('type_id', '5')
+                    ->where('unit_name', 'like', '%'.$req->unit.'%')
+                )
+                ->orderBy('unit_name','asc')
+                ->take(10)
+                ->get();
 
 
         if($units->count() > 0){

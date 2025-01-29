@@ -1,34 +1,40 @@
 <?php
 
-namespace App\Http\Controllers\API\Backend\Inventory\Inventory_Transaction;
+namespace App\Http\Controllers\API\Backend\Transactions;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Transaction_Groupe;
 use App\Models\Transaction_Head;
 use App\Models\Transaction_Detail;
 use App\Models\Transaction_Main;
 use App\Models\Transaction_Details_Temp;
 use App\Models\Transaction_Mains_Temp;
 
-class InventoryPurchaseController extends Controller
+class PurchaseController extends Controller
 {
-    // Show All Inventory Purchase
+    // Show All Item/Product Purchase
     public function ShowAll(Request $req){
-        $inventory = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Purchase')->where('tran_type','5')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '5')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
+        $type = GetTranType($req->segment(2));
+
+        $purchase = Transaction_Main::on('mysql_second')
+        ->with('User')
+        ->where('tran_method','Purchase')
+        ->where('tran_type', $type)
+        ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
+        ->orderBy('tran_date','asc')
+        ->paginate(15);
+        
         return response()->json([
             'status'=> true,
-            'data' => $inventory,
-            'groupes' => $groupes,
+            'data' => $purchase,
         ], 200);
     } // End Method
 
 
 
-    // Insert Inventory Purchase
+    // Insert Item/Product Purchase
     public function Insert(Request $req){
         // Validation Part Start
         $req->validate([
@@ -74,106 +80,125 @@ class InventoryPurchaseController extends Controller
         }
         // Validation Part End
 
-        // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Mains_Temp::on('mysql_second')->where('tran_type', $req->type)->where('tran_method', $req->method)->latest('tran_id')->first();
-        $id = ($transaction) ? 'IPP' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'IPP000000001';
+        $prefixes = [
+            '5' => ['Purchase' => 'IIP'],
+            '6' => ['Purchase' => 'PIP'],
+        ];
 
-        DB::transaction(function () use ($req, $id) {
-            Transaction_Mains_Temp::on('mysql_second')->insert([
-                "tran_id" => $id,
-                "tran_type" => $req->type,
-                "tran_method" => $req->method,
-                "tran_type_with" => $req->withs,
-                "tran_user" => $req->user,
-                "bill_amount" => $req->amountRP,
-                "discount" => $req->discount,
-                "net_amount" => $req->netAmount,
-                "payment" => $req->advance,
-                "due" => $req->balance,
-                "store_id" => $req->store,
-            ]);
+        if ($req->type && isset($prefixes[$req->type])) {
+            $prefix = $prefixes[$req->type][$req->method] ?? null;
+            if ($prefix) {
+                $transaction = Transaction_Mains_Temp::on('mysql_second')
+                ->where('tran_type', $req->type)
+                ->where('tran_method', $req->method)
+                ->latest('tran_id')
+                ->first();
+    
+                $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
 
-            $billDiscount = $req->discount;
-            $billAmount = $req->amountRP;
-            $billNet = $req->netAmount;
-            $billAdvance = $req->advance;
-            $products = json_decode($req->products, true);
-            foreach($products as $product){
-                $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
-                // Calculate Profit
-                $totalMrp = $product['quantity'] * $product['mrp'];
-                $totalCp = $product['quantity'] * $product['cp'];
-                // Calculate Discount 
-                $discount = round( ($billDiscount * $totalCp) / $billAmount);
-
-                $amount = $totalCp - $discount;
-                $advance = round( ($billAdvance * $amount) / $billNet );
-                $due = $amount - $advance;
-                $p->update([
-                    "cp" => $product['cp'],
-                    "mrp" => $product['mrp'],
-                    "expiry_date" => $product['expiry'],
-                    "updated_at" => now()
-                ]);
-
-                Transaction_Details_Temp::on('mysql_second')->insert([
-                    "tran_id" => $id,
-                    "tran_type" => $req->type,
-                    "tran_method" => $req->method,
-                    "tran_type_with" => $req->withs,
-                    "tran_user" => $req->user,
-                    "tran_groupe_id" => $product['groupe'],
-                    "tran_head_id" => $product['product'],
-                    "amount" => $product['cp'],
-                    "quantity_actual" => $product['quantity'],
-                    "quantity" => $product['quantity'],
-                    "unit_id" => $product['unit'],
-                    "tot_amount" => $product['totAmount'],
-                    "discount" => $discount,
-                    "mrp" => $product['mrp'],
-                    "cp" => $product['cp'],
-                    "payment" => $advance,
-                    "due" => $due,
-                    "expiry_date" => $product['expiry'] == null ? null : $product['expiry'],
-                    "store_id" => $req->store,
-                ]);
-
-                $billDiscount -= $discount;
-                $billAmount -= $totalCp;
-                $billAdvance -= $advance;
-                $billNet -= $amount;
-           }
-        });
+                DB::transaction(function () use ($req, $id) {
+                    Transaction_Mains_Temp::on('mysql_second')->insert([
+                        "tran_id" => $id,
+                        "tran_type" => $req->type,
+                        "tran_method" => $req->method,
+                        "tran_type_with" => $req->withs,
+                        "tran_user" => $req->user,
+                        "bill_amount" => $req->amountRP,
+                        "discount" => $req->discount,
+                        "net_amount" => $req->netAmount,
+                        "payment" => $req->advance,
+                        "due" => $req->balance,
+                        "store_id" => $req->store,
+                    ]);
         
+                    $billDiscount = $req->discount;
+                    $billAmount = $req->amountRP;
+                    $billNet = $req->netAmount;
+                    $billAdvance = $req->advance;
+                    $products = json_decode($req->products, true);
+                    foreach($products as $product){
+                        $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
+                        // Calculate Profit
+                        $totalMrp = $product['quantity'] * $product['mrp'];
+                        $totalCp = $product['quantity'] * $product['cp'];
+                        // Calculate Discount 
+                        $discount = round( ($billDiscount * $totalCp) / $billAmount);
+        
+                        $amount = $totalCp - $discount;
+                        $advance = round( ($billAdvance * $amount) / $billNet );
+                        $due = $amount - $advance;
+                        $p->update([
+                            "cp" => $product['cp'],
+                            "mrp" => $product['mrp'],
+                            "expiry_date" => $product['expiry'],
+                            "updated_at" => now()
+                        ]);
+        
+                        Transaction_Details_Temp::on('mysql_second')->insert([
+                            "tran_id" => $id,
+                            "tran_type" => $req->type,
+                            "tran_method" => $req->method,
+                            "tran_type_with" => $req->withs,
+                            "tran_user" => $req->user,
+                            "tran_groupe_id" => $product['groupe'],
+                            "tran_head_id" => $product['product'],
+                            "amount" => $product['cp'],
+                            "quantity_actual" => $product['quantity'],
+                            "quantity" => $product['quantity'],
+                            "unit_id" => $product['unit'],
+                            "tot_amount" => $product['totAmount'],
+                            "discount" => $discount,
+                            "mrp" => $product['mrp'],
+                            "cp" => $product['cp'],
+                            "payment" => $advance,
+                            "due" => $due,
+                            "expiry_date" => $product['expiry'] == null ? null : $product['expiry'],
+                            "store_id" => $req->store,
+                        ]);
+        
+                        $billDiscount -= $discount;
+                        $billAmount -= $totalCp;
+                        $billAdvance -= $advance;
+                        $billNet -= $amount;
+                    }
+                });
+
+                return response()->json([
+                    'status'=> true,
+                    'message' => 'Purchase Details Added Successfully'
+                ], 200); 
+            }
+        }
+
         return response()->json([
-            'status'=> true,
-            'message' => 'Purchase Details Added Successfully'
-        ], 200);  
+            'status'=> false,
+            'message' => 'Something is wrong!'
+        ], 200); 
     } // End Method
 
 
 
-    // Edit Inventory Purchase
+    // Edit Item/Product Purchase
     public function Edit(Request $req){
         if($req->status == 1){
-            $inventory = Transaction_Main::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+            $purchase = Transaction_Main::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
             return response()->json([
                 'status'=> true,
-                'inventory'=> $inventory,
+                'purchase'=> $purchase,
             ], 200);
         }
         else if($req->status == 2){
-            $inventory = Transaction_Mains_Temp::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+            $purchase = Transaction_Mains_Temp::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
             return response()->json([
                 'status'=> true,
-                'inventory'=> $inventory,
+                'purchase'=> $purchase,
             ], 200);
         }
     } // End Method
 
 
 
-    // Update Inventory Purchase
+    // Update Item/Product Purchase
     public function Update(Request $req){
         $req->validate([
             "amountRP"  => 'required|numeric',
@@ -331,7 +356,7 @@ class InventoryPurchaseController extends Controller
 
 
 
-    // Delete Inventory Purchase
+    // Delete Item/Product Purchase
     public function Delete(Request $req){
         if($req->status == 1){
             $details = Transaction_Detail::on('mysql_second')->where("tran_id", $req->id)->get();
@@ -366,11 +391,12 @@ class InventoryPurchaseController extends Controller
 
 
 
-    // Search Inventory Purchase
+    // Search Item/Product Purchase
     public function Search(Request $req){
         if($req->status == 1){
             if($req->searchOption == 1){
-                $inventory = Transaction_Main::on('mysql_second')->with('User')
+                $purchase = Transaction_Main::on('mysql_second')
+                ->with('User')
                 ->where('tran_id', "like", '%'. $req->search .'%')
                 ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
                 ->where('tran_method',$req->method)
@@ -379,7 +405,8 @@ class InventoryPurchaseController extends Controller
                 ->paginate(15);
             }
             else if($req->searchOption == 2){
-                $inventory = Transaction_Main::on('mysql_second')->with('User')
+                $purchase = Transaction_Main::on('mysql_second')
+                ->with('User')
                 ->whereHas('User', function ($query) use ($req) {
                     $query->where('user_name', 'like', '%'.$req->search.'%');
                     $query->orderBy('user_name','asc');
@@ -392,7 +419,8 @@ class InventoryPurchaseController extends Controller
         }
         else if($req->status == 2){
             if($req->searchOption == 1){
-                $inventory = Transaction_Mains_Temp::on('mysql_second')->with('User')
+                $purchase = Transaction_Mains_Temp::on('mysql_second')
+                ->with('User')
                 ->where('tran_id', "like", '%'. $req->search .'%')
                 ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
                 ->where('tran_method',$req->method)
@@ -401,7 +429,8 @@ class InventoryPurchaseController extends Controller
                 ->paginate(15);
             }
             else if($req->searchOption == 2){
-                $inventory = Transaction_Mains_Temp::on('mysql_second')->with('User')
+                $purchase = Transaction_Mains_Temp::on('mysql_second')
+                ->with('User')
                 ->whereHas('User', function ($query) use ($req) {
                     $query->where('user_name', 'like', '%'.$req->search.'%');
                     $query->orderBy('user_name','asc');
@@ -415,85 +444,105 @@ class InventoryPurchaseController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $inventory,
+            'data' => $purchase,
         ], 200);
     } // End Method
 
 
 
-    // Verify Inventory Purchase
+    // Verify Item/Product Purchase
     public function Verify(Request $req){
         $details = Transaction_Details_Temp::on('mysql_second')->where("tran_id", $req->id)->get();
         $mains = Transaction_Mains_Temp::on('mysql_second')->where("tran_id", $req->id)->first();
 
-        // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Main::on('mysql_second')->where('tran_type', $mains->tran_type)->where('tran_method', $mains->tran_method)->latest('tran_id')->first();
-        $id = ($transaction) ? 'IPP' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'IPP000000001';
 
+        $prefixes = [
+            '5' => ['Purchase' => 'IIP'],
+            '6' => ['Purchase' => 'PIP'],
+        ];
 
-        Transaction_Main::on('mysql_second')->insert([
-            "tran_id" => $id,
-            "tran_type" => $mains->tran_type,
-            "tran_method" => $mains->tran_method,
-            "tran_type_with" => $mains->tran_type_with,
-            "tran_user" => $mains->tran_user,
-            "user_name" => $mains->user_name,
-            "user_phone" => $mains->user_phone,
-            "user_address" => $mains->user_address,
-            "bill_amount" => $mains->bill_amount,
-            "discount" => $mains->discount,
-            "net_amount" => $mains->net_amount,
-            "payment" => $mains->payment,
-            "due" => $mains->due,
-            "store_id" => $mains->store_id,
-        ]);
-
+        if ($mains->tran_type && isset($prefixes[$mains->tran_type])) {
+            $prefix = $prefixes[$mains->tran_type][$mains->tran_method] ?? null;
+            if ($prefix) {
+                $transaction = Transaction_Main::on('mysql_second')
+                ->where('tran_type', $mains->tran_type)
+                ->where('tran_method', $mains->tran_method)
+                ->latest('tran_id')
+                ->first();
+                
+    
+                $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
+                
+                Transaction_Main::on('mysql_second')->insert([
+                    "tran_id" => $id,
+                    "tran_type" => $mains->tran_type,
+                    "tran_method" => $mains->tran_method,
+                    "tran_type_with" => $mains->tran_type_with,
+                    "tran_user" => $mains->tran_user,
+                    "user_name" => $mains->user_name,
+                    "user_phone" => $mains->user_phone,
+                    "user_address" => $mains->user_address,
+                    "bill_amount" => $mains->bill_amount,
+                    "discount" => $mains->discount,
+                    "net_amount" => $mains->net_amount,
+                    "payment" => $mains->payment,
+                    "due" => $mains->due,
+                    "store_id" => $mains->store_id,
+                ]);
+        
+                
+                
+                foreach($details as $detail){
+                    $p = Transaction_Head::on('mysql')->findOrFail($detail->tran_head_id);
+                    $quantity = $p->quantity + $detail->quantity;
+                    $p->update([
+                        "quantity" => $quantity, 
+                        "cp" => $detail->cp,
+                        "mrp" => $detail->mrp,
+                        "expiry_date" => $detail->expiry_date,
+                        "updated_at" => now()
+                    ]);
+        
+                    Transaction_Detail::on('mysql_second')->insert([
+                        "tran_id" => $id,
+                        "tran_type" => $detail->tran_type,
+                        "tran_method" => $detail->tran_method,
+                        "tran_type_with" => $detail->tran_type_with,
+                        "tran_user" => $detail->tran_user,
+                        "user_name" => $mains->user_name,
+                        "user_phone" => $mains->user_phone,
+                        "user_address" => $mains->user_address,
+                        "tran_groupe_id" => $detail->tran_groupe_id,
+                        "tran_head_id" => $detail->tran_head_id,
+                        "amount" => $detail->amount,
+                        "quantity_actual" => $detail->quantity,
+                        "quantity" => $detail->quantity,
+                        "unit_id" => $detail->unit_id,
+                        "discount" => $detail->discount,
+                        "tot_amount" => $detail->tot_amount,
+                        "mrp" => $detail->mrp,
+                        "cp" => $detail->cp,
+                        "payment" => $detail->payment,
+                        "due" => $detail->due,
+                        "expiry_date" => $detail->expiry_date == null ? null : $detail->expiry_date,
+                        "store_id" => $detail->store_id,
+                    ]);
+                }
         
         
-        foreach($details as $detail){
-            $p = Transaction_Head::on('mysql')->findOrFail($detail->tran_head_id);
-            $quantity = $p->quantity + $detail->quantity;
-            $p->update([
-                "quantity" => $quantity, 
-                "cp" => $detail->cp,
-                "mrp" => $detail->mrp,
-                "expiry_date" => $detail->expiry_date,
-                "updated_at" => now()
-            ]);
-
-            Transaction_Detail::on('mysql_second')->insert([
-                "tran_id" => $id,
-                "tran_type" => $detail->tran_type,
-                "tran_method" => $detail->tran_method,
-                "tran_type_with" => $detail->tran_type_with,
-                "tran_user" => $detail->tran_user,
-                "user_name" => $mains->user_name,
-                "user_phone" => $mains->user_phone,
-                "user_address" => $mains->user_address,
-                "tran_groupe_id" => $detail->tran_groupe_id,
-                "tran_head_id" => $detail->tran_head_id,
-                "amount" => $detail->amount,
-                "quantity_actual" => $detail->quantity,
-                "quantity" => $detail->quantity,
-                "unit_id" => $detail->unit_id,
-                "discount" => $detail->discount,
-                "tot_amount" => $detail->tot_amount,
-                "mrp" => $detail->mrp,
-                "cp" => $detail->cp,
-                "payment" => $detail->payment,
-                "due" => $detail->due,
-                "expiry_date" => $detail->expiry_date == null ? null : $detail->expiry_date,
-                "store_id" => $detail->store_id,
-            ]);
+                Transaction_Details_Temp::on('mysql_second')->where("tran_id", $req->id)->delete();
+                Transaction_Mains_Temp::on('mysql_second')->where("tran_id", $req->id)->delete();
+        
+                return response()->json([
+                    'status'=> true,
+                    'message' => 'Purchase Verified Successfully',
+                ], 200); 
+            }
         }
-
-
-        Transaction_Details_Temp::on('mysql_second')->where("tran_id", $req->id)->delete();
-        Transaction_Mains_Temp::on('mysql_second')->where("tran_id", $req->id)->delete();
-
+        
         return response()->json([
-            'status'=> true,
-            'message' => 'Purchase Verified Successfully',
+            'status'=> false,
+            'message' => 'Something is wrong!'
         ], 200); 
     } // End Method
 }

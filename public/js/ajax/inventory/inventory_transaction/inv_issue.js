@@ -70,29 +70,8 @@ function ShowInventoryIssues(data, startIndex) {
 
 
 $(document).ready(function () {
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/inventory/transaction/issue`,
-        method: "GET",
-        success: function (res) {
-            let groupein = "";
-            let updategroupein = "";
-
-            // Groupin chedckbox
-            $.each(res.groupes, function(key, groupe) {
-                groupein += `<input type="checkbox" id="groupe[]" name="groupe" class="groupe-checkbox"
-                value="${groupe.id}" checked>`
-            });
-            $('#groupein').html(groupein);
-
-            // Update Groupin chedckbox
-            $.each(res.groupes, function(key, groupe) {
-                updategroupein += `<input type="checkbox" id="groupe[]" name="groupe" class="updategroupe-checkbox"
-                    value="${groupe.id}" checked>`
-            });
-            $('#updategroupein').html(updategroupein);
-        },
-    });
+    // Load Transaction Groupe
+    GetTransactionGroupe(5, "Receive");
 
 
     // Load Data on Hard Reload
@@ -144,23 +123,23 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        getTransactionGrid(res.inventory.tran_id);
-        $('#id').val(res.inventory.id);
+        getTransactionGrid(res.issue.tran_id);
+        $('#id').val(res.issue.id);
         
-        $('#updateTranId').val(res.inventory.tran_id);
-        var timestamps = new Date(res.inventory.tran_date);
+        $('#updateTranId').val(res.issue.tran_id);
+        var timestamps = new Date(res.issue.tran_date);
         var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
         $('#updateDate').val(formattedDate);
-        $('#updateStore').val(res.inventory.store.store_name);
-        $('#updateStore').attr('data-id', res.inventory.store_id);
-        $('#updateUser').attr('data-id',res.inventory.tran_user);
-        $('#updateUser').attr('data-with',res.inventory.tran_type_with);
-        $('#updateUser').val(res.inventory.user.user_name);
-        $('#updateTotalDiscount').val(res.inventory.discount);
-        $('#updateAdvance').val(res.inventory.receive);
-        $('#updateName').val(res.inventory.user_name);
-        $('#updatePhone').val(res.inventory.user_phone);
-        $('#updateAddress').val(res.inventory.user_address);
+        $('#updateStore').val(res.issue.store.store_name);
+        $('#updateStore').attr('data-id', res.issue.store_id);
+        $('#updateUser').attr('data-id',res.issue.tran_user);
+        $('#updateUser').attr('data-with',res.issue.tran_type_with);
+        $('#updateUser').val(res.issue.user.user_name);
+        $('#updateTotalDiscount').val(res.issue.discount);
+        $('#updateAdvance').val(res.issue.receive);
+        $('#updateName').val(res.issue.user_name);
+        $('#updatePhone').val(res.issue.user_phone);
+        $('#updateAddress').val(res.issue.user_address);
         $("#updateProduct").focus();
     }
 

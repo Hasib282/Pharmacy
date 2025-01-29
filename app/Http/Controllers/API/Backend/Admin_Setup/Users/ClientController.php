@@ -48,8 +48,8 @@ class ClientController extends Controller
     // Insert Clients
     public function Insert(Request $req){
         $req->validate([
-            "name" => 'required|exists:mysql_second.transaction__withs,id',
-            "type" => 'required',
+            "name" => 'required',
+            "type" => 'required|exists:mysql_second.transaction__withs,id',
             "phone" => 'required|numeric',
             "email" => 'required|email',
             "gender" => 'required',

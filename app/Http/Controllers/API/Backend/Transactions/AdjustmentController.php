@@ -1,44 +1,38 @@
 <?php
 
-namespace App\Http\Controllers\API\Backend\Pharmacy\Pharmacy_Adjustment;
+namespace App\Http\Controllers\API\Backend\Transactions;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Transaction_Groupe;
 use App\Models\Transaction_Head;
 use App\Models\Transaction_Detail;
 
-class PharmacyAdjustmentController extends Controller
+class AdjustmentController extends Controller
 {
-    // Show All Pharmacy Adjustment
-    public function ShowAllPositive(Request $req){
-        $adjust = Transaction_Detail::on('mysql_second')->where('tran_method','Positive')->where('tran_type','6')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '6')->orderBy('added_at','asc')->get();
+    // Show All Product/Item Adjustment Data
+    public function ShowAll(Request $req){
+        $type = GetTranType($req->segment(2));
+        $method = ucfirst($req->segment(4));
+
+        $adjust = Transaction_Detail::on('mysql_second')
+        ->with('Head','Store')
+        ->where('tran_method', $method)
+        ->where('tran_type', $type)
+        ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
+        ->orderBy('tran_date','asc')
+        ->paginate(15);
+
         return response()->json([
             'status'=> true,
             'data' => $adjust,
-            'groupes' => $groupes,
-        ], 200);
-    } // End Method
-    
-    
-    
-    // Show All Pharmacy Adjustment
-    public function ShowAllNegative(Request $req){
-        $adjust = Transaction_Detail::on('mysql_second')->where('tran_method','Negative')->where('tran_type','6')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '6')->orderBy('added_at','asc')->get();
-        return response()->json([
-            'status'=> true,
-            'data' => $adjust,
-            'groupes' => $groupes,
         ], 200);
     } // End Method
 
 
 
-    // Insert Pharmacy Adjustment
+    // Insert Product/Item Adjustment
     public function Insert(Request $req){
         $req->validate([
             "method" => 'required',
@@ -134,7 +128,7 @@ class PharmacyAdjustmentController extends Controller
 
 
 
-    // Edit Pharmacy Adjustment
+    // Edit Product/Item Adjustment
     public function Edit(Request $req){
         $adjust = Transaction_Detail::on('mysql_second')->with('Store','Head')->findOrFail($req->id);
         return response()->json([
@@ -145,7 +139,7 @@ class PharmacyAdjustmentController extends Controller
 
 
 
-    // Update Pharmacy Adjustment
+    // Update Product/Item Adjustment
     public function Update(Request $req){
         $req->validate([
             "method" => 'required',
@@ -157,7 +151,8 @@ class PharmacyAdjustmentController extends Controller
         ]);
     
         // Find the existing transaction
-        $transaction = Transaction_Detail::on('mysql_second')->where('tran_id', $req->tranId)
+        $transaction = Transaction_Detail::on('mysql_second')
+            ->where('tran_id', $req->tranId)
             ->where('tran_head_id', $req->product)
             ->first();
     
@@ -211,7 +206,7 @@ class PharmacyAdjustmentController extends Controller
 
 
 
-    // Delete Pharmacy Adjustment
+    // Delete Product/Item Adjustment
     public function Delete(Request $req){
         $transaction = Transaction_Detail::on('mysql_second')->findOrFail($req->id);
 
@@ -258,10 +253,12 @@ class PharmacyAdjustmentController extends Controller
 
 
 
-    // Search Pharmacy Adjustment
+    // Search Product/Item Adjustment
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $adjust = Transaction_Detail::on('mysql_second')->where('tran_id', "like", '%'. $req->search .'%')
+            $adjust = Transaction_Detail::on('mysql_second')
+            ->with('Head','Store')
+            ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
             ->where('tran_type', $req->type)
@@ -269,11 +266,14 @@ class PharmacyAdjustmentController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $adjust = Transaction_Detail::on('mysql_second')->with('Head')
-            ->whereHas('Head', function ($query) use ($req) {
-                $query->where('tran_head_name', 'like', '%'.$req->search.'%');
-                $query->orderBy('tran_head_name','asc');
-            })
+            $head = Transaction_Head::on('mysql')
+            ->where('tran_head_name', 'like', '%'.$req->search.'%')
+            ->orderby('tran_head_name')
+            ->pluck('id');
+
+            $adjust = Transaction_Detail::on('mysql_second')
+            ->with('Head','Store')
+            ->whereIn('tran_head_id', $head)
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
             ->where('tran_type', $req->type)

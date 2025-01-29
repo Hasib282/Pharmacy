@@ -36,12 +36,15 @@
             <caption class="caption">{{ $name }} Details</caption>
             <thead>
                 <tr>
-                    <th>SL:</th>
+                    <th style="width:4%;">SL:</th>
                     <th>Transaction Head Name</th>
                     @if (Request::segment(1) != 'hr')
                         <th>Transaction Groupe</th>
                     @endif
-                    <th>Action</th>
+                    @if (UserRole() == 1)
+                        <th style="width:12%;">Company Id</th>
+                    @endif
+                    <th style="width:12%;">Action</th>
                 </tr>
             </thead>
             <tbody></tbody>

@@ -24,9 +24,12 @@
         <caption class="caption">{{ $name }} Details</caption>
         <thead>
             <tr>
-                <th>SL:</th>
+                <th style="width:4%;">SL:</th>
                 <th>{{ $name }} Name</th>
-                <th>Action</th>
+                @if ( UserRole() == 1 && (Request::segment(1) == 'pharmacy' || Request::segment(1) == 'inventory') )
+                    <th style="width:12%;">Company Id</th>
+                @endif
+                <th style="width:12%;">Action</th>
             </tr>
         </thead>
         <tbody></tbody>

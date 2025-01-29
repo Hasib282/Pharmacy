@@ -36,29 +36,8 @@ function ShowBankDeposits(data, startIndex) {
 
 
 $(document).ready(function () {
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/transaction/bank/deposit`,
-        method: "GET",
-        success: function (res) {
-            let groupein = "";
-            let updategroupein = "";
-
-            // Groupin chedckbox
-            $.each(res.groupes, function(key, groupe) {
-                groupein += `<input type="checkbox" id="groupe[]" name="groupe" class="groupe-checkbox"
-                value="${groupe.id}" checked>`
-            });
-            $('#groupein').html(groupein);
-            
-            // Update Groupin chedckbox
-            $.each(res.groupes, function(key, groupe) {
-                updategroupein += `<input type="checkbox" id="groupe[]" name="groupe" class="updategroupe-checkbox"
-                    value="${groupe.id}" checked>`
-            });
-            $('#updategroupein').html(updategroupein);
-        },
-    });
+    // Load Transaction Groupe
+    GetTransactionGroupe(4, "Payment");
 
     // Load Data on Hard Reload
     ReloadData('transaction/bank/deposit', ShowBankDeposits);

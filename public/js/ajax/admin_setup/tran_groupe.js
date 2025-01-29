@@ -9,6 +9,7 @@ function ShowTranGroupe(data, startIndex) {
                     <td>${item.tran_groupe_name}</td>
                     <td>${item.type.type_name}</td>
                     <td>${item.tran_method}</td>
+                    <td>${item.company_id}</td>
                     <td>
                         <div style="display: flex;gap:5px;">
 

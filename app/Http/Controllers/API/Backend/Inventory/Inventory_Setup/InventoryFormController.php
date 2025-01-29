@@ -11,7 +11,7 @@ class InventoryFormController extends Controller
 {
     // Show All Item/Product Form
     public function ShowAll(Request $req){
-        $form = Item_Form::on('mysql')->where('type_id', '5')->orderBy('added_at','asc')->paginate(15);
+        $form = filterByCompany(Item_Form::on('mysql')->where('type_id', '5'))->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
             'data' => $form,
@@ -85,10 +85,13 @@ class InventoryFormController extends Controller
 
     // Search Item/Product Form
     public function Search(Request $req){
-        $form = Item_Form::on('mysql')->where('type_id', '5')
-        ->where('form_name', 'like', '%'.$req->search.'%')
-        ->orderBy('form_name','asc')
-        ->paginate(15);
+        $form = filterByCompany(
+                    Item_Form::on('mysql')
+                    ->where('type_id', '5')
+                    ->where('form_name', 'like', '%'.$req->search.'%')
+                )
+                ->orderBy('form_name','asc')
+                ->paginate(15);
         
         return response()->json([
             'status' => true,
@@ -100,11 +103,14 @@ class InventoryFormController extends Controller
 
     // Get Item/Product Form
     public function Get(Request $req){
-        $forms = Item_Form::on('mysql')->where('type_id', '5')
-        ->where('form_name', 'like', '%'.$req->form.'%')
-        ->orderBy('form_name','asc')
-        ->take(10)
-        ->get();
+        $forms = filterByCompany(
+                    Item_Form::on('mysql')
+                    ->where('type_id', '5')
+                    ->where('form_name', 'like', '%'.$req->form.'%')
+                )
+                ->orderBy('form_name','asc')
+                ->take(10)
+                ->get();
 
 
         if($forms->count() > 0){

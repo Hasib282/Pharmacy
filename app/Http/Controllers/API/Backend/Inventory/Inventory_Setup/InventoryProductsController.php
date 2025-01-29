@@ -28,18 +28,19 @@ class InventoryProductsController extends Controller
         // ) as x"),'h.id', '=', 'x.tran_head_id')
         // ->update(['h.quantity' => DB::raw('x.balance')]);
 
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '5')->orderBy('added_at','asc')->get();
-        $heads = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
-        ->whereHas('Groupe', function ($query){
-            $query->where('tran_groupe_type', 5);
-        })
-        ->orderBy('added_at','asc')
-        ->paginate(15);
+        $heads = filterByCompany(
+                    Transaction_Head::on('mysql')
+                    ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
+                    ->whereHas('Groupe', function ($query){
+                        $query->where('tran_groupe_type', 5);
+                    })
+                )
+                ->orderBy('added_at','asc')
+                ->paginate(15);
 
         return response()->json([
             'status'=> true,
             'data' => $heads,
-            'groupes' => $groupes,
         ], 200);
     } // End Method
 
@@ -140,7 +141,7 @@ class InventoryProductsController extends Controller
 
     // Search Item/Product
     public function Search(Request $req){
-        $query = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->whereHas('Groupe', function ($q) {$q->where('tran_groupe_type', 5);} ); // Base query
+        $query = filterByCompany(Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->whereHas('Groupe', function ($q) {$q->where('tran_groupe_type', 5);} )); // Base query
 
         if($req->searchOption == 1){
             $query->where('tran_head_name', 'like', '%'.$req->search.'%')
@@ -213,12 +214,15 @@ class InventoryProductsController extends Controller
         // ) as x"),'h.id', '=', 'x.tran_head_id')
         // ->update(['h.quantity' => DB::raw('x.balance')]);
 
-        $heads = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category")
-        ->where('tran_head_name', 'like', $req->product.'%')
-        ->whereIn('groupe_id', $req->groupe)
-        ->orderBy('tran_head_name','asc')
-        ->take(10)
-        ->get();
+        $heads = filterByCompany(
+                    Transaction_Head::on('mysql')
+                    ->with("Unit","Form","Manufecturer","Category")
+                    ->where('tran_head_name', 'like', $req->product.'%')
+                    ->whereIn('groupe_id', $req->groupe)
+                )
+                ->orderBy('tran_head_name','asc')
+                ->take(10)
+                ->get();
 
         if($heads->count() > 0){
             $list = "";
@@ -247,12 +251,15 @@ class InventoryProductsController extends Controller
 
     // Get Inventory Product List
     public function GetProductList(Request $req){
-        $heads = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category")
-        ->where('tran_head_name', 'like', $req->product.'%')
-        ->whereIn('groupe_id', $req->groupe)
-        ->orderBy('tran_head_name','asc')
-        ->take(10)
-        ->get();
+        $heads = filterByCompany(
+                    Transaction_Head::on('mysql')
+                    ->with("Unit","Form","Manufecturer","Category")
+                    ->where('tran_head_name', 'like', $req->product.'%')
+                    ->whereIn('groupe_id', $req->groupe)
+                )
+                ->orderBy('tran_head_name','asc')
+                ->take(10)
+                ->get();
 
         if($heads->count() > 0){
             $list = "";

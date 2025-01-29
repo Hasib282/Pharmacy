@@ -1,14 +1,63 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\Login_User;
 use App\Models\User_Info;
 
 
+// --------------------------------------- Get Transaction Type Data -------------------------------- //
+// This Helper Function is for Getting Transaction Type Data 
+if (!function_exists('GetTranType')) {
+    function GetTranType($type) {
+        $segments = [
+            'transaction' => 1,
+            'hr' => 3,
+            'inventory' => 5,
+            'pharmacy' => 6,
+        ];
+
+        return $segments[$type] ?? null;
+    }
+}
 
 
 
 
+
+// --------------------------------------- Get Auth User Data -------------------------------- //
+// This Helper Function is for Getting Login User Data 
+if (!function_exists('UserData')) {
+    function UserData() {
+        return Auth::user();
+    }
+}
+
+// This Helper Function is for Getting Login User Role 
+if (!function_exists('UserRole')) {
+    function UserRole() {
+        return Auth::user()->user_role;
+    }
+}
+
+// This Helper Function is for Getting Login User Company
+if (!function_exists('UserCompany')) {
+    function UserCompany() {
+        return Auth::user()->company_id;
+    }
+}
+
+// This Helper Function is for Getting Login User Store 
+if (!function_exists('UserStore')) {
+    function UserStore() {
+        return Auth::user()->store_id;
+    }
+}
+
+
+
+
+// --------------------------------------- Generate User IDs -------------------------------- //
 // This Helper Function is for Creating Custom User Ids 
 if (!function_exists('GenerateUserId')) {
     function GenerateUserId($role, $prefix) {
@@ -29,6 +78,8 @@ if (!function_exists('GenerateLoginUserId')) {
 
 
 
+
+// --------------------------------------- Store Images -------------------------------- //
 // This Helper Function is for Creating and Storing Image Name
 if (!function_exists('StoreUserImage')) {
     function StoreUserImage($req, $id) {

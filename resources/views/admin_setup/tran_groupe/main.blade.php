@@ -65,7 +65,7 @@
             <caption class="caption">{{ $name }} Details</caption>
             <thead>
                 <tr>
-                    <th>SL:</th>
+                    <th style="width:4%;">SL:</th>
                     <th>{{ $name }} Name</th>
                     @if (Request::segment(1) == 'admin')
                         <th>{{ $name }} Type</th>
@@ -73,7 +73,10 @@
                     @elseif (Request::segment(1) == 'transaction')
                         <th>Transaction Method</th>
                     @endif
-                    <th>Action</th>
+                    @if (UserRole() == 1)
+                        <th style="width:12%;">Company Id</th>
+                    @endif
+                    <th style="width:12%;">Action</th>
                 </tr>
             </thead>
             <tbody></tbody>

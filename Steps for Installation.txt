@@ -1,0 +1,10 @@
+////////----------------------Steps for Installation:--------------------------//////////////////////
+
+git clone https://github.com/parvez-git/real-estate.git
+cd real-estate
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan storage:link
+php artisan serve

@@ -1,5 +1,5 @@
 // Get Transaction With
-function GetTransactionWith(type, method, targetElement, user = null, AdditionalEvent=null) {
+function GetTransactionWith(type, method, targetElement, user = null, AdditionalEvent= null) {
     $.ajax({
         url: `${apiUrl}/admin/tranwith/get`,
         method: 'GET',
@@ -14,6 +14,42 @@ function GetTransactionWith(type, method, targetElement, user = null, Additional
                     $.each(res.tranwith, function (key, withs) {
                         $(targetElement).append(`<input type="checkbox" id="with[]" class="with-checkbox" name="with" value="${withs.id}" checked>`);
                     });
+                }
+            }
+        }
+    });
+}
+
+
+
+// Get Transaction Groupe Select Options
+function GetTransactionGroupe(type = null, method = null, AdditionalEvent = null) {
+    $.ajax({
+        url: `${apiUrl}/admin/trangroupes/get`,
+        method: 'GET',
+        data: { type, method },
+        success: function (res) {
+            if (res.status) {
+                if(AdditionalEvent == 'Ok'){
+                    CreateSelectOptions('#groupe', 'Select Transaction Groupe', res.groupes, null, 'tran_groupe_name')
+                }
+                else{
+                    let groupein = "";
+                    let updategroupein = "";
+
+                    // Groupin chedckbox
+                    $.each(res.groupes, function(key, groupe) {
+                        groupein += `<input type="checkbox" id="groupe[]" name="groupe" class="groupe-checkbox" value="${groupe.id}" checked>`
+                    });
+                    $('#groupein').html(groupein);
+
+
+                    // Update Groupin chedckbox
+                    $.each(res.groupes, function(key, groupe) {
+                        updategroupein += `<input type="checkbox" id="groupe[]" name="groupe" class="updategroupe-checkbox"
+                            value="${groupe.id}" checked>`
+                    });
+                    $('#updategroupein').html(updategroupein);
                 }
             }
         }

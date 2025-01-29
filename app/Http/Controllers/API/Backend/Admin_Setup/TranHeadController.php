@@ -13,34 +13,23 @@ class TranHeadController extends Controller
 {
     // Show All Transaction Heads
     public function ShowAll(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'hr' => 3,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
+        $type = GetTranType($req->segment(2));
 
-        $type = $segments[$req->segment(2)] ?? null;
-
-        if($type != null){
-            $heads = Transaction_Head::on('mysql')
-            ->with('Groupe')
-            ->whereHas('Groupe', function ($query) use ($req, $type) {
-                $query->whereIn('tran_groupe_type', [$type]);
-            })
-            ->orderBy('added_at')
-            ->paginate(15);
-            $groupes = Transaction_Groupe::on('mysql')->whereIn('tran_groupe_type', [$type])->orderBy('added_at')->get();
-        }
-        else{
-            $heads = Transaction_Head::on('mysql')->with('Groupe')->orderBy('added_at')->paginate(15);
-            $groupes = Transaction_Groupe::on('mysql')->orderBy('added_at')->get();
-        }
+        $heads = filterByCompany(
+                    Transaction_Head::on('mysql')
+                    ->with('Groupe')
+                    ->when($type, function ($query) use ($type) { // when $type is not null
+                        $query->whereHas('Groupe', function ($q) use ($type) {
+                            $q->where('tran_groupe_type', $type);
+                        });
+                    })
+                )
+                ->orderBy('added_at')
+                ->paginate(15);
         
         return response()->json([
             'status'=> true,
             'data' => $heads,
-            'groupes' => $groupes,
         ], 200);
     } // End Method
 
@@ -133,37 +122,35 @@ class TranHeadController extends Controller
 
     // Search Transaction Heads
     public function Search(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'hr' => 3,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
+        $type = GetTranType($req->segment(2));
 
-        $type = $segments[$req->segment(2)] ?? null;
+        $heads = Transaction_Head::on('mysql')
+        ->with('Groupe')
+        ->when($type, function ($query) use ($type) { // when $type is not null
+            $query->whereHas('Groupe', function ($q) use ($type) {
+                $q->where('tran_groupe_type', $type);
+            });
+        });
 
         if($req->searchOption == 1){
-            $heads = Transaction_Head::on('mysql')
-            ->with('Groupe')
-            ->whereHas('Groupe', function ($query) use ($req, $type) {
-                $query->whereIn('tran_groupe_type', [$type]);
-            })
+            $heads = filterByCompany($heads)
             ->where('tran_head_name', 'like', $req->search.'%')
             ->orderBy('tran_head_name')
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $heads = Transaction_Head::on('mysql')
-            ->with('Groupe')
-            ->whereHas('Groupe', function ($query) use ($req, $type) {
-                
-            })
-            ->whereHas('Groupe', function ($query) use ($req, $type) {
-                $query->whereIn('tran_groupe_type', [$type]);
-                $query->where('tran_groupe_name', 'like', $req->search . '%');
-                $query->orderBy('tran_groupe_name');
+            $heads = filterByCompany($heads)
+            ->whereHas('Groupe', function ($q) use ($req, $type) {
+                $q->where('tran_groupe_name', 'like', $req->search . '%');
+                $q->orderBy('tran_groupe_name');
             })
             ->paginate(15);
+        }
+        else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Wrong Search Option Selected',
+            ], 200);
         }
         
         return response()->json([

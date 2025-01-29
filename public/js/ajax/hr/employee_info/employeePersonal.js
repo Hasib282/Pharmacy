@@ -50,14 +50,8 @@ function ShowEmployeePersonalDetails(data, startIndex) {
 
 
 $(document).ready(function () {
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/hr/employee/personal`,
-        method: "GET",
-        success: function (res) {
-            CreateSelectOptions('#type', 'Select Employee Type', res.tranwith, null, 'tran_with_name');
-        },
-    });
+    // Get Transaction With / User Type 
+    GetTransactionWith(3, '', '#type', 3, 'Ok');
 
 
     // Load Data on Hard Reload

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Backend\Admin_Setup;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 use App\Models\Transaction_Groupe;
@@ -13,28 +14,18 @@ class TranGroupController extends Controller
 {
     // Show All Transaction Group
     public function ShowAll(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'hr' => 3,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
+        $type = GetTranType($req->segment(2));
 
-        $type = $segments[$req->segment(2)] ?? null;
-
-        if($type != null){
-            $groupes = Transaction_Groupe::on('mysql')
-            ->with('Type')
-            ->whereIn('tran_groupe_type', [$type])
-            ->orderBy('added_at')
-            ->paginate(15);
-        }
-        else{
-            $groupes = Transaction_Groupe::on('mysql')
-            ->with('Type')
-            ->orderBy('added_at')
-            ->paginate(15);
-        }
+        
+        $groupes = filterByCompany(
+                    Transaction_Groupe::on('mysql')
+                    ->with('Type')
+                    ->when($type, function ($query) use ($type) { // when $type is not null
+                        $query->where('tran_groupe_type', $type);
+                    })
+                )
+                ->orderBy('added_at')
+                ->paginate(15);
         
         $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
@@ -122,13 +113,15 @@ class TranGroupController extends Controller
 
     // Search Transaction Group
     public function Search(Request $req){
-        $groupes = Transaction_Groupe::on('mysql')
-        ->with('Type')
-        ->where('tran_groupe_name', 'like', $req->search.'%')
-        ->where('tran_groupe_type', 'like', '%'.$req->type.'%')
-        ->where('tran_method', 'like', '%'.$req->method.'%')
-        ->orderBy('tran_groupe_name')
-        ->paginate(15);
+        $groupes = filterByCompany(
+                    Transaction_Groupe::on('mysql')
+                    ->with('Type')
+                    ->where('tran_groupe_name', 'like', $req->search.'%')
+                    ->where('tran_groupe_type', 'like', '%'.$req->type.'%')
+                    ->where('tran_method', 'like', '%'.$req->method.'%')
+                )
+                ->orderBy('tran_groupe_name')
+                ->paginate(15);
         
         return response()->json([
             'status' => true,
@@ -138,33 +131,22 @@ class TranGroupController extends Controller
 
 
 
-    // Get Transaction Groupes
-    public function Get(Request $req){
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_name', 'like', $req->groupe.'%')
-        ->orderBy('tran_groupe_name')
-        ->take(10)
-        ->get();
-
-
-        if($groupes->count() > 0){
-            $list = "";
-            foreach($groupes as $index => $groupe) {
-                $list .= '<li tabindex="'.($index + 1).'" data-id="'.$groupe->id.'">'.$groupe->tran_groupe_name.'</li>';
-            }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
-        return $list;
-    } // End Method
-
-
-
     // Get Transaction Groupes By Type
-    public function GetByType(Request $req){
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', 'like', '%'.$req->type.'%')
-        ->orderBy('tran_groupe_type')
-        ->get();
+    public function Get(Request $req){
+        $type = $req->type;
+        $method = $req->method;
+
+        $groupes = filterByCompany(
+                    Transaction_Groupe::on('mysql')
+                    ->when($type, function ($query) use ($type) { // when $type is not null
+                        $query->where('tran_groupe_type', $type);
+                    })
+                    ->when($method, function ($query) use ($method) { // when $method is not null
+                        $query->whereIn('tran_method',[$method,'Both']);
+                    })
+                )
+                ->orderBy('tran_groupe_name')
+                ->get();
 
         return response()->json([
             'status' => "success",

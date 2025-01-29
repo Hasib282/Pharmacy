@@ -34,16 +34,16 @@ class AuthController extends Controller
             $host = $req->getHost();
             $subdomain = explode('.', $host)[0];
             
-            if (Auth::user()->user_role != 1) {
-                $userDomain = Auth::user()->company->domain;
-                if($subdomain != $userDomain){
-                    Auth::logout();
-                    return response()->json([
-                        'status' => false,
-                        'domain' => $userDomain,
-                    ], 401);
-                }
-            }
+            // if (Auth::user()->user_role != 1) {
+            //     $userDomain = Auth::user()->company->domain;
+            //     if($subdomain != $userDomain){
+            //         Auth::logout();
+            //         return response()->json([
+            //             'status' => false,
+            //             'domain' => $userDomain,
+            //         ], 401);
+            //     }
+            // }
             
             // Remember me funtionality
             $remember_time = time() + (180 * 24 * 60 * 60); // 6 Month

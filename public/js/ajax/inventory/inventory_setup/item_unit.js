@@ -7,6 +7,7 @@ function ShowInventoryUnits(data, startIndex) {
                 <tr>
                     <td>${startIndex + key + 1}</td>
                     <td>${item.unit_name}</td>
+                    ${role == 1 ? `<td>${item.company_id }</td>`: ''}
                     <td>
                         <div style="display: flex;gap:5px;">
                             <button class="open-modal" data-modal-id="editModal" id="edit"
