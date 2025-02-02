@@ -116,126 +116,187 @@ class IssueController extends Controller
                     $billAmount = $req->amountRP;
                     $billNet = $req->netAmount;
                     $billAdvance = $req->advance;
+
                     $products = json_decode($req->products, true);
-                    foreach($products as $product){
-                        $purchase = Transaction_Detail::on('mysql_second')->where('tran_head_id', $product['product'])
-                        ->where('quantity', '>', 0)
-                        ->whereIn('tran_method', ["Purchase","Positive"])
-                        ->orderBy('tran_date', 'asc')
-                        ->get();
-        
-                        $quantity = $product['quantity'];
-                        foreach($purchase as $index => $pro) {
-                            if($quantity != 0){
-                                if($pro->quantity <= $quantity){
-                                    $issue =  $pro->quantity_issue + $pro->quantity ;
-                                    // Calculate Profit
-                                    $totalMrp = $pro->quantity * $product['mrp'];
-                                    $totalCp = $pro->quantity * $pro->cp;
-                                    // Calculate Discount 
-                                    $discount = round( ($billDiscount * $totalMrp) / $billAmount);
-                                    
-                                    $amount = $totalMrp - $discount;
-                                    $advance = round( ($billAdvance * $amount) / $billNet );
-                                    $due = $amount - $advance;
-        
-                                    Transaction_Detail::on('mysql_second')->findOrFail($pro->id)->update([
-                                        "quantity_issue" => $issue,
-                                        "quantity" => 0,
-                                        "updated_at" => now()
-                                    ]);
-        
-        
-                                    Transaction_Detail::on('mysql_second')->insert([
-                                        "tran_id" => $id,
-                                        "store_id" => $req->store,
-                                        "tran_type" => $req->type,
-                                        "tran_method" => $req->method,
-                                        "tran_groupe_id" => $product['groupe'],
-                                        "tran_head_id" => $product['product'],
-                                        "tran_type_with" => $req->with,
-                                        "tran_user" => $req->user,
-                                        "user_name" => $req->name,
-                                        "user_phone" => $req->phone,
-                                        "user_address" => $req->address,
-                                        "amount" => $product['mrp'],
-                                        "mrp" => $product['mrp'],
-                                        "cp" => $pro->cp,
-                                        "quantity_actual" => $pro->quantity,
-                                        "quantity" => $pro->quantity,
-                                        "unit_id" => $pro->unit_id,
-                                        "tot_amount" => $totalMrp,
-                                        "receive" => $advance,
-                                        "due" => $due,
-                                        "discount" => $discount,
-                                        "expiry_date" => $pro->expiry_date,
-                                        "batch_id" => $pro->tran_id,
-                                    ]);
-        
-                                    $quantity = $quantity - $pro->quantity;
-                                    $billDiscount -= $discount;
-                                    $billAmount -= $totalMrp;
-                                    $billAdvance -= $advance;
-                                    $billNet -= $amount;
-                                }
-                                else if($pro->quantity > $quantity){
-                                    $issue =  $pro->quantity_issue + $quantity ;
-                                    $dueQuantity = $pro->quantity - $quantity;
-                                    // Calculate Profit
-                                    $totalMrp = $quantity * $product['mrp'];
-                                    $totalCp = $quantity * $pro->cp;
-                                    // Calculate Discount
-                                    $discount = round( ($billDiscount * $totalMrp) / $billAmount);
-                                    
-                                    $amount = $totalMrp - $discount;
-                                    $advance = round( ($billAdvance * $amount) / $billNet );
-                                    $due = $amount - $advance;
-        
-                                    Transaction_Detail::on('mysql_second')->findOrFail($pro->id)->update([
-                                        "quantity_issue" => $issue,
-                                        "quantity" => $dueQuantity,
-                                        "updated_at" => now()
-                                    ]);
-        
-                                    Transaction_Detail::on('mysql_second')->insert([
-                                        "tran_id" => $id,
-                                        "store_id" => $req->store,
-                                        "tran_type" => $req->type,
-                                        "tran_method" => $req->method,
-                                        "tran_groupe_id" => $product['groupe'],
-                                        "tran_head_id" => $product['product'],
-                                        "tran_type_with" => $req->withs,
-                                        "tran_user" => $req->user,
-                                        "user_name" => $req->name,
-                                        "user_phone" => $req->phone,
-                                        "user_address" => $req->address,
-                                        "amount" => $product['mrp'],
-                                        "mrp" => $product['mrp'],
-                                        "cp" => $pro->cp,
-                                        "quantity_actual" => $quantity,
-                                        "quantity" => $quantity,
-                                        "unit_id" => $pro->unit_id,
-                                        "tot_amount" => $totalMrp,
-                                        "discount" => $discount,
-                                        "receive" => $advance,
-                                        "due" => $due,
-                                        "expiry_date" => $pro->expiry_date,
-                                        "batch_id" => $pro->tran_id,
-                                    ]);
-                                    $quantity = 0;
-                                    $billDiscount -= $discount;
-                                    $billAmount -= $totalMrp;
-                                    $billAdvance -= $advance;
-                                    $billNet -= $amount;
+                    foreach($products as $product) {
+                        if(isset($item['batch'])){ // If Batch Id is Selected
+                            
+                            $purchase = Transaction_Detail::on('mysql_second')
+                            ->where('tran_head_id', $product['product'])
+                            ->where('tran_id', $product['batch'])
+                            ->first();
+                            
+                            $quantity = $product['quantity'];
+
+                            $issue =  $purchase->quantity_issue + $quantity ;
+                            $dueQuantity = $purchase->quantity - $quantity;
+                            // Calculate Profit
+                            $totalMrp = $quantity * $product['mrp'];
+                            $totalCp = $quantity * $purchase->cp;
+                            // Calculate Discount
+                            $discount = round( ($billDiscount * $totalMrp) / $billAmount);
+                            
+                            $amount = $totalMrp - $discount;
+                            $advance = round( ($billAdvance * $amount) / $billNet );
+                            $due = $amount - $advance;
+
+                            Transaction_Detail::on('mysql_second')->findOrFail($purchase->id)->update([
+                                "quantity_issue" => $issue,
+                                "quantity" => $dueQuantity,
+                                "updated_at" => now()
+                            ]);
+
+                            Transaction_Detail::on('mysql_second')->insert([
+                                "tran_id" => $id,
+                                "store_id" => $req->store,
+                                "tran_type" => $req->type,
+                                "tran_method" => $req->method,
+                                "tran_groupe_id" => $product['groupe'],
+                                "tran_head_id" => $product['product'],
+                                "tran_type_with" => $req->withs,
+                                "tran_user" => $req->user,
+                                "user_name" => $req->name,
+                                "user_phone" => $req->phone,
+                                "user_address" => $req->address,
+                                "amount" => $product['mrp'],
+                                "mrp" => $product['mrp'],
+                                "cp" => $purchase->cp,
+                                "quantity_actual" => $quantity,
+                                "quantity" => $quantity,
+                                "unit_id" => $purchase->unit_id,
+                                "tot_amount" => $totalMrp,
+                                "discount" => $discount,
+                                "receive" => $advance,
+                                "due" => $due,
+                                "expiry_date" => $purchase->expiry_date,
+                                "batch_id" => $purchase->tran_id,
+                            ]);
+                            $quantity = 0;
+                            $billDiscount -= $discount;
+                            $billAmount -= $totalMrp;
+                            $billAdvance -= $advance;
+                            $billNet -= $amount;
+                        }
+                        else{ // If The batch id is not selected than continue with FIFO System
+                            $purchase = Transaction_Detail::on('mysql_second')->where('tran_head_id', $product['product'])
+                            ->where('quantity', '>', 0)
+                            ->whereIn('tran_method', ["Purchase","Positive"])
+                            ->orderBy('tran_date', 'asc')
+                            ->get();
+            
+                            $quantity = $product['quantity'];
+                            foreach($purchase as $index => $pro) {
+                                if($quantity != 0){
+                                    if($pro->quantity <= $quantity){
+                                        $issue =  $pro->quantity_issue + $pro->quantity ;
+                                        // Calculate Profit
+                                        $totalMrp = $pro->quantity * $product['mrp'];
+                                        $totalCp = $pro->quantity * $pro->cp;
+                                        // Calculate Discount 
+                                        $discount = round( ($billDiscount * $totalMrp) / $billAmount);
+                                        
+                                        $amount = $totalMrp - $discount;
+                                        $advance = round( ($billAdvance * $amount) / $billNet );
+                                        $due = $amount - $advance;
+            
+                                        Transaction_Detail::on('mysql_second')->findOrFail($pro->id)->update([
+                                            "quantity_issue" => $issue,
+                                            "quantity" => 0,
+                                            "updated_at" => now()
+                                        ]);
+            
+            
+                                        Transaction_Detail::on('mysql_second')->insert([
+                                            "tran_id" => $id,
+                                            "store_id" => $req->store,
+                                            "tran_type" => $req->type,
+                                            "tran_method" => $req->method,
+                                            "tran_groupe_id" => $product['groupe'],
+                                            "tran_head_id" => $product['product'],
+                                            "tran_type_with" => $req->with,
+                                            "tran_user" => $req->user,
+                                            "user_name" => $req->name,
+                                            "user_phone" => $req->phone,
+                                            "user_address" => $req->address,
+                                            "amount" => $product['mrp'],
+                                            "mrp" => $product['mrp'],
+                                            "cp" => $pro->cp,
+                                            "quantity_actual" => $pro->quantity,
+                                            "quantity" => $pro->quantity,
+                                            "unit_id" => $pro->unit_id,
+                                            "tot_amount" => $totalMrp,
+                                            "receive" => $advance,
+                                            "due" => $due,
+                                            "discount" => $discount,
+                                            "expiry_date" => $pro->expiry_date,
+                                            "batch_id" => $pro->tran_id,
+                                        ]);
+            
+                                        $quantity = $quantity - $pro->quantity;
+                                        $billDiscount -= $discount;
+                                        $billAmount -= $totalMrp;
+                                        $billAdvance -= $advance;
+                                        $billNet -= $amount;
+                                    }
+                                    else if($pro->quantity > $quantity){
+                                        $issue =  $pro->quantity_issue + $quantity ;
+                                        $dueQuantity = $pro->quantity - $quantity;
+                                        // Calculate Profit
+                                        $totalMrp = $quantity * $product['mrp'];
+                                        $totalCp = $quantity * $pro->cp;
+                                        // Calculate Discount
+                                        $discount = round( ($billDiscount * $totalMrp) / $billAmount);
+                                        
+                                        $amount = $totalMrp - $discount;
+                                        $advance = round( ($billAdvance * $amount) / $billNet );
+                                        $due = $amount - $advance;
+            
+                                        Transaction_Detail::on('mysql_second')->findOrFail($pro->id)->update([
+                                            "quantity_issue" => $issue,
+                                            "quantity" => $dueQuantity,
+                                            "updated_at" => now()
+                                        ]);
+            
+                                        Transaction_Detail::on('mysql_second')->insert([
+                                            "tran_id" => $id,
+                                            "store_id" => $req->store,
+                                            "tran_type" => $req->type,
+                                            "tran_method" => $req->method,
+                                            "tran_groupe_id" => $product['groupe'],
+                                            "tran_head_id" => $product['product'],
+                                            "tran_type_with" => $req->withs,
+                                            "tran_user" => $req->user,
+                                            "user_name" => $req->name,
+                                            "user_phone" => $req->phone,
+                                            "user_address" => $req->address,
+                                            "amount" => $product['mrp'],
+                                            "mrp" => $product['mrp'],
+                                            "cp" => $pro->cp,
+                                            "quantity_actual" => $quantity,
+                                            "quantity" => $quantity,
+                                            "unit_id" => $pro->unit_id,
+                                            "tot_amount" => $totalMrp,
+                                            "discount" => $discount,
+                                            "receive" => $advance,
+                                            "due" => $due,
+                                            "expiry_date" => $pro->expiry_date,
+                                            "batch_id" => $pro->tran_id,
+                                        ]);
+                                        $quantity = 0;
+                                        $billDiscount -= $discount;
+                                        $billAmount -= $totalMrp;
+                                        $billAdvance -= $advance;
+                                        $billNet -= $amount;
+                                    }
                                 }
                             }
+            
+                            $heads = Transaction_Head::on('mysql')->where('id',$product['product'])->first();
+                            $remain_quantity = $heads->quantity - $product['quantity'];
+                            Transaction_Head::on('mysql')->findOrFail($product['product'])->update([
+                                "quantity" => $remain_quantity
+                            ]);
                         }
-        
-                        $heads = Transaction_Head::on('mysql')->where('id',$product['product'])->first();
-                        $remain_quantity = $heads->quantity - $product['quantity'];
-                        Transaction_Head::on('mysql')->findOrFail($product['product'])->update([
-                            "quantity" => $remain_quantity
-                        ]);
                     }
                 });
                 

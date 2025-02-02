@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 use App\Models\Transaction_Groupe;
 use App\Models\Transaction_Detail;
@@ -533,12 +534,49 @@ class GeneralTransactionController extends Controller
 
 
 
+    // Get Product Batch Id
+    public function GetProductBatch(Request $req){  
+        $batches = Transaction_Detail::on('mysql_second')->select('tran_id','tran_date','quantity')
+        ->where('tran_id', 'like', '%'.$req->batch.'%')
+        // ->where('tran_type', $req->type)
+        ->where('tran_head_id', $req->product)
+        ->where('tran_method', "Purchase")
+        ->where('quantity', '>', 0)
+        ->orderBy('tran_id','asc')
+        ->groupby('tran_id','tran_date','quantity')
+        ->take(10)
+        ->get();
+
+        if($batches->count() > 0){
+            $list = "";
+            foreach($batches as $index => $batch) {
+                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$batch->tran_id.'">'.$batch->tran_id. " | Qty: " . $batch->quantity .  " | " . Carbon::parse($batch->tran_date)->format('Y-m-d'). '</li>';
+            }
+        }
+        else{
+            $list = '<li>No Data Found</li>';
+        }
+        return $list;
+    } // End Method
+
+
+
     // Get Product Stock 
     public function GetProductStock(Request $req){
-        $purchase = Transaction_Detail::on('mysql_second')->where('tran_head_id', $req->product)
+        if($req->batch){
+            $purchase = Transaction_Detail::on('mysql_second')->where('tran_head_id', $req->product)
+            ->where('quantity', '>', 0)
+            // ->whereIn('tran_method', ["Purchase","Positive"])
+            ->where('tran_id', $req->batch)
+            ->get();
+        }
+        else{
+            $purchase = Transaction_Detail::on('mysql_second')->where('tran_head_id', $req->product)
             ->where('quantity', '>', 0)
             ->whereIn('tran_method', ["Purchase","Positive"])
             ->get();
+        }
+        
 
         $totQuantity = 0;
         foreach($purchase as $index => $pro) {

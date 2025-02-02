@@ -70,12 +70,24 @@
                                 <span class="error" id="update_address_error"></span>
                             </div>
                         </div>
-                        <div class="c-12">
+                        <div class="c-6">
                             <div class="form-input-group">
                                 <label for="updateProduct">Product Name</label>
                                 <input type="text" name="product" id="updateProduct" class="form-input"
                                     autocomplete="off">
                                 <span class="error" id="update_product_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="updatePbatch">Batch</label>
+                                <input type="text" name="pbatch" class="form-input" id="updatPbatch" autocomplete="off">
+                                <div id="update-pbatch">
+                                    <ul>
+
+                                    </ul>
+                                </div>
+                                <span class="error" id="update_pbatch_error"></span>
                             </div>
                         </div>
                         <div class="c-4">

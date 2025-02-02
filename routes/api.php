@@ -479,6 +479,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/get/user', 'GetUser')->withoutMiddleware(CheckPermission::class);
             Route::get('/get/transactiongrid', 'GetTransactionGrid')->withoutMiddleware(CheckPermission::class);
             Route::get('/get/batch', 'GetBatch')->withoutMiddleware(CheckPermission::class);
+            Route::get('/get/productbatch', 'GetProductBatch')->withoutMiddleware(CheckPermission::class);
             Route::get('/get/batch/details', 'GetBatchDetails')->withoutMiddleware(CheckPermission::class);
             Route::get('/get/product/stock', 'GetProductStock')->withoutMiddleware(CheckPermission::class);
         }); // End GeneralTransactionController  

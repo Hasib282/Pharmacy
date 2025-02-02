@@ -48,6 +48,13 @@ ol, ul, p {
     width: 100%;
 }
 
+.cols{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
 .c-1{
     flex: 0 0 auto;
     width: 8.333%;

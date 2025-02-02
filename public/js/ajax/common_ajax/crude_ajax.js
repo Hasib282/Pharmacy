@@ -284,7 +284,8 @@ function getTransactionGrid(tranId) {
                         cp: transaction.cp,
                         mrp: transaction.mrp,
                         totAmount: transaction.total_amount,
-                        expiry: transaction.expiry_date
+                        expiry: transaction.expiry_date,
+                        batch: transaction.batch,
                     };
                     
                     // Add the new productGrids to the list
@@ -364,6 +365,7 @@ function validateFormData(isEdit = false, issue = false) {
     let isValid = true;
     let errors = {};
 
+    let batch = $(isEdit ? '#updatePbatch' : '#pbatch').attr('data-id');
     let head = $(isEdit ? '#updateHead' : '#head').attr('data-id');
     let product = $(isEdit ? '#updateProduct' : '#product').attr('data-id');
     let quantity = $(isEdit ? '#updateQuantity' : '#quantity').val();
@@ -389,7 +391,7 @@ function validateFormData(isEdit = false, issue = false) {
         $.ajax({
             url: `${apiUrl}/transaction/get/product/stock`,
             method: 'GET',
-            data: { product, quantity },
+            data: { product, quantity, batch },
             async: false,
             success: function (res) {
                 if(res.result){
@@ -488,7 +490,16 @@ function InsertLocalStorage(isIssue = false) {
         let cp = isUpdate ? $('#updateCp').val() : $('#cp').val();
         let expiry = isUpdate ? $('#updateExpiry').val() : $('#expiry').val();
         let amount = isUpdate ? $('#updateAmount').val() : $('#amount').val();
+        let batch = isUpdate ? $('#updatePbatch').attr('data-id') : $('#pbatch').attr('data-id');
         
+        const path = window.location.pathname;
+        const pathSegments = path.split("/");
+        
+        if (batch === undefined && pathSegments[3] === "issue") {
+            if (!confirm('Batch ID is not selected. Do you want to proceed?')) {
+                return;
+            }
+        }
 
 
         let productIssue = {
@@ -502,8 +513,13 @@ function InsertLocalStorage(isIssue = false) {
             unit,
             cp,
             expiry,
-            amount
+            amount,
+            batch,
         };
+
+        // console.log(batch);
+        
+        
 
         // Retrieve existing productIssue from local storage
         let productIssues = JSON.parse(localStorage.getItem('transactionData')) || [];
@@ -536,6 +552,9 @@ function InsertLocalStorage(isIssue = false) {
         isUpdate ? $('#updateAmount').val('') : $('#amount').val('');
         let currentDate = new Date().toISOString().split('T')[0];
         isUpdate ? $('#updateExpiry').val(currentDate) : $('#expiry').val(currentDate);
+
+        isUpdate ? $('#updatePbatch').val('') : $('#pbatch').val('') ;
+        isUpdate ? $('#updatePbatch').removeAttr('data-id') : $('#pbatch').removeAttr('data-id');
     }); // End Method
 } // End Function
 

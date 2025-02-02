@@ -12,7 +12,7 @@ function GetTransactionWith(type, method, targetElement, user = null, Additional
                 else{
                     $(targetElement).html('');
                     $.each(res.tranwith, function (key, withs) {
-                        $(targetElement).append(`<input type="checkbox" id="with[]" class="with-checkbox" name="with" value="${withs.id}" checked>`);
+                        $(targetElement).append(`<input type="checkbox" class="with-checkbox" name="with" value="${withs.id}" checked>`);
                     });
                 }
             }
@@ -39,14 +39,14 @@ function GetTransactionGroupe(type = null, method = null, AdditionalEvent = null
 
                     // Groupin chedckbox
                     $.each(res.groupes, function(key, groupe) {
-                        groupein += `<input type="checkbox" id="groupe[]" name="groupe" class="groupe-checkbox" value="${groupe.id}" checked>`
+                        groupein += `<input type="checkbox" name="groupe" class="groupe-checkbox" value="${groupe.id}" checked>`
                     });
                     $('#groupein').html(groupein);
 
 
                     // Update Groupin chedckbox
                     $.each(res.groupes, function(key, groupe) {
-                        updategroupein += `<input type="checkbox" id="groupe[]" name="groupe" class="updategroupe-checkbox"
+                        updategroupein += `<input type="checkbox" name="groupe" class="updategroupe-checkbox"
                             value="${groupe.id}" checked>`
                     });
                     $('#updategroupein').html(updategroupein);

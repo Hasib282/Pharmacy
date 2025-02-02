@@ -67,11 +67,23 @@
                                 <span class="error" id="address_error"></span>
                             </div>
                         </div>
-                        <div class="c-12">
+                        <div class="c-6">
                             <div class="form-input-group">
                                 <label for="product">Product Name</label>
                                 <input type="text" name="product" id="product" class="form-input" autocomplete="off">
                                 <span class="error" id="product_error"></span>
+                            </div>
+                        </div>
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="pbatch">Batch</label>
+                                <input type="text" name="pbatch" class="form-input" id="pbatch" autocomplete="off">
+                                <div id="pbatch-list">
+                                    <ul>
+
+                                    </ul>
+                                </div>
+                                <span class="error" id="pbatch_error"></span>
                             </div>
                         </div>
                         <div class="c-4">
