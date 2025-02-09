@@ -117,10 +117,10 @@ class InventorySetupController extends Controller
         $name = "Inventory Product";
         $js = 'inventory/inventory_setup/inventory_product';
         if ($req->ajax()) {
-            return view('products.ajaxBlade', compact('name', 'js'));
+            return view('admin_setup.products.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('products.main', compact('name', 'js'));
+            return view('admin_setup.products.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -130,6 +130,6 @@ class InventorySetupController extends Controller
     public function SearchInventoryProduct(Request $req){
         $name = "Inventory Product";
         $js = 'inventory/inventory_setup/inventory_product';
-        return view('products.main', compact('name', 'js'));
+        return view('admin_setup.products.main', compact('name', 'js'));
     } // End Method
 }

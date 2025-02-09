@@ -15,13 +15,13 @@ function ShowPharmacySupplierReturnSummarys(data, startIndex) {
                     <td>${startIndex + key + 1}</td>
                     <td>${item.tran_id}</td>
                     <td>${item.user.user_name}</td>
-                    <td style="text-align: right">${item.bill_amount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">${item.discount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">${item.net_amount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">${item.receive.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">${item.due_col.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">${item.due_disc.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">${item.due.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+                    <td style="text-align: right">${item.bill_amount ? item.bill_amount.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
+                    <td style="text-align: right">${item.discount ? item.discount.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
+                    <td style="text-align: right">${item.net_amount ? item.net_amount.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
+                    <td style="text-align: right">${item.receive ? item.receive.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
+                    <td style="text-align: right">${item.due_col ? item.due_col.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
+                    <td style="text-align: right">${item.due_disc ? item.due_disc.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
+                    <td style="text-align: right">${item.due ? item.due.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
                     <td>${new Date(item.tran_date).toLocaleDateString('en-CA')}</td>    
                 </tr>
             `;
@@ -40,13 +40,13 @@ function ShowPharmacySupplierReturnSummarys(data, startIndex) {
         $('.load-data .show-table tfoot').html(`
             <tr>
                 <td colspan="3">Total:</td>
-                <td style="text-align: right">${totalBillAmount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalNetAmount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalAdvance.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalDueCol.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalDueDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalDue.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+                <td style="text-align: right">${totalBillAmount ? totalBillAmount.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
+                <td style="text-align: right">${totalDiscount ? totalDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
+                <td style="text-align: right">${totalNetAmount ? totalNetAmount.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
+                <td style="text-align: right">${totalAdvance ? totalAdvance.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
+                <td style="text-align: right">${totalDueCol ? totalDueCol.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
+                <td style="text-align: right">${totalDueDiscount ? totalDueDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
+                <td style="text-align: right">${totalDue ? totalDue.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
                 <td></td>    
             </tr>`
         );

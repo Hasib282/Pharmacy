@@ -119,8 +119,7 @@ class IssueController extends Controller
 
                     $products = json_decode($req->products, true);
                     foreach($products as $product) {
-                        if(isset($item['batch'])){ // If Batch Id is Selected
-                            
+                        if(isset($product['batch'])){ // If Batch Id is Selected
                             $purchase = Transaction_Detail::on('mysql_second')
                             ->where('tran_head_id', $product['product'])
                             ->where('tran_id', $product['batch'])

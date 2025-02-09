@@ -40,10 +40,10 @@ class UsersController extends Controller
         $name = "Admin";
         $js = "admin";
         if ($req->ajax()) {
-            return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
+            return view('users.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.users.main', compact('name', 'js'));
+            return view('users.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -53,7 +53,7 @@ class UsersController extends Controller
     public function SearchAdmins(Request $request){
         $name = "Admin";
         $js = "admin";
-        return view('admin_setup.users.main', compact('name', 'js'));
+        return view('users.main', compact('name', 'js'));
     } // End Method
 
 
@@ -66,10 +66,10 @@ class UsersController extends Controller
         $name = "Super Admin";
         $js = "super_admin";
         if ($req->ajax()) {
-            return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
+            return view('users.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.users.main', compact('name', 'js'));
+            return view('users.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -79,7 +79,7 @@ class UsersController extends Controller
     public function SearchSuperAdmins(Request $request){
         $name = "Super Admin";
         $js = "super_admin";
-        return view('admin_setup.users.main', compact('name', 'js'));
+        return view('users.main', compact('name', 'js'));
     } // End Method
 
 
@@ -92,10 +92,10 @@ class UsersController extends Controller
         $name = "Client";
         $js = "client";
         if ($req->ajax()) {
-            return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
+            return view('users.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.users.main', compact('name', 'js'));
+            return view('users.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -104,7 +104,7 @@ class UsersController extends Controller
     public function SearchClients(Request $request){
         $name = "Client";
         $js = "client";
-        return view('admin_setup.users.main', compact('name', 'js'));
+        return view('users.main', compact('name', 'js'));
     } // End Method
 
 
@@ -117,10 +117,10 @@ class UsersController extends Controller
         $name = "Supplier";
         $js = "supplier";
         if ($req->ajax()) {
-            return view('admin_setup.users.ajaxBlade', compact('name', 'js'));
+            return view('users.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.users.main', compact('name', 'js'));
+            return view('users.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -130,6 +130,6 @@ class UsersController extends Controller
     public function SearchSuppliers(Request $request){
         $name = "Supplier";
         $js = "supplier";
-        return view('admin_setup.users.main', compact('name', 'js'));
+        return view('users.main', compact('name', 'js'));
     } // End Method
 }

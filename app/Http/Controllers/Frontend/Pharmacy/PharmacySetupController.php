@@ -117,10 +117,10 @@ class PharmacySetupController extends Controller
         $name = "Pharmacy Product";
         $js = 'pharmacy/pharmacy_setup/pharmacy_product';
         if ($req->ajax()) {
-            return view('products.ajaxBlade', compact('name', 'js'));
+            return view('admin_setup.products.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('products.main', compact('name', 'js'));
+            return view('admin_setup.products.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -130,6 +130,6 @@ class PharmacySetupController extends Controller
     public function SearchPharmacyProduct(Request $req){
         $name = "Pharmacy Product";
         $js = 'pharmacy/pharmacy_setup/pharmacy_product';
-        return view('products.main', compact('name', 'js'));
+        return view('admin_setup.products.main', compact('name', 'js'));
     } // End Method
 }

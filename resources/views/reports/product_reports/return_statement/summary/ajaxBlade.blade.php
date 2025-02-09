@@ -53,6 +53,7 @@
                 <th>Due Col</th>
                 <th>Due Discount</th>
                 <th>Due</th>
+                <th>Date</th>
             </tr>
         </thead>
         <tbody></tbody>
