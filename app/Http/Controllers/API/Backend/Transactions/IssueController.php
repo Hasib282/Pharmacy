@@ -175,6 +175,12 @@ class IssueController extends Controller
                             $billAmount -= $totalMrp;
                             $billAdvance -= $advance;
                             $billNet -= $amount;
+
+                            $heads = Transaction_Head::on('mysql')->where('id',$product['product'])->first();
+                            $remain_quantity = $heads->quantity - $product['quantity'];
+                            Transaction_Head::on('mysql')->findOrFail($product['product'])->update([
+                                "quantity" => $remain_quantity
+                            ]);
                         }
                         else{ // If The batch id is not selected than continue with FIFO System
                             $purchase = Transaction_Detail::on('mysql_second')->where('tran_head_id', $product['product'])
