@@ -117,7 +117,11 @@ class LocationController extends Controller
 
     // Get Location By Upazila
     public function Get(Request $req){
-        $locations = Location_Info::on('mysql')->where('upazila', 'like', '%'.$req->location.'%')
+        $locations = Location_Info::on('mysql')
+        ->where('upazila', 'like', '%'.$req->location.'%')
+        ->when($req->division != 'undefined', function ($query) use ($req) {
+            $query->where('division', $req->division);
+        })
         ->orderBy('upazila')
         ->take(10)
         ->get();
@@ -130,30 +134,12 @@ class LocationController extends Controller
             }
         }
         else{
-            $list = '<li>No Data Found</li>';
-        }
-        return $list;
-    } // End Method
-
-
-    
-    // Get Location By Division
-    public function GetLocationByDivision(Request $req){
-        $locations = Location_Info::on('mysql')->where('upazila', 'like', '%'.$req->location.'%')
-        ->where('division', '=', $req->division)
-        ->orderBy('upazila')
-        ->take(10)
-        ->get();
-
-
-        if($locations->count() > 0){
-            $list = "";
-            foreach($locations as $index => $location) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$location->id.'">'.$location->upazila.'</li>';
+            if($req->division != 'undefined'){
+                $list = '<li>Select Division First</li>';
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
+            else{
+                $list = '<li>No Data Found</li>';
+            }
         }
         return $list;
     } // End Method

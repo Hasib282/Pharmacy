@@ -499,7 +499,8 @@ class GeneralTransactionController extends Controller
 
     // Get Batch Details
     public function GetBatchDetails(Request $req){  
-        $batches = Transaction_Detail::on('mysql_second')->with('Head')
+        $batches = Transaction_Detail::on('mysql_second')
+        ->with('Head')
         ->where('tran_id', $req->batch)
         ->orderBy('tran_id','asc')
         ->get();
@@ -536,7 +537,8 @@ class GeneralTransactionController extends Controller
 
     // Get Product Batch Id
     public function GetProductBatch(Request $req){  
-        $batches = Transaction_Detail::on('mysql_second')->select('tran_id','tran_date','quantity')
+        $batches = Transaction_Detail::on('mysql_second')
+        ->select('tran_id','tran_date','quantity')
         ->where('tran_id', 'like', '%'.$req->batch.'%')
         // ->where('tran_type', $req->type)
         ->where('tran_head_id', $req->product)
@@ -554,7 +556,12 @@ class GeneralTransactionController extends Controller
             }
         }
         else{
-            $list = '<li>No Data Found</li>';
+            if ($req->product) {
+                $list = '<li>No Data Found</li>';
+            }
+            else{
+                $list = '<li>Select Product First</li>';
+            }
         }
         return $list;
     } // End Method

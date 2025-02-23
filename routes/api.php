@@ -311,7 +311,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::delete('/locations', 'Delete')->middleware(SuperAdminAccess::class);
             Route::get('/locations/search', 'Search');
             Route::get('/locations/get', 'Get')->withoutMiddleware(CheckPermission::class);
-            Route::get('/locations/get/division', 'GetLocationByDivision')->withoutMiddleware(CheckPermission::class);
         });
         
 

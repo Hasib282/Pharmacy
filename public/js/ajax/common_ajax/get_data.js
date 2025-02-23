@@ -1,3 +1,16 @@
+// Get Input List Data 
+function GetInputList(link, data = {}, targetList) {
+    $.ajax({
+        url: `${apiUrl}/${link}`,
+        data: data,
+        success: function (res) {
+            $(targetList).html(res);
+        }
+    });
+}
+
+
+
 // Get Transaction With
 function GetTransactionWith(type, method, targetElement, user = null, AdditionalEvent= null) {
     $.ajax({

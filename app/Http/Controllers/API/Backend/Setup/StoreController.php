@@ -133,7 +133,8 @@ class StoreController extends Controller
 
     // Get Store By Name
     public function Get(Request $req){
-        $stores = Store::on('mysql_second')->where('store_name', 'like', $req->store.'%')
+        $stores = Store::on('mysql_second')
+        ->where('store_name', 'like', $req->store.'%')
         ->orderBy('store_name')
         ->take(10)
         ->get();

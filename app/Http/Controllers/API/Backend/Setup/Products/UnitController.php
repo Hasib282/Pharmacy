@@ -106,6 +106,7 @@ class UnitController extends Controller
 
     // Get Unit
     public function Get(Request $req){
+        $type = GetTranType($req->segment(2));
         $units = filterByCompany(
                     Item_Unit::on('mysql')
                     ->where('type_id', $type)

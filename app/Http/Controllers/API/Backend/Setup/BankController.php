@@ -154,8 +154,9 @@ class BankController extends Controller
 
     // Get Banks
     public function Get(Request $req){
-        $banks = Bank::on('mysql')->select('name','user_id')
-        ->where('name', 'like', '%'.$req->bank.'%')
+        $banks = Bank::on('mysql')
+        ->select('name','user_id')
+        ->where('name', 'like', $req->bank.'%')
         ->orderBy('name')
         ->take(10)
         ->get();

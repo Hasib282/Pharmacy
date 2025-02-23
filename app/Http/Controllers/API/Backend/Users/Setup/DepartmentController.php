@@ -99,7 +99,8 @@ class DepartmentController extends Controller
 
     // Get Departments
     public function Get(Request $req){
-        $departments = Department::on('mysql_second')->where('name', 'like', '%'.$req->department.'%')
+        $departments = Department::on('mysql_second')
+        ->where('name', 'like', $req->department.'%')
         ->orderBy('name','asc')
         ->take(10)
         ->get();

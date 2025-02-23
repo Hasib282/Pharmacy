@@ -120,26 +120,28 @@ class DesignationController extends Controller
 
     // Get Designation By Department
     public function Get(Request $req){
-        if($req->department != ""){
-            $designations = Designation::on('mysql_second')->where('designation', 'like', '%'.$req->designation.'%')
-            ->where('dept_id', $req->department)
-            ->orderBy('designation','asc')
-            ->take(10)
-            ->get();
+        $designations = Designation::on('mysql_second')
+        ->where('designation', 'like', $req->designation.'%')
+        ->where('dept_id', $req->department)
+        ->orderBy('designation','asc')
+        ->take(10)
+        ->get();
 
-            if($designations->count() > 0){
-                $list = "";
-                foreach($designations as $index => $designation) {
-                    $list .= '<li tabindex="'. ($index + 1) .'" data-id="'.$designation->id.'">'.$designation->designation.'</li>';
-                }
+        if($designations->count() > 0){
+            $list = "";
+            foreach($designations as $index => $designation) {
+                $list .= '<li tabindex="'. ($index + 1) .'" data-id="'.$designation->id.'">'.$designation->designation.'</li>';
             }
-            else{
-                $list = '<li>No Data Found</li>';
-            }
-            return $list;
         }
         else{
-            return $list = "";
+            if($req->department != ""){
+                $list = '<li>No Data Found</li>';
+            }
+            else{
+                $list = '<li>Select Department First</li>';
+            }
         }
+        return $list;
+        
     } // End Method
 }
