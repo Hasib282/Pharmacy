@@ -118,3 +118,38 @@ function getDueListByUserId(id, grid) {
         }
     });
 }
+
+
+
+
+//Get Payroll By User Id
+function getPayrollByUserId(id, grid) {
+    let tableRows = '';
+    $.ajax({
+        url: `${apiUrl}/hr/payroll/get`,
+        method: 'GET',
+        data: { id },
+        success: function (res) {
+            if(res.status){
+                $.each(res.data, function(key, item) {
+                    tableRows += `
+                    <tr>
+                        <td>${key+1}</td>
+                        <td>${item.head.tran_head_name}</td>
+                        <td>${item.amount}</td>
+                        ${
+                            item.date ? `
+                            <td>${String(new Date(item.date).getMonth() + 1).padStart(2, '0')}</td>
+                            <td>${new Date(item.date).getFullYear()}</td>`
+                            :
+                            `<td></td>
+                            <td></td>`
+                        }
+                    </tr>`
+                });
+
+                $(grid).html(tableRows);
+            }
+        }
+    });
+}

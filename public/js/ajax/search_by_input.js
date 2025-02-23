@@ -1,10 +1,13 @@
+let timeoutId = null;
 // Search By Input Function For Searching in Input
-function SearchByInput(link, getData, targetInput, targetList, tableData = undefined, targetTable="") {
+function SearchByInput(link, getData, targetInput, targetList, tableData = undefined, targetTable="", AdditionalEvent = undefined) {
+    let keyDownProcessed = false;
     // Keydown Event
     $(document).off('keydown', targetInput).on('keydown', targetInput, function (e) {
+        keyDownProcessed = true;
         setTimeout(() => {
             let data = getData($(this));
-            KeyDown(e, link, data, targetList, targetInput);
+            KeyDown(e, link, data, targetList, targetInput, AdditionalEvent);
             $(targetTable).html('');
         }, 0);
     });
@@ -13,7 +16,13 @@ function SearchByInput(link, getData, targetInput, targetList, tableData = undef
 
     // List Keypup Event
     $(document).off('keyup', `${targetList} li`).on('keyup', `${targetList} li`, function (e) {
-        ListKeyUp(e, targetList, targetInput);
+        // Skip the list keyup event if input keydown was processed
+        if (keyDownProcessed) {
+            keyDownProcessed = false; // Reset the flag
+            return;
+        }
+
+        ListKeyUp(e, targetList, targetInput, AdditionalEvent);
     });
 
 
@@ -27,7 +36,7 @@ function SearchByInput(link, getData, targetInput, targetList, tableData = undef
         }
         else{
             if (typeof tableData === "function") {
-                tableData();
+                tableData(id);
             }
         }
     });
@@ -51,9 +60,16 @@ function SearchByInput(link, getData, targetInput, targetList, tableData = undef
     $(document).off('click', `${targetList} li`).on('click', `${targetList} li`, function () {
         let value = $(this).text();
         let id = $(this).data('id');
+        $(targetInput).focus();
         $(targetInput).val(value);
         $(targetInput).attr('data-id', id);
         $(targetList).html('');
+
+
+        // Additional Events If Needed
+        if (typeof AdditionalEvent === "function") {
+            AdditionalEvent(targetInput, $(this));
+        }
     });
 }
 
@@ -62,7 +78,7 @@ function SearchByInput(link, getData, targetInput, targetList, tableData = undef
 
 
 // Keydown Event Function Start
-function KeyDown(e, link, data, targetList, targetInput){
+function KeyDown(e, link, data, targetList, targetInput, AdditionalEvent){
     let key = e.key;
     let list = $(`${targetList} li`);
     
@@ -74,28 +90,32 @@ function KeyDown(e, link, data, targetList, targetInput){
     }
     else if ((key.length === 1 && key.match(/^[a-zA-Z0-9]$/)) || key === "Backspace" || key === 'Space'){
         $(targetInput).removeAttr('data-id');
-        GetInputList(link, data, targetList);
+
+        
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+
+        // Set a new timeout for the GetInputList call
+        timeoutId = setTimeout(() => {
+            GetInputList(link, data, targetList);
+        }, 800);
     }
     if (list.length > 0) {
-        if (key === 'ArrowDown') { // Down arrow key
-            list.first().focus();
-            $(targetInput).val(list.first().text());
-            $(targetInput).attr("data-id", list.data('id'));
+        if (key === 'ArrowDown') {
+            UpdateInput(list, 0, targetInput, AdditionalEvent);
         } 
-        else if (key === 'ArrowUp') { // Up arrow key
-            list.last().focus();
-            $(targetInput).val(list.last().text());
-            $(targetInput).attr("data-id", list.data('id'));
+        else if (key === 'ArrowUp') {
+            UpdateInput(list, list.length - 1, targetInput, AdditionalEvent);
         }
     }
-    
 } // Keydown Event Function End
 
 
 
 
 // List Keyup Event Function Start
-function ListKeyUp(e, targetList, targetInput) {
+function ListKeyUp(e, targetList, targetInput, AdditionalEvent) {
     let key = e.key;
     let list = $(`${targetList} li`);
     let focused = $(`${targetList} li:focus`);
@@ -103,64 +123,39 @@ function ListKeyUp(e, targetList, targetInput) {
 
     if (key === 'ArrowDown') {
         nextIndex = (focused.index() + 1) % list.length;
-        updateInput(nextIndex);
+        UpdateInput(list, nextIndex, targetInput, AdditionalEvent);
     } 
     else if (key === 'ArrowUp') {
         prevIndex = (focused.index() - 1) % list.length;
-        updateInput(prevIndex);
+        UpdateInput(list, prevIndex, targetInput, AdditionalEvent);
     }
     else if (key === 'Enter') {
         $(targetList).html('');
         $(targetInput).focus();
     }
-
-    function updateInput(index) {
-        let item = list.eq(index);
-        item.focus();
-        $(targetInput).val(item.text());
-        $(targetInput).attr("data-id", item.data('id'));
-    }
-} // List Keyup Event Function End
-
-
-
-
-
-
-
-
-
-//Get Payroll By User Id
-function getPayrollByUserId(id, grid) {
-    let tableRows = '';
-    $.ajax({
-        url: `${apiUrl}/hr/payroll/get`,
-        method: 'GET',
-        data: { id },
-        success: function (res) {
-            if(res.status){
-                $.each(res.data, function(key, item) {
-                    tableRows += `
-                    <tr>
-                        <td>${key+1}</td>
-                        <td>${item.head.tran_head_name}</td>
-                        <td>${item.amount}</td>
-                        ${
-                            item.date ? `
-                            <td>${String(new Date(item.date).getMonth() + 1).padStart(2, '0')}</td>
-                            <td>${new Date(item.date).getFullYear()}</td>`
-                            :
-                            `<td></td>
-                            <td></td>`
-                        }
-                    </tr>`
-                });
-
-                $(grid).html(tableRows);
-            }
-        }
-    });
 }
+
+
+
+// Update The Input Value When Focusing on Lists
+function UpdateInput(list, index, targetInput, AdditionalEvent) {
+    let item = list.eq(index);
+    item.focus();
+    $(targetInput).val(item.text());
+    $(targetInput).attr("data-id", item.data('id'));
+    
+    // Additional Events If Needed
+    if (typeof AdditionalEvent === "function") {
+        AdditionalEvent(targetInput, item);
+    }
+}
+
+
+
+
+
+
+
 
 $(document).ready(function () {
     /////////////// ------------------ Search Company by name and add value to input ajax part start ---------------- /////////////////////////////
@@ -390,7 +385,7 @@ $(document).ready(function () {
     /////////////// ------------------ Search Manufacturer by Name and add value to input ajax part start ---------------- /////////////////////////////
     // Manufacturer Input Search
     SearchByInput(
-        $('#manufacturer').attr('data-url'),  
+        $('#manufacturer').data('url'),  
 
         function ($input) {
             return {
@@ -406,7 +401,7 @@ $(document).ready(function () {
 
     // Update Manufacturer Input Search
     SearchByInput(
-        $('#updateManufacturer').attr('data-url'), 
+        $('#updateManufacturer').data('url'), 
 
         function ($input) {
             return {
@@ -424,7 +419,7 @@ $(document).ready(function () {
     /////////////// ------------------ Search Category by Name and add value to input ajax part start ---------------- /////////////////////////////
     // Category Input Search
     SearchByInput(
-        $('#category').attr('data-url'),  
+        $('#category').data('url'),  
 
         function ($input) {
             return {
@@ -440,7 +435,7 @@ $(document).ready(function () {
 
     // Update Category Input Search
     SearchByInput(
-        $('#updateCategory').attr('data-url'), 
+        $('#updateCategory').data('url'), 
 
         function ($input) {
             return {
@@ -458,7 +453,7 @@ $(document).ready(function () {
     /////////////// ------------------ Search Form by Name and add value to input ajax part start ---------------- /////////////////////////////
     // Form Input Search
     SearchByInput(
-        $('#form').attr('data-url'),  
+        $('#form').data('url'),  
 
         function ($input) {
             return {
@@ -474,7 +469,7 @@ $(document).ready(function () {
 
     // Update Form Input Search
     SearchByInput(
-        $('#updateForm').attr('data-url'), 
+        $('#updateForm').data('url'), 
 
         function ($input) {
             return {
@@ -492,7 +487,7 @@ $(document).ready(function () {
     /////////////// ------------------ Search Unit by Name and add value to input ajax part start ---------------- /////////////////////////////
     // Unit Input Search
     SearchByInput(
-        $('#unit').attr('data-url'),  
+        $('#unit').data('url'),  
 
         function ($input) {
             return {
@@ -508,7 +503,7 @@ $(document).ready(function () {
 
     // Update Unit Input Search
     SearchByInput(
-        $('#updateUnit').attr('data-url'), 
+        $('#updateUnit').data('url'), 
 
         function ($input) {
             return {
@@ -626,660 +621,166 @@ $(document).ready(function () {
     
     
     ////////////// ------------------- Search Transaction User and add value to input ajax part start --------------- ////////////////////////////
-    // // Unit Input Search
-    // SearchByInput(
-    //     $('#unit').attr('data-url'),  
+    // User Input Search
+    SearchByInput(
+        'transaction/get/user',  
 
-    //     function ($input) {
-    //         return {
-    //             unit: $input.val(),
-    //         };
-    //     }, 
-
-    //     '#unit', 
-
-    //     '#unit-list ul'
-    // );
-
-
-    // // Update Unit Input Search
-    // SearchByInput(
-    //     $('#updateUnit').attr('data-url'), 
-
-    //     function ($input) {
-    //         return {
-    //             unit: $input.val(),
-    //         };
-    //     }, 
-
-    //     '#updateUnit', 
-
-    //     '#update-unit ul'
-    // );
-    
-    
-    //search Transaction User on add modal
-    $(document).off('keyup', '#user').on('keyup', '#user', function (e) {
-        let tranUser = $(this).val();
-        let tranUserType;
-        let within;
-        if ($('#within').length) {
-            tranUserType = $('.with-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            within = 1;
-        } else {
-            tranUserType = $('#with').val();
-            within = 0;
-        }
-        let id = $(this).attr('data-id');
-        UserKeyUp(e, tranUserType, within, tranUser, id, '#user', '#user-list ul', '#name', "#phone", "#address");
-        $('.due-grid tbody, .due-grid tfoot').html('');
-    });
-
-
-
-    // User Key Down Event
-    $(document).off('keydown', '#user').on('keydown', '#user', function (e) {
-        let list = $('#user-list ul li');
-        UserKeyDown(e, list, '#user', '#user-list ul', '#name', "#phone", "#address");
-    });
-
-
-
-    // User List key Down Event
-    $(document).off('keydown', '#user-list ul li').on('keydown', '#user-list ul li', function (e) {
-        let list = $('#user-list ul li');
-        let focused = $('#user-list ul li:focus');
-        UserListKeyDown(e, list, focused, '#user', '#user-list ul', '#name', "#phone", "#address");
-    });
-
-
-
-    //add list value in Transaction User input of add modal
-    $(document).off('click', '#user-list li').on('click', '#user-list li', function () {
-        let value = $(this).text();
-        let id = $(this).data('id');
-        let withs = $(this).data('with');
-        let name = $(this).data('name');
-        let phone = $(this).data('phone');
-        let address = $(this).data('address');
-        $('#user').val(value);
-        $('#user').attr('data-id', id);
-        $('#user').attr('data-with', withs);
-        $('#name').val(name);
-        $('#phone').val(phone);
-        $('#address').val(address);
-        $('#user-list ul').html('');
-        getDueListByUserId(id, '.due-grid tbody');
-        getPayrollByUserId(id, '.payroll-grid tbody');
-        // getPayrollSetupByUserId(id, '.setup tbody');
-        // getPayrollMiddlewireByUserId(id, '.middlewire tbody');
-    });
-
-
-
-    // User Focus Event
-    $(document).off('focus', '#user').on('focus', '#user', function (e) {
-        let tranUser = $(this).val();
-        let tranUserType;
-        let within;
-        if ($('#within').length) {
-            tranUserType = $('.with-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            within = 1;
-        } else {
-            tranUserType = $('#with').val();
-            within = 0;
-        }
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            getTransactionUser(tranUserType, within, tranUser, '#user-list ul');
-        }
-        else{
-            e.preventDefault();
-        }
-    });
-
-
-    // User Focousout event
-    $(document).off('focusout', '#user').on('focusout', '#user', function (e) {
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            $(document).on('click', function (e){
-                if($(e.target).attr('tabindex') == undefined){
-                    $('#user-list ul').html('');
-                }
-            });
-        }
-    });
-
-
-
-    //search Transaction User on edit modal
-    $(document).off('keyup', '#updateUser').on('keyup', '#updateUser', function (e) {
-        let tranUser = $(this).val();
-        let tranUserType;
-        let within;
-        if ($('#within').length) {
-            tranUserType = $('.with-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            within = 1;
-        } else {
-            tranUserType = $('#updateWith').val();
-            within = 0;
-        }
-        let id = $(this).attr('data-id');
-        UserKeyUp(e, tranUserType, within, tranUser, id, '#updateUser', '#update-user ul', '#updateName', "#updatePhone", "#updateAddress");
-    });
-
-
-
-    // Update User Key Down Event
-    $(document).off('keydown', '#updateUser').on('keydown', '#updateUser', function (e) {
-        let list = $('#update-user ul li');
-        UserKeyDown(e, list, '#updateUser', '#update-user ul', '#updateName', "#updatePhone", "#updateAddress");
-    });
-
-
-
-    // Update User List key Down Event
-    $(document).off('keydown', '#update-user ul li').on('keydown', '#update-user ul li', function (e) {
-        let list = $('#update-user ul li');
-        let focused = $('#update-user ul li:focus');
-        UserListKeyDown(e, list, focused, '#updateUser', '#update-user ul', '#updateName', "#updatePhone", "#updateAddress");
-    });
-
-
-
-    //add list value in Transaction User input of add modal
-    $(document).off('click', '#update-user li').on('click', '#update-user li', function () {
-        let value = $(this).text();
-        let id = $(this).data('id');
-        let withs = $(this).data('with');
-        let name = $(this).data('name');
-        let phone = $(this).data('phone');
-        let address = $(this).data('address');
-        $('#updateUser').val(value);
-        $('#updateUser').attr('data-id', id);
-        $('#updateUser').attr('data-with', withs);
-        $('#updateName').val(name);
-        $('#updatePhone').val(phone);
-        $('#updateAddress').val(address);
-        $('#update-user ul').html('');
-        getDueListByUserId(id, '.due-grid tbody');
-    });
-
-
-    // User Focus Event
-    $(document).off('focus', '#updateUser').on('focus', '#updateUser', function (e) {
-        let tranUser = $(this).val();
-        let tranUserType;
-        let within;
-        if ($('#within').length) {
-            tranUserType = $('.with-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            within = 1;
-        } else {
-            tranUserType = $('#updateWith').val();
-            within = 0;
-        }
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            getTransactionUser(tranUserType, within, tranUser, '#update-user ul');
-        }
-        else{
-            e.preventDefault();
-        }
-    });
-
-
-    // User Focousout event
-    $(document).off('focusout', '#updateUser').on('focusout', '#updateUser', function (e) {
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            $(document).on('click', function (e){
-                if($(e.target).attr('tabindex') == undefined){
-                    $('#update-user ul').html('');
-                }
-            });
-        }
-    });
-
-
-
-    // User Key Up Event Function
-    function UserKeyUp(e, tranUserType, within, tranUser, id, targetElement1, targetElement2, targetElement3, targetElement4, targetElement5){
-        if (e.keyCode === 13) { // Enter Key
-            e.preventDefault();
-        }
-        else if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 8){
-            //keyCode 65 = a, keyCode 90 = z, keyCode 96 = 0, keyCode 105 = 9, keyCode 8 = backSpace
-            $(targetElement1).removeAttr('data-id');
-            $(targetElement1).removeAttr('data-with');
-            $(targetElement3).val('');
-            $(targetElement4).val('');
-            $(targetElement5).val('');
-            getTransactionUser(tranUserType, within, tranUser, targetElement2);
-        }
-        else if (e.keyCode === 9) { // Tab key
-            if (id != undefined) {
-                e.preventDefault();
+        function ($input) {
+            if ($('#within').length) {
+                tranUserType = $('.with-checkbox:checked').map(function() {
+                    return $(this).val();
+                }).get();
+                within = 1;
+            } else {
+                tranUserType = $('#with').val();
+                within = 0;
             }
-            else{
-                $(targetElement1).removeAttr('data-id');
-                $(targetElement1).removeAttr('data-with');
-                $(targetElement3).val('');
-                $(targetElement4).val('');
-                $(targetElement5).val('');
-                getTransactionUser(tranUserType, within, tranUser, targetElement2);
-            }
-        }
-    }
 
+            return {
+                tranUserType,
+                within,
+                tranUser: $input.val(),
+            };
+        }, 
 
+        '#user', 
 
-    // User Key Down Event Function
-    function UserKeyDown(e, list, targetElement1, targetElement2, targetElement3, targetElement4, targetElement5) {
-        if (list.length > 0) {
-            if (e.keyCode === 40) { // Down arrow key
-                e.preventDefault();
-                list.first().focus();
-                $(targetElement1).val(list.first().text());
-                $(targetElement1).attr("data-id", list.data('id'));
-                $(targetElement1).attr("data-with", list.data('with'));
-                $(targetElement3).val(list.data('name'));
-                $(targetElement4).val(list.data('phone'));
-                $(targetElement5).val(list.data('address'));
-            } 
-            else if (e.keyCode === 38) { // Up arrow key
-                e.preventDefault();
-                list.last().focus();
-                $(targetElement1).val(list.last().text());
-                $(targetElement1).attr("data-id", list.data('id'));
-                $(targetElement1).attr("data-with", list.data('with'));
-                $(targetElement3).val(list.data('name'));
-                $(targetElement4).val(list.data('phone'));
-                $(targetElement5).val(list.data('address'));
-            } 
-            else if (e.keyCode === 13) { // Enter key
-                e.preventDefault();
-            }
-            else if (e.keyCode === 9) { // Tab key
-                $(targetElement2).html('');
-            }
-        }
-    }
-    
+        '#user-list ul',
 
-
-    // User List Key Down Event function
-    function UserListKeyDown(e, list, focused, targetElement1, targetElement2, targetElement3, targetElement4, targetElement5) {
-        if (e.keyCode === 40) { // Down arrow key
-            e.preventDefault();
-            let nextIndex = focused.index() + 1;
-            if (nextIndex >= list.length) {
-                nextIndex = 0; // Loop to the first item
-            }
-            list.eq(nextIndex).focus();
-            $(targetElement1).val(list.eq(nextIndex).text());
-            $(targetElement1).attr("data-id", list.eq(nextIndex).data('id'));
-            $(targetElement1).attr("data-with", list.eq(nextIndex).data('with'));
-            $(targetElement3).val(list.eq(nextIndex).data('name'));
-            $(targetElement4).val(list.eq(nextIndex).data('phone'));
-            $(targetElement5).val(list.eq(nextIndex).data('address'));
-        } 
-        else if (e.keyCode === 38) { // Up arrow key
-            e.preventDefault();
-            let prevIndex = focused.index() - 1;
-            if (prevIndex < 0) {
-                prevIndex = list.length - 1; // Loop to the last item
-            }
-            list.eq(prevIndex).focus();
-            $(targetElement1).val(list.eq(prevIndex).text());
-            $(targetElement1).attr("data-id", list.eq(prevIndex).data('id'));
-            $(targetElement1).attr("data-with", list.eq(nextIndex).data('with'));
-            $(targetElement3).val(list.eq(nextIndex).data('name'));
-            $(targetElement4).val(list.eq(nextIndex).data('phone'));
-            $(targetElement5).val(list.eq(nextIndex).data('address'));
-        } 
-        else if (e.keyCode === 13) { // Enter key
-            e.preventDefault();
-            let id = $(targetElement1).attr('data-id');
+        function (id) {
             getDueListByUserId(id, '.due-grid tbody');
             getPayrollByUserId(id, '.payroll-grid tbody');
-            // getPayrollSetupByUserId(id, '.setup tbody');
-            // getPayrollMiddlewireByUserId(id, '.middlewire tbody');
-            $(targetElement2).html('');
-            $(targetElement1).focus();
+        },
+
+        ".due-grid tbody, .due-grid tfoot, .payroll-grid tbody, .payroll-grid tfoot",
+
+        function (targetInput, item) {
+            $(targetInput).attr("data-with", item.data('with'));
+            $('#name').val(item.data('name'));
+            $('#phone').val(item.data('phone'));
+            $('#address').val(item.data('address'));
         }
-    }
+    );
 
 
+    // Update User Input Search
+    SearchByInput(
+        'transaction/get/user', 
 
-    // Search Transaction User by Name
-    function getTransactionUser(tranUserType, within, tranUser, targetElement1) {
-        $.ajax({
-            url: `${apiUrl}/transaction/get/user`,
-            method: 'GET',
-            data: { tranUserType, within, tranUser },
-            success: function (res) {
-                $(targetElement1).html(res);
+        function ($input) {
+            if ($('#within').length) {
+                tranUserType = $('.with-checkbox:checked').map(function() {
+                    return $(this).val();
+                }).get();
+                within = 1;
+            } else {
+                tranUserType = $('#updateWith').val();
+                within = 0;
             }
-        });
-    }
 
+            return {
+                tranUserType,
+                within,
+                tranUser: $input.val(),
+            };
+        }, 
 
+        '#updateUser', 
 
-    
+        '#update-user ul',
+        
+        function (id) {
+            getDueListByUserId(id, '.due-grid tbody');
+            getPayrollByUserId(id, '.payroll-grid tbody');
+        },
 
+        ".due-grid tbody, .due-grid tfoot, .payroll-grid tbody, .payroll-grid tfoot",
 
-    ////////////// ------------------- Search Transaction user and add value to input ajax part end --------------- ////////////////////////////
-
-
-
-    /////////////// ------------------ Search Heads By Name And Group add value to input ajax part start ---------------- /////////////////////////////
-    // // Unit Input Search
-    // SearchByInput(
-    //     $('#unit').attr('data-url'),  
-
-    //     function ($input) {
-    //         return {
-    //             unit: $input.val(),
-    //         };
-    //     }, 
-
-    //     '#unit', 
-
-    //     '#unit-list ul'
-    // );
-
-
-    // // Update Unit Input Search
-    // SearchByInput(
-    //     $('#updateUnit').attr('data-url'), 
-
-    //     function ($input) {
-    //         return {
-    //             unit: $input.val(),
-    //         };
-    //     }, 
-
-    //     '#updateUnit', 
-
-    //     '#update-unit ul'
-    // );
-    
-    
-    // Head Keyup Event
-    $(document).off('keyup', '#head').on('keyup', '#head', function (e) {
-        let head = $(this).val();
-        let groupe;
-        let groupein;
-        if ($('#groupein').length) {
-            groupe = $('.groupe-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            groupein = 1;
-        } else {
-            groupe = $('#groupe').val();
-            groupein = 0;
+        function (targetInput, item) {
+            $(targetInput).attr("data-with", item.data('with'));
+            $('#updateName').val(item.data('name'));
+            $('#updatePhone').val(item.data('phone'));
+            $('#updateAddress').val(item.data('address'));
         }
-        let id = $(this).attr('data-id');
-        HeadKeyUp(e, groupe, groupein, head, id, '#head', '#head-list ul');
-    });
-
-    // Head Key down Event
-    $(document).off('keydown', '#head').on('keydown', '#head', function (e) {
-        let list = $('#head-list ul li');
-        HeadKeyDown(e, list, '#head', '#head-list ul');
-    });
-
-
-    // Head List Key down Event
-    $(document).off('keydown', '#head-list ul li').on('keydown', '#head-list ul li', function (e) {
-        let list = $('#head-list ul li');
-        let focused = $('#head-list ul li:focus');
-        HeadListKeyDown(e, list, focused, '#head', '#head-list ul');
-    });
-
-
-    // Head Focus Event
-    $(document).off('focus', '#head').on('focus', '#head', function (e) {
-        let head = $(this).val();
-        let groupe;
-        let groupein;
-        if ($('#groupein').length) {
-            groupe = $('.groupe-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            groupein = 1;
-        } else {
-            groupe = $('#groupe').val();
-            groupein = 0;
-        }
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            getHeadByGroupe(groupe, groupein, head,  '#head-list ul');
-        }
-        else{
-            e.preventDefault();
-        }
-    });
-
-
-    // Head Focous out event
-    $(document).off('focusout', '#head').on('focusout', '#head', function (e) {
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            $(document).on('click', function (e){
-                if($(e.target).attr('tabindex') == undefined){
-                    $('#head-list ul').html('');
-                }
-            });
-        }
-    });
-
-
-    // Head List Click Event
-    $(document).off('click', '#head-list li').on('click', '#head-list li', function () {
-        let value = $(this).text();
-        let id = $(this).data('id');
-        let groupe = $(this).data('groupe');
-        $('#head').val(value);
-        $('#head').attr('data-id', id);
-        $('#head').attr('data-groupe', groupe);
-        $('#head-list ul').html('');
-    });
+    );
 
 
 
-    // Update Head Keyup event
-    $(document).off('keyup', '#updateHead').on('keyup', '#updateHead', function (e) {
-        let head = $(this).val();
-        let groupe;
-        let groupein;
-        if ($('#updategroupein').length) {
-            groupe = $('.updategroupe-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            groupein = 1;
-        } else {
-            groupe = $('#updategroupe').val();
-            groupein = 0;
-        }
-        let id = $(this).attr('data-id');
-        HeadKeyUp(e, groupe, groupein, head, id, '#updateHead', '#update-head ul');
-    });
+    /////////////// ------------------ Search Transaction Heads By Name And Group Add value to input ajax part start ---------------- /////////////////////////////
+    // Head Input Search
+    SearchByInput(
+        'admin/tranheads/get',  
 
-
-
-    // Update Head Keydown event
-    $(document).off('keydown', '#updateHead').on('keydown', '#updateHead', function (e) {
-        let list = $('#update-head ul li');
-        HeadKeyDown(e, list, '#updateHead', '#update-head ul');
-    });
-
-
-
-    // Update Head List Keydown event
-    $(document).off('keydown', '#update-head ul li').on('keydown', '#update-head ul li', function (e) {
-        let list = $('#update-head ul li');
-        let focused = $('#update-head ul li:focus');
-        HeadListKeyDown(e, list, focused, '#updateHead', '#update-head ul');
-    });
-
-
-
-    // Update Head Focus Event
-    $(document).off('focus', '#updateHead').on('focus', '#updateHead', function (e) {
-        let head = $(this).val();
-        let groupe;
-        let groupein;
-        if ($('#updategroupein').length) {
-            groupe = $('.updategroupe-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            groupein = 1;
-        } else {
-            groupe = $('#updateGroupe').val();
-            groupein = 0;
-        }
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            getHeadByGroupe(groupe, groupein, head, '#update-head ul');
-        }
-        else{
-            e.preventDefault();
-        }
-    });
-
-
-    
-    // Update Head Focousout event
-    $(document).off('focusout', '#updateHead').on('focusout', '#updateHead', function (e) {
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            $(document).on('click', function (e){
-                if($(e.target).attr('tabindex') == undefined){
-                    $('#update-head ul').html('');
-                }
-            });
-        }
-    });
-
-
-    // Update Head Click Event
-    $(document).off('click', '#update-head li').on('click', '#update-head li', function () {
-        let value = $(this).text();
-        let id = $(this).data('id');
-        let groupe = $(this).data('groupe');
-        $('#updateHead').val(value);
-        $('#updateHead').attr('data-id', id);
-        $('#updateHead').attr('data-groupe', groupe);
-        $('#update-head ul').html('');
-    });
-
-
-
-    // Head Key Up Event Function
-    function HeadKeyUp(e, groupe, groupein, head, id, targetElement1, targetElement2){
-        if (e.keyCode === 13) { // Enter Key
-            e.preventDefault();
-        }
-        else if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 8){
-            //keyCode 65 = a, keyCode 90 = z, keyCode 96 = 0, keyCode 105 = 9, keyCode 8 = backSpace
-            $(targetElement1).removeAttr('data-id');
-            $(targetElement1).removeAttr('data-groupe');
-            getHeadByGroupe(groupe, groupein, head,  targetElement2);
-        }
-        else if (e.keyCode === 9) { // Tab key
-            if (id != undefined) {
-                e.preventDefault();
+        function ($input) {
+            let groupe;
+            let groupein;
+            if ($('#groupein').length) {
+                groupe = $('.groupe-checkbox:checked').map(function() {
+                    return $(this).val()
+                }).get();
+                groupein = 1;
+            } else {
+                groupe = $('#groupe').val();
+                groupein = 0;
             }
-            else{
-                $(targetElement1).removeAttr('data-id');
-                $(targetElement1).removeAttr('data-groupe');
-                getHeadByGroupe(groupe, groupein, head,  targetElement2);
-            }
+            return {
+                groupe,
+                groupein,
+                head: $input.val(),
+            };
+        }, 
+
+        '#head', 
+
+        '#head-list ul',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            $(targetInput).attr("data-groupe", item.data('groupe'));
         }
-    }
+    );
 
 
-    // Head Key Down Event Function
-    function HeadKeyDown(e, list, targetElement1, targetElement2) {
-        if (list.length > 0) {
-            if (e.keyCode === 40) { // Down arrow key
-                e.preventDefault();
-                list.first().focus();
-                $(targetElement1).val(list.first().text());
-                $(targetElement1).attr("data-id", list.data('id'));
-                $(targetElement1).attr("data-groupe", list.data('groupe'));
-            } 
-            else if (e.keyCode === 38) { // Up arrow key
-                e.preventDefault();
-                list.last().focus();
-                $(targetElement1).val(list.last().text());
-                $(targetElement1).attr("data-id", list.data('id'));
-                $(targetElement1).attr("data-groupe", list.data('groupe'));
-            } 
-            else if (e.keyCode === 13) { // Enter key
-                e.preventDefault();
-            } 
-            else if (e.keyCode === 9) { // Tab key
-                $(targetElement2).html('');
+
+    // Update Head Input Search
+    SearchByInput(
+        'admin/tranheads/get', 
+
+        function ($input) {
+            let groupe;
+            let groupein;
+            if ($('#groupein').length) {
+                groupe = $('.groupe-checkbox:checked').map(function() {
+                    return $(this).val()
+                }).get();
+                groupein = 1;
+            } else {
+                groupe = $('#updateGroupe').val();
+                groupein = 0;
             }
+
+            return {
+                groupe,
+                groupein,
+                head: $input.val(),
+            };
+        }, 
+
+        '#updateHead', 
+
+        '#update-head ul',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            $(targetInput).attr("data-groupe", item.data('groupe'));
         }
-    }
-
-
-    // Head List Key Down Event function
-    function HeadListKeyDown(e, list, focused, targetElement1, targetElement2) {
-        if (e.keyCode === 40) { // Down arrow key
-            e.preventDefault();
-            let nextIndex = focused.index() + 1;
-            if (nextIndex >= list.length) {
-                nextIndex = 0; // Loop to the first item
-            }
-            list.eq(nextIndex).focus();
-            $(targetElement1).val(list.eq(nextIndex).text());
-            $(targetElement1).attr("data-id", list.eq(nextIndex).data('id'));
-            $(targetElement1).attr("data-groupe", list.eq(nextIndex).data('groupe'));
-        } 
-        else if (e.keyCode === 38) { // Up arrow key
-            e.preventDefault();
-            let prevIndex = focused.index() - 1;
-            if (prevIndex < 0) {
-                prevIndex = list.length - 1; // Loop to the last item
-            }
-            list.eq(prevIndex).focus();
-            $(targetElement1).val(list.eq(prevIndex).text());
-            $(targetElement1).attr("data-id", list.eq(prevIndex).data('id'));
-            $(targetElement1).attr("data-groupe", list.eq(prevIndex).data('groupe'));
-        } 
-        else if (e.keyCode === 13) { // Enter key
-            e.preventDefault();
-            $(targetElement2).html('');
-            $(targetElement1).focus();
-        }
-    }
-
-    // Search Head by Name
-    function getHeadByGroupe(groupe, groupein, head, targetElement1) {
-        $.ajax({
-            url: `${apiUrl}/admin/tranheads/get`,
-            method: 'GET',
-            data: { groupe, groupein, head },
-            success: function (res) {
-                $(targetElement1).html(res);
-            }
-        });
-    }
-
-    /////////////// ------------------ Search Head By Name And Groupe add value to input ajax part end ---------------- /////////////////////////////
+    );
 
 
 

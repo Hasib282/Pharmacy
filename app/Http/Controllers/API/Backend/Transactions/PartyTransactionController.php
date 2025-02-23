@@ -34,7 +34,7 @@ class PartyTransactionController extends Controller
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '2')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         
         
-        if (!isset($segments[$req->segment(2)])) {
+        if (!isset($type)) {
             return response()->json([
                 'status' => false,
                 'message' => 'You hit the Wrong Url',
@@ -336,14 +336,7 @@ class PartyTransactionController extends Controller
 
     // Search Party Collection
     public function Search(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'hr' => 3,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
-
-        $type = $segments[$req->segment(2)] ?? null;
+        $type = GetTranType($req->segment(2));
         $method = ucfirst($req->segment(4)); // Capitalize the first letter
 
         $data = Transaction_Main::on('mysql_second')
@@ -366,7 +359,7 @@ class PartyTransactionController extends Controller
 
         $transaction = $data->paginate(15);
         
-        if (!isset($segments[$req->segment(2)])) {
+        if (!isset($type)) {
             return response()->json([
                 'status' => false,
                 'message' => 'You hit the Wrong Url',
