@@ -1468,10 +1468,166 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
     /////-----/////-----/////-----/////-----/////-----///// Pharmacy Routes End /////-----/////-----/////-----/////-----/////-----/////
     
+
+
+
+
+    /////-----/////-----/////-----/////-----/////-----///// Hospital Routes Start /////-----/////-----/////-----/////-----/////-----/////
     
+    Route::prefix('/hospital')->group(function () {
+        // *************************************** Hospital Setup Routes Start *************************************** //
+        Route::prefix('/setup')->group(function () {
+            // ///////////// --------------- Pharmacy Purchase Routes ----------- ///////////////////
+            // Route::controller(PurchaseController::class)->group(function () {
+            //     Route::get('/purchase', 'ShowAll');
+            //     Route::post('/purchase', 'Insert');
+            //     Route::get('/purchase/edit', 'Edit');
+            //     Route::put('/purchase', 'Update');
+            //     Route::delete('/purchase', 'Delete');
+            //     Route::get('/purchase/search', 'Search');
+            //     Route::delete('/purchase/verify', 'Verify');
+            // });
+        }); // End Hospital Setup Routes
+        
+        
+        
+        // *************************************** Hospital Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            
+        }); // End Hospital Users Routes
+        
+        
+        
+        // *************************************** Hospital Transaction Routes Start *************************************** //
+        Route::prefix('/transaction')->group(function () {
+            
+        }); // End Hospital Transaction Routes
+        
+        
+        
+        // *************************************** Hospital Paty Payment Routes Start *************************************** //
+        Route::prefix('/party')->group(function () {
+            
+        }); // End Hospital Paty Payment Routes
+        
+        
+        
+        // *************************************** Hospital Report Routes Start *************************************** //
+        Route::prefix('/report')->group(function () {
+            
+        }); // End Hospital Report Routes
+    }); // End Hospital Routes 
+
+    /////-----/////-----/////-----/////-----/////-----///// Hospital Routes Start /////-----/////-----/////-----/////-----/////-----/////
+
+
+
+
+
+    /////-----/////-----/////-----/////-----/////-----///// Hotel Routes Start /////-----/////-----/////-----/////-----/////-----/////
     
+    Route::prefix('/hotel')->group(function () {
+        // *************************************** Hotel Setup Routes Start *************************************** //
+        Route::prefix('/setup')->group(function () {
+            // ///////////// --------------- Pharmacy Purchase Routes ----------- ///////////////////
+            // Route::controller(PurchaseController::class)->group(function () {
+            //     Route::get('/purchase', 'ShowAll');
+            //     Route::post('/purchase', 'Insert');
+            //     Route::get('/purchase/edit', 'Edit');
+            //     Route::put('/purchase', 'Update');
+            //     Route::delete('/purchase', 'Delete');
+            //     Route::get('/purchase/search', 'Search');
+            //     Route::delete('/purchase/verify', 'Verify');
+            // });
+        }); // End Hotel Setup Routes
+        
+        
+        
+        // *************************************** Hotel Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            
+        }); // End Hotel Users Routes
+        
+        
+        
+        // *************************************** Hotel Transaction Routes Start *************************************** //
+        Route::prefix('/transaction')->group(function () {
+            
+        }); // End Hotel Transaction Routes
+        
+        
+        
+        // *************************************** Hotel Paty Payment Routes Start *************************************** //
+        Route::prefix('/party')->group(function () {
+            
+        }); // End Hotel Paty Payment Routes
+        
+        
+        
+        // *************************************** Hotel Report Routes Start *************************************** //
+        Route::prefix('/report')->group(function () {
+            
+        }); // End Hotel Report Routes
+    }); // End Hotel Routes 
+
+    /////-----/////-----/////-----/////-----/////-----///// Hotel Routes Start /////-----/////-----/////-----/////-----/////-----/////
+
+
+
+
+
+    /////-----/////-----/////-----/////-----/////-----///// Restaurant Routes Start /////-----/////-----/////-----/////-----/////-----/////
     
-    
+    Route::prefix('/restaurant')->group(function () {
+        // *************************************** Restaurant Setup Routes Start *************************************** //
+        Route::prefix('/setup')->group(function () {
+            // ///////////// --------------- Pharmacy Purchase Routes ----------- ///////////////////
+            // Route::controller(PurchaseController::class)->group(function () {
+            //     Route::get('/purchase', 'ShowAll');
+            //     Route::post('/purchase', 'Insert');
+            //     Route::get('/purchase/edit', 'Edit');
+            //     Route::put('/purchase', 'Update');
+            //     Route::delete('/purchase', 'Delete');
+            //     Route::get('/purchase/search', 'Search');
+            //     Route::delete('/purchase/verify', 'Verify');
+            // });
+        }); // End Restaurant Setup Routes
+        
+        
+        
+        // *************************************** Restaurant Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            
+        }); // End Restaurant Users Routes
+        
+        
+        
+        // *************************************** Restaurant Transaction Routes Start *************************************** //
+        Route::prefix('/transaction')->group(function () {
+            
+        }); // End Restaurant Transaction Routes
+        
+        
+        
+        // *************************************** Restaurant Paty Payment Routes Start *************************************** //
+        Route::prefix('/party')->group(function () {
+            
+        }); // End Restaurant Paty Payment Routes
+        
+        
+        
+        // *************************************** Restaurant Report Routes Start *************************************** //
+        Route::prefix('/report')->group(function () {
+            
+        }); // End Restaurant Report Routes
+    }); // End Restaurant Routes 
+
+    /////-----/////-----/////-----/////-----/////-----///// Restaurant Routes Start /////-----/////-----/////-----/////-----/////-----/////
+
+
+
+
+
     /////-----/////-----/////-----/////-----/////-----///// Report Routes Start /////-----/////-----/////-----/////-----/////-----/////
     
     Route::prefix('/report')->group(function () {

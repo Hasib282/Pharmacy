@@ -925,6 +925,147 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
 
 
 
+    /////-----/////-----/////-----/////-----/////-----///// Hospital Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    Route::prefix('/hospital')->group(function () {
+        // *************************************** Hospital Setup Routes Start *************************************** //
+        Route::prefix('/setup')->group(function () {
+            // Route::controller(AccountStatementController::class)->group(function () {
+            //     ///////////// --------------- Account Summary Statement Routes ----------- ///////////////////
+            //     Route::get('/summary', 'ShowAccountSummaryStatement')->name('show.accountSummary');
+            //     Route::get('/summary/search', 'SearchAccountSummaryStatement')->name('search.accountSummary');
+            // });
+        }); // End Hospital Setup Routes
+        
+        
+        
+        // *************************************** Hospital Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            
+        }); // End Hospital Users Routes
+        
+        
+        
+        // *************************************** Hospital Transaction Routes Start *************************************** //
+        Route::prefix('/transaction')->group(function () {
+            
+        }); // End Hospital Transaction Routes
+        
+        
+        
+        // *************************************** Hospital Paty Payment Routes Start *************************************** //
+        Route::prefix('/party')->group(function () {
+            
+        }); // End Hospital Paty Payment Routes
+        
+        
+        
+        // *************************************** Hospital Report Routes Start *************************************** //
+        Route::prefix('/report')->group(function () {
+            
+        }); // End Hospital Report Routes
+    }); // End Hospital Routes 
+
+    /////-----/////-----/////-----/////-----/////-----///// Hospital Routes Start /////-----/////-----/////-----/////-----/////-----/////
+
+
+
+
+
+    /////-----/////-----/////-----/////-----/////-----///// Hotel Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    Route::prefix('/hotel')->group(function () {
+        // *************************************** Hotel Setup Routes Start *************************************** //
+        Route::prefix('/setup')->group(function () {
+            // Route::controller(AccountStatementController::class)->group(function () {
+            //     ///////////// --------------- Account Summary Statement Routes ----------- ///////////////////
+            //     Route::get('/summary', 'ShowAccountSummaryStatement')->name('show.accountSummary');
+            //     Route::get('/summary/search', 'SearchAccountSummaryStatement')->name('search.accountSummary');
+            // });
+        }); // End Hotel Setup Routes
+        
+        
+        
+        // *************************************** Hotel Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            
+        }); // End Hotel Users Routes
+        
+        
+        
+        // *************************************** Hotel Transaction Routes Start *************************************** //
+        Route::prefix('/transaction')->group(function () {
+            
+        }); // End Hotel Transaction Routes
+        
+        
+        
+        // *************************************** Hotel Paty Payment Routes Start *************************************** //
+        Route::prefix('/party')->group(function () {
+            
+        }); // End Hotel Paty Payment Routes
+        
+        
+        
+        // *************************************** Hotel Report Routes Start *************************************** //
+        Route::prefix('/report')->group(function () {
+            
+        }); // End Hotel Report Routes
+    }); // End Hotel Routes 
+
+    /////-----/////-----/////-----/////-----/////-----///// Hotel Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    
+    
+    
+    
+    /////-----/////-----/////-----/////-----/////-----///// Restaurants Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    Route::prefix('/restaurant')->group(function () {
+        // *************************************** Restaurants Setup Routes Start *************************************** //
+        Route::prefix('/setup')->group(function () {
+            // Route::controller(AccountStatementController::class)->group(function () {
+            //     ///////////// --------------- Account Summary Statement Routes ----------- ///////////////////
+            //     Route::get('/summary', 'ShowAccountSummaryStatement')->name('show.accountSummary');
+            //     Route::get('/summary/search', 'SearchAccountSummaryStatement')->name('search.accountSummary');
+            // });
+        }); // End Restaurants Setup Routes
+        
+        
+        
+        // *************************************** Restaurants Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            
+        }); // End Restaurants Users Routes
+        
+        
+        
+        // *************************************** Restaurants Transaction Routes Start *************************************** //
+        Route::prefix('/transaction')->group(function () {
+            
+        }); // End Restaurants Transaction Routes
+        
+        
+        
+        // *************************************** Restaurants Paty Payment Routes Start *************************************** //
+        Route::prefix('/party')->group(function () {
+            
+        }); // End Restaurants Paty Payment Routes
+        
+        
+        
+        // *************************************** Restaurants Report Routes Start *************************************** //
+        Route::prefix('/report')->group(function () {
+            
+        }); // End Restaurants Report Routes
+    }); // End Restaurants Routes 
+
+    /////-----/////-----/////-----/////-----/////-----///// Restaurants Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    
+    
+    
+    
     /////-----/////-----/////-----/////-----/////-----///// Report Routes Start /////-----/////-----/////-----/////-----/////-----/////
     
     Route::prefix('/report')->group(function () {
