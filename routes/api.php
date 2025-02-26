@@ -78,7 +78,10 @@ use App\Http\Controllers\API\Backend\Setup\Payroll\PayrollSetupController;
 use App\Http\Controllers\API\Backend\Setup\Payroll\PayrollMiddlewireController;
 
 
-
+// Hospital Setup Controller
+use App\Http\Controllers\API\Backend\Setup\Hospital\SpecializationController;
+use App\Http\Controllers\API\Backend\Setup\Hospital\BedCatagoryController;
+use App\Http\Controllers\API\Backend\Setup\Hospital\BedListController;
 
 
 /////////////////////////////////////// Transaction Controlles Part Start /////////////////////////////////////
@@ -1467,7 +1470,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
     }); // End Pharmacy Routes
 
     /////-----/////-----/////-----/////-----/////-----///// Pharmacy Routes End /////-----/////-----/////-----/////-----/////-----/////
-    
+
 
 
 
@@ -1477,16 +1480,42 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
     Route::prefix('/hospital')->group(function () {
         // *************************************** Hospital Setup Routes Start *************************************** //
         Route::prefix('/setup')->group(function () {
-            // ///////////// --------------- Pharmacy Purchase Routes ----------- ///////////////////
-            // Route::controller(PurchaseController::class)->group(function () {
-            //     Route::get('/purchase', 'ShowAll');
-            //     Route::post('/purchase', 'Insert');
-            //     Route::get('/purchase/edit', 'Edit');
-            //     Route::put('/purchase', 'Update');
-            //     Route::delete('/purchase', 'Delete');
-            //     Route::get('/purchase/search', 'Search');
-            //     Route::delete('/purchase/verify', 'Verify');
-            // });
+            ///////////// --------------- Doctor Specialization Routes ----------- ///////////////////
+            Route::controller(SpecializationController::class)->group(function () {
+                Route::get('/specialization', 'ShowAll');
+                Route::post('/specialization', 'Insert');
+                Route::get('/specialization/edit', 'Edit');
+                Route::put('/specialization', 'Update');
+                Route::delete('/specialization', 'Delete');
+                Route::get('/specialization/search', 'Search');
+                Route::get('/specialization/get', 'Get');
+            });
+
+
+
+            ///////////// --------------- Bed catagory Routes ----------- ///////////////////
+            Route::controller(BedCatagoryController::class)->group(function () {
+                Route::get('/bedcategory', 'ShowAll');
+                Route::post('/bedcategory', 'Insert');
+                Route::get('/bedcategory/edit', 'Edit');
+                Route::put('/bedcategory', 'Update');
+                Route::delete('/bedcategory', 'Delete');
+                Route::get('/bedcategory/search', 'Search');
+                Route::get('/bedcategory/get', 'Get');
+            });
+
+
+
+            ///////////// --------------- Bed list Routes ----------- ///////////////////
+            Route::controller(BedListController::class)->group(function () {
+                Route::get('/bedlist', 'ShowAll');
+                Route::post('/bedlist', 'Insert');
+                Route::get('/bedlist/edit', 'Edit');
+                Route::put('/bedlist', 'Update');
+                Route::delete('/bedlist', 'Delete');
+                Route::get('/bedlist/search', 'Search');
+                Route::get('/bedlist/get', 'Get');
+            });
         }); // End Hospital Setup Routes
         
         
@@ -1623,6 +1652,110 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
     }); // End Restaurant Routes 
 
     /////-----/////-----/////-----/////-----/////-----///// Restaurant Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    
+    
+    
+    
+    /////-----/////-----/////-----/////-----/////-----///// Diagnosis Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    Route::prefix('/diagnosis')->group(function () {
+        // *************************************** Diagnosis Setup Routes Start *************************************** //
+        Route::prefix('/setup')->group(function () {
+            // ///////////// --------------- Pharmacy Purchase Routes ----------- ///////////////////
+            // Route::controller(PurchaseController::class)->group(function () {
+            //     Route::get('/purchase', 'ShowAll');
+            //     Route::post('/purchase', 'Insert');
+            //     Route::get('/purchase/edit', 'Edit');
+            //     Route::put('/purchase', 'Update');
+            //     Route::delete('/purchase', 'Delete');
+            //     Route::get('/purchase/search', 'Search');
+            //     Route::delete('/purchase/verify', 'Verify');
+            // });
+        }); // End Diagnosis Setup Routes
+        
+        
+        
+        // *************************************** Diagnosis Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            
+        }); // End Diagnosis Users Routes
+        
+        
+        
+        // *************************************** Diagnosis Transaction Routes Start *************************************** //
+        Route::prefix('/transaction')->group(function () {
+            
+        }); // End Diagnosis Transaction Routes
+        
+        
+        
+        // *************************************** Diagnosis Paty Payment Routes Start *************************************** //
+        Route::prefix('/party')->group(function () {
+            
+        }); // End Diagnosis Paty Payment Routes
+        
+        
+        
+        // *************************************** Diagnosis Report Routes Start *************************************** //
+        Route::prefix('/report')->group(function () {
+            
+        }); // End Diagnosis Report Routes
+    }); // End Diagnosis Routes 
+
+    /////-----/////-----/////-----/////-----/////-----///// Diagnosis Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    
+    
+    
+    
+    /////-----/////-----/////-----/////-----/////-----///// School Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    Route::prefix('/school')->group(function () {
+        // *************************************** School Setup Routes Start *************************************** //
+        Route::prefix('/setup')->group(function () {
+            // ///////////// --------------- Pharmacy Purchase Routes ----------- ///////////////////
+            // Route::controller(PurchaseController::class)->group(function () {
+            //     Route::get('/purchase', 'ShowAll');
+            //     Route::post('/purchase', 'Insert');
+            //     Route::get('/purchase/edit', 'Edit');
+            //     Route::put('/purchase', 'Update');
+            //     Route::delete('/purchase', 'Delete');
+            //     Route::get('/purchase/search', 'Search');
+            //     Route::delete('/purchase/verify', 'Verify');
+            // });
+        }); // End School Setup Routes
+        
+        
+        
+        // *************************************** School Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            
+        }); // End School Users Routes
+        
+        
+        
+        // *************************************** School Transaction Routes Start *************************************** //
+        Route::prefix('/transaction')->group(function () {
+            
+        }); // End School Transaction Routes
+        
+        
+        
+        // *************************************** School Paty Payment Routes Start *************************************** //
+        Route::prefix('/party')->group(function () {
+            
+        }); // End School Paty Payment Routes
+        
+        
+        
+        // *************************************** School Report Routes Start *************************************** //
+        Route::prefix('/report')->group(function () {
+            
+        }); // End School Report Routes
+    }); // End School Routes 
+
+    /////-----/////-----/////-----/////-----/////-----///// School Routes Start /////-----/////-----/////-----/////-----/////-----/////
 
 
 
@@ -1690,34 +1823,34 @@ Route::middleware(['web'])->group(function () {
     Route::get('/hr/report/salary/details/print', [SalaryDetailController::class, 'Print']);
 
 
-    Route::get('/pharmacy/report/item/flow/print', [PharmacyItemFlowStatementController::class, 'Print']);
-    Route::get('/pharmacy/report/stock/details/print', [PharmacyStockDetailController::class, 'Print']);
-    Route::get('/pharmacy/report/stock/summary/print', [PharmacyStockSummaryController::class, 'Print']);
-    Route::get('/pharmacy/report/profitability/statement/print', [PharmacyProfitabilityStatementController::class, 'Print']);
-    Route::get('/pharmacy/report/expiry/statement/print', [PharmacyExpiryStatementController::class, 'Print']);
-    Route::get('/pharmacy/report/purchase/details/print', [PharmacyPurchaseDetailController::class, 'Print']);
-    Route::get('/pharmacy/report/purchase/summary/print', [PharmacyPurchaseSummaryController::class, 'Print']);
-    Route::get('/pharmacy/report/issue/details/print', [PharmacyIssueDetailController::class, 'Print']);
-    Route::get('/pharmacy/report/issue/summary/print', [PharmacyIssueSummaryController::class, 'Print']);
-    Route::get('/pharmacy/report/return/client/details/print', [PharmacyClientReturnDetailController::class, 'Print']);
-    Route::get('/pharmacy/report/return/client/summary/print', [PharmacyClientReturnSummaryController::class, 'Print']);
-    Route::get('/pharmacy/report/return/supplier/details/print', [PharmacySupplierReturnDetailController::class, 'Print']);
-    Route::get('/pharmacy/report/return/supplier/summary/print', [PharmacySupplierReturnSummaryController::class, 'Print']);
+    Route::get('/pharmacy/report/item/flow/print', [ItemFlowStatementController::class, 'Print']);
+    Route::get('/pharmacy/report/stock/details/print', [StockDetailController::class, 'Print']);
+    Route::get('/pharmacy/report/stock/summary/print', [StockSummaryController::class, 'Print']);
+    Route::get('/pharmacy/report/profitability/statement/print', [ProfitabilityStatementController::class, 'Print']);
+    Route::get('/pharmacy/report/expiry/statement/print', [ExpiryStatementController::class, 'Print']);
+    Route::get('/pharmacy/report/purchase/details/print', [PurchaseDetailController::class, 'Print']);
+    Route::get('/pharmacy/report/purchase/summary/print', [PurchaseSummaryController::class, 'Print']);
+    Route::get('/pharmacy/report/issue/details/print', [IssueDetailController::class, 'Print']);
+    Route::get('/pharmacy/report/issue/summary/print', [IssueSummaryController::class, 'Print']);
+    Route::get('/pharmacy/report/return/client/details/print', [ClientReturnDetailController::class, 'Print']);
+    Route::get('/pharmacy/report/return/client/summary/print', [ClientReturnSummaryController::class, 'Print']);
+    Route::get('/pharmacy/report/return/supplier/details/print', [SupplierReturnDetailController::class, 'Print']);
+    Route::get('/pharmacy/report/return/supplier/summary/print', [SupplierReturnSummaryController::class, 'Print']);
 
 
-    Route::get('/inventory/report/item/flow/print', [InventoryItemFlowStatementController::class, 'Print']);
-    Route::get('/inventory/report/stock/details/print', [InventoryStockDetailController::class, 'Print']);
-    Route::get('/inventory/report/stock/summary/print', [InventoryStockSummaryController::class, 'Print']);
-    Route::get('/inventory/report/profitability/statement/print', [InventoryProfitabilityStatementController::class, 'Print']);
-    Route::get('/inventory/report/expiry/statement/print', [InventoryExpiryStatementController::class, 'Print']);
-    Route::get('/inventory/report/purchase/details/print', [InventoryPurchaseDetailController::class, 'Print']);
-    Route::get('/inventory/report/purchase/summary/print', [InventoryPurchaseSummaryController::class, 'Print']);
-    Route::get('/inventory/report/issue/details/print', [InventoryIssueDetailController::class, 'Print']);
-    Route::get('/inventory/report/issue/summary/print', [InventoryIssueSummaryController::class, 'Print']);
-    Route::get('/inventory/report/return/client/details/print', [InventoryClientReturnDetailController::class, 'Print']);
-    Route::get('/inventory/report/return/client/summary/print', [InventoryClientReturnSummaryController::class, 'Print']);
-    Route::get('/inventory/report/return/supplier/details/print', [InventorySupplierReturnDetailController::class, 'Print']);
-    Route::get('/inventory/report/return/supplier/summary/print', [InventorySupplierReturnSummaryController::class, 'Print']);
+    Route::get('/inventory/report/item/flow/print', [ItemFlowStatementController::class, 'Print']);
+    Route::get('/inventory/report/stock/details/print', [StockDetailController::class, 'Print']);
+    Route::get('/inventory/report/stock/summary/print', [StockSummaryController::class, 'Print']);
+    Route::get('/inventory/report/profitability/statement/print', [ProfitabilityStatementController::class, 'Print']);
+    Route::get('/inventory/report/expiry/statement/print', [ExpiryStatementController::class, 'Print']);
+    Route::get('/inventory/report/purchase/details/print', [PurchaseDetailController::class, 'Print']);
+    Route::get('/inventory/report/purchase/summary/print', [PurchaseSummaryController::class, 'Print']);
+    Route::get('/inventory/report/issue/details/print', [IssueDetailController::class, 'Print']);
+    Route::get('/inventory/report/issue/summary/print', [IssueSummaryController::class, 'Print']);
+    Route::get('/inventory/report/return/client/details/print', [ClientReturnDetailController::class, 'Print']);
+    Route::get('/inventory/report/return/client/summary/print', [ClientReturnSummaryController::class, 'Print']);
+    Route::get('/inventory/report/return/supplier/details/print', [SupplierReturnDetailController::class, 'Print']);
+    Route::get('/inventory/report/return/supplier/summary/print', [SupplierReturnSummaryController::class, 'Print']);
     
 
     Route::get('/report/account/summary/print', [AccountSummaryController::class, 'Print']);

@@ -51,6 +51,10 @@ use App\Http\Controllers\Frontend\Pharmacy\PharmacyAdjustmentController;
 use App\Http\Controllers\Frontend\Pharmacy\PharmacyReportController;
 
 
+//Hospital Controllers
+use App\Http\Controllers\Frontend\Hospital\HospitalSetupConrtoller;
+
+
 // Report Controllers
 use App\Http\Controllers\Frontend\Report\AccountStatementController;
 use App\Http\Controllers\Frontend\Report\PartyStatementController;
@@ -930,11 +934,23 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
     Route::prefix('/hospital')->group(function () {
         // *************************************** Hospital Setup Routes Start *************************************** //
         Route::prefix('/setup')->group(function () {
-            // Route::controller(AccountStatementController::class)->group(function () {
-            //     ///////////// --------------- Account Summary Statement Routes ----------- ///////////////////
-            //     Route::get('/summary', 'ShowAccountSummaryStatement')->name('show.accountSummary');
-            //     Route::get('/summary/search', 'SearchAccountSummaryStatement')->name('search.accountSummary');
-            // });
+            Route::controller(HospitalSetupConrtoller::class)->group(function(){
+                ///////////// --------------- Doctor  Specialization Routes ----------- ///////////////////
+                Route::get('/specialization',  'ShowSpecialization')->name('show.specialization');
+                Route::get('/specialization/search',  'SearchSpecialization')->name('search.specialization');
+
+
+
+                ///////////// ---------------Bed catagoary ----------- ///////////////////
+                Route::get('/bedcategory',  'ShowBedCategory')->name('show.bedcategory');
+                Route::get('/bedcategory/search',  'SearchBedCategory')->name('search.bedcategory');
+
+
+                
+                ///////////// ---------------Bed list ----------- ///////////////////
+                Route::get('/bedlist',  'ShowBedList')->name('show.bedlist');
+                Route::get('/bedlist/search',  'SearchBedList')->name('search.bedlist');
+            });
         }); // End Hospital Setup Routes
         
         
@@ -1061,6 +1077,100 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
     }); // End Restaurants Routes 
 
     /////-----/////-----/////-----/////-----/////-----///// Restaurants Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    
+    
+    
+    
+    /////-----/////-----/////-----/////-----/////-----///// Diagnosis Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    Route::prefix('/diagnosis')->group(function () {
+        // *************************************** Diagnosis Setup Routes Start *************************************** //
+        Route::prefix('/setup')->group(function () {
+            // Route::controller(AccountStatementController::class)->group(function () {
+            //     ///////////// --------------- Account Summary Statement Routes ----------- ///////////////////
+            //     Route::get('/summary', 'ShowAccountSummaryStatement')->name('show.accountSummary');
+            //     Route::get('/summary/search', 'SearchAccountSummaryStatement')->name('search.accountSummary');
+            // });
+        }); // End Diagnosis Setup Routes
+        
+        
+        
+        // *************************************** Diagnosis Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            
+        }); // End Diagnosis Users Routes
+        
+        
+        
+        // *************************************** Diagnosis Transaction Routes Start *************************************** //
+        Route::prefix('/transaction')->group(function () {
+            
+        }); // End Diagnosis Transaction Routes
+        
+        
+        
+        // *************************************** Diagnosis Paty Payment Routes Start *************************************** //
+        Route::prefix('/party')->group(function () {
+            
+        }); // End Diagnosis Paty Payment Routes
+        
+        
+        
+        // *************************************** Diagnosis Report Routes Start *************************************** //
+        Route::prefix('/report')->group(function () {
+            
+        }); // End Diagnosis Report Routes
+    }); // End Diagnosis Routes 
+
+    /////-----/////-----/////-----/////-----/////-----///// Diagnosis Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    
+    
+    
+    
+    /////-----/////-----/////-----/////-----/////-----///// School Routes Start /////-----/////-----/////-----/////-----/////-----/////
+    
+    Route::prefix('/school')->group(function () {
+        // *************************************** School Setup Routes Start *************************************** //
+        Route::prefix('/setup')->group(function () {
+            // Route::controller(AccountStatementController::class)->group(function () {
+            //     ///////////// --------------- Account Summary Statement Routes ----------- ///////////////////
+            //     Route::get('/summary', 'ShowAccountSummaryStatement')->name('show.accountSummary');
+            //     Route::get('/summary/search', 'SearchAccountSummaryStatement')->name('search.accountSummary');
+            // });
+        }); // End School Setup Routes
+        
+        
+        
+        // *************************************** School Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            
+        }); // End School Users Routes
+        
+        
+        
+        // *************************************** School Transaction Routes Start *************************************** //
+        Route::prefix('/transaction')->group(function () {
+            
+        }); // End School Transaction Routes
+        
+        
+        
+        // *************************************** School Paty Payment Routes Start *************************************** //
+        Route::prefix('/party')->group(function () {
+            
+        }); // End School Paty Payment Routes
+        
+        
+        
+        // *************************************** School Report Routes Start *************************************** //
+        Route::prefix('/report')->group(function () {
+            
+        }); // End School Report Routes
+    }); // End School Routes 
+
+    /////-----/////-----/////-----/////-----/////-----///// School Routes Start /////-----/////-----/////-----/////-----/////-----/////
     
     
     

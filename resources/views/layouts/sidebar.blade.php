@@ -1624,7 +1624,765 @@
             </li>
             <hr>
         @endif
+
         
+        <!-- Hospital Menu Start -->
+        @if(auth()->user()->hasPermissionMainHead('8'))
+            <li class="menu-item">
+                <div class="menu-title {{ Request::segment(1) == 'hospital' ? 'active':''}}">
+                    <p>
+                        <i class="fa-solid fa-hospital"></i>
+                        Hospital
+                    </p>
+                    <i class="fas fa-angle-right {{ Request::segment(1) == 'hospital' ? 'rotate':''}}"></i>
+                </div>
+                <ul class="sub-menu {{ Request::segment(1) == 'hospital' ? 'show':''}}">
+                    {{-- Hospital Setup Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-gears"></i>
+                                SETUP
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup') ? 'show':''}}">              
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.bedcategory')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedcategory') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Bed Category
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.bedlist')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedlist') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Bed List
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                    {{-- Hotel User Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-users-gear"></i>
+                                USERS
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Hospital Transaction Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'transaction') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                TRANSACTION
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'transaction') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'transaction') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'transaction' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Hospital Party Payment Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'party') ? 'active':''}}">
+                            <p>
+                                <i class="fa-regular fa-credit-card"></i>
+                                PARTY PAYMENT
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'party') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'party' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Hospital Reports Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'report') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                REPORTS
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'report') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'report') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'report' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                </ul>
+            </li> 
+            <hr>
+        @endif
+        
+        
+        <!-- Hotel Menu Start -->
+        @if(auth()->user()->hasPermissionMainHead('9'))
+            <li class="menu-item">
+                <div class="menu-title {{ Request::segment(1) == 'hotel' ? 'active':''}}">
+                    <p>
+                        <i class="fa-solid fa-hotel"></i>
+                        HOTEL
+                    </p>
+                    <i class="fas fa-angle-right {{ Request::segment(1) == 'hotel' ? 'rotate':''}}"></i>
+                </div>
+                <ul class="sub-menu {{ Request::segment(1) == 'hotel' ? 'show':''}}">
+                    {{-- Hotel Setup Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-gears"></i>
+                                SETUP
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.bedcatagory')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedcatagory') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Bed Catagory
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.bedlist')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedlist') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Bed List
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+
+                    {{-- Hotel User Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-users-gear"></i>
+                                USERS
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Hotel Transaction Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                TRANSACTION
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Hotel Party Payment Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'party') ? 'active':''}}">
+                            <p>
+                                <i class="fa-regular fa-credit-card"></i>
+                                PARTY PAYMENT
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'party') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'party' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Hotel Reports Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'report') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                REPORTS
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'report') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'report') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'report' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                </ul>
+            </li> 
+            <hr>
+        @endif
+        
+        
+        
+        <!-- Restaurant Menu Start -->
+        @if(auth()->user()->hasPermissionMainHead('10'))
+            <li class="menu-item">
+                <div class="menu-title {{ Request::segment(1) == 'resturant' ? 'active':''}}">
+                    <p>
+                        <i class="fa-solid fa-shop"></i>
+                        RESTAURANT
+                    </p>
+                    <i class="fas fa-angle-right {{ Request::segment(1) == 'resturant' ? 'rotate':''}}"></i>
+                </div>
+                <ul class="sub-menu {{ Request::segment(1) == 'resturant' ? 'show':''}}">
+                    {{-- Restaurant Setup Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'setup') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-gears"></i>
+                                SETUP
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'setup') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'setup') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'setup' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.bedcatagory')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedcatagory') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Bed Catagory
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.bedlist')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedlist') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Bed List
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+
+                    {{-- Restaurant User Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'users') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-users-gear"></i>
+                                USERS
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'users') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'users' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Restaurant Transaction Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'transaction') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                TRANSACTION
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'transaction') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'transaction') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'transaction' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Restaurant Party Payment Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'party') ? 'active':''}}">
+                            <p>
+                                <i class="fa-regular fa-credit-card"></i>
+                                PARTY PAYMENT
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'party') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'party' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Restaurant Reports Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'report') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                REPORTS
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'report') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'report') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'resturant' && Request::segment(2) == 'report' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                </ul>
+            </li> 
+            <hr>
+        @endif
+        
+        
+        <!-- Diagnosis Menu Start -->
+        @if(auth()->user()->hasPermissionMainHead('11'))
+            <li class="menu-item">
+                <div class="menu-title {{ Request::segment(1) == 'diagnosis' ? 'active':''}}">
+                    <p>
+                        <i class="fa-solid fa-stethoscope"></i>
+                        DIAGNOSIS
+                    </p>
+                    <i class="fas fa-angle-right {{ Request::segment(1) == 'diagnosis' ? 'rotate':''}}"></i>
+                </div>
+                <ul class="sub-menu {{ Request::segment(1) == 'diagnosis' ? 'show':''}}">
+                    {{-- Diagnosis Setup Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'setup') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-gears"></i>
+                                SETUP
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'setup') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'setup') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'setup' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.bedcatagory')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedcatagory') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Bed Catagory
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.bedlist')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedlist') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Bed List
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+
+                    {{-- Diagnosis User Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'users') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-users-gear"></i>
+                                USERS
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'users') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'users' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Diagnosis Transaction Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'transaction') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                TRANSACTION
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'transaction') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'transaction') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'transaction' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Diagnosis Party Payment Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'party') ? 'active':''}}">
+                            <p>
+                                <i class="fa-regular fa-credit-card"></i>
+                                PARTY PAYMENT
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'party') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'party' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- Diagnosis Reports Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'report') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                REPORTS
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'report') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'report') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'diagnosis' && Request::segment(2) == 'report' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                </ul>
+            </li> 
+            <hr>
+        @endif
+        
+        
+        <!-- School Menu Start -->
+        @if(auth()->user()->hasPermissionMainHead('12'))
+            <li class="menu-item">
+                <div class="menu-title {{ Request::segment(1) == 'school' ? 'active':''}}">
+                    <p>
+                        <i class="fa-solid fa-school"></i>
+                        SCHOOL
+                    </p>
+                    <i class="fas fa-angle-right {{ Request::segment(1) == 'school' ? 'rotate':''}}"></i>
+                </div>
+                <ul class="sub-menu {{ Request::segment(1) == 'school' ? 'show':''}}">
+                    {{-- School Setup Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'setup') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-gears"></i>
+                                SETUP
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'school' && Request::segment(2) == 'setup') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'school' && Request::segment(2) == 'setup') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'setup' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.bedcatagory')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedcatagory') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Bed Catagory
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.bedlist')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedlist') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Bed List
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+
+                    {{-- School User Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'users') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-users-gear"></i>
+                                USERS
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'school' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'school' && Request::segment(2) == 'users') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'users' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- School Transaction Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'transaction') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                TRANSACTION
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'school' && Request::segment(2) == 'transaction') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'school' && Request::segment(2) == 'transaction') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'transaction' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- School Party Payment Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'party') ? 'active':''}}">
+                            <p>
+                                <i class="fa-regular fa-credit-card"></i>
+                                PARTY PAYMENT
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'school' && Request::segment(2) == 'party') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'school' && Request::segment(2) == 'party') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'party' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                    
+                    {{-- School Reports Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'report') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                REPORTS
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'school' && Request::segment(2) == 'report') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'school' && Request::segment(2) == 'report') ? 'show':''}}">              
+                            {{-- @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'school' && Request::segment(2) == 'report' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Specialization
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif --}}
+                        </ul>
+                    </li>
+                </ul>
+            </li> 
+            <hr>
+        @endif
+                       
+        
+            
         {{-- Reports and Querrys  --}}
         @if(auth()->user()->hasPermissionMainHead('7'))
             <li class="menu-item">
