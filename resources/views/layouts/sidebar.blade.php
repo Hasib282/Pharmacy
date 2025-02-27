@@ -1657,6 +1657,17 @@
                                     </div>
                                 </li>
                             @endif
+                            
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.nursingStation')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'nursingstation') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Nursing Station
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
 
                             @if(auth()->user()->hasPermission(194))
                                 <li class="sub-menu1-item" data-url="{{route('show.bedcategory')}}">
@@ -1668,12 +1679,35 @@
                                     </div>
                                 </li>
                             @endif
+
                             @if(auth()->user()->hasPermission(194))
                                 <li class="sub-menu1-item" data-url="{{route('show.bedlist')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedlist') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-industry"></i>
                                             Bed List
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.doctors')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'doctors') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Doctors
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.patients')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'patients') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Patients
                                         </p>
                                     </div>
                                 </li>

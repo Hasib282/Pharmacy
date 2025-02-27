@@ -82,6 +82,9 @@ use App\Http\Controllers\API\Backend\Setup\Payroll\PayrollMiddlewireController;
 use App\Http\Controllers\API\Backend\Setup\Hospital\SpecializationController;
 use App\Http\Controllers\API\Backend\Setup\Hospital\BedCatagoryController;
 use App\Http\Controllers\API\Backend\Setup\Hospital\BedListController;
+use App\Http\Controllers\API\Backend\Setup\Hospital\NursingStationController;
+use App\Http\Controllers\API\Backend\Setup\Hospital\DoctorController;
+use App\Http\Controllers\API\Backend\Setup\Hospital\PatientController;
 
 
 /////////////////////////////////////// Transaction Controlles Part Start /////////////////////////////////////
@@ -1515,6 +1518,42 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::delete('/bedlist', 'Delete');
                 Route::get('/bedlist/search', 'Search');
                 Route::get('/bedlist/get', 'Get');
+            });
+
+
+
+            ///////////// --------------- Nursing Station Routes ----------- ///////////////////
+            Route::controller(NursingStationController::class)->group(function(){
+                Route::get('/nursingstation', 'ShowAll');
+                Route::post('/nursingstation', 'Insert');
+                Route::get('/nursingstation/edit', 'Edit');
+                Route::put('/nursingstation', 'Update');
+                Route::delete('/nursingstation', 'Delete');
+                Route::get('/nursingstation/search', 'Search');
+            });
+
+
+
+            ///////////// --------------- Doctor Information Routes ----------- ///////////////////
+            Route::controller(DoctorController::class)->group(function(){
+                Route::get('/doctors', 'ShowAll');
+                Route::post('/doctors', 'Insert');
+                Route::get('/doctors/edit', 'Edit');
+                Route::put('/doctors', 'Update');
+                Route::delete('/doctors', 'Delete');
+                Route::get('/doctors/search', 'Search');
+            });
+
+
+
+            ///////////// --------------- Patient Registration Routes ----------- ///////////////////
+            Route::controller(PatientController::class)->group(function(){
+                Route::get('/patients', 'ShowAll');
+                Route::post('/patients', 'Insert');
+                Route::get('/patients/edit', 'Edit');
+                Route::put('/patients', 'Update');
+                Route::delete('/patients', 'Delete');
+                Route::get('/patients/search', 'Search');
             });
         }); // End Hospital Setup Routes
         

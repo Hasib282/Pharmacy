@@ -935,21 +935,37 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
         // *************************************** Hospital Setup Routes Start *************************************** //
         Route::prefix('/setup')->group(function () {
             Route::controller(HospitalSetupConrtoller::class)->group(function(){
-                ///////////// --------------- Doctor  Specialization Routes ----------- ///////////////////
+                ///////////// --------------- Doctor Specialization Routes Start ----------- ///////////////////
                 Route::get('/specialization',  'ShowSpecialization')->name('show.specialization');
                 Route::get('/specialization/search',  'SearchSpecialization')->name('search.specialization');
 
 
 
-                ///////////// ---------------Bed catagoary ----------- ///////////////////
+                ///////////// --------------- Bed Catagoary Routes  ----------- ///////////////////
                 Route::get('/bedcategory',  'ShowBedCategory')->name('show.bedcategory');
                 Route::get('/bedcategory/search',  'SearchBedCategory')->name('search.bedcategory');
 
 
                 
-                ///////////// ---------------Bed list ----------- ///////////////////
+                ///////////// --------------- Bed list Routes Start ----------- ///////////////////
                 Route::get('/bedlist',  'ShowBedList')->name('show.bedlist');
                 Route::get('/bedlist/search',  'SearchBedList')->name('search.bedlist');
+
+
+                ///////////////////// ------------------ Nursing Station Routes Start ------------------ /////////////////////
+                Route::get('/nursingstation',  'ShowNursingStation')->name('show.nursingStation');
+                Route::get('/nursingstation/search',  'SearchNursingStation')->name('search.nursingStation');              
+
+
+                ///////////////////// ------------------ Doctors Information Routes Start ------------------ /////////////////////
+                Route::get('/doctors',  'ShowDoctors')->name('show.doctors');
+                Route::get('/doctors/search',  'SearchDoctors')->name('search.doctors');
+
+
+
+                ///////////////////// ------------------ Patient Registration Routes Start ------------------ /////////////////////
+                Route::get('/patients',  'ShowPatients')->name('show.patients');
+                Route::get('/patients/search',  'SearchPatients')->name('search.patients');
             });
         }); // End Hospital Setup Routes
         
