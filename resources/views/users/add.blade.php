@@ -11,7 +11,7 @@
             @csrf
             @method('POST')
             <div class="rows">
-                @if ($name != "Admin" && $name != "Super Admin")
+                @if ($name != "Admin" && $name != "Super Admin" && $name != "Sales Representative" && $name != "Marketing Head")
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="type">{{ $name }} Type <span class="required" title="Required">*</span></label>
@@ -99,7 +99,7 @@
                     </div>
                 @endif
 
-                @if ($name != "Client" && $name != "Supplier")
+                @if ($name != "Client" && $name != "Supplier" && $name != "Sales Representative" && $name != "Marketing Head")
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for = "password">Password <span class="required" title="Required">*</span></label>

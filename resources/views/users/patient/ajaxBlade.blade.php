@@ -6,10 +6,10 @@
 
     <div class="add-search">
         <div class="rows">
-            <div class="c-3">
+            {{-- <div class="c-3">
                 <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
-            </div>
-            <div class="c-9 search">
+            </div> --}}
+            <div class="c-12 search center">
                 <select name="searchOption" id="searchOption" class="select-small">
                     <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Name</option>
                     <option value="2" {{ $searchOptionValue == '2' ? 'selected' : '' }}>Floor</option>
@@ -27,14 +27,14 @@
             <caption class="caption">{{ $name }}</caption>
             <thead>
                 <tr>
-                    <th>SL:</th>  
-                    <th>Title</th>                  
+                    <th>SL:</th> 
+                    <th>Paitent id</th>
+                    <th>Title</th>
                     <th>Name</th>
-                    <th>Degree</th>
-                    <th>Email</th>
                     <th>Phone</th>
-                    <th>Chamber</th>
-                   
+                    <th>Email</th>                   
+                    <th>Gender</th>
+                    <th>Address</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -47,13 +47,11 @@
 
 
     
-    @include('admin_setup.hospital.doctor_information.add')
+    {{-- @include('users.patient.add') --}}
 
-    @include('admin_setup.hospital.doctor_information.edit')
+    @include('users.patient.edit')
     
     @include('common_modals.delete')
 
     <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/hospital/setup/doctor_information.js') }}"></script>
-
-
+    <script src="{{ asset('js/ajax/hospital/users/patient.js') }}"></script>

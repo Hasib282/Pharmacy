@@ -61,10 +61,10 @@ class HospitalSetupConrtoller extends Controller
         $name = "Bed List";
         $js = 'hospital/setup/bed_list';
         if ($req->ajax()) {
-            return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
+            return view('admin_setup.hospital.bed_list.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('common_modals.single_input.main', compact('name', 'js'));
+            return view('admin_setup.hospital.bed_list.main', compact('name', 'js'));
         }
     } // End Method
 
@@ -74,7 +74,7 @@ class HospitalSetupConrtoller extends Controller
     public function SearchBedList(Request $req){
         $name = "Bed List";
         $js = 'hospital/setup/bed_list';
-        return view('common_modals.single_input.main', compact('name', 'js'));
+        return view('admin_setup.hospital.bed_list.main', compact('name', 'js'));
     } // End Method
     
     
@@ -101,38 +101,16 @@ class HospitalSetupConrtoller extends Controller
         $js = '';
         return view('admin_setup.hospital.nursing_station.main', compact('name', 'js'));
     } // End Method
-    
-    
-    
-    /////////////////////////// --------------- Doctor Methods Start Here ---------- //////////////////////////
-    // Show Doctors
-    public function ShowDoctors(Request $req){
-        $name = "Doctor";
-        $js = '';
-        if ($req->ajax()) {
-            return view('admin_setup.hospital.doctor_information.ajaxBlade', compact('name','js'));
-        }
-        else{
-            return view('admin_setup.hospital.doctor_information.main', compact('name', 'js'));
-        }
-    } // End Method
 
 
 
-    // Search Doctors
-    public function SearchDoctors(Request $req){
-        $name = "Doctor";
-        $js = '';
-        return view('admin_setup.hospital.doctor_information.main', compact('name', 'js'));
-    } // End Method
-    
-    
-    
-    /////////////////////////// --------------- Patient Methods Start Here ---------- //////////////////////////
-    // Show Patients
-    public function ShowPatients(Request $req){
-        $name = "Patient";
-        $js = '';
+
+
+    /////////////////////////// --------------- Patient Registrations Methods Start Here ---------- //////////////////////////
+    // Show Patient Registrations
+    public function ShowPatientRegistrations(Request $req){
+        $name = "Patient Registration";
+        $js = 'patient_registration';
         if ($req->ajax()) {
             return view('admin_setup.hospital.patient_registration.ajaxBlade', compact('name','js'));
         }
@@ -143,10 +121,10 @@ class HospitalSetupConrtoller extends Controller
 
 
 
-    // Search Patients
-    public function SearchPatients(Request $req){
-        $name = "Patient";
-        $js = '';
+    // Search PatientRegistrations
+    public function SearchPatientRegistrations(Request $req){
+        $name = "Patient Registration";
+        $js = 'patient_registration';
         return view('admin_setup.hospital.patient_registration.main', compact('name', 'js'));
     } // End Method
 }

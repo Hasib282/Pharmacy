@@ -12,4 +12,12 @@ class Bed_List extends Model
     protected $guarded = [];
 
     public $timestamps = false;
+
+    public function category(){
+        return $this->belongsTo(Bed_Category::class,'category','id');
+    }
+
+    public function nursing(){
+        return $this->belongsTo(Nursing_Station::class,'nursing_station','id');
+    }
 }

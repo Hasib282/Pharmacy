@@ -132,4 +132,108 @@ class UsersController extends Controller
         $js = "supplier";
         return view('users.main', compact('name', 'js'));
     } // End Method
+
+
+
+
+
+    /////////////////////////// --------------- Doctor Methods Start Here ---------- //////////////////////////
+    // Show Doctors
+    public function ShowDoctors(Request $req){
+        $name = "Doctor";
+        $js = 'doctor';
+        if ($req->ajax()) {
+            return view('users.doctor.ajaxBlade', compact('name','js'));
+        }
+        else{
+            return view('users.doctor.main', compact('name', 'js'));
+        }
+    } // End Method
+
+
+
+    // Search Doctors
+    public function SearchDoctors(Request $req){
+        $name = "Doctor";
+        $js = 'doctor';
+        return view('users.doctor.main', compact('name', 'js'));
+    } // End Method
+    
+    
+    
+
+    
+    /////////////////////////// --------------- Patient Methods Start Here ---------- //////////////////////////
+    // Show Patients
+    public function ShowPatients(Request $req){
+        $name = "Patient";
+        $js = 'patient';
+        if ($req->ajax()) {
+            return view('users.patient.ajaxBlade', compact('name','js'));
+        }
+        else{
+            return view('users.patient.main', compact('name', 'js'));
+        }
+    } // End Method
+
+
+
+    // Search Patients
+    public function SearchPatients(Request $req){
+        $name = "Patient";
+        $js = 'patient';
+        return view('users.patient.main', compact('name', 'js'));
+    } // End Method
+
+
+
+
+
+    // /////////////////////////// --------------- Sales Representative Methods Start Here ---------- //////////////////////////
+    // // Show Sales Representatives
+    // public function ShowSR(Request $req){
+    //     $name = "Sales Representative";
+    //     $js = 'sr';
+    //     if ($req->ajax()) {
+    //         return view('users.ajaxBlade', compact('name','js'));
+    //     }
+    //     else{
+    //         return view('users.main', compact('name', 'js'));
+    //     }
+    // } // End Method
+
+
+
+    // // Search Sales Representatives
+    // public function SearchSR(Request $req){
+    //     $name = "Sales Representative";
+    //     $js = 'sr';
+    //     return view('users.main', compact('name', 'js'));
+    // } // End Method
+    
+    
+    
+
+
+    // /////////////////////////// --------------- Marketing Heads Methods Start Here ---------- //////////////////////////
+    // // Show Marketing Heads
+    // public function ShowMarketingHeads(Request $req){
+    //     $name = "Marketing Head";
+    //     $js = 'marketng_head';
+    //     if ($req->ajax()) {
+    //         return view('users.ajaxBlade', compact('name','js'));
+    //     }
+    //     else{
+    //         return view('users.main', compact('name', 'js'));
+    //     }
+    // } // End Method
+
+
+
+    // // Search Marketing Heads
+    // public function SearchMarketingHeads(Request $req){
+    //     $name = "Marketing Head";
+    //     $js = 'marketng_head';
+    //     return view('users.main', compact('name', 'js'));
+    // } // End Method
 }

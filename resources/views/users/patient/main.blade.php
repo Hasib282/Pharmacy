@@ -7,10 +7,10 @@
 @section('main-content')
     <div class="add-search">
         <div class="rows">
-            <div class="c-3">
+            {{-- <div class="c-3">
                 <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
-            </div>
-            <div class="c-9 search">
+            </div> --}}
+            <div class="c-12 search center">
                 <select name="searchOption" id="searchOption" class="select-small">
                     <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Name</option>
                     <option value="2" {{ $searchOptionValue == '2' ? 'selected' : '' }}>Floor</option>
@@ -29,14 +29,14 @@
             <thead>
                 <tr>
                     <th>SL:</th> 
-                    <th>Registration id</th>
                     <th>Paitent id</th>
-                    <th>Bed list</th>
-                    <th>Doctor</th>
-                    <th>Sells_representative(SR)</th>                   
-                    <th>Addmission by</th>  
-                    <th>Addmission date</th>
-                     <th>Action</th>
+                    <th>Title</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>                   
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -48,13 +48,12 @@
 
 
     
-    @include('admin_setup.hospital.patient_registration.add')
+    {{-- @include('users.patient.add') --}}
 
-    @include('admin_setup.hospital.patient_registration.edit')
+    @include('users.patient.edit')
     
     @include('common_modals.delete')
 
     <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/hospital/setup/patient_registration.js') }}"></script>
-    <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
+    <script src="{{ asset('js/ajax/hospital/users/patient.js') }}"></script>
 @endsection

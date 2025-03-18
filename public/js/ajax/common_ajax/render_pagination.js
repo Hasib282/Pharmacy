@@ -1,12 +1,12 @@
 //////////////////// -------------------- Render the Design of Pagination Navigation/Controls -------------------- ////////////////////
-function RenderPagination(pagination, link) {
+function RenderPagination(pagination) {
     let currentPage = GetCurrentPageFromURL();
     let totalPages = pagination.last_page;
 
     // Arrow Function For creating page numbers 
     const CreatePageItem = (i, isActive) => `
         <li class="page-item ${isActive ? 'active' : ''}">
-            ${isActive ? `<span class="page-link">${i}</span>` : `<a class="page-link" href="${`${link}?page=${i}`}">${i}</a>`}
+            ${isActive ? `<span class="page-link">${i}</span>` : `<a class="page-link" href="${`${pagination.path}?page=${i}`}">${i}</a>`}
         </li>
     `;
 

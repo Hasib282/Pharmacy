@@ -3,8 +3,7 @@
     $searchOptionValue = request()->query('searchOption');
 @endphp
 
-@extends('layouts.layout')
-@section('main-content')
+
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
@@ -28,15 +27,15 @@
             <caption class="caption">{{ $name }}</caption>
             <thead>
                 <tr>
-                    <th>SL:</th> 
-                    <th>Registration id</th>
-                    <th>Paitent id</th>
-                    <th>Bed list</th>
-                    <th>Doctor</th>
-                    <th>Sells_representative(SR)</th>                   
-                    <th>Addmission by</th>  
-                    <th>Addmission date</th>
-                     <th>Action</th>
+                    <th>SL:</th>  
+                    <th>Title</th>                  
+                    <th>Name</th>
+                    <th>Degree</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Chamber</th>
+                    <th>Specialization</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -48,13 +47,14 @@
 
 
     
-    @include('admin_setup.hospital.patient_registration.add')
+    @include('users.doctor.add')
 
-    @include('admin_setup.hospital.patient_registration.edit')
+    @include('users.doctor.edit')
     
     @include('common_modals.delete')
 
     <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/hospital/setup/patient_registration.js') }}"></script>
+    <script src="{{ asset('js/ajax/hospital/users/doctor.js') }}"></script>
     <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
-@endsection
+
+

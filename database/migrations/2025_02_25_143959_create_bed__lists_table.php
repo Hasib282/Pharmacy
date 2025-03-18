@@ -14,11 +14,16 @@ return new class extends Migration
         Schema::connection('mysql_second')->create('bed__lists', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->unsignedBigInteger('catagory')->nullable();
+            $table->unsignedBigInteger('category')->nullable();
             $table->unsignedBigInteger('nursing_station')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1:active, 0:Inactive');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
+
+            $table->foreign('category')->references('id')->on('bed__categories')
+                    ->onUpdate('cascade');
+            $table->foreign('nursing_station')->references('id')->on('nursing__stations')
+                    ->onUpdate('cascade');
         });
     }
 

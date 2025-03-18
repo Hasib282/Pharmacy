@@ -18,11 +18,17 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('degree')->nullable();
-            $table->integer('chamber')->nullable();
+            $table->string('chamber')->nullable();
+            $table->unsignedBigInteger('specialization')->nullable();
             $table->string('marketing_head')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1:active, 0:Inactive');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
+
+            $table->foreign('specialization')->references('id')->on('specializations')
+                    ->onUpdate('cascade');
+            $table->foreign('marketing_head')->references('user_id')->on('user__infos')
+                    ->onUpdate('cascade');
         });
     }
 

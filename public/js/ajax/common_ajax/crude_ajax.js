@@ -42,7 +42,7 @@ function LoadBackendData(url, RenderData, queryParams) {
                 
                 let startIndex = (response.data.current_page - 1) * response.data.per_page;
                 RenderData(response.data.data ? response.data.data : response.data, startIndex, response);
-                response.data.path ? RenderPagination(response.data, response.data.path) : null;
+                response.data.path ? RenderPagination(response.data) : null;
             }
             else{
                 toastr.error(response.message, "Wrong Command!");

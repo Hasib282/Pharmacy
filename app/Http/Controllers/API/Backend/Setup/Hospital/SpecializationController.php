@@ -86,7 +86,8 @@ class SpecializationController extends Controller
 
     // Search Doctors Specialization
     public function Search(Request $req){
-        $data = Specialization::on('mysql_second')->where('name', 'like', $req->search.'%')
+        $data = Specialization::on('mysql_second')
+        ->where('name', 'like', $req->search.'%')
         ->orderBy('name')
         ->paginate(15);
         
@@ -99,11 +100,23 @@ class SpecializationController extends Controller
 
 
     // Get Transaction Main Head
-    public function Get(){
-        $data = Specialization::on('mysql_second')->orderBy('added_at')->paginate(15);
-        return response()->json([
-            'status' => true,
-            'data'=> $data,
-        ]);
+    public function Get(Request $req){
+        $specializations = Specialization::on('mysql_second')
+        ->where('name', 'like', $req->specialization.'%')
+        ->orderBy('name')
+        ->take(10)
+        ->get();
+
+
+        if($specializations->count() > 0){
+            $list = "";
+            foreach($specializations as $index => $specialization) {
+                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$specialization->id.'">'.$specialization->name.'</li>';
+            }
+        }
+        else{
+            $list = '<li>No Data Found</li>';
+        }
+        return $list;
     } // End Method
 }

@@ -86,7 +86,8 @@ class BedCatagoryController extends Controller
 
     // Search Bed Category
     public function Search(Request $req){
-        $data = Bed_Category::on('mysql_second')->where('name', 'like', $req->search.'%')
+        $data = Bed_Category::on('mysql_second')
+        ->where('name', 'like', $req->search.'%')
         ->orderBy('name')
         ->paginate(15);
         
@@ -99,11 +100,23 @@ class BedCatagoryController extends Controller
 
 
     // Get Transaction Main Head
-    public function Get(){
-        $data = Bed_Category::on('mysql_second')->orderBy('added_at')->paginate(15);
-        return response()->json([
-            'status' => true,
-            'data'=> $data,
-        ]);
+    public function Get(Request $req){
+        $categories = Bed_Category::on('mysql_second')
+        ->where('name', 'like', $req->bed_category.'%')
+        ->orderBy('name')
+        ->take(10)
+        ->get();
+
+
+        if($categories->count() > 0){
+            $list = "";
+            foreach($categories as $index => $category) {
+                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$category->id.'">'.$category->name.'</li>';
+            }
+        }
+        else{
+            $list = '<li>No Data Found</li>';
+        }
+        return $list;
     } // End Method
 }

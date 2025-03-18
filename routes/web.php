@@ -53,6 +53,8 @@ use App\Http\Controllers\Frontend\Pharmacy\PharmacyReportController;
 
 //Hospital Controllers
 use App\Http\Controllers\Frontend\Hospital\HospitalSetupConrtoller;
+use App\Http\Controllers\Frontend\Hospital\HospitalUsersConrtoller;
+use App\Http\Controllers\Frontend\Hospital\HospitalTransactionController;
 
 
 // Report Controllers
@@ -932,9 +934,10 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
     /////-----/////-----/////-----/////-----/////-----///// Hospital Routes Start /////-----/////-----/////-----/////-----/////-----/////
     
     Route::prefix('/hospital')->group(function () {
-        // *************************************** Hospital Setup Routes Start *************************************** //
-        Route::prefix('/setup')->group(function () {
-            Route::controller(HospitalSetupConrtoller::class)->group(function(){
+        
+        Route::controller(HospitalSetupConrtoller::class)->group(function(){
+            // *************************************** Hospital Setup Routes Start *************************************** //
+            Route::prefix('/setup')->group(function () {
                 ///////////// --------------- Doctor Specialization Routes Start ----------- ///////////////////
                 Route::get('/specialization',  'ShowSpecialization')->name('show.specialization');
                 Route::get('/specialization/search',  'SearchSpecialization')->name('search.specialization');
@@ -954,9 +957,21 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
 
                 ///////////////////// ------------------ Nursing Station Routes Start ------------------ /////////////////////
                 Route::get('/nursingstation',  'ShowNursingStation')->name('show.nursingStation');
-                Route::get('/nursingstation/search',  'SearchNursingStation')->name('search.nursingStation');              
+                Route::get('/nursingstation/search',  'SearchNursingStation')->name('search.nursingStation');
+            }); // End Hospital Setup Routes
 
 
+            ///////////////////// ------------------ Patient Registration Routes Start ------------------ /////////////////////
+            Route::get('/ptnregistration',  'ShowPatientRegistrations')->name('show.patientRegistration');
+            Route::get('/ptnregistration/search',  'SearchPatientRegistrations')->name('search.patientRegistration');
+        });
+        
+        
+        
+        
+        // *************************************** Hospital Users Routes Start *************************************** //
+        Route::prefix('/users')->group(function () {
+            Route::controller(UsersController::class)->group(function(){
                 ///////////////////// ------------------ Doctors Information Routes Start ------------------ /////////////////////
                 Route::get('/doctors',  'ShowDoctors')->name('show.doctors');
                 Route::get('/doctors/search',  'SearchDoctors')->name('search.doctors');
@@ -966,21 +981,49 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 ///////////////////// ------------------ Patient Registration Routes Start ------------------ /////////////////////
                 Route::get('/patients',  'ShowPatients')->name('show.patients');
                 Route::get('/patients/search',  'SearchPatients')->name('search.patients');
+                
+                
+                
+                // ///////////////////// ------------------ SR Routes Start ------------------ /////////////////////
+                // Route::get('/sr',  'ShowSR')->name('show.sr');
+                // Route::get('/sr/search',  'SearchSR')->name('search.sr');
+
+
+
+                // ///////////////////// ------------------ Merketing Head Routes Start ------------------ /////////////////////
+                // Route::get('/marketinghead',  'ShowMarketingHeads')->name('show.marketinghead');
+                // Route::get('/marketinghead/search',  'SearchMarketingHeads')->name('search.marketinghead');
             });
-        }); // End Hospital Setup Routes
-        
-        
-        
-        // *************************************** Hospital Users Routes Start *************************************** //
-        Route::prefix('/users')->group(function () {
-            
         }); // End Hospital Users Routes
         
         
         
         // *************************************** Hospital Transaction Routes Start *************************************** //
         Route::prefix('/transaction')->group(function () {
-            
+            Route::controller(HospitalTransactionController::class)->group(function(){
+                ///////////// --------------- Admission Fee Routes Start ----------- ///////////////////
+                Route::get('/admission',  'ShowAdmission')->name('show.admission');
+                Route::get('/admission/search',  'SearchAdmission')->name('search.admission');
+                
+                
+                
+                ///////////// --------------- Deposit Routes Start ----------- ///////////////////
+                Route::get('/deposit',  'ShowDeposit')->name('show.deposit');
+                Route::get('/deposit/search',  'SearchDeposit')->name('search.deposit');
+                
+                
+                
+                ///////////// --------------- Deposit Refunds Routes Start ----------- ///////////////////
+                Route::get('/depositrefund',  'ShowDepositRefund')->name('show.depositrefund');
+                Route::get('/depositrefund/search',  'SearchDepositRefund')->name('search.depositrefund');
+                
+                
+                
+                ///////////// --------------- Services Fee Routes Start ----------- ///////////////////
+                Route::get('/services',  'ShowServices')->name('show.services');
+                Route::get('/services/search',  'SearchServices')->name('search.services');
+
+            });
         }); // End Hospital Transaction Routes
         
         

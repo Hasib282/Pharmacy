@@ -13,7 +13,7 @@
             @method('PUT')
             <div class="rows">
                 <input type="hidden" name="id" id="id">
-                @if ($name != "Admin" && $name != "Super Admin")
+                @if ($name != "Admin" && $name != "Super Admin" && $name != "Sales Representative" && $name != "SR")
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="updateType">{{ $name }} Type <span class="required" title="Required">*</span></label>

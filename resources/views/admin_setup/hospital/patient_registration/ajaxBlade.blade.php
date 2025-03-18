@@ -27,20 +27,15 @@
             <caption class="caption">{{ $name }}</caption>
             <thead>
                 <tr>
-                    <th>SL:</th>                    
-                    <th>Pid</th>
-                    <th>Rid</th>
-                    <th>Title</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Action</th>
-                    <th>Age(Y,M,D)</th>
-                    <th>Gender</th>
-                    <th>Nationality</th>
-                    <th>Religion</th>
-                    <th>Doctor</th>
-                    <th>Sells_representative(SR)</th>
-                    <th>Action</th>
+                    <th>SL:</th> 
+                    <th>Registration id</th>
+                    <th>Paitent id</th>
+                    <th>Bed list</th>
+                    <th>Doctor id</th>
+                    <th>Sells_representative(SR)</th>                   
+                    <th>Addmission by</th>  
+                    <th>Addmission date</th>
+                     <th>Action</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -60,4 +55,4 @@
 
     <!-- ajax part start from here -->
     <script src="{{ asset('js/ajax/hospital/setup/patient_registration.js') }}"></script>
-
+    <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>

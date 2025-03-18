@@ -60,16 +60,17 @@ function SearchByInput(link, getData, targetInput, targetList, tableData = undef
     $(document).off('click', `${targetList} li`).on('click', `${targetList} li`, function () {
         let value = $(this).text();
         let id = $(this).data('id');
-        $(targetInput).focus();
+        
         $(targetInput).val(value);
         $(targetInput).attr('data-id', id);
         $(targetList).html('');
-
 
         // Additional Events If Needed
         if (typeof AdditionalEvent === "function") {
             AdditionalEvent(targetInput, $(this));
         }
+        
+        $(targetInput).focus();
     });
 }
 
@@ -149,9 +150,6 @@ function UpdateInput(list, index, targetInput, AdditionalEvent) {
         AdditionalEvent(targetInput, item);
     }
 }
-
-
-
 
 
 
@@ -1231,4 +1229,262 @@ $(document).ready(function () {
     }
 
     /////////////// ------------------ Search Head By Name And Groupe add value to input ajax part end ---------------- /////////////////////////////
+
+
+
+
+
+    /////////////// ------------------ Search Specialization by Name and add value to input ajax part start ---------------- /////////////////////////////
+    // Specialization Input Search
+    SearchByInput(
+        'hospital/setup/specialization/get',  
+
+        function ($input) {
+            return {
+                specialization: $input.val(),
+            };
+        }, 
+
+        '#specialization', 
+
+        '#specialization-list ul'
+    );
+
+
+    // Update Specialization Input Search
+    SearchByInput(
+        'hospital/setup/specialization/get', 
+
+        function ($input) {
+            return {
+                specialization: $input.val(),
+            };
+        }, 
+
+        '#updateSpecialization', 
+
+        '#update-specialization ul'
+    );
+
+
+
+
+
+    /////////////// ------------------ Search Bed Category by Name and add value to input ajax part start ---------------- /////////////////////////////
+    // Bed Category Input Search
+    SearchByInput(
+        'hospital/setup/bedcategory/get',  
+
+        function ($input) {
+            return {
+                bed_category: $input.val(),
+            };
+        }, 
+
+        '#bed_category', 
+
+        '#bed_category-list ul'
+    );
+
+
+    // Update Bed Category Input Search
+    SearchByInput(
+        'hospital/setup/bedcategory/get', 
+
+        function ($input) {
+            return {
+                bed_category: $input.val(),
+            };
+        }, 
+
+        '#updateBed_Category', 
+
+        '#update-bed_category ul'
+    );
+    
+    
+    
+    
+    
+    /////////////// ------------------ Search Bed List by Name and add value to input ajax part start ---------------- /////////////////////////////
+    // Bed List Input Search
+    SearchByInput(
+        'hospital/setup/bedlist/get',  
+
+        function ($input) {
+            return {
+                bed_list: $input.val(),
+                bed_category: $('#bed_category').attr('data-id'),
+            };
+        }, 
+
+        '#bed_list', 
+
+        '#bed_list-list ul'
+    );
+
+
+    // Update Bed List Input Search
+    SearchByInput(
+        'hospital/setup/bedlist/get', 
+
+        function ($input) {
+            return {
+                bed_list: $input.val(),
+                bed_category: $('#updateBed_Category').attr('data-id'),
+            };
+        }, 
+
+        '#updateBed_List', 
+
+        '#update-bed_list ul'
+    );
+
+
+
+
+
+    /////////////// ------------------ Search Nursing Station by Name and add value to input ajax part start ---------------- /////////////////////////////
+    // Nursing Station Input Search
+    SearchByInput(
+        'hospital/setup/nursingstation/get',  
+
+        function ($input) {
+            return {
+                nursing_station: $input.val(),
+            };
+        }, 
+
+        '#nursing_station', 
+
+        '#nursing_station-list ul'
+    );
+
+
+    // Update Nursing Station Input Search
+    SearchByInput(
+        'hospital/setup/nursingstation/get', 
+
+        function ($input) {
+            return {
+                nursing_station: $input.val(),
+            };
+        }, 
+
+        '#updateNursing_Station', 
+
+        '#update-nursing_station ul'
+    );
+
+
+
+
+
+    /////////////// ------------------ Search Sales Representative by Name and add value to input ajax part start ---------------- /////////////////////////////
+    // Sales Representative Input Search
+    SearchByInput(
+        'transaction/get/user',  
+
+        function ($input) {
+            return {
+                tranUser: $input.val(),
+                tranUserType: '4',
+            };
+        }, 
+
+        '#sr', 
+
+        '#sr-list ul'
+    );
+
+
+    // Update Sales Representative Input Search
+    SearchByInput(
+        'transaction/get/user', 
+
+        function ($input) {
+            return {
+                tranUser: $input.val(),
+                tranUserType: '4',
+            };
+        }, 
+
+        '#updateSR', 
+
+        '#update-sr ul'
+    );
+
+
+
+
+
+    /////////////// ------------------ Search Marketing Head by Name and add value to input ajax part start ---------------- /////////////////////////////
+    // Marketing Head Input Search
+    SearchByInput(
+        'transaction/get/user',  
+
+        function ($input) {
+            return {
+                tranUser: $input.val(),
+                tranUserType: '5',
+            };
+        }, 
+
+        '#marketing_head', 
+
+        '#marketing_head-list ul'
+    );
+
+
+    // Update Marketing Head Input Search
+    SearchByInput(
+        'transaction/get/user', 
+
+        function ($input) {
+            return {
+                tranUser: $input.val(),
+                tranUserType: '5',
+            };
+        }, 
+
+        '#updateMarketing_Head', 
+
+        '#update-marketing_head ul'
+    );
+
+
+
+
+
+    /////////////// ------------------ Search Doctor by Name and add value to input ajax part start ---------------- /////////////////////////////
+    // Doctor Input Search
+    SearchByInput(
+        'hospital/users/doctors/get',  
+
+        function ($input) {
+            return {
+                doctor: $input.val(),
+            };
+        }, 
+
+        '#doctor', 
+
+        '#doctor-list ul'
+    );
+
+
+    // Update Doctor Input Search
+    SearchByInput(
+        'hospital/users/doctors/get', 
+
+        function ($input) {
+            return {
+                doctor: $input.val(),
+            };
+        }, 
+
+        '#updateDoctor', 
+
+        '#update-doctor ul'
+    );
 });

@@ -35,7 +35,7 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Chamber</th>
-                   
+                    <th>Specialization</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -48,12 +48,13 @@
 
 
     
-    @include('admin_setup.hospital.doctor_information.add')
+    @include('users.doctor.add')
 
-    @include('admin_setup.hospital.doctor_information.edit')
+    @include('users.doctor.edit')
     
     @include('common_modals.delete')
 
     <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/hospital/setup/doctor_information.js') }}"></script>
+    <script src="{{ asset('js/ajax/hospital/users/doctor.js') }}"></script>
+    <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
 @endsection

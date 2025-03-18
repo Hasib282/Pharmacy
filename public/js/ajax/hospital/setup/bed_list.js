@@ -1,51 +1,3 @@
-function ShowBedList(data, startIndex) {
-    let tableRows = '';
-    
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            tableRows += `
-                <tr>
-                    <td>${startIndex + key + 1}</td>
-                    <td>${item.name}</td>
-                    <td>
-                        <div style="display: flex;gap:5px;">
-                            
-                            <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                        
-                            <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                            
-                        </div>
-                    </td>
-                </tr>
-            `;
-        });
-
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
-
-
-
-// Additional Edit Functionality
-function EditFormInputValue(res){
-    $('#id').val(res.data.id);
-    $('#updateName').val(res.data.name);
-    $('#updateName').focus();
-}
-
-
-
-$(document).ready(function () {
-    SingleInputDataCrudeAjax('hospital/setup/bedlist', ShowBedList);
-});
-
-
 // $(document).ready(function () {
 //     function Showbedlist(){
 //         $.ajax({
@@ -57,7 +9,8 @@ $(document).ready(function () {
 //                     view += `<tr>
 //                                 <td>${key + 1} </td>
 //                                 <td>${item.name} </td>
-                                
+//                                 <td>${item.catagory}</td>
+//                                 <td>${item.nursing_station}</td>
 //                                 <td>
 //                                    <div style="display: flex;gap:5px;">
                                 
@@ -207,38 +160,128 @@ $(document).ready(function () {
 
 
 
-//     // $(document).on('submit', '#InsertForm', function (e) {
-//     //     e.preventDefault();
-//     //     let formData = new FormData(this);
-//     //     $.ajax({
-//     //         url: "/addstudent",
-//     //         method: 'POST',
-//     //         processData: false,
-//     //         contentType: false,
-//     //         cache: false,
-//     //         data: formData,
-//             // beforeSend:function() {
-//             //     $(document).find('span.error').text('');  
-//             // },
-//     //         success: function (res) {
-//     //             if (res.status == "success") {
-//     //                 $('#AddBankForm')[0].reset();
-//     //                 $('#location').removeAttr('data-id');
-//     //                 $('#name').focus();
-//     //                 $('.bank').load(location.href + ' .bank');
-//     //                 $('#search').val('');
-//     //                 toastr.success('Bank Details Added Successfully', 'Added!');
-//     //             }
-//     //         },
-//     //         error: function (err) {
-//     //             console.log(err)
-//     //             let error = err.responseJSON;
-//     //             $.each(error.errors, function (key, value) {
-//     //                 $('#' + key + "_error").text(value);
-//     //             });
-//     //         }
-//     //     });
-//     // });
+//     $(document).on('submit', '#InsertForm', function (e) {
+//         e.preventDefault();
+//         let formData = new FormData(this);
+//         $.ajax({
+//             url: "/addstudent",
+//             method: 'POST',
+//             processData: false,
+//             contentType: false,
+//             cache: false,
+//             data: formData,
+//             beforeSend:function() {
+//                 $(document).find('span.error').text('');  
+//             },
+//             success: function (res) {
+//                 if (res.status == "success") {
+//                     $('#AddBankForm')[0].reset();
+//                     $('#location').removeAttr('data-id');
+//                     $('#name').focus();
+//                     $('.bank').load(location.href + ' .bank');
+//                     $('#search').val('');
+//                     toastr.success('Bank Details Added Successfully', 'Added!');
+//                 }
+//             },
+//             error: function (err) {
+//                 console.log(err)
+//                 let error = err.responseJSON;
+//                 $.each(error.errors, function (key, value) {
+//                     $('#' + key + "_error").text(value);
+//                 });
+//             }
+//         });
+//     });
 
 
 // });
+
+
+
+function ShowBedList(data, startIndex) {
+    let tableRows = '';
+    
+    if(data.length > 0){
+        $.each(data, function(key, item) {
+            tableRows += `
+                <tr>
+                    <td>${startIndex + key + 1}</td>
+                    <td>${item.name} </td>
+                    <td>${item.category.name}</td>
+                    <td>${item.nursing.name}</td>
+                    <td>
+                        <div style="display: flex;gap:5px;">
+                            
+                            <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
+                        
+                            <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
+                            
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
+
+        // Inject the generated rows into the table body
+        $('.load-data .show-table tbody').html(tableRows);
+        $('.load-data .show-table tfoot').html('')
+    }
+    else{
+        $('.load-data .show-table tbody').html('');
+        $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
+    }
+}; // End Function
+
+
+
+$(document).ready(function () {
+    // Load Data on Hard Reload
+    ReloadData('hospital/setup/bedlist', ShowBedList);
+    
+    
+    // Add Modal Open Functionality
+    AddModalFunctionality("#name", function () {
+        $('#nursing_station').removeAttr('data-id');
+        $('#bed_category').removeAttr('data-id');
+    });
+
+
+    // Insert Ajax
+    InsertAjax('hospital/setup/bedlist', ShowBedList, {nursing_station: { selector: '#nursing_station', attribute: 'data-id' }, bed_category: { selector: '#bed_category', attribute: 'data-id' }}, function() {
+        $('#name').focus();
+        $('#nursing_station').removeAttr('data-id');
+        $('#bed_category').removeAttr('data-id');
+    });
+
+
+    //Edit Ajax
+    EditAjax('hospital/setup/bedlist', EditFormInputValue);
+
+
+    // Update Ajax
+    UpdateAjax('hospital/setup/bedlist', ShowBedList, {nursing_station: { selector: '#updateNursing_Station', attribute: 'data-id' }, bed_category: { selector: '#updateBed_Category', attribute: 'data-id' }});
+    
+
+    // Delete Ajax
+    DeleteAjax('hospital/setup/bedlist', ShowBedList);
+
+
+    // Pagination Ajax
+    PaginationAjax(ShowBedList);
+
+
+    // Search Ajax
+    SearchAjax('hospital/setup/bedlist', ShowBedList);
+
+
+    // Additional Edit Functionality
+    function EditFormInputValue(res){
+        $('#id').val(res.data.id);
+        $('#updateName').val(res.data.name);
+        $('#updateBed_Category').val(res.data.category.name);
+        $('#updateBed_Category').attr('data-id',res.data.category);
+        $('#updateNursing_Station').val(res.data.nursing.name);
+        $('#updateNursing_Station').attr('data-id',res.data.nursing_station);
+        $('#updateName').focus();
+    }; // End Method
+});
