@@ -1575,6 +1575,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::delete('/ptnregistration', 'Delete');
             Route::get('/ptnregistration/search', 'Search');
             Route::get('/ptnregistration/get', 'Get');
+            Route::get('/ptnregistration/get/patient', 'GetPatient');
         });
         
         

@@ -181,5 +181,37 @@ class PatientRegistrationController extends Controller
             'message'=> 'Deleted'
         ]);
     }
+
+
+    // Get Patient
+    public function GetPatient(Request $req){
+        if($req->opt == 1){
+            $data = Patient_Information::on('mysql_second')
+            ->where('ptn_id', 'like', $req->ptn_id.'%')
+            ->orderBy('ptn_id')
+            ->take(10)
+            ->get();
+        }
+        else if($req->opt == 2){
+            $data = Patient_Information::on('mysql_second')
+            ->where('phone', 'like', $req->ptn_phone.'%')
+            ->orderBy('name')
+            ->take(10)
+            ->get();
+        }
+        
+
+
+        if($data->count() > 0){
+            $list = "";
+            foreach($data as $index => $item) {
+                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->ptn_id.'" data-title="'.$item->title.'" data-name="'.$item->name.'" data-phone="'.$item->phone.'" data-email="'.$item->email.'" data-gender="'.$item->gender.'" data-nationality="'.$item->nationality.'" data-religion="'.$item->religion.'" data-address="'.$item->address.'">'.$item->name. '('.$item->ptn_id.')</li>';
+            }
+        }
+        else{
+            $list = '<li>No Data Found</li>';
+        }
+        return $list;
+    } // End Method
 }
     

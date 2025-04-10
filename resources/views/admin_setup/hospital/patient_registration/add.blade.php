@@ -32,6 +32,11 @@
                         <div class="form-input-group">
                             <label for="ptn_id">Patient Id</label>
                             <input type="text" name="ptn_id" class="form-input" id="ptn_id">
+                            <div id="ptn-list">
+                                <ul>
+
+                                </ul>
+                            </div>
                             <span class="error" id="ptn_id_error"></span>
                         </div>
                     </div>
@@ -68,6 +73,11 @@
                         <div class="form-input-group">
                             <label for="phone">Phone</label>
                             <input type="text" name="phone" class="form-input" id="phone">
+                            <div id="ptn-phone-list">
+                                <ul>
+                                    
+                                </ul>
+                            </div>
                             <span class="error" id="phone_error"></span>
                         </div>
                     </div>

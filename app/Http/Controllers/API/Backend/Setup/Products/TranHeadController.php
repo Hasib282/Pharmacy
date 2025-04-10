@@ -58,14 +58,7 @@ class TranHeadController extends Controller
 
     // Edit Transaction Heads
     public function Edit(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'hr' => 3,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
-
-        $type = $segments[$req->segment(2)] ?? null;
+        $type = GetTranType($req->segment(2));
 
         if($type != null){
             $groupes = Transaction_Groupe::on('mysql')->whereIn('tran_groupe_type', [$type])->orderBy('added_at')->get();

@@ -118,7 +118,7 @@ class LocationController extends Controller
     // Get Location By Upazila
     public function Get(Request $req){
         $locations = Location_Info::on('mysql')
-        ->where('upazila', 'like', '%'.$req->location.'%')
+        ->where('upazila', 'like', $req->location.'%')
         ->when($req->division != 'undefined', function ($query) use ($req) {
             $query->where('division', $req->division);
         })

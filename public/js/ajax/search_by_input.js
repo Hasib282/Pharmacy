@@ -1,13 +1,13 @@
 let timeoutId = null;
 // Search By Input Function For Searching in Input
-function SearchByInput(link, getData, targetInput, targetList, tableData = undefined, targetTable="", AdditionalEvent = undefined) {
+function SearchByInput(link, getData, targetInput, targetUl, targetList, tableData = undefined, targetTable="", AdditionalEvent = undefined, RemoveData = undefined) {
     let keyDownProcessed = false;
     // Keydown Event
     $(document).off('keydown', targetInput).on('keydown', targetInput, function (e) {
         keyDownProcessed = true;
         setTimeout(() => {
             let data = getData($(this));
-            KeyDown(e, link, data, targetList, targetInput, AdditionalEvent);
+            KeyDown(e, link, data, targetUl, targetList, targetInput, AdditionalEvent, RemoveData);
             $(targetTable).html('');
         }, 0);
     });
@@ -15,14 +15,14 @@ function SearchByInput(link, getData, targetInput, targetList, tableData = undef
 
 
     // List Keypup Event
-    $(document).off('keyup', `${targetList} li`).on('keyup', `${targetList} li`, function (e) {
+    $(document).off('keyup', `${targetList}`).on('keyup', `${targetList}`, function (e) {
         // Skip the list keyup event if input keydown was processed
         if (keyDownProcessed) {
             keyDownProcessed = false; // Reset the flag
             return;
         }
 
-        ListKeyUp(e, targetList, targetInput, AdditionalEvent);
+        ListKeyUp(e, targetUl, targetList, targetInput, AdditionalEvent);
     });
 
 
@@ -32,7 +32,7 @@ function SearchByInput(link, getData, targetInput, targetList, tableData = undef
         let data = getData($(this));
         let id = $(this).attr('data-id');
         if(id == undefined) {
-            GetInputList(link, data, targetList);
+            GetInputList(link, data, targetUl);
         }
         else{
             if (typeof tableData === "function") {
@@ -49,7 +49,7 @@ function SearchByInput(link, getData, targetInput, targetList, tableData = undef
         if(id == undefined){
             $(document).on('click', function (e){
                 if($(e.target).attr('tabindex') == undefined){
-                    $(targetList).html('');
+                    $(targetUl).html('');
                 }
             });
         }
@@ -57,13 +57,13 @@ function SearchByInput(link, getData, targetInput, targetList, tableData = undef
 
 
     // Company List Click Event
-    $(document).off('click', `${targetList} li`).on('click', `${targetList} li`, function () {
+    $(document).off('click', `${targetList}`).on('click', `${targetList}`, function () {
         let value = $(this).text();
         let id = $(this).data('id');
         
         $(targetInput).val(value);
         $(targetInput).attr('data-id', id);
-        $(targetList).html('');
+        $(targetUl).html('');
 
         // Additional Events If Needed
         if (typeof AdditionalEvent === "function") {
@@ -79,19 +79,23 @@ function SearchByInput(link, getData, targetInput, targetList, tableData = undef
 
 
 // Keydown Event Function Start
-function KeyDown(e, link, data, targetList, targetInput, AdditionalEvent){
+function KeyDown(e, link, data, targetUl, targetList, targetInput, AdditionalEvent, RemoveData){
     let key = e.key;
-    let list = $(`${targetList} li`);
+    let list = $(`${targetList}`);
     
     if (key === 'Enter') { // Enter Key
         e.preventDefault();
     }
     else if (key === 'Tab') { // Tab key
-        $(targetList).html('');
+        $(targetUl).html('');
     }
     else if ((key.length === 1 && key.match(/^[a-zA-Z0-9]$/)) || key === "Backspace" || key === 'Space'){
         $(targetInput).removeAttr('data-id');
 
+        // Remove Input Data Events If Needed
+        if (typeof RemoveData === "function") {
+            RemoveData(targetInput);
+        }
         
         if (timeoutId) {
             clearTimeout(timeoutId);
@@ -99,7 +103,7 @@ function KeyDown(e, link, data, targetList, targetInput, AdditionalEvent){
 
         // Set a new timeout for the GetInputList call
         timeoutId = setTimeout(() => {
-            GetInputList(link, data, targetList);
+            GetInputList(link, data, targetUl);
         }, 800);
     }
     if (list.length > 0) {
@@ -116,10 +120,10 @@ function KeyDown(e, link, data, targetList, targetInput, AdditionalEvent){
 
 
 // List Keyup Event Function Start
-function ListKeyUp(e, targetList, targetInput, AdditionalEvent) {
+function ListKeyUp(e, targetUl, targetList, targetInput, AdditionalEvent) {
     let key = e.key;
-    let list = $(`${targetList} li`);
-    let focused = $(`${targetList} li:focus`);
+    let list = $(`${targetList}`);
+    let focused = $(`${targetList}:focus`);
     let nextIndex, prevIndex;
 
     if (key === 'ArrowDown') {
@@ -131,7 +135,7 @@ function ListKeyUp(e, targetList, targetInput, AdditionalEvent) {
         UpdateInput(list, prevIndex, targetInput, AdditionalEvent);
     }
     else if (key === 'Enter') {
-        $(targetList).html('');
+        $(targetUl).html('');
         $(targetInput).focus();
     }
 }
@@ -169,7 +173,9 @@ $(document).ready(function () {
 
         '#company', 
 
-        '#company-list ul'
+        '#company-list ul',
+
+        '#company-list ul li',
     );
 
 
@@ -185,7 +191,9 @@ $(document).ready(function () {
 
         '#updateCompany', 
 
-        '#update-company ul'
+        '#update-company ul',
+
+        '#update-company ul li',
     );
 
     
@@ -203,7 +211,9 @@ $(document).ready(function () {
 
         '#department', 
 
-        '#department-list ul'
+        '#department-list ul',
+
+        '#department-list ul li',
     );
 
 
@@ -219,7 +229,9 @@ $(document).ready(function () {
 
         '#updateDepartment', 
 
-        '#update-department ul'
+        '#update-department ul',
+
+        '#update-department ul li',
     );
 
     
@@ -238,7 +250,9 @@ $(document).ready(function () {
 
         '#designation', 
 
-        '#designation-list ul'
+        '#designation-list ul',
+
+        '#designation-list ul li',
     );
 
 
@@ -255,7 +269,9 @@ $(document).ready(function () {
 
         '#updateDesignation', 
 
-        '#update-designation ul'
+        '#update-designation ul',
+
+        '#update-designation ul li',
     );
 
     
@@ -282,7 +298,9 @@ $(document).ready(function () {
 
         '#location', 
 
-        '#location-list ul'
+        '#location-list ul',
+
+        '#location-list ul li',
     );
 
 
@@ -307,7 +325,9 @@ $(document).ready(function () {
 
         '#updateLocation', 
 
-        '#update-location ul'
+        '#update-location ul',
+
+        '#update-location ul li'
     );
     
     
@@ -325,7 +345,9 @@ $(document).ready(function () {
 
         '#bank', 
 
-        '#bank-list ul'
+        '#bank-list ul',
+
+        '#bank-list ul li',
     );
 
 
@@ -341,7 +363,9 @@ $(document).ready(function () {
 
         '#updateBank', 
 
-        '#update-bank ul'
+        '#update-bank ul',
+
+        '#update-bank ul li',
     );
     
     
@@ -359,7 +383,9 @@ $(document).ready(function () {
 
         '#store', 
 
-        '#store-list ul'
+        '#store-list ul',
+
+        '#store-list ul li',
     );
 
 
@@ -375,7 +401,9 @@ $(document).ready(function () {
 
         '#updateStore', 
 
-        '#update-store ul'
+        '#update-store ul',
+
+        '#update-store ul li',
     );
     
     
@@ -393,7 +421,9 @@ $(document).ready(function () {
 
         '#manufacturer', 
 
-        '#manufacturer-list ul'
+        '#manufacturer-list ul',
+
+        '#manufacturer-list ul li',
     );
 
 
@@ -409,7 +439,9 @@ $(document).ready(function () {
 
         '#updateManufacturer', 
 
-        '#update-manufacturer ul'
+        '#update-manufacturer ul',
+
+        '#update-manufacturer ul li',
     );
     
     
@@ -427,7 +459,9 @@ $(document).ready(function () {
 
         '#category', 
 
-        '#category-list ul'
+        '#category-list ul',
+
+        '#category-list ul li',
     );
 
 
@@ -443,7 +477,9 @@ $(document).ready(function () {
 
         '#updateCategory', 
 
-        '#update-category ul'
+        '#update-category ul',
+
+        '#update-category ul li',
     );
     
     
@@ -461,7 +497,9 @@ $(document).ready(function () {
 
         '#form', 
 
-        '#form-list ul'
+        '#form-list ul',
+
+        '#form-list ul li',
     );
 
 
@@ -477,7 +515,9 @@ $(document).ready(function () {
 
         '#updateForm', 
 
-        '#update-form ul'
+        '#update-form ul',
+
+        '#update-form ul li',
     );
     
     
@@ -495,7 +535,9 @@ $(document).ready(function () {
 
         '#unit', 
 
-        '#unit-list ul'
+        '#unit-list ul',
+
+        '#unit-list ul li',
     );
 
 
@@ -511,7 +553,9 @@ $(document).ready(function () {
 
         '#updateUnit', 
 
-        '#update-unit ul'
+        '#update-unit ul',
+
+        '#update-unit ul li',
     );
 
 
@@ -530,7 +574,9 @@ $(document).ready(function () {
 
         '#pbatch', 
 
-        '#pbatch-list ul'
+        '#pbatch-list ul',
+
+        '#pbatch-list ul li',
     );
 
 
@@ -547,7 +593,9 @@ $(document).ready(function () {
 
         '#updatePbatch', 
 
-        '#update-pbatch ul'
+        '#update-pbatch ul',
+
+        '#update-pbatch ul li',
     );
     
     
@@ -568,6 +616,8 @@ $(document).ready(function () {
         '#batch', 
 
         '#batch-list ul',
+
+        '#batch-list ul li',
 
         function () {
             GetInputList('transaction/get/batch/details', {batch: $('#batch').attr('data-id')}, '#batch-details-list tbody');
@@ -593,6 +643,8 @@ $(document).ready(function () {
         '#updateBatch', 
 
         '#update-batch ul',
+
+        '#update-batch ul li',
 
         function () {
             GetInputList('transaction/get/batch/details', {batch: $('#updateBatch').attr('data-id')}, '#update-batch-details-list tbody');
@@ -645,6 +697,8 @@ $(document).ready(function () {
 
         '#user-list ul',
 
+        '#user-list ul li',
+
         function (id) {
             getDueListByUserId(id, '.due-grid tbody');
             getPayrollByUserId(id, '.payroll-grid tbody');
@@ -686,6 +740,8 @@ $(document).ready(function () {
         '#updateUser', 
 
         '#update-user ul',
+
+        '#update-user ul li',
         
         function (id) {
             getDueListByUserId(id, '.due-grid tbody');
@@ -732,6 +788,8 @@ $(document).ready(function () {
 
         '#head-list ul',
 
+        '#head-list ul li',
+
         undefined, 
 
         "",
@@ -771,6 +829,8 @@ $(document).ready(function () {
 
         '#update-head ul',
 
+        '#update-head ul li',
+
         undefined, 
 
         "",
@@ -787,448 +847,137 @@ $(document).ready(function () {
 
 
     /////////////// ------------------ Search Products By Name And Group add value to input ajax part start ---------------- /////////////////////////////
-    // // Product Input Search
-    // SearchByInput(
-    //     'inventory/setup/product/get',  
+    // Product Input Search
+    SearchByInput(
+        'inventory/setup/product/get',  
 
-    //     function ($input) {
-    //         let groupe;
-    //         let groupein;
-    //         if ($('#groupein').length) {
-    //             groupe = $('.groupe-checkbox:checked').map(function() {
-    //                 return $(this).val()
-    //             }).get();
-    //             groupein = 1;
-    //         } else {
-    //             groupe = $('#updateGroupe').val();
-    //             groupein = 0;
-    //         }
+        function ($input) {
+            let groupe;
+            let groupein;
+            if ($('#groupein').length) {
+                groupe = $('.groupe-checkbox:checked').map(function() {
+                    return $(this).val()
+                }).get();
+                groupein = 1;
+            } else {
+                groupe = $('#updateGroupe').val();
+                groupein = 0;
+            }
 
-    //         return {
-    //             product: $input.val(),
-    //         };
-    //     }, 
+            return {
+                groupe,
+                groupein,
+                product: $input.val(),
+            };
+        }, 
 
-    //     '#product', 
+        '#product', 
 
-    //     '#product-list ul'
-    // );
+        '#product-list table tbody',
 
+        '#product-list table tbody tr',
 
-    // // Update Product Input Search
-    // SearchByInput(
-    //     'inventory/setup/product/get', 
+        undefined, 
 
-    //     function ($input) {
-    //         let groupe;
-    //         let groupein;
-    //         if ($('#groupein').length) {
-    //             groupe = $('.groupe-checkbox:checked').map(function() {
-    //                 return $(this).val()
-    //             }).get();
-    //             groupein = 1;
-    //         } else {
-    //             groupe = $('#updateGroupe').val();
-    //             groupein = 0;
-    //         }
+        "",
+
+        function (targetInput, item) {
+            $(targetInput).val(item.find('td:first').text());
+            $(targetInput).attr("data-groupe", item.data('groupe'));
+            $('#mrp').val(item.attr('data-mrp'));
+            $('#cp').val(item.attr('data-cp'));
+            $('#unit').val(item.attr('data-unit'));
+            $('#unit').attr('data-id',item.data('unit-id'));
+            let qty = $('#quantity').val();
+
+            const path = window.location.pathname;
+            const pathSegments = path.split("/");
             
-    //         return {
-    //             product: $input.val(),
-    //         };
-    //     }, 
+            if(pathSegments[3] === 'issue'){
+                $('#totAmount').val(item.attr('data-mrp') * qty);
+            }
+            else if(pathSegments[3] === 'purchase'){
+                $('#totAmount').val(item.attr('data-cp') * qty);
+            }
+        },
 
-    //     '#updateProduct', 
-
-    //     '#update-product ul'
-    // );
-
-
-
-    // Head Keyup Event
-    $(document).off('keyup', '#product').on('keyup', '#product', function (e) {
-        let product = $(this).val();
-        let groupe;
-        let groupein;
-        if ($('#groupein').length) {
-            groupe = $('.groupe-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            groupein = 1;
-        } else {
-            groupe = $('#groupe').val();
-            groupein = 0;
+        function (targetInput) {
+            $(targetInput).removeAttr('data-groupe');
+            $('#unit').removeAttr('data-id');
+            $('#mrp').val('');
+            $('#cp').val('');
+            $('#unit').val('');
+            $('#totAmount').val('');
         }
-        let id = $(this).attr('data-id');
-        ProductKeyUp(e, groupe, groupein, product, id, '#product', '#product-list table tbody', '#mrp', '#cp', '#unit', '#quantity', '#totAmount');
-    });
-
-    // Product Key down Event
-    $(document).off('keydown', '#product').on('keydown', '#product', function (e) {
-        let list = $('#product-list table tbody tr');
-        ProductKeyDown(e, list, '#product', '#product-list table tbody', '#mrp', '#cp', '#unit', '#quantity', '#totAmount');
-    });
-
-
-    // Product List Key down Event
-    $(document).off('keydown', '#product-list table tbody tr').on('keydown', '#product-list table tbody tr', function (e) {
-        let list = $('#product-list table tbody tr');
-        let focused = $('#product-list table tbody tr:focus');
-        ProductListKeyDown(e, list, focused, '#product', '#product-list table tbody', '#mrp', '#cp', '#unit', '#quantity', '#totAmount');
-    });
-
-
-    // Product Focus Event
-    $(document).off('focus', '#product').on('focus', '#product', function (e) {
-        let product = $(this).val();
-        let groupe;
-        let groupein;
-        if ($('#groupein').length) {
-            groupe = $('.groupe-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            groupein = 1;
-        } else {
-            groupe = $('#groupe').val();
-            groupein = 0;
-        }
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            getProductByGroupe(groupe, groupein, product,  '#product-list table tbody');
-        }
-        else{
-            e.preventDefault();
-        }
-    });
-
-
-    // Product Focous out event
-    $(document).off('focusout', '#product').on('focusout', '#product', function (e) {
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            $(document).on('click', function (e){
-                if($(e.target).attr('tabindex') == undefined){
-                    $('#product-list table tbody').html('');
-                }
-            });
-        }
-    });
-
-
-    // Product List Click Event
-    $(document).off('click', '#product-list tbody tr').on('click', '#product-list tbody tr', function () {
-        let value = $(this).find('td:first').text();
-        let id = $(this).data('id');
-        let groupe = $(this).data('groupe');
-        let qty = $('#quantity').val();
-        let cp = $(this).data('cp');
-        let mrp = $(this).data('mrp');
-        let unitid = $(this).data('unit-id');
-        let unitname = $(this).data('unit');
-
-        $('#product').val(value);
-        $('#product').attr('data-id', id);
-        $('#product').attr('data-groupe', groupe);
-        $('#mrp').val(mrp);
-        $('#cp').val(cp);
-        $('#unit').val(unitname);
-        $('#unit').attr('data-id', unitid);
-
-        const path = window.location.pathname;
-        const pathSegments = path.split("/");
-
-        if(pathSegments[3] === 'issue'){
-            $('#totAmount').val(mrp * qty);
-        }
-        else if(pathSegments[3] === 'purchase'){
-            $('#totAmount').val(cp * qty);
-        }
-
-        $('#product-list table tbody').html('');
-        $('#product').focus();
-        
-    });
-
-
-
-    // Update Product Keyup event
-    $(document).off('keyup', '#updateProduct').on('keyup', '#updateProduct', function (e) {
-        let product = $(this).val();
-        let groupe;
-        let groupein;
-        if ($('#updategroupein').length) {
-            groupe = $('.updategroupe-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            groupein = 1;
-        } else {
-            groupe = $('#updategroupe').val();
-            groupein = 0;
-        }
-        let id = $(this).attr('data-id');
-        ProductKeyUp(e, groupe, groupein, product, id, '#updateProduct', '#update-product table tbody', '#updateMrp', '#updateCp', '#updateUnit', '#updateQuantity', '#updateTotAmount');
-    });
-
-
-
-    // Update Product Keydown event
-    $(document).off('keydown', '#updateProduct').on('keydown', '#updateProduct', function (e) {
-        let list = $('#update-product table tbody tr');
-        ProductKeyDown(e, list, '#updateProduct', '#update-product table tbody', '#updateMrp', '#updateCp', '#updateUnit', '#updateQuantity', '#updateTotAmount');
-    });
-
-
-
-    // Update Product List Keydown event
-    $(document).off('keydown', '#update-product table tbody tr').on('keydown', '#update-product table tbody tr', function (e) {
-        let list = $('#update-product table tbody tr');
-        let focused = $('#update-product table tbody tr:focus');
-        ProductListKeyDown(e, list, focused, '#updateProduct', '#update-product table tbody', '#updateMrp', '#updateCp', '#updateUnit', '#updateQuantity', 'totAmount');
-    });
-
-
-
-    // Update Product Focus Event
-    $(document).off('focus', '#updateProduct').on('focus', '#updateProduct', function (e) {
-        let product = $(this).val();
-        let groupe;
-        let groupein;
-        if ($('#updategroupein').length) {
-            groupe = $('.updategroupe-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-            groupein = 1;
-        } else {
-            groupe = $('#updateGroupe').val();
-            groupein = 0;
-        }
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            getProductByGroupe(groupe, groupein, product, '#update-product table tbody');
-        }
-        else{
-            e.preventDefault();
-        }
-    });
+    );
 
 
     
-    // Update Product Focousout event
-    $(document).off('focusout', '#updateProduct').on('focusout', '#updateProduct', function (e) {
-        let id = $(this).attr('data-id');
-        if(id == undefined){
-            $(document).on('click', function (e){
-                if($(e.target).attr('tabindex') == undefined){
-                    $('#update-product table tbody').html('');
-                }
-            });
-        }
-    });
+    // Update Product Input Search
+    SearchByInput(
+        'inventory/setup/product/get', 
 
-
-    // Update Product Click Event
-    $(document).off('click', '#update-product tbody tr').on('click', '#update-product tbody tr', function () {
-        let value = $(this).find('td:first').text();
-        let id = $(this).data('id');
-        let groupe = $(this).data('groupe');
-        let qty = $('#updateQuantity').val();
-        let cp = $(this).data('cp');
-        let mrp = $(this).data('mrp');
-        let unitid = $(this).data('unit-id');
-        let unitname = $(this).data('unit');
-
-        $('#updateProduct').val(value);
-        $('#updateProduct').attr('data-id', id);
-        $('#updateProduct').attr('data-groupe', groupe);
-        $('#updateMrp').val(mrp);
-        $('#updateCp').val(cp);
-        $('#updateUnit').val(unitname);
-        $('#updateUnit').attr('data-id', unitid);
-
-        const path = window.location.pathname;
-        const pathSegments = path.split("/");
-
-        if(pathSegments[3] === 'issue'){
-            $('#updateTotAmount').val(mrp * qty);
-        }
-        else if(pathSegments[3] === 'purchase'){
-            $('#updateTotAmount').val(cp * qty);
-        }
-
-
-
-        $('#update-product table tbody').html('');
-        $('#updateProduct').focus();
-    });
-
-
-
-    // Product Key Up Event Function
-    function ProductKeyUp(e, groupe, groupein, product, id, targetElement1, targetElement2, targetElement3, targetElement4, targetElement5, targetElement6, targetElement7){
-        if (e.keyCode === 13) { // Enter Key
-            e.preventDefault();
-        }
-        else if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 8){
-            //keyCode 65 = a, keyCode 90 = z, keyCode 96 = 0, keyCode 105 = 9, keyCode 8 = backSpace
-            $(targetElement1).removeAttr('data-id');
-            $(targetElement1).removeAttr('data-groupe');
-            $(targetElement5).removeAttr('data-id');
-            $(targetElement3).val('');
-            $(targetElement4).val('');
-            $(targetElement5).val('');
-            $(targetElement7).val('');
-            getProductByGroupe(groupe, groupein, product,  targetElement2);
-        }
-        else if (e.keyCode === 9) { // Tab key
-            if (id != undefined) {
-                e.preventDefault();
+        function ($input) {
+            let groupe;
+            let groupein;
+            if ($('#groupein').length) {
+                groupe = $('.groupe-checkbox:checked').map(function() {
+                    return $(this).val()
+                }).get();
+                groupein = 1;
+            } else {
+                groupe = $('#updateGroupe').val();
+                groupein = 0;
             }
-            else{
-                $(targetElement1).removeAttr('data-id');
-                $(targetElement1).removeAttr('data-groupe');
-                $(targetElement5).removeAttr('data-id');
-                $(targetElement3).val('');
-                $(targetElement4).val('');
-                $(targetElement5).val('');
-                $(targetElement7).val('');
-                getProductByGroupe(groupe, groupein, product,  targetElement2);
-            }
-        }
-    }
+            
+            return {
+                groupe,
+                groupein,
+                product: $input.val(),
+            };
+        }, 
 
+        '#updateProduct', 
 
-    // Product Key Down Event Function
-    function ProductKeyDown(e, list, targetElement1, targetElement2, targetElement3, targetElement4, targetElement5, targetElement6, targetElement7) {
-        if (list.length > 0) {
-            let qty = $(targetElement6).val();
-            if (e.keyCode === 40) { // Down arrow key
-                e.preventDefault();
-                list.first().focus();
-                $(targetElement1).val(list.first().find('td:first').text());
-                $(targetElement1).attr("data-id", list.data('id'));
-                $(targetElement1).attr("data-groupe", list.data('groupe'));
-                $(targetElement5).attr('data-id',list.data('unit-id'));
-                $(targetElement3).val(list.first().attr('data-mrp'));
-                $(targetElement4).val(list.first().attr('data-cp'));
-                $(targetElement5).val(list.first().attr('data-unit'));
+        '#update-product table tbody',
 
-                const path = window.location.pathname;
-                const pathSegments = path.split("/");
+        '#update-product table tbody tr',
 
-                if(pathSegments[3] === 'issue'){
-                    $(targetElement7).val(list.first().attr('data-mrp') * qty);
-                }
-                else if(pathSegments[3] === 'purchase'){
-                    $(targetElement7).val(list.first().attr('data-cp') * qty);
-                }
-            } 
-            else if (e.keyCode === 38) { // Up arrow key
-                e.preventDefault();
-                list.last().focus();
-                $(targetElement1).val(list.last().find('td:first').text());
-                $(targetElement1).attr("data-id", list.data('id'));
-                $(targetElement1).attr("data-groupe", list.data('groupe'));
-                $(targetElement5).attr('data-id',list.data('unit-id'));
-                $(targetElement3).val(list.last().attr('data-mrp'));
-                $(targetElement4).val(list.last().attr('data-cp'));
-                $(targetElement5).val(list.last().attr('data-unit'));
+        undefined, 
 
-                const path = window.location.pathname;
-                const pathSegments = path.split("/");
+        "",
 
-                if(pathSegments[3] === 'issue'){
-                    $(targetElement7).val(list.last().attr('data-mrp') * qty);
-                }
-                else if(pathSegments[3] === 'purchase'){
-                    $(targetElement7).val(list.last().attr('data-cp') * qty);
-                }
-            } 
-            else if (e.keyCode === 13) { // Enter key
-                e.preventDefault();
-            } 
-            else if (e.keyCode === 9) { // Tab key
-                $(targetElement2).html('');
-            }
-        }
-    }
-
-
-    // Product List Key Down Event function
-    function ProductListKeyDown(e, list, focused, targetElement1, targetElement2, targetElement3, targetElement4, targetElement5, targetElement6, targetElement7) {
-        let qty = $(targetElement6).val();
-        if (e.keyCode === 40) { // Down arrow key
-            e.preventDefault();
-            let nextIndex = focused.index() + 1;
-            if (nextIndex >= list.length) {
-                nextIndex = 0; // Loop to the first item
-            }
-            list.eq(nextIndex).focus();
-            $(targetElement1).val(list.eq(nextIndex).find('td:first').text());
-            $(targetElement1).attr("data-id", list.eq(nextIndex).data('id'));
-            $(targetElement1).attr("data-groupe", list.eq(nextIndex).data('groupe'));
-            $(targetElement5).attr('data-id',list.data('unit-id'));
-            $(targetElement3).val(list.eq(nextIndex).attr('data-mrp'));
-            $(targetElement4).val(list.eq(nextIndex).attr('data-cp'));
-            $(targetElement5).val(list.eq(nextIndex).attr('data-unit'));
+        function (targetInput, item) {
+            $(targetInput).val(item.find('td:first').text());
+            $(targetInput).attr("data-groupe", item.data('groupe'));
+            $('#updateMrp').val(item.attr('data-mrp'));
+            $('#updateCp').val(item.attr('data-cp'));
+            $('#updateUnit').val(item.attr('data-unit'));
+            $('#updateUnit').attr('data-id',item.data('unit-id'));
+            let qty = $('#updateQuantity').val();
 
             const path = window.location.pathname;
             const pathSegments = path.split("/");
             
             if(pathSegments[3] === 'issue'){
-                $(targetElement7).val(list.eq(nextIndex).attr('data-mrp') * qty);
+                $('#updateTotAmount').val(item.attr('data-mrp') * qty);
             }
             else if(pathSegments[3] === 'purchase'){
-                $(targetElement7).val(list.eq(nextIndex).attr('data-cp') * qty);
+                $('#updateTotAmount').val(item.attr('data-cp') * qty);
             }
-        } 
-        else if (e.keyCode === 38) { // Up arrow key
-            e.preventDefault();
-            let prevIndex = focused.index() - 1;
-            if (prevIndex < 0) {
-                prevIndex = list.length - 1; // Loop to the last item
-            }
-            list.eq(prevIndex).focus();
-            $(targetElement1).val(list.eq(prevIndex).find('td:first').text());
-            $(targetElement1).attr("data-id", list.eq(prevIndex).data('id'));
-            $(targetElement1).attr("data-groupe", list.eq(prevIndex).data('groupe'));
-            $(targetElement5).attr('data-id',list.data('unit-id'));
-            $(targetElement3).val(list.eq(prevIndex).attr('data-mrp'));
-            $(targetElement4).val(list.eq(prevIndex).attr('data-cp'));
-            $(targetElement5).val(list.eq(prevIndex).attr('data-unit'));
+        }, 
 
-            const path = window.location.pathname;
-            const pathSegments = path.split("/");
-            
-            if(pathSegments[3] === 'issue'){
-                $(targetElement7).val(list.eq(prevIndex).attr('data-mrp') * qty);
-            }
-            else if(pathSegments[3] === 'purchase'){
-                $(targetElement7).val(list.eq(prevIndex).attr('data-cp') * qty);
-            }
-        } 
-        else if (e.keyCode === 13) { // Enter key
-            e.preventDefault();
-            $(targetElement2).html('');
-            $(targetElement1).focus();
+        function (targetInput) {
+            $(targetInput).removeAttr('data-groupe');
+            $('#updateUnit').removeAttr('data-id');
+            $('#updateMrp').val('');
+            $('#updateCp').val('');
+            $('#updateUnit').val('');
+            $('#updateTotAmount').val('');
         }
-        else if (e.keyCode === 9) { // Tab key
-            e.preventDefault();
-        }
-    }
+    );
 
-
-    // Search Product by Name
-    function getProductByGroupe(groupe, groupein, product, targetElement1) {
-        $.ajax({
-            url: `${apiUrl}/inventory/setup/product/get`,
-            method: 'GET',
-            data: { groupe, groupein, product },
-            success: function (res) {
-                $(targetElement1).html(res);
-            }
-        });
-    }
-
-    /////////////// ------------------ Search Head By Name And Groupe add value to input ajax part end ---------------- /////////////////////////////
+    /////////////// ------------------ Search Products By Name And Groupe add value to input ajax part end ---------------- /////////////////////////////
 
 
 
@@ -1247,7 +996,9 @@ $(document).ready(function () {
 
         '#specialization', 
 
-        '#specialization-list ul'
+        '#specialization-list ul',
+
+        '#specialization-list ul li',
     );
 
 
@@ -1263,7 +1014,9 @@ $(document).ready(function () {
 
         '#updateSpecialization', 
 
-        '#update-specialization ul'
+        '#update-specialization ul',
+
+        '#update-specialization ul li',
     );
 
 
@@ -1283,7 +1036,9 @@ $(document).ready(function () {
 
         '#bed_category', 
 
-        '#bed_category-list ul'
+        '#bed_category-list ul',
+
+        '#bed_category-list ul li',
     );
 
 
@@ -1299,7 +1054,9 @@ $(document).ready(function () {
 
         '#updateBed_Category', 
 
-        '#update-bed_category ul'
+        '#update-bed_category ul',
+
+        '#update-bed_category ul li',
     );
     
     
@@ -1320,7 +1077,9 @@ $(document).ready(function () {
 
         '#bed_list', 
 
-        '#bed_list-list ul'
+        '#bed_list-list ul',
+
+        '#bed_list-list ul li',
     );
 
 
@@ -1337,7 +1096,9 @@ $(document).ready(function () {
 
         '#updateBed_List', 
 
-        '#update-bed_list ul'
+        '#update-bed_list ul',
+
+        '#update-bed_list ul li',
     );
 
 
@@ -1357,7 +1118,9 @@ $(document).ready(function () {
 
         '#nursing_station', 
 
-        '#nursing_station-list ul'
+        '#nursing_station-list ul',
+
+        '#nursing_station-list ul li',
     );
 
 
@@ -1373,7 +1136,9 @@ $(document).ready(function () {
 
         '#updateNursing_Station', 
 
-        '#update-nursing_station ul'
+        '#update-nursing_station ul',
+
+        '#update-nursing_station ul li',
     );
 
 
@@ -1394,7 +1159,9 @@ $(document).ready(function () {
 
         '#sr', 
 
-        '#sr-list ul'
+        '#sr-list ul',
+
+        '#sr-list ul li',
     );
 
 
@@ -1411,7 +1178,9 @@ $(document).ready(function () {
 
         '#updateSR', 
 
-        '#update-sr ul'
+        '#update-sr ul',
+
+        '#update-sr ul li',
     );
 
 
@@ -1432,7 +1201,9 @@ $(document).ready(function () {
 
         '#marketing_head', 
 
-        '#marketing_head-list ul'
+        '#marketing_head-list ul',
+
+        '#marketing_head-list ul li',
     );
 
 
@@ -1449,7 +1220,9 @@ $(document).ready(function () {
 
         '#updateMarketing_Head', 
 
-        '#update-marketing_head ul'
+        '#update-marketing_head ul',
+
+        '#update-marketing_head ul li',
     );
 
 
@@ -1469,7 +1242,9 @@ $(document).ready(function () {
 
         '#doctor', 
 
-        '#doctor-list ul'
+        '#doctor-list ul',
+
+        '#doctor-list ul li',
     );
 
 
@@ -1485,6 +1260,226 @@ $(document).ready(function () {
 
         '#updateDoctor', 
 
-        '#update-doctor ul'
+        '#update-doctor ul',
+
+        '#update-doctor ul li',
     );
+
+
+
+
+
+    /////////////// ------------------ Search Patients And add value to input ajax part start ---------------- /////////////////////////////
+    // Patient Input Search
+    SearchByInput(
+        'hospital/ptnregistration/get/patient',  
+
+        function ($input) {
+            return {
+                ptn_id: $input.val(),
+                opt: 1,
+            };
+        }, 
+
+        '#ptn_id', 
+
+        '#ptn-list ul',
+
+        '#ptn-list ul li',
+
+        undefined, 
+
+        "",
+
+        // function (targetInput, item) {
+        //     $(targetInput).val(item.find('td:first').text());
+        //     $(targetInput).attr("data-groupe", item.data('groupe'));
+        //     $('#mrp').val(item.attr('data-mrp'));
+        //     $('#cp').val(item.attr('data-cp'));
+        //     $('#unit').val(item.attr('data-unit'));
+        //     $('#unit').attr('data-id',item.data('unit-id'));
+        //     let qty = $('#quantity').val();
+
+        //     const path = window.location.pathname;
+        //     const pathSegments = path.split("/");
+            
+        //     if(pathSegments[3] === 'issue'){
+        //         $('#totAmount').val(item.attr('data-mrp') * qty);
+        //     }
+        //     else if(pathSegments[3] === 'purchase'){
+        //         $('#totAmount').val(item.attr('data-cp') * qty);
+        //     }
+        // },
+
+        // function (targetInput) {
+        //     $(targetInput).removeAttr('data-groupe');
+        //     $('#unit').removeAttr('data-id');
+        //     $('#mrp').val('');
+        //     $('#cp').val('');
+        //     $('#unit').val('');
+        //     $('#totAmount').val('');
+        // }
+    );
+
+
+    
+    // Update Patient Input Search
+    SearchByInput(
+        'hospital/ptnregistration/get/patient', 
+
+        function ($input) {
+            return {
+                ptn_id: $input.val(),
+                opt: 1,
+            };
+        }, 
+
+        '#updatePtn_Id', 
+
+        '#update-ptn ul',
+
+        '#update-ptn ul li',
+
+        undefined, 
+
+        "",
+
+        // function (targetInput, item) {
+        //     $(targetInput).val(item.find('td:first').text());
+        //     $(targetInput).attr("data-groupe", item.data('groupe'));
+        //     $('#updateMrp').val(item.attr('data-mrp'));
+        //     $('#updateCp').val(item.attr('data-cp'));
+        //     $('#updateUnit').val(item.attr('data-unit'));
+        //     $('#updateUnit').attr('data-id',item.data('unit-id'));
+        //     let qty = $('#updateQuantity').val();
+
+        //     const path = window.location.pathname;
+        //     const pathSegments = path.split("/");
+            
+        //     if(pathSegments[3] === 'issue'){
+        //         $('#updateTotAmount').val(item.attr('data-mrp') * qty);
+        //     }
+        //     else if(pathSegments[3] === 'purchase'){
+        //         $('#updateTotAmount').val(item.attr('data-cp') * qty);
+        //     }
+        // }, 
+
+        // function (targetInput) {
+        //     $(targetInput).removeAttr('data-groupe');
+        //     $('#updateUnit').removeAttr('data-id');
+        //     $('#updateMrp').val('');
+        //     $('#updateCp').val('');
+        //     $('#updateUnit').val('');
+        //     $('#updateTotAmount').val('');
+        // }
+    );
+    
+    
+    
+    /////////////// ------------------ Search Patients And add value to input ajax part start ---------------- /////////////////////////////
+    // Patient Input Search
+    SearchByInput(
+        'hospital/ptnregistration/get/patient',  
+
+        function ($input) {
+            return {
+                ptn_phone: $input.val(),
+                opt: 2,
+            };
+        }, 
+
+        '#ptn_phone', 
+
+        '#ptn-phone-list ul',
+
+        '#ptn-phone-list ul li',
+
+        undefined, 
+
+        "",
+
+        // function (targetInput, item) {
+        //     $(targetInput).val(item.find('td:first').text());
+        //     $(targetInput).attr("data-groupe", item.data('groupe'));
+        //     $('#mrp').val(item.attr('data-mrp'));
+        //     $('#cp').val(item.attr('data-cp'));
+        //     $('#unit').val(item.attr('data-unit'));
+        //     $('#unit').attr('data-id',item.data('unit-id'));
+        //     let qty = $('#quantity').val();
+
+        //     const path = window.location.pathname;
+        //     const pathSegments = path.split("/");
+            
+        //     if(pathSegments[3] === 'issue'){
+        //         $('#totAmount').val(item.attr('data-mrp') * qty);
+        //     }
+        //     else if(pathSegments[3] === 'purchase'){
+        //         $('#totAmount').val(item.attr('data-cp') * qty);
+        //     }
+        // },
+
+        // function (targetInput) {
+        //     $(targetInput).removeAttr('data-groupe');
+        //     $('#unit').removeAttr('data-id');
+        //     $('#mrp').val('');
+        //     $('#cp').val('');
+        //     $('#unit').val('');
+        //     $('#totAmount').val('');
+        // }
+    );
+
+
+    
+    // Update Patient Input Search
+    SearchByInput(
+        'hospital/ptnregistration/get/patient', 
+
+        function ($input) {
+            return {
+                ptn_phone: $input.val(),
+                opt: 2,
+            };
+        }, 
+
+        '#updatePtn_Phone', 
+
+        '#update-ptn-phone ul',
+
+        '#update-ptn-phone ul li',
+
+        undefined, 
+
+        "",
+
+        // function (targetInput, item) {
+        //     $(targetInput).val(item.find('td:first').text());
+        //     $(targetInput).attr("data-groupe", item.data('groupe'));
+        //     $('#updateMrp').val(item.attr('data-mrp'));
+        //     $('#updateCp').val(item.attr('data-cp'));
+        //     $('#updateUnit').val(item.attr('data-unit'));
+        //     $('#updateUnit').attr('data-id',item.data('unit-id'));
+        //     let qty = $('#updateQuantity').val();
+
+        //     const path = window.location.pathname;
+        //     const pathSegments = path.split("/");
+            
+        //     if(pathSegments[3] === 'issue'){
+        //         $('#updateTotAmount').val(item.attr('data-mrp') * qty);
+        //     }
+        //     else if(pathSegments[3] === 'purchase'){
+        //         $('#updateTotAmount').val(item.attr('data-cp') * qty);
+        //     }
+        // }, 
+
+        // function (targetInput) {
+        //     $(targetInput).removeAttr('data-groupe');
+        //     $('#updateUnit').removeAttr('data-id');
+        //     $('#updateMrp').val('');
+        //     $('#updateCp').val('');
+        //     $('#updateUnit').val('');
+        //     $('#updateTotAmount').val('');
+        // }
+    );
+
+    /////////////// ------------------ Search Patients and add value to input ajax part end ---------------- /////////////////////////////
 });
