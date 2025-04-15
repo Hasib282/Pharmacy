@@ -1002,7 +1002,7 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
         Route::prefix('/transaction')->group(function () {
             Route::controller(HospitalTransactionController::class)->group(function(){
                 ///////////// --------------- Admission Fee Routes Start ----------- ///////////////////
-                Route::get('/admission',  'ShowAdmission')->name('show.admission');
+                Route::get('/admission',  'showadmission')->name('show.admission');
                 Route::get('/admission/search',  'SearchAdmission')->name('search.admission');
                 
                 
