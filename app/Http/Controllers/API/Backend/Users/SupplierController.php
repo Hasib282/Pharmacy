@@ -19,15 +19,9 @@ class SupplierController extends Controller
 {
     // Show All Suppliers
     public function ShowAll(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
+        $type = GetTranType($req->segment(2));
 
-        $type = $segments[$req->segment(2)] ?? null;
-
-        $supplier = User_Info::on('mysql_second')
+        $data = User_Info::on('mysql_second')
         ->with('Withs', 'Location')
         ->whereHas('Withs', function ($q) use ($type) {
             $q->where('tran_type', $type);
@@ -38,7 +32,7 @@ class SupplierController extends Controller
 
         return response()->json([
             'status'=> true,
-            'data' => $supplier,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -86,20 +80,14 @@ class SupplierController extends Controller
 
     // Edit Suppliers
     public function Edit(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
-
-        $type = $segments[$req->segment(2)] ?? null;
+        $type = GetTranType($req->segment(2));
 
         $supplier = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($req->id);
-        $tranwith = Transaction_With::on('mysql_second')->where('tran_type', $type)->where('user_role','5')->get();
+        $data = Transaction_With::on('mysql_second')->where('tran_type', $type)->where('user_role','5')->get();
         return response()->json([
             'status'=> true,
             'supplier'=> $supplier,
-            'tranwith'=> $tranwith,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -107,7 +95,7 @@ class SupplierController extends Controller
 
     // Update Suppliers
     public function Update(Request $req){
-        $supplier = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
@@ -119,10 +107,10 @@ class SupplierController extends Controller
             "type" => 'required|exists:mysql_second.transaction__withs,id'
         ]);
 
-        DB::transaction(function () use ($req, $supplier) {
-            $imageName = UpdateUserImage($req, $supplier->image, null, $supplier->user_id);
+        DB::transaction(function () use ($req, $data) {
+            $imageName = UpdateUserImage($req, $data->image, null, $data->user_id);
 
-            $update = User_Info::on('mysql_second')->findOrFail($req->id)->update([
+            $update = $data->update([
                 "tran_user_type" => $req->type,
                 "user_name" => $req->name,
                 "user_email" => $req->email,
@@ -145,11 +133,11 @@ class SupplierController extends Controller
 
     // Delete Suppliers
     public function Delete(Request $req){
-        $supplier = User_Info::on('mysql_second')->findOrFail($req->id);
-        if($supplier->image){
-            Storage::disk('public')->delete($supplier->image);
+        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        if($data->image){
+            Storage::disk('public')->delete($data->image);
         }
-        $supplier->delete();
+        $data->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Supplier Details Deleted Successfully',
@@ -160,13 +148,7 @@ class SupplierController extends Controller
 
     // Search Suppliers
     public function Search(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
-
-        $type = $segments[$req->segment(2)] ?? null;
+        $type = GetTranType($req->segment(2));
 
         $query = User_Info::on('mysql_second')
         ->with('Withs', 'Location')
@@ -205,11 +187,11 @@ class SupplierController extends Controller
         }
 
         // Execute query and paginate
-        $supplier = $query->paginate(15);
+        $data = $query->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $supplier,
+            'data' => $data,
         ], 200);
     } // End Method
 

@@ -42,22 +42,22 @@ $(document).ready(function () {
     $(document).off('keyup', '#from').on('keyup', '#from', function (e) {
         let from = $(this).val();
         let id = $(this).attr('data-id');
-        FromUserKeyUp(e, from, id, '#from', '#from-list ul');
+        FromUserKeyUp(e, from, id, '#from', '#from-list');
     });
 
 
     // From User Keydown Event
     $(document).off('keydown', '#from').on('keydown', '#from', function (e) {
-        let list = $('#from-list ul li');
-        FromUserKeyDown(e, list, '#from', '#from-list ul');
+        let list = $('#from-list li');
+        FromUserKeyDown(e, list, '#from', '#from-list');
     });
 
 
     // From User List keydown Event
-    $(document).off('keydown', '#from-list ul li').on('keydown', '#from-list ul li', function (e) {
-        let list = $('#from-list ul li');
-        let focused = $('#from-list ul li:focus');
-        FromUserListKeyDown(e, list, focused, '#from', '#from-list ul');
+    $(document).off('keydown', '#from-list li').on('keydown', '#from-list li', function (e) {
+        let list = $('#from-list li');
+        let focused = $('#from-list li:focus');
+        FromUserListKeyDown(e, list, focused, '#from', '#from-list');
     });
 
 
@@ -67,7 +67,7 @@ $(document).ready(function () {
         let id = $(this).data('id');
         $('#from').val(value);
         $('#from').attr('data-id', id);
-        $('#from-list ul').html('');
+        $('#from-list').html('');
     });
 
 
@@ -76,7 +76,7 @@ $(document).ready(function () {
         let from = $(this).val();
         let id = $(this).attr('data-id');
         if(id == undefined){
-            getFromUserByName(from, '#from-list ul');
+            getFromUserByName(from, '#from-list');
         }
         else{
             e.preventDefault();
@@ -90,7 +90,7 @@ $(document).ready(function () {
         if(id == undefined){
             $(document).on('click', function (e){
                 if($(e.target).attr('tabindex') == undefined){
-                    $('#from-list ul').html('');
+                    $('#from-list').html('');
                 }
             });
         }
@@ -195,22 +195,22 @@ $(document).ready(function () {
     $(document).off('keyup', '#to').on('keyup', '#to', function (e) {
         let to = $(this).val();
         let id = $(this).attr('data-id');
-        ToUserKeyUp(e, to, id, '#to', '#to-list ul');
+        ToUserKeyUp(e, to, id, '#to', '#to-list');
     });
 
 
     // To User Keydown Event
     $(document).off('keydown', '#to').on('keydown', '#to', function (e) {
-        let list = $('#to-list ul li');
-        ToUserKeyDown(e, list, '#to', '#to-list ul');
+        let list = $('#to-list li');
+        ToUserKeyDown(e, list, '#to', '#to-list');
     });
 
 
     // To User List keydown Event
-    $(document).off('keydown', '#to-list ul li').on('keydown', '#to-list ul li', function (e) {
-        let list = $('#to-list ul li');
-        let focused = $('#to-list ul li:focus');
-        ToUserListKeyDown(e, list, focused, '#to', '#to-list ul');
+    $(document).off('keydown', '#to-list li').on('keydown', '#to-list li', function (e) {
+        let list = $('#to-list li');
+        let focused = $('#to-list li:focus');
+        ToUserListKeyDown(e, list, focused, '#to', '#to-list');
     });
 
 
@@ -220,7 +220,7 @@ $(document).ready(function () {
         let id = $(this).data('id');
         $('#to').val(value);
         $('#to').attr('data-id', id);
-        $('#to-list ul').html('');
+        $('#to-list').html('');
     });
 
 
@@ -229,7 +229,7 @@ $(document).ready(function () {
         let to = $(this).val();
         let id = $(this).attr('data-id');
         if(id == undefined){
-            getToUserByName(to, '#to-list ul');
+            getToUserByName(to, '#to-list');
         }
         else{
             e.preventDefault();
@@ -243,7 +243,7 @@ $(document).ready(function () {
         if(id == undefined){
             $(document).on('click', function (e){
                 if($(e.target).attr('tabindex') == undefined){
-                    $('#to-list ul').html('');
+                    $('#to-list').html('');
                 }
             });
         }

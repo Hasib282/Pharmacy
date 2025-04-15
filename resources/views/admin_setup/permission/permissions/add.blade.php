@@ -10,6 +10,7 @@
         <!-- form start -->
         <form id="AddForm" method="post">
             @csrf
+            {{-- mainhead --}}
             <div class="form-input-group">
                 <label for="mainhead">Transaction Groupe <span class="required" title="Required">*</span></label>
                 <select name="mainhead" id="mainhead">
@@ -17,6 +18,7 @@
                 </select>
                 <span class="error" id="mainhead_error"></span>
             </div>
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="name">Permission Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="name" class="form-input" id="name">

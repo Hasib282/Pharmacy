@@ -10,19 +10,17 @@
         <!-- form start -->
         <form id="AddForm" method="post">
             @csrf
+            {{-- designation --}}
             <div class="form-input-group">
                 <label for="designations">Designation</label>
                 <input type="text" name="designations" class="form-input" id="designations">
                 <span class="error" id="designations_error"></span>
             </div>
+            {{-- department --}}
             <div class="form-input-group">
                 <label for="department">Department</label>
                 <input type="text" name="department" class="form-input" id="department" autocomplete="off">
-                <div id="department-list">
-                    <ul>
-
-                    </ul>
-                </div>
+                <div id="department-list"></div>
                 <span class="error" id="department_error"></span>
             </div>
             <div class="center">

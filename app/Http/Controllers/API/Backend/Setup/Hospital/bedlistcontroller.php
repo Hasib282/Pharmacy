@@ -148,21 +148,22 @@ class BedListController extends Controller
         ->take(10)
         ->get();
 
-
-        if($beds->count() > 0){
-            $list = "";
-            foreach($beds as $index => $bed) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$bed->id.'">'.$bed->name.'</li>';
-            }
-        }
-        else{
-            if($req->bed_category != 'undefined'){
-                $list = '<li>Select Bed Category First</li>';
+        $list = "<ul>";
+            if($beds->count() > 0){
+                foreach($beds as $index => $bed) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$bed->id.'">'.$bed->name.'</li>';
+                }
             }
             else{
-                $list = '<li>No Data Found</li>';
+                if($req->bed_category != 'undefined'){
+                    $list = '<li>Select Bed Category First</li>';
+                }
+                else{
+                    $list .= '<li>No Data Found</li>';
+                }
             }
-        }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 }

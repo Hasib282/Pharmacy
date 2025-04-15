@@ -11,7 +11,9 @@
         <form id="EditForm" method="post">
             @csrf
             @method('PUT')
+            {{-- id  --}}
             <input type="hidden" name="id" id="id">
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="updateName">{{ $name }} Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="name" class="form-input" id="updateName">

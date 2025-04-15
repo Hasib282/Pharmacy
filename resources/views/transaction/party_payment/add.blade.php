@@ -12,8 +12,10 @@
             @csrf
             <div class="rows">
                 <div class="c-6">
+                    {{-- within --}}
                     <div id="within" style="display: none"> </div>
                     <div class="rows">
+                        {{-- date  --}}
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="date">Date</label>
@@ -22,18 +24,16 @@
                                 <span class="error" id="date_error"></span>
                             </div>
                         </div>
+                        {{-- user --}}
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="user">Transaction User</label>
                                 <input type="text" name="user" class="form-input" id="user" autocomplete="off">
-                                <div id="user-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <div id="user-list"></div>
                                 <span class="error" id="user_error"></span>
                             </div>
                         </div>
+                        {{-- discount --}}
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for="discount">Discount</label>
@@ -41,6 +41,7 @@
                                 <span class="error" id="discount_error"></span>
                             </div>
                         </div>
+                        {{-- amount --}}
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for="amount">Amount</label>
@@ -54,6 +55,7 @@
                     </div>
                 </div>
                 <div class="c-6">
+                    {{-- due grid --}}
                     <div class="due-grid">
                         <table class="show-table">
                             <thead>

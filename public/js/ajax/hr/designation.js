@@ -77,10 +77,10 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.designations.id);
-        $('#updateDesignations').val(res.designations.designation);
-        $('#updateDepartment').attr('data-id',res.designations.dept_id);
-        $('#updateDepartment').val(res.designations.department.name);
+        $('#id').val(res.data.id);
+        $('#updateDesignations').val(res.data.designation);
+        $('#updateDepartment').attr('data-id',res.data.dept_id);
+        $('#updateDepartment').val(res.data.department.name);
         $('#updateDesignations').focus();
     }
 });

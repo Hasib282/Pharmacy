@@ -12,8 +12,10 @@
             @csrf
             @method('PUT')
             <div class="rows">
+                {{-- id  --}}
                 <input type="hidden" name="id" id="id">
                 @if ($name != "Admin" && $name != "Super Admin" && $name != "Sales Representative" && $name != "SR")
+                    {{-- type --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="updateType">{{ $name }} Type <span class="required" title="Required">*</span></label>
@@ -24,7 +26,7 @@
                         </div>
                     </div>
                 @endif
-
+                {{-- name --}}
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="updateName">{{ $name }} Name <span class="required" title="Required">*</span></label>
@@ -32,6 +34,7 @@
                         <span class="error" id="update_name_error"></span>
                     </div>
                 </div>
+                {{-- email  --}}
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="updateEmail">Email <span class="required" title="Required">*</span></label>
@@ -39,6 +42,7 @@
                         <span class="error" id="update_email_error"></span>
                     </div>
                 </div>
+                {{-- phone  --}}
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="updatePhone">Phone <span class="required" title="Required">*</span></label>
@@ -48,6 +52,7 @@
                 </div>
 
                 @if ($name != "Super Admin" && $name != "Admin")
+                    {{-- gender --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="updateGender">Gender <span class="required" title="Required">*</span></label>
@@ -60,28 +65,24 @@
                             <span class="error" id="update_gender_error"></span>
                         </div>
                     </div>
+                    {{-- division --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="updateDivision">Division <span class="required" title="Required">*</span></label>
-                            <select name="division" id="updateDivision">
-            
-                            </select>
+                            <select name="division" id="updateDivision"></select>
                             <span class="error" id="update_division_error"></span>
                         </div>
                     </div>
+                    {{-- location --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="updateLocation">Location <span class="required" title="Required">*</span></label>
                             <input type="text" name="location" class="form-input" id="updateLocation" autocomplete="off">
-                            <div id="update-location">
-                                <ul>
-
-                                </ul>
-                            </div>
+                            <div id="update-location"></div>
                             <span class="error" id="update_location_error"></span>
                         </div>
                     </div>
-                    
+                    {{-- address  --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="updateAddress">Address</label>
@@ -90,7 +91,7 @@
                         </div>
                     </div>
                 @endif
-
+                {{-- image --}}
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="updateImage">Image</label>

@@ -11,20 +11,19 @@
         <form id="EditForm" method="post">
             @csrf
             @method('PUT')
+            {{-- id  --}}
             <input type="hidden" name="id" id="id">
+            {{-- designation --}}
             <div class="form-input-group">
                 <label for="updateDesignations">Designation</label>
                 <input type="text" name="designations" class="form-input" id="updateDesignations">
                 <span class="error" id="update_designations_error"></span>
             </div>
+            {{-- department --}}
             <div class="form-input-group">
                 <label for="updateDepartment">Department</label>
                 <input type="text" name="department" class="form-input" id="updateDepartment" autocomplete="off">
-                <div id="update-department">
-                    <ul>
-
-                    </ul>
-                </div>
+                <div id="update-department"></div>
                 <span class="error" id="update_department_error"></span>
             </div>
             <div class="center">

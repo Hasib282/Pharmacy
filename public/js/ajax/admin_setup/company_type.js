@@ -34,8 +34,9 @@ function ShowCompanyTypes(data, startIndex) {
 
 // Additional Edit Functionality
 function EditFormInputValue(res){
-    $('#id').val(res.type.id);
-    $('#updateName').val(res.type.name);
+    $('#id').val(res.data.id);
+    $('#updateName').val(res.data.name);
+    $('#updateName').focus();
 }
 
 

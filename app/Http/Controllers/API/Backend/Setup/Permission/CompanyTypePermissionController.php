@@ -12,18 +12,18 @@ use App\Models\Permission_Head;
 
 class CompanyTypePermissionController extends Controller
 {
-    // Show All Role Permissions
+    // Show All Company Type Permissions
     public function ShowAll(Request $req){
-        $companytypepermission = Company_Type::on('mysql')->with('permissions')->orderBy('id')->get();
+        $data = Company_Type::on('mysql')->with('permissions')->orderBy('id')->get();
         return response()->json([
             'status'=> true,
-            'data' => $companytypepermission,
+            'data' => $data,
         ], 200);
     } // End Method
 
 
 
-    // Edit Role Permissions
+    // Edit Company Type Permissions
     public function Edit(Request $req){
         $type = Company_Type::on('mysql')->where('id',$req->id)->first();
         $companytypepermission = Permission_Company_Type::on('mysql')->where('company_type_id', $req->id)->pluck('permission_id')->toArray();
@@ -31,8 +31,6 @@ class CompanyTypePermissionController extends Controller
         ->orderBy('permission_mainhead')
         ->get()
         ->groupBy('permission_mainhead');
-
-        // dd(Cache::get("permission_ids_{$req->id}"));
 
         return response()->json([
             'status'=> true,
@@ -44,7 +42,7 @@ class CompanyTypePermissionController extends Controller
 
 
 
-    // Update Role Permissions
+    // Update Company Type Permissions
     public function Update(Request $req){
         $type = Company_Type::on('mysql')->findOrFail($req->type);
 
@@ -72,15 +70,15 @@ class CompanyTypePermissionController extends Controller
         
         return response()->json([
             'status'=> true,
-            'message' => 'Role Permissions Added Successfully'
+            'message' => 'Company Type Permissions Added Successfully'
         ], 200);  
     } // End Method
 
 
 
-    // Search Role Permissions
+    // Search Company Type Permissions
     public function Search(Request $req){
-        $companytypepermission = Company_Type::on('mysql')
+        $data = Company_Type::on('mysql')
         ->where('name', 'like', $req->search.'%')
         ->with('permissions')
         ->orderBy('name')
@@ -88,7 +86,7 @@ class CompanyTypePermissionController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $companytypepermission,
+            'data' => $data,
         ], 200);
     } // End Method
 }

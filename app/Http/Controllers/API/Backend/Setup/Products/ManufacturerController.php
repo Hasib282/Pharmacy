@@ -115,16 +115,18 @@ class ManufacturerController extends Controller
                         ->orderBy('manufacturer_name','asc')
                         ->take(10)
                         ->get();
-
-        if($manufacturers->count() > 0){
-            $list = "";
-            foreach($manufacturers as $index => $manufacturer) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$manufacturer->id.'">'.$manufacturer->manufacturer_name.'</li>';
+        
+        $list = "<ul>";
+            if($manufacturers->count() > 0){
+                foreach($manufacturers as $index => $manufacturer) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$manufacturer->id.'">'.$manufacturer->manufacturer_name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 }

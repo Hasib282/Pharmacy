@@ -34,8 +34,9 @@ function ShowMainHeads(data, startIndex) {
 
 // Additional Edit Functionality
 function EditFormInputValue(res){
-    $('#id').val(res.mainhead.id);
-    $('#updateName').val(res.mainhead.type_name);
+    $('#id').val(res.data.id);
+    $('#updateName').val(res.data.type_name);
+    $('#updateName').focus();
 }
 
 

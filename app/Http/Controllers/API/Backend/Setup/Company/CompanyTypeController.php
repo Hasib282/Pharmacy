@@ -12,10 +12,10 @@ class CompanyTypeController extends Controller
 {
     // Show All Company Types
     public function ShowAll(Request $req){
-        $type = Company_Type::on('mysql')->orderBy('added_at')->paginate(15);
+        $data = Company_Type::on('mysql')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $type,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -34,17 +34,17 @@ class CompanyTypeController extends Controller
         return response()->json([
             'status'=> true,
             'message' => 'Company Type Added Successfully'
-        ], 200);  
+        ], 200);
     } // End Method
 
 
 
     // Edit Company Types
     public function Edit(Request $req){
-        $type = Company_Type::on('mysql')->findOrFail($req->id);
+        $data = Company_Type::on('mysql')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'type'=> $type,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -52,13 +52,13 @@ class CompanyTypeController extends Controller
 
     // Update Company Types
     public function Update(Request $req){
-        $type = Company_Type::on('mysql')->findOrFail($req->id);
+        $data = Company_Type::on('mysql')->findOrFail($req->id);
         
         $req->validate([
-            "name" => ['required',Rule::unique('mysql.company__types', 'name')->ignore($type->id)],
+            "name" => ['required',Rule::unique('mysql.company__types', 'name')->ignore($data->id)],
         ]);
 
-        $update = Company_Type::on('mysql')->findOrFail($req->id)->update([
+        $update = $data->update([
             "name" => $req->name,
             "updated_at" => now()
         ]);
@@ -86,24 +86,24 @@ class CompanyTypeController extends Controller
 
     // Search Company Types
     public function Search(Request $req){
-        $type = Company_Type::on('mysql')->where('name', 'like', $req->search.'%')
+        $data = Company_Type::on('mysql')->where('name', 'like', $req->search.'%')
         ->orderBy('name')
         ->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $type,
+            'data' => $data,
         ], 200);
     } // End Method
 
 
 
-    // Get Transaction Main Head
+    // Get Company Types
     public function Get(){
-        $type = Company_Type::on('mysql')->orderBy('added_at')->paginate(15);
+        $data = Company_Type::on('mysql')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status' => true,
-            'type'=> $type,
+            'data'=> $data,
         ]);
     } // End Method
 }

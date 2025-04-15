@@ -12,10 +12,10 @@ class DepartmentController extends Controller
 {
     // Show All Departments
     public function ShowAll(Request $req){
-        $department = Department::on('mysql_second')->orderBy('added_at','asc')->paginate(15);
+        $data = Department::on('mysql_second')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $department,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -41,10 +41,10 @@ class DepartmentController extends Controller
 
     // Edit Departments
     public function Edit(Request $req){
-        $department = Department::on('mysql_second')->findOrFail($req->id);
+        $data = Department::on('mysql_second')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'department'=> $department,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -52,13 +52,13 @@ class DepartmentController extends Controller
 
     // Update Departments
     public function Update(Request $req){
-        $department = Department::on('mysql_second')->findOrFail($req->id);
+        $data = Department::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
-            "name" => ['required',Rule::unique('mysql_second.departments', 'name')->ignore($department->id)],
+            "name" => ['required',Rule::unique('mysql_second.departments', 'name')->ignore($data->id)],
         ]);
 
-        $update = Department::on('mysql_second')->findOrFail($req->id)->update([
+        $update = $data->update([
             "name" => $req->name,
         ]);
 
@@ -85,36 +85,37 @@ class DepartmentController extends Controller
 
     // Search Departments
     public function Search(Request $req){
-        $department = Department::on('mysql_second')
+        $data = Department::on('mysql_second')
         ->where('name', 'like', $req->search.'%')
         ->orderBy('name','asc')
         ->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $department,
+            'data' => $data,
         ], 200);
     } // End Method
 
 
+    
     // Get Departments
     public function Get(Request $req){
-        $departments = Department::on('mysql_second')
+        $data = Department::on('mysql_second')
         ->where('name', 'like', $req->department.'%')
         ->orderBy('name','asc')
         ->take(10)
         ->get();
 
-
-        if($departments->count() > 0){
-            $list = "";
-            foreach($departments as $index => $department) {
-                $list .= '<li tabindex="'.($index + 1).'" data-id="'.$department->id.'">'.$department->name.'</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="'.($index + 1).'" data-id="'.$item->id.'">'.$item->name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "<ul>";
 
         return $list;
     } // End Method

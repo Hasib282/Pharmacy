@@ -131,24 +131,24 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        getTransactionGrid(res.transaction.tran_id);
+        getTransactionGrid(res.data.tran_id);
 
-        $('#id').val(res.transaction.id);
+        $('#id').val(res.data.id);
         
-        $('#updateTranId').val(res.transaction.tran_id);
+        $('#updateTranId').val(res.data.tran_id);
 
-        var timestamps = new Date(res.transaction.tran_date);
+        var timestamps = new Date(res.data.tran_date);
         var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
         $('#updateDate').val(formattedDate);
         
-        $('#updateUser').attr('data-id',res.transaction.tran_user);
-        $('#updateUser').attr('data-with',res.transaction.tran_type_with);
-        $('#updateUser').val(res.transaction.user.user_name);
+        $('#updateUser').attr('data-id',res.data.tran_user);
+        $('#updateUser').attr('data-with',res.data.tran_type_with);
+        $('#updateUser').val(res.data.user.user_name);
 
 
-        $('#updateTotalDiscount').val(res.transaction.discount);
+        $('#updateTotalDiscount').val(res.data.discount);
 
-        $('#updateAdvance').val(res.transaction.receive);
+        $('#updateAdvance').val(res.data.receive);
 
         
         $("#updateHead").focus();

@@ -12,10 +12,10 @@ class StoreController extends Controller
 {
     // Show All Stores
     public function ShowAll(Request $req){
-        $store = Store::on('mysql_second')->with('Location')->orderBy('added_at')->paginate(15);
+        $data = Store::on('mysql_second')->with('Location')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $store,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -46,10 +46,10 @@ class StoreController extends Controller
 
     // Edit Stores
     public function Edit(Request $req){
-        $store = Store::on('mysql_second')->with('Location')->where('id', $req->id)->first();
+        $data = Store::on('mysql_second')->with('Location')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
-            'store'=> $store,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -57,13 +57,15 @@ class StoreController extends Controller
 
     // Update Stores
     public function Update(Request $req){
+        $data = Store::on('mysql_second')->findOrFail($req->id);
+
         $req->validate([
             'store_name' => 'required',
             'division' => 'required',
             'location' => 'required|exists:mysql.location__infos,id',
         ]);
 
-        $update = Store::on('mysql_second')->findOrFail($req->id)->update([
+        $update = $data->update([
             'store_name' => $req->store_name,
             'division' => $req->division,
             'location_id' => $req->location,
@@ -95,7 +97,7 @@ class StoreController extends Controller
     // Search Stores
     public function Search(Request $req){
         if($req->searchOption == 1){ // Search By Store Name
-            $store = Store::on('mysql_second')->with('Location')
+            $data = Store::on('mysql_second')->with('Location')
             ->where('store_name', 'like', '%'.$req->search.'%')
             ->where('division', 'like','%'.$req->division.'%')
             ->orderBy('store_name')
@@ -109,14 +111,14 @@ class StoreController extends Controller
             ->pluck('id');
 
             // Fetch stores from the 'mysql_second' database using the location IDs
-            $store = Store::on('mysql_second')
+            $data = Store::on('mysql_second')
             ->with('Location')
             ->whereIn('location_id', $locations)
             ->where('division', 'like', $req->division.'%')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search By Address
-            $store = Store::on('mysql_second')->with('Location')
+            $data = Store::on('mysql_second')->with('Location')
             ->where('address', 'like', '%'.$req->search.'%')
             ->where('division', 'like', $req->division.'%')
             ->orderBy('store_name')
@@ -125,7 +127,7 @@ class StoreController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $store,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -133,21 +135,23 @@ class StoreController extends Controller
 
     // Get Store By Name
     public function Get(Request $req){
-        $stores = Store::on('mysql_second')
+        $data = Store::on('mysql_second')
         ->where('store_name', 'like', $req->store.'%')
         ->orderBy('store_name')
         ->take(10)
         ->get();
 
-        if($stores->count() > 0){
-            $list = "";
-            foreach($stores as $index => $store) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$store->id.'">'.$store->store_name.'</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->store_name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 }

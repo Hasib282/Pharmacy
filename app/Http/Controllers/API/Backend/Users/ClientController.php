@@ -19,16 +19,9 @@ class ClientController extends Controller
 {
     // Show All Clients
     public function ShowAll(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'hr' => 3,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
+        $type = GetTranType($req->segment(2));
 
-        $type = $segments[$req->segment(2)] ?? null;
-
-        $client = User_Info::on('mysql_second')
+        $data = User_Info::on('mysql_second')
         ->with('Withs', 'Location')
         ->whereHas('Withs', function ($q) use ($type) {
             $q->where('tran_type', $type);
@@ -39,7 +32,7 @@ class ClientController extends Controller
 
         return response()->json([
             'status'=> true,
-            'data' => $client,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -87,19 +80,13 @@ class ClientController extends Controller
 
     // Edit Clients
     public function Edit(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
+        $type = GetTranType($req->segment(2));
 
-        $type = $segments[$req->segment(2)] ?? null;
-
-        $client = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($req->id);
         $tranwith = Transaction_With::on('mysql_second')->where('tran_type', $type)->where('user_role', 4)->get();
         return response()->json([
             'status'=> true,
-            'client'=> $client,
+            'data'=> $data,
             'tranwith'=> $tranwith,
         ], 200);
     } // End Method
@@ -108,7 +95,7 @@ class ClientController extends Controller
 
     // Update Clients
     public function Update(Request $req){
-        $client = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
             "type" => 'required|exists:mysql_second.tranaction__withs,id',
@@ -119,8 +106,8 @@ class ClientController extends Controller
             "location" => 'required|exists:mysql.location__infos,id',
         ]);
 
-        DB::transaction(function () use ($req, $client) {
-            $imageName = UpdateUserImage($req, $client->image, null, $client->user_id);
+        DB::transaction(function () use ($req, $data) {
+            $imageName = UpdateUserImage($req, $data->image, null, $data->user_id);
 
             $update = User_Info::on('mysql_second')->findOrFail($req->id)->update([
                 "tran_user_type" => $req->type,
@@ -145,10 +132,11 @@ class ClientController extends Controller
 
     // Delete Clients
     public function Delete(Request $req){
-        $client = User_Info::on('mysql_second')->findOrFail($req->id);
-        if($client->image){
-            Storage::disk('public')->delete($client->image);
+        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        if($data->image){
+            Storage::disk('public')->delete($data->image);
         }
+        $data->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Client Details Deleted Successfully',
@@ -159,13 +147,7 @@ class ClientController extends Controller
 
     // Search Clients
     public function Search(Request $req){
-        $segments = [
-            'transaction' => 1,
-            'inventory' => 5,
-            'pharmacy' => 6,
-        ];
-
-        $type = $segments[$req->segment(2)] ?? null;
+        $type = GetTranType($req->segment(2));
 
         $query = User_Info::on('mysql_second')
         ->with('Withs', 'Location')
@@ -204,11 +186,11 @@ class ClientController extends Controller
         }
 
         // Execute query and paginate
-        $client = $query->paginate(15);
+        $data = $query->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $client,
+            'data' => $data,
         ], 200);
     } // End Method
 

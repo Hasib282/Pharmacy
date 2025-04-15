@@ -73,8 +73,8 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.heads.id);
-        $('#updateHeadName').val(res.heads.tran_head_name);
+        $('#id').val(res.data.id);
+        $('#updateHeadName').val(res.data.tran_head_name);
         
         $('#updateHeadName').focus();
     }; // End Method

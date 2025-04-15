@@ -13,8 +13,11 @@
             @method('put')
             <!-- Personal Details Section -->
             <div class="rows">
+                {{-- id  --}}
                 <input type="hidden" name="id" id="id">
+                {{-- employee id  --}}
                 <input type="hidden" name="employee_id" id="employee_id">
+                {{-- employee type --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_type">Employee Type <span class="required" title="Required">*</span></label>
@@ -24,6 +27,7 @@
                         <span class="error" id="update_type_error"></span>
                     </div>
                 </div>
+                {{-- name --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_name">Name <span class="required" title="Required">*</span></label>
@@ -31,6 +35,7 @@
                         <span class="error" id="update_name_error"></span>
                     </div>
                 </div>
+                {{-- fathers name --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_fathers_name">Father's Name</label>
@@ -38,6 +43,7 @@
                         <span class="error" id="update_fathers_name_error"></span>
                     </div>
                 </div>
+                {{-- mothers name --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_mothers_name">Mother's Name</label>
@@ -45,6 +51,7 @@
                         <span class="error" id="update_mothers_name_error"></span>
                     </div>
                 </div>
+                {{-- Date of Birth --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_dob">Date of Birth</label>
@@ -52,6 +59,7 @@
                         <span class="error" id="update_dob_error"></span>
                     </div>
                 </div>
+                {{-- Grnder --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_gender">Gender <span class="required" title="Required">*</span></label>
@@ -61,6 +69,7 @@
                         <span class="error" id="update_gender_error"></span>
                     </div>
                 </div>
+                {{-- religion --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_religion">Religion <span class="required" title="Required">*</span></label>
@@ -70,6 +79,7 @@
                         <span class="error" id="update_religion_error"></span>
                     </div>
                 </div>
+                {{-- marital status --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_marital_status">Marital Status <span class="required" title="Required">*</span></label>
@@ -79,6 +89,7 @@
                         <span class="error" id="update_marital_status_error"></span>
                     </div>
                 </div>
+                {{-- nationality --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_nationality">Nationality</label>
@@ -86,6 +97,7 @@
                         <span class="error" id="update_nationality_error"></span>
                     </div>
                 </div>
+                {{-- nid no --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_nid_no">Nid No</label>
@@ -93,6 +105,7 @@
                         <span class="error" id="update_nid_no_error"></span>
                     </div>
                 </div>
+                {{-- phone no  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_phn_no">Phone No <span class="required" title="Required">*</span></label>
@@ -100,6 +113,7 @@
                         <span class="error" id="update_phn_no_error"></span>
                     </div>
                 </div>
+                {{-- email  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_email">Email <span class="required" title="Required">*</span></label>
@@ -107,6 +121,7 @@
                         <span class="error" id="update_email_error"></span>
                     </div>
                 </div>
+                {{-- division --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateDivision">Division <span class="required" title="Required">*</span></label>
@@ -116,18 +131,16 @@
                         <span class="error" id="update_division_error"></span>
                     </div>
                 </div>
+                {{-- location --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateLocation">Location <span class="required" title="Required">*</span></label>
                         <input type="text" name="location" id="updateLocation" class="form-input">
-                        <div id="update-location">
-                            <ul>
-
-                            </ul>
-                        </div>
+                        <div id="update-location"></div>
                         <span class="error" id="update_location_error"></span>
                     </div>
                 </div>
+                {{-- address  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_address">Address</label>
@@ -135,6 +148,7 @@
                         <span class="error" id="update_address_error"></span>
                     </div>
                 </div>
+                {{-- blood groupe --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_blood_group">Blood Group</label>
@@ -144,6 +158,7 @@
                         <span class="error" id="update_blood_group_error"></span>
                     </div>
                 </div>
+                {{-- image --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateImage">Image</label>

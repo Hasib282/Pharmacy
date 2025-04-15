@@ -74,12 +74,12 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.admin.id);
-        $('#updateName').val(res.admin.user_name);
-        $('#updatePhone').val(res.admin.user_phone);
-        $('#updateEmail').val(res.admin.user_email);
+        $('#id').val(res.data.id);
+        $('#updateName').val(res.data.user_name);
+        $('#updatePhone').val(res.data.user_phone);
+        $('#updateEmail').val(res.data.user_email);
 
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.admin.image ? res.admin.image : 'male.png'}?${new Date().getTime()} `).show();
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.data.image ? res.data.image : 'male.png'}?${new Date().getTime()} `).show();
         $('#updateName').focus();
     }; // End Method
 

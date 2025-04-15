@@ -79,35 +79,35 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.client.id);
+        $('#id').val(res.data.id);
 
-        CreateSelectOptions('#updateType', 'Select Company Type', res.tranwith, res.client.tran_user_type, 'tran_with_name');
+        CreateSelectOptions('#updateType', 'Select Company Type', res.tranwith, res.data.tran_user_type, 'tran_with_name');
 
-        $('#updateName').val(res.client.user_name);
-        $('#updatePhone').val(res.client.user_phone);
-        $('#updateEmail').val(res.client.user_email);
+        $('#updateName').val(res.data.user_name);
+        $('#updatePhone').val(res.data.user_phone);
+        $('#updateEmail').val(res.data.user_email);
 
         // Create options dynamically
         $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${res.client.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-            <option value="Chittagong" ${res.client.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-            <option value="Rajshahi" ${res.client.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-            <option value="Khulna" ${res.client.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-            <option value="Sylhet" ${res.client.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barisal" ${res.client.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
-            <option value="Rangpur" ${res.client.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-            <option value="Mymensingh" ${res.client.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
+        $('#updateDivision').append(`<option value="Dhaka" ${res.data.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
+            <option value="Chittagong" ${res.data.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
+            <option value="Rajshahi" ${res.data.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
+            <option value="Khulna" ${res.data.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
+            <option value="Sylhet" ${res.data.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
+            <option value="Barisal" ${res.data.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
+            <option value="Rangpur" ${res.data.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
+            <option value="Mymensingh" ${res.data.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
 
         // Create options dynamically based on the status value
         $('#updateGender').empty();
-        $('#updateGender').append(`<option value="Male" ${res.client.gender === 'Male' ? 'selected' : ''}>Male</option>
-                                    <option value="Female" ${res.client.gender === 'Female' ? 'selected' : ''}>Female</option>
-                                    <option value="Others" ${res.client.gender === 'Others' ? 'selected' : ''}>Others</option>`);
+        $('#updateGender').append(`<option value="Male" ${res.data.gender === 'Male' ? 'selected' : ''}>Male</option>
+                                    <option value="Female" ${res.data.gender === 'Female' ? 'selected' : ''}>Female</option>
+                                    <option value="Others" ${res.data.gender === 'Others' ? 'selected' : ''}>Others</option>`);
 
-        $('#updateLocation').val(res.client.location.upazila);
-        $('#updateLocation').attr('data-id',res.client.loc_id);
-        $('#updateAddress').val(res.client.address);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.client.image ? res.client.image : (res.client.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
+        $('#updateLocation').val(res.data.location.upazila);
+        $('#updateLocation').attr('data-id',res.data.loc_id);
+        $('#updateAddress').val(res.data.address);
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.data.image ? res.data.image : (res.data.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
         $('#updateType').focus();
     }; // End Method
 

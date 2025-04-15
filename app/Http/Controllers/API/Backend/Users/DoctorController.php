@@ -116,22 +116,43 @@ class DoctorController extends Controller
 
     // Get Doctors
     public function Get(Request $req){
-        $doctors = Doctor_Information::on('mysql_second')
+        $data = Doctor_Information::on('mysql_second')
         ->where('name', 'like', $req->doctor.'%')
         ->orderBy('name')
         ->take(10)
         ->get();
 
+        $list = '<table class="patient-table" style="overflow-x:auto; width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Degree</th>
+                            <th>Specialization</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+                        if($data->count() > 0){
+                            foreach($data as $index => $item) {
+                                $list .= '<tr tabindex="' . ($index + 1) . '" data-id="'.$item->id.'" data-title="'.$item->title.'" data-name="'.$item->name.'" data-phone="'.$item->phone.'" data-email="'.$item->email.'" data-degree="'.$item->degree.'" data-chamber="'.$item->chamber.'" data-specialization="'.$item->specialization.'">
+                                            <td>' .$item->name. '</td>
+                                            <td>' .$item->phone. '</td>
+                                            <td>' .$item->email. '</td>
+                                            <td>' .$item->degree. '</td>
+                                            <td>' .$item->specialization. '</td>
+                                        </tr>';
+                            }
+                        }
+                        else{
+                            $list .= '<tr>
+                                        <td colspan="10">No Data Found</td>
+                                    </tr>';
+                        }
+        $list .= '  </tbody>
+                </table>';
 
-        if($doctors->count() > 0){
-            $list = "";
-            foreach($doctors as $index => $doctor) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$doctor->id.'">'.$doctor->name.'</li>';
-            }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
         return $list;
     } // End Method
 }

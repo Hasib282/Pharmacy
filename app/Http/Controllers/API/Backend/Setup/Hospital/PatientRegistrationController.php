@@ -220,7 +220,7 @@ class PatientRegistrationController extends Controller
                             }
                         }
                         else{
-                            $list = '<tr>
+                            $list .= '<tr>
                                         <td colspan="10">No Data Found</td>
                                     </tr>';
                         }

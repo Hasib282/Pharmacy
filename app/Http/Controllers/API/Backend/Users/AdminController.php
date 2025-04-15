@@ -20,13 +20,13 @@ class AdminController extends Controller
     // Show All Admins
     public function ShowAll(Request $req){
         if(Auth::user()->user_role == 1) {
-            $admin = User_Info::on('mysql_second')
+            $data = User_Info::on('mysql_second')
             ->where('user_role', 2)
             ->orderBy('added_at', 'asc')
             ->paginate(15);
         }
         else{
-            $admin = User_Info::on('mysql_second')
+            $data = User_Info::on('mysql_second')
             ->where('company_id', Auth::user()->company_id)
             ->where('user_role', 2)
             ->orderBy('added_at', 'asc')
@@ -35,7 +35,7 @@ class AdminController extends Controller
 
         return response()->json([
             'status'=> true,
-            'data' => $admin,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -97,10 +97,10 @@ class AdminController extends Controller
 
     // Edit Admins
     public function Edit(Request $req){
-        $admin = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'admin'=> $admin,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -108,19 +108,19 @@ class AdminController extends Controller
 
     // Update Admins
     public function Update(Request $req){
-        $admin = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
-            "phone" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore('user_id',$admin->login_user_id)],
-            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore('user_id',$admin->login_user_id)],
+            "phone" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore($data->login_user_id, 'user_id' )],
+            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore( $data->login_user_id, 'user_id')],
         ]);
 
 
-        DB::transaction(function () use ($req, $admin) {
-            $login_user = Login_User::on('mysql')->where('user_id', $admin->login_user_id)->first();
+        DB::transaction(function () use ($req, $data) {
+            $login_user = Login_User::on('mysql')->where('user_id', $data->login_user_id)->first();
             // Calling UserHelper Functions
-            $imageName = UpdateUserImage($req, $admin->image, $login_user->company_id, $admin->user_id);
+            $imageName = UpdateUserImage($req, $data->image, $login_user->company_id, $data->user_id);
 
             $login_user->update([
                 "user_name" => $req->name,
@@ -131,7 +131,7 @@ class AdminController extends Controller
             ]);
 
             
-            $admin->update([
+            $data->update([
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
                 "user_email" => $req->email,
@@ -150,12 +150,12 @@ class AdminController extends Controller
 
     // Delete Admins
     public function Delete(Request $req){
-        $admin = User_Info::on('mysql_second')->findOrFail($req->id);
-        if($admin->image){
-            Storage::disk('public')->delete($admin->image);
+        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        if($data->image){
+            Storage::disk('public')->delete($data->image);
         }
-        Login_User::on('mysql')->where('user_id',$admin->login_user_id)->delete();
-        $admin->delete();
+        Login_User::on('mysql')->where('user_id',$data->login_user_id)->delete();
+        $data->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Admin Details Deleted Successfully',
@@ -188,16 +188,16 @@ class AdminController extends Controller
 
         // Execute query and paginate
         if(Auth::user()->user_role = 1){
-            $admins = $query->paginate(15);
+            $data = $query->paginate(15);
         }
         else{
-            $admins = $query->where('company_id', Auth::user()->company_id)->paginate(15);
+            $data = $query->where('company_id', Auth::user()->company_id)->paginate(15);
         }
         
 
         return response()->json([
             'status' => true,
-            'data' => $admins,
+            'data' => $data,
         ], 200);
     } // End Method
 

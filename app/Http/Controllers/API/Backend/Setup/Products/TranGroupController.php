@@ -16,8 +16,7 @@ class TranGroupController extends Controller
     public function ShowAll(Request $req){
         $type = GetTranType($req->segment(2));
 
-        
-        $groupes = filterByCompany(
+        $data = filterByCompany(
                     Transaction_Groupe::on('mysql')
                     ->with('Type')
                     ->when($type, function ($query) use ($type) { // when $type is not null
@@ -30,7 +29,7 @@ class TranGroupController extends Controller
         $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
-            'data' => $groupes,
+            'data' => $data,
             'types' => $types,
         ], 200);
     } // End Method
@@ -62,11 +61,11 @@ class TranGroupController extends Controller
 
     // Edit Transaction Group
     public function Edit(Request $req){
-        $groupes = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($req->id);
+        $data = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($req->id);
         $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,            
-            'groupes'=>$groupes,
+            'data'=>$data,
             'types'=>$types,
         ], 200);
     } // End Method
@@ -75,15 +74,15 @@ class TranGroupController extends Controller
 
     // Update Transaction Group
     public function Update(Request $req){
-        $groupes = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4','5'])->findOrFail($req->id);
+        $data = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4','5'])->findOrFail($req->id);
 
         $req->validate([
-            "groupeName" => ['required', Rule::unique('mysql.transaction__groupes', 'tran_groupe_name')->ignore($groupes->id)],
+            "groupeName" => ['required', Rule::unique('mysql.transaction__groupes', 'tran_groupe_name')->ignore($data->id)],
             "type" => 'required|exists:mysql.transaction__main__heads,id',
             "method" => 'required|in:Receive,Payment,Both',
         ]);
 
-        $update = Transaction_Groupe::on('mysql')->findOrFail($req->id)->update([
+        $update = $data->update([
             "tran_groupe_name" => $req->groupeName,
             "tran_groupe_type" => $req->type,
             "tran_method" => $req->method,
@@ -113,7 +112,7 @@ class TranGroupController extends Controller
 
     // Search Transaction Group
     public function Search(Request $req){
-        $groupes = filterByCompany(
+        $data = filterByCompany(
                     Transaction_Groupe::on('mysql')
                     ->with('Type')
                     ->where('tran_groupe_name', 'like', $req->search.'%')
@@ -125,7 +124,7 @@ class TranGroupController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $groupes,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -136,7 +135,7 @@ class TranGroupController extends Controller
         $type = $req->type;
         $method = $req->method;
 
-        $groupes = filterByCompany(
+        $data = filterByCompany(
                     Transaction_Groupe::on('mysql')
                     ->when($type, function ($query) use ($type) { // when $type is not null
                         $query->where('tran_groupe_type', $type);
@@ -150,7 +149,7 @@ class TranGroupController extends Controller
 
         return response()->json([
             'status' => "success",
-            'groupes'=> $groupes,
+            'groupes'=> $data,
         ]);
     } // End Method
 }

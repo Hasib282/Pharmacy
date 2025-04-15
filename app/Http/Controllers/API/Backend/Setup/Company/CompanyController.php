@@ -17,11 +17,11 @@ class CompanyController extends Controller
 {
     // Show All Companies
     public function ShowAll(Request $req){
-        $company = Company_Details::on('mysql')->with('Type')->orderBy('added_at','asc')->paginate(15);
+        $data = Company_Details::on('mysql')->with('Type')->orderBy('added_at','asc')->paginate(15);
         $type = Company_Type::on('mysql')->get();
         return response()->json([
             'status'=> true,
-            'data' => $company,
+            'data' => $data,
             'type' => $type,
         ], 200);
     } // End Method
@@ -69,11 +69,11 @@ class CompanyController extends Controller
 
     // Edit Companies
     public function Edit(Request $req){
-        $company = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
+        $data = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
         $type = Company_Type::on('mysql')->get();
         return response()->json([
             'status'=> true,
-            'company'=> $company,
+            'data'=> $data,
             'type'=> $type,
         ], 200);
     } // End Method
@@ -82,21 +82,21 @@ class CompanyController extends Controller
 
     // Update Companies
     public function Update(Request $req){
-        $company = Company_Details::on('mysql')->findOrFail($req->id);
+        $data = Company_Details::on('mysql')->findOrFail($req->id);
 
         $req->validate([
             "type" => 'required|exists:mysql.company__types,id',
             "name" => 'required',
-            "phone" => ['required','numeric',Rule::unique('mysql.company__details', 'company_phone')->ignore($company->id)],
-            "email" => ['required','email',Rule::unique('mysql.company__details', 'company_email')->ignore($company->id)],
+            "phone" => ['required','numeric',Rule::unique('mysql.company__details', 'company_phone')->ignore($data->id)],
+            "email" => ['required','email',Rule::unique('mysql.company__details', 'company_email')->ignore($data->id)],
             "domain" => 'required',
         ]);
 
-        DB::transaction(function () use ($req, $company) {
-            $path = 'company/logos/'.$company->logo;
-            $imageName = UpdateUserImage($req, $path, null, $company->company_id, $company->logo);
+        DB::transaction(function () use ($req, $data) {
+            $path = 'company/logos/'.$data->logo;
+            $imageName = UpdateUserImage($req, $path, null, $data->company_id, $data->logo);
 
-            Company_Details::on('mysql')->findOrFail($req->id)->update([
+            $data->update([
                 "company_type" => $req->type,
                 "company_name" => $req->name,
                 "company_phone" => $req->phone,
@@ -133,28 +133,28 @@ class CompanyController extends Controller
     // Search Companies
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $company = Company_Details::on('mysql')->with('Type')
+            $data = Company_Details::on('mysql')->with('Type')
             ->where('company_name', 'like', $req->search.'%')
             ->where('company_type', 'like', '%'.$req->type.'%')
             ->orderBy('company_name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $company = Company_Details::on('mysql')->with('Type')
+            $data = Company_Details::on('mysql')->with('Type')
             ->where('company_email', 'like', $req->search.'%')
             ->where('company_type', 'like', '%'.$req->type.'%')
             ->orderBy('company_email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){
-            $company = Company_Details::on('mysql')->with('Type')
+            $data = Company_Details::on('mysql')->with('Type')
             ->where('company_phone', 'like', $req->search.'%')
             ->where('company_type', 'like', '%'.$req->type.'%')
             ->orderBy('company_phone','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 4){
-            $company = Company_Details::on('mysql')->with('Type')
+            $data = Company_Details::on('mysql')->with('Type')
             ->where('address', 'like', '%'.$req->search.'%')
             ->where('company_type', 'like', '%'.$req->type.'%')
             ->orderBy('address','asc')
@@ -163,7 +163,7 @@ class CompanyController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $company,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -171,22 +171,23 @@ class CompanyController extends Controller
 
     // Get Companies
     public function Get(Request $req){
-        $companies = Company_Details::on('mysql')->select('company_name','company_id')
+        $data = Company_Details::on('mysql')->select('company_name','company_id')
         ->where('company_name', 'like', $req->company.'%')
         ->orderBy('company_name')
         ->take(10)
         ->get();
 
-
-        if($companies->count() > 0){
-            $list = "";
-            foreach($companies as $index => $company) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$company->company_id.'">'.$company->company_name.'</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->company_id.'">'.$item->company_name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 
@@ -198,7 +199,7 @@ class CompanyController extends Controller
         $company = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'data'=>view('admin_setup.company.details', compact('company','apiUrl'))->render(),
+            'data'=> view('admin_setup.company.details', compact('company','apiUrl'))->render(),
         ]);
     } // End Method
 }

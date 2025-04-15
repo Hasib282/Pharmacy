@@ -15,14 +15,14 @@ class BankTransactionController extends Controller
 {
     // Show All Bank Withdraws
     public function ShowAllWithdraws(Request $req){
-        $transactions = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Withdraw')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        foreach ($transactions as $transaction) {
-            $transaction->bill_amount = number_format($transaction->bill_amount, 0, '.', ',');
+        $data = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Withdraw')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        foreach ($data as $item) {
+            $item->bill_amount = number_format($item->bill_amount, 0, '.', ',');
         }
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '4')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
-            'data' => $transactions,
+            'data' => $data,
             'groupes' => $groupes,
         ], 200);
     } // End Method
@@ -31,15 +31,15 @@ class BankTransactionController extends Controller
     
     // Show All Bank Deposits
     public function ShowAllDeposits(Request $req){
-        $transactions = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Deposit')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        foreach ($transactions as $transaction) {
-            $transaction->bill_amount = number_format($transaction->bill_amount, 0, '.', ',');
+        $data = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Deposit')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        foreach ($data as $item) {
+            $item->bill_amount = number_format($item->bill_amount, 0, '.', ',');
         }
         
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '4')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
-            'data' => $transactions,
+            'data' => $data,
             'groupes' => $groupes,
         ], 200);
     } // End Method
@@ -107,10 +107,10 @@ class BankTransactionController extends Controller
 
     // Edit Bank Transactions
     public function Edit(Request $req){
-        $transaction = Transaction_Detail::on('mysql_second')->with('Bank','Head')->where('tran_id', $req->id )->first();
+        $data = Transaction_Detail::on('mysql_second')->with('Bank','Head')->where('tran_id', $req->id )->first();
         return response()->json([
             'status'=> true,
-            'transaction'=> $transaction,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -176,7 +176,7 @@ class BankTransactionController extends Controller
     // Search Bank Transactions
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $transaction = Transaction_Main::on('mysql_second')->with('Bank')
+            $data = Transaction_Main::on('mysql_second')->with('Bank')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
@@ -185,7 +185,7 @@ class BankTransactionController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $transaction = Transaction_Main::on('mysql_second')->with('Bank')
+            $data = Transaction_Main::on('mysql_second')->with('Bank')
             ->whereHas('Bank', function ($query) use ($req) {
                 $query->where('name', 'like', '%'.$req->search.'%');
                 $query->orderBy('name','asc');
@@ -198,7 +198,7 @@ class BankTransactionController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $transaction,
+            'data' => $data,
         ], 200);
     } // End Method
 }

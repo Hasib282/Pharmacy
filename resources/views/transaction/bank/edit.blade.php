@@ -11,33 +11,31 @@
         <form id="EditForm" method="post">
             @csrf
             @method('PUT')
+            {{-- id  --}}
             <input type="hidden" name="id" id="id">
+            {{-- groupein --}}
             <div id="updategroupein" style="display: none"></div>
+            {{-- date  --}}
             <div class="form-input-group">
                 <label for="updateDate">Date</label>
                 <input type="text" name="date" class="form-input" id="updateDate" value="{{ date('Y-m-d') }}" disabled>
                 <span class="error" id="update_date_error"></span>
             </div>
+            {{-- bank --}}
             <div class="form-input-group">
                 <label for="updateBank">Bank Name</label>
                 <input type="text" name="bank" class="form-input" id="updateBank" autocomplete="off">
-                <div id="update-bank">
-                    <ul>
-
-                    </ul>
-                </div>
+                <div id="update-bank"></div>
                 <span class="error" id="update_bank_error"></span>
             </div>
+            {{-- head  --}}
             <div class="form-input-group">
                 <label for="updateHead">Transaction Head</label>
                 <input type="text" name="head" id="updateHead" class="form-input" autocomplete="off">
-                <div id="update-head">
-                    <ul>
-
-                    </ul>
-                </div>
+                <div id="update-head"></div>
                 <span class="error" id="update_head_error"></span>
             </div>
+            {{-- amount --}}
             <div class="form-input-group">
                 <label for="updateAmount">Amount</label>
                 <input type="text" name="amount" class="form-input" id="updateAmount">

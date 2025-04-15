@@ -35,8 +35,8 @@ function ShowDepartments(data, startIndex) {
 
 // Additional Edit Functionality
 function EditFormInputValue(res){
-    $('#id').val(res.department.id);
-    $('#updateName').val(res.department.name);
+    $('#id').val(res.data.id);
+    $('#updateName').val(res.data.name);
     $('#updateName').focus();
 }
 

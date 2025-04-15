@@ -20,7 +20,7 @@ class PartyTransactionController extends Controller
         $type = GetTranType($req->segment(2));
         $method = ucfirst($req->segment(4)); // Capitalize the first letter
 
-        $transaction = Transaction_Main::on('mysql_second')
+        $data = Transaction_Main::on('mysql_second')
         ->with('User','Withs')
         ->whereHas('Withs', function ($query) use ($type) {
             $query->where('tran_type', $type);
@@ -42,7 +42,7 @@ class PartyTransactionController extends Controller
         }
         return response()->json([
             'status'=> true,
-            'data' => $transaction,
+            'data' => $data,
             'groupes' => $groupes,
         ], 200);
     } // End Method
@@ -289,10 +289,10 @@ class PartyTransactionController extends Controller
 
     // Edit Party Collection
     public function Edit(Request $req){
-        $party = Transaction_Main::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+        $data = Transaction_Main::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
         return response()->json([
             'status'=> true,
-            'party'=>$party,
+            'data'=>$data,
         ], 200);
     } // End Method
 
@@ -339,7 +339,7 @@ class PartyTransactionController extends Controller
         $type = GetTranType($req->segment(2));
         $method = ucfirst($req->segment(4)); // Capitalize the first letter
 
-        $data = Transaction_Main::on('mysql_second')
+        $transaction = Transaction_Main::on('mysql_second')
         ->with('User', 'Withs')
         ->whereHas('Withs', function ($query) use ($req, $type) {
             $query->where('tran_type', $type);
@@ -349,15 +349,15 @@ class PartyTransactionController extends Controller
         ->where('tran_type', 2);
 
         if ($req->searchOption == 1) {
-            $data->where('tran_id', 'like', '%' . $req->search . '%')->orderBy('tran_id');
+            $transaction->where('tran_id', 'like', '%' . $req->search . '%')->orderBy('tran_id');
         } 
         else if ($req->searchOption == 2) {
-            $data->whereHas('User', function ($query) use ($req) {
+            $transaction->whereHas('User', function ($query) use ($req) {
                 $query->where('user_name', 'like', '%' . $req->search . '%')->orderBy('user_name');
             });
         }
 
-        $transaction = $data->paginate(15);
+        $data = $transaction->paginate(15);
         
         if (!isset($type)) {
             return response()->json([
@@ -367,7 +367,7 @@ class PartyTransactionController extends Controller
         }
         return response()->json([
             'status' => true,
-            'data' => $transaction,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -376,14 +376,14 @@ class PartyTransactionController extends Controller
     // Get Transacetion Due List By User Id
     public function GetDueList(Request $req){
         if($req->id != ""){
-            $transaction = Transaction_Main::on('mysql_second')->where('tran_user', 'like', '%'.$req->id.'%')
+            $data = Transaction_Main::on('mysql_second')->where('tran_user', 'like', '%'.$req->id.'%')
             ->where('due', '>', 0)
             ->orderBy('tran_date','asc')
             ->get();
 
             return response()->json([
                 'status' => true,
-                'data' => $transaction,
+                'data' => $data,
             ]);
         }
     } // End Method

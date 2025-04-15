@@ -13,20 +13,20 @@ use App\Models\Permission_Head;
 
 class CompanyPermissionController extends Controller
 {
-    // Show All User Permissions
+    // Show All Company Permissions
     public function ShowAll(Request $req){
         $types = Company_Type::on('mysql')->get();
-        $companypermission = Company_Details::on('mysql')->with('permissions')->orderBy('company_id')->paginate(15);
+        $data = Company_Details::on('mysql')->with('permissions')->orderBy('company_id')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $companypermission,
+            'data' => $data,
             'types' => $types,
         ], 200);
     } // End Method
 
 
 
-    // Edit User Permissions
+    // Edit Company Permissions
     public function Edit(Request $req){
         $company = Company_Details::on('mysql')->where('company_id',$req->id)->first();
         $companypermission = Permission_Company::on('mysql')->where('company_id', $req->id)->pluck('permission_id')->toArray();
@@ -48,7 +48,7 @@ class CompanyPermissionController extends Controller
 
 
 
-    // Update User Permissions
+    // Update Company Permissions
     public function Update(Request $req){
         $req->validate([
             'company' => 'required|exists:mysql.company__details,company_id',
@@ -77,15 +77,15 @@ class CompanyPermissionController extends Controller
         
         return response()->json([
             'status'=> true,
-            'message' => 'User Permissions Added Successfully'
+            'message' => 'Company Permissions Added Successfully'
         ], 200);  
     } // End Method
 
 
 
-    // Search User Permissions
+    // Search Company Permissions
     public function Search(Request $req){
-        $companypermission = Company_Details::on('mysql')
+        $data = Company_Details::on('mysql')
         ->where('company_name', 'like', $req->search.'%')
         ->where('company_type', 'like', '%'.$req->type.'%')
         ->with('permissions')
@@ -94,7 +94,7 @@ class CompanyPermissionController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $companypermission,
+            'data' => $data,
         ], 200);
     } // End Method
     
@@ -102,7 +102,7 @@ class CompanyPermissionController extends Controller
     
     // Get The User From whom you get the permission
     public function UserFrom(Request $req){
-        $froms = Company_Details::on('mysql')
+        $data = Company_Details::on('mysql')
         ->select('company_name','company_id')
         ->where('company_name', 'like', $req->from.'%')
         ->orderBy('company_name')
@@ -110,45 +110,44 @@ class CompanyPermissionController extends Controller
         ->get();
 
 
-        if($froms->count() > 0){
-            $list = "";
-            foreach($froms as $index => $from) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$from->company_id.'">'.$from->company_name.'('.$from->company_id.')'.'</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->company_id.'">'.$item->company_name.'('.$item->company_id.')'.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
     
     
     
-    
     // Get The User To whom you assing the permission
     public function UserTo(Request $req){
-        $tos = Company_Details::on('mysql')
+        $data = Company_Details::on('mysql')
         ->select('company_name','company_id')
         ->where('company_name', 'like', $req->to.'%')
         ->orderBy('company_name')
         ->take(10)
         ->get();
 
-
-        if($tos->count() > 0){
-            $list = "";
-            foreach($tos as $index => $to) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$to->company_id.'">'.$to->company_name.'('.$to->company_id.')'.'</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->company_id.'">'.$item->company_name.'('.$item->company_id.')'.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
-    
-    
-    
     
     
     

@@ -11,10 +11,10 @@ class LocationController extends Controller
 {
     // Show All Locations
     public function ShowAll(Request $req){
-        $location = Location_Info::on('mysql')->orderBy('added_at')->paginate(15);
+        $data = Location_Info::on('mysql')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $location,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -44,10 +44,10 @@ class LocationController extends Controller
 
     // Edit Locations
     public function Edit(Request $req){
-        $location = Location_Info::on('mysql')->findOrFail($req->id);
+        $data = Location_Info::on('mysql')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'location'=> $location,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -55,13 +55,15 @@ class LocationController extends Controller
 
     // Update Locations
     public function Update(Request $req){
+        $data = Location_Info::on('mysql')->findOrFail($req->id);
+
         $req->validate([
             "division" => 'required',
             "district"  => 'required',
             "upazila"  => 'required',
         ]);
 
-        $update = Location_Info::on('mysql')->findOrFail($req->id)->update([
+        $update = $data->update([
             "district" => $req->district,
             "division" => $req->division,
             "upazila" => $req->upazila,
@@ -92,24 +94,24 @@ class LocationController extends Controller
     // Search Locations
     public function Search(Request $req){
         if($req->searchOption == 1){ // Search By Division
-            $location = Location_Info::on('mysql')->where('division', 'like', '%'.$req->search.'%')
+            $data = Location_Info::on('mysql')->where('division', 'like', '%'.$req->search.'%')
             ->orderBy('division')
             ->paginate(15);
         }
         else if($req->searchOption == 2){ // Search By District
-            $location = Location_Info::on('mysql')->where('district', 'like', '%'.$req->search.'%')
+            $data = Location_Info::on('mysql')->where('district', 'like', '%'.$req->search.'%')
             ->orderBy('district')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search By Upazila
-            $location = Location_Info::on('mysql')->where('upazila', 'like', '%'.$req->search.'%')
+            $data = Location_Info::on('mysql')->where('upazila', 'like', '%'.$req->search.'%')
             ->orderBy('upazila')
             ->paginate(15);
         }
         
         return response()->json([
             'status' => true,
-            'data' => $location,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -117,7 +119,7 @@ class LocationController extends Controller
 
     // Get Location By Upazila
     public function Get(Request $req){
-        $locations = Location_Info::on('mysql')
+        $data = Location_Info::on('mysql')
         ->where('upazila', 'like', $req->location.'%')
         ->when($req->division != 'undefined', function ($query) use ($req) {
             $query->where('division', $req->division);
@@ -126,21 +128,22 @@ class LocationController extends Controller
         ->take(10)
         ->get();
 
-
-        if($locations->count() > 0){
-            $list = "";
-            foreach($locations as $index => $location) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$location->id.'">'.$location->upazila.'</li>';
-            }
-        }
-        else{
-            if($req->division != 'undefined'){
-                $list = '<li>Select Division First</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->upazila.'</li>';
+                }
             }
             else{
-                $list = '<li>No Data Found</li>';
+                if($req->division != 'undefined'){
+                    $list .= '<li>Select Division First</li>';
+                }
+                else{
+                    $list .= '<li>No Data Found</li>';
+                }
             }
-        }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 }

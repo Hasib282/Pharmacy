@@ -71,8 +71,8 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.groupes.id);
-        $('#updateGroupeName').val(res.groupes.tran_groupe_name);
+        $('#id').val(res.data.id);
+        $('#updateGroupeName').val(res.data.tran_groupe_name);
 
         $('#updateGroupeName').focus();
     }; // End Method

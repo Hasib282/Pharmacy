@@ -17,10 +17,10 @@ class SuperAdminController extends Controller
 {
     // Show All SuperAdmins
     public function ShowAll(Request $req){
-        $superadmin = Login_User::on('mysql')->where('user_role', 1)->orderBy('added_at','asc')->paginate(15);
+        $data = Login_User::on('mysql')->where('user_role', 1)->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $superadmin,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -63,10 +63,10 @@ class SuperAdminController extends Controller
 
     // Edit SuperAdmins
     public function Edit(Request $req){
-        $superadmin = Login_User::on('mysql')->findOrFail($req->id);
+        $data = Login_User::on('mysql')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'superadmin'=> $superadmin,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -74,20 +74,20 @@ class SuperAdminController extends Controller
 
     // Update SuperAdmins
     public function Update(Request $req){
-        $superadmin = Login_User::on('mysql')->findOrFail($req->id);
+        $data = Login_User::on('mysql')->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
-            "phone" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore($superadmin->id)],
-            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore($superadmin->id)],
+            "phone" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore($data->id)],
+            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore($data->id)],
         ]);
 
 
-        DB::transaction(function () use ($req, $superadmin) {
+        DB::transaction(function () use ($req, $data) {
             // Calling UserHelper Functions
-            $imageName = UpdateUserImage($req, $superadmin->image, null, $superadmin->user_id);
+            $imageName = UpdateUserImage($req, $data->image, null, $data->user_id);
 
-            Login_User::on('mysql')->findOrFail($req->id)->update([
+            $data->update([
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
                 "user_email" => $req->email,
@@ -106,11 +106,11 @@ class SuperAdminController extends Controller
 
     // Delete SuperAdmins
     public function Delete(Request $req){
-        $superadmin = Login_User::on('mysql')->findOrFail($req->id);
-        if($superadmin->image){
-            Storage::disk('public')->delete($superadmin->image);
+        $data = Login_User::on('mysql')->findOrFail($req->id);
+        if($data->image){
+            Storage::disk('public')->delete($data->image);
         }
-        $superadmin->delete();
+        $data->delete();
         return response()->json([
             'status'=> true,
             'message' => 'SuperAdmin Details Deleted Successfully',
@@ -122,21 +122,21 @@ class SuperAdminController extends Controller
     // Search SuperAdmins
     public function Search(Request $req){
         if($req->searchOption == 1){ // Search by User Name and Id
-            $superadmin = Login_User::on('mysql')
+            $data = Login_User::on('mysql')
             ->where('user_role', 1)
             ->where('user_name', 'like', $req->search.'%')
             ->orderBy('user_name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){ // Search by User Email
-            $superadmin = Login_User::on('mysql')
+            $data = Login_User::on('mysql')
             ->where('user_role', 1)
             ->where('user_email', 'like', $req->search.'%')
             ->orderBy('user_email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search by User Phone
-            $superadmin = Login_User::on('mysql')
+            $data = Login_User::on('mysql')
             ->where('user_role', 1)
             ->where('user_phone', 'like', $req->search.'%')
             ->orderBy('user_phone','asc')
@@ -145,7 +145,7 @@ class SuperAdminController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $superadmin,
+            'data' => $data,
         ], 200);
     } // End Method
 }

@@ -9,11 +9,13 @@
 
         <form id="AddForm" method="post">
             @csrf
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="store_name">Store Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="store_name" class="form-input" id="store_name">
                 <span class="error" id="store_name_error"></span>
             </div>
+            {{-- division --}}
             <div class="form-input-group">
                 <label for="division">Division <span class="required" title="Required">*</span></label>
                 <select name="division" id="division">
@@ -29,6 +31,7 @@
                 </select>
                 <span class="error" id="division_error"></span>
             </div>
+            {{-- location --}}
             <div class="form-input-group">
                 <label for="location">Location <span class="required" title="Required">*</span></label>
                 <input type="text" name="location" id="location" class="form-input" autocomplete="off">
@@ -39,6 +42,7 @@
                 </div>
                 <span class="error" id="location_error"></span>
             </div>
+            {{-- address  --}}
             <div class="form-input-group">
                 <label for="address">Address</label>
                 <input type="text" name="address" class="form-input" id="address">

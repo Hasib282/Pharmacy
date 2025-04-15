@@ -10,6 +10,7 @@
         <!-- form start -->
         <form id="AddForm" method="post">
             @csrf
+            {{-- division --}}
             <div class="form-input-group">
                 <label for="division">Division <span class="required" title="Required">*</span></label>
                 <select name="division" id="division">
@@ -25,11 +26,13 @@
                 </select>
                 <span class="error" id="division_error"></span>
             </div>
+            {{-- district --}}
             <div class="form-input-group">
                 <label for="district">District <span class="required" title="Required">*</span></label>
                 <input type="text" name="district" class="form-input" id="district">
                 <span class="error" id="district_error"></span>
             </div>
+            {{-- upazila --}}
             <div class="form-input-group">
                 <label for="upazila">Upazila <span class="required" title="Required">*</span></label>
                 <input type="text" name="upazila" class="form-input" id="upazila">

@@ -19,11 +19,11 @@ class PersonalDetailsController extends Controller
 {
     // Show All Employee Personal Details
     public function ShowAll(Request $req){
-        $employee = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
+        $data = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
-            'data' => $employee,
+            'data' => $data,
             'tranwith' => $tranwith,
         ], 200);
     } // End Method
@@ -121,11 +121,11 @@ class PersonalDetailsController extends Controller
 
     // Edit Employee Personal Details
     public function Edit(Request $req){
-        $employee = Employee_Personal_Detail::on('mysql_second')->with('Location')->where('employee_id', $req->id)->first();
+        $data = Employee_Personal_Detail::on('mysql_second')->with('Location')->where('employee_id', $req->id)->first();
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
-            'employee'=>$employee,
+            'data'=>$data,
             'tranwith'=>$tranwith,
         ], 200);
     } // End Method
@@ -134,23 +134,23 @@ class PersonalDetailsController extends Controller
 
     // Update Employee Personal Details
     public function Update(Request $req){
-        $employee = User_Info::on('mysql_second')->where('user_id', $req->employee_id)->first();
+        $data = User_Info::on('mysql_second')->where('user_id', $req->employee_id)->first();
         $req->validate([
             'name' => 'required',
             'gender' => 'in:Male,Female,Others',
             'religion' => 'in:Islam,Hinduism,Christianity,Buddhism,Judaism',
             'marital_status' => 'in:Married,Unmarried',
             'nid_no' => 'nullable|numeric',
-            "phn_no" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore($employee->id)],
-            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore($employee->id)],
+            "phn_no" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore($data->id)],
+            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore($data->id)],
             'location'  => 'required|exists:mysql.location__infos,id',
             'type'=> 'required|exists:mysql_second.transaction__withs,id',
         ]);
 
-        DB::transaction(function () use ($req, $employee) {
-            $login_user = Login_User::on('mysql')->where('user_id', $employee->login_user_id)->first();
+        DB::transaction(function () use ($req, $data) {
+            $login_user = Login_User::on('mysql')->where('user_id', $data->login_user_id)->first();
             // Calling UserHelper Functions
-            $imageName = UpdateUserImage($req, $employee->image, $login_user->company_id, $employee->user_id);
+            $imageName = UpdateUserImage($req, $data->image, $login_user->company_id, $data->user_id);
 
             Login_User::on('mysql')->where('user_id', $req->employee_id)->update([
                 "user_name" => $req->name,
@@ -208,12 +208,12 @@ class PersonalDetailsController extends Controller
 
     // Delete Employee Personal Details
     public function Delete(Request $req){
-        $employee = User_Info::on('mysql_second')->findOrFail($req->id);
-        if($employee->image){
-            Storage::disk('public')->delete($employee->image);
+        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        if($data->image){
+            Storage::disk('public')->delete($data->image);
         }
-        Login_User::on('mysql')->where('user_id',$employee->login_user_id)->delete();
-        $employee->delete();
+        Login_User::on('mysql')->where('user_id',$data->login_user_id)->delete();
+        $data->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Employee Personal Details Deleted Successfully',
@@ -277,11 +277,11 @@ class PersonalDetailsController extends Controller
             }
         }
 
-        $employee = $query->paginate(15);
+        $data = $query->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $employee,
+            'data' => $data,
         ], 200);
     } // End Method
 

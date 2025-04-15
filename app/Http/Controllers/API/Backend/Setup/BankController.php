@@ -13,10 +13,10 @@ class BankController extends Controller
 {
     // Show All Banks
     public function ShowAll(Request $req){
-        $bank = Bank::on('mysql')->with('Location')->orderBy('added_at','asc')->paginate(15);
+        $data = Bank::on('mysql')->with('Location')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $bank,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -57,10 +57,10 @@ class BankController extends Controller
 
     // Edit Banks
     public function Edit(Request $req){
-        $bank = Bank::on('mysql')->with('Location')->findOrFail($req->id);
+        $data = Bank::on('mysql')->with('Location')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'bank'=> $bank,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -68,18 +68,18 @@ class BankController extends Controller
 
     // Update Banks
     public function Update(Request $req){
-        $bank = Bank::on('mysql')->findOrFail($req->id);
+        $data = Bank::on('mysql')->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
-            "phone" => ['required','numeric',Rule::unique('mysql.banks', 'phone')->ignore($bank->id)],
-            "email" => ['required','email',Rule::unique('mysql.banks', 'email')->ignore($bank->id)],
+            "phone" => ['required','numeric',Rule::unique('mysql.banks', 'phone')->ignore($data->id)],
+            "email" => ['required','email',Rule::unique('mysql.banks', 'email')->ignore($data->id)],
             "address" => 'required',
             "location" => 'required|exists:mysql.location__infos,id',
         ]);
 
 
-        $update = Bank::on('mysql')->findOrFail($req->id)->update([
+        $update = $data->update([
             "name" => $req->name,
             "phone" => $req->phone,
             "email" => $req->email,
@@ -112,25 +112,25 @@ class BankController extends Controller
     // Search Banks
     public function Search(Request $req){
         if($req->searchOption == 1){ // Search By Name
-            $bank = Bank::on('mysql')->with('Location')
+            $data = Bank::on('mysql')->with('Location')
             ->where('name', 'like', '%'.$req->search.'%')
             ->orderBy('name','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 2){ // Search By Email
-            $bank = Bank::on('mysql')->with('Location')
+            $data = Bank::on('mysql')->with('Location')
             ->where('email', 'like', '%'.$req->search.'%')
             ->orderBy('email','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 3){ // Search By Phone
-            $bank = Bank::on('mysql')->with('Location')
+            $data = Bank::on('mysql')->with('Location')
             ->where('phone', 'like', '%'.$req->search.'%')
             ->orderBy('phone','asc')
             ->paginate(15);
         }
         else if($req->searchOption == 4){ // Search By Location
-            $bank = Bank::on('mysql')->with('Location')
+            $data = Bank::on('mysql')->with('Location')
             ->whereHas('Location', function ($query) use ($req) {
                 $query->where('upazila', 'like', '%'.$req->search.'%');
                 $query->orderBy('upazila','asc');
@@ -138,7 +138,7 @@ class BankController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 5){ // Search By Address
-            $bank = Bank::on('mysql')->with('Location')
+            $data = Bank::on('mysql')->with('Location')
             ->where('address', 'like', '%'.$req->search.'%')
             ->orderBy('address','asc')
             ->paginate(15);
@@ -146,7 +146,7 @@ class BankController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $bank,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -161,16 +161,17 @@ class BankController extends Controller
         ->take(10)
         ->get();
 
-
-        if($banks->count() > 0){
-            $list = "";
-            foreach($banks as $index => $bank) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$bank->user_id.'">'.$bank->name.'</li>';
+        $list = "<ul>";
+            if($banks->count() > 0){
+                foreach($banks as $index => $bank) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$bank->user_id.'">'.$bank->name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 

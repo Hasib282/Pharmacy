@@ -19,11 +19,11 @@ class GeneralTransactionController extends Controller
 {
     // Show All General Transaction Receives
     public function ShowAllReceive(Request $req){
-        $transactions = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Receive')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $data = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Receive')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '1')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
-            'data' => $transactions,
+            'data' => $data,
             'groupes' => $groupes,
         ], 200);
     } // End Method
@@ -32,11 +32,11 @@ class GeneralTransactionController extends Controller
     
     // Show All General Transaction Payment
     public function ShowAllPayment(Request $req){
-        $transactions = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Payment')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $data = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Payment')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '1')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
-            'data' => $transactions,
+            'data' => $data,
             'groupes' => $groupes,
         ], 200);
     } // End Method
@@ -169,10 +169,10 @@ class GeneralTransactionController extends Controller
 
     // Edit General Transaction
     public function Edit(Request $req){
-        $transaction = Transaction_Main::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
+        $data = Transaction_Main::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
         return response()->json([
             'status'=> true,
-            'transaction'=> $transaction,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -307,7 +307,7 @@ class GeneralTransactionController extends Controller
     // Search General Transaction
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $transaction = Transaction_Main::on('mysql_second')->with('User')
+            $data = Transaction_Main::on('mysql_second')->with('User')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
@@ -316,7 +316,7 @@ class GeneralTransactionController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $transaction = Transaction_Main::on('mysql_second')->with('User')
+            $data = Transaction_Main::on('mysql_second')->with('User')
             ->whereHas('User', function ($query) use ($req) {
                 $query->where('user_name', 'like', '%'.$req->search.'%');
                 $query->orderBy('user_name','asc');
@@ -329,7 +329,7 @@ class GeneralTransactionController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $transaction,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -379,7 +379,7 @@ class GeneralTransactionController extends Controller
     // Get Inserted Transacetion Grid By Transaction Id
     public function GetTransactionGrid(Request $request){
         if($request->status == 1){
-            $transaction = Transaction_Detail::on('mysql_second')->with('Head')
+            $data = Transaction_Detail::on('mysql_second')->with('Head')
             ->select(
                 'tran_head_id',
                 'mrp',
@@ -397,7 +397,7 @@ class GeneralTransactionController extends Controller
             ->get();
         }
         else if($request->status == 2){
-            $transaction = Transaction_Details_Temp::on('mysql_second')->with('Head')
+            $data = Transaction_Details_Temp::on('mysql_second')->with('Head')
             ->select(
                 'tran_head_id',
                 'mrp',
@@ -418,7 +418,7 @@ class GeneralTransactionController extends Controller
 
         return response()->json([
             'status' => true,
-            'transaction' => $transaction
+            'data' => $data
         ]);
         // if ($transaction->isNotEmpty()) {
         //     return response()->json([
@@ -437,7 +437,7 @@ class GeneralTransactionController extends Controller
     // Get User By User Type
     public function GetUser(Request $req){
         if($req->within == "1"){
-            $users = User_Info::on('mysql_second')->where('user_name', 'like', '%'.$req->tranUser.'%')
+            $data = User_Info::on('mysql_second')->where('user_name', 'like', '%'.$req->tranUser.'%')
             ->whereIn('tran_user_type', $req->tranUserType)
             ->orderBy('user_name','asc')
             ->take(10)
@@ -449,7 +449,7 @@ class GeneralTransactionController extends Controller
                 return $list;
             }
             else{
-                $users = User_Info::on('mysql_second')->where('user_name', 'like', '%'.$req->tranUser.'%')
+                $data = User_Info::on('mysql_second')->where('user_name', 'like', '%'.$req->tranUser.'%')
                 ->where('tran_user_type', $req->tranUserType)
                 ->orderBy('user_name','asc')
                 ->take(10)
@@ -457,15 +457,17 @@ class GeneralTransactionController extends Controller
             }
         }
 
-        if($users->count() > 0){
-            $list = "";
-            foreach($users as $index => $user) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$user->user_id.'"  data-with="'.$user->tran_user_type.'" data-name="'.$user->user_name.'" data-phone="'.$user->user_phone.'" data-address="'.$user->address.'">'.$user->user_name.'</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->user_id.'"  data-with="'.$item->tran_user_type.'" data-name="'.$item->user_name.'" data-phone="'.$item->user_phone.'" data-address="'.$item->address.'">'.$item->user_name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 
@@ -474,7 +476,7 @@ class GeneralTransactionController extends Controller
 
     // Get Batch Id
     public function GetBatch(Request $req){  
-        $batches = Transaction_Detail::on('mysql_second')->select('tran_id')
+        $data = Transaction_Detail::on('mysql_second')->select('tran_id')
         ->where('tran_id', 'like', '%'.$req->batch.'%')
         ->where('tran_type', $req->type)
         ->where('tran_method', $req->method)
@@ -483,15 +485,17 @@ class GeneralTransactionController extends Controller
         ->take(10)
         ->get();
 
-        if($batches->count() > 0){
-            $list = "";
-            foreach($batches as $index => $batch) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$batch->tran_id.'">'.$batch->tran_id.'</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->tran_id.'">'.$item->tran_id.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 
@@ -537,7 +541,7 @@ class GeneralTransactionController extends Controller
 
     // Get Product Batch Id
     public function GetProductBatch(Request $req){  
-        $batches = Transaction_Detail::on('mysql_second')
+        $data = Transaction_Detail::on('mysql_second')
         ->select('tran_id','tran_date','quantity')
         ->where('tran_id', 'like', '%'.$req->batch.'%')
         // ->where('tran_type', $req->type)
@@ -549,20 +553,22 @@ class GeneralTransactionController extends Controller
         ->take(10)
         ->get();
 
-        if($batches->count() > 0){
-            $list = "";
-            foreach($batches as $index => $batch) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$batch->tran_id.'">'.$batch->tran_id. " | Qty: " . $batch->quantity .  " | " . Carbon::parse($batch->tran_date)->format('Y-m-d'). '</li>';
-            }
-        }
-        else{
-            if ($req->product) {
-                $list = '<li>No Data Found</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->tran_id.'">'.$item->tran_id. " | Qty: " . $item->quantity .  " | " . Carbon::parse($item->tran_date)->format('Y-m-d'). '</li>';
+                }
             }
             else{
-                $list = '<li>Select Product First</li>';
+                if ($req->product) {
+                    $list .= '<li>No Data Found</li>';
+                }
+                else{
+                    $list .= '<li>Select Product First</li>';
+                }
             }
-        }
+        $list .= "</ul>";
+        
         return $list;
     } // End Method
 
@@ -571,14 +577,14 @@ class GeneralTransactionController extends Controller
     // Get Product Stock 
     public function GetProductStock(Request $req){
         if($req->batch){
-            $purchase = Transaction_Detail::on('mysql_second')->where('tran_head_id', $req->product)
+            $data = Transaction_Detail::on('mysql_second')->where('tran_head_id', $req->product)
             ->where('quantity', '>', 0)
             // ->whereIn('tran_method', ["Purchase","Positive"])
             ->where('tran_id', $req->batch)
             ->get();
         }
         else{
-            $purchase = Transaction_Detail::on('mysql_second')->where('tran_head_id', $req->product)
+            $data = Transaction_Detail::on('mysql_second')->where('tran_head_id', $req->product)
             ->where('quantity', '>', 0)
             ->whereIn('tran_method', ["Purchase","Positive"])
             ->get();
@@ -586,7 +592,7 @@ class GeneralTransactionController extends Controller
         
 
         $totQuantity = 0;
-        foreach($purchase as $index => $pro) {
+        foreach($data as $index => $pro) {
             $totQuantity = $totQuantity + $pro->quantity;
         }
 

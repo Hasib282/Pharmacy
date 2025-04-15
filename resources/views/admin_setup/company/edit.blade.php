@@ -13,6 +13,7 @@
             @method('PUT')
             <div class="rows">
                 <input type="hidden" name="id" id="id">
+                {{-- type --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateType">Company Type <span class="required" title="Required">*</span></label>
@@ -22,6 +23,7 @@
                         <span class="error" id="update_type_error"></span>
                     </div>
                 </div>
+                {{-- name --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateName">Company Name <span class="required" title="Required">*</span></label>
@@ -29,6 +31,7 @@
                         <span class="error" id="update_name_error"></span>
                     </div>
                 </div>
+                {{-- email  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateEmail">Email <span class="required" title="Required">*</span></label>
@@ -36,6 +39,7 @@
                         <span class="error" id="update_email_error"></span>
                     </div>
                 </div>
+                {{-- phone  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updatePhone">Phone <span class="required" title="Required">*</span></label>
@@ -43,6 +47,7 @@
                         <span class="error" id="update_phone_error"></span>
                     </div>
                 </div>
+                {{-- address  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateAddress">Address</label>
@@ -50,6 +55,7 @@
                         <span class="error" id="update_address_error"></span>
                     </div>
                 </div>
+                {{-- website --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateWebsite">Website</label>
@@ -57,6 +63,7 @@
                         <span class="error" id="update_website_error"></span>
                     </div>
                 </div>
+                {{-- domain --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateDomain">Domain</label>
@@ -64,6 +71,7 @@
                         <span class="error" id="update_domain_error"></span>
                     </div>
                 </div>
+                {{-- image --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateImage">Image</label>

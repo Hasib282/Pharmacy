@@ -12,10 +12,10 @@ class MainHeadController extends Controller
 {
     // Show All MainHeads
     public function ShowAll(Request $req){
-        $mainhead = Transaction_Main_Head::on('mysql')->orderBy('added_at')->paginate(15);
+        $data = Transaction_Main_Head::on('mysql')->orderBy('added_at')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $mainhead,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -41,10 +41,10 @@ class MainHeadController extends Controller
 
     // Edit MainHeads
     public function Edit(Request $req){
-        $mainhead = Transaction_Main_Head::on('mysql')->findOrFail($req->id);
+        $data = Transaction_Main_Head::on('mysql')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'mainhead'=> $mainhead,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -52,13 +52,13 @@ class MainHeadController extends Controller
 
     // Update MainHeads
     public function Update(Request $req){
-        $mainhead = Transaction_Main_Head::on('mysql')->findOrFail($req->id);
+        $data = Transaction_Main_Head::on('mysql')->findOrFail($req->id);
         
         $req->validate([
-            "name" => ['required',Rule::unique('mysql.transaction__main__heads', 'type_name')->ignore($mainhead->id)],
+            "name" => ['required',Rule::unique('mysql.transaction__main__heads', 'type_name')->ignore($data->id)],
         ]);
 
-        $update = Transaction_Main_Head::findOrFail($req->id)->update([
+        $update = $data->update([
             "type_name" => $req->name,
             "updated_at" => now()
         ]);
@@ -86,13 +86,13 @@ class MainHeadController extends Controller
 
     // Search MainHeads
     public function Search(Request $req){
-        $mainhead = Transaction_Main_Head::on('mysql')->where('type_name', 'like', $req->search.'%')
+        $data = Transaction_Main_Head::on('mysql')->where('type_name', 'like', $req->search.'%')
         ->orderBy('type_name')
         ->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $mainhead,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -100,10 +100,10 @@ class MainHeadController extends Controller
 
     // Get Transaction Main Head
     public function Get(){
-        $mainhead = Transaction_Main_Head::on('mysql')->orderBy('added_at')->paginate(15);
+        $data = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status' => true,
-            'mainhead'=> $mainhead,
+            'data'=> $data,
         ]);
     } // End Method
 }

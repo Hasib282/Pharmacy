@@ -11,7 +11,9 @@
         <form id="EditForm" method="post">
             @csrf
             @method('PUT')
+            {{-- id --}}
             <input type="hidden" name="id" id="id">
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="updateGroupeName">Groupe Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="groupeName" class="form-input" id="updateGroupeName">
@@ -19,6 +21,7 @@
             </div>
 
             @if (Request::segment(1) == 'admin')
+                {{-- type --}}
                 <div class="form-input-group">
                     <label for="updateType">Transaction Type <span class="required" title="Required">*</span></label>
                     <select name="type" id="updateType">
@@ -26,6 +29,7 @@
                     </select>
                     <span class="error" id="update_type_error"></span>
                 </div>
+                {{-- method  --}}
                 <div class="form-input-group">
                     <label for="updateMethod">Transaction Method <span class="required" title="Required">*</span></label>
                     <select name="method" id="updateMethod">
@@ -34,6 +38,7 @@
                     <span class="error" id="update_method_error"></span>
                 </div>
             @elseif (Request::segment(1) == 'transaction')
+                {{-- method  --}}
                 <div class="form-input-group">
                     <label for="updateMethod">Transaction Method <span class="required" title="Required">*</span></label>
                     <select name="method" id="updateMethod">

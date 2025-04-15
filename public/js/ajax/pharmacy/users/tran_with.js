@@ -78,18 +78,18 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.tranwith.id);
-        $('#updateName').val(res.tranwith.tran_with_name);
+        $('#id').val(res.data.id);
+        $('#updateName').val(res.data.tran_with_name);
 
         // Create options dynamically
         $('#updateRole').html('');
-        $('#updateRole').append(`<option value="4" ${res.tranwith.user_role == '4' ? 'selected' : ''}>Client</option>
-                                    <option value="5" ${res.tranwith.user_role == '5' ? 'selected' : ''}>Supplier</option>`);
+        $('#updateRole').append(`<option value="4" ${res.data.user_role == '4' ? 'selected' : ''}>Client</option>
+                                    <option value="5" ${res.data.user_role == '5' ? 'selected' : ''}>Supplier</option>`);
 
         $('#updateTranMethod').html('');
-        $('#updateTranMethod').append(`<option value="Receive" ${res.tranwith.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
-                                    <option value="Payment" ${res.tranwith.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
-                                    <option value="Both" ${res.tranwith.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
+        $('#updateTranMethod').append(`<option value="Receive" ${res.data.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
+                                    <option value="Payment" ${res.data.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
+                                    <option value="Both" ${res.data.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
         $('#updateName').focus();
     }; // End Method
 });

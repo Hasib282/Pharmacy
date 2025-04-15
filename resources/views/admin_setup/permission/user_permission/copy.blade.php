@@ -16,11 +16,7 @@
                     <div class="form-input-group">
                         <label for="from">From</label>
                         <input type="text" name="from" id="from" class="form-input" placeholder="select the user from whom you want to copy" autocomplete="off">
-                        <div id='from-list'>
-                            <ul>
-        
-                            </ul>
-                        </div>
+                        <div id='from-list'></div>
                         <span class="error" id="from_error"></span>
                     </div>
                 </div>
@@ -28,11 +24,7 @@
                     <div class="form-input-group">
                         <label for="to">To</label>
                         <input type="text" name="to" id="to" class="form-input" placeholder="select the user whom you want to assign" autocomplete="off">
-                        <div id='to-list'>
-                            <ul>
-        
-                            </ul>
-                        </div>
+                        <div id='to-list'></div>
                         <span class="error" id="to_error"></span>
                     </div>
                 </div>

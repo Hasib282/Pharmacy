@@ -71,19 +71,19 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.location.id);
+        $('#id').val(res.data.id);
         // Create options dynamically
         $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${res.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-                                    <option value="Chittagong" ${res.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-                                    <option value="Rajshahi" ${res.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-                                    <option value="Khulna" ${res.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-                                    <option value="Sylhet" ${res.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-                                    <option value="Barishal" ${res.location.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
-                                    <option value="Rangpur" ${res.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-                                    <option value="Mymensingh" ${res.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-        $('#updateDistrict').val(res.location.district);
-        $('#updateUpazila').val(res.location.upazila);
+        $('#updateDivision').append(`<option value="Dhaka" ${res.data.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
+                                    <option value="Chittagong" ${res.data.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
+                                    <option value="Rajshahi" ${res.data.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
+                                    <option value="Khulna" ${res.data.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
+                                    <option value="Sylhet" ${res.data.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
+                                    <option value="Barishal" ${res.data.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
+                                    <option value="Rangpur" ${res.data.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
+                                    <option value="Mymensingh" ${res.data.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
+        $('#updateDistrict').val(res.data.district);
+        $('#updateUpazila').val(res.data.upazila);
         $('#updateDivision').focus();
     }
 });

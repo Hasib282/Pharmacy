@@ -95,24 +95,20 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.company.id);
+        $('#id').val(res.data.id);
 
-        CreateSelectOptions('#updateType', 'Select Company Type', res.type, res.company.company_type, 'name');
+        CreateSelectOptions('#updateType', 'Select Company Type', res.type, res.data.company_type, 'name');
 
-        $('#updateName').val(res.company.company_name);
-        $('#updatePhone').val(res.company.company_phone);
-        $('#updateEmail').val(res.company.company_email);
-        $('#updateAddress').val(res.company.address);
-        $('#updateDomain').val(res.company.domain);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.company.logo ? res.company.logo : 'tsbd.png'}?${new Date().getTime()} `).show();
+        $('#updateName').val(res.data.company_name);
+        $('#updatePhone').val(res.data.company_phone);
+        $('#updateEmail').val(res.data.company_email);
+        $('#updateAddress').val(res.data.address);
+        $('#updateDomain').val(res.data.domain);
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.data.logo ? res.data.logo : 'tsbd.png'}?${new Date().getTime()} `).show();
         $('#updateName').focus();
     }; // End Method
 
 
     // Show Detals Ajax
     DetailsAjax('admin/companies');
-
-
-    // Creating Select Options Dynamically
-    // GetTransactionWith(null, null, null, 3, 'Ok');
 });

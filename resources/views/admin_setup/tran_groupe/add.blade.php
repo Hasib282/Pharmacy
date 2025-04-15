@@ -10,6 +10,7 @@
         <!-- form start -->
         <form id="AddForm" method="post">
             @csrf
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="groupeName">Groupe Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="groupeName" class="form-input" id="groupeName">
@@ -17,6 +18,7 @@
             </div>
 
             @if (Request::segment(1) == 'admin')
+                {{-- type --}}
                 <div class="form-input-group">
                     <label for="type">Transaction Type <span class="required" title="Required">*</span></label>
                     <select name="type" id="type">
@@ -24,6 +26,7 @@
                     </select>
                     <span class="error" id="type_error"></span>
                 </div>
+                {{-- method  --}}
                 <div class="form-input-group">
                     <label for="method">Transaction Method <span class="required" title="Required">*</span></label>
                     <select name="method" id="method">
@@ -35,6 +38,7 @@
                     <span class="error" id="method_error"></span>
                 </div>
             @elseif (Request::segment(1) == 'transaction')
+                {{-- type --}}
                 <div class="form-input-group">
                     <label for="method">Transaction Method <span class="required" title="Required">*</span></label>
                     <select name="method" id="method">
@@ -46,16 +50,12 @@
                     <span class="error" id="method_error"></span>
                 </div>
             @endif
-            
+            {{-- company --}}
             @if (auth()->user()->user_role == 1)
                 <div class="form-input-group">
                     <label for="company">Company <span class="required" title="Required">*</span></label>
                     <input type="text" name="company" class="form-input" id="company" autocomplete="off">
-                    <div id="company-list">
-                        <ul>
-
-                        </ul>
-                    </div>
+                    <div id="company-list"></div>
                     <span class="error" id="company_error"></span>
                 </div>
             @else

@@ -103,13 +103,13 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#updateTranId').val(res.party.tran_id);
+        $('#updateTranId').val(res.data.tran_id);
 
-        getDueListByUserId(res.party.tran_user, '.due-grid tbody');
-        $('#updateUser').attr('data-id',res.party.tran_user);
-        $('#updateUser').val(res.party.user.user_name);
-        $('#updateAmount').val(res.party.receive);
-        $('#updateDiscount').val(res.party.discount);
+        getDueListByUserId(res.data.tran_user, '.due-grid tbody');
+        $('#updateUser').attr('data-id',res.data.tran_user);
+        $('#updateUser').val(res.data.user.user_name);
+        $('#updateAmount').val(res.data.receive);
+        $('#updateDiscount').val(res.data.discount);
     }
 
 

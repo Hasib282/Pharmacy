@@ -88,11 +88,11 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.permission.id);
+        $('#id').val(res.data.id);
 
-        CreateSelectOptions('#updateMainhead', 'Select Main Head', res.permissionMainhead, res.permission.permission_mainhead, 'name');
+        CreateSelectOptions('#updateMainhead', 'Select Main Head', res.permissionMainhead, res.data.permission_mainhead, 'name');
 
-        $('#updateName').val(res.permission.name);
+        $('#updateName').val(res.data.name);
         $('#updateName').focus();
     }
 });

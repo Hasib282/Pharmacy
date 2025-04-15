@@ -176,9 +176,9 @@ $(document).ready(function () {
 
         '#company', 
 
-        '#company-list ul',
+        '#company-list',
 
-        '#company-list ul li',
+        '#company-list li',
     );
 
 
@@ -194,9 +194,9 @@ $(document).ready(function () {
 
         '#updateCompany', 
 
-        '#update-company ul',
+        '#update-company',
 
-        '#update-company ul li',
+        '#update-company li',
     );
 
     
@@ -214,9 +214,9 @@ $(document).ready(function () {
 
         '#department', 
 
-        '#department-list ul',
+        '#department-list',
 
-        '#department-list ul li',
+        '#department-list li',
     );
 
 
@@ -232,9 +232,9 @@ $(document).ready(function () {
 
         '#updateDepartment', 
 
-        '#update-department ul',
+        '#update-department',
 
-        '#update-department ul li',
+        '#update-department li',
     );
 
     
@@ -253,9 +253,9 @@ $(document).ready(function () {
 
         '#designation', 
 
-        '#designation-list ul',
+        '#designation-list',
 
-        '#designation-list ul li',
+        '#designation-list li',
     );
 
 
@@ -272,9 +272,9 @@ $(document).ready(function () {
 
         '#updateDesignation', 
 
-        '#update-designation ul',
+        '#update-designation',
 
-        '#update-designation ul li',
+        '#update-designation li',
     );
 
     
@@ -301,9 +301,9 @@ $(document).ready(function () {
 
         '#location', 
 
-        '#location-list ul',
+        '#location-list',
 
-        '#location-list ul li',
+        '#location-list li',
     );
 
 
@@ -328,9 +328,9 @@ $(document).ready(function () {
 
         '#updateLocation', 
 
-        '#update-location ul',
+        '#update-location',
 
-        '#update-location ul li'
+        '#update-location li'
     );
     
     
@@ -348,9 +348,9 @@ $(document).ready(function () {
 
         '#bank', 
 
-        '#bank-list ul',
+        '#bank-list',
 
-        '#bank-list ul li',
+        '#bank-list li',
     );
 
 
@@ -366,9 +366,9 @@ $(document).ready(function () {
 
         '#updateBank', 
 
-        '#update-bank ul',
+        '#update-bank',
 
-        '#update-bank ul li',
+        '#update-bank li',
     );
     
     
@@ -386,9 +386,9 @@ $(document).ready(function () {
 
         '#store', 
 
-        '#store-list ul',
+        '#store-list',
 
-        '#store-list ul li',
+        '#store-list li',
     );
 
 
@@ -404,9 +404,9 @@ $(document).ready(function () {
 
         '#updateStore', 
 
-        '#update-store ul',
+        '#update-store',
 
-        '#update-store ul li',
+        '#update-store li',
     );
     
     
@@ -424,9 +424,9 @@ $(document).ready(function () {
 
         '#manufacturer', 
 
-        '#manufacturer-list ul',
+        '#manufacturer-list',
 
-        '#manufacturer-list ul li',
+        '#manufacturer-list li',
     );
 
 
@@ -442,9 +442,9 @@ $(document).ready(function () {
 
         '#updateManufacturer', 
 
-        '#update-manufacturer ul',
+        '#update-manufacturer',
 
-        '#update-manufacturer ul li',
+        '#update-manufacturer li',
     );
     
     
@@ -462,9 +462,9 @@ $(document).ready(function () {
 
         '#category', 
 
-        '#category-list ul',
+        '#category-list',
 
-        '#category-list ul li',
+        '#category-list li',
     );
 
 
@@ -480,9 +480,9 @@ $(document).ready(function () {
 
         '#updateCategory', 
 
-        '#update-category ul',
+        '#update-category',
 
-        '#update-category ul li',
+        '#update-category li',
     );
     
     
@@ -500,9 +500,9 @@ $(document).ready(function () {
 
         '#form', 
 
-        '#form-list ul',
+        '#form-list',
 
-        '#form-list ul li',
+        '#form-list li',
     );
 
 
@@ -518,9 +518,9 @@ $(document).ready(function () {
 
         '#updateForm', 
 
-        '#update-form ul',
+        '#update-form',
 
-        '#update-form ul li',
+        '#update-form li',
     );
     
     
@@ -538,9 +538,9 @@ $(document).ready(function () {
 
         '#unit', 
 
-        '#unit-list ul',
+        '#unit-list',
 
-        '#unit-list ul li',
+        '#unit-list li',
     );
 
 
@@ -556,9 +556,9 @@ $(document).ready(function () {
 
         '#updateUnit', 
 
-        '#update-unit ul',
+        '#update-unit',
 
-        '#update-unit ul li',
+        '#update-unit li',
     );
 
 
@@ -577,9 +577,9 @@ $(document).ready(function () {
 
         '#pbatch', 
 
-        '#pbatch-list ul',
+        '#pbatch-list',
 
-        '#pbatch-list ul li',
+        '#pbatch-list li',
     );
 
 
@@ -596,9 +596,9 @@ $(document).ready(function () {
 
         '#updatePbatch', 
 
-        '#update-pbatch ul',
+        '#update-pbatch',
 
-        '#update-pbatch ul li',
+        '#update-pbatch li',
     );
     
     
@@ -618,9 +618,9 @@ $(document).ready(function () {
 
         '#batch', 
 
-        '#batch-list ul',
+        '#batch-list',
 
-        '#batch-list ul li',
+        '#batch-list li',
 
         function () {
             GetInputList('transaction/get/batch/details', {batch: $('#batch').attr('data-id')}, '#batch-details-list tbody');
@@ -645,9 +645,9 @@ $(document).ready(function () {
 
         '#updateBatch', 
 
-        '#update-batch ul',
+        '#update-batch',
 
-        '#update-batch ul li',
+        '#update-batch li',
 
         function () {
             GetInputList('transaction/get/batch/details', {batch: $('#updateBatch').attr('data-id')}, '#update-batch-details-list tbody');
@@ -698,9 +698,9 @@ $(document).ready(function () {
 
         '#user', 
 
-        '#user-list ul',
+        '#user-list',
 
-        '#user-list ul li',
+        '#user-list li',
 
         function (id) {
             getDueListByUserId(id, '.due-grid tbody');
@@ -742,9 +742,9 @@ $(document).ready(function () {
 
         '#updateUser', 
 
-        '#update-user ul',
+        '#update-user',
 
-        '#update-user ul li',
+        '#update-user li',
         
         function (id) {
             getDueListByUserId(id, '.due-grid tbody');
@@ -789,9 +789,9 @@ $(document).ready(function () {
 
         '#head', 
 
-        '#head-list ul',
+        '#head-list',
 
-        '#head-list ul li',
+        '#head-list li',
 
         undefined, 
 
@@ -830,9 +830,9 @@ $(document).ready(function () {
 
         '#updateHead', 
 
-        '#update-head ul',
+        '#update-head',
 
-        '#update-head ul li',
+        '#update-head li',
 
         undefined, 
 
@@ -999,9 +999,9 @@ $(document).ready(function () {
 
         '#specialization', 
 
-        '#specialization-list ul',
+        '#specialization-list',
 
-        '#specialization-list ul li',
+        '#specialization-list li',
     );
 
 
@@ -1017,9 +1017,9 @@ $(document).ready(function () {
 
         '#updateSpecialization', 
 
-        '#update-specialization ul',
+        '#update-specialization',
 
-        '#update-specialization ul li',
+        '#update-specialization li',
     );
 
 
@@ -1039,9 +1039,9 @@ $(document).ready(function () {
 
         '#bed_category', 
 
-        '#bed_category-list ul',
+        '#bed_category-list',
 
-        '#bed_category-list ul li',
+        '#bed_category-list li',
     );
 
 
@@ -1057,9 +1057,9 @@ $(document).ready(function () {
 
         '#updateBed_Category', 
 
-        '#update-bed_category ul',
+        '#update-bed_category',
 
-        '#update-bed_category ul li',
+        '#update-bed_category li',
     );
     
     
@@ -1080,9 +1080,9 @@ $(document).ready(function () {
 
         '#bed_list', 
 
-        '#bed_list-list ul',
+        '#bed_list-list',
 
-        '#bed_list-list ul li',
+        '#bed_list-list li',
     );
 
 
@@ -1099,9 +1099,9 @@ $(document).ready(function () {
 
         '#updateBed_List', 
 
-        '#update-bed_list ul',
+        '#update-bed_list',
 
-        '#update-bed_list ul li',
+        '#update-bed_list li',
     );
 
 
@@ -1121,9 +1121,9 @@ $(document).ready(function () {
 
         '#nursing_station', 
 
-        '#nursing_station-list ul',
+        '#nursing_station-list',
 
-        '#nursing_station-list ul li',
+        '#nursing_station-list li',
     );
 
 
@@ -1139,9 +1139,9 @@ $(document).ready(function () {
 
         '#updateNursing_Station', 
 
-        '#update-nursing_station ul',
+        '#update-nursing_station',
 
-        '#update-nursing_station ul li',
+        '#update-nursing_station li',
     );
 
 
@@ -1162,9 +1162,9 @@ $(document).ready(function () {
 
         '#sr', 
 
-        '#sr-list ul',
+        '#sr-list',
 
-        '#sr-list ul li',
+        '#sr-list li',
     );
 
 
@@ -1181,9 +1181,9 @@ $(document).ready(function () {
 
         '#updateSR', 
 
-        '#update-sr ul',
+        '#update-sr',
 
-        '#update-sr ul li',
+        '#update-sr li',
     );
 
 
@@ -1204,9 +1204,9 @@ $(document).ready(function () {
 
         '#marketing_head', 
 
-        '#marketing_head-list ul',
+        '#marketing_head-list',
 
-        '#marketing_head-list ul li',
+        '#marketing_head-list li',
     );
 
 
@@ -1223,9 +1223,9 @@ $(document).ready(function () {
 
         '#updateMarketing_Head', 
 
-        '#update-marketing_head ul',
+        '#update-marketing_head',
 
-        '#update-marketing_head ul li',
+        '#update-marketing_head li',
     );
 
 
@@ -1245,9 +1245,9 @@ $(document).ready(function () {
 
         '#doctor', 
 
-        '#doctor-list ul',
+        '#doctor-list',
 
-        '#doctor-list ul li',
+        '#doctor-list li',
     );
 
 
@@ -1263,9 +1263,9 @@ $(document).ready(function () {
 
         '#updateDoctor', 
 
-        '#update-doctor ul',
+        '#update-doctor',
 
-        '#update-doctor ul li',
+        '#update-doctor li',
     );
 
 

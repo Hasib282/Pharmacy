@@ -11,6 +11,7 @@
             @csrf
             @method('POST')
             <div class="rows">
+                {{-- type --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="type">Company Type <span class="required" title="Required">*</span></label>
@@ -20,6 +21,7 @@
                         <span class="error" id="type_error"></span>
                     </div>
                 </div>
+                {{-- name --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="name">Name <span class="required" title="Required">*</span></label>
@@ -27,6 +29,7 @@
                         <span class="error" id="name_error"></span>
                     </div>
                 </div>
+                {{-- email --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="email">Email <span class="required" title="Required">*</span></label>
@@ -34,6 +37,7 @@
                         <span class="error" id="email_error"></span>
                     </div>
                 </div>
+                {{-- phone --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="phone">Phone <span class="required" title="Required">*</span></label>
@@ -41,6 +45,7 @@
                         <span class="error" id="phone_error"></span>
                     </div>
                 </div>
+                {{-- address  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="address">Address</label>
@@ -48,6 +53,7 @@
                         <span class="error" id="address_error"></span>
                     </div>
                 </div>
+                {{-- website --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="website">Website</label>
@@ -55,6 +61,7 @@
                         <span class="error" id="website_error"></span>
                     </div>
                 </div>
+                {{-- domain --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="domain">Domain</label>
@@ -62,7 +69,7 @@
                         <span class="error" id="domain_error"></span>
                     </div>
                 </div>
-                
+                {{-- image --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="image">Image</label>

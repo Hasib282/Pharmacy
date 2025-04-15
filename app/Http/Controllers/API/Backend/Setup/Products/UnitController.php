@@ -116,16 +116,17 @@ class UnitController extends Controller
                 ->take(10)
                 ->get();
 
-
-        if($units->count() > 0){
-            $list = "";
-            foreach($units as $index => $unit) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$unit->id.'">'.$unit->unit_name.'</li>';
+        $list = "<ul>";
+            if($units->count() > 0){
+                foreach($units as $index => $unit) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$unit->id.'">'.$unit->unit_name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 }

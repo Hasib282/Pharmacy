@@ -34,11 +34,7 @@
                             <div class="form-input-group">
                                 <label for="head">Transaction Head</label>
                                 <input type="text" name="head" id="head" class="form-input" autocomplete="off">
-                                <div id="head-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <div id="head-list"></div>
                                 <span class="error" id="head_error"></span>
                             </div>
                         </div>

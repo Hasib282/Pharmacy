@@ -11,6 +11,7 @@
             @csrf
             @method('POST')
             <div class="rows">
+                {{-- type --}}
                 @if ($name != "Admin" && $name != "Super Admin" && $name != "Sales Representative" && $name != "Marketing Head")
                     <div class="c-4">
                         <div class="form-input-group">
@@ -22,7 +23,7 @@
                         </div>
                     </div>
                 @endif
-                
+                {{-- name --}}
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="name">{{ $name }} Name <span class="required" title="Required">*</span></label>
@@ -30,6 +31,7 @@
                         <span class="error" id="name_error"></span>
                     </div>
                 </div>
+                {{-- email  --}}
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="email">Email <span class="required" title="Required">*</span></label>
@@ -37,6 +39,7 @@
                         <span class="error" id="email_error"></span>
                     </div>
                 </div>
+                {{-- phone --}}
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="phone">Phone <span class="required" title="Required">*</span></label>
@@ -46,6 +49,7 @@
                 </div>
 
                 @if ($name != "Super Admin" && $name != "Admin")
+                    {{-- gender --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="gender">Gender <span class="required" title="Required">*</span></label>
@@ -58,7 +62,7 @@
                             <span class="error" id="gender_error"></span>
                         </div>
                     </div>
-
+                    {{-- division --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="division">Division <span class="required" title="Required">*</span></label>
@@ -76,20 +80,16 @@
                             <span class="error" id="division_error"></span>
                         </div>
                     </div>
-
+                    {{-- location --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="location">Location <span class="required" title="Required">*</span></label>
                             <input type="text" name="location" class="form-input" id="location" autocomplete="off">
-                            <div id="location-list">
-                                <ul>
-
-                                </ul>
-                            </div>
+                            <div id="location-list"></div>
                             <span class="error" id="location_error"></span>
                         </div>
                     </div>
-                    
+                    {{-- address  --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="address">Address</label>
@@ -100,6 +100,7 @@
                 @endif
 
                 @if ($name != "Client" && $name != "Supplier" && $name != "Sales Representative" && $name != "Marketing Head")
+                    {{-- password  --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for = "password">Password <span class="required" title="Required">*</span></label>
@@ -107,6 +108,7 @@
                             <span class="error" id="password_error"></span>
                         </div>
                     </div>
+                    {{-- confirm Password  --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for = "password_confirmation">Confirm Password <span class="required" title="Required">*</span></label>
@@ -115,7 +117,7 @@
                         </div>
                     </div>
                 @endif
-                
+                {{-- image --}}
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="image">Image</label>
@@ -127,31 +129,25 @@
                 </div>
 
                 @if ($name == "Admin") 
+                    {{-- store --}}
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="store">Store <span class="required" title="Required">*</span></label>
                             <input type="text" name="store" class="form-input" id="store" autocomplete="off">
-                            <div id="store-list">
-                                <ul>
-
-                                </ul>
-                            </div>
+                            <div id="store-list"></div>
                             <span class="error" id="store_error"></span>
                         </div>
                     </div>
                 @endif
                 
                 @if ($name == "Admin")
+                    {{-- company --}}
                     @if (auth()->user()->user_role == 1)
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="company">Company <span class="required" title="Required">*</span></label>
                                 <input type="text" name="company" class="form-input" id="company" autocomplete="off">
-                                <div id="company-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <div id="company-list"></div>
                                 <span class="error" id="company_error"></span>
                             </div>
                         </div>

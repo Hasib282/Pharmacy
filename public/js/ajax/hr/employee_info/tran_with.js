@@ -70,8 +70,8 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.tranwith.id);
-        $('#updateName').val(res.tranwith.tran_with_name);
+        $('#id').val(res.data.id);
+        $('#updateName').val(res.data.tran_with_name);
 
         $('#updateName').focus();
     }; // End Method

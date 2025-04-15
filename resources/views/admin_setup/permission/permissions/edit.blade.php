@@ -11,7 +11,9 @@
         <form id="EditForm" method="post">
             @csrf
             @method('PUT')
+            {{-- id  --}}
             <input type="hidden" name="id" id="id">
+            {{-- mainhead --}}
             <div class="form-input-group">
                 <label for="updateMainhead">Mainhead <span class="required" title="Required">*</span></label>
                 <select name="mainhead" id="updateMainhead">
@@ -19,6 +21,7 @@
                 </select>
                 <span class="error" id="update_mainhead_error"></span>
             </div>
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="updateName">Permission Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="name" class="form-input" id="updateName">

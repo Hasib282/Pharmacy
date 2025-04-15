@@ -10,6 +10,7 @@
         <!-- form start -->
         <form id="AddForm" method="post">
             @csrf
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="name">Tran With Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="name" class="form-input" id="name">
@@ -17,6 +18,7 @@
             </div>
 
             @if(Request::segment(1) == 'admin')
+                {{-- role --}}
                 <div class="form-input-group">
                     <label for="role">User Role <span class="required" title="Required">*</span></label>
                     <select name="role" id="role">
@@ -24,6 +26,7 @@
                     </select>
                     <span class="error" id="role_error"></span>
                 </div>
+                {{-- type --}}
                 <div class="form-input-group">
                     <label for="tranType">Transaction Type <span class="required" title="Required">*</span></label>
                     <select name="tranType" id="tranType">
@@ -31,6 +34,7 @@
                     </select>
                     <span class="error" id="tranType_error"></span>
                 </div>
+                {{-- method  --}}
                 <div class="form-input-group">
                     <label for="tranMethod">Transaction Method <span class="required" title="Required">*</span></label>
                     <select name="tranMethod" id="tranMethod">
@@ -42,6 +46,7 @@
                     <span class="error" id="tranMethod_error"></span>
                 </div>
             @elseif(Request::segment(1) == 'transaction' || Request::segment(1) == 'inventory' || Request::segment(1) == 'pharmacy')
+                {{-- role --}}
                 <div class="form-input-group">
                     <label for="role">User Role <span class="required" title="Required">*</span></label>
                     <select name="role" id="role">
@@ -51,6 +56,7 @@
                     </select>
                     <span class="error" id="role_error"></span>
                 </div>
+                {{-- method  --}}
                 <div class="form-input-group">
                     <label for="tranMethod">Transaction Method <span class="required" title="Required">*</span></label>
                     <select name="tranMethod" id="tranMethod">
@@ -63,15 +69,12 @@
                 </div>
             @endif
 
+            {{-- company --}}
             @if (auth()->user()->user_role == 1)
                 <div class="form-input-group">
                     <label for="company">Company <span class="required" title="Required">*</span></label>
                     <input type="text" name="company" class="form-input" id="company" autocomplete="off">
-                    <div id="company-list">
-                        <ul>
-
-                        </ul>
-                    </div>
+                    <div id="company-list"></div>
                     <span class="error" id="company_error"></span>
                 </div>
             @else

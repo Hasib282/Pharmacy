@@ -10,12 +10,13 @@
         <!-- form start -->
         <form id="AddForm" method="post">
             @csrf
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="headName">Head Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="headName" class="form-input" id="headName">
                 <span class="error" id="headName_error"></span>
             </div>
-
+            {{-- groupe --}}
             @if (Request::segment(1) != 'hr')
                 <div class="form-input-group">
                     <label for="groupe">Transaction Groupe <span class="required" title="Required">*</span></label>
@@ -25,16 +26,12 @@
                     <span class="error" id="groupe_error"></span>
                 </div>
             @endif
-
+            {{-- company --}}
             @if (auth()->user()->user_role == 1)
                 <div class="form-input-group">
                     <label for="company">Company <span class="required" title="Required">*</span></label>
                     <input type="text" name="company" class="form-input" id="company" autocomplete="off">
-                    <div id="company-list">
-                        <ul>
-
-                        </ul>
-                    </div>
+                    <div id="company-list"></div>
                     <span class="error" id="company_error"></span>
                 </div>
             @else

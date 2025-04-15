@@ -77,14 +77,14 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.groupes.id);
-        $('#updateGroupeName').val(res.groupes.tran_groupe_name);
+        $('#id').val(res.data.id);
+        $('#updateGroupeName').val(res.data.tran_groupe_name);
 
         $('#updateMethod').empty();
         $('#updateMethod').append(`<option value="" >Select Transaction Method</option>
-                                    <option value="Receive" ${res.groupes.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
-                                    <option value="Payment" ${res.groupes.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
-                                    <option value="Both" ${res.groupes.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
+                                    <option value="Receive" ${res.data.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
+                                    <option value="Payment" ${res.data.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
+                                    <option value="Both" ${res.data.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
 
         $('#updateGroupeName').focus();
     }; // End Method

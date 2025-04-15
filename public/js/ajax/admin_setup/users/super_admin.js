@@ -73,11 +73,11 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.superadmin.id);
-        $('#updateName').val(res.superadmin.user_name);
-        $('#updatePhone').val(res.superadmin.user_phone);
-        $('#updateEmail').val(res.superadmin.user_email);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.superadmin.image ? res.superadmin.image : (res.superadmin.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
+        $('#id').val(res.data.id);
+        $('#updateName').val(res.data.user_name);
+        $('#updatePhone').val(res.data.user_phone);
+        $('#updateEmail').val(res.data.user_email);
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.data.image ? res.data.image : (res.data.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
         $('#updateName').focus();
     }; // End Method
 });

@@ -35,8 +35,8 @@ function ShowPermissionMainheads(data, startIndex) {
 
 // Additional Edit Functionality
 function EditFormInputValue(res){
-    $('#id').val(res.permissionMainhead.id);
-    $('#updateName').val(res.permissionMainhead.name);
+    $('#id').val(res.data.id);
+    $('#updateName').val(res.data.name);
     $('#updateName').focus();
 }
 

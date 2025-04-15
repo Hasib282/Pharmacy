@@ -158,16 +158,17 @@ class UserPermissionController extends Controller
             ->get();
         }
 
-
-        if($froms->count() > 0){
-            $list = "";
-            foreach($froms as $index => $from) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$from->user_id.'">'.$from->user_name.'('.(Auth::user()->user_role == 1 ? $from->user_id : $from->company_user_id).')'.'</li>';
+        $list = "<ul>";
+            if($froms->count() > 0){
+                foreach($froms as $index => $from) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$from->user_id.'">'.$from->user_name.'('.(Auth::user()->user_role == 1 ? $from->user_id : $from->company_user_id).')'.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
     
@@ -177,7 +178,7 @@ class UserPermissionController extends Controller
     // Get The User To whom you assing the permission
     public function UserTo(Request $req){
         if(Auth::user()->user_role == 1) {
-            $tos = Login_User::on('mysql')
+            $data = Login_User::on('mysql')
             ->select('user_name','user_id','company_user_id')
             ->where('user_name', 'like', $req->to.'%')
             ->whereNotIn('user_role', ['1','4','5'])
@@ -186,7 +187,7 @@ class UserPermissionController extends Controller
             ->get();
         }
         else{
-            $tos = Login_User::on('mysql')
+            $data = Login_User::on('mysql')
             ->select('user_name','user_id','company_user_id')
             ->where('user_name', 'like', $req->to.'%')
             ->whereNotIn('user_role', ['1','4','5'])
@@ -196,16 +197,17 @@ class UserPermissionController extends Controller
             ->get();
         }
 
-
-        if($tos->count() > 0){
-            $list = "";
-            foreach($tos as $index => $to) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$to->user_id.'">'.$to->user_name.'('.(Auth::user()->user_role == 1 ? $to->user_id : $to->company_user_id).')'.'</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->user_id.'">'.$item->user_name.'('.(Auth::user()->user_role == 1 ? $item->user_id : $item->company_user_id).')'.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
     

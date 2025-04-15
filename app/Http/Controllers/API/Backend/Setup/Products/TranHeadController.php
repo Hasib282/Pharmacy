@@ -15,7 +15,7 @@ class TranHeadController extends Controller
     public function ShowAll(Request $req){
         $type = GetTranType($req->segment(2));
 
-        $heads = filterByCompany(
+        $data = filterByCompany(
                     Transaction_Head::on('mysql')
                     ->with('Groupe')
                     ->when($type, function ($query) use ($type) { // when $type is not null
@@ -29,7 +29,7 @@ class TranHeadController extends Controller
         
         return response()->json([
             'status'=> true,
-            'data' => $heads,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -67,10 +67,10 @@ class TranHeadController extends Controller
             $groupes = Transaction_Groupe::on('mysql')->orderBy('added_at')->get();
         }
 
-        $heads = Transaction_Head::on('mysql')->with('Groupe')->findOrFail($req->id);
+        $data = Transaction_Head::on('mysql')->with('Groupe')->findOrFail($req->id);
         return response()->json([
             'status'=> true,            
-            'heads'=>$heads,
+            'data'=>$data,
             'groupes'=>$groupes,
         ], 200);
     } // End Method
@@ -79,14 +79,14 @@ class TranHeadController extends Controller
 
     // Update Transaction Heads
     public function Update(Request $req){
-        $heads = Transaction_Head::on('mysql')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id);
+        $data = Transaction_Head::on('mysql')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id);
 
         $req->validate([
-            "headName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($heads->id)],
+            "headName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($data->id)],
             "groupe"  => 'required|exists:mysql.transaction__groupes,id'
         ]);
 
-        $update = Transaction_Head::on('mysql')->findOrFail($req->id)->update([
+        $update = $data->update([
             "tran_head_name" => $req->headName,
             "groupe_id" => $req->groupe,
             "updated_at" => now()
@@ -117,7 +117,7 @@ class TranHeadController extends Controller
     public function Search(Request $req){
         $type = GetTranType($req->segment(2));
 
-        $heads = Transaction_Head::on('mysql')
+        $data = Transaction_Head::on('mysql')
         ->with('Groupe')
         ->when($type, function ($query) use ($type) { // when $type is not null
             $query->whereHas('Groupe', function ($q) use ($type) {
@@ -126,13 +126,13 @@ class TranHeadController extends Controller
         });
 
         if($req->searchOption == 1){
-            $heads = filterByCompany($heads)
+            $data = filterByCompany($data)
             ->where('tran_head_name', 'like', $req->search.'%')
             ->orderBy('tran_head_name')
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $heads = filterByCompany($heads)
+            $data = filterByCompany($data)
             ->whereHas('Groupe', function ($q) use ($req, $type) {
                 $q->where('tran_groupe_name', 'like', $req->search . '%');
                 $q->orderBy('tran_groupe_name');
@@ -148,7 +148,7 @@ class TranHeadController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $heads,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -156,7 +156,8 @@ class TranHeadController extends Controller
 
     // Get Transaction Heads By Name And Groupe
     public function Get(Request $req){
-        $query = Transaction_Head::on('mysql')->where('tran_head_name', 'like', $req->head . '%')
+        $query = Transaction_Head::on('mysql')
+        ->where('tran_head_name', 'like', $req->head . '%')
         ->orderBy('tran_head_name')
         ->take(10);
 
@@ -166,18 +167,19 @@ class TranHeadController extends Controller
             $query->where('groupe_id', $req->groupe);
         }
 
-        $heads = $query->get();
+        $data = $query->get();
 
-        
-        if($heads->count() > 0){
-            $list = "";
-            foreach($heads as $index => $head) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$head->id.'" data-groupe="'.$head->groupe_id.'">'.$head->tran_head_name.'</li>';
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'" data-groupe="'.$item->groupe_id.'">'.$item->tran_head_name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 }

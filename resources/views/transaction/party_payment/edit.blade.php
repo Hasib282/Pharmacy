@@ -12,8 +12,10 @@
             @csrf
             <div class="rows">
                 <div class="c-6">
+                    {{-- transaction id  --}}
                     <input type="text" name="tranId" class="form-input" id="updateTranId" style="display: none">
                     <div class="rows">
+                        {{-- date  --}}
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="updateDate">Date</label>
@@ -22,18 +24,16 @@
                                 <span class="error" id="update_date_error"></span>
                             </div>
                         </div>
+                        {{-- user --}}
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="updateUser">Transaction User</label>
                                 <input type="text" name="user" class="form-input" id="updateUser" autocomplete="off">
-                                <div id="update-user">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <div id="update-user"></div>
                                 <span class="error" id="update_user_error"></span>
                             </div>
                         </div>
+                        {{-- discount --}}
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for="updateDiscount">Discount</label>
@@ -41,6 +41,7 @@
                                 <span class="error" id="update_discount_error"></span>
                             </div>
                         </div>
+                        {{-- amount --}}
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for="updateAmount">Amount</label>
@@ -54,6 +55,7 @@
                     </div>
                 </div>
                 <div class="c-6">
+                    {{-- due grid --}}
                     <div class="due-grid">
                         <table class="show-table">
                             <thead>

@@ -107,16 +107,16 @@ class SpecializationController extends Controller
         ->take(10)
         ->get();
 
-
-        if($specializations->count() > 0){
-            $list = "";
-            foreach($specializations as $index => $specialization) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$specialization->id.'">'.$specialization->name.'</li>';
+        $list = "<ul>";
+            if($specializations->count() > 0){
+                foreach($specializations as $index => $specialization) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$specialization->id.'">'.$specialization->name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
         return $list;
     } // End Method
 }

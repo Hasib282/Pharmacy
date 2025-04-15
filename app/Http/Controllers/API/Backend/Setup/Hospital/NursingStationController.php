@@ -117,16 +117,17 @@ class NursingStationController extends Controller
         ->take(10)
         ->get();
 
-
-        if($nursing_stations->count() > 0){
-            $list = "";
-            foreach($nursing_stations as $index => $nursing_station) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$nursing_station->id.'">'.$nursing_station->name.'</li>';
+        $list = "<ul>";
+            if($nursing_stations->count() > 0){
+                foreach($nursing_stations as $index => $nursing_station) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$nursing_station->id.'">'.$nursing_station->name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } 
 }

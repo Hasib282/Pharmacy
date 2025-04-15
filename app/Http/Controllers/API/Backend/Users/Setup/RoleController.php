@@ -12,10 +12,10 @@ class RoleController extends Controller
 {
     // Show All User Roles
     public function ShowAll(Request $req){
-        $roles = Role::on('mysql')->orderBy('added_at','asc')->paginate(15);
+        $data = Role::on('mysql')->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $roles,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -41,10 +41,10 @@ class RoleController extends Controller
 
     // Edit User Roles
     public function Edit(Request $req){
-        $roles = Role::on('mysql')->findOrFail($req->id);
+        $data = Role::on('mysql')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'roles'=> $roles,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -52,13 +52,13 @@ class RoleController extends Controller
 
     // Update User Roles
     public function Update(Request $req){
-        $roles = Role::on('mysql')->findOrFail($req->id);
+        $data = Role::on('mysql')->findOrFail($req->id);
 
         $req->validate([
-            "name" => ['required',Rule::unique('mysql.roles', 'name')->ignore($roles->id)],
+            "name" => ['required',Rule::unique('mysql.roles', 'name')->ignore($data->id)],
         ]);
 
-        $update = Role::on('mysql')->findOrFail($req->id)->update([
+        $update = $data->update([
             "name" => $req->name
         ]);
 
@@ -85,13 +85,13 @@ class RoleController extends Controller
 
     // Search User Roles
     public function Search(Request $req){
-        $roles = Role::on('mysql')->where('name', 'like', $req->search.'%')
+        $data = Role::on('mysql')->where('name', 'like', $req->search.'%')
         ->orderBy('name','asc')
         ->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $roles,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -99,7 +99,7 @@ class RoleController extends Controller
 
     // Get Roles
     public function Get(){
-        $roles = Role::on('mysql')
+        $data = Role::on('mysql')
         ->whereNotIn('id', ['1'])
         ->where('name', 'like', $req->role.'%')
         ->orderBy('name')
@@ -108,7 +108,7 @@ class RoleController extends Controller
 
         return response()->json([
             'status' => true,
-            'roles'=> $roles,
+            'data'=> $data,
         ]);
     } // End Method
 }

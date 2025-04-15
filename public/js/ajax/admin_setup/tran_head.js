@@ -85,10 +85,10 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.heads.id);
-        $('#updateHeadName').val(res.heads.tran_head_name);
+        $('#id').val(res.data.id);
+        $('#updateHeadName').val(res.data.tran_head_name);
 
-        CreateSelectOptions('#updateGroupe', 'Select Transaction Groupe', res.groupes, res.heads.groupe_id, 'tran_groupe_name')
+        CreateSelectOptions('#updateGroupe', 'Select Transaction Groupe', res.groupes, res.data.groupe_id, 'tran_groupe_name')
         
         $('#updateHeadName').focus();
     }; // End Method

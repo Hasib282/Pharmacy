@@ -35,8 +35,9 @@ function ShowRoles(data, startIndex) {
 
 // Additional Edit Functionality
 function EditFormInputValue(res){
-    $('#id').val(res.roles.id);
-    $('#updateName').val(res.roles.name);
+    $('#id').val(res.data.id);
+    $('#updateName').val(res.data.name);
+    $('#updateName').focus();
 }
 
 

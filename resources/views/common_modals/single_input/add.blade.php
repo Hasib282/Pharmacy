@@ -10,21 +10,19 @@
         <!-- form start -->
         <form id="AddForm" method="post">
             @csrf
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="name">{{ $name }} Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="name" class="form-input" id="name">
                 <span class="error" id="name_error"></span>
             </div>
 
+            {{-- company --}}
             @if ( auth()->user()->user_role == 1 && (Request::segment(1) == 'pharmacy' || Request::segment(1) == 'inventory') )
                 <div class="form-input-group">
                     <label for="company">Company <span class="required" title="Required">*</span></label>
                     <input type="text" name="company" class="form-input" id="company" autocomplete="off">
-                    <div id="company-list">
-                        <ul>
-
-                        </ul>
-                    </div>
+                    <div id="company-list"></div>
                     <span class="error" id="company_error"></span>
                 </div>
             @elseif(Request::segment(1) == 'pharmacy' || Request::segment(1) == 'inventory')

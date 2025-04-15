@@ -107,16 +107,17 @@ class BedCatagoryController extends Controller
         ->take(10)
         ->get();
 
-
-        if($categories->count() > 0){
-            $list = "";
-            foreach($categories as $index => $category) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$category->id.'">'.$category->name.'</li>';
+        $list = "<ul>";
+            if($categories->count() > 0){
+                foreach($categories as $index => $category) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$category->id.'">'.$category->name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 }

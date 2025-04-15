@@ -92,69 +92,69 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.employee.id);
-        $('#employee_id').val(res.employee.employee_id);
-        $('#update_name').val(res.employee.name);
+        $('#id').val(res.data.id);
+        $('#employee_id').val(res.data.employee_id);
+        $('#update_name').val(res.data.name);
         $('#update_name').focus();
-        $('#update_fathers_name').val(res.employee.fathers_name);
-        $('#update_mothers_name').val(res.employee.mothers_name);
-        $('#update_dob').val(res.employee.dob);
+        $('#update_fathers_name').val(res.data.fathers_name);
+        $('#update_mothers_name').val(res.data.mothers_name);
+        $('#update_dob').val(res.data.dob);
 
         // Create options dynamically
         $('#update_gender').empty();
-        $('#update_gender').append(`<option value="Male" ${res.employee.gender === 'Male' ? 'selected' : ''}>Male</option>
-                                    <option value="Female" ${res.employee.gender === 'Female' ? 'selected' : ''}>Female</option>
-                                    <option value="Others" ${res.employee.gender === 'Others' ? 'selected' : ''}>Others</option>`);
+        $('#update_gender').append(`<option value="Male" ${res.data.gender === 'Male' ? 'selected' : ''}>Male</option>
+                                    <option value="Female" ${res.data.gender === 'Female' ? 'selected' : ''}>Female</option>
+                                    <option value="Others" ${res.data.gender === 'Others' ? 'selected' : ''}>Others</option>`);
 
         $('#update_religion').empty();
-        $('#update_religion').append(`<option value="Islam" ${res.employee.religion === 'Islam' ? 'selected' : ''}>Islam</option>
-                                    <option value="Hinduism" ${res.employee.religion === 'Hinduism' ? 'selected' : ''}>Hinduism</option>
-                                    <option value="Christianity" ${res.employee.religion === 'Christianity' ? 'selected' : ''}>Christianity</option>
-                                    <option value="Buddhism" ${res.employee.religion === 'Buddhism' ? 'selected' : ''}>Buddhism</option>
-                                    <option value="Judaism" ${res.employee.religion === 'Judaism' ? 'selected' : ''}>Judaism</option>`);
+        $('#update_religion').append(`<option value="Islam" ${res.data.religion === 'Islam' ? 'selected' : ''}>Islam</option>
+                                    <option value="Hinduism" ${res.data.religion === 'Hinduism' ? 'selected' : ''}>Hinduism</option>
+                                    <option value="Christianity" ${res.data.religion === 'Christianity' ? 'selected' : ''}>Christianity</option>
+                                    <option value="Buddhism" ${res.data.religion === 'Buddhism' ? 'selected' : ''}>Buddhism</option>
+                                    <option value="Judaism" ${res.data.religion === 'Judaism' ? 'selected' : ''}>Judaism</option>`);
 
         $('#update_marital_status').empty();
-        $('#update_marital_status').append(`<option value="Married" ${res.employee.marital_status === 'Married' ? 'selected' : ''}>Married</option>
-                                            <option value="Unmarried" ${res.employee.marital_status === 'Unmarried' ? 'selected' : ''}>Unmarried</option>`);
+        $('#update_marital_status').append(`<option value="Married" ${res.data.marital_status === 'Married' ? 'selected' : ''}>Married</option>
+                                            <option value="Unmarried" ${res.data.marital_status === 'Unmarried' ? 'selected' : ''}>Unmarried</option>`);
 
-        $('#update_nationality').val(res.employee.nationality);
-        $('#update_nid_no').val(res.employee.nid_no);
-        $('#update_phn_no').val(res.employee.phn_no);
+        $('#update_nationality').val(res.data.nationality);
+        $('#update_nid_no').val(res.data.nid_no);
+        $('#update_phn_no').val(res.data.phn_no);
         $('#update_blood_group').empty();
-        $('#update_blood_group').append(`<option value="A+" ${res.employee.blood_group === 'A+' ? 'selected' : ''}>A+</option>
-                                    <option value="A-" ${res.employee.blood_group === 'A-' ? 'selected' : ''}>A-</option>
-                                    <option value="B+" ${res.employee.blood_group === 'B+' ? 'selected' : ''}>B+</option>
-                                    <option value="B-" ${res.employee.blood_group === 'B-' ? 'selected' : ''}>B-</option>
-                                    <option value="O+" ${res.employee.blood_group === 'O+' ? 'selected' : ''}>O+</option>
-                                    <option value="O-" ${res.employee.blood_group === 'O-' ? 'selected' : ''}>O-</option>
-                                    <option value="AB+" ${res.employee.blood_group === 'AB+' ? 'selected' : ''}>AB+</option>
-                                    <option value="AB-" ${res.employee.blood_group === 'AB-' ? 'selected' : ''}>AB-</option>`);
+        $('#update_blood_group').append(`<option value="A+" ${res.data.blood_group === 'A+' ? 'selected' : ''}>A+</option>
+                                    <option value="A-" ${res.data.blood_group === 'A-' ? 'selected' : ''}>A-</option>
+                                    <option value="B+" ${res.data.blood_group === 'B+' ? 'selected' : ''}>B+</option>
+                                    <option value="B-" ${res.data.blood_group === 'B-' ? 'selected' : ''}>B-</option>
+                                    <option value="O+" ${res.data.blood_group === 'O+' ? 'selected' : ''}>O+</option>
+                                    <option value="O-" ${res.data.blood_group === 'O-' ? 'selected' : ''}>O-</option>
+                                    <option value="AB+" ${res.data.blood_group === 'AB+' ? 'selected' : ''}>AB+</option>
+                                    <option value="AB-" ${res.data.blood_group === 'AB-' ? 'selected' : ''}>AB-</option>`);
 
-        $('#update_email').val(res.employee.email);
+        $('#update_email').val(res.data.email);
 
         // Create options dynamically
         $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${res.employee.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-            <option value="Chittagong" ${res.employee.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-            <option value="Rajshahi" ${res.employee.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-            <option value="Khulna" ${res.employee.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-            <option value="Sylhet" ${res.employee.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barisal" ${res.employee.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
-            <option value="Rangpur" ${res.employee.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-            <option value="Mymensingh" ${res.employee.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
+        $('#updateDivision').append(`<option value="Dhaka" ${res.data.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
+            <option value="Chittagong" ${res.data.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
+            <option value="Rajshahi" ${res.data.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
+            <option value="Khulna" ${res.data.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
+            <option value="Sylhet" ${res.data.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
+            <option value="Barisal" ${res.data.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
+            <option value="Rangpur" ${res.data.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
+            <option value="Mymensingh" ${res.data.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
 
-        $('#updateLocation').val(res.employee.location.upazila);
-        $('#updateLocation').attr('data-id',res.employee.location_id);
+        $('#updateLocation').val(res.data.location.upazila);
+        $('#updateLocation').attr('data-id',res.data.location_id);
 
         // Create options dynamically
         $('#update_type').empty();
         $.each(res.tranwith, function (key, withs) {
-            $('#update_type').append(`<option value="${withs.id}" ${res.employee.tran_user_type === withs.id ? 'selected' : ''}>${withs.tran_with_name}</option>`);
+            $('#update_type').append(`<option value="${withs.id}" ${res.data.tran_user_type === withs.id ? 'selected' : ''}>${withs.tran_with_name}</option>`);
         });
 
-        $('#update_address').val(res.employee.address);
-        $('#update_password').val(res.employee.password);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.employee.image ? res.employee.image : (res.employee.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
+        $('#update_address').val(res.data.address);
+        $('#update_password').val(res.data.password);
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.data.image ? res.data.image : (res.data.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
     }
 
     

@@ -79,25 +79,25 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.bank.id);
-        $('#updateName').val(res.bank.name);
-        $('#updatePhone').val(res.bank.phone);
-        $('#updateEmail').val(res.bank.email);
+        $('#id').val(res.data.id);
+        $('#updateName').val(res.data.name);
+        $('#updatePhone').val(res.data.phone);
+        $('#updateEmail').val(res.data.email);
 
         // Create options dynamically
         $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${res.bank.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-            <option value="Chittagong" ${res.bank.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-            <option value="Rajshahi" ${res.bank.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-            <option value="Khulna" ${res.bank.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-            <option value="Sylhet" ${res.bank.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barishal" ${res.bank.location.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
-            <option value="Rangpur" ${res.bank.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-            <option value="Mymensingh" ${res.bank.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
+        $('#updateDivision').append(`<option value="Dhaka" ${res.data.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
+            <option value="Chittagong" ${res.data.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
+            <option value="Rajshahi" ${res.data.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
+            <option value="Khulna" ${res.data.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
+            <option value="Sylhet" ${res.data.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
+            <option value="Barishal" ${res.data.location.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
+            <option value="Rangpur" ${res.data.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
+            <option value="Mymensingh" ${res.data.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
 
-        $('#updateLocation').val(res.bank.location.upazila);
-        $('#updateLocation').attr('data-id',res.bank.loc_id);
-        $('#updateAddress').val(res.bank.address);
+        $('#updateLocation').val(res.data.location.upazila);
+        $('#updateLocation').attr('data-id',res.data.loc_id);
+        $('#updateAddress').val(res.data.address);
         $('#updateName').focus();
     }; // End Method
 

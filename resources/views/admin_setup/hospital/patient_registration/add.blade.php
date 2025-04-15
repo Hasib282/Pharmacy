@@ -134,11 +134,7 @@
                     <div class="form-input-group">
                         <label for="bed_category">Bed Category<span class="required">*</span></label>
                         <input type="text" name="bed_category" class="form-input" id="bed_category" autocomplete="off">
-                        <div id='bed_category-list'>
-                            <ul>
-        
-                            </ul>
-                        </div>
+                        <div id='bed_category-list'></div>
                         <span class="error" id="bed_category_error"></span>
                     </div>
                 </div>
@@ -148,11 +144,7 @@
                     <div class="form-input-group">
                         <label for="bed_list">Bed List<span class="required">*</span></label>
                         <input type="text" name="bed_list" class="form-input" id="bed_list" autocomplete="off">
-                        <div id='bed_list-list'>
-                            <ul>
-        
-                            </ul>
-                        </div>
+                        <div id='bed_list-list'></div>
                         <span class="error" id="bed_list_error"></span>
                     </div>
                 </div>
@@ -162,11 +154,7 @@
                     <div class="form-input-group">
                         <label for="doctor">Doctor<span class="required">*</span></label>
                         <input type="text" name="doctor" class="form-input" id="doctor" autocomplete="off">
-                        <div id='doctor-list'>
-                            <ul>
-        
-                            </ul>
-                        </div>
+                        <div id='doctor-list'></div>
                         <span class="error" id="doctor_error"></span>
                     </div>
                 </div>
@@ -176,11 +164,7 @@
                     <div class="form-input-group">
                         <label for="sr">Sells Representative (SR)<span class="required">*</span></label>
                         <input type="text" name="sr" class="form-input" id="sr" autocomplete="off">
-                        <div id='sr-list'>
-                            <ul>
-        
-                            </ul>
-                        </div>
+                        <div id='sr-list'></div>
                         <span class="error" id="sr_error"></span>
                     </div>
                 </div>

@@ -12,9 +12,12 @@
             @csrf
             <div class="rows">
                 <div class="c-6">
+                    {{-- within --}}
                     <div id="within" style="display: none"> </div>
+                    {{-- groupein --}}
                     <div id="groupein" style="display: none"></div>
                     <div class="rows">
+                        {{-- date  --}}
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="date">Date</label>
@@ -22,30 +25,25 @@
                                     readonly>
                             </div>
                         </div>
+                        {{-- user --}}
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="user">Transaction User</label>
                                 <input type="text" name="user" class="form-input" id="user" autocomplete="off">
-                                <div id="user-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <div id="user-list"></div>
                                 <span class="error" id="user_error"></span>
                             </div>
                         </div>
+                        {{-- head  --}}
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="head">Transaction Head</label>
                                 <input type="text" name="head" id="head" class="form-input" autocomplete="off">
-                                <div id="head-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <div id="head-list"></div>
                                 <span class="error" id="head_error"></span>
                             </div>
                         </div>
+                        {{-- quantity --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="quantity">Quantity</label>
@@ -53,6 +51,7 @@
                                 <span class="error" id="quantity_error"></span>
                             </div>
                         </div>
+                        {{-- amount --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="amount">Amount</label>
@@ -60,6 +59,7 @@
                                 <span class="error" id="amount_error"></span>
                             </div>
                         </div>
+                        {{-- total --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="totAmount">Total</label>
@@ -94,28 +94,33 @@
                         <div class="c-6"></div>
                         <div class="c-6">
                             <table style="width: 100%">
+                                {{-- invoice amount --}}
                                 <tr>
                                     <td><label for="amountRP">Invoice Amount</label></td>
                                     <td><input type="text" name="amountRP" class="input-small" id="amountRP" value="0"
                                             readonly style="text-align: right;"></td>
                                 </tr>
+                                {{-- discount --}}
                                 <tr>
                                     <td><label for="totalDiscount">Discount</label></td>
                                     <td><input type="text" name="totalDiscount" class="input-small" id="totalDiscount"
                                             value="0" style="text-align: right;"></td>
                                 </tr>
+                                {{-- net amount --}}
                                 <tr>
                                     <td><label for="netAmount">Net Amount</label>
                                     <td><input type="text" name="netAmount" class="input-small" id="netAmount" value="0"
                                             readonly style="text-align: right;">
                                     </td>
                                 </tr>
+                                {{-- advance --}}
                                 <tr>
                                     <td><label for="advance">Advance</label>
                                     <td><input type="text" name="advance" class="input-small" id="advance" value="0"
                                             style="text-align: right;">
                                     </td>
                                 </tr>
+                                {{-- balance --}}
                                 <tr>
                                     <td><label for="balance">Balance</label>
                                     <td><input type="text" name="balance" class="input-small" id="balance" value="0"

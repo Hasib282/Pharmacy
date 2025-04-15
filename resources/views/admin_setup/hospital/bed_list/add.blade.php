@@ -17,21 +17,13 @@
             <div class="form-input-group">
                 <label for="bed_category">Bed Category <span class="required" title="Required">*</span></label>
                 <input type="text" name="bed_category" id="bed_category" class="form-input" autocomplete="off">
-                <div id='bed_category-list'>
-                    <ul>
-
-                    </ul>
-                </div>
+                <div id='bed_category-list'></div>
                 <span class="error" id="bed_category_error"></span>
             </div>
             <div class="form-input-group">
                 <label for="nursing_station">Nursing station <span class="required" title="Required">*</span></label>
                 <input type="text" name="nursing_station" class="form-input" id="nursing_station" autocomplete="off">
-                <div id='nursing_station-list'>
-                    <ul>
-
-                    </ul>
-                </div>
+                <div id='nursing_station-list'></div>
                 <span class="error" id="nursing_station_error"></span>
             </div>
             <div class="center">

@@ -116,16 +116,17 @@ class FormController extends Controller
                 ->take(10)
                 ->get();
 
-
-        if($forms->count() > 0){
-            $list = "";
-            foreach($forms as $index => $form) {
-                $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$form->id.'">'.$form->form_name.'</li>';
+        $list = "<ul>";
+            if($forms->count() > 0){
+                foreach($forms as $index => $form) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$form->id.'">'.$form->form_name.'</li>';
+                }
             }
-        }
-        else{
-            $list = '<li>No Data Found</li>';
-        }
+            else{
+                $list .= '<li>No Data Found</li>';
+            }
+        $list .= "</ul>";
+
         return $list;
     } // End Method
 }
