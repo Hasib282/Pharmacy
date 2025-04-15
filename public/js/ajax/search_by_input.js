@@ -15,7 +15,7 @@ function SearchByInput(link, getData, targetInput, targetUl, targetList, tableDa
 
 
     // List Keypup Event
-    $(document).off('keyup', `${targetList}`).on('keyup', `${targetList}`, function (e) {
+    $(document).off('keydown', `${targetList}`).on('keydown', `${targetList}`, function (e) {
         // Skip the list keyup event if input keydown was processed
         if (keyDownProcessed) {
             keyDownProcessed = false; // Reset the flag
@@ -108,9 +108,11 @@ function KeyDown(e, link, data, targetUl, targetList, targetInput, AdditionalEve
     }
     if (list.length > 0) {
         if (key === 'ArrowDown') {
+            e.preventDefault();
             UpdateInput(list, 0, targetInput, AdditionalEvent);
         } 
         else if (key === 'ArrowUp') {
+            e.preventDefault();
             UpdateInput(list, list.length - 1, targetInput, AdditionalEvent);
         }
     }
@@ -121,6 +123,7 @@ function KeyDown(e, link, data, targetUl, targetList, targetInput, AdditionalEve
 
 // List Keyup Event Function Start
 function ListKeyUp(e, targetUl, targetList, targetInput, AdditionalEvent) {
+    e.preventDefault();
     let key = e.key;
     let list = $(`${targetList}`);
     let focused = $(`${targetList}:focus`);
@@ -1276,49 +1279,42 @@ $(document).ready(function () {
 
         function ($input) {
             return {
-                ptn_id: $input.val(),
-                opt: 1,
+                patient: $input.val(),
             };
         }, 
 
-        '#ptn_id', 
+        '#patient', 
 
-        '#ptn-list ul',
+        '#patient-list',
 
-        '#ptn-list ul li',
+        '#patient-list tbody tr',
 
         undefined, 
 
         "",
 
-        // function (targetInput, item) {
-        //     $(targetInput).val(item.find('td:first').text());
-        //     $(targetInput).attr("data-groupe", item.data('groupe'));
-        //     $('#mrp').val(item.attr('data-mrp'));
-        //     $('#cp').val(item.attr('data-cp'));
-        //     $('#unit').val(item.attr('data-unit'));
-        //     $('#unit').attr('data-id',item.data('unit-id'));
-        //     let qty = $('#quantity').val();
+        function (targetInput, item) {
+            $(targetInput).val(item.find('td:first').text());
+            $('#title').val(item.attr('data-title'));
+            $('#name').val(item.attr('data-name'));
+            $('#phone').val(item.attr('data-phone'));
+            $('#email').val(item.attr('data-email'));
+            $('#gender').val(item.attr('data-gender'));
+            $('#nationality').val(item.attr('data-nationality'));
+            $('#religion').val(item.attr('data-religion'));
+            $('#address').val(item.attr('data-address'));
+        },
 
-        //     const path = window.location.pathname;
-        //     const pathSegments = path.split("/");
-            
-        //     if(pathSegments[3] === 'issue'){
-        //         $('#totAmount').val(item.attr('data-mrp') * qty);
-        //     }
-        //     else if(pathSegments[3] === 'purchase'){
-        //         $('#totAmount').val(item.attr('data-cp') * qty);
-        //     }
-        // },
-
-        // function (targetInput) {
-        //     $(targetInput).removeAttr('data-groupe');
-        //     $('#unit').removeAttr('data-id');
-        //     $('#mrp').val('');
-        //     $('#cp').val('');
-        //     $('#unit').val('');
-        //     $('#totAmount').val('');
-        // }
+        function (targetInput) {
+            $('#title').val('');
+            $('#name').val('');
+            $('#phone').val('');
+            $('#email').val('');
+            $('#gender').val('');
+            $('#nationality').val('');
+            $('#religion').val('');
+            $('#address').val('');
+        }
     );
 
 
@@ -1329,40 +1325,39 @@ $(document).ready(function () {
 
         function ($input) {
             return {
-                ptn_id: $input.val(),
-                opt: 1,
+                patient: $input.val(),
             };
         }, 
 
-        '#updatePtn_Id', 
+        '#updatePatient', 
 
-        '#update-ptn ul',
+        '#update-patient',
 
-        '#update-ptn ul li',
+        '#update-patient tbody tr',
 
         undefined, 
 
         "",
 
-        // function (targetInput, item) {
-        //     $(targetInput).val(item.find('td:first').text());
-        //     $(targetInput).attr("data-groupe", item.data('groupe'));
-        //     $('#updateMrp').val(item.attr('data-mrp'));
-        //     $('#updateCp').val(item.attr('data-cp'));
-        //     $('#updateUnit').val(item.attr('data-unit'));
-        //     $('#updateUnit').attr('data-id',item.data('unit-id'));
-        //     let qty = $('#updateQuantity').val();
+        function (targetInput, item) {
+            $(targetInput).val(item.find('td:first').text());
+            // $(targetInput).attr("data-groupe", item.data('groupe'));
+            // $('#updateMrp').val(item.attr('data-mrp'));
+            // $('#updateCp').val(item.attr('data-cp'));
+            // $('#updateUnit').val(item.attr('data-unit'));
+            // $('#updateUnit').attr('data-id',item.data('unit-id'));
+            // let qty = $('#updateQuantity').val();
 
-        //     const path = window.location.pathname;
-        //     const pathSegments = path.split("/");
+            // const path = window.location.pathname;
+            // const pathSegments = path.split("/");
             
-        //     if(pathSegments[3] === 'issue'){
-        //         $('#updateTotAmount').val(item.attr('data-mrp') * qty);
-        //     }
-        //     else if(pathSegments[3] === 'purchase'){
-        //         $('#updateTotAmount').val(item.attr('data-cp') * qty);
-        //     }
-        // }, 
+            // if(pathSegments[3] === 'issue'){
+            //     $('#updateTotAmount').val(item.attr('data-mrp') * qty);
+            // }
+            // else if(pathSegments[3] === 'purchase'){
+            //     $('#updateTotAmount').val(item.attr('data-cp') * qty);
+            // }
+        }, 
 
         // function (targetInput) {
         //     $(targetInput).removeAttr('data-groupe');
@@ -1373,113 +1368,4 @@ $(document).ready(function () {
         //     $('#updateTotAmount').val('');
         // }
     );
-    
-    
-    
-    /////////////// ------------------ Search Patients And add value to input ajax part start ---------------- /////////////////////////////
-    // Patient Input Search
-    SearchByInput(
-        'hospital/ptnregistration/get/patient',  
-
-        function ($input) {
-            return {
-                ptn_phone: $input.val(),
-                opt: 2,
-            };
-        }, 
-
-        '#ptn_phone', 
-
-        '#ptn-phone-list ul',
-
-        '#ptn-phone-list ul li',
-
-        undefined, 
-
-        "",
-
-        // function (targetInput, item) {
-        //     $(targetInput).val(item.find('td:first').text());
-        //     $(targetInput).attr("data-groupe", item.data('groupe'));
-        //     $('#mrp').val(item.attr('data-mrp'));
-        //     $('#cp').val(item.attr('data-cp'));
-        //     $('#unit').val(item.attr('data-unit'));
-        //     $('#unit').attr('data-id',item.data('unit-id'));
-        //     let qty = $('#quantity').val();
-
-        //     const path = window.location.pathname;
-        //     const pathSegments = path.split("/");
-            
-        //     if(pathSegments[3] === 'issue'){
-        //         $('#totAmount').val(item.attr('data-mrp') * qty);
-        //     }
-        //     else if(pathSegments[3] === 'purchase'){
-        //         $('#totAmount').val(item.attr('data-cp') * qty);
-        //     }
-        // },
-
-        // function (targetInput) {
-        //     $(targetInput).removeAttr('data-groupe');
-        //     $('#unit').removeAttr('data-id');
-        //     $('#mrp').val('');
-        //     $('#cp').val('');
-        //     $('#unit').val('');
-        //     $('#totAmount').val('');
-        // }
-    );
-
-
-    
-    // Update Patient Input Search
-    SearchByInput(
-        'hospital/ptnregistration/get/patient', 
-
-        function ($input) {
-            return {
-                ptn_phone: $input.val(),
-                opt: 2,
-            };
-        }, 
-
-        '#updatePtn_Phone', 
-
-        '#update-ptn-phone ul',
-
-        '#update-ptn-phone ul li',
-
-        undefined, 
-
-        "",
-
-        // function (targetInput, item) {
-        //     $(targetInput).val(item.find('td:first').text());
-        //     $(targetInput).attr("data-groupe", item.data('groupe'));
-        //     $('#updateMrp').val(item.attr('data-mrp'));
-        //     $('#updateCp').val(item.attr('data-cp'));
-        //     $('#updateUnit').val(item.attr('data-unit'));
-        //     $('#updateUnit').attr('data-id',item.data('unit-id'));
-        //     let qty = $('#updateQuantity').val();
-
-        //     const path = window.location.pathname;
-        //     const pathSegments = path.split("/");
-            
-        //     if(pathSegments[3] === 'issue'){
-        //         $('#updateTotAmount').val(item.attr('data-mrp') * qty);
-        //     }
-        //     else if(pathSegments[3] === 'purchase'){
-        //         $('#updateTotAmount').val(item.attr('data-cp') * qty);
-        //     }
-        // }, 
-
-        // function (targetInput) {
-        //     $(targetInput).removeAttr('data-groupe');
-        //     $('#updateUnit').removeAttr('data-id');
-        //     $('#updateMrp').val('');
-        //     $('#updateCp').val('');
-        //     $('#updateUnit').val('');
-        //     $('#updateTotAmount').val('');
-        // }
-    );
-
-    /////////////// ------------------ Search Patients and add value to input ajax part end ---------------- /////////////////////////////
 });
