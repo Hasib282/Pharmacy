@@ -261,14 +261,12 @@ $(document).ready(function () {
     $(document).on('change', '#newPatient', function () {
         if ($(this).is(':checked')) {
             $('.togglePatientid').hide();
-            $('#togglePhone').show();
         }
     })
 
     $(document).on('change', '#oldPatient', function () {
         if ($(this).is(':checked')) {
             $('.togglePatientid').show();
-            $('#togglePhone').hide();
         }
     })
 });

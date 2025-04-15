@@ -30,14 +30,10 @@
                 <div class="c-12">
                     <div class="togglePatientid" style="display: none;">
                         <div class="form-input-group">
-                            <label for="ptn_id">Patient Id</label>
-                            <input type="text" name="ptn_id" class="form-input" id="ptn_id">
-                            <div id="ptn-list">
-                                <ul>
-
-                                </ul>
-                            </div>
-                            <span class="error" id="ptn_id_error"></span>
+                            <label for="patient">Patient Search</label>
+                            <input type="text" name="patient" class="form-input" id="patient">
+                            <div id="patient-list"></div>
+                            <span class="error" id="patient_id_error"></span>
                         </div>
                     </div>
                 </div>
@@ -62,24 +58,10 @@
                 
                 <!-- phone -->
                 <div class="c-6">
-                    <div class="togglePatientid" style="display: none;">
-                        <div class="form-input-group">
-                            <label for="ptn_phone">Phone</label>
-                            <input type="text" name="ptn_phone" class="form-input" id="ptn_phone">
-                            <span class="error" id="ptn_phone_error"></span>
-                        </div>
-                    </div>
-                    <div id="togglePhone">
-                        <div class="form-input-group">
-                            <label for="phone">Phone</label>
-                            <input type="text" name="phone" class="form-input" id="phone">
-                            <div id="ptn-phone-list">
-                                <ul>
-                                    
-                                </ul>
-                            </div>
-                            <span class="error" id="phone_error"></span>
-                        </div>
+                    <div class="form-input-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" name="phone" class="form-input" id="phone">
+                        <span class="error" id="phone_error"></span>
                     </div>
                 </div>
 
@@ -151,7 +133,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="bed_category">Bed Category<span class="required">*</span></label>
-                        <input type="text" name="bed_category" class="form-input" id="bed_category">
+                        <input type="text" name="bed_category" class="form-input" id="bed_category" autocomplete="off">
                         <div id='bed_category-list'>
                             <ul>
         
@@ -165,7 +147,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="bed_list">Bed List<span class="required">*</span></label>
-                        <input type="text" name="bed_list" class="form-input" id="bed_list">
+                        <input type="text" name="bed_list" class="form-input" id="bed_list" autocomplete="off">
                         <div id='bed_list-list'>
                             <ul>
         
@@ -179,7 +161,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="doctor">Doctor<span class="required">*</span></label>
-                        <input type="text" name="doctor" class="form-input" id="doctor">
+                        <input type="text" name="doctor" class="form-input" id="doctor" autocomplete="off">
                         <div id='doctor-list'>
                             <ul>
         
@@ -193,7 +175,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="sr">Sells Representative (SR)<span class="required">*</span></label>
-                        <input type="text" name="sr" class="form-input" id="sr">
+                        <input type="text" name="sr" class="form-input" id="sr" autocomplete="off">
                         <div id='sr-list'>
                             <ul>
         

@@ -536,7 +536,7 @@ thead tr{
     background: #20c997;
 }
 
-.product-table, .batch-table{
+.product-table, .batch-table, .patient-table{
     font-family: arial, sans-serif;
     font-size: 14px;
     border-collapse: collapse;
@@ -544,17 +544,20 @@ thead tr{
 }
 
 .product-table td, th,
-.batch-table td, th {
+.batch-table td, th , 
+.patient-table td, th{
     border: 1px solid #dddddd;
     font-size: 14px;
     padding: 1px 4px;
 }
 
-.product-table th, .batch-table th {
+.product-table th, .batch-table th , .patient-table th{
     text-align: center;
 }
 
-.batch-table tbody tr:hover{
+.batch-table tbody tr:hover, 
+.patient-table tbody tr:hover,
+.patient-table tbody tr:focus{
     background: rgb(0, 217, 255);
     cursor: pointer;
 }
