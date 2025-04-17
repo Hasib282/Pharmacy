@@ -24,14 +24,14 @@
             {{-- bank --}}
             <div class="form-input-group">
                 <label for="updateBank">Bank Name</label>
-                <input type="text" name="bank" class="form-input" id="updateBank" autocomplete="off">
+                <input type="text" name="bank" class="form-input" id="updateBank" autocomplete="off"><hr>
                 <div id="update-bank"></div>
                 <span class="error" id="update_bank_error"></span>
             </div>
             {{-- head  --}}
             <div class="form-input-group">
                 <label for="updateHead">Transaction Head</label>
-                <input type="text" name="head" id="updateHead" class="form-input" autocomplete="off">
+                <input type="text" name="head" id="updateHead" class="form-input" autocomplete="off"><hr>
                 <div id="update-head"></div>
                 <span class="error" id="update_head_error"></span>
             </div>

@@ -10,11 +10,13 @@
         <!-- form start -->
         <form id="AddForm" method="post">
             @csrf
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="productName">{{ $name }} Name</label>
                 <input type="text" name="productName" class="form-input" id="productName">
                 <span class="error" id="productName_error"></span>
             </div>
+            {{-- groupe --}}
             <div class="form-input-group">
                 <label for="groupe">Select Product Groupe</label>
                 <select name="groupe" id="groupe">
@@ -22,55 +24,40 @@
                 </select>
                 <span class="error" id="groupe_error"></span>
             </div>
+            {{-- category --}}
             <div class="form-input-group">
                 <label for="category">Category Name</label>
-                <input type="text" name="category" class="form-input" id="category"  data-url="{{ Request::segment(1) }}/setup/category/get" autocomplete="off">
-                <div id='category-list'>
-                    <ul>
-
-                    </ul>
-                </div>
+                <input type="text" name="category" class="form-input" id="category"  data-url="{{ Request::segment(1) }}/setup/category/get" autocomplete="off"><hr>
+                <div id='category-list'></div>
                 <span class="error" id="category_error"></span>
             </div>
+            {{-- manufacturer --}}
             <div class="form-input-group">
                 <label for="manufacturer">Manufacture Name</label>
-                <input type="text" name="manufacturer" class="form-input" id="manufacturer"  data-url="{{ Request::segment(1) }}/setup/manufacturer/get" autocomplete="off">
-                <div id='manufacturer-list'>
-                    <ul>
-
-                    </ul>
-                </div>
+                <input type="text" name="manufacturer" class="form-input" id="manufacturer"  data-url="{{ Request::segment(1) }}/setup/manufacturer/get" autocomplete="off"><hr>
+                <div id='manufacturer-list'></div>
                 <span class="error" id="manufacturer_error"></span>
             </div>
+            {{-- form  --}}
             <div class="form-input-group">
                 <label for="form">Product Form Name</label>
-                <input type="text" name="form" class="form-input" id="form"  data-url="{{ Request::segment(1) }}/setup/form/get" autocomplete="off">
-                <div id='form-list'>
-                    <ul>
-
-                    </ul>
-                </div>
+                <input type="text" name="form" class="form-input" id="form"  data-url="{{ Request::segment(1) }}/setup/form/get" autocomplete="off"><hr>
+                <div id='form-list'></div>
                 <span class="error" id="form_error"></span>
             </div>
+            {{-- unit --}}
             <div class="form-input-group">
                 <label for="unit">Product Unit Name</label>
-                <input type="text" name="unit" class="form-input" id="unit"  data-url="{{ Request::segment(1) }}/setup/unit/get" autocomplete="off">
-                <div id='unit-list'>
-                    <ul>
-
-                    </ul>
-                </div>
+                <input type="text" name="unit" class="form-input" id="unit"  data-url="{{ Request::segment(1) }}/setup/unit/get" autocomplete="off"><hr>
+                <div id='unit-list'></div>
                 <span class="error" id="unit_error"></span>
             </div>
+            {{-- company --}}
             @if (auth()->user()->user_role == 1)
                 <div class="form-input-group">
                     <label for="company">Company <span class="required" title="Required">*</span></label>
-                    <input type="text" name="company" class="form-input" id="company" autocomplete="off">
-                    <div id="company-list">
-                        <ul>
-
-                        </ul>
-                    </div>
+                    <input type="text" name="company" class="form-input" id="company" autocomplete="off"><hr>
+                    <div id="company-list"></div>
                     <span class="error" id="company_error"></span>
                 </div>
             @else

@@ -16,7 +16,7 @@ class SupplierReturnController extends Controller
     public function ShowAll(Request $req){
         $type = GetTranType($req->segment(2));
 
-        $return = Transaction_Main::on('mysql_second')
+        $data = Transaction_Main::on('mysql_second')
         ->with('User')
         ->where('tran_method','Supplier Return')
         ->where('tran_type', $type)
@@ -26,7 +26,7 @@ class SupplierReturnController extends Controller
 
         return response()->json([
             'status'=> true,
-            'data' => $return,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -253,7 +253,7 @@ class SupplierReturnController extends Controller
     // Search Supplier Return
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $return = Transaction_Main::on('mysql_second')->with('User')
+            $data = Transaction_Main::on('mysql_second')->with('User')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
@@ -262,7 +262,7 @@ class SupplierReturnController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $return = Transaction_Main::on('mysql_second')->with('User')
+            $data = Transaction_Main::on('mysql_second')->with('User')
             ->whereHas('User', function ($query) use ($req) {
                 $query->where('user_name', 'like', '%'.$req->search.'%');
                 $query->orderBy('user_name','asc');
@@ -275,7 +275,7 @@ class SupplierReturnController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $return,
+            'data' => $data,
         ], 200);
     } // End Method
 }

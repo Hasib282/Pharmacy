@@ -11,7 +11,6 @@
         <form id="AddForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
-
             <div class="rows">
                 <!-- title -->
                 <div class="c-4">
@@ -65,12 +64,8 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="specialization"> Specialization <span class="required" title="Required">*</span></label>
-                        <input type="text" name="specialization" class="form-input" id="specialization" autocomplete="off">
-                        <div id='specialization-list'>
-                            <ul>
-        
-                            </ul>
-                        </div>
+                        <input type="text" name="specialization" class="form-input" id="specialization" autocomplete="off"><hr>
+                        <div id='specialization-list'></div>
                         <span class="error" id="specialization_error"></span>
                     </div>
                 </div>
@@ -78,12 +73,8 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="marketing_head"> Marketing Head <span class="required" title="Required">*</span></label>
-                        <input type="text" name="marketing_head" class="form-input" id="marketing_head" autocomplete="off">
-                        <div id='marketing_head-list'>
-                            <ul>
-        
-                            </ul>
-                        </div>
+                        <input type="text" name="marketing_head" class="form-input" id="marketing_head" autocomplete="off"><hr>
+                        <div id='marketing_head-list'></div>
                         <span class="error" id="marketing_head_error"></span>
                     </div>
                 </div>

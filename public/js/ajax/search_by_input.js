@@ -685,7 +685,7 @@ $(document).ready(function () {
                 }).get();
                 within = 1;
             } else {
-                tranUserType = $('#with').val();
+                tranUserType = $('#type').val();
                 within = 0;
             }
 

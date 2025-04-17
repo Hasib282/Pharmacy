@@ -12,8 +12,11 @@
             @csrf
             @method('put')
             <div class="rows">
+                {{-- id  --}}
                 <input type="hidden" name="id" id="id">
+                {{-- employee id  --}}
                 <input type="hidden" name="empId" id="empId">
+                {{-- degree title  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_degree">Degree Title <span class="required" title="Required">*</span></label>
@@ -21,6 +24,7 @@
                         <span class="error" id="update_degree_error"></span>
                     </div>
                 </div>
+                {{-- groupe --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_group">Group</label>
@@ -30,6 +34,7 @@
                         <span class="error" id="update_group_error"></span>
                     </div>
                 </div>
+                {{-- institution --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_institution">Institution Name <span class="required" title="Required">*</span></label>
@@ -37,6 +42,7 @@
                         <span class="error" id="update_institution_error"></span>
                     </div>
                 </div>
+                {{-- result --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_result">Result <span class="required" title="Required">*</span></label>
@@ -46,6 +52,7 @@
                         <span class="error" id="update_result_error"></span>
                     </div>
                 </div>
+                {{-- scale --}}
                 <div class="c-6 hidden" id="update_scale-group">
                     <div class="form-input-group">
                         <label for="update_scale">Scale </label>
@@ -53,6 +60,7 @@
                         <span class="error" id="update_scale_error"></span>
                     </div>
                 </div>
+                {{-- cgpa --}}
                 <div class="c-6 hidden" id="update_cgpa-group">
                     <div class="form-input-group">
                         <label for="update_cgpa">CGPA </label>
@@ -60,6 +68,7 @@
                         <span class="error" id="update_cgpa_error"></span>
                     </div>
                 </div>
+                {{-- marks --}}
                 <div class="c-6 hidden" id="update_marks-group">
                     <div class="form-input-group">
                         <label for="update_marks">Marks </label>
@@ -67,6 +76,7 @@
                         <span class="error" id="update_marks_error"></span>
                     </div>
                 </div>
+                {{-- batch --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_batch">Batch <span class="required" title="Required">*</span></label>
@@ -75,6 +85,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="center">
                 <button type="submit" id="Update" class="btn-blue">Update</button>
             </div>

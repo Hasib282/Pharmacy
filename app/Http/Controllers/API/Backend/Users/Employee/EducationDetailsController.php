@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User_Info;
-use App\Models\Transaction_With;
 use App\Models\Employee_Education_Detail;
 use App\Models\Employee_Personal_Detail;
 
@@ -14,12 +13,10 @@ class EducationDetailsController extends Controller
 {
     // Show All Employee Education Details
     public function ShowAll(Request $req){
-        $employee = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
+        $data = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $employee,
-            'tranwith' => $tranwith,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -52,12 +49,12 @@ class EducationDetailsController extends Controller
 
 
         $educationDetails = [];
-        foreach ($req->level_of_education as $key => $value) {
+        foreach ($req->degree as $key => $value) {
             $educationDetails[] = [
                 'emp_id' => $req->user,
-                'degree' => $req->degree_title[$key],
+                'degree' => $req->degree[$key],
                 'group' => $req->group[$key] ?? null,
-                'institution' => $req->institution_name[$key],
+                'institution' => $req->institution[$key],
                 'result' => $req->result[$key],
                 'scale' => $req->scale[$key] ?? null,
                 'cgpa' => $req->cgpa[$key] ?? null,
@@ -78,12 +75,10 @@ class EducationDetailsController extends Controller
 
     // Edit Employee Education Details
     public function Edit(Request $req){
-        $employee = Employee_Education_Detail::on('mysql_second')->where('id', $req->id)->first();
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
+        $data = Employee_Education_Detail::on('mysql_second')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
-            'employee'=>$employee,
-            'tranwith'=>$tranwith,
+            'data'=>$data,
         ], 200);
     } // End Method
 
@@ -91,6 +86,8 @@ class EducationDetailsController extends Controller
 
     // Update Employee Education Details
     public function Update(Request $req){
+        $data = Employee_Education_Detail::on('mysql_second')->findOrFail($req->id);
+
         $req->validate([
             'degree' => 'required|string|max:255',
             'group' => 'nullable|in:Science,Arts,Commerce',
@@ -102,10 +99,9 @@ class EducationDetailsController extends Controller
             'batch' => 'numeric',
         ]);
 
-        $employee = Employee_Education_Detail::on('mysql_second')->findOrFail($req->id);
         
 
-        $update = Employee_Education_Detail::on('mysql_second')->findOrFail($req->id)->update([
+        $update = $data->update([
             'degree' => $req->degree,
             'group' => $req->group,
             'institution' => $req->institution,
@@ -191,11 +187,11 @@ class EducationDetailsController extends Controller
             }
         }
 
-        $employee = $query->paginate(15);
+        $data = $query->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $employee,
+            'data' => $data,
         ], 200);
     } // End Method
 

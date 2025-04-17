@@ -12,11 +12,16 @@
             @csrf
             <div class="rows">
                 <div class="c-6">
+                    {{-- within --}}
                     <div id="within" style="display: none"> </div>
+                    {{-- within --}}
                     <div id="groupein" style="display: none"></div>
+                    {{-- groupein --}}
                     <input type="hidden" name="type" class="form-input" id="type">
+                    {{-- method  --}}
                     <input type="hidden" name="method" class="form-input" id="method">
                     <div class="rows">
+                        {{-- date  --}}
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="date">Date</label>
@@ -24,52 +29,42 @@
                                     disabled>
                             </div>
                         </div>
+                        {{-- store --}}
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="store">Store</label>
-                                <input type="text" name="store" class="form-input" id="store" autocomplete="off">
-                                <div id="store-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="store" class="form-input" id="store" autocomplete="off"><hr>
+                                <div id="store-list"></div>
                                 <span class="error" id="store_error"></span>
                             </div>
                         </div>
+                        {{-- user --}}
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for="user">User Name</label>
-                                <input type="text" name="user" class="form-input" id="user" autocomplete="off">
-                                <div id="user-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="user" class="form-input" id="user" autocomplete="off"><hr>
+                                <div id="user-list"></div>
                                 <span class="error" id="user_error"></span>
                             </div>
                         </div>
+                        {{-- batch id  --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="batch">Batch Id.</label>
-                                <input type="text" name="batch" class="form-input" id="batch" autocomplete="off">
-                                <div id="batch-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="batch" class="form-input" id="batch" autocomplete="off"><hr>
+                                <div id="batch-list"></div>
                                 <span class="error" id="batch_error"></span>
                             </div>
                         </div>
-
+                        {{-- product name --}}
                         <div class="c-8">
                             <div class="form-input-group">
                                 <label for="product">Product Name</label>
                                 <input type="text" name="product" id="product" class="form-input" autocomplete="off" disabled>
-
                                 <span class="error" id="product_error"></span>
                             </div>
                         </div>
-
+                        {{-- quantity --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="quantity">Quantity</label>
@@ -77,6 +72,7 @@
                                 <span class="error" id="quantity_error"></span>
                             </div>
                         </div>
+                        {{-- price --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="price">Price</label>
@@ -84,6 +80,7 @@
                                 <span class="error" id="price_error"></span>
                             </div>
                         </div>
+                        {{-- total --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="totAmount">Total</label>
@@ -96,6 +93,7 @@
                         <button type="submit" id="Add" class="btn-blue">Add</button>
                     </div>
                 </div>
+                {{-- batch details --}}
                 <div class="c-6">
                     <div id="batch-details-list" style="max-height: 100%; position: initial; overflow-x: auto; font-size: 10px;">
                         <table class="batch-table">
@@ -115,6 +113,7 @@
                         </table>
                     </div>
                 </div>
+                {{-- transaction grid --}}
                 <div class="c-6">
                     <div class="transaction_grid" style="overflow-x:auto; margin-top: 10px">
                         <table class="show-table">
@@ -135,6 +134,7 @@
                         </table>
                     </div>
                 </div>
+                {{-- invoice calculation part --}}
                 <div class="c-6">
                     <table style="width: 100%">
                         <tr>

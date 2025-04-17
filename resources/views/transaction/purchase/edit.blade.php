@@ -13,11 +13,16 @@
             @method('PUT')
             <div class="rows">
                 <div class="c-6">
+                    {{-- within --}}
                     <div id="updatewithin" style="display: none"> </div>
+                    {{-- groupein --}}
                     <div id="updategroupein" style="display: none"></div>
+                    {{-- id  --}}
                     <input type="hidden" name="id" id="id">
+                    {{-- transaction id  --}}
                     <input type="hidden" name="tranId" id="updateTranId">
                     <div class="rows">
+                        {{-- date  --}}
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="updateDate">Date</label>
@@ -25,39 +30,34 @@
                                     value="{{ date('Y-m-d') }}" disabled>
                             </div>
                         </div>
+                        {{-- store --}}
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="updateStore">Store</label>
-                                <input type="text" name="store" class="form-input" id="updateStore" autocomplete="off">
-                                <div id="update-store">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="store" class="form-input" id="updateStore" autocomplete="off"><hr>
+                                <div id="update-store"></div>
                                 <span class="error" id="update_store_error"></span>
                             </div>
                         </div>
+                        {{-- supplier --}}
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for="updateUser">Supplier Name</label>
-                                <input type="text" name="user" class="form-input" id="updateUser" autocomplete="off">
-                                <div id="update-user">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="user" class="form-input" id="updateUser" autocomplete="off"><hr>
+                                <div id="update-user"></div>
                                 <span class="error" id="update_user_error"></span>
                             </div>
                         </div>
-
+                        {{-- product  --}}
                         <div class="c-8">
                             <div class="form-input-group">
                                 <label for="updateProduct">Product Name</label>
                                 <input type="text" name="product" id="updateProduct" class="form-input"
-                                    autocomplete="off">
+                                    autocomplete="off"><hr>
                                 <span class="error" id="update_product_error"></span>
                             </div>
                         </div>
+                        {{-- quantity --}}
                         <div class="c-2">
                             <div class="form-input-group">
                                 <label for="updateQuantity">Quantity</label>
@@ -65,6 +65,7 @@
                                 <span class="error" id="update_quantity_error"></span>
                             </div>
                         </div>
+                        {{-- unit --}}
                         <div class="c-2">
                             <div class="form-input-group">
                                 <label for="updateUnit">Unit</label>
@@ -73,13 +74,15 @@
                                 <span class="error" id="update_unit_error"></span>
                             </div>
                         </div>
+                        {{-- cp  --}}
                         <div class="c-2">
                             <div class="form-input-group">
-                                <label for="updateCp">Cost Price</label>
+                                <label for="updateCp">CP</label>
                                 <input type="text" name="cp" class="form-input updateAmount" id="updateCp">
                                 <span class="error" id="update_cp_error"></span>
                             </div>
                         </div>
+                        {{-- mrp --}}
                         <div class="c-2">
                             <div class="form-input-group">
                                 <label for="updateMrp">Mrp</label>
@@ -87,6 +90,7 @@
                                 <span class="error" id="update_mrp_error"></span>
                             </div>
                         </div>
+                        {{-- total --}}
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="updateTotAmount">Total</label>
@@ -94,6 +98,7 @@
                                 <span class="error" id="update_totAmount_error"></span>
                             </div>
                         </div>
+                        {{-- expiry --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="updateExpiry">Expiry Date</label>

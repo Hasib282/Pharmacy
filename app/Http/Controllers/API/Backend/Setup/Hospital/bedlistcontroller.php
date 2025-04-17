@@ -131,32 +131,23 @@ class BedListController extends Controller
 
 
 
-    // Get Transaction Bed List
+    // Get Bed List
     public function Get(Request $req){
-        // $data = Bed_List::on('mysql_second')->orderBy('added_at')->paginate(15);
-        // return response()->json([
-        //     'status' => true,
-        //     'data'=> $data,
-        // ]);
-
-
-
-        $beds = Bed_List::on('mysql_second')
+        $data = Bed_List::on('mysql_second')
         ->where('name', 'like', $req->bed_list.'%')
         ->where('category',  $req->bed_category)
         ->orderBy('name')
-        ->take(10)
         ->get();
 
         $list = "<ul>";
-            if($beds->count() > 0){
-                foreach($beds as $index => $bed) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$bed->id.'">'.$bed->name.'</li>';
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->name.'</li>';
                 }
             }
             else{
                 if($req->bed_category != 'undefined'){
-                    $list = '<li>Select Bed Category First</li>';
+                    $list .= '<li>Select Bed Category First</li>';
                 }
                 else{
                     $list .= '<li>No Data Found</li>';

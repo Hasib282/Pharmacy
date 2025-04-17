@@ -13,12 +13,18 @@
             @method('PUT')
             <div class="rows">
                 <div class="c-6">
+                    {{-- within --}}
                     <div id="updatewithin" style="display: none"> </div>
+                    {{-- groupein --}}
                     <div id="updategroupein" style="display: none"></div>
+                    {{-- id  --}}
                     <input type="hidden" name="id" id="id">
+                    {{-- details id  --}}
                     <input type="hidden" name="dId" id="dId">
+                    {{-- transaction id  --}}
                     <input type="hidden" name="tranId" id="updateTranId">
                     <div class="rows">
+                        {{-- date  --}}
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="updateDate">Date</label>
@@ -26,43 +32,34 @@
                                     value="{{ date('Y-m-d') }}" disabled>
                             </div>
                         </div>
+                        {{-- store --}}
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="updateStore">Store</label>
-                                <input type="text" name="store" class="form-input" id="updateStore" autocomplete="off">
-                                <div id="update-store">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="store" class="form-input" id="updateStore" autocomplete="off"><hr>
+                                <div id="update-store"></div>
                                 <span class="error" id="update_store_error"></span>
                             </div>
                         </div>
+                        {{-- user --}}
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="updateUser">User Name</label>
-                                <input type="text" name="user" class="form-input" id="updateUser" autocomplete="off">
-                                <div id="update-user">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="user" class="form-input" id="updateUser" autocomplete="off"><hr>
+                                <div id="update-user"></div>
                                 <span class="error" id="update_user_error"></span>
                             </div>
                         </div>
+                        {{-- batch id  --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="updateBatch">Batch Id.</label>
-                                <input type="text" name="batch" class="form-input" id="updateBatch" autocomplete="off">
-                                <div id="batch-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="batch" class="form-input" id="updateBatch" autocomplete="off"><hr>
+                                <div id="batch-list"></div>
                                 <span class="error" id="update_batch_error"></span>
                             </div>
                         </div>
-
+                        {{-- product  --}}
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="updateHead">Product Name</label>
@@ -75,6 +72,7 @@
                                 <span class="error" id="update_head_error"></span>
                             </div>
                         </div>
+                        {{-- quantity --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="updateQuantity">Quantity</label>
@@ -82,6 +80,7 @@
                                 <span class="error" id="update_quantity_error"></span>
                             </div>
                         </div>
+                        {{-- price --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="updatePrice">Price</label>
@@ -89,6 +88,7 @@
                                 <span class="error" id="update_price_error"></span>
                             </div>
                         </div>
+                        {{-- total --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="updateTotAmount">Total</label>
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                 </div>
-
+                {{-- batch details table  --}}
                 <div class="c-6">
                     <div id="batch-details-list" style="max-height: 100%; position: initial; overflow-x: auto; font-size: 10px;">
                         <table class="batch-table">
@@ -121,7 +121,7 @@
                         </table>
                     </div>
                 </div>
-
+                {{-- transaction grid part start --}}
                 <div class="c-6">
                     <div class="update_transaction_grid" style="overflow-x:auto; margin-top: 10px">
                         <table class="show-table">
@@ -140,6 +140,7 @@
                             </tbody>
                         </table>
                     </div>
+                    {{-- invoice calculation --}}
                     <div class="rows">
                         <div class="c-6"></div>
                         <div class="c-6">

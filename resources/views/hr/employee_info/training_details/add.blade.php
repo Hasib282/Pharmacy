@@ -12,28 +12,26 @@
             @csrf
             @method('POST')
             <div class="rows">
+                {{-- type --}}
                 <div class="c-6">  
                     <div class="form-input-group">   
-                        <label for="with">Employee Type <span class="required" title="Required">*</span></label>
-                        <select name="with" id="with">
+                        <label for="type">Employee Type <span class="required" title="Required">*</span></label>
+                        <select name="type" id="type">
                             
                         </select>
-                        <span class="error" id="with_error"></span>
+                        <span class="error" id="type_error"></span>
                     </div>
                 </div>
+                {{-- name --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="user">Name <span class="required" title="Required">*</span></label>
-                        <input type="text" name="user" class="form-input" id="user" autocomplete="off">
-                        <div id="user-list">
-                            <ul>
-
-                            </ul>
-                        </div>
+                        <input type="text" name="user" class="form-input" id="user" autocomplete="off"><hr> 
+                        <div id="user-list"></div>
                         <span class="error" id="user_error"></span>
                     </div>
                 </div>
-
+                {{-- traning title  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for = "training_title_0">Training Title <span class="required" title="Required">*</span></label>
@@ -41,6 +39,7 @@
                         <span class="error" id="training_title_0_error"></span>
                     </div>
                 </div>
+                {{-- country --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for = "country_0">Country</label>
@@ -48,6 +47,7 @@
                         <span class="error" id="country_0_error"></span>
                     </div>
                 </div>
+                {{-- topic --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for = "topic_0">Topic <span class="required" title="Required">*</span></label>
@@ -55,6 +55,7 @@
                         <span class="error" id="topic_0_error"></span>
                     </div>
                 </div>
+                {{-- institution name --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for = "institution_name_0">Institution Name <span class="required" title="Required">*</span></label>
@@ -62,6 +63,7 @@
                         <span class="error" id="institution_name_0_error"></span>
                     </div>
                 </div>
+                {{-- start date  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="start_date_0">Start Date</label>
@@ -69,6 +71,7 @@
                         <span class="error" id="start_date_0_error"></span>
                     </div>
                 </div>
+                {{-- end date  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="end_date_0">End Date</label>
@@ -76,18 +79,16 @@
                         <span class="error" id="end_date_0_error"></span>
                     </div>
                 </div>
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for = "training_year_0">Training Year <span class="required" title="Required">*</span></label>
-                        <input type="integer" name="training_year[]" id="training_year_0" class="form-input">
-                        <span class="error" id="training_year_0_error"></span>
-                    </div>
-                </div>
             </div>
-            <div id="formContainer"></div>
+
+            <div id="formContainer">
+                {{-- Forms will be dynamically added here --}}
+            </div>
+
             <div>
                 <button type = "button" name = "addTraining" id = "addTraining" class="btn-blue">Add+</button>
             </div>
+            
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Save</button>
             </div>

@@ -30,7 +30,7 @@ class ProductsController extends Controller
 
         $type = GetTranType($req->segment(2));
 
-        $heads = filterByCompany(
+        $data = filterByCompany(
                     Transaction_Head::on('mysql')
                     ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
                     ->whereHas('Groupe', function ($query) use($type){
@@ -42,7 +42,7 @@ class ProductsController extends Controller
         
         return response()->json([
             'status'=> true,
-            'data' => $heads,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -81,10 +81,10 @@ class ProductsController extends Controller
     public function Edit(Request $req){
         $type = GetTranType($req->segment(2));
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', $type)->orderBy('added_at','asc')->get();
-        $heads = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
+        $data = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'heads'=>$heads,
+            'data'=>$data,
             'groupes' => $groupes,
         ], 200);
     } // End Method
@@ -93,10 +93,10 @@ class ProductsController extends Controller
 
     // Update Pharmacy Item/Products
     public function Update(Request $req){
-        $heads = Transaction_Head::findOrFail($req->id);
+        $data = Transaction_Head::findOrFail($req->id);
         
         $req->validate([
-            "productName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($heads->id)],
+            "productName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($data->id)],
             "groupe" => 'required|exists:mysql.transaction__groupes,id',
             "category" => 'nullable|exists:mysql.item__categories,id',
             "manufacturer" => 'nullable|exists:mysql.item__manufacturers,id',
@@ -107,7 +107,7 @@ class ProductsController extends Controller
             "mrp" => 'required|numeric',
         ]);
 
-        $update = Transaction_Head::on('mysql')->findOrFail($req->id)->update([
+        $update = $data->update([
             "tran_head_name" => $req->productName,
             "groupe_id" => $req->groupe,
             "category_id" => $req->category,
@@ -191,13 +191,13 @@ class ProductsController extends Controller
             ->orderBy('expiry_date','asc');
         }
 
-        $heads = $query->paginate(15);
+        $data = $query->paginate(15);
 
 
         
         return response()->json([
             'status' => true,
-            'data' => $heads,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -219,7 +219,7 @@ class ProductsController extends Controller
         // ) as x"),'h.id', '=', 'x.tran_head_id')
         // ->update(['h.quantity' => DB::raw('x.balance')]);
 
-        $heads = filterByCompany(
+        $data = filterByCompany(
                     Transaction_Head::on('mysql')
                     ->with("Unit","Form","Manufecturer","Category")
                     ->where('tran_head_name', 'like', $req->product.'%')
@@ -229,16 +229,16 @@ class ProductsController extends Controller
                 ->take(10)
                 ->get();
 
-        if($heads->count() > 0){
+        if($data->count() > 0){
             $list = "";
-            foreach($heads as $index => $head) {
-                $list .= '<tr tabindex="' . ($index + 1) . '" data-id="'.$head->id.'" data-groupe="'.$head->groupe_id.'" data-unit="'.optional($head->Unit)->unit_name.'" data-unit-id="'.$head->unit_id.'" data-cp="'.$head->cp.'" data-mrp="'.$head->mrp.'">
-                            <td>'.$head->tran_head_name.'</td>
-                            <td>'.($head->category_id == null ? '' : optional($head->Category)->category_name).'</td>
-                            <td>'.($head->manufacturer_id == null ? '' : optional($head->Menufacturer)->manufacturer_name).'</td>
-                            <td>'.($head->form_id == null ? '' : optional($head->Form)->form_name).'</td>
-                            <td>'.$head->quantity.'</td>
-                            <td>'.$head->mrp.'</td>
+            foreach($data as $index => $item) {
+                $list .= '<tr tabindex="' . ($index + 1) . '" data-id="'.$item->id.'" data-groupe="'.$item->groupe_id.'" data-unit="'.optional($item->Unit)->unit_name.'" data-unit-id="'.$item->unit_id.'" data-cp="'.$item->cp.'" data-mrp="'.$item->mrp.'">
+                            <td>'.$item->tran_head_name.'</td>
+                            <td>'.($item->category_id == null ? '' : optional($item->Category)->category_name).'</td>
+                            <td>'.($item->manufacturer_id == null ? '' : optional($item->Menufacturer)->manufacturer_name).'</td>
+                            <td>'.($item->form_id == null ? '' : optional($item->Form)->form_name).'</td>
+                            <td>'.$item->quantity.'</td>
+                            <td>'.$item->mrp.'</td>
                         </tr>';
             }
         }

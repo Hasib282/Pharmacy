@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User_Info;
-use App\Models\Transaction_With;
 use App\Models\Employee_Training_Detail;
 use App\Models\Employee_Personal_Detail;
 
@@ -14,12 +13,10 @@ class TrainingDetailsController extends Controller
 {
     // Show All Employee Training Details
     public function ShowAll(Request $req){
-        $employee = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
+        $data = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $employee,
-            'tranwith' => $tranwith,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -33,14 +30,12 @@ class TrainingDetailsController extends Controller
             'country.*' => 'nullable',
             'topic.*' => 'required',
             'institution_name.*' => 'required',
-            'training_year.*' => 'required|numeric',
         ],
         [
             'training_title.*.required' => 'This field is required',
             'country.*.required' => 'This field is required',
             'topic.*.required' => 'This field is required',
             'institution_name.*.required' => 'This field is required',
-            'training_year.*.required' => 'This field is required',
         ]);
 
         $trainingDetails = [];
@@ -53,7 +48,6 @@ class TrainingDetailsController extends Controller
                 'institution_name' => $req->institution_name[$key],
                 'start_date' => $req->start_date[$key],
                 'end_date' => $req->end_date[$key],
-                'training_year' => $req->training_year[$key],
             ];
         }
 
@@ -69,12 +63,10 @@ class TrainingDetailsController extends Controller
 
     // Edit Employee Training Details
     public function Edit(Request $req){
-        $employee = Employee_Training_Detail::on('mysql_second')->where('id', $req->id)->first();
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
+        $data = Employee_Training_Detail::on('mysql_second')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
-            'employee'=>$employee,
-            'tranwith'=>$tranwith,
+            'data'=>$data,
         ], 200);
     } // End Method
 
@@ -82,25 +74,22 @@ class TrainingDetailsController extends Controller
 
     // Update Employee Training Details
     public function Update(Request $req){
+        $data = Employee_Training_Detail::on('mysql_second')->findOrFail($req->id);
+        
         $req->validate([
             'training_title' => 'required',
             'country' => 'nullable',
             'topic' => 'required',
             'institution_name' => 'required',
-            'training_year' => 'required|numeric',
         ]);
 
-        $employee = Employee_Training_Detail::on('mysql_second')->findOrFail($req->id);
-        
-
-        $update = Employee_Training_Detail::on('mysql_second')->findOrFail($req->id)->update([
+        $update = $data->update([
             'training_title' => $req->training_title,
             'country' => $req->country,
             'topic' => $req->topic,
             'institution_name' => $req->institution_name,
             'start_date' => $req->start_date,
             'end_date' => $req->end_date,
-            'training_year' => $req->training_year,
             'updated_at' => now()
         ]);
 
@@ -180,11 +169,11 @@ class TrainingDetailsController extends Controller
             }
         }
 
-        $employee = $query->paginate(15);
+        $data = $query->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $employee,
+            'data' => $data,
         ], 200);
     } // End Method
 

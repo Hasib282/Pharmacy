@@ -123,23 +123,23 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        getTransactionGrid(res.issue.tran_id);
-        $('#id').val(res.issue.id);
+        getTransactionGrid(res.data.tran_id);
+        $('#id').val(res.data.id);
         
-        $('#updateTranId').val(res.issue.tran_id);
-        var timestamps = new Date(res.issue.tran_date);
+        $('#updateTranId').val(res.data.tran_id);
+        var timestamps = new Date(res.data.tran_date);
         var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
         $('#updateDate').val(formattedDate);
-        $('#updateStore').val(res.issue.store.store_name);
-        $('#updateStore').attr('data-id', res.issue.store_id);
-        $('#updateUser').attr('data-id',res.issue.tran_user);
-        $('#updateUser').attr('data-with',res.issue.tran_type_with);
-        $('#updateUser').val(res.issue.user.user_name);
-        $('#updateTotalDiscount').val(res.issue.discount);
-        $('#updateAdvance').val(res.issue.receive);
-        $('#updateName').val(res.issue.user_name);
-        $('#updatePhone').val(res.issue.user_phone);
-        $('#updateAddress').val(res.issue.user_address);
+        $('#updateStore').val(res.data.store.store_name);
+        $('#updateStore').attr('data-id', res.data.store_id);
+        $('#updateUser').attr('data-id',res.data.tran_user);
+        $('#updateUser').attr('data-with',res.data.tran_type_with);
+        $('#updateUser').val(res.data.user.user_name);
+        $('#updateTotalDiscount').val(res.data.discount);
+        $('#updateAdvance').val(res.data.receive);
+        $('#updateName').val(res.data.user_name);
+        $('#updatePhone').val(res.data.user_phone);
+        $('#updateAddress').val(res.data.user_address);
         $("#updateProduct").focus();
     }
 

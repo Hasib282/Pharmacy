@@ -10,19 +10,19 @@ use App\Models\Patient_Information;
 
 class PatientRegistrationController extends Controller
 {
+    // Show All Patient Registrations
     public function ShowAll(Request $req){
         $data = Patient_Registration::on('mysql_second')->paginate(15);//with is used to bring data from the doctors table ->with('doctors')
-
         return response()->json([
-            'data'=> $data,
             'status'=> true,
+            'data' => $data,
+        ], 200);
+    } // End Method
 
-        ],200);
-    }
 
-    //Insert
+
+    // Insert Patient Registrations
     public function Insert(Request $req){
-        
         if($req->patient_type == "new"){
             //Patient id auto generate
             $patient_id = Patient_Information::on('mysql_second')->select('ptn_id')->orderby('ptn_id','desc')->first();
@@ -35,8 +35,6 @@ class PatientRegistrationController extends Controller
             }
             $ptn_id= "P".str_pad($newptn_id,11,'0',STR_PAD_LEFT);
             //Patient id auto generation ends
-
-
 
             // validation
             $req->validate([
@@ -117,21 +115,25 @@ class PatientRegistrationController extends Controller
         
         return response()->json([
             'status'=> true,
-            'message' => ' Added Successfully'
+            'message' => 'Patient Registrations Added Successfully'
         ], 200); 
     } // End Method
 
-    //Edit 
+
+
+    //Edit Patient Registrations
     public function Edit(Request $req){
         $data = Patient_Registration::on('mysql_second')->findOrFail($req-> id);
 
         return response()->json([
             'status'=> true,
             'data'=> $data,
-        ]);
+        ], 200);
     }
 
-    //Update
+
+
+    // Update Patient Registrations
     public function Update(Request $req){
         $req->validate([
             'pid'=> 'required',
@@ -165,28 +167,28 @@ class PatientRegistrationController extends Controller
         if($update){
             return response()->json([
                 'status'=>true,
-                'message'=>'updated'
-            ]);
+                'message'=>'Patient Registrations Updated Successfully'
+            ], 200);
         }
+    } // End Method
 
 
-    }
 
-    //delete
+    // Delete Patient Registrations
     public function Delete(Request $req){
         Patient_Registration::on('mysql_second')->findOrFail($req->id)->delete();
-
         return response()->json([
             'status'=> true,
-            'message'=> 'Deleted'
-        ]);
-    }
+            'message'=> 'Patient Registrations Deleted Successfully'
+        ], 200);
+    } // End Method
 
 
-    // Get Patient
+
+    // Get Patient Information
     public function GetPatient(Request $req){
         $data = Patient_Information::on('mysql_second')
-            ->where('ptn_id', 'like', $req->patient.'%')
+            ->where('ptn_id', 'like', 'P%'.$req->patient.'%')
             ->orWhere('phone', 'like', $req->patient.'%')
             ->orWhere('name', 'like', $req->patient.'%')
             ->orderBy('name')

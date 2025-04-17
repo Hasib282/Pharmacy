@@ -11,6 +11,7 @@
          <form id="EditForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            {{-- id  --}}
             <input type="hidden" id="id" name="id">
 
             <div class="rows">
@@ -22,7 +23,6 @@
                         <span class="error" id="update_title_error"></span>
                     </div>
                 </div>
-                
                 <!-- Name -->
                 <div class="c-8">
                     <div class="form-input-group">
@@ -31,7 +31,6 @@
                         <span class="error" id="update_name_error"></span>
                     </div>
                 </div>
-                
                 <!-- phone -->
                 <div class="c-6">
                     <div class="form-input-group">
@@ -40,7 +39,6 @@
                         <span class="error" id="update_phone_error"></span>
                     </div>
                 </div>
-
                 <!-- email -->
                 <div class="c-6">
                     <div class="form-input-group">
@@ -49,7 +47,6 @@
                         <span class="error" id="update_email_error"></span>
                     </div>
                 </div>
-
                 <!-- Age -->
                 <div class="c-12">
                     <div class="form-input-group">
@@ -64,7 +61,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <!-- Gender -->
                 <div class="c-4">
                     <div class="form-input-group">
@@ -78,7 +74,6 @@
                         <span class="error" id="update_gender_error"></span>
                     </div>
                 </div>
-
                 <!-- Nationality -->
                 <div class="c-4">
                     <div class="form-input-group">
@@ -87,7 +82,6 @@
                         <span class="error" id="update_nationality_error"></span>
                     </div>
                 </div>
-
                 <!-- Religion -->
                 <div class="c-4">
                     <div class="form-input-group">
@@ -96,7 +90,6 @@
                         <span class="error" id="update_religion_error"></span>
                     </div>
                 </div>
-                
                 <!-- Address -->
                 <div class="c-12">
                     <div class="form-input-group">

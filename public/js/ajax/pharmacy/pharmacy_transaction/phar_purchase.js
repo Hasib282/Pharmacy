@@ -134,26 +134,26 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        getTransactionGrid(res.purchase.tran_id);
+        getTransactionGrid(res.data.tran_id);
 
-        $('#id').val(res.purchase.id);
+        $('#id').val(res.data.id);
         
-        $('#updateTranId').val(res.purchase.tran_id);
+        $('#updateTranId').val(res.data.tran_id);
 
-        var timestamps = new Date(res.purchase.tran_date);
+        var timestamps = new Date(res.data.tran_date);
         var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
         $('#updateDate').val(formattedDate);
 
-        $('#updateStore').val(res.purchase.store.store_name);
-        $('#updateStore').attr('data-id', res.purchase.store_id);
+        $('#updateStore').val(res.data.store.store_name);
+        $('#updateStore').attr('data-id', res.data.store_id);
         
-        $('#updateUser').attr('data-id',res.purchase.tran_user);
-        $('#updateUser').attr('data-with',res.purchase.tran_type_with);
-        $('#updateUser').val(res.purchase.user.user_name);
+        $('#updateUser').attr('data-id',res.data.tran_user);
+        $('#updateUser').attr('data-with',res.data.tran_type_with);
+        $('#updateUser').val(res.data.user.user_name);
 
-        $('#updateTotalDiscount').val(res.purchase.discount);
+        $('#updateTotalDiscount').val(res.data.discount);
 
-        $('#updateAdvance').val(res.purchase.payment);
+        $('#updateAdvance').val(res.data.payment);
 
         
         $("#updateProduct").focus();

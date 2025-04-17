@@ -12,10 +12,10 @@ class ManufacturerController extends Controller
     // Show All Item/Product MAnufacturer
     public function ShowAll(Request $req){
         $type = GetTranType($req->segment(2));
-        $manufacturer = filterByCompany(Item_Manufacturer::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->paginate(15);
+        $data = filterByCompany(Item_Manufacturer::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $manufacturer,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -44,10 +44,10 @@ class ManufacturerController extends Controller
 
     // Edit Item/Product MAnufacturer
     public function Edit(Request $req){
-        $manufacturer = Item_Manufacturer::on('mysql')->where('id', $req->id)->first();
+        $data = Item_Manufacturer::on('mysql')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
-            'manufacturer'=> $manufacturer,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -88,7 +88,7 @@ class ManufacturerController extends Controller
     // Search Item/Product MAnufacturer
     public function Search(Request $req){
         $type = GetTranType($req->segment(2));
-        $manufacturer = filterByCompany(
+        $data = filterByCompany(
                             Item_Manufacturer::on('mysql')
                             ->where('type_id', $type)
                             ->where('manufacturer_name', 'like', '%'.$req->search.'%')
@@ -98,7 +98,7 @@ class ManufacturerController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $manufacturer,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -107,7 +107,7 @@ class ManufacturerController extends Controller
     // Get Manufacturer
     public function Get(Request $req){
         $type = GetTranType($req->segment(2));
-        $manufacturers = filterByCompany(
+        $data = filterByCompany(
                             Item_Manufacturer::on('mysql')
                             ->where('type_id', $type)
                             ->where('manufacturer_name', 'like', '%'.$req->manufacturer.'%')
@@ -117,9 +117,9 @@ class ManufacturerController extends Controller
                         ->get();
         
         $list = "<ul>";
-            if($manufacturers->count() > 0){
-                foreach($manufacturers as $index => $manufacturer) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$manufacturer->id.'">'.$manufacturer->manufacturer_name.'</li>';
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->manufacturer_name.'</li>';
                 }
             }
             else{

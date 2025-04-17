@@ -22,7 +22,7 @@
             {{-- department --}}
             <div class="form-input-group">
                 <label for="updateDepartment">Department</label>
-                <input type="text" name="department" class="form-input" id="updateDepartment" autocomplete="off">
+                <input type="text" name="department" class="form-input" id="updateDepartment" autocomplete="off"><hr>
                 <div id="update-department"></div>
                 <span class="error" id="update_department_error"></span>
             </div>

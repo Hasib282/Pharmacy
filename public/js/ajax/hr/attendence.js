@@ -94,12 +94,12 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.attendence.id);
+        $('#id').val(res.data.id);
 
-        $('#updateUser').val(res.attendence.user.user_name);
-        $('#updateDate').val(res.attendence.date);
-        $('#updateIn').val(res.attendence.in);
-        $('#updateOut').val(res.attendence.out);
+        $('#updateUser').val(res.data.user.user_name);
+        $('#updateDate').val(res.data.date);
+        $('#updateIn').val(res.data.in);
+        $('#updateOut').val(res.data.out);
 
         $('#updateOut').focus();
     }

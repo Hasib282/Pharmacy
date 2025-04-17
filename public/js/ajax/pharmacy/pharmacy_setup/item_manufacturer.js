@@ -33,8 +33,9 @@ function ShowPharmacyManufacturers(data, startIndex) {
 
 // Additional Edit Functionality
 function EditFormInputValue(res){
-    $('#id').val(res.manufacturer.id);
-    $('#updateName').val(res.manufacturer.manufacturer_name);
+    $('#id').val(res.data.id);
+    $('#updateName').val(res.data.manufacturer_name);
+    $('#updateName').focus();
 }
 
 

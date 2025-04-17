@@ -12,8 +12,11 @@
             @csrf
             @method('put')
             <div class="rows">
+                {{-- id  --}}
                 <input type="hidden" name="id" id="id">
+                {{-- employee id  --}}
                 <input type="hidden" name="empId" id="empId">
+                {{-- company --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_company_name">Company Name</label>
@@ -21,6 +24,7 @@
                         <span class="error" id="update_company_name_error"></span>
                     </div>
                 </div>
+                {{-- department --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_department">Department</label>
@@ -28,6 +32,7 @@
                         <span class="error" id="update_department_error"></span>
                     </div>
                 </div>
+                {{-- designation --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_designation">Designation</label>
@@ -35,6 +40,7 @@
                         <span class="error" id="update_designation_error"></span>
                     </div>
                 </div>
+                {{-- company address  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_company_location">Company Address</label>
@@ -42,6 +48,7 @@
                         <span class="error" id="update_company_location_error"></span>
                     </div>
                 </div>
+                {{-- start date  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_start_date">Start Date</label>
@@ -49,6 +56,7 @@
                         <span class="error" id="update_start_date_error"></span>
                     </div>
                 </div>
+                {{-- end date  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_end_date">End Date</label>
@@ -56,9 +64,10 @@
                         <span class="error" id="update_end_date_error"></span>
                     </div>
                 </div>
-                <div class="center">
-                    <button type="submit" id="Update" class="btn-blue">Update</button>
-                </div>
+            </div>
+            
+            <div class="center">
+                <button type="submit" id="Update" class="btn-blue">Update</button>
             </div>
         </form>
     </div>

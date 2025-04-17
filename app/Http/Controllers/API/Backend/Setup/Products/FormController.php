@@ -12,10 +12,10 @@ class FormController extends Controller
     // Show All Item/Product Form
     public function ShowAll(Request $req){
         $type = GetTranType($req->segment(2));
-        $form = filterByCompany(Item_Form::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->paginate(15);
+        $data = filterByCompany(Item_Form::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $form,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -44,10 +44,10 @@ class FormController extends Controller
 
     // Edit Item/Product Form
     public function Edit(Request $req){
-        $form = Item_Form::on('mysql')->where('id', $req->id)->first();
+        $data = Item_Form::on('mysql')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
-            'form'=> $form,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -88,7 +88,7 @@ class FormController extends Controller
     // Search Item/Product Form
     public function Search(Request $req){
         $type = GetTranType($req->segment(2));
-        $form = filterByCompany(
+        $data = filterByCompany(
                     Item_Form::on('mysql')
                     ->where('type_id', $type)
                     ->where('form_name', 'like', '%'.$req->search.'%')
@@ -98,7 +98,7 @@ class FormController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $form,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -107,7 +107,7 @@ class FormController extends Controller
     // Get Item/Product Form
     public function Get(Request $req){
         $type = GetTranType($req->segment(2));
-        $forms = filterByCompany(
+        $data = filterByCompany(
                     Item_Form::on('mysql')
                     ->where('type_id', $type)
                     ->where('form_name', 'like', '%'.$req->form.'%')
@@ -117,9 +117,9 @@ class FormController extends Controller
                 ->get();
 
         $list = "<ul>";
-            if($forms->count() > 0){
-                foreach($forms as $index => $form) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$form->id.'">'.$form->form_name.'</li>';
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->form_name.'</li>';
                 }
             }
             else{

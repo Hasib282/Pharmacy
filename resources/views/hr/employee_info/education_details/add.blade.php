@@ -14,28 +14,26 @@
             @method('POST')
             <!-- Education Details Section -->
             <div class="rows">
+                {{-- type --}}
                 <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="with">Employee Type <span class="required" title="Required">*</span></label>
-                        <select name="with" id="with">
-
+                    <div class="form-input-group">   
+                        <label for="type">Employee Type <span class="required" title="Required">*</span></label>
+                        <select name="type" id="type">
+                            
                         </select>
-                        <span class="error" id="with_error"></span>
+                        <span class="error" id="type_error"></span>
                     </div>
                 </div>
+                {{-- name --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="user">Name <span class="required" title="Required">*</span></label>
-                        <input type="text" name="user" class="form-input" id="user" autocomplete="off">
-                        <div id="user-list">
-                            <ul>
-
-                            </ul>
-                        </div>
+                        <input type="text" name="user" class="form-input" id="user" autocomplete="off"><hr>
+                        <div id="user-list"></div>
                         <span class="error" id="user_error"></span>
                     </div>
                 </div>
-
+                {{-- degree title  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="degree_0">Degree Title <span class="required" title="Required">*</span></label>
@@ -43,6 +41,7 @@
                         <span class="error" id="degree_0_error"></span>
                     </div>
                 </div>
+                {{-- groupe --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="group_0">Group</label>
@@ -55,6 +54,7 @@
                         <span class="error" id="group_0_error"></span>
                     </div>
                 </div>
+                {{-- institution --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="institution_0">Institution Name <span class="required" title="Required">*</span></label>
@@ -62,6 +62,7 @@
                         <span class="error" id="institution_0_error"></span>
                     </div>
                 </div>
+                {{-- result --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="result_0">Result <span class="required" title="Required">*</span></label>
@@ -75,6 +76,7 @@
                         <span class="error" id="result_0_error"></span>
                     </div>
                 </div>
+                {{-- scale --}}
                 <div class="c-6 hidden" id="scale-group_0">
                     <div class="form-input-group">
                         <label for="scale_0">Scale </label>
@@ -82,6 +84,7 @@
                         <span class="error" id="scale_0_error"></span>
                     </div>
                 </div>
+                {{-- cgpa --}}
                 <div class="c-6 hidden" id="cgpa-group_0">
                     <div class="form-input-group">
                         <label for="cgpa_0">CGPA </label>
@@ -89,6 +92,7 @@
                         <span class="error" id="cgpa_0_error"></span>
                     </div>
                 </div>
+                {{-- marks --}}
                 <div class="c-6 hidden" id="marks-group_0">
                     <div class="form-input-group">
                         <label for="marks_0">Marks</label>
@@ -96,6 +100,7 @@
                         <span class="error" id="marks_0_error"></span>
                     </div>
                 </div>
+                {{-- batch --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="batch_0">Batch <span class="required" title="Required">*</span></label>
@@ -106,7 +111,7 @@
             </div>
 
             <div id="formContainer">
-                <!-- Forms will be dynamically added here -->
+                {{-- Forms will be dynamically added here --}}
             </div>
 
             <div>

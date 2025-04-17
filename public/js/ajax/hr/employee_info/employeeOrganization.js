@@ -115,14 +115,14 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.employee.id);
-        $('#emp_id').val(res.employee.emp_id);
-        $('#update_joining_date').val(res.employee.joining_date);
-        $('#updateLocation').val(res.employee.location.upazila);
-        $('#updateLocation').attr('data-id',res.employee.joining_location);
-        $('#updateDepartment').val(res.employee.department.name);
-        $('#updateDepartment').attr('data-id',res.employee.department.id);
-        $('#updateDesignation').val(res.employee.designation.designation);
-        $('#updateDesignation').attr('data-id',res.employee.designation.id);
+        $('#id').val(res.data.id);
+        $('#emp_id').val(res.data.emp_id);
+        $('#update_joining_date').val(res.data.joining_date);
+        $('#updateLocation').val(res.data.location.upazila);
+        $('#updateLocation').attr('data-id',res.data.joining_location);
+        $('#updateDepartment').val(res.data.department.name);
+        $('#updateDepartment').attr('data-id',res.data.department.id);
+        $('#updateDesignation').val(res.data.designation.designation);
+        $('#updateDesignation').attr('data-id',res.data.designation.id);
     }
 });

@@ -112,15 +112,15 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.adjust.id);
-        $('#updateTranId').val(res.adjust.tran_id);
-        $('#updateStore').attr('data-id', res.adjust.store_id);
-        $('#updateStore').val(res.adjust.store.store_name);
-        $('#updateProduct').attr('data-groupe', res.adjust.tran_groupe_id);
-        $('#updateProduct').attr('data-id', res.adjust.tran_head_id);
-        $('#updateProduct').val(res.adjust.head.tran_head_name);
-        $('#updateQuantity').val(res.adjust.quantity);
-        $('#updateCp').val(res.adjust.cp);
-        $('#updateMrp').val(res.adjust.mrp);
+        $('#id').val(res.data.id);
+        $('#updateTranId').val(res.data.tran_id);
+        $('#updateStore').attr('data-id', res.data.store_id);
+        $('#updateStore').val(res.data.store.store_name);
+        $('#updateProduct').attr('data-groupe', res.data.tran_groupe_id);
+        $('#updateProduct').attr('data-id', res.data.tran_head_id);
+        $('#updateProduct').val(res.data.head.tran_head_name);
+        $('#updateQuantity').val(res.data.quantity);
+        $('#updateCp').val(res.data.cp);
+        $('#updateMrp').val(res.data.mrp);
     }
 });

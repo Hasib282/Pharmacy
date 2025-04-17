@@ -20,11 +20,9 @@ class PersonalDetailsController extends Controller
     // Show All Employee Personal Details
     public function ShowAll(Request $req){
         $data = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'tranwith' => $tranwith,
         ], 200);
     } // End Method
 
@@ -135,14 +133,15 @@ class PersonalDetailsController extends Controller
     // Update Employee Personal Details
     public function Update(Request $req){
         $data = User_Info::on('mysql_second')->where('user_id', $req->employee_id)->first();
+        
         $req->validate([
             'name' => 'required',
             'gender' => 'in:Male,Female,Others',
             'religion' => 'in:Islam,Hinduism,Christianity,Buddhism,Judaism',
             'marital_status' => 'in:Married,Unmarried',
             'nid_no' => 'nullable|numeric',
-            "phn_no" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore($data->id)],
-            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore($data->id)],
+            "phn_no" => ['required','numeric',Rule::unique('mysql.login__users', 'user_phone')->ignore($data->login_user_id, 'user_id')],
+            "email" => ['required','email',Rule::unique('mysql.login__users', 'user_email')->ignore($data->login_user_id, 'user_id')],
             'location'  => 'required|exists:mysql.location__infos,id',
             'type'=> 'required|exists:mysql_second.transaction__withs,id',
         ]);

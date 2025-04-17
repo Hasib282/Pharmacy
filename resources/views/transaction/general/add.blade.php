@@ -29,7 +29,7 @@
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="user">Transaction User</label>
-                                <input type="text" name="user" class="form-input" id="user" autocomplete="off">
+                                <input type="text" name="user" class="form-input" id="user" autocomplete="off"><hr>
                                 <div id="user-list"></div>
                                 <span class="error" id="user_error"></span>
                             </div>
@@ -38,7 +38,7 @@
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="head">Transaction Head</label>
-                                <input type="text" name="head" id="head" class="form-input" autocomplete="off">
+                                <input type="text" name="head" id="head" class="form-input" autocomplete="off"><hr>
                                 <div id="head-list"></div>
                                 <span class="error" id="head_error"></span>
                             </div>

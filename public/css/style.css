@@ -64,13 +64,13 @@ ol, ul, p {
 .c-2{
     flex: 0 0 auto;
     width: 16.66666667%;
-    padding: 0 4px;
+    padding: 0 0 0 10px;
 }
 
 .c-3{
     flex: 0 0 auto;
     width: 25%;
-    padding: 0 6px;
+    padding: 0 0 0 10px;
 }
 
 .c-4{
@@ -851,7 +851,7 @@ div[id$="-list"], div[id^="update-"] {
     top: 57px;
     width: 100%;
     box-sizing: border-box;
-    max-height: 110px;
+    max-height: 150px;
     overflow-y: auto;
     overflow-x: hidden;
     position: absolute;

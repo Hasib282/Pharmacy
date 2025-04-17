@@ -29,12 +29,8 @@
             {{-- location --}}
             <div class="form-input-group">
                 <label for="updateLocation">Location <span class="required" title="Required">*</span></label>
-                <input type="text" name="location" id="updateLocation" class="form-input" autocomplete="off">
-                <div id="update-location">
-                    <ul>
-
-                    </ul>
-                </div>
+                <input type="text" name="location" id="updateLocation" class="form-input" autocomplete="off"><hr>
+                <div id="update-location"></div>
                 <span class="error" id="update_location_error"></span>
             </div>
             {{-- address --}}

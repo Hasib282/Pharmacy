@@ -33,8 +33,9 @@ function ShowInventoryForms(data, startIndex) {
 
 // Additional Edit Functionality
 function EditFormInputValue(res){
-    $('#id').val(res.form.id);
-    $('#updateName').val(res.form.form_name);
+    $('#id').val(res.data.id);
+    $('#updateName').val(res.data.form_name);
+    $('#updateName').focus();
 }
 
 

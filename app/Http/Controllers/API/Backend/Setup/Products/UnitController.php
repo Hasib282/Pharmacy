@@ -12,10 +12,10 @@ class UnitController extends Controller
     // Show All Item/Product Unit
     public function ShowAll(Request $req){
         $type = GetTranType($req->segment(2));
-        $unit = filterByCompany(Item_Unit::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->paginate(15);
+        $data = filterByCompany(Item_Unit::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $unit,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -44,10 +44,10 @@ class UnitController extends Controller
 
     // Edit Item/Product Unit
     public function Edit(Request $req){
-        $unit = Item_Unit::on('mysql')->where('id', $req->id)->first();
+        $data = Item_Unit::on('mysql')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
-            'unit'=> $unit,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -88,7 +88,7 @@ class UnitController extends Controller
     // Search Item/Product Unit
     public function Search(Request $req){
         $type = GetTranType($req->segment(2));
-        $unit = filterByCompany(
+        $data = filterByCompany(
                     Item_Unit::on('mysql')
                     ->where('type_id', $type)
                     ->where('unit_name', 'like', '%'.$req->search.'%')
@@ -98,7 +98,7 @@ class UnitController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $unit,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -107,7 +107,7 @@ class UnitController extends Controller
     // Get Unit
     public function Get(Request $req){
         $type = GetTranType($req->segment(2));
-        $units = filterByCompany(
+        $data = filterByCompany(
                     Item_Unit::on('mysql')
                     ->where('type_id', $type)
                     ->where('unit_name', 'like', '%'.$req->unit.'%')
@@ -117,9 +117,9 @@ class UnitController extends Controller
                 ->get();
 
         $list = "<ul>";
-            if($units->count() > 0){
-                foreach($units as $index => $unit) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$unit->id.'">'.$unit->unit_name.'</li>';
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->unit_name.'</li>';
                 }
             }
             else{

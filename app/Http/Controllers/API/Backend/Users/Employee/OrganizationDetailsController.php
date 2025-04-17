@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User_Info;
-use App\Models\Transaction_With;
 use App\Models\Employee_Organization_Detail;
 use App\Models\Employee_Personal_Detail;
 
@@ -14,12 +13,10 @@ class OrganizationDetailsController extends Controller
 {
     // Show All Employee Organization Details
     public function ShowAll(Request $req){
-        $employee = User_Info::on('mysql_second')->with('Withs','Location','organizationDetail')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
+        $data = User_Info::on('mysql_second')->with('Withs','Location','organizationDetail')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $employee,
-            'tranwith' => $tranwith,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -54,12 +51,10 @@ class OrganizationDetailsController extends Controller
 
     // Edit Employee Organization Details
     public function Edit(Request $req){
-        $employee = Employee_Organization_Detail::on('mysql_second')->with('Department','Designation','Location')->where('id', $req->id)->first();
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
+        $data = Employee_Organization_Detail::on('mysql_second')->with('Department','Designation','Location')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
-            'employee'=>$employee,
-            'tranwith'=>$tranwith,
+            'data'=>$data,
         ], 200);
     } // End Method
 
@@ -67,14 +62,14 @@ class OrganizationDetailsController extends Controller
 
     // Update Employee Organization Details
     public function Update(Request $req){
+        $data = Employee_Organization_Detail::on('mysql_second')->where('emp_id', $req->emp_id)->first();
+
         $req->validate([
             'joining_date' => 'required',
             'location' => 'required',
             'department' => 'required',
             'designation' => 'required',
         ]);
-
-        $employee = Employee_Organization_Detail::on('mysql_second')->where('emp_id', $req->emp_id)->first();
         
         $update = Employee_Organization_Detail::on('mysql_second')->findOrFail($req->id)->update([
             "joining_date" => $req->joining_date,
@@ -160,11 +155,11 @@ class OrganizationDetailsController extends Controller
             }
         }
 
-        $employee = $query->paginate(15);
+        $data = $query->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $employee,
+            'data' => $data,
         ], 200);
     } // End Method
 

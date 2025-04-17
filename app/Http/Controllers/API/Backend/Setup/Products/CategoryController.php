@@ -12,10 +12,10 @@ class CategoryController extends Controller
     // Show All Item/Product Category
     public function ShowAll(Request $req){
         $type = GetTranType($req->segment(2));
-        $category = filterByCompany(Item_Category::on('mysql'))->where('type_id', $type)->orderBy('added_at','asc')->paginate(15);
+        $data = filterByCompany(Item_Category::on('mysql'))->where('type_id', $type)->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $category,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -44,10 +44,10 @@ class CategoryController extends Controller
 
     // Edit Item/Product Category
     public function Edit(Request $req){
-        $category = Item_Category::on('mysql')->where('id', $req->id)->first();
+        $data = Item_Category::on('mysql')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
-            'category'=> $category,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -88,7 +88,7 @@ class CategoryController extends Controller
     // Search Item/Product Category
     public function Search(Request $req){
         $type = GetTranType($req->segment(2));
-        $category = filterByCompany(
+        $data = filterByCompany(
                         Item_Category::on('mysql')
                         ->where('type_id', $type)
                         ->where('category_name', 'like', '%'.$req->search.'%')
@@ -98,7 +98,7 @@ class CategoryController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $category,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -107,7 +107,7 @@ class CategoryController extends Controller
     // Get Item/Product Category By Name
     public function Get(Request $req){
         $type = GetTranType($req->segment(2));
-        $categories = filterByCompany(
+        $data = filterByCompany(
                         Item_Category::on('mysql')
                         ->where('type_id', $type)
                         ->where('category_name', 'like', '%'.$req->category.'%')
@@ -117,9 +117,9 @@ class CategoryController extends Controller
                     ->get();
 
         $list = "<ul>";
-            if($categories->count() > 0){
-                foreach($categories as $index => $category) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$category->id.'">'.$category->category_name.'</li>';
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->category_name.'</li>';
                 }
             }
             else{

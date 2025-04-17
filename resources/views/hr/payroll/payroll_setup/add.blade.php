@@ -7,27 +7,26 @@
             </div>
         </div>
 
-        <div class="form-input-group">
-            <label for="with">Employee Type</label>
-            <select name="with" id="with">
-                {{-- options will be display dynamically --}}
+        {{-- employee type --}}
+        <div class="form-input-group">   
+            <label for="type">Employee Type <span class="required" title="Required">*</span></label>
+            <select name="type" id="type">
+                
             </select>
-            <span class="error" id="with_error"></span>
+            <span class="error" id="type_error"></span>
         </div>
+        {{-- name --}}
         <div class="form-input-group">
             <label for="user">Employee Name</label>
-            <input type="text" name="user" class="form-input" id="user" autocomplete="off">
-            <div id="user-list">
-                <ul>
-
-                </ul>
-            </div>
+            <input type="text" name="user" class="form-input" id="user" autocomplete="off"><hr>
+            <div id="user-list"></div>
             <span class="error" id="user_error"></span>
         </div>
         <!-- form start -->
         <form id="AddForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
+            {{-- category --}}
             <div class="form-input-group">
                 <label for="head">Payroll Category</label>
                 <select name="head" id="head">
@@ -35,6 +34,7 @@
                 </select>
                 <span class="error" id="head_error"></span>
             </div>
+            {{-- amount --}}
             <div class="form-input-group">
                 <label for="amount">Amount</label>
                 <input type="text" name="amount" class="form-input" id="amount">
@@ -44,6 +44,7 @@
                 <button type="submit" class="btn-blue" id="Insert">Submit</button>
             </div>
         </form>
+        {{-- payroll-grid  --}}
         <table class="show-table payroll-grid">
             <thead>
                 <tr>

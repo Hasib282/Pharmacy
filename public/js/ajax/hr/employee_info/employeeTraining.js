@@ -102,15 +102,14 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.employee.id);
-        $('#empId').val(res.employee.emp_id);
-        $('#update_training_title').val(res.employee.training_title);
-        $('#update_country').val(res.employee.country);
-        $('#update_topic').val(res.employee.topic);
-        $('#update_institution_name').val(res.employee.institution_name);
-        $('#update_start_date').val(res.employee.start_date);
-        $('#update_end_date').val(res.employee.end_date);
-        $('#update_training_year').val(res.employee.training_year);
+        $('#id').val(res.data.id);
+        $('#empId').val(res.data.emp_id);
+        $('#update_training_title').val(res.data.training_title);
+        $('#update_country').val(res.data.country);
+        $('#update_topic').val(res.data.topic);
+        $('#update_institution_name').val(res.data.institution_name);
+        $('#update_start_date').val(res.data.start_date);
+        $('#update_end_date').val(res.data.end_date);
     }
     
 
@@ -158,13 +157,6 @@ $(document).ready(function () {
                                 <label for="end_date_${formIndex}">End Date</label>
                                 <input type="date" name="end_date[]" id="end_date_${formIndex}" class="form-input">
                                 <span class="error" id="end_date_${formIndex}_error"></span>
-                            </div>
-                        </div>
-                        <div class="c-6">
-                            <div class="form-input-group">
-                                <label for = "training_year_${formIndex}">Training Year <span class="required" title="Required">*</span></label>
-                                <input type="integer" name="training_year[]" id="training_year_${formIndex}" class="form-input">
-                                <span class="error" id="training_year_${formIndex}_error"></span>
                             </div>
                         </div>
                     </div>`;

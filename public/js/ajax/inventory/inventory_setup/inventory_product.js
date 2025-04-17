@@ -105,45 +105,45 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.heads.id);
-        $('#updateProductName').val(res.heads.tran_head_name);
+        $('#id').val(res.data.id);
+        $('#updateProductName').val(res.data.tran_head_name);
         $('#updateProductName').focus();
 
         $('#updateGroupe').html('');
         $('#updateGroupe').append(`<option value="" >Select Product Groupe</option>`);
         $.each(res.groupes, function (key, groupe) {
-            $('#updateGroupe').append(`<option value="${groupe.id}" ${res.heads.groupe_id === groupe.id ? 'selected' : ''}>${groupe.tran_groupe_name}</option>`);
+            $('#updateGroupe').append(`<option value="${groupe.id}" ${res.data.groupe_id === groupe.id ? 'selected' : ''}>${groupe.tran_groupe_name}</option>`);
         });
 
-        if(res.heads.category_id){
-            $('#updateCategory').val(res.heads.category.category_name);
-            $('#updateCategory').attr('data-id', res.heads.category.id);
+        if(res.data.category_id){
+            $('#updateCategory').val(res.data.category.category_name);
+            $('#updateCategory').attr('data-id', res.data.category.id);
         }
         
-        if(res.heads.manufacturer_id){
-            $('#updateManufacturer').val(res.heads.manufecturer.manufacturer_name);
-            $('#updateManufacturer').attr('data-id', res.heads.manufecturer.id);
+        if(res.data.manufacturer_id){
+            $('#updateManufacturer').val(res.data.manufecturer.manufacturer_name);
+            $('#updateManufacturer').attr('data-id', res.data.manufecturer.id);
         }
         
-        if(res.heads.form_id){
-            $('#updateForm').val(res.heads.form.form_name);
-            $('#updateForm').attr('data-id', res.heads.form_id);
+        if(res.data.form_id){
+            $('#updateForm').val(res.data.form.form_name);
+            $('#updateForm').attr('data-id', res.data.form_id);
         }
 
-        if(res.heads.unit_id){
-            $('#updateUnit').val(res.heads.unit.unit_name);
-            $('#updateUnit').attr('data-id', res.heads.unit_id);
+        if(res.data.unit_id){
+            $('#updateUnit').val(res.data.unit.unit_name);
+            $('#updateUnit').attr('data-id', res.data.unit_id);
         }
 
-        if(res.heads.store_id){
-            $('#updateStore').val(res.heads.store.store_name);
-            $('#updateStore').attr('data-id', res.heads.store_id);
+        if(res.data.store_id){
+            $('#updateStore').val(res.data.store.store_name);
+            $('#updateStore').attr('data-id', res.data.store_id);
         }
 
-        $('#updateQuantity').val(res.heads.quantity);
-        $('#updateCp').val(res.heads.cp);
-        $('#updateMrp').val(res.heads.mrp);
-        $('#updateExpiryDate').val(res.heads.expired_date);
+        $('#updateQuantity').val(res.data.quantity);
+        $('#updateCp').val(res.data.cp);
+        $('#updateMrp').val(res.data.mrp);
+        $('#updateExpiryDate').val(res.data.expired_date);
     }
 
 

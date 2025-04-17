@@ -135,7 +135,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="updateLocation">Location <span class="required" title="Required">*</span></label>
-                        <input type="text" name="location" id="updateLocation" class="form-input">
+                        <input type="text" name="location" id="updateLocation" class="form-input" autocomplete="off"><hr>
                         <div id="update-location"></div>
                         <span class="error" id="update_location_error"></span>
                     </div>

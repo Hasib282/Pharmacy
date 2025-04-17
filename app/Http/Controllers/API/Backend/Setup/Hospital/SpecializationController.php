@@ -52,13 +52,13 @@ class SpecializationController extends Controller
 
     // Update Doctors Specialization
     public function Update(Request $req){
-        $type = Specialization::on('mysql_second')->findOrFail($req->id);
+        $data = Specialization::on('mysql_second')->findOrFail($req->id);
         
         $req->validate([
-            "name" => ['required',Rule::unique('mysql_second.specializations', 'name')->ignore($type->id)],
+            "name" => ['required',Rule::unique('mysql_second.specializations', 'name')->ignore($data->id)],
         ]);
 
-        $update = Specialization::on('mysql_second')->findOrFail($req->id)->update([
+        $update = $data->update([
             "name" => $req->name,
             "updated_at" => now()
         ]);
@@ -101,16 +101,16 @@ class SpecializationController extends Controller
 
     // Get Transaction Main Head
     public function Get(Request $req){
-        $specializations = Specialization::on('mysql_second')
+        $data = Specialization::on('mysql_second')
         ->where('name', 'like', $req->specialization.'%')
         ->orderBy('name')
         ->take(10)
         ->get();
 
         $list = "<ul>";
-            if($specializations->count() > 0){
-                foreach($specializations as $index => $specialization) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$specialization->id.'">'.$specialization->name.'</li>';
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->name.'</li>';
                 }
             }
             else{

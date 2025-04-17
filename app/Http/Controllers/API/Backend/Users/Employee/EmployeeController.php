@@ -19,11 +19,9 @@ class EmployeeController extends Controller
     // Show All Employee Details
     public function ShowAll(Request $req){
         $data = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'tranwith' => $tranwith,
         ], 200);
     } // End Method
 

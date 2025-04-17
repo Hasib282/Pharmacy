@@ -10,20 +10,18 @@ use App\Models\Doctor_Information;
 
 class DoctorController extends Controller
 {
-    //show data
+    // Show All Doctors
     public function ShowAll(Request $req){
         $data = Doctor_Information::on('mysql_second')->paginate(15);
-        
         return response()->json([
-            'status'=>true,
-            'data'=>$data,
-            
-        ],200);
-    }
+            'status' => true,
+            'data' => $data,
+        ], 200);
+    } // End Method
 
 
 
-    // insert data
+    // Insert Doctors
     public function Insert(Request $req){
         $req-> validate([
             'title'=>'required',
@@ -50,25 +48,24 @@ class DoctorController extends Controller
 
         return response()->json([
             'status'=>true,
-            'message'=>'added sussesfully'
-        ]);
-    }
+            'message'=>'Doctors information Added Successfully'
+        ], 200);
+    } // End Method
 
 
 
-    //edit data
+    // Edit Doctors
     public function Edit(Request $req){
         $data = Doctor_Information::on('mysql_second')->findorfail($req->id);
         return response()->json([
             'status'=>true,
             'data'=> $data,
-        ]);
-
-    }
-
+        ], 200);
+    } // End Method
 
 
-    //update data 
+
+    // Update Doctors 
     public function Update(Request $req){
         $req-> validate([
             'title'=>'required',
@@ -97,22 +94,21 @@ class DoctorController extends Controller
         if($update){
             return response()->json([
                 'status'=>true,
-                'message'=>'updated sussesfully'
-            ]);
+                'message'=>'Doctors Information Updated Successfully'
+            ], 200);
         }
-    }
+    } // End Method
 
 
 
-    //delete data
+    // Delete Doctors
     public function Delete(Request $req){
         Doctor_Information::on('mysql_second')->findOrFail($req->id)->delete();
-
         return response()->json([
             'status'=>true,
-            'message'=> 'deleted data'
-        ]);
-    }
+            'message'=> 'Doctors Information Deleted Successfully'
+        ], 200);
+    } // End Method
 
     // Get Doctors
     public function Get(Request $req){
@@ -125,10 +121,7 @@ class DoctorController extends Controller
         $list = '<table class="patient-table" style="overflow-x:auto; width:100%;">
                     <thead>
                         <tr>
-                            <th>Id</th>
                             <th>Name</th>
-                            <th>Phone</th>
-                            <th>Email</th>
                             <th>Degree</th>
                             <th>Specialization</th>
                         </tr>
@@ -138,8 +131,6 @@ class DoctorController extends Controller
                             foreach($data as $index => $item) {
                                 $list .= '<tr tabindex="' . ($index + 1) . '" data-id="'.$item->id.'" data-title="'.$item->title.'" data-name="'.$item->name.'" data-phone="'.$item->phone.'" data-email="'.$item->email.'" data-degree="'.$item->degree.'" data-chamber="'.$item->chamber.'" data-specialization="'.$item->specialization.'">
                                             <td>' .$item->name. '</td>
-                                            <td>' .$item->phone. '</td>
-                                            <td>' .$item->email. '</td>
                                             <td>' .$item->degree. '</td>
                                             <td>' .$item->specialization. '</td>
                                         </tr>';

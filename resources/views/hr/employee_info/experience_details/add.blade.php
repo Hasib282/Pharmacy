@@ -12,30 +12,27 @@
         <form id='AddForm' enctype="multipart/form-data">
             @csrf
             @method('POST')
-            
             <div class="rows">
+                {{-- type --}}
                 <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="with">Employee Type <span class="required" title="Required">*</span></label>
-                        <select name="with" id="with">
+                    <div class="form-input-group">   
+                        <label for="type">Employee Type <span class="required" title="Required">*</span></label>
+                        <select name="type" id="type">
                             
                         </select>
-                        <span class="error" id="with_error"></span>
+                        <span class="error" id="type_error"></span>
                     </div>
                 </div>
+                {{-- name --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="user">Name <span class="required" title="Required">*</span></label>
-                        <input type="text" name="user" class="form-input" id="user" autocomplete="off">
-                        <div id="user-list">
-                            <ul>
-
-                            </ul>
-                        </div>
+                        <input type="text" name="user" class="form-input" id="user" autocomplete="off"><hr>
+                        <div id="user-list"></div>
                         <span class="error" id="user_error"></span>
                     </div>
                 </div>
-
+                {{-- company --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="company_name_0">Company Name <span class="required" title="Required">*</span></label>
@@ -43,6 +40,7 @@
                         <span class="error" id="company_name_0_error"></span>
                     </div>
                 </div>
+                {{-- department --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="department_0">Department <span class="required" title="Required">*</span></label>
@@ -50,6 +48,7 @@
                         <span class="error" id="department_0_error"></span>
                     </div>
                 </div>
+                {{-- designation --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="designation">Designation <span class="required" title="Required">*</span></label>
@@ -57,6 +56,7 @@
                         <span class="error" id="designation_0_error"></span>
                     </div>
                 </div>
+                {{-- company address --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="company_location_0">Company Address <span class="required" title="Required">*</span></label>
@@ -64,6 +64,7 @@
                         <span class="error" id="company_location_0_error"></span>
                     </div>
                 </div>
+                {{-- start date  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="start_date_0">Start Date</label>
@@ -71,6 +72,7 @@
                         <span class="error" id="start_date_0_error"></span>
                     </div>
                 </div>
+                {{-- end date  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="end_date_0">End Date</label>
@@ -81,7 +83,7 @@
             </div>
 
             <div id="formContainer"></div>
-
+                {{-- Forms will be dynamically added here --}}
             <div>
                 <button type="button" name="addExperience" id="addExperience" class="btn-blue">Add+</button>
             </div>

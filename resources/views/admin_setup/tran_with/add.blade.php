@@ -73,7 +73,7 @@
             @if (auth()->user()->user_role == 1)
                 <div class="form-input-group">
                     <label for="company">Company <span class="required" title="Required">*</span></label>
-                    <input type="text" name="company" class="form-input" id="company" autocomplete="off">
+                    <input type="text" name="company" class="form-input" id="company" autocomplete="off"><hr>
                     <div id="company-list"></div>
                     <span class="error" id="company_error"></span>
                 </div>

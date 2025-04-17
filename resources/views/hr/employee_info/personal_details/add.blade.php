@@ -17,10 +17,7 @@
                     <div class="form-input-group">   
                         <label for="type">Employee Type <span class="required" title="Required">*</span></label>
                         <select name="type" id="type">
-                            {{-- <option value="">Select Employee Type</option>
-                            @foreach ($tranwith as $with)
-                                <option value="{{$with->id}}">{{$with->tran_with_name}}</option>                                                
-                            @endforeach --}}
+                            
                         </select>
                         <span class="error" id="type_error"></span>
                     </div>
@@ -29,7 +26,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for = "name">Name <span class="required" title="Required">*</span></label>
-                        <input type="text" name="name" id="name" class="form-input">
+                        <input type="text" name="name" id="name" class="form-input" autocomplete="off"><hr>
                         <span class="error" id="name_error"></span>
                     </div>
                 </div>
@@ -148,7 +145,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for = "location">Work Location <span class="required" title="Required">*</span></label>
-                        <input type="text" name="location" id="location" class="form-input" autocomplete="off">
+                        <input type="text" name="location" id="location" class="form-input" autocomplete="off"><hr>
                         <div id="location-list"></div>
                         <span class="error" id="location_error"></span>
                     </div>
@@ -199,7 +196,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="store">Store <span class="required" title="Required">*</span></label>
-                        <input type="text" name="store" class="form-input" id="store" autocomplete="off">
+                        <input type="text" name="store" class="form-input" id="store" autocomplete="off"><hr>
                         <div id="store-list"></div>
                         <span class="error" id="store_error"></span>
                     </div>
@@ -209,7 +206,7 @@
                     <div class="c-6">
                         <div class="form-input-group">
                             <label for="company">Company <span class="required" title="Required">*</span></label>
-                            <input type="text" name="company" class="form-input" id="company" autocomplete="off">
+                            <input type="text" name="company" class="form-input" id="company" autocomplete="off"><hr>
                             <div id="company-list"></div>
                             <span class="error" id="company_error"></span>
                         </div>

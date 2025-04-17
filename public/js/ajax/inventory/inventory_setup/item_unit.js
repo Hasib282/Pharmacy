@@ -33,8 +33,9 @@ function ShowInventoryUnits(data, startIndex) {
 
 // Additional Edit Functionality
 function EditFormInputValue(res){
-    $('#id').val(res.unit.id);
-    $('#updateName').val(res.unit.unit_name);
+    $('#id').val(res.data.id);
+    $('#updateName').val(res.data.unit_name);
+    $('#updateName').focus();
 }
 
 

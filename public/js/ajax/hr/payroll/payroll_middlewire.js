@@ -53,13 +53,15 @@ function ShowPayrollMiddlewire(data, startIndex) {
 
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
+
+    // Get Transaction With / User Type 
+    GetTransactionWith(3, '', '#with', 3, 'Ok');
     
     // Creating Select Options Dynamically
     $.ajax({
         url: `${apiUrl}/hr/payroll/middlewire`,
         method: "GET",
         success: function (res) {
-            CreateSelectOptions('#with', 'Select Employee Type', res.tranwith, null, 'tran_with_name')
             CreateSelectOptions('#head', 'Select Payroll Category', res.heads, null, 'tran_head_name')
         },
     });

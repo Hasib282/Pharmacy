@@ -19,7 +19,7 @@
             {{-- department --}}
             <div class="form-input-group">
                 <label for="department">Department</label>
-                <input type="text" name="department" class="form-input" id="department" autocomplete="off">
+                <input type="text" name="department" class="form-input" id="department" autocomplete="off"><hr>
                 <div id="department-list"></div>
                 <span class="error" id="department_error"></span>
             </div>

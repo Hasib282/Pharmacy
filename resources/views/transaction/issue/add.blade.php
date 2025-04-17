@@ -12,9 +12,12 @@
             @csrf
             <div class="rows">
                 <div class="c-6">
+                    {{-- within --}}
                     <div id="within" style="display: none"> </div>
+                    {{-- groupein --}}
                     <div id="groupein" style="display: none"></div>
                     <div class="rows">
+                        {{-- date  --}}
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="date">Date</label>
@@ -22,30 +25,25 @@
                                     disabled>
                             </div>
                         </div>
+                        {{-- store --}}
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="store">Store</label>
-                                <input type="text" name="store" class="form-input" id="store" autocomplete="off">
-                                <div id="store-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="store" class="form-input" id="store" autocomplete="off"><hr>
+                                <div id="store-list"></div>
                                 <span class="error" id="store_error"></span>
                             </div>
                         </div>
+                        {{-- client name --}}
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for="user">Client Name</label>
-                                <input type="text" name="user" class="form-input" id="user" autocomplete="off">
-                                <div id="user-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="user" class="form-input" id="user" autocomplete="off"><hr>
+                                <div id="user-list"></div>
                                 <span class="error" id="user_error"></span>
                             </div>
                         </div>
+                        {{-- name --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="name">Name</label>
@@ -53,6 +51,7 @@
                                 <span class="error" id="name_error"></span>
                             </div>
                         </div>
+                        {{-- phone  --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="phone">Phone Number</label>
@@ -60,6 +59,7 @@
                                 <span class="error" id="phone_error"></span>
                             </div>
                         </div>
+                        {{-- address  --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="address">Address</label>
@@ -67,25 +67,24 @@
                                 <span class="error" id="address_error"></span>
                             </div>
                         </div>
+                        {{-- product  --}}
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for="product">Product Name</label>
-                                <input type="text" name="product" id="product" class="form-input" autocomplete="off">
+                                <input type="text" name="product" id="product" class="form-input" autocomplete="off"><hr>
                                 <span class="error" id="product_error"></span>
                             </div>
                         </div>
+                        {{-- batch --}}
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for="pbatch">Batch</label>
-                                <input type="text" name="pbatch" class="form-input" id="pbatch" autocomplete="off">
-                                <div id="pbatch-list">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <input type="text" name="pbatch" class="form-input" id="pbatch" autocomplete="off"><hr>
+                                <div id="pbatch-list"></div>
                                 <span class="error" id="pbatch_error"></span>
                             </div>
                         </div>
+                        {{-- quantity --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="quantity">Quantity</label>
@@ -93,6 +92,7 @@
                                 <span class="error" id="quantity_error"></span>
                             </div>
                         </div>
+                        {{-- mrp --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="mrp">MRP</label>
@@ -100,6 +100,7 @@
                                 <span class="error" id="mrp_error"></span>
                             </div>
                         </div>
+                        {{-- total --}}
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="totAmount">Total</label>
@@ -112,6 +113,7 @@
                         <button type="submit" id="InsertTransaction" class="btn-blue">Add</button>
                     </div>
                 </div>
+                {{-- product list part start --}}
                 <div class="c-6">
                     <div id="product-list">
                         <table class="product-table">
@@ -133,6 +135,7 @@
                         </table>
                     </div>
                 </div>
+                {{-- transaction grid part start --}}
                 <div class="c-6">
                     <div class="transaction_grid" style="overflow-x:auto;">
                         <table class="show-table">
@@ -152,6 +155,7 @@
                         </table>
                     </div>
                 </div>
+                {{-- invoice calculation part start --}}
                 <div class="c-6">
                     <table>
                         <tr>

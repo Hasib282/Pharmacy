@@ -34,7 +34,7 @@ class NursingStationController extends Controller
         
         return response()->json([
             'status'=> true,
-            'message' => ' Added Successfully'
+            'message' => 'Nursing station Added Successfully'
         ], 200);  
     } // End Method
 
@@ -53,14 +53,14 @@ class NursingStationController extends Controller
 
     // Update Nursing station
     public function Update(Request $req){
-        $mainhead = Nursing_Station::on('mysql_second')->findOrFail($req->id);
+        $data = Nursing_Station::on('mysql_second')->findOrFail($req->id);
         
         $req->validate([
             "name" => 'required',
             "floor"=> 'required'
         ]);
 
-        $update = Nursing_Station::on('mysql_second')->findOrFail($req->id)->update([
+        $update = $data->update([
             "name" => $req->name,
             "floor" => $req->floor,
         ]);
@@ -68,7 +68,7 @@ class NursingStationController extends Controller
         if($update){
             return response()->json([
                 'status'=>true,
-                'message' => 'MainHead Updated Successfully',
+                'message' => 'Nursing station Updated Successfully',
             ], 200); 
         }
     } // End Method
@@ -80,7 +80,7 @@ class NursingStationController extends Controller
         Nursing_Station::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
-            'message' => 'MainHead Deleted Successfully',
+            'message' => 'Nursing station Deleted Successfully',
         ], 200); 
     } // End Method
 
@@ -111,16 +111,16 @@ class NursingStationController extends Controller
 
     // Get Nursing station
     public function Get(Request $req){
-        $nursing_stations = Nursing_Station::on('mysql_second')
+        $data = Nursing_Station::on('mysql_second')
         ->where('name', 'like', $req->nursing_station.'%')
         ->orderBy('name')
         ->take(10)
         ->get();
 
         $list = "<ul>";
-            if($nursing_stations->count() > 0){
-                foreach($nursing_stations as $index => $nursing_station) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$nursing_station->id.'">'.$nursing_station->name.'</li>';
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->name.'('.$item->floor.')</li>';
                 }
             }
             else{

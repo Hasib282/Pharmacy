@@ -33,8 +33,9 @@ function ShowInventoryCategorys(data, startIndex) {
 
 // Additional Edit Functionality
 function EditFormInputValue(res){
-    $('#id').val(res.category.id);
-    $('#updateName').val(res.category.category_name);
+    $('#id').val(res.data.id);
+    $('#updateName').val(res.data.category_name);
+    $('#updateName').focus();
 }
 
 

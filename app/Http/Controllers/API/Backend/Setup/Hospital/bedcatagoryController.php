@@ -52,13 +52,13 @@ class BedCatagoryController extends Controller
 
     // Update Bed Category
     public function Update(Request $req){
-        $type = Bed_Category::on('mysql_second')->findOrFail($req->id);
+        $data = Bed_Category::on('mysql_second')->findOrFail($req->id);
         
         $req->validate([
-            "name" => ['required',Rule::unique('mysql_second.bed__categories', 'name')->ignore($type->id)],
+            "name" => ['required',Rule::unique('mysql_second.bed__categories', 'name')->ignore($data->id)],
         ]);
 
-        $update = Bed_Category::on('mysql_second')->findOrFail($req->id)->update([
+        $update = $data->update([
             "name" => $req->name,
             "updated_at" => now()
         ]);
@@ -99,18 +99,17 @@ class BedCatagoryController extends Controller
 
 
 
-    // Get Transaction Main Head
+    // Get Bed Category
     public function Get(Request $req){
-        $categories = Bed_Category::on('mysql_second')
+        $data = Bed_Category::on('mysql_second')
         ->where('name', 'like', $req->bed_category.'%')
         ->orderBy('name')
-        ->take(10)
         ->get();
 
         $list = "<ul>";
-            if($categories->count() > 0){
-                foreach($categories as $index => $category) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$category->id.'">'.$category->name.'</li>';
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->name.'</li>';
                 }
             }
             else{

@@ -13,27 +13,26 @@
             @method('POST')
 
             <div class="rows">
+                {{-- type --}}
                 <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="with">Employee Type</label>
-                        <select name="with" id="with">
+                    <div class="form-input-group">   
+                        <label for="type">Employee Type <span class="required" title="Required">*</span></label>
+                        <select name="type" id="type">
                             
                         </select>
-                        <span class="error" id="with_error"></span>
+                        <span class="error" id="type_error"></span>
                     </div>
                 </div>
+                {{-- name --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="user">Name</label>
-                        <input type="text" name="user" class="form-input" id="user" autocomplete="off">
-                        <div id="user-list">
-                            <ul>
-
-                            </ul>
-                        </div>
+                        <input type="text" name="user" class="form-input" id="user" autocomplete="off"><hr>
+                        <div id="user-list"></div>
                         <span class="error" id="user_error"></span>
                     </div>
                 </div>
+                {{-- joining date  --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="joining_date">Joining Date</label>
@@ -41,39 +40,30 @@
                         <span class="error" id="joining_date_error"></span>
                     </div>
                 </div>
+                {{-- joining location --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="location">Joining Location</label>
-                        <input type="text" name="location" id="location" class="form-input">
-                        <div id="location-list">
-                            <ul>
-
-                            </ul>
-                        </div>
+                        <input type="text" name="location" id="location" class="form-input" autocomplete="off"><hr>
+                        <div id="location-list"></div>
                         <span class="error" id="location_error"></span>
                     </div>
                 </div>
+                {{-- department --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="department">Department</label>
-                        <input type="text" name="department" id="department" class="form-input">
-                        <div id="department-list">
-                            <ul>
-
-                            </ul>
-                        </div>
+                        <input type="text" name="department" id="department" class="form-input" autocomplete="off"><hr>
+                        <div id="department-list"></div>
                         <span class="error" id="department_error"></span>
                     </div>
                 </div>
+                {{-- designation --}}
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="designation">Designation</label>
-                        <input type="text" name="designation" id="designation" class="form-input">
-                        <div id="designation-list">
-                            <ul>
-
-                            </ul>
-                        </div>
+                        <input type="text" name="designation" id="designation" class="form-input" autocomplete="off"><hr>
+                        <div id="designation-list"></div>
                         <span class="error" id="designation_error"></span>
                     </div>
                 </div>

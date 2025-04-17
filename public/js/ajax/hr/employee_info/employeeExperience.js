@@ -102,14 +102,14 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        $('#id').val(res.employee.id);
-        $('#empId').val(res.employee.emp_id);
-        $('#update_company_name').val(res.employee.company_name);
-        $('#update_department').val(res.employee.department);
-        $('#update_designation').val(res.employee.designation);
-        $('#update_company_location').val(res.employee.company_location);
-        $('#update_start_date').val(res.employee.start_date);
-        $('#update_end_date').val(res.employee.end_date);
+        $('#id').val(res.data.id);
+        $('#empId').val(res.data.emp_id);
+        $('#update_company_name').val(res.data.company_name);
+        $('#update_department').val(res.data.department);
+        $('#update_designation').val(res.data.designation);
+        $('#update_company_location').val(res.data.company_location);
+        $('#update_start_date').val(res.data.start_date);
+        $('#update_end_date').val(res.data.end_date);
     }
 
 

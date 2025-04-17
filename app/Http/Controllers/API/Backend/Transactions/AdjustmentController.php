@@ -16,7 +16,7 @@ class AdjustmentController extends Controller
         $type = GetTranType($req->segment(2));
         $method = ucfirst($req->segment(4));
 
-        $adjust = Transaction_Detail::on('mysql_second')
+        $data = Transaction_Detail::on('mysql_second')
         ->with('Head','Store')
         ->where('tran_method', $method)
         ->where('tran_type', $type)
@@ -26,7 +26,7 @@ class AdjustmentController extends Controller
 
         return response()->json([
             'status'=> true,
-            'data' => $adjust,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -130,10 +130,10 @@ class AdjustmentController extends Controller
 
     // Edit Product/Item Adjustment
     public function Edit(Request $req){
-        $adjust = Transaction_Detail::on('mysql_second')->with('Store','Head')->findOrFail($req->id);
+        $data = Transaction_Detail::on('mysql_second')->with('Store','Head')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'adjust'=> $adjust,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -256,7 +256,7 @@ class AdjustmentController extends Controller
     // Search Product/Item Adjustment
     public function Search(Request $req){
         if($req->searchOption == 1){
-            $adjust = Transaction_Detail::on('mysql_second')
+            $data = Transaction_Detail::on('mysql_second')
             ->with('Head','Store')
             ->where('tran_id', "like", '%'. $req->search .'%')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
@@ -271,7 +271,7 @@ class AdjustmentController extends Controller
             ->orderby('tran_head_name')
             ->pluck('id');
 
-            $adjust = Transaction_Detail::on('mysql_second')
+            $data = Transaction_Detail::on('mysql_second')
             ->with('Head','Store')
             ->whereIn('tran_head_id', $head)
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
@@ -282,7 +282,7 @@ class AdjustmentController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $adjust,
+            'data' => $data,
         ], 200);
     } // End Method
 }

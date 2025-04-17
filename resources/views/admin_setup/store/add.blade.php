@@ -34,12 +34,8 @@
             {{-- location --}}
             <div class="form-input-group">
                 <label for="location">Location <span class="required" title="Required">*</span></label>
-                <input type="text" name="location" id="location" class="form-input" autocomplete="off">
-                <div id="location-list">
-                    <ul>
-
-                    </ul>
-                </div>
+                <input type="text" name="location" id="location" class="form-input" autocomplete="off"><hr>
+                <div id="location-list"></div>
                 <span class="error" id="location_error"></span>
             </div>
             {{-- address  --}}

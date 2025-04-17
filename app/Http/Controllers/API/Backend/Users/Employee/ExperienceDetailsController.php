@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User_Info;
-use App\Models\Transaction_With;
 use App\Models\Employee_Experience_Detail;
 use App\Models\Employee_Personal_Detail;
 
@@ -14,12 +13,10 @@ class ExperienceDetailsController extends Controller
 {
     // Show All Employee Experience Details
     public function ShowAll(Request $req){
-        $employee = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
+        $data = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $employee,
-            'tranwith' => $tranwith,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -72,12 +69,10 @@ class ExperienceDetailsController extends Controller
 
     // Edit Employee Experience Details
     public function Edit(Request $req){
-        $employee = Employee_Experience_Detail::on('mysql_second')->where('id', $req->id)->first();
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
+        $data = Employee_Experience_Detail::on('mysql_second')->where('id', $req->id)->first();
         return response()->json([
             'status'=> true,
-            'employee'=>$employee,
-            'tranwith'=>$tranwith,
+            'data'=>$data,
         ], 200);
     } // End Method
 
@@ -85,6 +80,8 @@ class ExperienceDetailsController extends Controller
 
     // Update Employee Experience Details
     public function Update(Request $req){
+        $data = Employee_Experience_Detail::on('mysql_second')->findOrFail($req->id);
+
         $req->validate([
             'company_name' => 'required',
             'designation' => 'required',
@@ -94,10 +91,7 @@ class ExperienceDetailsController extends Controller
             'end_date' => 'nullable|after:start_date',
         ]);
 
-        $employee = Employee_Experience_Detail::on('mysql_second')->findOrFail($req->id);
-        
-
-        $update = Employee_Experience_Detail::on('mysql_second')->findOrFail($req->id)->update([
+        $update = $data->update([
             "company_name" => $req->company_name,
             "designation" =>  $req->designation,
             "department" => $req->department,
@@ -183,11 +177,11 @@ class ExperienceDetailsController extends Controller
             }
         }
 
-        $employee = $query->paginate(15);
+        $data = $query->paginate(15);
         
         return response()->json([
             'status' => true,
-            'data' => $employee,
+            'data' => $data,
         ], 200);
     } // End Method
     

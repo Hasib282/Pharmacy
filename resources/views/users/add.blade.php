@@ -84,7 +84,7 @@
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="location">Location <span class="required" title="Required">*</span></label>
-                            <input type="text" name="location" class="form-input" id="location" autocomplete="off">
+                            <input type="text" name="location" class="form-input" id="location" autocomplete="off"><hr>
                             <div id="location-list"></div>
                             <span class="error" id="location_error"></span>
                         </div>
@@ -133,7 +133,7 @@
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="store">Store <span class="required" title="Required">*</span></label>
-                            <input type="text" name="store" class="form-input" id="store" autocomplete="off">
+                            <input type="text" name="store" class="form-input" id="store" autocomplete="off"><hr>
                             <div id="store-list"></div>
                             <span class="error" id="store_error"></span>
                         </div>
@@ -146,7 +146,7 @@
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="company">Company <span class="required" title="Required">*</span></label>
-                                <input type="text" name="company" class="form-input" id="company" autocomplete="off">
+                                <input type="text" name="company" class="form-input" id="company" autocomplete="off"><hr>
                                 <div id="company-list"></div>
                                 <span class="error" id="company_error"></span>
                             </div>

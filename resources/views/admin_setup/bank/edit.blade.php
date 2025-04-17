@@ -38,7 +38,7 @@
             {{-- location --}}
             <div class="form-input-group">
                 <label for="updateLocation">Location <span class="required" title="Required">*</span></label>
-                <input type="text" name="location" class="form-input" id="updateLocation" autocomplete="off">
+                <input type="text" name="location" class="form-input" id="updateLocation" autocomplete="off"><hr>
                 <div id="update-location"></div>
                 <span class="error" id="update_location_error"></span>
             </div>

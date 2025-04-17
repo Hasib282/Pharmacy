@@ -23,12 +23,10 @@ class AttendenceController extends Controller
 {
     // Show All Attendence
     public function ShowAll(Request $req){
-        $attendence = Attendence::with('User')->orderBy('insert_at')->whereRaw("DATE(date) = ?", [date('Y-m-d')])->paginate(15);
-        $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
+        $data = Attendence::with('User')->orderBy('insert_at')->whereRaw("DATE(date) = ?", [date('Y-m-d')])->paginate(15);
         return response()->json([
             'status'=> true,
-            'data' => $attendence,
-            'tranwith' => $tranwith,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -58,10 +56,10 @@ class AttendenceController extends Controller
 
     // Edit Attendence
     public function Edit(Request $req){
-        $attendence = Attendence::with('User')->findOrFail($req->id);
+        $data = Attendence::with('User')->findOrFail($req->id);
         return response()->json([
             'status'=> true,
-            'attendence'=> $attendence,
+            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -116,7 +114,7 @@ class AttendenceController extends Controller
 
     // Search Attendence
     public function Search(Request $req){
-        $attendence = Attendence::with('User')
+        $data = Attendence::with('User')
         ->whereHas('User', function ($q) use ($req) {
             $q->where('user_name', 'like', '%' . $req->search . '%');
         })
@@ -126,7 +124,7 @@ class AttendenceController extends Controller
         
         return response()->json([
             'status' => true,
-            'data' => $attendence,
+            'data' => $data,
         ], 200);
     } // End Method
 }
