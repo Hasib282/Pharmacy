@@ -532,8 +532,18 @@ footer{
     letter-spacing: 0.02em;
 }
 
-thead tr{
+thead tr:nth-child(1){
     background: #20c997;
+}
+
+/* thead tr:nth-child(2){
+    background: #b3c7c1;
+} */
+
+thead tr:nth-child(2) th{
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 
 .product-table, .batch-table, .patient-table{
@@ -1002,3 +1012,37 @@ div[id$="-list"] li:focus, div[id^="update-"] li:focus {
     justify-content: center;
 }
 /* -------------------------- Old Styles part end here ------------------------------- */
+
+
+
+
+
+
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #e0e0e0;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loader-text {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #666;
+    font-weight: 500;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

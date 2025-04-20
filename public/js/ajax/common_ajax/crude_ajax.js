@@ -55,6 +55,43 @@ function LoadBackendData(url, RenderData, queryParams) {
 
 
 
+// function ReloadData(url, RenderData, queryParams = {}) {
+//     $.ajax({
+//         url: `${apiUrl}/${url}`,
+//         type: 'GET',
+//         data: queryParams,
+//         beforeSend: function () {
+//             $('.load-data tbody').html(`
+//                 <tr>
+//                     <td colspan="15">
+//                         <div class="loader-container">
+//                             <div class="spinner"></div>
+//                             <div class="loader-text">Loading, please wait...</div>
+//                         </div>
+//                     </td>
+//                 </tr>
+//             `);
+//         },
+//         success: function(response) {
+//             if (response.status) {
+//                 if (response.redirect) {
+//                     window.location.href = response.redirect;
+//                     return;
+//                 }
+                
+//                 RenderData(response);
+//             }
+//             else{
+//                 toastr.error(response.message, "Wrong Command!");
+//             }
+//         }
+//     });
+// }; // End Method
+
+
+
+
+
 // Add Button Click Functionality
 function AddModalFunctionality(focusVariable, AddClickEvent){
     $(document).off('click', '.add').on('click', '.add', function (e) {

@@ -32,6 +32,22 @@ function ShowLocations(data, startIndex) {
     }
 }; // End Function
 
+// function ShowLocations(res) {
+//     new GenerateTable({
+//         tableId: '#location-table',
+//         data: res.data,
+//         createColumn: (item) => `
+//                         <td>${item.division}</td>
+//                         <td>${item.district}</td>
+//                         <td>${item.upazila}</td>
+//                         <td>
+//                             <div style="display: flex;gap:5px;">
+//                                 <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>                         
+//                                 <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>                           
+//                             </div>
+//                         </td>`,
+//     });
+// }
 
 
 $(document).ready(function () {

@@ -38,7 +38,31 @@ function ShowPharmacyProducts(data, startIndex) {
     }
 }; // End Function
 
-
+// function ShowPharmacyProducts(res) {
+//     new GenerateTable({
+//         tableId: '#product-table',
+//         data: res.data,
+//         createColumn: (item) => `
+//                         <td>${item.tran_head_name}</td>
+//                         <td>${item.groupe.tran_groupe_name}</td>
+//                         <td>${item.category_id == null ? '': item.category.category_name} </td>
+//                         <td>${item.manufacturer_id == null ? '': item.manufecturer.manufacturer_name}</td>
+//                         <td>${item.form_id == null ? '': item.form.form_name}</td>
+//                         <td>${item.quantity}</td>
+//                         <td>${item.unit_id == null ? '': item.unit.unit_name}</td>
+//                         <td>${item.cp}</td>
+//                         <td>${item.mrp}</td>
+//                         <td>${item.expiry_date}</td>
+//                         ${role == 1 ? `<td>${item.company_id }</td>`: ''}
+//                         <td>
+//                             <div style="display: flex;gap:5px;">
+//                                 <button class="open-modal" data-modal-id="editModal" id="edit"
+//                                         data-id="${item.id}"><i class="fas fa-edit"></i></button>
+//                                 <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
+//                             </div>
+//                         </td>`,
+//     });
+// }
 
 $(document).ready(function () {
     // Load Transaction Groupe

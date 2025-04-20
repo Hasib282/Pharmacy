@@ -75,9 +75,9 @@ use App\Http\Controllers\Frontend\Report\PartyStatementController;
 
 /*---------------------------------- Admin Login -----------------------------------------------*/
 
-// Route::get('/', function () {
-//     return view('layouts.layout')->name('dashboard');
-// });
+Route::get('/datatable', function () {
+    return view('datatable.datatable');
+});
 Route::get('/link', function(){
     Artisan::call('storage:link');
 });

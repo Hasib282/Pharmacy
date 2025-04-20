@@ -18,7 +18,7 @@ function RenderPagination(pagination) {
     `;
 
     if(pagination.next_page_url != null || pagination.prev_page_url != null){
-        let paginationHtml = '<nav><ul class="pagination">';
+        let paginationHtml = `<nav style="display:flex;align-items:center;gap:10px;"><ul class="pagination">`;
     
         // Create Previous Link
         paginationHtml += pagination.prev_page_url ? `
@@ -65,7 +65,7 @@ function RenderPagination(pagination) {
         `;
 
 
-        paginationHtml += '</ul></nav>';
+        paginationHtml += `</ul></nav>`;
 
         $('#paginate').html(paginationHtml);
     } 

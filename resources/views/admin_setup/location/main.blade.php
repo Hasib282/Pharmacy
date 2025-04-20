@@ -35,6 +35,28 @@
                     <th>Upazila</th>
                     <th>Action</th>
                 </tr>
+                {{-- <tr>
+                    <th>
+                        <select id="rowsPerPage">
+                            <option value="15">15 / page</option>
+                            <option value="30">30 / page</option>
+                            <option value="50">50 / page</option>
+                            <option value="100">100 / page</option>
+                        </select>
+                    </th>
+                    <th>
+                        <input type="text" class="form-input col-filter" data-key="division" />
+                    </th>
+                    <th>
+                        <input type="text" class="form-input col-filter" data-key="district" />
+                    </th>
+                    <th>
+                        <input type="text" class="form-input col-filter" data-key="upazila" />
+                    </th>
+                    <th>
+                        <button id="exportCSV" class="btn btn-success"><i class="fa-regular fa-file-excel"></i></button>
+                    </th>
+                </tr> --}}
             </thead>
             <tbody></tbody>
             <tfoot></tfoot>

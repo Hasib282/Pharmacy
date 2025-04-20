@@ -14,6 +14,7 @@ class LocationInfoSeeder extends Seeder
      */
     public function run(): void
     {
+        // Location_Info::factory()->count(100000)->create();
         $json = File::get("database/json/location_info.json");
         $data = collect(json_decode($json));
 

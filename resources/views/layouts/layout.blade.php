@@ -20,9 +20,13 @@
         <script>let apiUrl = "{{ config('app.api_url') }}";</script>
         <!-- Common Ajax File Load -->
         <script src="{{ asset('js/ajax/common_ajax/ajax_setup.js') }}"></script>
+        {{-- datatable js  --}}
+        <script src="{{ asset('js/datatable.js') }}"></script>
         
         <!-- including custom style sheet -->
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <!-- including custom style sheet -->
+        <link rel="stylesheet" href="{{ asset('css/datatable.css') }}">
         {{-- brian2694/laravel-toastr css  --}}
         <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
 
