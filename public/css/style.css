@@ -41,106 +41,6 @@ ol, ul, p {
 
 
 
-/* ----------------------------- Common Grid Design Starts here ----------------------------------------- */
-.rows{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.cols{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.c-1{
-    flex: 0 0 auto;
-    width: 8.333%;
-    padding: 0 2px;
-}
-
-.c-2{
-    flex: 0 0 auto;
-    width: 16.66666667%;
-    padding: 0 0 0 10px;
-}
-
-.c-3{
-    flex: 0 0 auto;
-    width: 25%;
-    padding: 0 0 0 10px;
-}
-
-.c-4{
-    flex: 0 0 33.33%;
-    width: 33.33%;
-    padding: 0 10px;
-}
-
-.c-5{
-    flex: 0 0 auto;
-    width: 41.66666667%;
-    padding: 0 10px;
-}
-
-.c-6{
-    flex: 0 0 auto;
-    width: 50%;
-    padding: 0 10px;
-}
-
-.c-7{
-    flex: 0 0 auto;
-    width: 58.33333333%;
-    padding: 0 10px;
-}
-
-.c-8{
-    flex: 0 0 auto;
-    width: 66.66666667%;
-    padding: 0 10px;
-}
-
-.c-9{
-    flex: 0 0 auto;
-    width: 75%;
-    padding: 0 10px;
-}
-
-.c-10{
-    flex: 0 0 auto;
-    width: 83.33333333%;
-    padding: 0 10px;
-}
-
-.c-11{
-    flex: 0 0 auto;
-    width: 91.66666667%;
-    padding: 0 10px;
-}
-
-.c-12{
-    flex: 0 0 auto;
-    width: 100%;
-    padding: 0 10px;
-}
-
-.center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.center-col{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-/* ----------------------------- Common Grid Design ends here ----------------------------------------- */
-
 
 
 /* --------------------------- Main container design start --------------------------- */
@@ -402,68 +302,6 @@ footer{
 
 
 
-/* ---------------------------------- Pagination design start here --------------------------- */
-.pagination {
-    display: flex;
-    padding: 0;
-    list-style: none;
-    border-radius: 0.25rem;
-    justify-content: center;
-    margin: 1rem 0;
-}
-
-.page-link {
-    display: block;
-    padding: 0.5rem 0.75rem;
-    color: #007bff;
-    text-decoration: none;
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.page-link:hover {
-    background-color: #e9ecef;
-}
-
-.page-item.active .page-link {
-    z-index: 1;
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.page-item.disabled .page-link {
-    color: rgba(33, 37, 41, .75);
-    pointer-events: none;
-    background-color: #e9ecef;
-    border-color: #dee2e6;
-}
-
-.page-link[aria-disabled="true"] {
-    color: rgba(33, 37, 41, .75);
-    pointer-events: none;
-    background-color: #e9ecef;
-    border-color: #dee2e6;
-}
-
-.page-link[rel="next"], .page-link[rel="prev"] {
-    font-weight: bold;
-}
-
-@media (max-width: 576px) {
-    .pagination {
-        flex-wrap: wrap;
-    }
-
-    .page-item {
-        margin: 0.1rem;
-    }
-}
-/* -------------------------- Pagination Design part end here ------------------------------- */
-
-
 
 
 /* -------------------------- Old Styles part starts here ------------------------------- */
@@ -475,16 +313,8 @@ footer{
     display: flex;
 }
 
-.add-search{
-    margin: 15px 12px;
-}
-
 .hidden {
     display: none;
-}
-
-#paginate {
-    margin-top: 20px;
 }
 
 
@@ -656,12 +486,6 @@ input[type=checkbox]{
     margin-bottom: 15px;
 }
 
-label{
-    font-weight: 600;
-    margin-bottom: 4px;
-    font-size: 13px;
-}
-
 .form-input, select {
     font-size: 14px;
     border: 1px solid rgb(222, 226, 230);
@@ -707,19 +531,6 @@ label{
     border-color: #86b7fe;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
-}
-
-/* Hide the default dropdown arrow and add background image in it*/
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    padding: 4px 18px 8px 4px;
-    cursor: pointer;
-    box-sizing: border-box;
-    height: 33px;
-    background: url('../images/angle-arrow-down.png') no-repeat right 4px center #fff;
-    background-size: 10px;
 }
 
 #search{
@@ -794,61 +605,6 @@ select {
     border: none;
     border-radius: 20px;
     padding: 8px 15px;
-}
-
-#delete{
-    color:white;
-    background: red;
-    border: none;
-    border-radius: 10%;
-    padding: 5px 10px;
-}
-
-#delete:hover{
-    background: #f13f13;
-}
-
-#edit, #assign{
-    color:white;
-    background: #00a7ffd9;
-    border: none;
-    border-radius: 10%;
-    padding: 5px 10px;
-}
-
-#edit:hover, #assign:hover{
-    background: #2ae1f4d9;
-}
-
-#details{
-    color:black;
-    background: #20c997;
-    border: none;
-    border-radius: 10%;
-    padding: 5px 10px;
-}
-
-#details:hover{
-    background: #1ce0a6;
-}
-
-#verify{
-    color:white;
-    background: #0072ffe3;
-    border: none;
-    border-radius: 10%;
-    padding: 5px 10px;
-}
-
-#verify:hover{
-    background: #0088ffbd;
-}
-
-.remove{
-    color: red;
-    cursor: pointer;
-    padding: 2px 10px;
-    border: none;
 }
 /* -------------------------------------- Buttons custom design end ----------------------------------------------------- */
 

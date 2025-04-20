@@ -1,5 +1,5 @@
 class GenerateTable {
-    constructor({tableId , data, createColumn}) {
+    constructor({tableId , data, tbody, actions}) {
         this.table = document.querySelector(tableId); // Select Table
         this.data = data; // Original Data
         this.filteredData = [...data]; // Copy of Original data
@@ -7,13 +7,14 @@ class GenerateTable {
         this.rowsPerPage = 15;
         this.sortKey = null;
         this.sortOrder = 'asc';
-        this.createColumn = createColumn;
+        this.tbody = tbody;
+        this.actions = actions;
         this.init();
     }
 
 
     init() {
-        this.renderTable();
+        this.renderTableBody();
         this.bindEvents();
     }
 
@@ -39,14 +40,14 @@ class GenerateTable {
             if (e.target.matches('a.page-link') && e.target.dataset.page) {
                 e.preventDefault();
                 this.currentPage = +e.target.dataset.page;
-                this.renderTable();
+                this.renderTableBody();
             }
         });
 
         // $(document).off('click', 'a.page-link').on('click', 'a.page-link', (e) => {
         //     e.preventDefault();
         //     this.currentPage = +e.target.dataset.page;
-        //     this.renderTable();
+        //     this.renderTableBody();
         // });
 
 
@@ -71,7 +72,7 @@ class GenerateTable {
                 this.currentPage = 1;
                 this.rowsPerPage = +e.target.value;
 
-                this.renderTable();
+                this.renderTableBody();
             });
         }
     
@@ -96,7 +97,7 @@ class GenerateTable {
 
         this.currentPage = 1;
         
-        this.renderTable();
+        this.renderTableBody();
     }
 
 
@@ -104,8 +105,8 @@ class GenerateTable {
     columnSearch() {
         let filters = {};
 
-        $('.col-filter').each(function () {
-            filters[$(this).data('key')] = $(this).val().toLowerCase(); // store the filter keys
+        document.querySelectorAll('.col-filter').forEach(input => {
+            filters[input.dataset.key] = input.value.toLowerCase(); // store the filter keys
         });
 
         this.filteredData = this.data.filter(row => {
@@ -116,7 +117,7 @@ class GenerateTable {
 
         this.currentPage = 1;
 
-        this.renderTable();
+        this.renderTableBody();
     }
 
 
@@ -133,9 +134,9 @@ class GenerateTable {
     //       ? valA.localeCompare(valB)
     //       : valB.localeCompare(valA);
     //   });
-    //   this.renderTable();
+    //   this.renderTableBody();
     // }
-  
+
 
     // Export To CSV File
     exportCSV() {
@@ -166,27 +167,22 @@ class GenerateTable {
 
 
     
-    // Create the Table Rows 
-    renderTable() {
+    // Create the tbody Rows 
+    renderTableBody() {
         const tbody = this.table.querySelector('tbody');
-        tbody.innerHTML = '';
         const start = (this.currentPage - 1) * this.rowsPerPage;
         const pageData = this.filteredData.slice(start, start + this.rowsPerPage);
-        
-        let rows = "";
-        pageData.forEach((row, i) => {
-            rows +=`
-                <tr>
-                    <td>${start + i + 1}</td>
-                    ${this.createColumn(row)}
-                </tr>
-            `;
-        });
-        
-        tbody.innerHTML = rows;
-    
+
+        tbody.innerHTML = pageData.map((row, i) => `
+            <tr>
+                <td>${start + i + 1}</td>
+                ${this.tbody.map(col => `<td>${row[col]}</td>`).join('')}
+                <td><div id="actions">${this.actions(row)}</div></td>
+            </tr>
+        `).join('');
+
         this.renderPagination();
-    } // End Render Table
+    }
 
 
 
@@ -194,7 +190,7 @@ class GenerateTable {
     renderPagination() {
         let totalPages = Math.ceil(this.filteredData.length / this.rowsPerPage);
         let currentPage = this.currentPage;
-   
+
         // Arrow Function For creating page numbers 
         const CreatePageItem = (i, isActive) => `
             <li class="page-item ${isActive ? 'active' : ''}">
@@ -263,3 +259,28 @@ class GenerateTable {
         pagination.innerHTML = paginationHtml;
     } // End Render Pagination
 }
+
+
+// Create the thead Rows 
+function renderTableHead(thead) {
+    const head = document.querySelector('.data-table thead');
+    const row1 = thead.map(h => `<th>${h.label}</th>`).join('');
+
+    const row2 = thead.map(h => {
+        if (h.type === 'select') {
+            const opts = h.options.map(option => `<option value="${option}">${option} / page</option>`).join('');
+            return `<th><select id="rowsPerPage">${opts}</select></th>`;
+        } else if (h.type === 'button') {
+            return `<th><button id="exportCSV"><i class="fa-regular fa-file-excel"></i></button></th>`;
+        } else if (h.key) {
+            return `<th><input type="text" class="col-filter" data-key="${h.key}" /></th>`;
+        } else {
+            return `<th></th>`;
+        }
+    }).join('');
+
+    head.innerHTML = `
+        <tr>${row1}</tr>
+        <tr>${row2}</tr>
+    `;
+} // End Render thead Rows

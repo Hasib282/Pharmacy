@@ -4,60 +4,45 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Custom DataTable</title>
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-        <style>
-            .toolbar {
-                margin-bottom: 1rem;
-                display: flex;
-                gap: 1rem;
-            }
-
-            .column-filters input {
-                width: 100%;
-            }
-
-            #pagination button.active {
-                background-color: #0d6efd;
-                color: white;
-            }
-        </style>
+        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"> --}}
+        <!-- including custom style sheet -->
+        <link rel="stylesheet" href="{{ asset('css/datatable.css') }}">
+        <!-- Font Awesome CDN -->
+        <link href="{{ asset('css/fontawesome/css/all.css') }}" rel="stylesheet">
     </head>
     <body>
-        <div class="container mt-4">
-            <h2>Custom DataTable</h2>
-            <div class="toolbar">
-                <button id="exportCSV" class="btn btn-success">Export CSV</button>
-                <input type="text" id="globalSearch" class="form-control w-25" placeholder="Search..." />
+        {{-- Add Button And Search Fields --}}
+        <div class="add-search">
+            <div class="rows">
+                <div class="c-3">
+                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add </button>
+                </div>
+                <div class="c-6">
+
+                </div>
+                <div class="c-3" style="padding: 0;">
+                    <input type="text" id="globalSearch" placeholder="Search..." />
+                </div>
             </div>
-
-            <table id="customTable" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" id="selectAll" /></th>
-                        <th data-key="name">Name</th>
-                        <th data-key="email">Email</th>
-                        <th data-key="age">Age</th>
-                        <th>Actions</th>
-                    </tr>
-                    <tr class="column-filters">
-                        <th></th>
-                        <th><input type="text" class="col-filter" data-key="name" /></th>
-                        <th><input type="text" class="col-filter" data-key="email" /></th>
-                        <th><input type="text" class="col-filter" data-key="age" /></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-
-            <div id="paginate" class="mt-3"></div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        {{-- Datatable Part --}}
+        <div class="load-data">
+            <table class="data-table" id="data-table">
+                <caption> Details</caption>
+                <thead></thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+            </table>
+    
+            <div id="paginate"></div>
+        </div>
+
+
+        {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
         <script>
             class GenerateTable {
-                constructor({tableId , data, createColumn}) {
+                constructor({tableId , data, tbody, actions}) {
                     this.table = document.querySelector(tableId); // Select Table
                     this.data = data; // Original Data
                     this.filteredData = [...data]; // Copy of Original data
@@ -65,13 +50,14 @@
                     this.rowsPerPage = 15;
                     this.sortKey = null;
                     this.sortOrder = 'asc';
-                    this.createColumn = createColumn;
+                    this.tbody = tbody;
+                    this.actions = actions;
                     this.init();
                 }
 
 
                 init() {
-                    this.renderTable();
+                    this.renderTableBody();
                     this.bindEvents();
                 }
 
@@ -97,14 +83,14 @@
                         if (e.target.matches('a.page-link') && e.target.dataset.page) {
                             e.preventDefault();
                             this.currentPage = +e.target.dataset.page;
-                            this.renderTable();
+                            this.renderTableBody();
                         }
                     });
 
                     // $(document).off('click', 'a.page-link').on('click', 'a.page-link', (e) => {
                     //     e.preventDefault();
                     //     this.currentPage = +e.target.dataset.page;
-                    //     this.renderTable();
+                    //     this.renderTableBody();
                     // });
 
 
@@ -129,7 +115,7 @@
                             this.currentPage = 1;
                             this.rowsPerPage = +e.target.value;
 
-                            this.renderTable();
+                            this.renderTableBody();
                         });
                     }
                 
@@ -154,7 +140,7 @@
 
                     this.currentPage = 1;
                     
-                    this.renderTable();
+                    this.renderTableBody();
                 }
 
 
@@ -162,8 +148,8 @@
                 columnSearch() {
                     let filters = {};
 
-                    $('.col-filter').each(function () {
-                        filters[$(this).data('key')] = $(this).val().toLowerCase(); // store the filter keys
+                    document.querySelectorAll('.col-filter').forEach(input => {
+                        filters[input.dataset.key] = input.value.toLowerCase(); // store the filter keys
                     });
 
                     this.filteredData = this.data.filter(row => {
@@ -174,7 +160,7 @@
 
                     this.currentPage = 1;
 
-                    this.renderTable();
+                    this.renderTableBody();
                 }
 
 
@@ -191,9 +177,9 @@
                 //       ? valA.localeCompare(valB)
                 //       : valB.localeCompare(valA);
                 //   });
-                //   this.renderTable();
+                //   this.renderTableBody();
                 // }
-            
+
 
                 // Export To CSV File
                 exportCSV() {
@@ -224,27 +210,22 @@
 
 
                 
-                // Create the Table Rows 
-                renderTable() {
+                // Create the tbody Rows 
+                renderTableBody() {
                     const tbody = this.table.querySelector('tbody');
-                    tbody.innerHTML = '';
                     const start = (this.currentPage - 1) * this.rowsPerPage;
                     const pageData = this.filteredData.slice(start, start + this.rowsPerPage);
-                    
-                    let rows = "";
-                    pageData.forEach((row, i) => {
-                        rows +=`
-                            <tr>
-                                <td>${start + i + 1}</td>
-                                ${this.createColumn(row)}
-                            </tr>
-                        `;
-                    });
-                    
-                    tbody.innerHTML = rows;
-                
+
+                    tbody.innerHTML = pageData.map((row, i) => `
+                        <tr>
+                            <td>${start + i + 1}</td>
+                            ${this.tbody.map(col => `<td>${row[col]}</td>`).join('')}
+                            <td><div id="actions">${this.actions(row)}</div></td>
+                        </tr>
+                    `).join('');
+
                     this.renderPagination();
-                } // End Render Table
+                }
 
 
 
@@ -252,7 +233,7 @@
                 renderPagination() {
                     let totalPages = Math.ceil(this.filteredData.length / this.rowsPerPage);
                     let currentPage = this.currentPage;
-            
+
                     // Arrow Function For creating page numbers 
                     const CreatePageItem = (i, isActive) => `
                         <li class="page-item ${isActive ? 'active' : ''}">
@@ -322,26 +303,62 @@
                 } // End Render Pagination
             }
 
-            $(document).ready(() => {
-                const demoData = Array.from({ length: 120 }, (_, i) => ({
+
+            // Create the thead Rows 
+            function renderTableHead(thead) {
+                const head = document.querySelector('.data-table thead');
+                const row1 = thead.map(h => `<th>${h.label}</th>`).join('');
+
+                const row2 = thead.map(h => {
+                    if (h.type === 'select') {
+                        const opts = h.options.map(option => `<option value="${option}">${option} / page</option>`).join('');
+                        return `<th><select id="rowsPerPage">${opts}</select></th>`;
+                    } else if (h.type === 'button') {
+                        return `<th><button id="exportCSV"><i class="fa-regular fa-file-excel"></i></button></th>`;
+                    } else if (h.key) {
+                        return `<th><input type="text" class="col-filter" data-key="${h.key}" /></th>`;
+                    } else {
+                        return `<th></th>`;
+                    }
+                }).join('');
+
+                head.innerHTML = `
+                    <tr>${row1}</tr>
+                    <tr>${row2}</tr>
+                `;
+            } // End Render thead Rows
+
+
+
+
+            document.addEventListener('DOMContentLoaded', () => {
+                renderTableHead([
+                    { label: 'SL:', type: 'select', options: [15, 30, 50, 100] },
+                    { label: 'Name', key: 'name' },
+                    { label: 'Email', key: 'email' },
+                    { label: 'Age', key: 'age' },
+                    { label: 'Action', type: 'button' }
+                ]);
+
+
+                const demoData = Array.from({ length: 1000 }, (_, i) => ({
                     name: `User ${i + 1}`,
                     email: `user${i + 1}@domain.com`,
                     age: 20 + (i % 30)
                 }));
 
                 new GenerateTable({
-                    tableId: '#customTable',
+                    tableId: '#data-table',
                     data: demoData,
-                    createColumn: (row) => `
-                                    <td>${row.name}</td>
-                                    <td>${row.email}</td>
-                                    <td>${row.age}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary">Edit</button>
-                                        <button class="btn btn-sm btn-danger">Delete</button>
-                                    </td>`,
-                    rowsPerPage: 15
+                    tbody: ['name','email','age'],
+                    actions: (row) => `
+                            <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                                    
+                            <button data-modal-id="deleteModal" data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                            `,
                 });
+
+                
             });
         </script>
     </body>
