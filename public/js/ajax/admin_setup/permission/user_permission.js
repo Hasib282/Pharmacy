@@ -50,7 +50,7 @@ function ShowUserPermissions(res) {
     new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['user_id','company.company_name','user_name','permissionNames'],
+        tbody: ['user_id','user_name','company.company_name','permissionNames'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.user_id}"><i class="fas fa-edit"></i></button>
                 `,
@@ -67,9 +67,9 @@ $(document).ready(function () {
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
         { label: 'User Id', key: 'user_id' },
-        { label: 'Company Name', key: 'company.company_name' },
         { label: 'User Name', key: 'user_name' },
-        { label: 'Permissions', key: 'permissionNames' },
+        { label: 'Company Name', key: 'company.company_name' },
+        { label: 'Permissions' },
         { label: 'Action', type: 'button' }
     ]);
 

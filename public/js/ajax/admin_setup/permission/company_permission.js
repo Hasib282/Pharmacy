@@ -61,8 +61,8 @@ $(document).ready(function () {
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
         { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'Company Name', key: 'company_name' },
+        { label: 'Permissions' },
         { label: 'Action', type: 'button' }
     ]);
 

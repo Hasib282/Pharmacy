@@ -33,7 +33,7 @@ function ShowPayrolls(res) {
     new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['emp_id','employee_name','slary'],
+        tbody: ['emp_id','emp_name','salary'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.emp_id}"><i class="fas fa-edit"></i></button>
                 `,
@@ -49,7 +49,7 @@ $(document).ready(function () {
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
         { label: 'Employee Id', key: 'emp_id' },
         { label: 'Employee Name', key: 'emp_name' },
-        { label: 'Salary' },
+        { label: 'Salary', key: 'salary'},
         { label: 'Action', type: 'button' }
     ]);
     

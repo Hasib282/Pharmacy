@@ -53,8 +53,7 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'StoreName', key: 'store_name' },
+        { label: 'Store Name', key: 'store_name' },
         { label: 'Division', key: 'division' },
         { label: 'Location', key: 'location.upazila' },
         { label: 'Address', key: 'address' },

@@ -191,9 +191,9 @@ class GenerateTable {
     
             return `
                 <tr>
-                    <td>${start + i + 1}</td>
+                    <td width="6%">${start + i + 1}</td>
                     ${columns}
-                    <td><div id="actions">${this.actions(row)}</div></td>
+                    <td width="10%"><div id="actions">${this.actions(row)}</div></td>
                 </tr>`;
         }).join('');
 
@@ -284,7 +284,7 @@ function renderTableHead(thead) {
 
     const row2 = thead.map(h => {
         if (h.type === 'select') {
-            const opts = h.options.map(option => `<option value="${option}">${option} / page</option>`).join('');
+            const opts = h.options.map(option => `<option value="${option}">${option}</option>`).join('');
             return `<th><select id="rowsPerPage">${opts}</select></th>`;
         } else if (h.type === 'button') {
             return `<th><button id="exportCSV"><i class="fa-regular fa-file-excel"></i></button></th>`;

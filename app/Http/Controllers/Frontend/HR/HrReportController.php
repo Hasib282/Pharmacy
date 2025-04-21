@@ -10,11 +10,12 @@ class HrReportController extends Controller
     ///////////////////////// --------------------------- Salary Summary Report Part Start -------------------- /////////////////////////
     // Show Salary Summary Report
     public function SalarySummaryReport(Request $req){
+        $name = "Salary Summary";
         if ($req->ajax()) {
-            return view('reports.salary_statement.summary.ajaxBlade');
+            return view('reports.salary_statement.summary.ajaxBlade', compact('name'));
         }
         else{
-            return view('reports.salary_statement.summary.main');
+            return view('reports.salary_statement.summary.main', compact('name'));
         }
     } // End Method
 
@@ -22,7 +23,8 @@ class HrReportController extends Controller
 
     // Search Salary Summary Report by user
     public function SearchSalarySummaryReport(Request $req){
-        return view('reports.salary_statement.summary.main');
+        $name = "Salary Summary";
+        return view('reports.salary_statement.summary.main', compact('name'));
     } // End Method
 
 
@@ -32,11 +34,12 @@ class HrReportController extends Controller
     ///////////////////////// --------------------------- Salary Details Report Part -------------------- /////////////////////////
     // Show Salary Details Report
     public function SalaryDetailsReport(Request $req){
+        $name = "Salary Details Report";
         if ($req->ajax()) {
-            return view('reports.salary_statement.details.ajaxBlade');
+            return view('reports.salary_statement.details.ajaxBlade', compact('name'));
         }
         else{
-            return view('reports.salary_statement.details.main');
+            return view('reports.salary_statement.details.main', compact('name'));
         }
     } // End Method
 
@@ -44,7 +47,8 @@ class HrReportController extends Controller
 
     // Search Salary Details Report by user
     public function SearchSalaryDetailsReport(Request $req){
-        return view('reports.salary_statement.details.main');
+        $name = "Salary Details Report";
+        return view('reports.salary_statement.details.main', compact('name'));
     } // End Method
 
 }

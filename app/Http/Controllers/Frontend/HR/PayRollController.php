@@ -72,11 +72,12 @@ class PayRollController extends Controller
     ////////////// ------------------------ Payroll Process Part Start Here --------------------- ////////////////////////////
     // Show Payroll
     public function ShowPayroll(Request $req){
+        $name = "Salary Process";
         if ($req->ajax()) {
-            return view('hr.payroll.payroll_installment.ajaxBlade');
+            return view('hr.payroll.payroll_installment.ajaxBlade', compact('name'));
         }
         else{
-            return view('hr.payroll.payroll_installment.main');
+            return view('hr.payroll.payroll_installment.main', compact('name'));
         }
     } // End Method 
 
@@ -84,7 +85,8 @@ class PayRollController extends Controller
 
     // Search Payroll by user
     public function SearchPayroll(Request $req){
-        return view('hr.payroll.payroll_installment.main');
+        $name = "Salary Process";
+        return view('hr.payroll.payroll_installment.main', compact('name'));
     } // End Method
 
     ////////////// ------------------------ Payroll Part End Here --------------------- ////////////////////////////
