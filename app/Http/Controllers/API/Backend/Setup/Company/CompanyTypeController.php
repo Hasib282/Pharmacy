@@ -12,7 +12,7 @@ class CompanyTypeController extends Controller
 {
     // Show All Company Types
     public function ShowAll(Request $req){
-        $data = Company_Type::on('mysql')->orderBy('added_at')->paginate(15);
+        $data = Company_Type::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

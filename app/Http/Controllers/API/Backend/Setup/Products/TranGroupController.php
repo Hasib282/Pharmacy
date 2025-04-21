@@ -24,7 +24,7 @@ class TranGroupController extends Controller
                     })
                 )
                 ->orderBy('added_at')
-                ->paginate(15);
+                ->get();
         
         $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
         return response()->json([

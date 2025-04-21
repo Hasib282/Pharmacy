@@ -12,7 +12,7 @@ class UnitController extends Controller
     // Show All Item/Product Unit
     public function ShowAll(Request $req){
         $type = GetTranType($req->segment(2));
-        $data = filterByCompany(Item_Unit::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->paginate(15);
+        $data = filterByCompany(Item_Unit::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

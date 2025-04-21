@@ -12,7 +12,7 @@ class PatientRegistrationController extends Controller
 {
     // Show All Patient Registrations
     public function ShowAll(Request $req){
-        $data = Patient_Registration::on('mysql_second')->paginate(15);//with is used to bring data from the doctors table ->with('doctors')
+        $data = Patient_Registration::on('mysql_second')->get();//with is used to bring data from the doctors table ->with('doctors')
         return response()->json([
             'status'=> true,
             'data' => $data,

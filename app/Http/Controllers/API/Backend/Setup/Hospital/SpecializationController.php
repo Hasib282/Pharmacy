@@ -12,7 +12,7 @@ class SpecializationController extends Controller
 {
     // Show All Doctors Specialization
     public function ShowAll(Request $req){
-        $data = Specialization::on('mysql_second')->orderBy('added_at')->paginate(15);
+        $data = Specialization::on('mysql_second')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

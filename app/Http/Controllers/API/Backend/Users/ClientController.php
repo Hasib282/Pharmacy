@@ -28,7 +28,7 @@ class ClientController extends Controller
         })
         ->where('user_role', 4)
         ->orderBy('added_at', 'asc')
-        ->paginate(15);
+        ->get();
 
         return response()->json([
             'status'=> true,

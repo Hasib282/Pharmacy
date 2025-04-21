@@ -12,7 +12,7 @@ class DoctorController extends Controller
 {
     // Show All Doctors
     public function ShowAll(Request $req){
-        $data = Doctor_Information::on('mysql_second')->paginate(15);
+        $data = Doctor_Information::on('mysql_second')->get();
         return response()->json([
             'status' => true,
             'data' => $data,

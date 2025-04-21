@@ -21,13 +21,13 @@ class TranWithController extends Controller
             ->with('Role','Type')
             ->where('tran_type', $type)
             ->orderBy('added_at')
-            ->paginate(15);
+            ->get();
         }
         else{
             $tranwith = Transaction_With::on('mysql_second')
             ->with('Role','Type')
             ->orderBy('added_at')
-            ->paginate(15);
+            ->get();
         }
 
         $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();

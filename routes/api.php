@@ -1542,27 +1542,27 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
 
-            // ///////////// --------------- Doctor Information Routes ----------- ///////////////////
-            // Route::controller(DoctorController::class)->group(function(){
-            //     Route::get('/doctors', 'ShowAll');
-            //     Route::post('/doctors', 'Insert');
-            //     Route::get('/doctors/edit', 'Edit');
-            //     Route::put('/doctors', 'Update');
-            //     Route::delete('/doctors', 'Delete');
-            //     Route::get('/doctors/search', 'Search');
-            // });
+            // *************************************** Hospital Groupe Routes Start *************************************** //
+            Route::controller(TranGroupController::class)->group(function () {
+                Route::get('/groupe', 'ShowAll');
+                Route::post('/groupe', 'Insert');
+                Route::get('/groupe/edit', 'Edit');
+                Route::put('/groupe', 'Update');
+                Route::delete('/groupe', 'Delete');
+                Route::get('/groupe/search', 'Search');
+            });
+            
 
 
-
-            // ///////////// --------------- Patient Registration Routes ----------- ///////////////////
-            // Route::controller(PatientController::class)->group(function(){
-            //     Route::get('/patients', 'ShowAll');
-            //     Route::post('/patients', 'Insert');
-            //     Route::get('/patients/edit', 'Edit');
-            //     Route::put('/patients', 'Update');
-            //     Route::delete('/patients', 'Delete');
-            //     Route::get('/patients/search', 'Search');
-            // });
+            // *************************************** Hospital Services Routes Start *************************************** //
+            Route::controller(TranHeadController::class)->group(function () {
+                Route::get('/services', 'ShowAll');
+                Route::post('/services', 'Insert');
+                Route::get('/services/edit', 'Edit');
+                Route::put('/services', 'Update');
+                Route::delete('/services', 'Delete');
+                Route::get('/services/search', 'Search');
+            });
         }); // End Hospital Setup Routes
 
 

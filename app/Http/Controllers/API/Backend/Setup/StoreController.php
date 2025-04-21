@@ -12,7 +12,7 @@ class StoreController extends Controller
 {
     // Show All Stores
     public function ShowAll(Request $req){
-        $data = Store::on('mysql_second')->with('Location')->orderBy('added_at')->paginate(15);
+        $data = Store::on('mysql_second')->with('Location')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

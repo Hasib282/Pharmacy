@@ -19,7 +19,7 @@ class GeneralTransactionController extends Controller
 {
     // Show All General Transaction Receives
     public function ShowAllReceive(Request $req){
-        $data = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Receive')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $data = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Receive')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '1')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
@@ -32,7 +32,7 @@ class GeneralTransactionController extends Controller
     
     // Show All General Transaction Payment
     public function ShowAllPayment(Request $req){
-        $data = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Payment')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $data = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Payment')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '1')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,

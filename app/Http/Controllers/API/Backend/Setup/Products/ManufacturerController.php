@@ -12,7 +12,7 @@ class ManufacturerController extends Controller
     // Show All Item/Product MAnufacturer
     public function ShowAll(Request $req){
         $type = GetTranType($req->segment(2));
-        $data = filterByCompany(Item_Manufacturer::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->paginate(15);
+        $data = filterByCompany(Item_Manufacturer::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

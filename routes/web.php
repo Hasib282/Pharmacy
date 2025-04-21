@@ -955,6 +955,16 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 Route::get('/bedlist/search',  'SearchBedList')->name('search.bedlist');
 
 
+                ///////////////////// ------------------ Hospital Group Routes Start ------------------ /////////////////////
+                Route::get('/groupe',  'ShowHospitalGroupe')->name('show.hospitalGroupe');
+                Route::get('/groupe/search',  'SearchHospitalGroupe')->name('search.hospitalGroupe');
+                
+                
+                ///////////////////// ------------------ Hospital Services Routes Start ------------------ /////////////////////
+                Route::get('/services',  'ShowHospitalServices')->name('show.hospitalServices');
+                Route::get('/services/search',  'SearchHospitalServices')->name('search.hospitalServices');
+                
+                
                 ///////////////////// ------------------ Nursing Station Routes Start ------------------ /////////////////////
                 Route::get('/nursingstation',  'ShowNursingStation')->name('show.nursingStation');
                 Route::get('/nursingstation/search',  'SearchNursingStation')->name('search.nursingStation');

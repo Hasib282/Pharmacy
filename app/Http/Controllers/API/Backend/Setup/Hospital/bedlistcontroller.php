@@ -12,7 +12,7 @@ class BedListController extends Controller
 {
     // Show All Bed List
     public function ShowAll(Request $req){
-        $data = Bed_List::on('mysql_second')->with('category','nursing')->orderBy('added_at')->paginate(15);
+        $data = Bed_List::on('mysql_second')->with('category','nursing')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

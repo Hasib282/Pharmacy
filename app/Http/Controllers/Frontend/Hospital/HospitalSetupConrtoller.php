@@ -127,4 +127,52 @@ class HospitalSetupConrtoller extends Controller
         $js = 'patient_registration';
         return view('admin_setup.hospital.patient_registration.main', compact('name', 'js'));
     } // End Method
+
+
+
+
+
+    /////////////////////////// --------------- Transaction Groupe Table Methods start ---------- //////////////////////////
+    // Show All Transaction Groupes
+    public function ShowHospitalGroupe(Request $req){
+        $name = "HospitalGroupe";
+        if ($req->ajax()) {
+            return view('admin_setup.tran_groupe.ajaxBlade', compact('name'));
+        }
+        else{
+            return view('admin_setup.tran_groupe.main', compact('name'));
+        }
+    } // End Method
+
+
+
+    // Transaction Groupes Search
+    public function SearchHospitalGroupe(Request $req){
+        $name = "HospitalGroupe";
+        return view('admin_setup.tran_groupe.main', compact('name'));
+    } // End Method
+
+
+
+
+
+    /////////////////////////// --------------- Transaction Heads Table Methods start ---------- //////////////////////////
+    // Show All Transaction Heads
+    public function ShowHospitalServices(Request $req){
+        $name = "HospitalServices";
+        if ($req->ajax()) {
+            return view('admin_setup.tran_head.ajaxBlade', compact('name'));
+        }
+        else{
+            return view('admin_setup.tran_head.main', compact('name'));
+        }
+    } // End Method
+
+
+
+    // Transaction Heads Search
+    public function SearchHospitalServices(Request $req){
+        $name = "HospitalServices";
+        return view('admin_setup.tran_head.main', compact('name'));
+    } // End Method
 }

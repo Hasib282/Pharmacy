@@ -25,7 +25,7 @@ class TranHeadController extends Controller
                     })
                 )
                 ->orderBy('added_at')
-                ->paginate(15);
+                ->get();
         
         return response()->json([
             'status'=> true,

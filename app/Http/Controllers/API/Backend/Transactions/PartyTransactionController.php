@@ -29,7 +29,7 @@ class PartyTransactionController extends Controller
         ->where('tran_type', 2)
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
         ->orderBy('tran_date','asc')
-        ->paginate(15);
+        ->get();
         
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '2')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         

@@ -23,14 +23,14 @@ class AdminController extends Controller
             $data = User_Info::on('mysql_second')
             ->where('user_role', 2)
             ->orderBy('added_at', 'asc')
-            ->paginate(15);
+            ->get();
         }
         else{
             $data = User_Info::on('mysql_second')
             ->where('company_id', Auth::user()->company_id)
             ->where('user_role', 2)
             ->orderBy('added_at', 'asc')
-            ->paginate(15);
+            ->get();
         }
 
         return response()->json([

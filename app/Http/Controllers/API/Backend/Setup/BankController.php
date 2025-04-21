@@ -13,7 +13,7 @@ class BankController extends Controller
 {
     // Show All Banks
     public function ShowAll(Request $req){
-        $data = Bank::on('mysql')->with('Location')->orderBy('added_at','asc')->paginate(15);
+        $data = Bank::on('mysql')->with('Location')->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

@@ -17,7 +17,7 @@ class SuperAdminController extends Controller
 {
     // Show All SuperAdmins
     public function ShowAll(Request $req){
-        $data = Login_User::on('mysql')->where('user_role', 1)->orderBy('added_at','asc')->paginate(15);
+        $data = Login_User::on('mysql')->where('user_role', 1)->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

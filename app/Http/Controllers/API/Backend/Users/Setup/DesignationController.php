@@ -15,7 +15,7 @@ class DesignationController extends Controller
         $data = Designation::on('mysql_second')
         ->with('Department:id,name')
         ->orderBy('added_at','asc')
-        ->paginate(15);
+        ->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

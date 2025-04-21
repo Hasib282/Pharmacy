@@ -12,7 +12,7 @@ class MainHeadController extends Controller
 {
     // Show All MainHeads
     public function ShowAll(Request $req){
-        $data = Transaction_Main_Head::on('mysql')->orderBy('added_at')->paginate(15);
+        $data = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
