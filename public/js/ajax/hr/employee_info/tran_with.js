@@ -49,7 +49,8 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Transaction with Name', key: 'tran_with_name' },
+        { label: 'Emplyee Type Name', key: 'tran_with_name' },
+        { label: 'Action', type: 'button' }
     ]);
 
 

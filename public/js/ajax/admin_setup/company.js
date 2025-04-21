@@ -64,11 +64,13 @@ $(document).ready(function () {
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
         { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'company_name' },
+        { label: 'Name', key: 'company_name' },
         { label: 'Type Name', key: 'type.name' },
-        { label: 'Permission', key: 'company_email' },
-        { label: 'Company Email', key: 'company_phone' },
+        { label: 'Email', key: 'company_email' },
+        { label: 'Phone', key: 'company_phone' },
         { label: 'Address', key: 'address' },
+        { label: 'Domain', key: 'domain' },
+        { label: 'Image' },
         { label: 'Action', type: 'button' }
     ]);
 

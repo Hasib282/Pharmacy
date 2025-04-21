@@ -27,7 +27,7 @@ class PayrollMiddlewireController extends Controller
 
         return response()->json([
             'status'=> true,
-            'data' => $payroll,
+            'data' => $data,
             'tranwith' => $tranwith,
             'heads' => $heads,
         ], 200);

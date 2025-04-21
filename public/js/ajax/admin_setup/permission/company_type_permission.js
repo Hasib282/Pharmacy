@@ -57,7 +57,7 @@ $(document).ready(function () {
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
         { label: 'Company Type Name', key: 'name' },
-        { label: 'Permissions', key: 'permission' },
+        { label: 'Permissions' },
         { label: 'Action', type: 'button' }
     ]);
 

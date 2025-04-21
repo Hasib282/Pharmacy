@@ -16,7 +16,7 @@ class SalarySummaryController extends Controller
         ->where('tran_method','Payment')
         ->where('tran_type', 3)
         ->orderBy('id','asc')
-        ->paginate(15);
+        ->get();
 
         return response()->json([
             'status'=> true,

@@ -51,7 +51,7 @@ function ShowEmployeePersonalDetails(res) {
     new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['user_id','user_name','withs.tranwith','dob','gender','user_email', 'user_phone','address','image','status'],
+        tbody: ['user_id','user_name','withs.tran_with_name','dob','gender','user_email', 'user_phone','address','image','status'],
         actions: (row) => `
                 <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
                             
@@ -65,17 +65,19 @@ function ShowEmployeePersonalDetails(res) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
         { label: 'Id', key: 'user_id' },
-        { label: ' Name', key: 'user_name' },
+        { label: 'Name', key: 'user_name' },
         { label: 'Employee Type', key: 'withs.tran_with_name' },
         { label: 'DOB', key: 'dob' },
         { label: 'Gender	', key: 'gender' },
         { label: 'Email', key: 'user_email' },
-        { label: 'Phone', key: '.user_phone' },
+        { label: 'Phone', key: 'user_phone' },
         { label: 'Address', key: 'address' },
-        { label: 'Image', key: '' },
+        { label: 'Image' },
+        { label: 'Status', key: 'status' },
         { label: 'Action', type: 'button' }
     ]);
 
