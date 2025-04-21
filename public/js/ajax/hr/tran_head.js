@@ -35,6 +35,17 @@ function ShowTranHead(data, startIndex) {
 
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
+
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+    
     
     // Load Data on Hard Reload
     ReloadData('hr/payroll/heads', ShowTranHead);
@@ -64,11 +75,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowTranHead);
+    // PaginationAjax(ShowTranHead);
 
 
     // Search Ajax
-    SearchAjax('hr/payroll/heads', ShowTranHead, {groupe: 1, searchOption: 1});
+    // SearchAjax('hr/payroll/heads', ShowTranHead, {groupe: 1, searchOption: 1});
 
 
     // Additional Edit Functionality

@@ -5,13 +5,13 @@
 
 @extends('layouts.layout')
 @section('main-content')
-    <div class="add-search">
+    {{-- <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                {{-- @if(Auth::user()->hasPermissionToRoute('insert.payroll')) --}}
+                @if(Auth::user()->hasPermissionToRoute('insert.payroll'))
                     <button id="PayrollProcess" data-modal-id="confirmModal"><i
                         class="fa-solid fa-rotate"></i> Process Payroll</button>
-                {{-- @endif --}}
+                @endif
             </div>
             <div class="c-1">
                 <label for="month">Month</label>
@@ -44,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach ($payroll as $key => $item)
+                @foreach ($payroll as $key => $item)
                     <tr>
                         <td>{{ $key+1 }}</td>
                         <td>{{ $item['emp_id'] }}</td>
@@ -57,11 +57,40 @@
                             @endif
                         </td>
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
             <tfoot></tfoot>
         </table>        
+    </div> --}}
+
+
+    {{-- Add Button And Search Fields --}}
+    <div class="add-search">
+        <div class="rows">
+            <div class="c-3">
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            </div>
+            <div class="c-6">
+
+            </div>
+            <div class="c-3" style="padding: 0;">
+                <input type="text" id="globalSearch" placeholder="Search..." />
+            </div>
+        </div>
     </div>
+
+    {{-- Datatable Part --}}
+    <div class="load-data">
+        <table class="data-table" id="data-table">
+            <caption>{{ $name }} Details</caption>
+            <thead></thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+        </table>
+
+        <div id="paginate"></div>
+    </div>
+
 
     @include('hr.payroll.payroll_installment.editPayroll')
 

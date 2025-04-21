@@ -179,6 +179,16 @@ function ShowDoctors(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('hospital/users/doctors', ShowDoctors);
     
@@ -208,11 +218,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowDoctors);
+    // PaginationAjax(ShowDoctors);
 
 
     // Search Ajax
-    SearchAjax('hospital/users/doctors', ShowDoctors);
+    // SearchAjax('hospital/users/doctors', ShowDoctors);
 
 
     // Additional Edit Functionality

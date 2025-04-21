@@ -4,13 +4,13 @@
 @endphp
 
 
-<div class="add-search">
+{{-- <div class="add-search">
     <div class="rows">
         <div class="c-3">
-            {{-- @if(Auth::user()->hasPermissionToRoute('insert.payroll')) --}}
+            @if(Auth::user()->hasPermissionToRoute('insert.payroll'))
             <button id="PayrollProcess" data-modal-id="confirmModal"><i class="fa-solid fa-rotate"></i>
                 Process Payroll</button>
-            {{-- @endif --}}
+            @endif
         </div>
         <div class="c-1">
             <label for="month">Month</label>
@@ -46,7 +46,7 @@
         <tbody></tbody>
         <tfoot></tfoot>
     </table>
-</div>
+</div> --}}
 
 @include('hr.payroll.payroll_installment.editPayroll')
 

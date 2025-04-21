@@ -33,6 +33,16 @@ function ShowTranWith(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('hr/employee/usertype', ShowTranWith);
     
@@ -61,11 +71,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowTranWith);
+    // PaginationAjax(ShowTranWith);
 
 
     // Search Ajax
-    SearchAjax('hr/employee/usertype', ShowTranWith, {type: 3, method: 'Both', role: 3});
+    // SearchAjax('hr/employee/usertype', ShowTranWith, {type: 3, method: 'Both', role: 3});
 
 
     // Additional Edit Functionality

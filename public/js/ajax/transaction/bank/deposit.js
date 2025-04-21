@@ -36,6 +36,16 @@ function ShowBankDeposits(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(4, "Payment");
 
@@ -86,15 +96,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowBankDeposits);
+    // PaginationAjax(ShowBankDeposits);
 
 
     // Search Ajax
-    SearchAjax('transaction/bank/deposit', ShowBankDeposits, {type: 4, method: 'Deposit'});
+    // SearchAjax('transaction/bank/deposit', ShowBankDeposits, {type: 4, method: 'Deposit'});
 
 
     // Search By Date
-    SearchByDateAjax('transaction/bank/deposit', ShowBankDeposits, {type: 4, method: 'Deposit'})
+    // SearchByDateAjax('transaction/bank/deposit', ShowBankDeposits, {type: 4, method: 'Deposit'})
 
 
     // Additional Edit Functionality

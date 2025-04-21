@@ -82,6 +82,17 @@ function ShowPharmacyPurchases(data, startIndex) {
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
 
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(6, "Payment");
     
@@ -117,19 +128,19 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowPharmacyPurchases);
+    // PaginationAjax(ShowPharmacyPurchases);
 
 
     // Search Ajax
-    SearchAjax('pharmacy/transaction/purchase', ShowPharmacyPurchases, { type: 6, method: 'Purchase', status: { selector: "#status"} });
+    // SearchAjax('pharmacy/transaction/purchase', ShowPharmacyPurchases, { type: 6, method: 'Purchase', status: { selector: "#status"} });
 
 
     // Search By Date
-    SearchByDateAjax('pharmacy/transaction/purchase', ShowPharmacyPurchases, { type: 6, method: 'Purchase', status: { selector: "#status"} });
+    // SearchByDateAjax('pharmacy/transaction/purchase', ShowPharmacyPurchases, { type: 6, method: 'Purchase', status: { selector: "#status"} });
 
 
     // Search By Methods, Roles, Types
-    SearchBySelect('pharmacy/transaction/purchase', ShowPharmacyPurchases, '#status', { type: 6, method: 'Purchase', status: { selector: "#status"} } );
+    // SearchBySelect('pharmacy/transaction/purchase', ShowPharmacyPurchases, '#status', { type: 6, method: 'Purchase', status: { selector: "#status"} } );
 
 
     // Additional Edit Functionality

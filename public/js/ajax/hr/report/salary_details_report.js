@@ -50,19 +50,30 @@ function ShowSalaryDetails(data, startIndex) {
 
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
+
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
     
     // Load Data on Hard Reload
     ReloadData('hr/report/salary/details', ShowSalaryDetails);
     
 
     // Pagination Ajax
-    PaginationAjax(ShowSalaryDetails, { month: { selector: '#month'}, year: { selector: '#year'}});
+    // PaginationAjax(ShowSalaryDetails, { month: { selector: '#month'}, year: { selector: '#year'}});
 
 
     // Search Ajax
-    SearchAjax('hr/report/salary/details', ShowSalaryDetails, { month: { selector: '#month'}, year: { selector: '#year'}});
+    // SearchAjax('hr/report/salary/details', ShowSalaryDetails, { month: { selector: '#month'}, year: { selector: '#year'}});
 
 
     // Search By Month or Year
-    SearchBySelect('hr/report/salary/details', ShowSalaryDetails, '#month, #year', { month: { selector: '#month'}, year: { selector: '#year'}})
+    // SearchBySelect('hr/report/salary/details', ShowSalaryDetails, '#month, #year', { month: { selector: '#month'}, year: { selector: '#year'}})
 });

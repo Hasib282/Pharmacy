@@ -4,7 +4,7 @@
 @endphp
 
 
-    <div class="add-search">
+    {{-- <div class="add-search">
         <div class="rows">
             <div class="c-3">
                 <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
@@ -43,7 +43,7 @@
         </table>
         
         <div class="center paginate" id="paginate"> </div>
-    </div>
+    </div> --}}
 
 
     

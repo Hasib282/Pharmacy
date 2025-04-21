@@ -33,6 +33,15 @@ function ShowPayrolls(data, startIndex) {
 
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
     
     // Load Data on Hard Reload
     ReloadData('hr/payroll/process', ShowPayrolls);
@@ -43,15 +52,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowPayrolls, { month: { selector: '#month'}, year: { selector: '#year'}});
+    // PaginationAjax(ShowPayrolls, { month: { selector: '#month'}, year: { selector: '#year'}});
 
 
     // Search Ajax
-    SearchAjax('hr/payroll/process', ShowPayrolls, { month: { selector: '#month'}, year: { selector: '#year'}});
+    // SearchAjax('hr/payroll/process', ShowPayrolls, { month: { selector: '#month'}, year: { selector: '#year'}});
 
 
     // Search By Month or Year
-    SearchBySelect('hr/payroll/process', ShowPayrolls, '#month, #year', { month: { selector: '#month'}, year: { selector: '#year'}})
+    // SearchBySelect('hr/payroll/process', ShowPayrolls, '#month, #year', { month: { selector: '#month'}, year: { selector: '#year'}})
 
 
     // Additional Edit Functionality

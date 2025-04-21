@@ -34,6 +34,16 @@ function ShowNursingStation(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('hospital/setup/nursingstation', ShowNursingStation);
     
@@ -61,11 +71,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowNursingStation);
+    // PaginationAjax(ShowNursingStation);
 
 
     // Search Ajax
-    SearchAjax('hospital/setup/nursingstation', ShowNursingStation);
+    // SearchAjax('hospital/setup/nursingstation', ShowNursingStation);
 
 
     // Additional Edit Functionality

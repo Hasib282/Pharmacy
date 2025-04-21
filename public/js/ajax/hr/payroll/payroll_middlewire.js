@@ -52,6 +52,16 @@ function ShowPayrollMiddlewire(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     $(document).off(`.${'SearchBySelect'}`);
 
     // Get Transaction With / User Type 
@@ -100,15 +110,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowPayrollMiddlewire, { month: { selector: '#optionMonth'}, year: { selector: '#optionYear'}});
+    // PaginationAjax(ShowPayrollMiddlewire, { month: { selector: '#optionMonth'}, year: { selector: '#optionYear'}});
 
 
     // Search Ajax
-    SearchAjax('hr/payroll/middlewire', ShowPayrollMiddlewire, { month: { selector: '#optionMonth'}, year: { selector: '#optionYear'}});
+    // SearchAjax('hr/payroll/middlewire', ShowPayrollMiddlewire, { month: { selector: '#optionMonth'}, year: { selector: '#optionYear'}});
 
 
     // Search By Month or Year
-    SearchBySelect('hr/payroll/middlewire', ShowPayrollMiddlewire, '#optionMonth, #optionYear', { month: { selector: '#optionMonth'}, year: { selector: '#optionYear'}})
+    // SearchBySelect('hr/payroll/middlewire', ShowPayrollMiddlewire, '#optionMonth, #optionYear', { month: { selector: '#optionMonth'}, year: { selector: '#optionYear'}})
 
 
     // Additional Edit Functionality

@@ -58,18 +58,28 @@ function ShowPharmacyIssueSummarys(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('pharmacy/report/issue/summary', ShowPharmacyIssueSummarys);
     
 
     // Pagination Ajax
-    PaginationAjax(ShowPharmacyIssueSummarys);
+    // PaginationAjax(ShowPharmacyIssueSummarys);
 
 
     // Search Ajax
-    SearchAjax('pharmacy/report/issue/summary', ShowPharmacyIssueSummarys, { type:'6', method:'Issue' });
+    // SearchAjax('pharmacy/report/issue/summary', ShowPharmacyIssueSummarys, { type:'6', method:'Issue' });
 
 
     // Search By Month or Year
-    SearchByDateAjax('pharmacy/report/issue/summary', ShowPharmacyIssueSummarys, { type:'6', method:'Issue' })
+    // SearchByDateAjax('pharmacy/report/issue/summary', ShowPharmacyIssueSummarys, { type:'6', method:'Issue' })
 });

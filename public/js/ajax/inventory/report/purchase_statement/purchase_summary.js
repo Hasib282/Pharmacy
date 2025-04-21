@@ -58,18 +58,28 @@ function ShowInventoryPurchaseSummarys(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('inventory/report/purchase/summary', ShowInventoryPurchaseSummarys);
     
 
     // Pagination Ajax
-    PaginationAjax(ShowInventoryPurchaseSummarys);
+    // PaginationAjax(ShowInventoryPurchaseSummarys);
 
 
     // Search Ajax
-    SearchAjax('inventory/report/purchase/summary', ShowInventoryPurchaseSummarys, { type:'5', method:'Purchase' });
+    // SearchAjax('inventory/report/purchase/summary', ShowInventoryPurchaseSummarys, { type:'5', method:'Purchase' });
 
 
     // Search By Month or Year
-    SearchByDateAjax('inventory/report/purchase/summary', ShowInventoryPurchaseSummarys, { type:'5', method:'Purchase' })
+    // SearchByDateAjax('inventory/report/purchase/summary', ShowInventoryPurchaseSummarys, { type:'5', method:'Purchase' })
 });

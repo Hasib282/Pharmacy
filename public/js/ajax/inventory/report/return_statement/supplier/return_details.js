@@ -53,18 +53,28 @@ function ShowInventorySupplierReturnDetails(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('inventory/report/return/supplier/details', ShowInventorySupplierReturnDetails);
     
 
     // Pagination Ajax
-    PaginationAjax(ShowInventorySupplierReturnDetails);
+    // PaginationAjax(ShowInventorySupplierReturnDetails);
 
 
     // Search Ajax
-    SearchAjax('inventory/report/return/supplier/details', ShowInventorySupplierReturnDetails, { type:'5', method:'Supplier Return' });
+    // SearchAjax('inventory/report/return/supplier/details', ShowInventorySupplierReturnDetails, { type:'5', method:'Supplier Return' });
 
 
     // Search By Month or Year
-    SearchByDateAjax('inventory/report/return/supplier/details', ShowInventorySupplierReturnDetails, { type:'5', method:'Supplier Return' })
+    // SearchByDateAjax('inventory/report/return/supplier/details', ShowInventorySupplierReturnDetails, { type:'5', method:'Supplier Return' })
 });

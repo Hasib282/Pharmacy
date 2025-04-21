@@ -36,6 +36,17 @@ function ShowStores(data, startIndex) {
 
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
+
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
     
     // Load Data on Hard Reload
     ReloadData('admin/stores', ShowStores);
@@ -65,15 +76,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowStores);
+    // PaginationAjax(ShowStores);
 
 
     // Search Ajax
-    SearchAjax('admin/stores', ShowStores, {division: { selector: '#searchDivision'}});
+    // SearchAjax('admin/stores', ShowStores, {division: { selector: '#searchDivision'}});
 
 
     // Search By Division
-    SearchBySelect('admin/stores', ShowStores, "#searchDivision", {division: { selector: '#searchDivision'}} );
+    // SearchBySelect('admin/stores', ShowStores, "#searchDivision", {division: { selector: '#searchDivision'}} );
 
 
     // Additional Edit Functionality

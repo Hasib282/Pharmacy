@@ -60,6 +60,16 @@ function ShowPharmacyItemflowStatements(data, startIndex, res) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(6);
     // Creating Select Options Dynamically
@@ -99,7 +109,7 @@ $(document).ready(function () {
 
 
     // Search By Month or Year
-    SearchByDateAjax('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#product-search', attribute: 'data-id' }})
+    // SearchByDateAjax('pharmacy/report/item/flow', ShowPharmacyItemflowStatements, {search_id: { selector: '#product-search', attribute: 'data-id' }})
 
 
 

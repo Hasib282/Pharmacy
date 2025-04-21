@@ -76,23 +76,34 @@ function ShowPartyDetailsReports(data, startIndex) {
 
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
+
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+    
     
     // Load Data on Hard Reload
     ReloadData('report/party/details', ShowPartyDetailsReports);
 
 
     // Pagination Ajax
-    PaginationAjax(ShowPartyDetailsReports);
+    // PaginationAjax(ShowPartyDetailsReports);
 
 
     // Search Ajax
-    SearchAjax('report/party/details', ShowPartyDetailsReports, {method: { selector: "#methodOption"}} );
+    // SearchAjax('report/party/details', ShowPartyDetailsReports, {method: { selector: "#methodOption"}} );
 
 
     // Search By Date
-    SearchByDateAjax('report/party/details', ShowPartyDetailsReports, {method: { selector: "#methodOption"}} );
+    // SearchByDateAjax('report/party/details', ShowPartyDetailsReports, {method: { selector: "#methodOption"}} );
 
 
     // Search By Methods, Roles, Types
-    SearchBySelect('report/party/details', ShowPartyDetailsReports, '#methodOption', {method: { selector: "#methodOption"}} );
+    // SearchBySelect('report/party/details', ShowPartyDetailsReports, '#methodOption', {method: { selector: "#methodOption"}} );
 });

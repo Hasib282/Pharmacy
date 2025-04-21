@@ -4,12 +4,12 @@
 @endphp
 
 
-<div class="add-search">
+{{-- <div class="add-search">
     <div class="rows">
         <div class="c-3">
-            {{-- @if(Auth::user()->hasPermissionToRoute('insert.employeeEducation')) --}}
+            @if(Auth::user()->hasPermissionToRoute('insert.employeeEducation'))
             <button class="open-modal add" data-modal-id="addModal">Add Education Detail</button>
-            {{-- @endif --}}
+            @endif
         </div>
         <div class="c-9 search">
             <select name="searchOption" id="searchOption" class="select-small">
@@ -51,7 +51,36 @@
     </table>
 
     <div class="center paginate" id="paginate"></div>
+</div> --}}
+
+
+{{-- Add Button And Search Fields --}}
+<div class="add-search">
+    <div class="rows">
+        <div class="c-3">
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+        </div>
+        <div class="c-6">
+
+        </div>
+        <div class="c-3" style="padding: 0;">
+            <input type="text" id="globalSearch" placeholder="Search..." />
+        </div>
+    </div>
 </div>
+
+{{-- Datatable Part --}}
+<div class="load-data">
+    <table class="data-table" id="data-table">
+        <caption>{{ $name }} Details</caption>
+        <thead></thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+    </table>
+
+    <div id="paginate"></div>
+</div>
+
 
 @include('hr.employee_info.education_details.add')
 

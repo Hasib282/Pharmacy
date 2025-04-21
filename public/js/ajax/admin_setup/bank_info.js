@@ -42,6 +42,16 @@ function ShowBanks(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('admin/banks', ShowBanks);
     
@@ -70,11 +80,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowBanks);
+    // PaginationAjax(ShowBanks);
 
 
     // Search Ajax
-    SearchAjax('admin/banks', ShowBanks);
+    // SearchAjax('admin/banks', ShowBanks);
 
 
     // Additional Edit Functionality

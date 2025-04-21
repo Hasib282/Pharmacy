@@ -37,6 +37,16 @@ function ShowAdmins(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('admin/users/superadmins', ShowAdmins);
     
@@ -64,11 +74,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowAdmins);
+    // PaginationAjax(ShowAdmins);
 
 
     // Search Ajax
-    SearchAjax('admin/users/superadmins', ShowAdmins);
+    // SearchAjax('admin/users/superadmins', ShowAdmins);
 
 
     // Additional Edit Functionality

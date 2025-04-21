@@ -60,18 +60,28 @@ function ShowPharmacySupplierReturnSummarys(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('pharmacy/report/return/supplier/summary', ShowPharmacySupplierReturnSummarys);
     
 
     // Pagination Ajax
-    PaginationAjax(ShowPharmacySupplierReturnSummarys);
+    // PaginationAjax(ShowPharmacySupplierReturnSummarys);
 
 
     // Search Ajax
-    SearchAjax('pharmacy/report/return/supplier/summary', ShowPharmacySupplierReturnSummarys, { type:'6', method:'Supplier Return' });
+    // SearchAjax('pharmacy/report/return/supplier/summary', ShowPharmacySupplierReturnSummarys, { type:'6', method:'Supplier Return' });
 
 
     // Search By Month or Year
-    SearchByDateAjax('pharmacy/report/return/supplier/summary', ShowPharmacySupplierReturnSummarys, { type:'6', method:'Supplier Return' })
+    // SearchByDateAjax('pharmacy/report/return/supplier/summary', ShowPharmacySupplierReturnSummarys, { type:'6', method:'Supplier Return' })
 });

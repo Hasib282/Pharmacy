@@ -5,7 +5,7 @@
 
 @extends('layouts.layout')
 @section('main-content')
-    <div class="add-search">
+    {{-- <div class="add-search">
         <div class="rows">
             <div class="c-3">
                 @if (Auth::user()->user_role == 1)
@@ -35,7 +35,7 @@
                     <th>Upazila</th>
                     <th>Action</th>
                 </tr>
-                {{-- <tr>
+                <tr>
                     <th>
                         <select id="rowsPerPage">
                             <option value="15">15 / page</option>
@@ -56,14 +56,44 @@
                     <th>
                         <button id="exportCSV" class="btn btn-success"><i class="fa-regular fa-file-excel"></i></button>
                     </th>
-                </tr> --}}
+                </tr>
             </thead>
             <tbody></tbody>
             <tfoot></tfoot>
         </table>
 
         <div class="center paginate" id="paginate"></div>
+    </div> --}}
+
+
+    {{-- Add Button And Search Fields --}}
+    <div class="add-search">
+        <div class="rows">
+            <div class="c-3">
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            </div>
+            <div class="c-6">
+
+            </div>
+            <div class="c-3" style="padding: 0;">
+                <input type="text" id="globalSearch" placeholder="Search..." />
+            </div>
+        </div>
     </div>
+
+    {{-- Datatable Part --}}
+    <div class="load-data">
+        <table class="data-table" id="data-table">
+            <caption>{{ $name }} Details</caption>
+            <thead></thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+        </table>
+
+        <div id="paginate"></div>
+    </div>
+
+
     @if (Auth::user()->user_role == 1)
         @include('admin_setup.location.add')
 

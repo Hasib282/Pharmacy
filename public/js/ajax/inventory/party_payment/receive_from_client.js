@@ -46,6 +46,16 @@ function ShowReceiveFromClients(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('inventory/party/receive', ShowReceiveFromClients);
     
@@ -90,15 +100,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowReceiveFromClients);
+    // PaginationAjax(ShowReceiveFromClients);
 
 
     // Search Ajax
-    SearchAjax('inventory/party/receive', ShowReceiveFromClients);
+    // SearchAjax('inventory/party/receive', ShowReceiveFromClients);
 
 
     // Search By Date
-    SearchByDateAjax('inventory/party/receive', ShowReceiveFromClients);
+    // SearchByDateAjax('inventory/party/receive', ShowReceiveFromClients);
 
 
     // Additional Edit Functionality

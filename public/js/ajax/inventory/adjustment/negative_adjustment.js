@@ -38,6 +38,16 @@ function ShowInventoryNegativeAdjustments(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(5);
 
@@ -99,15 +109,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowInventoryNegativeAdjustments);
+    // PaginationAjax(ShowInventoryNegativeAdjustments);
 
 
     // Search Ajax
-    SearchAjax('inventory/adjustment/negative', ShowInventoryNegativeAdjustments, { type: 5, method: 'Negative' });
+    // SearchAjax('inventory/adjustment/negative', ShowInventoryNegativeAdjustments, { type: 5, method: 'Negative' });
     
     
     // Search By Date Ajax
-    SearchByDateAjax('inventory/adjustment/negative', ShowInventoryNegativeAdjustments, { type: 5, method: 'Negative' });
+    // SearchByDateAjax('inventory/adjustment/negative', ShowInventoryNegativeAdjustments, { type: 5, method: 'Negative' });
 
 
     // Additional Edit Functionality

@@ -38,6 +38,16 @@ function ShowPharmacyNegativeAdjustments(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(6);
 
@@ -99,15 +109,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowPharmacyNegativeAdjustments);
+    // PaginationAjax(ShowPharmacyNegativeAdjustments);
 
 
     // Search Ajax
-    SearchAjax('pharmacy/adjustment/negative', ShowPharmacyNegativeAdjustments, { type: 6, method: 'Negative' });
+    // SearchAjax('pharmacy/adjustment/negative', ShowPharmacyNegativeAdjustments, { type: 6, method: 'Negative' });
     
     
     // Search By Date Ajax
-    SearchByDateAjax('pharmacy/adjustment/negative', ShowPharmacyNegativeAdjustments, { type: 6, method: 'Negative' });
+    // SearchByDateAjax('pharmacy/adjustment/negative', ShowPharmacyNegativeAdjustments, { type: 6, method: 'Negative' });
 
 
     // Additional Edit Functionality

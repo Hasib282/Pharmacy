@@ -36,7 +36,18 @@ function ShowPermissions(data, startIndex) {
 
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
+
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
     
+
     // Creating Select Options Dynamically
     $.ajax({
         url: `${apiUrl}/admin/permission/heads`,
@@ -47,6 +58,7 @@ $(document).ready(function () {
             CreateSelectOptions('#mainhead', 'Select Permission Mainhead', res.permissionMainhead, null, 'name');
         },
     });
+
 
     // Load Data on Hard Reload
     ReloadData('admin/permission/heads', ShowPermissions);
@@ -75,15 +87,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowPermissions);
+    // PaginationAjax(ShowPermissions);
 
 
     // Search Ajax
-    SearchAjax('admin/permission/heads', ShowPermissions, {searchHead: { selector: "#searchHead"}});
+    // SearchAjax('admin/permission/heads', ShowPermissions, {searchHead: { selector: "#searchHead"}});
 
 
     // Search By Methods, Roles, Types
-    SearchBySelect('admin/permission/heads', ShowPermissions, '#searchHead', {searchHead: { selector: "#searchHead"}} );
+    // SearchBySelect('admin/permission/heads', ShowPermissions, '#searchHead', {searchHead: { selector: "#searchHead"}} );
 
 
     // Additional Edit Functionality

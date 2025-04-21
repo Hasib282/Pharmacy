@@ -65,6 +65,16 @@ function ShowPharmacyProducts(data, startIndex) {
 // }
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(6, null, "Ok");
 
@@ -120,11 +130,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowPharmacyProducts);
+    // PaginationAjax(ShowPharmacyProducts);
 
 
     // Search Ajax
-    SearchAjax('pharmacy/setup/product', ShowPharmacyProducts, {  });
+    // SearchAjax('pharmacy/setup/product', ShowPharmacyProducts, {  });
 
 
     // Additional Edit Functionality

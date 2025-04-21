@@ -80,6 +80,16 @@ $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
 
 
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(5, "Payment");
 
@@ -115,19 +125,19 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowInventoryPurchases);
+    // PaginationAjax(ShowInventoryPurchases);
 
 
     // Search Ajax
-    SearchAjax('inventory/transaction/purchase', ShowInventoryPurchases, { type: 5, method: 'Purchase', status: { selector: "#status"} });
+    // SearchAjax('inventory/transaction/purchase', ShowInventoryPurchases, { type: 5, method: 'Purchase', status: { selector: "#status"} });
 
 
     // Search By Date
-    SearchByDateAjax('inventory/transaction/purchase', ShowInventoryPurchases, { type: 5, method: 'Purchase', status: { selector: "#status"} });
+    // SearchByDateAjax('inventory/transaction/purchase', ShowInventoryPurchases, { type: 5, method: 'Purchase', status: { selector: "#status"} });
 
 
     // Search By Methods, Roles, Types
-    SearchBySelect('inventory/transaction/purchase', ShowInventoryPurchases, '#status', { type: 5, method: 'Purchase', status: { selector: "#status"} } );
+    // SearchBySelect('inventory/transaction/purchase', ShowInventoryPurchases, '#status', { type: 5, method: 'Purchase', status: { selector: "#status"} } );
 
 
     // Additional Edit Functionality

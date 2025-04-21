@@ -74,6 +74,16 @@ function ShowTransactionPayments(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(1, "Payment");
 
@@ -118,15 +128,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowTransactionPayments);
+    // PaginationAjax(ShowTransactionPayments);
 
 
     // Search Ajax
-    SearchAjax('transaction/payment', ShowTransactionPayments, { type: 1, method: 'Payment' });
+    // SearchAjax('transaction/payment', ShowTransactionPayments, { type: 1, method: 'Payment' });
 
 
     // Search By Date
-    SearchByDateAjax('transaction/payment', ShowTransactionPayments, {type: 1, method: 'Payment'});
+    // SearchByDateAjax('transaction/payment', ShowTransactionPayments, {type: 1, method: 'Payment'});
 
 
     // Additional Edit Functionality

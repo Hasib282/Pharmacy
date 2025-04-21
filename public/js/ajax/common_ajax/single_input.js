@@ -27,9 +27,9 @@ function SingleInputDataCrudeAjax(link, RenderData){
 
 
     // Pagination Ajax
-    PaginationAjax(RenderData);
+    // PaginationAjax(RenderData);
 
 
     // Search Ajax
-    SearchAjax(link, RenderData);
+    // SearchAjax(link, RenderData);
 }

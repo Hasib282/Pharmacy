@@ -37,6 +37,17 @@ function ShowTranHead(data, startIndex) {
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
 
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     GetTransactionGroupe(null, null, "Ok");
     // // Creating Select Options Dynamically
     // $.ajax({
@@ -76,11 +87,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowTranHead);
+    // PaginationAjax(ShowTranHead);
 
 
     // Search Ajax
-    SearchAjax('admin/tranheads', ShowTranHead, {type: { selector: "#types"}, method: { selector: "#methods"}, role: { selector: "#roles"}});
+    // SearchAjax('admin/tranheads', ShowTranHead, {type: { selector: "#types"}, method: { selector: "#methods"}, role: { selector: "#roles"}});
 
 
     // Additional Edit Functionality

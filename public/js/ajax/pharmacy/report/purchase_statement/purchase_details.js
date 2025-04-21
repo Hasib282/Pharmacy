@@ -59,18 +59,28 @@ function ShowPharmacyPurchaseDetails(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+    
     // Load Data on Hard Reload
     ReloadData('pharmacy/report/purchase/details', ShowPharmacyPurchaseDetails);
     
 
     // Pagination Ajax
-    PaginationAjax(ShowPharmacyPurchaseDetails);
+    // PaginationAjax(ShowPharmacyPurchaseDetails);
 
 
     // Search Ajax
-    SearchAjax('pharmacy/report/purchase/details', ShowPharmacyPurchaseDetails, { type:'6', method:'Purchase' });
+    // SearchAjax('pharmacy/report/purchase/details', ShowPharmacyPurchaseDetails, { type:'6', method:'Purchase' });
 
 
     // Search By Month or Year
-    SearchByDateAjax('pharmacy/report/purchase/details', ShowPharmacyPurchaseDetails, { type:'6', method:'Purchase' })
+    // SearchByDateAjax('pharmacy/report/purchase/details', ShowPharmacyPurchaseDetails, { type:'6', method:'Purchase' })
 });

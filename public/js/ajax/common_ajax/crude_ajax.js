@@ -1,85 +1,48 @@
 //////////////////// -------------------- Show Data on Hard Reload -------------------- ////////////////////
 //////////////////// -------------------- Reload Content in Current Pagination Page After Successful Add/Update/Delete -------------------- ////////////////////
-function ReloadData(link, RenderData){
-    const queryParams = GetQueryParams();
-    const url = window.location.href.includes('/search')
-        ? `${apiUrl}/${link}/search`
-        : `${apiUrl}/${link}`;
+// function ReloadData(link, RenderData){
+//     const queryParams = GetQueryParams();
+//     const url = window.location.href.includes('/search')
+//         ? `${apiUrl}/${link}/search`
+//         : `${apiUrl}/${link}`;
         
-    LoadBackendData(url, RenderData, queryParams);
+//     LoadBackendData(url, RenderData, queryParams);
 
-    // CheckIfLastPage(function(isLastPage) {
-    //     if(isLastPage){
-    //         queryParams['page'] = GetCurrentPageFromURL() - 1;
-    //     }
-    //     if (window.location.href.includes('/search')) {
-    //         LoadBackendData(`${apiUrl}/${link}/search`, RenderData, queryParams);
-    //     }
-    //     else{
-    //         LoadBackendData(`${apiUrl}/${link}`, RenderData, queryParams); 
-    //     }
-    // });
-}; // End Method
+//     // CheckIfLastPage(function(isLastPage) {
+//     //     if(isLastPage){
+//     //         queryParams['page'] = GetCurrentPageFromURL() - 1;
+//     //     }
+//     //     if (window.location.href.includes('/search')) {
+//     //         LoadBackendData(`${apiUrl}/${link}/search`, RenderData, queryParams);
+//     //     }
+//     //     else{
+//     //         LoadBackendData(`${apiUrl}/${link}`, RenderData, queryParams); 
+//     //     }
+//     // });
+// }; // End Method
 
 
 
 
 
 //////////////////// -------------------- Show Data Ajax Part Start -------------------- ////////////////////
-function LoadBackendData(url, RenderData, queryParams) {
-    $.ajax({
-        url: url,
-        type: 'GET',
-        data: queryParams,
-        success: function(response) {
-            if (response.status) {
-                UpdateUrl(url, queryParams);
-
-                if (response.redirect) {
-                    window.location.href = response.redirect;
-                    return;
-                }
-                
-                let startIndex = (response.data.current_page - 1) * response.data.per_page;
-                RenderData(response.data.data ? response.data.data : response.data, startIndex, response);
-                response.data.path ? RenderPagination(response.data) : null;
-            }
-            else{
-                toastr.error(response.message, "Wrong Command!");
-            }
-        }
-    });
-}; // End Method
-
-
-
-
-
-// function ReloadData(url, RenderData, queryParams = {}) {
+// function LoadBackendData(url, RenderData, queryParams) {
 //     $.ajax({
-//         url: `${apiUrl}/${url}`,
+//         url: url,
 //         type: 'GET',
 //         data: queryParams,
-//         beforeSend: function () {
-//             $('.load-data tbody').html(`
-//                 <tr>
-//                     <td colspan="15">
-//                         <div class="loader-container">
-//                             <div class="spinner"></div>
-//                             <div class="loader-text">Loading, please wait...</div>
-//                         </div>
-//                     </td>
-//                 </tr>
-//             `);
-//         },
 //         success: function(response) {
 //             if (response.status) {
+//                 UpdateUrl(url, queryParams);
+
 //                 if (response.redirect) {
 //                     window.location.href = response.redirect;
 //                     return;
 //                 }
                 
-//                 RenderData(response);
+//                 let startIndex = (response.data.current_page - 1) * response.data.per_page;
+//                 RenderData(response.data.data ? response.data.data : response.data, startIndex, response);
+//                 response.data.path ? RenderPagination(response.data) : null;
 //             }
 //             else{
 //                 toastr.error(response.message, "Wrong Command!");
@@ -87,6 +50,43 @@ function LoadBackendData(url, RenderData, queryParams) {
 //         }
 //     });
 // }; // End Method
+
+
+
+
+
+function ReloadData(url, RenderData, queryParams = {}) {
+    $.ajax({
+        url: `${apiUrl}/${url}`,
+        type: 'GET',
+        data: queryParams,
+        beforeSend: function () {
+            $('.load-data tbody').html(`
+                <tr>
+                    <td colspan="15">
+                        <div class="loader-container">
+                            <div class="spinner"></div>
+                            <div class="loader-text">Loading, please wait...</div>
+                        </div>
+                    </td>
+                </tr>
+            `);
+        },
+        success: function(response) {
+            if (response.status) {
+                if (response.redirect) {
+                    window.location.href = response.redirect;
+                    return;
+                }
+                
+                RenderData(response);
+            }
+            else{
+                toastr.error(response.message, "Wrong Command!");
+            }
+        }
+    });
+}; // End Method
 
 
 

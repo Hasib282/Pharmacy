@@ -99,6 +99,17 @@ function ShowDetailsReports(data, startIndex) {
 
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
+
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+    
     
     // Creating Select Options Dynamically
     $.ajax({
@@ -116,17 +127,17 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowDetailsReports);
+    // PaginationAjax(ShowDetailsReports);
 
 
     // Search Ajax
-    SearchAjax('report/account/details', ShowDetailsReports, {type: { selector: "#typeOption"}});
+    // SearchAjax('report/account/details', ShowDetailsReports, {type: { selector: "#typeOption"}});
 
 
     // Search By Date
-    SearchByDateAjax('report/account/details', ShowDetailsReports, {type: { selector: "#typeOption"}});
+    // SearchByDateAjax('report/account/details', ShowDetailsReports, {type: { selector: "#typeOption"}});
 
 
     // Search by Type
-    SearchBySelect('report/account/details', ShowDetailsReports, "#typeOption", {type: { selector: "#typeOption"}});
+    // SearchBySelect('report/account/details', ShowDetailsReports, "#typeOption", {type: { selector: "#typeOption"}});
 });

@@ -202,6 +202,16 @@ function ShowPatientRegistration(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('hospital/ptnregistration', ShowPatientRegistration);
     
@@ -240,11 +250,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowPatientRegistration);
+    // PaginationAjax(ShowPatientRegistration);
 
 
     // Search Ajax
-    SearchAjax('hospital/ptnregistration', ShowPatientRegistration);
+    // SearchAjax('hospital/ptnregistration', ShowPatientRegistration);
 
 
     // Additional Edit Functionality

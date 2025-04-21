@@ -43,6 +43,16 @@ function ShowPatients(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('hospital/users/patients', ShowPatients);
     
@@ -65,44 +75,44 @@ $(document).ready(function () {
     UpdateAjax('hospital/users/patients', ShowPatients);
 
     
-     // Update Ajuax
-     $(document).on('submit','#EditForm', function (e) {
-         e.preventDefault();
-//         let formData = new FormData(this);
+//      // Update Ajuax
+//      $(document).on('submit','#EditForm', function (e) {
+//          e.preventDefault();
+// //         let formData = new FormData(this);
 
-        $.ajax({
-            url: "/api/hospital/setup/patients",
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            cache: false,
-            data: formData,
-            beforeSend:function() {
-                $(document).find('span.error').text('');  
-            },
-            success: function (res) {
-                console.log(res);
+//         $.ajax({
+//             url: "/api/hospital/setup/patients",
+//             method: 'POST',
+//             processData: false,
+//             contentType: false,
+//             cache: false,
+//             data: formData,
+//             beforeSend:function() {
+//                 $(document).find('span.error').text('');  
+//             },
+//             success: function (res) {
+//                 console.log(res);
                 
-                if (res.status) {
-                    $('#editModal').hide();
-                    $('#EditForm')[0].reset();
-                    ShowPatients();
-                    // $('.table').load(location.href + ' .table');
-                }
-            },
+//                 if (res.status) {
+//                     $('#editModal').hide();
+//                     $('#EditForm')[0].reset();
+//                     ShowPatients();
+//                     // $('.table').load(location.href + ' .table');
+//                 }
+//             },
 
-            error: function (err) {
-                console.log(err);
+//             error: function (err) {
+//                 console.log(err);
 
-                let error = err.responseJSON;
-                $.each(error.errors, function (key, value) {
-                    $('#update_' + key + "_error").text(value);
-                });
-            }
-        })
+//                 let error = err.responseJSON;
+//                 $.each(error.errors, function (key, value) {
+//                     $('#update_' + key + "_error").text(value);
+//                 });
+//             }
+//         })
 
 
-    });
+//     });
     
 
     // Delete Ajax
@@ -110,11 +120,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowPatients);
+    // PaginationAjax(ShowPatients);
 
 
     // Search Ajax
-    SearchAjax('hospital/users/patients', ShowPatients);
+    // SearchAjax('hospital/users/patients', ShowPatients);
 
 
     // Additional Edit Functionality

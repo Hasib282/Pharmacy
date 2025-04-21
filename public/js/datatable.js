@@ -91,7 +91,7 @@ class GenerateTable {
     globalSearch(query) {
         this.filteredData = this.data.filter(rows =>
             Object.values(rows).some(val =>
-                val.toString().toLowerCase().includes(query.toLowerCase())
+                (val ?? '').toString().toLowerCase().includes(query.toLowerCase())
             )
         );
 
@@ -109,9 +109,11 @@ class GenerateTable {
             filters[input.dataset.key] = input.value.toLowerCase(); // store the filter keys
         });
 
+        console.log(this.filteredData);
         this.filteredData = this.data.filter(row => {
+            
             return Object.keys(filters).every(key =>
-                row[key].toString().toLowerCase().includes(filters[key])
+                (row[key] ?? '').toString().toLowerCase().includes(filters[key])
             );
         });
 

@@ -26,18 +26,28 @@ function ShowInventoryExpiryDetails(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('inventory/report/expiry/statement', ShowInventoryExpiryDetails);
     
 
     // Pagination Ajax
-    PaginationAjax(ShowInventoryExpiryDetails);
+    // PaginationAjax(ShowInventoryExpiryDetails);
 
 
     // Search Ajax
-    SearchAjax('inventory/report/expiry/statement', ShowInventoryExpiryDetails);
+    // SearchAjax('inventory/report/expiry/statement', ShowInventoryExpiryDetails);
 
 
     // Search By Month or Year
-    SearchByDateAjax('inventory/report/expiry/statement', ShowInventoryExpiryDetails)
+    // SearchByDateAjax('inventory/report/expiry/statement', ShowInventoryExpiryDetails)
 });

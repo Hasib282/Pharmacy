@@ -36,6 +36,16 @@ function ShowBankWithdraws(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(4, "Receive");
 
@@ -86,15 +96,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowBankWithdraws);
+    // PaginationAjax(ShowBankWithdraws);
 
 
     // Search Ajax
-    SearchAjax('transaction/bank/withdraw', ShowBankWithdraws, {type: 4, method: 'Withdraw'});
+    // SearchAjax('transaction/bank/withdraw', ShowBankWithdraws, {type: 4, method: 'Withdraw'});
 
 
     // Search By Date
-    SearchByDateAjax('transaction/bank/withdraw', ShowBankWithdraws, {type: 4, method: 'Withdraw'});
+    // SearchByDateAjax('transaction/bank/withdraw', ShowBankWithdraws, {type: 4, method: 'Withdraw'});
 
 
     // Additional Edit Functionality

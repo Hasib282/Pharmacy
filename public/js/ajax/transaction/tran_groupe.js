@@ -37,6 +37,17 @@ function ShowTranGroupe(data, startIndex) {
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
 
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('transaction/setup/groupes', ShowTranGroupe);
     
@@ -64,15 +75,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowTranGroupe);
+    // PaginationAjax(ShowTranGroupe);
 
 
     // Search Ajax
-    SearchAjax('transaction/setup/groupes', ShowTranGroupe, {type: 1, method: { selector: "#methods"}});
+    // SearchAjax('transaction/setup/groupes', ShowTranGroupe, {type: 1, method: { selector: "#methods"}});
 
 
     // Search By Methods, Types
-    SearchBySelect('transaction/setup/groupes', ShowTranGroupe, '#methods', {type: 1, method: { selector: "#methods"}} );
+    // SearchBySelect('transaction/setup/groupes', ShowTranGroupe, '#methods', {type: 1, method: { selector: "#methods"}} );
 
 
     // Additional Edit Functionality

@@ -115,15 +115,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowInventorySupplierReturns);
+    // PaginationAjax(ShowInventorySupplierReturns);
 
 
     // Search Ajax
-    SearchAjax('inventory/transaction/return/supplier', ShowInventorySupplierReturns, { type: 5, method: 'Supplier Return' });
+    // SearchAjax('inventory/transaction/return/supplier', ShowInventorySupplierReturns, { type: 5, method: 'Supplier Return' });
     
     
     // Search By Date Ajax
-    SearchByDateAjax('inventory/transaction/return/supplier', ShowInventorySupplierReturns, { type: 5, method: 'Supplier Return' });
+    // SearchByDateAjax('inventory/transaction/return/supplier', ShowInventorySupplierReturns, { type: 5, method: 'Supplier Return' });
 
 
     // Additional Edit Functionality

@@ -74,6 +74,16 @@ function ShowTransactionReceives(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(1, "Receive");
 
@@ -118,15 +128,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowTransactionReceives);
+    // PaginationAjax(ShowTransactionReceives);
 
 
     // Search Ajax
-    SearchAjax('transaction/receive', ShowTransactionReceives, { type: 1, method: 'Receive' });
+    // SearchAjax('transaction/receive', ShowTransactionReceives, { type: 1, method: 'Receive' });
 
 
     // Search By Date
-    SearchByDateAjax('transaction/receive', ShowTransactionReceives, {type: 1, method: 'Receive'});
+    // SearchByDateAjax('transaction/receive', ShowTransactionReceives, {type: 1, method: 'Receive'});
 
 
     // Additional Edit Functionality

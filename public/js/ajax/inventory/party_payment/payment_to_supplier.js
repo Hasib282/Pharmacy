@@ -46,6 +46,16 @@ function ShowPaymentToSuppliers(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('inventory/party/payment', ShowPaymentToSuppliers);
     
@@ -90,15 +100,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowPaymentToSuppliers);
+    // PaginationAjax(ShowPaymentToSuppliers);
 
 
     // Search Ajax
-    SearchAjax('inventory/party/payment', ShowPaymentToSuppliers);
+    // SearchAjax('inventory/party/payment', ShowPaymentToSuppliers);
 
 
     // Search By Date
-    SearchByDateAjax('inventory/party/payment', ShowPaymentToSuppliers);
+    // SearchByDateAjax('inventory/party/payment', ShowPaymentToSuppliers);
 
 
     // Additional Edit Functionality

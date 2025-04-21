@@ -70,6 +70,16 @@ function ShowInventoryIssues(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Transaction Groupe
     GetTransactionGroupe(5, "Receive");
 
@@ -110,15 +120,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowInventoryIssues);
+    // PaginationAjax(ShowInventoryIssues);
 
 
     // Search Ajax
-    SearchAjax('inventory/transaction/issue', ShowInventoryIssues, { type: 5, method: 'Issue' });
+    // SearchAjax('inventory/transaction/issue', ShowInventoryIssues, { type: 5, method: 'Issue' });
 
 
     // Search By Ajax
-    SearchByDateAjax('inventory/transaction/issue', ShowInventoryIssues, { type: 5, method: 'Issue' });
+    // SearchByDateAjax('inventory/transaction/issue', ShowInventoryIssues, { type: 5, method: 'Issue' });
 
 
     // Additional Edit Functionality

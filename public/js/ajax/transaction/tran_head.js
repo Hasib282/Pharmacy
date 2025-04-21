@@ -37,6 +37,16 @@ function ShowTranHead(data, startIndex) {
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
 
+
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
     
     // Load Transaction Groupe
     GetTransactionGroupe(1, null, "Ok");
@@ -69,11 +79,11 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowTranHead);
+    // PaginationAjax(ShowTranHead);
 
 
     // Search Ajax
-    SearchAjax('transaction/setup/heads', ShowTranHead);
+    // SearchAjax('transaction/setup/heads', ShowTranHead);
 
 
     // Additional Edit Functionality

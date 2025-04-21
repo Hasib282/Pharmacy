@@ -5,7 +5,7 @@
 
 @extends('layouts.layout')
 @section('main-content')
-    <div class="add-search">
+    {{-- <div class="add-search">
         <div class="rows">
             <div class="c-3">
                 <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
@@ -14,7 +14,7 @@
                 <div class="form-input-group">
                     <label for="searchHead">Main Head</label>
                     <select name="searchHead" id="searchHead">
-                        {{-- options will be display dynamically --}}
+                        options will be display dynamically
                     </select>
                 </div>
             </div>
@@ -46,6 +46,34 @@
         </table>
         
         <div class="center paginate" id="paginate"></div>
+    </div> --}}
+
+
+    {{-- Add Button And Search Fields --}}
+    <div class="add-search">
+        <div class="rows">
+            <div class="c-3">
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            </div>
+            <div class="c-6">
+
+            </div>
+            <div class="c-3" style="padding: 0;">
+                <input type="text" id="globalSearch" placeholder="Search..." />
+            </div>
+        </div>
+    </div>
+
+    {{-- Datatable Part --}}
+    <div class="load-data">
+        <table class="data-table" id="data-table">
+            <caption>{{ $name }} Details</caption>
+            <thead></thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+        </table>
+
+        <div id="paginate"></div>
     </div>
 
 

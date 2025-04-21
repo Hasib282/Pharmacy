@@ -46,6 +46,16 @@ function ShowReceiveFromClients(data, startIndex) {
 
 
 $(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Company Name', key: 'name' },
+        { label: 'Permission', key: 'permission' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
     // Load Data on Hard Reload
     ReloadData('pharmacy/party/receive', ShowReceiveFromClients);
     
@@ -90,15 +100,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowReceiveFromClients);
+    // PaginationAjax(ShowReceiveFromClients);
 
 
     // Search Ajax
-    SearchAjax('pharmacy/party/receive', ShowReceiveFromClients);
+    // SearchAjax('pharmacy/party/receive', ShowReceiveFromClients);
 
 
     // Search By Date
-    SearchByDateAjax('pharmacy/party/receive', ShowReceiveFromClients);
+    // SearchByDateAjax('pharmacy/party/receive', ShowReceiveFromClients);
 
 
     // Additional Edit Functionality
