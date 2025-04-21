@@ -13,7 +13,7 @@ class PermissionHeadController extends Controller
 {
     // Show All Permission Head
     public function ShowAll(Request $req){
-        $data = Permission_Head::on('mysql')->with('mainhead')->orderBy('created_at','asc')->paginate(15);
+        $data = Permission_Head::on('mysql')->with('mainhead')->orderBy('created_at','asc')->get();
         $permissionMainhead = Permission_Main_Head::on('mysql')->orderBy('created_at','asc')->get();
         return response()->json([
             'status'=> true,

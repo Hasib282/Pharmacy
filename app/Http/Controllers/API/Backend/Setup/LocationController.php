@@ -11,7 +11,7 @@ class LocationController extends Controller
 {
     // Show All Locations
     public function ShowAll(Request $req){
-        $data = Location_Info::on('mysql')->orderBy('added_at')->paginate(15);
+        $data = Location_Info::on('mysql')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

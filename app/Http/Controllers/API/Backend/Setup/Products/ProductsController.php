@@ -38,7 +38,7 @@ class ProductsController extends Controller
                     })
                 )
                 ->orderBy('added_at','asc')
-                ->paginate(15);
+                ->get();
         
         return response()->json([
             'status'=> true,

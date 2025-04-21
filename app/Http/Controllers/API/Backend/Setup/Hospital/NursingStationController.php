@@ -11,7 +11,7 @@ class NursingStationController extends Controller
 {
     // Show All Nursing station
     public function ShowAll(Request $req){
-        $data = Nursing_Station::on('mysql_second')->paginate(15);
+        $data = Nursing_Station::on('mysql_second')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

@@ -16,7 +16,7 @@ class CompanyPermissionController extends Controller
     // Show All Company Permissions
     public function ShowAll(Request $req){
         $types = Company_Type::on('mysql')->get();
-        $data = Company_Details::on('mysql')->with('permissions')->orderBy('company_id')->paginate(15);
+        $data = Company_Details::on('mysql')->with('permissions')->orderBy('company_id')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

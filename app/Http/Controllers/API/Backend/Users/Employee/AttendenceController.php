@@ -23,7 +23,7 @@ class AttendenceController extends Controller
 {
     // Show All Attendence
     public function ShowAll(Request $req){
-        $data = Attendence::with('User')->orderBy('insert_at')->whereRaw("DATE(date) = ?", [date('Y-m-d')])->paginate(15);
+        $data = Attendence::with('User')->orderBy('insert_at')->whereRaw("DATE(date) = ?", [date('Y-m-d')])->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

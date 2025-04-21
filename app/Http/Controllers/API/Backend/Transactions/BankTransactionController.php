@@ -15,7 +15,7 @@ class BankTransactionController extends Controller
 {
     // Show All Bank Withdraws
     public function ShowAllWithdraws(Request $req){
-        $data = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Withdraw')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
+        $data = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Withdraw')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
         foreach ($data as $item) {
             $item->bill_amount = number_format($item->bill_amount, 0, '.', ',');
         }

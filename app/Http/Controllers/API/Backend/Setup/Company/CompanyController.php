@@ -17,7 +17,7 @@ class CompanyController extends Controller
 {
     // Show All Companies
     public function ShowAll(Request $req){
-        $data = Company_Details::on('mysql')->with('Type')->orderBy('added_at','asc')->paginate(15);
+        $data = Company_Details::on('mysql')->with('Type')->orderBy('added_at','asc')->get();
         $type = Company_Type::on('mysql')->get();
         return response()->json([
             'status'=> true,

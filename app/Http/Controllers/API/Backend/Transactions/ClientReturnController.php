@@ -22,7 +22,7 @@ class ClientReturnController extends Controller
         ->where('tran_type', $type)
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
         ->orderBy('tran_date','asc')
-        ->paginate(15);
+        ->get();
 
         return response()->json([
             'status'=> true,

@@ -12,7 +12,7 @@ class DepartmentController extends Controller
 {
     // Show All Departments
     public function ShowAll(Request $req){
-        $data = Department::on('mysql_second')->orderBy('added_at','asc')->paginate(15);
+        $data = Department::on('mysql_second')->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

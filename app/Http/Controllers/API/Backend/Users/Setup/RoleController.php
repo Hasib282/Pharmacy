@@ -12,7 +12,7 @@ class RoleController extends Controller
 {
     // Show All User Roles
     public function ShowAll(Request $req){
-        $data = Role::on('mysql')->orderBy('added_at','asc')->paginate(15);
+        $data = Role::on('mysql')->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,

@@ -13,7 +13,7 @@ class OrganizationDetailsController extends Controller
 {
     // Show All Employee Organization Details
     public function ShowAll(Request $req){
-        $data = User_Info::on('mysql_second')->with('Withs','Location','organizationDetail')->where('user_role', 3)->orderBy('added_at','asc')->paginate(15);
+        $data = User_Info::on('mysql_second')->with('Withs','Location','organizationDetail')->where('user_role', 3)->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
