@@ -1,37 +1,50 @@
-function ShowTranWith(data, startIndex) {
-    let tableRows = '';
+// function ShowTranWith(data, startIndex) {
+//     let tableRows = '';
     
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            tableRows += `
-                <tr>
-                    <td>${startIndex + key + 1}</td>
-                    <td>${item.tran_with_name}</td>
-                    <td>${item.role.name}</td>
-                    <td>${item.tran_method}</td>
-                    <td>${item.type.type_name}</td>
-                    <td>
-                        <div style="display: flex;gap:5px;">
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             tableRows += `
+//                 <tr>
+//                     <td>${startIndex + key + 1}</td>
+//                     <td>${item.tran_with_name}</td>
+//                     <td>${item.role.name}</td>
+//                     <td>${item.tran_method}</td>
+//                     <td>${item.type.type_name}</td>
+//                     <td>
+//                         <div style="display: flex;gap:5px;">
                             
-                            <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
+//                             <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
                             
-                            <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
+//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
                             
-                        </div>
-                    </td>
-                </tr>
-            `;
-        });
+//                         </div>
+//                     </td>
+//                 </tr>
+//             `;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html('')
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html('');
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
+
+function ShowTranWith(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['tran_with_name','role.name','tran_method','type.type_name'],
+        actions: (row) => `
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                        
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `,
+    });
+}
 
 
 

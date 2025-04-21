@@ -25,10 +25,10 @@ class UserPermissionController extends Controller
             $data = Login_User::on('mysql')->whereNotIn('user_role', ['1','4','5'])->whereNotIn('user_id', [Auth::user()->user_id])->with('permissions')->where('company_id', Auth::user()->company_id)->orderBy('user_id')->get();
         }
 
-        $data->getCollection()->transform(function ($user) {
-            $user->auth_user_role = Auth::user()->user_role;
-            return $user;
-        });
+        // $data->getCollection()->transform(function ($user) {
+        //     $user->auth_user_role = Auth::user()->user_role;
+        //     return $user;
+        // });
         return response()->json([
             'status'=> true,
             'data' => $data,

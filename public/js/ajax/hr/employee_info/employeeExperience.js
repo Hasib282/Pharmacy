@@ -1,51 +1,62 @@
-function ShowEmployeeExperienceDetails(data, startIndex) {
-    let tableRows = '';
+// function ShowEmployeeExperienceDetails(data, startIndex) {
+//     let tableRows = '';
     
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            tableRows += `
-                <tr>
-                    <td>${startIndex + key + 1}</td>
-                    <td>${item.user_id}</td>
-                    <td>${item.user_name}</td>
-                    <td>${item.dob}</td>
-                    <td>${item.gender}</td>
-                    <td>${item.user_email}</td>
-                    <td>${item.user_phone}</td>
-                    <td>${item.address}</td>
-                    <td><img src="${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
-                    <td>
-                        ${item.status == 1 ?
-                            `<button class="btn btn-success btn-sm toggle-status" data-id="${item.id}"
-                                data-table="Inv_Client_Info" data-status="${item.status}" data-target=".client">Active</button>`
-                            :
-                            `<button class="btn btn-danger btn-sm toggle-status" data-id="${item.id}" data-table="Inv_Client_Info"
-                                data-status="${item.status}" data-target=".client">Inactive</button>`
-                        }
-                    </td>
-                    <td>
-                        <div style="display: flex;gap:5px;">
-                            <button class="btn-show" id="showGrid" data-id="${item.user_id}">Show <i class="fa fa-chevron-circle-right"></i></button>
-                            <button class="open-modal" data-modal-id="detailsModal" id="details"
-                                data-id="${item.user_id}"><i class="fa-solid fa-circle-info"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr id="grid${item.user_id}" style="display:none"></tr>
-            `;
-        });
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             tableRows += `
+//                 <tr>
+//                     <td>${startIndex + key + 1}</td>
+//                     <td>${item.user_id}</td>
+//                     <td>${item.user_name}</td>
+//                     <td>${item.dob}</td>
+//                     <td>${item.gender}</td>
+//                     <td>${item.user_email}</td>
+//                     <td>${item.user_phone}</td>
+//                     <td>${item.address}</td>
+//                     <td><img src="${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
+//                     <td>
+//                         ${item.status == 1 ?
+//                             `<button class="btn btn-success btn-sm toggle-status" data-id="${item.id}"
+//                                 data-table="Inv_Client_Info" data-status="${item.status}" data-target=".client">Active</button>`
+//                             :
+//                             `<button class="btn btn-danger btn-sm toggle-status" data-id="${item.id}" data-table="Inv_Client_Info"
+//                                 data-status="${item.status}" data-target=".client">Inactive</button>`
+//                         }
+//                     </td>
+//                     <td>
+//                         <div style="display: flex;gap:5px;">
+//                             <button class="btn-show" id="showGrid" data-id="${item.user_id}">Show <i class="fa fa-chevron-circle-right"></i></button>
+//                             <button class="open-modal" data-modal-id="detailsModal" id="details"
+//                                 data-id="${item.user_id}"><i class="fa-solid fa-circle-info"></i></button>
+//                         </div>
+//                     </td>
+//                 </tr>
+//                 <tr id="grid${item.user_id}" style="display:none"></tr>
+//             `;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="11" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html('')
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html('');
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="11" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
 
-
+function ShowEmployeeExperienceDetails(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['user_id','user_name','withs.tranwith','dob','gender','user_email', 'user_phone','address','image','status'],
+        actions: (row) => `
+                <button class="btn-show" id="showGrid" data-id="${row.user_id}">Show <i class="fa fa-chevron-circle-right"></i></button>
+                
+                <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
+                `,
+    });
+}
 
 $(document).ready(function () {
     // Render The Table Heads

@@ -1,48 +1,58 @@
-function ShowAttendence(data, startIndex) {
-    let tableRows = '';
+// function ShowAttendence(data, startIndex) {
+//     let tableRows = '';
     
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            let startTime = new Date(`1970-01-01 ${item.in}`);
-            let endTime = new Date(`1970-01-01 ${item.out}`);
-            let timeDiffInMilliseconds = endTime - startTime;
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             let startTime = new Date(`1970-01-01 ${item.in}`);
+//             let endTime = new Date(`1970-01-01 ${item.out}`);
+//             let timeDiffInMilliseconds = endTime - startTime;
 
-            // Calculate time difference in hours
-            let timeDiffInHours = (timeDiffInMilliseconds / (1000 * 60 * 60)).toFixed(1);
+//             // Calculate time difference in hours
+//             let timeDiffInHours = (timeDiffInMilliseconds / (1000 * 60 * 60)).toFixed(1);
 
 
-            tableRows += `
-                <tr>
-                    <td>${startIndex + key + 1}</td>
-                    <td>${item.emp_id}</td>
-                    <td>${item.user.user_name}</td>
+//             tableRows += `
+//                 <tr>
+//                     <td>${startIndex + key + 1}</td>
+//                     <td>${item.emp_id}</td>
+//                     <td>${item.user.user_name}</td>
                     
-                    <td>${item.date}</td>
-                    <td>${item.in}</td>
-                    <td>${item.out}</td>
-                    <td>${timeDiffInHours}</td>
-                    <td>${item.insert_at}</td>
-                    <td>${item.updated_at}</td>
-                    <td>
-                        <div style="display: flex;gap:5px;">
-                            <button class="open-modal" data-modal-id="editModal" id="edit"
-                                    data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            `;
-        });
+//                     <td>${item.date}</td>
+//                     <td>${item.in}</td>
+//                     <td>${item.out}</td>
+//                     <td>${timeDiffInHours}</td>
+//                     <td>${item.insert_at}</td>
+//                     <td>${item.updated_at}</td>
+//                     <td>
+//                         <div style="display: flex;gap:5px;">
+//                             <button class="open-modal" data-modal-id="editModal" id="edit"
+//                                     data-id="${item.id}"><i class="fas fa-edit"></i></button>
+//                         </div>
+//                     </td>
+//                 </tr>
+//             `;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="12" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html('')
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html('');
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="12" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
 
+function ShowAttendence(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['emp_id','user.user_name','date','in','out','','insert_at','updated_at'],
+        actions: (row) => `
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                `,
+    });
+}
 
 
 $(document).ready(function () {

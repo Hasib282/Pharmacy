@@ -1,34 +1,44 @@
-function ShowPayrolls(data, startIndex) {
-    let tableRows = '';
+// function ShowPayrolls(data, startIndex) {
+//     let tableRows = '';
     
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            tableRows += `
-                <tr>
-                    <td>${key + 1}</td>
-                    <td>${item['emp_id']}</td>
-                    <td>${item['emp_name']}</td>
-                    <td>${item['salary'].toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td>
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             tableRows += `
+//                 <tr>
+//                     <td>${key + 1}</td>
+//                     <td>${item['emp_id']}</td>
+//                     <td>${item['emp_name']}</td>
+//                     <td>${item['salary'].toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                     <td>
                         
-                        <button class="open-modal" data-modal-id="editModal" id="edit"
-                                    data-id="${item['emp_id']}"><i class="fa-solid fa-circle-info"></i></button>
+//                         <button class="open-modal" data-modal-id="editModal" id="edit"
+//                                     data-id="${item['emp_id']}"><i class="fa-solid fa-circle-info"></i></button>
                         
-                    </td>
-                </tr>
-            `;
-        });
+//                     </td>
+//                 </tr>
+//             `;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="6" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html('')
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html('');
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="6" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
 
+function ShowPayrolls(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['emp_id','employee_name','slary'],
+        actions: (row) => `
+                <button data-modal-id="editModal" id="edit" data-id="${row.emp_id}"><i class="fas fa-edit"></i></button>
+                `,
+    });
+}
 
 
 $(document).ready(function () {
