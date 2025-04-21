@@ -1,44 +1,55 @@
-function ShowRolePermissions(data, startIndex) {
-    let tableRows = '';
+// function ShowRolePermissions(data, startIndex) {
+//     let tableRows = '';
 
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            let permissionNames = '';
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             let permissionNames = '';
             
-            // Loop through item.routes and concatenate the route names
-            $.each(item.permissions, function (key, permission) {
-                permissionNames += `${permission.name}, `;
-            });
+//             // Loop through item.routes and concatenate the route names
+//             $.each(item.permissions, function (key, permission) {
+//                 permissionNames += `${permission.name}, `;
+//             });
 
-            // Remove the trailing comma and space if there are route names
-            permissionNames = permissionNames.slice(0, -2);
-            tableRows += `
-                <tr>
-                    <td style="width: 4%;">${key + 1}</td>
-                    <td style="width: 20%;">${item.name}</td>
-                    <td class="truncate-text">
-                        ${permissionNames}
-                    </td>
-                    <td style="width: 10%;">
-                        <div style="display: flex;gap:5px;">
-                            <button class="open-modal" data-modal-id="editModal" id="edit"
-                                    data-id="${item.id}"><i class="fas fa-edit"></i> Assign</button>
-                        </div>
-                    </td>
-                </tr>
-            `;
-        });
+//             // Remove the trailing comma and space if there are route names
+//             permissionNames = permissionNames.slice(0, -2);
+//             tableRows += `
+//                 <tr>
+//                     <td style="width: 4%;">${key + 1}</td>
+//                     <td style="width: 20%;">${item.name}</td>
+//                     <td class="truncate-text">
+//                         ${permissionNames}
+//                     </td>
+//                     <td style="width: 10%;">
+//                         <div style="display: flex;gap:5px;">
+//                             <button class="open-modal" data-modal-id="editModal" id="edit"
+//                                     data-id="${item.id}"><i class="fas fa-edit"></i> Assign</button>
+//                         </div>
+//                     </td>
+//                 </tr>
+//             `;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html('')
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html('');
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
 
+
+function ShowRolePermissions(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['name','permissionNames'],
+        actions: (row) => `
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                `,
+    });
+}
 
 
 $(document).ready(function () {

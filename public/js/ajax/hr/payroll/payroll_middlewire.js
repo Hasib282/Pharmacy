@@ -1,54 +1,66 @@
-function ShowPayrollMiddlewire(data, startIndex) {
-    let tableRows = '';
-    let lastEmpId = null;
+// function ShowPayrollMiddlewire(data, startIndex) {
+//     let tableRows = '';
+//     let lastEmpId = null;
     
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            tableRows += `
-                <tr>
-                    <td>${startIndex + key + 1}</td>
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             tableRows += `
+//                 <tr>
+//                     <td>${startIndex + key + 1}</td>
 
                     
-                    ${item.emp_id != lastEmpId ?
-                        `<td>${item.emp_id}</td>
-                        <td>${item.employee.user_name}</td>`
-                        :
-                        `<td colspan="2"></td>`
-                    }
+//                     ${item.emp_id != lastEmpId ?
+//                         `<td>${item.emp_id}</td>
+//                         <td>${item.employee.user_name}</td>`
+//                         :
+//                         `<td colspan="2"></td>`
+//                     }
 
-                    <td>${item.head.tran_head_name}</td>
-                    <td>${item.amount}</td>
-                    ${item.date != null ?
-                        `<td>${new Date(item.date).toLocaleString('en-US', { month: '2-digit' })}</td>
-                        <td>${new Date(item.date).getFullYear()}</td>`
-                        :
-                        `<td colspan="2"></td>`
-                    }
+//                     <td>${item.head.tran_head_name}</td>
+//                     <td>${item.amount}</td>
+//                     ${item.date != null ?
+//                         `<td>${new Date(item.date).toLocaleString('en-US', { month: '2-digit' })}</td>
+//                         <td>${new Date(item.date).getFullYear()}</td>`
+//                         :
+//                         `<td colspan="2"></td>`
+//                     }
                     
-                    <td>
-                        <div style="display: flex;gap:5px;">
-                            <button class="open-modal" data-modal-id="editModal" id="edit"
-                                    data-id="${item.id}"><i class="fas fa-edit"></i></button>
+//                     <td>
+//                         <div style="display: flex;gap:5px;">
+//                             <button class="open-modal" data-modal-id="editModal" id="edit"
+//                                     data-id="${item.id}"><i class="fas fa-edit"></i></button>
                             
-                            <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            `;
+//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
+//                         </div>
+//                     </td>
+//                 </tr>
+//             `;
 
-            lastEmpId = item.emp_id;
-        });
+//             lastEmpId = item.emp_id;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html('')
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html('');
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
 
+function ShowPayrollMiddlewire(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['emp_id','employee.user_name','head.tran_head_name','amount','date','date'],
+        actions: (row) => `
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                        
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `,
+    });
+}
 
 
 $(document).ready(function () {

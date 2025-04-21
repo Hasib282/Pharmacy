@@ -175,13 +175,27 @@ class GenerateTable {
         const start = (this.currentPage - 1) * this.rowsPerPage;
         const pageData = this.filteredData.slice(start, start + this.rowsPerPage);
 
-        tbody.innerHTML = pageData.map((row, i) => `
-            <tr>
-                <td>${start + i + 1}</td>
-                ${this.tbody.map(col => `<td>${row[col]}</td>`).join('')}
-                <td><div id="actions">${this.actions(row)}</div></td>
-            </tr>
-        `).join('');
+        // tbody.innerHTML = pageData.map((row, i) => `
+        //     <tr>
+        //         <td>${start + i + 1}</td>
+        //         ${this.tbody.map(col => `<td>${row[col]}</td>`).join('')}
+        //         <td><div id="actions">${this.actions(row)}</div></td>
+        //     </tr>
+        // `).join('');
+
+        tbody.innerHTML = pageData.map((row, i) => {
+            const columns = this.tbody.map(col => {
+                const value = col.split('.').reduce((obj, key) => obj?.[key], row);
+                return `<td>${value ?? ''}</td>`;
+            }).join('');
+    
+            return `
+                <tr>
+                    <td>${start + i + 1}</td>
+                    ${columns}
+                    <td><div id="actions">${this.actions(row)}</div></td>
+                </tr>`;
+        }).join('');
 
         this.renderPagination();
     }
