@@ -16,7 +16,7 @@ function ShowBankDeposits(data, startIndex) {
                                     data-id="${item.tran_id}"><i class="fas fa-edit"></i></button>
                         
                             <button data-id="${item.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
-                        
+                        gi
                         </div>
                     </td>
                 </tr>

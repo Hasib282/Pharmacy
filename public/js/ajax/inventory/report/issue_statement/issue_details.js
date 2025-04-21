@@ -66,9 +66,18 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: ' User	', key: 'tran_id' },
+        { label: ' Product Name	', key: 'head.tran_head_name' },
+        { label: 'Quantity	', key: 'quantity' },
+        { label: 'Cost Price', key: 'cp' },
+        { label: ' MRP', key: 'mrp' },
+        { label: 'Quantity	', key: 'quantity' },
+        { label: 'Total Cost Price', key: 'quantity' },
+        { label: ' Total MRP	', key: 'company_id' },
+        { label: 'Discount		', key: 'name' },
+        { label: 'Profit	', key: 'permission' },
+        { label: ' Batch Id	', key: 'company_id' },
+        { label: 'Transaction Date	', key: 'name' },
         { label: 'Action', type: 'button' }
     ]);
 

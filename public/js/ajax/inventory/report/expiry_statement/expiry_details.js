@@ -29,9 +29,10 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'User	', key: 'company_id' },
+        { label: 'Product Name', key: 'head.tran_head_name' },
+        { label: 'Expiry Date', key: 'item.expiry_date' },
+        { label: 'Batch Id', key: 'item.tran_id' },
         { label: 'Action', type: 'button' }
     ]);
 

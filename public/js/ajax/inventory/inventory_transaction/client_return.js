@@ -77,9 +77,15 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'Id', key: 'tran_id' },
+        { label: 'User', key: 'user.user_name' },
+        { label: 'Total	', key: 'bill_amount' },
+        { label: '	Discount', key: 'discount' },
+        { label: 'Net Total', key: 'net_amount' },
+        { label: 'Advance', key: 'item.receive' },
+        { label: 'Due Col', key: 'item.due_col' },
+        { label: 'Due Discount', key: 'item.due_disc' },
+        { label: 'Due', key: 'item.due' },
         { label: 'Action', type: 'button' }
     ]);
 
