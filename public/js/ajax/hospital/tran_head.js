@@ -31,6 +31,14 @@ function ShowTranHead(data, startIndex) {
         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
     }
 }; // End Function
+ // Render The Table Heads
+ renderTableHead([
+    { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+    { label: 'Transaction Head Name', key: 'tran_head_name' },
+    { label: 'Transaction Groupe', key: 'tran_groupe_name' },
+    { label: 'Company Id', key: 'company_id' },
+    { label: 'Action', type: 'button' }
+]);
 
 
 

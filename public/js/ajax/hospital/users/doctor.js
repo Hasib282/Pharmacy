@@ -182,9 +182,13 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'Company Name', key: 'title' },
+        { label: 'Name', key: 'name' },
+        { label: 'Degree', key: 'degree' },
+        { label: 'Email', key: 'email' },
+        { label: 'Phone', key: 'phone' },
+        { label: 'Chamber', key: 'chamber' },
+        { label: 'Spacializatio', key: 'spacialization' },
         { label: 'Action', type: 'button' }
     ]);
 

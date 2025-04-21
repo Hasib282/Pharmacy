@@ -41,9 +41,9 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Transaction Head Name', key: 'tran_head_name' },
+        { label: 'Transaction Groupe', key: 'tran_groupe_name' },
         { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
         { label: 'Action', type: 'button' }
     ]);
 

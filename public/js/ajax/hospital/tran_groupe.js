@@ -33,6 +33,16 @@ function ShowTranGroupe(data, startIndex) {
     }
 }; // End Function
 
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Transaction Groupe Name', key: 'tran_groupe_name' },
+        { label: 'Transaction Groupe Type', key: 'type.type_name' },
+        { label: 'Transaction Method', key: 'tran_method' },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Action', type: 'button' }
+    ]);
+
 
 
 $(document).ready(function () {

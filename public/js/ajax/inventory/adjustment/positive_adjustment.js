@@ -38,15 +38,16 @@ function ShowInventoryPositiveAdjustments(data, startIndex) {
 
 
 $(document).ready(function () {
-    // Render The Table Heads
-    renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
-        { label: 'Action', type: 'button' }
-    ]);
-
+   // Render The Table Heads
+   renderTableHead([
+    { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+    { label: ' Id', key: 'tran_id' },
+    { label: 'Product Name', key: 'head.tran_head_name' },
+    { label: 'Store Name', key: 'store.store_name' },
+    { label: 'Quantity', key: 'quantity' },
+    { label: 'Date' },
+    { label: 'Action', type: 'button' }
+]);
 
     // Load Transaction Groupe
     GetTransactionGroupe(5);

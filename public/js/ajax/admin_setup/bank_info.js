@@ -45,9 +45,12 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'Bank Id', key: 'user_id' },
+        { label: 'Name', key: 'name' },
+        { label: 'Email', key: 'email' },
+        { label: 'Phone', key: 'phone' },
+        { label: 'Location	', key: 'location.upazila' },
+        { label: 'Address	', key: 'address' },
         { label: 'Action', type: 'button' }
     ]);
 

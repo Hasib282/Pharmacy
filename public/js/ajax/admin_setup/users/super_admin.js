@@ -40,9 +40,11 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'Super Admin Id', key: 'user_id' },
+        { label: 'Name', key: 'user_name' },
+        { label: 'Email', key: 'user_email' },
+        { label: 'Phone', key: 'user_phone' },
+        { label: 'Image', key: '' },
         { label: 'Action', type: 'button' }
     ]);
 

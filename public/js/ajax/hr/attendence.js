@@ -49,9 +49,15 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'Employee Id', key: 'emp_id' },
+        { label: 'Employee Name', key: 'user.user_name' },
+        { label: 'Date	', key: 'date' },
+        { label: 'In', key: 'in' },
+        { label: 'Out', key: 'out' },
+        { label: 'Working Hours', key: 'timeDiffInHours' },
+        { label: 'Insert At', key: 'insert_at' },
+        { label: 'Update At', key: 'updated_at' },
+        
         { label: 'Action', type: 'button' }
     ]);
 

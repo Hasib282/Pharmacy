@@ -37,9 +37,8 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'Designation', key: 'designation' },
+        { label: 'Department Name', key: 'department.name' },
         { label: 'Action', type: 'button' }
     ]);
 

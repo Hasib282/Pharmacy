@@ -39,16 +39,14 @@ function ShowSalarySummary(data, startIndex) {
 $(document).ready(function () {
     $(document).off(`.${'SearchBySelect'}`);
 
-
-    // Render The Table Heads
-    renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
-        { label: 'Action', type: 'button' }
-    ]);
-
+// Render The Table Heads
+renderTableHead([
+    { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+    { label: ' Id', key: 'company_id' },
+    { label: ' Employee Name', key: 'user_name' },
+    { label: '	Salary Amount' },
+    { label: '	Process Date' }
+]);
     
     // Load Data on Hard Reload
     ReloadData('hr/report/salary/summary', ShowSalarySummary);

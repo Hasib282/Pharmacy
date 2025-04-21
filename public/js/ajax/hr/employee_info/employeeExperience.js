@@ -49,11 +49,17 @@ function ShowEmployeeExperienceDetails(data, startIndex) {
 
 $(document).ready(function () {
     // Render The Table Heads
-    renderTableHead([
+    rerenderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'Id', key: 'user_id' },
+        { label: ' Name', key: 'user_name' },
+        { label: 'Employee Type', key: 'withs.tran_with_name' },
+        { label: 'DOB', key: 'dob' },
+        { label: 'Gender	', key: 'gender' },
+        { label: 'Email', key: 'user_email' },
+        { label: 'Phone', key: '.user_phone' },
+        { label: 'Address', key: 'address' },
+        { label: 'Image', key: '' },
         { label: 'Action', type: 'button' }
     ]);
 

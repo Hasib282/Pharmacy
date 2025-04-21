@@ -55,9 +55,10 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'User Id', key: 'user_id' },
+        { label: 'Company Name', key: 'company.company_name' },
+        { label: 'User Name', key: 'user_name' },
+        { label: 'Permissions', key: 'permissionNames' },
         { label: 'Action', type: 'button' }
     ]);
 

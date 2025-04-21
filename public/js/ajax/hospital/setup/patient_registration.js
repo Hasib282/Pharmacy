@@ -205,9 +205,13 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'Registration Id', key: 'reg_id' },
+        { label: 'Patient', key: 'ptn_id' },
+        { label: 'Bed list', key: 'bed_list' },
+        { label: 'Doctor', key: 'doctor' },
+        { label: 'SR', key: 'sr_id' },
+        { label: 'Admission By', key: 'addmission_by' },
+        { label: 'Added At', key: 'added_at' },
         { label: 'Action', type: 'button' }
     ]);
 
