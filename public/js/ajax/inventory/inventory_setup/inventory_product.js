@@ -1,42 +1,55 @@
-function ShowInventoryProducts(data, startIndex) {
-    let tableRows = '';
+// function ShowInventoryProducts(data, startIndex) {
+//     let tableRows = '';
     
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            tableRows += `
-                <tr>
-                    <td>${startIndex + key + 1}</td>
-                    <td>${item.tran_head_name}</td>
-                    <td>${item.groupe.tran_groupe_name}</td>
-                    <td>${item.category_id == null ? '': item.category.category_name} </td>
-                    <td>${item.manufacturer_id == null ? '': item.manufecturer.manufacturer_name}</td>
-                    <td>${item.form_id == null ? '': item.form.form_name}</td>
-                    <td>${item.quantity}</td>
-                    <td>${item.unit_id == null ? '': item.unit.unit_name}</td>
-                    <td>${item.cp}</td>
-                    <td>${item.mrp}</td>
-                    <td>${item.expiry_date}</td>
-                    ${role == 1 ? `<td>${item.company_id }</td>`: ''}
-                    <td>
-                        <div style="display: flex;gap:5px;">
-                            <button class="open-modal" data-modal-id="editModal" id="edit"
-                                    data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                            <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            `;
-        });
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             tableRows += `
+//                 <tr>
+//                     <td>${startIndex + key + 1}</td>
+//                     <td>${item.tran_head_name}</td>
+//                     <td>${item.groupe.tran_groupe_name}</td>
+//                     <td>${item.category_id == null ? '': item.category.category_name} </td>
+//                     <td>${item.manufacturer_id == null ? '': item.manufecturer.manufacturer_name}</td>
+//                     <td>${item.form_id == null ? '': item.form.form_name}</td>
+//                     <td>${item.quantity}</td>
+//                     <td>${item.unit_id == null ? '': item.unit.unit_name}</td>
+//                     <td>${item.cp}</td>
+//                     <td>${item.mrp}</td>
+//                     <td>${item.expiry_date}</td>
+//                     ${role == 1 ? `<td>${item.company_id }</td>`: ''}
+//                     <td>
+//                         <div style="display: flex;gap:5px;">
+//                             <button class="open-modal" data-modal-id="editModal" id="edit"
+//                                     data-id="${item.id}"><i class="fas fa-edit"></i></button>
+//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
+//                         </div>
+//                     </td>
+//                 </tr>
+//             `;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html('')
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html('');
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
+
+function ShowInventoryProducts(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['tran_head_name','groupe.tran_groupe_name','category.category_name','manufecturer.manufacturer_name','form.form_name','quantity','unit.unit_name',{key:'cp', type: 'number'},{key:'mrp', type: 'number'},{key:'expiry_date', type: 'date'},'company_id'],
+        actions: (row) => `
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                        
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `,
+    });
+}
 
 
 
@@ -46,16 +59,16 @@ $(document).ready(function () {
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
         { label: 'Product Name', key: 'tran_head_name' },
         { label: 'Transaction Groupe', key: 'groupe.tran_groupe_name' },
-        { label: 'Category Name', key: 'category_id' },
-        { label: 'Manufacturer', key: 'manufacturer_id' },
-        { label: 'Item Form Name	', key: 'form_id' },
-        { label: 'QTY	', key: 'quantity' },
-        { label: 'Unite	', key: 'unit_id' },
-        { label: 'CP	', key: 'cp' },
-        { label: 'MRP	', key: 'mrp' },
-        { label: 'Expiry	', key: 'expiry_date' },
-        { label: 'Company Id	', key: 'expiry_date' },
-        { label: 'Action', type: 'company_id' }
+        { label: 'Category Name', key: 'category.category_name' },
+        { label: 'Manufacturer', key: 'manufecturer.manufacturer_name' },
+        { label: 'Item Form Name	', key: 'form.form_name' },
+        { label: 'QTY', key: 'quantity' },
+        { label: 'Unite', key: 'unit.unit_name' },
+        { label: 'CP', key: 'cp' },
+        { label: 'MRP', key: 'mrp' },
+        { label: 'Expiry', key: 'expiry_date', type:'date' },
+        { label: 'Company Id', key: 'company_id' },
+        { label: 'Action', type: 'button' }
     ]);
 
 

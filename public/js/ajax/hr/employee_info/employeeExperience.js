@@ -49,7 +49,7 @@ function ShowEmployeeExperienceDetails(res) {
     new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['user_id','user_name','withs.tran_with_name','dob','gender','user_email', 'user_phone','address','image','status'],
+        tbody: ['user_id','user_name','withs.tran_with_name',{key:'dob', type: 'date'},'gender','user_email', 'user_phone','address',{key:'image', type: 'image'},{key:'status', type: 'status'}],
         actions: (row) => `
                 <button class="btn-show" id="showGrid" data-id="${row.user_id}">Show <i class="fa fa-chevron-circle-right"></i></button>
                 
@@ -72,7 +72,7 @@ $(document).ready(function () {
         { label: 'Address', key: 'address' },
         { label: 'Image' },
         { label: 'Status', key: 'status' },
-        { label: 'Action', type: 'button' }
+        { label: 'Action', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}] }
     ]);
 
 

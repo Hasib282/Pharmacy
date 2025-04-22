@@ -152,7 +152,9 @@
                         filters[input.dataset.key] = input.value.toLowerCase(); // store the filter keys
                     });
 
+                    console.log(this.filteredData);
                     this.filteredData = this.data.filter(row => {
+                        
                         return Object.keys(filters).every(key =>
                             (row[key] ?? '').toString().toLowerCase().includes(filters[key])
                         );
@@ -216,13 +218,27 @@
                     const start = (this.currentPage - 1) * this.rowsPerPage;
                     const pageData = this.filteredData.slice(start, start + this.rowsPerPage);
 
-                    tbody.innerHTML = pageData.map((row, i) => `
-                        <tr>
-                            <td>${start + i + 1}</td>
-                            ${this.tbody.map(col => `<td>${row[col]}</td>`).join('')}
-                            <td><div id="actions">${this.actions(row)}</div></td>
-                        </tr>
-                    `).join('');
+                    // tbody.innerHTML = pageData.map((row, i) => `
+                    //     <tr>
+                    //         <td>${start + i + 1}</td>
+                    //         ${this.tbody.map(col => `<td>${row[col]}</td>`).join('')}
+                    //         <td><div id="actions">${this.actions(row)}</div></td>
+                    //     </tr>
+                    // `).join('');
+
+                    tbody.innerHTML = pageData.map((row, i) => {
+                        const columns = this.tbody.map(col => {
+                            const value = col.split('.').reduce((obj, key) => obj?.[key], row);
+                            return `<td>${value ?? ''}</td>`;
+                        }).join('');
+                
+                        return `
+                            <tr>
+                                <td width="6%">${start + i + 1}</td>
+                                ${columns}
+                                <td width="10%"><div id="actions">${this.actions(row)}</div></td>
+                            </tr>`;
+                    }).join('');
 
                     this.renderPagination();
                 }
@@ -310,14 +326,23 @@
                 const row1 = thead.map(h => `<th>${h.label}</th>`).join('');
 
                 const row2 = thead.map(h => {
-                    if (h.type === 'select') {
-                        const opts = h.options.map(option => `<option value="${option}">${option} / page</option>`).join('');
+                    if (h.type === 'select') { // Rowper page
+                        const opts = h.options.map(option => `<option value="${option}">${option}</option>`).join('');
                         return `<th><select id="rowsPerPage">${opts}</select></th>`;
-                    } else if (h.type === 'button') {
+                    } 
+                    else if (h.status && typeof h.status === 'object') { // Status 
+                        const opts = Object.entries(h.status).map(
+                            ([value, text]) => `<option value="${value}">${text}</option>`
+                        ).join('');
+                        return `<th><select class="col-filter" data-key="${h.key}">${opts}</select></th>`;
+                    }
+                    else if (h.type === 'button') { // Action Button
                         return `<th><button id="exportCSV"><i class="fa-regular fa-file-excel"></i></button></th>`;
-                    } else if (h.key) {
+                    }
+                    else if (h.key) { // Col-Fielter Input
                         return `<th><input type="text" class="col-filter" data-key="${h.key}" /></th>`;
-                    } else {
+                    }
+                    else {
                         return `<th></th>`;
                     }
                 }).join('');

@@ -116,6 +116,10 @@
 
 
 /* ---------------------------------- Data Table Design Start From Here --------------------------- */
+.load-data{
+    overflow-x: auto;
+}
+
 .data-table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -133,6 +137,7 @@
 }
 
 .data-table td, th {
+    font-size: 13px;
     border: 1px solid #80808024;
     text-align: left;
     padding: 2px 4px;

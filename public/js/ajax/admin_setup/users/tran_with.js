@@ -55,9 +55,10 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'User Type', key: 'tran_with_name' },
+        { label: 'User Role', key: 'role.name' },
+        { label: 'Transaction Method', key: 'tran_method' },
+        { label: 'Transaction Type', key: 'tran_type' },
         { label: 'Action', type: 'button' }
     ]);
 
