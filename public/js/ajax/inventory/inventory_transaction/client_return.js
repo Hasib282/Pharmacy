@@ -1,75 +1,90 @@
-function ShowInventoryClientReturns(data, startIndex) {
-    let tableRows = '';
-    let totalBillAmount = 0;
-    let totalDiscount = 0;
-    let totalNetAmount = 0;
-    let totalAdvance = 0;
-    let totalDueCol = 0;
-    let totalDueDiscount = 0;
-    let totalDue = 0;
+// function ShowInventoryClientReturns(data, startIndex) {
+//     let tableRows = '';
+//     let totalBillAmount = 0;
+//     let totalDiscount = 0;
+//     let totalNetAmount = 0;
+//     let totalAdvance = 0;
+//     let totalDueCol = 0;
+//     let totalDueDiscount = 0;
+//     let totalDue = 0;
     
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            tableRows += `
-                <tr>
-                    <td>${startIndex + key + 1}</td>
-                    <td>${item.tran_id}</td>
-                    <td>${item.user.user_name}</td>
-                    <td style="text-align: right">${item.bill_amount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">${item.discount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">${item.net_amount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">
-                        ${item.tran_method == 'Receive' ? item.receive.toLocaleString('en-US', { minimumFractionDigits: 0 }): item.payment.toLocaleString('en-US', { minimumFractionDigits: 0 })} 
-                    </td>
-                    <td style="text-align: right">${item.due_col.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">${item.due_disc.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td style="text-align: right">${item.due.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td>
-                        <div style="display: flex;gap:5px;">
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             tableRows += `
+//                 <tr>
+//                     <td>${startIndex + key + 1}</td>
+//                     <td>${item.tran_id}</td>
+//                     <td>${item.user.user_name}</td>
+//                     <td style="text-align: right">${item.bill_amount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                     <td style="text-align: right">${item.discount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                     <td style="text-align: right">${item.net_amount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                     <td style="text-align: right">
+//                         ${item.tran_method == 'Receive' ? item.receive.toLocaleString('en-US', { minimumFractionDigits: 0 }): item.payment.toLocaleString('en-US', { minimumFractionDigits: 0 })} 
+//                     </td>
+//                     <td style="text-align: right">${item.due_col.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                     <td style="text-align: right">${item.due_disc.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                     <td style="text-align: right">${item.due.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                     <td>
+//                         <div style="display: flex;gap:5px;">
                             
-                            <a class="print-receipt" href="/api/get/invoice?id=${item.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
+//                             <a class="print-receipt" href="/api/get/invoice?id=${item.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
                         
-                            <button class="open-modal" data-modal-id="editModal" id="edit"
-                                data-id="${item.tran_id}"><i class="fas fa-edit"></i></button>
+//                             <button class="open-modal" data-modal-id="editModal" id="edit"
+//                                 data-id="${item.tran_id}"><i class="fas fa-edit"></i></button>
                         
-                            <button data-id="${item.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+//                             <button data-id="${item.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
                             
-                        </div>
-                    </td>
-                </tr>
-            `;
+//                         </div>
+//                     </td>
+//                 </tr>
+//             `;
 
-            totalBillAmount += item.bill_amount;
-            totalDiscount += item.discount;
-            totalNetAmount += item.net_amount;
-            item.tran_method == 'Receive' ? totalAdvance += item.receive : totalAdvance += item.payment;
-            totalDueCol += item.due_col;
-            totalDueDiscount += item.due_disc;
-            totalDue += item.due;
-        });
+//             totalBillAmount += item.bill_amount;
+//             totalDiscount += item.discount;
+//             totalNetAmount += item.net_amount;
+//             item.tran_method == 'Receive' ? totalAdvance += item.receive : totalAdvance += item.payment;
+//             totalDueCol += item.due_col;
+//             totalDueDiscount += item.due_disc;
+//             totalDue += item.due;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html(`
-            <tr>
-                <td colspan="3">Total:</td>
-                <td style="text-align: right">${totalBillAmount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalNetAmount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalAdvance.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalDueCol.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalDueDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td style="text-align: right">${totalDue.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                <td></td>
-            </tr>
-            `
-        );
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="11" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html(`
+//             <tr>
+//                 <td colspan="3">Total:</td>
+//                 <td style="text-align: right">${totalBillAmount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                 <td style="text-align: right">${totalDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                 <td style="text-align: right">${totalNetAmount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                 <td style="text-align: right">${totalAdvance.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                 <td style="text-align: right">${totalDueCol.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                 <td style="text-align: right">${totalDueDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                 <td style="text-align: right">${totalDue.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                 <td></td>
+//             </tr>
+//             `
+//         );
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html('');
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="11" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
+
+function ShowInventoryClientReturns(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'receive', type: 'number'},{key:'due_col', type: 'number'},{key:'due_discount', type: 'number'},{key:'due', type: 'number'}],
+        actions: (row) => `
+                <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
+
+                <button data-modal-id="editModal" id="edit" data-id="${row.tran_id}"><i class="fas fa-edit"></i></button>
+                        
+                <button data-id="${row.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+                `,
+    });
+}
 
 
 
@@ -82,10 +97,10 @@ $(document).ready(function () {
         { label: 'Total	', key: 'bill_amount' },
         { label: '	Discount', key: 'discount' },
         { label: 'Net Total', key: 'net_amount' },
-        { label: 'Advance', key: 'item.receive' },
-        { label: 'Due Col', key: 'item.due_col' },
-        { label: 'Due Discount', key: 'item.due_disc' },
-        { label: 'Due', key: 'item.due' },
+        { label: 'Advance', key: 'receive' },
+        { label: 'Due Col', key: 'due_col' },
+        { label: 'Due Discount', key: 'due_disc' },
+        { label: 'Due', key: 'due' },
         { label: 'Action', type: 'button' }
     ]);
 

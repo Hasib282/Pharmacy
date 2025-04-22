@@ -1,39 +1,52 @@
-function ShowInventoryNegativeAdjustments(data, startIndex) {
-    let tableRows = '';
+// function ShowInventoryNegativeAdjustments(data, startIndex) {
+//     let tableRows = '';
     
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            tableRows += `
-                <tr>
-                    <td>${startIndex + key + 1}</td>
-                    <td>${item.tran_id}</td>
-                    <td>${item.head.tran_head_name}</td>
-                    <td>${item.store.store_name}</td>
-                    <td>${item.quantity}</td>
-                    <td>${new Date(item.tran_date).toISOString().split('T')[0]}</td>
-                    <td>
-                        <div style="display: flex;gap:5px;">
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             tableRows += `
+//                 <tr>
+//                     <td>${startIndex + key + 1}</td>
+//                     <td>${item.tran_id}</td>
+//                     <td>${item.head.tran_head_name}</td>
+//                     <td>${item.store.store_name}</td>
+//                     <td>${item.quantity}</td>
+//                     <td>${new Date(item.tran_date).toISOString().split('T')[0]}</td>
+//                     <td>
+//                         <div style="display: flex;gap:5px;">
 
-                            <button class="open-modal" data-modal-id="editModal" id="edit"
-                                    data-id="${item.id}"><i class="fas fa-edit"></i></button>
+//                             <button class="open-modal" data-modal-id="editModal" id="edit"
+//                                     data-id="${item.id}"><i class="fas fa-edit"></i></button>
 
-                            <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
+//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
                             
-                        </div>
-                    </td>
-                </tr>
-            `;
-        });
+//                         </div>
+//                     </td>
+//                 </tr>
+//             `;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html('')
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html('');
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
+
+function ShowInventoryNegativeAdjustments(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['tran_id','head.tran_head_name','store.store_name','quantity',{key:'tran_date', type: 'date'}],
+        actions: (row) => `
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                        
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `,
+    });
+}
 
 
 
@@ -45,7 +58,7 @@ $(document).ready(function () {
         { label: 'Product Name', key: 'head.tran_head_name' },
         { label: 'Store Name', key: 'store.store_name' },
         { label: 'Quantity', key: 'quantity' },
-        { label: 'Date' },
+        { label: 'Date', key:'tran_date', type:"date" },
         { label: 'Action', type: 'button' }
     ]);
 

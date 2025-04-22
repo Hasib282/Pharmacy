@@ -39,7 +39,7 @@ function ShowAdmins(res) {
     new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['user_id','user_name','user_email', 'user_phone', 'image'],
+        tbody: ['user_id','user_name','user_email', 'user_phone', {key:'image', type: 'image'},{key:'status', type: 'status'}],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -59,6 +59,7 @@ $(document).ready(function () {
         { label: 'Email', key: 'user_email' },
         { label: 'Phone', key: 'user_phone' },
         { label: 'Image'},
+        { label: 'Status', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}]},
         { label: 'Action', type: 'button' }
     ]);
 

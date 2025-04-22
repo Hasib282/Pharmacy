@@ -43,7 +43,7 @@ function ShowCompanies(res) {
     new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['company_id','company_name','type.name','company_email', 'company_phone','address','domain','image'],
+        tbody: ['company_id','company_name','type.name','company_email', 'company_phone','address','domain',{key:'image', type: 'image'}],
         actions: (row) => `
                 <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.id}"><i class="fa-solid fa-circle-info"></i></button>
                 

@@ -43,7 +43,7 @@ function ShowEmployees(res) {
     new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['user_id','user_name','withs.tran_with_name','dob','gender','user_email', 'user_phone','address','image','status'],
+        tbody: ['user_id','user_name','withs.tran_with_name',{key:'dob', type: 'date'},'gender','user_email', 'user_phone','address',{key:'image', type: 'image'},{key:'status', type: 'status'}],
         actions: (row) => `
                 <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
                 
@@ -62,13 +62,13 @@ $(document).ready(function () {
         { label: 'Id', key: 'user_id' },
         { label: 'Name', key: 'user_name' },
         { label: 'Employee Type', key: 'withs.tran_with_name' },
-        { label: 'DOB', key: 'dob' },
+        { label: 'DOB', key: 'dob', type:"date" },
         { label: 'Gender	', key: 'gender' },
         { label: 'Email', key: 'user_email' },
         { label: 'Phone', key: 'user_phone' },
         { label: 'Address', key: 'address' },
         { label: 'Image' },
-        { label: 'Status', key: 'status' },
+        { label: 'Status', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}] },
         { label: 'Action', type: 'button' }
     ]);
 
