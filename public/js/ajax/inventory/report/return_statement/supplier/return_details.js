@@ -50,23 +50,30 @@ function ShowInventorySupplierReturnDetails(data, startIndex) {
     }
 }; // End Function
 
-
+function ShowInventorySupplierReturnDetails(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['tran_id','user.user_name','head.tran_head_name','quantity_actual',{key:'cp', type: 'number'},{key:'totCP', type: 'number'},{key:'discount', type: 'number'},{key:'tot_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due', type: 'number'},{key:'tran_date', type: 'date'}],
+    });
+}
 
 $(document).ready(function () {
-   // Render The Table Heads
-   renderTableHead([
-    { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-    { label: ' Id', key: 'tran_id' },
-    { label: ' User	', key: 'user.user_name' },
-    { label: ' Product Name	', key: 'head.tran_head_name' },
-    { label: 'Quantity	', key: 'quantity' },
-    { label: 'Cost Price', key: 'mrp' },
-    { label: 'Total Cost Price', key: 'mrp * item.quantity' },
-    { label: 'Discount		', key: 'discount' },
-    { label: ' Total	', key: 'tot_amount' },
-    { label: 'Transaction Date	', key: 'tran_date' },
-    { label: 'Action', type: 'button' }
-]);
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'Id', key: 'tran_id' },
+        { label: 'User', key: 'user.user_name' },
+        { label: 'Product Name', key: 'head.tran_head_name' },
+        { label: 'Quantity', key: 'quantity' },
+        { label: 'CP' },
+        { label: 'Total CP' },
+        { label: 'Discount' },
+        { label: 'Total' },
+        { label: 'Advance' },
+        { label: 'Due' },
+        { label: 'Transaction Date', key: 'tran_date' },
+    ]);
 
     // Load Data on Hard Reload
     ReloadData('inventory/report/return/supplier/details', ShowInventorySupplierReturnDetails);

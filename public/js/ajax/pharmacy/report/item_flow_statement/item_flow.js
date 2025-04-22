@@ -1,72 +1,82 @@
-function ShowPharmacyItemflowStatements(data, startIndex, res) {
-    let tableRows = '';
-    let balance = res.openingBalance;
+// function ShowPharmacyItemflowStatements(data, startIndex, res) {
+//     let tableRows = '';
+//     let balance = res.openingBalance;
     
-    tableRows += `
-            <tr>
-                <td></td>
-                <td>Opening Balance</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>${res.openingBalance}</td>
-                <td></td>
-                <td></td>
-            </tr>
-        `;
+//     tableRows += `
+//             <tr>
+//                 <td></td>
+//                 <td>Opening Balance</td>
+//                 <td></td>
+//                 <td></td>
+//                 <td></td>
+//                 <td></td>
+//                 <td>${res.openingBalance}</td>
+//                 <td></td>
+//                 <td></td>
+//             </tr>
+//         `;
 
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            if (item.tran_method == "Purchase") {
-                balance += item.quantity_actual;
-            } else if (item.tran_method == "Issue") {
-                balance -= item.quantity_actual;
-            } else if (item.tran_method == "Supplier Return") {
-                balance -= item.quantity_actual;
-            } else if (item.tran_method == "Client Return") {
-                balance += item.quantity_actual;
-            } else if (item.tran_method == "Positive") {
-                balance += item.quantity_actual;
-            } else if (item.tran_method == "Negative") {
-                balance -= item.quantity_actual;
-            }
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             if (item.tran_method == "Purchase") {
+//                 balance += item.quantity_actual;
+//             } else if (item.tran_method == "Issue") {
+//                 balance -= item.quantity_actual;
+//             } else if (item.tran_method == "Supplier Return") {
+//                 balance -= item.quantity_actual;
+//             } else if (item.tran_method == "Client Return") {
+//                 balance += item.quantity_actual;
+//             } else if (item.tran_method == "Positive") {
+//                 balance += item.quantity_actual;
+//             } else if (item.tran_method == "Negative") {
+//                 balance -= item.quantity_actual;
+//             }
 
-            tableRows += `
-                <tr>
-                    <td>${key + 1}</td>
-                    <td>${item.tran_method}</td>
-                    <td>${(item.tran_method == "Purchase" || item.tran_method == "Positive") ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
-                    <td>${(item.tran_method == "Issue" || item.tran_method == "Negative") ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
-                    <td>${item.tran_method == "Supplier Return" ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
-                    <td>${item.tran_method == "Client Return" ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
-                    <td>${balance.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-                    <td>${item.tran_id}</td>
-                    <td>${new Date(item.tran_date).toLocaleDateString('en-CA')}</td>
-                </tr>
-            `;
-        });
+//             tableRows += `
+//                 <tr>
+//                     <td>${key + 1}</td>
+//                     <td>${item.tran_method}</td>
+//                     <td>${(item.tran_method == "Purchase" || item.tran_method == "Positive") ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
+//                     <td>${(item.tran_method == "Issue" || item.tran_method == "Negative") ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
+//                     <td>${item.tran_method == "Supplier Return" ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0}</td>
+//                     <td>${item.tran_method == "Client Return" ? item.quantity_actual.toLocaleString('en-US', { minimumFractionDigits: 0 }) : 0 }</td>
+//                     <td>${balance.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
+//                     <td>${item.tran_id}</td>
+//                     <td>${new Date(item.tran_date).toLocaleDateString('en-CA')}</td>
+//                 </tr>
+//             `;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html(``);
-    }
-    else{
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('<tr><td colspan="13" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html(``);
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="13" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
 
-
+function ShowPharmacyItemflowStatements(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['tran_method','quantity_actual','quantity_actual','quantity_actual','quantity_actual','balance','tran_id',{key:'tran_date', type: 'date'}],
+    });
+}
 
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
-        { label: 'Action', type: 'button' }
+        { label: 'Status', key: 'tran_method' },
+        { label: 'Receive' },
+        { label: 'Issue' },
+        { label: 'Supplier Return' },
+        { label: 'Client Return' },
+        { label: 'Balance' },
+        { label: 'Tran Id', key: 'tran_id' },
+        { label: 'Date', key: 'tran_date', type:"date" }
     ]);
 
 

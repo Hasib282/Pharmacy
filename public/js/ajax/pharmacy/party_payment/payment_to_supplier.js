@@ -62,7 +62,7 @@ $(document).ready(function () {
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
         { label: 'Transaction Id', key: 'tran_id' },
         { label: 'User Name', key: 'user.user_name' },
-        { label: 'Amount', key: 'bill_amount' },
+        { label: 'Amount' },
         { label: 'Action', type: 'button' }
     ]);
 

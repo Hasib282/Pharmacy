@@ -38,8 +38,6 @@ function ShowTranHead(res) {
         data: res.data,
         tbody: ['tran_head_name','groupe.tran_groupe_name','company_id'],
         actions: (row) => `
-                <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
-                
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
                 <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>

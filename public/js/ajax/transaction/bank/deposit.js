@@ -1,47 +1,58 @@
-function ShowBankDeposits(data, startIndex) {
-    let tableRows = '';
+// function ShowBankDeposits(data, startIndex) {
+//     let tableRows = '';
     
-    if(data.length > 0){
-        $.each(data, function(key, item) {
-            tableRows += `
-                <tr>
-                    <td>${startIndex + key + 1}</td>
-                    <td>${item.tran_id}</td>
-                    <td>${item.bank.name}</td>
-                    <td style="text-align: right">${item.bill_amount} Tk.</td>
-                    <td>
-                        <div style="display: flex;gap:5px;">
+//     if(data.length > 0){
+//         $.each(data, function(key, item) {
+//             tableRows += `
+//                 <tr>
+//                     <td>${startIndex + key + 1}</td>
+//                     <td>${item.tran_id}</td>
+//                     <td>${item.bank.name}</td>
+//                     <td style="text-align: right">${item.bill_amount} Tk.</td>
+//                     <td>
+//                         <div style="display: flex;gap:5px;">
 
-                            <button class="open-modal" data-modal-id="editModal" id="edit"
-                                    data-id="${item.tran_id}"><i class="fas fa-edit"></i></button>
+//                             <button class="open-modal" data-modal-id="editModal" id="edit"
+//                                     data-id="${item.tran_id}"><i class="fas fa-edit"></i></button>
                         
-                            <button data-id="${item.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+//                             <button data-id="${item.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
                         
-                        </div>
-                    </td>
-                </tr>
-            `;
-        });
+//                         </div>
+//                     </td>
+//                 </tr>
+//             `;
+//         });
 
-        // Inject the generated rows into the table body
-        $('.load-data .show-table tbody').html(tableRows);
-        $('.load-data .show-table tfoot').html('')
-    }
-    else{
-        $('.load-data .show-table tbody').html('');
-        $('.load-data .show-table tfoot').html('<tr><td colspan="5" style="text-align:center;">No Data Found</td></tr>')
-    }
-}; // End Function
+//         // Inject the generated rows into the table body
+//         $('.load-data .show-table tbody').html(tableRows);
+//         $('.load-data .show-table tfoot').html('')
+//     }
+//     else{
+//         $('.load-data .show-table tbody').html('');
+//         $('.load-data .show-table tfoot').html('<tr><td colspan="5" style="text-align:center;">No Data Found</td></tr>')
+//     }
+// }; // End Function
 
-
+function ShowBankDeposits(res) {
+    new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['tran_id','bank.name',{key:'bill_amount', type: 'number'}],
+        actions: (row) => `
+                <button data-modal-id="editModal" id="edit" data-id="${row.tran_id}"><i class="fas fa-edit"></i></button>
+                        
+                <button data-id="${row.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+                `,
+    });
+}
 
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: ' Id', key: 'tran_id' },
+        { label: 'Tran Id', key: 'tran_id' },
         { label: 'Bank Name', key: 'bank.name' },
-        { label: 'Amount', key: 'bill_amount' },
+        { label: 'Amount' },
         { label: 'Action', type: 'button' }
     ]);
 
