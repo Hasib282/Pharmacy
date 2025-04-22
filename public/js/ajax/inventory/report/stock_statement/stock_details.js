@@ -36,12 +36,18 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
-        { label: 'Action', type: 'button' }
+        { label: 'Batch Id', key: 'tran_id' },
+        { label: 'Product Name', key: 'head.tran_head_name' },
+        { label: 'Category Name', key: 'head.category_id' },
+        { label: 'Manufacturer', key: 'head.manufecturer_id' },
+        { label: 'Item Form Name	', key: 'head.form_id' },
+        { label: 'QTY	', key: 'quantity' },
+        { label: 'Unite	', key: 'unit_id' },
+        { label: 'CP	', key: 'cp' },
+        { label: 'MRP	', key: 'mrp' },
+        { label: 'Expiry	', key: 'expiry_date' },
+        { label: 'Action', type: 'company_id' }
     ]);
-
 
     // Load Data on Hard Reload
     ReloadData('inventory/report/stock/details', ShowInventoryStockDetails);

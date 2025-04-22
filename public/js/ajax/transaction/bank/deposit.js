@@ -16,7 +16,7 @@ function ShowBankDeposits(data, startIndex) {
                                     data-id="${item.tran_id}"><i class="fas fa-edit"></i></button>
                         
                             <button data-id="${item.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
-                        gi
+                        
                         </div>
                     </td>
                 </tr>
@@ -39,9 +39,9 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: ' Id', key: 'tran_id' },
+        { label: 'Bank Name', key: 'bank.name' },
+        { label: 'Amount', key: 'bill_amount' },
         { label: 'Action', type: 'button' }
     ]);
 

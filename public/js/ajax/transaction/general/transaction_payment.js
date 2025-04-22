@@ -77,11 +77,18 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: 'Id	', key: 'tran_id' },
+        { label: 'User	', key: 'user.user_name' },
+        { label: 'Total ', key: 'bill_amount' },
+        { label: 'Discount ', key: 'discount' },
+        { label: 'Net Total', key: 'net_amount' },
+        { label: 'Advance ', key: 'payment' },
+        { label: 'Due Col', key: 'due_col' },
+        { label: 'Due Discount', key: 'due_disc' },
+        { label: 'Due', key: 'due' },
         { label: 'Action', type: 'button' }
     ]);
+    
 
 
     // Load Transaction Groupe

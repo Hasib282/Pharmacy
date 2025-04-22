@@ -63,9 +63,14 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
+        { label: '	Status', key: 'tran_method' },
+        { label: 'Receive', key: 'tran_method' },
+        { label: 'Issue', key: 'tran_method' },
+        { label: 'Supplier Return', key: 'quantity_actual' },
+        { label: 'Client Return', key: 'quantity_actual' },
+        { label: 'Balance', key: ' 0 ' },
+        { label: 'Tran Id	', key: 'tran_id' },
+        { label: 'Tran Id	', key: 'tran_date' },
         { label: 'Action', type: 'button' }
     ]);
 
