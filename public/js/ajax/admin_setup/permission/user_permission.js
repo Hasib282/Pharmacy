@@ -47,7 +47,7 @@
 // }; // End Function
 
 function ShowUserPermissions(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['user_id','user_name','company.company_name','permissionNames'],

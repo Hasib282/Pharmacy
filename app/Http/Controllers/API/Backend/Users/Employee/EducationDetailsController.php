@@ -63,11 +63,14 @@ class EducationDetailsController extends Controller
             ];
         }
     
-        Employee_Education_Detail::on('mysql_second')->insert($educationDetails);
+        $insert = Employee_Education_Detail::on('mysql_second')->create($educationDetails);
+
+        // $data = Employee_Education_Detail::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Employee Education Details Added Successfully'
+            'message' => 'Employee Education Details Added Successfully',
+            // "data" => $data,
         ], 200);  
     } // End Method
 
@@ -117,6 +120,7 @@ class EducationDetailsController extends Controller
             return response()->json([
                 'status'=>true,
                 'message' => 'Employee Education Details Updated Successfully',
+                // "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

@@ -35,7 +35,7 @@ class DoctorController extends Controller
 
         ]);
 
-        Doctor_Information::on('mysql_second')->insert([
+        $insert = Doctor_Information::on('mysql_second')->create([
             'title'=>$req->title,
             'name'=>$req->name,
             'degree'=>$req->degree,
@@ -46,9 +46,12 @@ class DoctorController extends Controller
             'marketing_head'=>$req->marketing_head
         ]);
 
+        $data = Doctor_Information::on('mysql_second')->findOrFail($insert->id);
+
         return response()->json([
             'status'=>true,
-            'message'=>'Doctors information Added Successfully'
+            'message'=>'Doctors information Added Successfully',
+            "data" => $data,
         ], 200);
     } // End Method
 
@@ -94,7 +97,8 @@ class DoctorController extends Controller
         if($update){
             return response()->json([
                 'status'=>true,
-                'message'=>'Doctors Information Updated Successfully'
+                'message'=>'Doctors Information Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200);
         }
     } // End Method

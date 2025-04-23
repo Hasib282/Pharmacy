@@ -58,7 +58,7 @@
 // }; // End Function
 
 function ShowPharmacyItemflowStatements(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_method','quantity_actual','quantity_actual','quantity_actual','quantity_actual','balance','tran_id',{key:'tran_date', type: 'date'}],

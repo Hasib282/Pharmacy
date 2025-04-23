@@ -202,7 +202,7 @@
 
 
 function ShowPatientRegistration(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['reg_id','ptn_id','bed_list','doctor', 'sr_id','admission_by','added_at'],

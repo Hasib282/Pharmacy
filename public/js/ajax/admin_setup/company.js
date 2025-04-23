@@ -40,7 +40,7 @@
 // }; // End Function
 
 function ShowCompanies(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['company_id','company_name','type.name','company_email', 'company_phone','address','domain',{key:'image', type: 'image'}],

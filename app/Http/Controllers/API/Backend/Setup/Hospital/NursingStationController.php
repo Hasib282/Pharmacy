@@ -27,14 +27,17 @@ class NursingStationController extends Controller
             "floor" => 'required|numeric'
         ]);
 
-        Nursing_Station::on('mysql_second')->insert([
+        $insert = Nursing_Station::on('mysql_second')->create([
             "name" => $req->name,
             "floor" => $req->floor,
         ]);
+
+        $data = Nursing_Station::on('mysql_second')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Nursing station Added Successfully'
+            'message' => 'Nursing station Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -65,10 +68,13 @@ class NursingStationController extends Controller
             "floor" => $req->floor,
         ]);
 
+        $updatedData = Nursing_Station::on('mysql_second')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Nursing station Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

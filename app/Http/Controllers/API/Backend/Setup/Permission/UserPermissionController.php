@@ -73,22 +73,23 @@ class UserPermissionController extends Controller
         $user->permissions()->sync($req->permissions);
 
         // Update User Pemissions Cache
-        $user_data = Login_User::on('mysql')->with('permissions')->where('user_id',$req->user)->first();
+        $updatedData = Login_User::on('mysql')->with('permissions')->where('user_id',$req->user)->first();
 
         Cache::forget("permission_mainheads_{$req->user}");
         Cache::forget("permission_ids_{$req->user}");
 
-        Cache::rememberForever("permission_mainheads_{$req->user}", function () use ($user_data) {
-            return $user_data->permissions->pluck('permission_mainhead')->unique()->toArray();
+        Cache::rememberForever("permission_mainheads_{$req->user}", function () use ($updatedData) {
+            return $updatedData->permissions->pluck('permission_mainhead')->unique()->toArray();
         });
         
-        Cache::rememberForever("permission_ids_{$req->user}", function () use ($user_data) {
-            return $user_data->permissions->pluck('id')->unique()->toArray();
+        Cache::rememberForever("permission_ids_{$req->user}", function () use ($updatedData) {
+            return $updatedData->permissions->pluck('id')->unique()->toArray();
         });
         
         return response()->json([
             'status'=> true,
-            'message' => 'User Permissions Added Successfully'
+            'message' => 'User Permissions Added Successfully',
+            "updatedData" => $updatedData,
         ], 200);  
     } // End Method
 

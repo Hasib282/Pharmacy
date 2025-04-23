@@ -27,13 +27,16 @@ class BedCatagoryController extends Controller
             "name" => 'required|unique:mysql_second.bed__categories,name',
         ]);
 
-        Bed_Category::on('mysql_second')->insert([
+        $insert = Bed_Category::on('mysql_second')->create([
             "name" => $req->name,
         ]);
+
+        $data = Bed_Category::on('mysql_second')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Bed Category Added Successfully'
+            'message' => 'Bed Category Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -63,10 +66,13 @@ class BedCatagoryController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Bed_Category::on('mysql_second')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Bed Category Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

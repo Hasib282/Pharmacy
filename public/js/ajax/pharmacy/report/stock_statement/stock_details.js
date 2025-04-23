@@ -31,7 +31,7 @@
 // }; // End Function
 
 function ShowPharmacyStockDetails(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_id','user.user_name','head.tran_head_name','head.category.category_name','head.manufecturer.manufacturer_name','head.form.form_name','quantity','head.unit.unit_name',{key:'cp', type: 'number'},{key:'mrp', type: 'number'},{key:'expiry_date', type: 'date'}],

@@ -28,15 +28,18 @@ class ManufacturerController extends Controller
             'name' => 'required',
         ]);
  
-        Item_Manufacturer::on('mysql')->insert([
+        $insert = Item_Manufacturer::on('mysql')->create([
             'manufacturer_name' => $req->name,
             'company_id' => $req->company,
             'type_id'=> $type,
         ]);
+
+        $data = Item_Manufacturer::on('mysql')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Manufacturer Added Successfully'
+            'message' => 'Manufacturer Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -64,10 +67,13 @@ class ManufacturerController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Item_Manufacturer::on('mysql')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Manufacturer Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

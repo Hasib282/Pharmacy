@@ -13,7 +13,7 @@ class PermissionHeadController extends Controller
 {
     // Show All Permission Head
     public function ShowAll(Request $req){
-        $data = Permission_Head::on('mysql')->with('mainhead')->orderBy('created_at','asc')->get();
+        $data = Permission_Head::on('mysql')->with('')->orderBy('created_at','asc')->get();
         $permissionMainhead = Permission_Main_Head::on('mysql')->orderBy('created_at','asc')->get();
         return response()->json([
             'status'=> true,
@@ -31,14 +31,17 @@ class PermissionHeadController extends Controller
             "name" => 'required|unique:mysql.permission__heads,name',
         ]);
 
-        Permission_Head::on('mysql')->insert([
+        $insert = Permission_Head::on('mysql')->create([
             "permission_mainhead" => $req->mainhead,
             "name" => $req->name,
         ]);
+
+        $data = Permission_Head::on('mysql')->with('mainhead')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Permission Head Added Successfully'
+            'message' => 'Permission Head Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -71,10 +74,13 @@ class PermissionHeadController extends Controller
             "name" => $req->name
         ]);
 
+        $updatedData = Permission_Head::on('mysql')->with('mainhead')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Permission Head Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

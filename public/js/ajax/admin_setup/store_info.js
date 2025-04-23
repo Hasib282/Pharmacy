@@ -33,7 +33,7 @@
 // }; // End Function
 
 function ShowStores(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['store_name','division','location.upazila','address'],

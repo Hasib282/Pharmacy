@@ -146,7 +146,9 @@ function InsertAjax(link, RenderData, AddData = {}, AddSuccessEvent, method ="PO
                     }
                     $('#previewImage').attr('src', "/images/male.png");
 
-                    ReloadData(link, RenderData);
+                    // ReloadData(link, RenderData);
+                    tableInstance.addRow(res.data);
+
                     toastr.success(res.message, 'Added!');
                 }
             },
@@ -220,13 +222,16 @@ function UpdateAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
             success: function (res) {
                 if (res.status) {
                     $('#editModal').hide();
+                    
                     $('#EditForm')[0].reset();
 
                     if(typeof AdditionalEvent === 'function'){
                         AdditionalEvent();
                     }
                     
-                    ReloadData(link, RenderData);
+                    // ReloadData(link, RenderData);
+                    tableInstance.editRow(formData.get('id'), res.updatedData);
+
                     toastr.success(res.message, 'Updated!');
                 }
             },
@@ -254,8 +259,11 @@ function DeleteAjax(link, RenderData) {
             data:{ id, status },
             success: function (res) {
                 if (res.status) {
-                    ReloadData(link, RenderData);
+                    // ReloadData(link, RenderData);
+                    tableInstance.deleteRow(id);
+
                     $('#deleteModal').hide();
+
                     toastr.success(res.message, 'Deleted!');
                 }
             },

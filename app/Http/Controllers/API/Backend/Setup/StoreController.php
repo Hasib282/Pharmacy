@@ -29,16 +29,19 @@ class StoreController extends Controller
             'location' => 'required|exists:mysql.location__infos,id',
         ]);
  
-        Store::on('mysql_second')->insert([
+        $insert = Store::on('mysql_second')->create([
             'store_name' => $req->store_name,
             'division' => $req->division,
             'location_id' => $req->location,
             'address' => $req->address,
         ]);
+
+        $data = Store::on('mysql')->with('Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Store Details Added Successfully'
+            'message' => 'Store Details Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -73,10 +76,13 @@ class StoreController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Store::on('mysql_second')->with('Location')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Store Details Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

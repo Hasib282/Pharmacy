@@ -28,15 +28,18 @@ class LocationController extends Controller
             "upazila" => 'required',
         ]);
 
-        $insert = Location_Info::insert([
+        $insert = Location_Info::on('mysql')->create([
             "division" => $req->division,
             "district" => $req->district,
             "upazila" => $req->upazila,
         ]);
         
+        $data = Location_Info::on('mysql')->findOrFail($insert->id);
+
         return response()->json([
             'status'=> true,
-            'message' => 'Location Added Successfully'
+            'message' => 'Location Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -70,10 +73,13 @@ class LocationController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Location_Info::on('mysql')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Location Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

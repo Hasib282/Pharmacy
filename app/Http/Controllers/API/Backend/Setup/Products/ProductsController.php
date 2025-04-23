@@ -59,7 +59,7 @@ class ProductsController extends Controller
             "unit" => 'nullable|exists:mysql.item__units,id',
         ]);
 
-        Transaction_Head::on('mysql')->insert([
+        $insert = Transaction_Head::on('mysql')->create([
             "tran_head_name" => $req->productName,
             "groupe_id" => $req->groupe,
             "category_id" => $req->category,
@@ -68,10 +68,13 @@ class ProductsController extends Controller
             "unit_id" => $req->unit,
             'company_id' => $req->company,
         ]);
+
+        $data = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Product Added Successfully'
+            'message' => 'Product Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -121,10 +124,13 @@ class ProductsController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Product Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

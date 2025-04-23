@@ -29,15 +29,18 @@ class BedListController extends Controller
             "nursing_station" => 'required|exists:mysql_second.nursing__stations,id',
         ]);
 
-        Bed_List::on('mysql_second')->insert([
+        $insert = Bed_List::on('mysql_second')->create([
             "name" => $req->name,
             "category" => $req->bed_category,
             "nursing_station" => $req->nursing_station,
         ]);
+
+        $data = Bed_List::on('mysql_second')->with('category','nursing')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Bed List Added Successfully'
+            'message' => 'Bed List Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -59,25 +62,28 @@ class BedListController extends Controller
 
     // Update Bed List
     public function Update(Request $req){
-        $type = Bed_List::on('mysql_second')->findOrFail($req->id);
+        $data = Bed_List::on('mysql_second')->findOrFail($req->id);
         
         $req->validate([
-            "name" => ['required',Rule::unique('mysql_second.bed__lists', 'name')->ignore($type->id)],
+            "name" => ['required',Rule::unique('mysql_second.bed__lists', 'name')->ignore($data->id)],
             "bed_category" => 'required|exists:mysql_second.bed__categories,id',
             "nursing_station" => 'required|exists:mysql_second.nursing__stations,id',
         ]);
 
-        $update = Bed_List::on('mysql_second')->findOrFail($req->id)->update([
+        $update = $data->update([
             "name" => $req->name,
             "category" => $req->bed_category,
             "nursing_station" => $req->nursing_station,
             "updated_at" => now()
         ]);
 
+        $updatedData = Bed_List::on('mysql_second')->with('category','nursing')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Bed List Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

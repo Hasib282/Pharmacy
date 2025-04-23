@@ -30,7 +30,7 @@
 // }; // End Function
 
 function ShowInventoryForms(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['form_name','company_id'],

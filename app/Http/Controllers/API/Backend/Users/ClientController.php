@@ -56,7 +56,7 @@ class ClientController extends Controller
             $id = GenerateUserId(4, 'CL');
             $imageName = StoreUserImage($req, $id);
 
-            User_Info::on('mysql_second')->insert([
+            $insert = User_Info::on('mysql_second')->create([
                 "user_id" => $id,
                 "tran_user_type" => $req->type,
                 "user_name" => $req->name,
@@ -69,10 +69,13 @@ class ClientController extends Controller
                 "image" => $imageName,
             ]);
         });
+
+        $data = User_Info::on('mysql_second')->with('Withs', 'Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Client Details Added Successfully'
+            'message' => 'Client Details Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -125,6 +128,7 @@ class ClientController extends Controller
         return response()->json([
             'status'=>true,
             'message' => 'Client Details Updated Successfully',
+            "updatedData" => $updatedData,
         ], 200);
     } // End Method
 

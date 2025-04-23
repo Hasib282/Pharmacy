@@ -61,7 +61,7 @@
 // }; // End Function
 
 function ShowInventoryIssueDetails(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_id','user.user_name','head.tran_head_name','quantity',{key:'cp', type: 'number'},{key:'mrp', type: 'number'},{key:'totCP', type: 'number'},{key:'totalMRP', type: 'number'},{key:'discount', type: 'number'},{key:'profit', type: 'number'},'batch_id',{key:'tran_date', type: 'date'}],

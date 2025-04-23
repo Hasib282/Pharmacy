@@ -97,7 +97,7 @@ class PurchaseController extends Controller
                 $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
 
                 DB::transaction(function () use ($req, $id) {
-                    Transaction_Mains_Temp::on('mysql_second')->insert([
+                    $insert = Transaction_Mains_Temp::on('mysql_second')->create([
                         "tran_id" => $id,
                         "tran_type" => $req->type,
                         "tran_method" => $req->method,
@@ -134,7 +134,7 @@ class PurchaseController extends Controller
                             "updated_at" => now()
                         ]);
         
-                        Transaction_Details_Temp::on('mysql_second')->insert([
+                        Transaction_Details_Temp::on('mysql_second')->create([
                             "tran_id" => $id,
                             "tran_type" => $req->type,
                             "tran_method" => $req->method,
@@ -163,9 +163,12 @@ class PurchaseController extends Controller
                     }
                 });
 
+                $data = Transaction_Mains_Temp::on('mysql_second')->with('User')->findOrFail($insert->id);
+
                 return response()->json([
                     'status'=> true,
-                    'message' => 'Purchase Details Added Successfully'
+                    'message' => 'Purchase Details Added Successfully',
+                    "data" => $data,
                 ], 200); 
             }
         }
@@ -348,9 +351,17 @@ class PurchaseController extends Controller
             }
         });
 
+        if($req->status == 1){
+            $updatedData = Transaction_Main::on('mysql_second')->findOrfail($req->id);
+        }
+        else if($req->status == 2){
+            $updatedData = Transaction_Mains_Temp::on('mysql_second')->findOrfail($req->id);
+        }
+
         return response()->json([
             'status'=>true,
             'message' => 'Purchase Details Updated Successfully',
+            "updatedData" => $updatedData,
         ], 200);
     } // End Method
 
@@ -473,7 +484,7 @@ class PurchaseController extends Controller
     
                 $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
                 
-                Transaction_Main::on('mysql_second')->insert([
+                Transaction_Main::on('mysql_second')->create([
                     "tran_id" => $id,
                     "tran_type" => $mains->tran_type,
                     "tran_method" => $mains->tran_method,
@@ -503,7 +514,7 @@ class PurchaseController extends Controller
                         "updated_at" => now()
                     ]);
         
-                    Transaction_Detail::on('mysql_second')->insert([
+                    Transaction_Detail::on('mysql_second')->create([
                         "tran_id" => $id,
                         "tran_type" => $detail->tran_type,
                         "tran_method" => $detail->tran_method,

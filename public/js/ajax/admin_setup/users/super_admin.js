@@ -35,7 +35,7 @@
 // }; // End Function
 
 function ShowAdmins(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['user_id','user_name','user_email','user_phone',{key:'image', type: 'image'}],

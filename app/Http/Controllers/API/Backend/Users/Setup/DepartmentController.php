@@ -27,13 +27,16 @@ class DepartmentController extends Controller
             "name" => 'required|unique:mysql_second.departments,name'
         ]);
 
-        Department::on('mysql_second')->insert([
+        $insert = Department::on('mysql_second')->create([
             "name" => $req->name,
         ]);
+
+        $data = Department::on('mysql_second')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Department Added Successfully'
+            'message' => 'Department Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -66,6 +69,7 @@ class DepartmentController extends Controller
             return response()->json([
                 'status'=>true,
                 'message' => 'Department Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

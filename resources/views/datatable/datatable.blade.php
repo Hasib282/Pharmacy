@@ -41,6 +41,7 @@
 
         {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
         <script>
+            let tableInstance = null;
             class GenerateTable {
                 constructor({tableId , data, tbody, actions}) {
                     this.table = document.querySelector(tableId); // Select Table
@@ -75,6 +76,7 @@
                     const colFilters = document.querySelectorAll('.col-filter');
                     colFilters.forEach(input => {
                         input.addEventListener('keyup', () => this.columnSearch());
+                        input.addEventListener('change', () => this.columnSearch());
                     });
                 
 
@@ -152,12 +154,11 @@
                         filters[input.dataset.key] = input.value.toLowerCase(); // store the filter keys
                     });
 
-                    console.log(this.filteredData);
                     this.filteredData = this.data.filter(row => {
-                        
-                        return Object.keys(filters).every(key =>
-                            (row[key] ?? '').toString().toLowerCase().includes(filters[key])
-                        );
+                        return Object.keys(filters).every(key => {
+                            const value = key.split('.').reduce((obj, k) => obj?.[k], row);
+                            return (value ?? '').toString().toLowerCase().includes(filters[key]);
+                        });
                     });
 
                     this.currentPage = 1;
@@ -215,26 +216,49 @@
                 // Create the tbody Rows 
                 renderTableBody() {
                     const tbody = this.table.querySelector('tbody');
-                    const start = (this.currentPage - 1) * this.rowsPerPage;
-                    const pageData = this.filteredData.slice(start, start + this.rowsPerPage);
+                    const startIndex = (this.currentPage - 1) * this.rowsPerPage;
+                    const filteredData = this.filteredData.slice(startIndex, startIndex + this.rowsPerPage);
 
-                    // tbody.innerHTML = pageData.map((row, i) => `
-                    //     <tr>
-                    //         <td>${start + i + 1}</td>
-                    //         ${this.tbody.map(col => `<td>${row[col]}</td>`).join('')}
-                    //         <td><div id="actions">${this.actions(row)}</div></td>
-                    //     </tr>
-                    // `).join('');
-
-                    tbody.innerHTML = pageData.map((row, i) => {
-                        const columns = this.tbody.map(col => {
-                            const value = col.split('.').reduce((obj, key) => obj?.[key], row);
-                            return `<td>${value ?? ''}</td>`;
+                    // Extracting the Rows one By one and create colums
+                    tbody.innerHTML = filteredData.map((row, i) => { 
+                        const columns = this.tbody.map(colConfig => { // Create Colums acording to tbody values
+                            const col = typeof colConfig === 'string' ? { key: colConfig, type: 'text' } : colConfig;
+                            const value = col.key.split('.').reduce((obj, key) => obj?.[key], row);
+                            const type = col.type || 'text';
+                            
+                            switch (type) {
+                                case 'number':
+                                    return `<td style="text-align:right;">${Number(value).toLocaleString()}</td>`;
+                
+                                case 'status':
+                                    const checked = value ? 'checked' : '';
+                                    return `<td>
+                                        <label class="switch">
+                                            <input type="checkbox" ${checked} data-id="${row.id}" class="status-toggle">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </td>`;
+                
+                                case 'image':
+                                    return `<td><img src="${apiUrl.replace('/api', '')}/storage/${value ? value : 'male.png'}?${new Date().getTime()}" alt="Image" height="30px" width="30px"></td>`
+                
+                                case 'date':
+                                    if (!value) return `<td></td>`;
+                                    const date = new Date(value);
+                                    return `<td>${date.toLocaleDateString('en-US', { day:'numeric', month: 'short', year: 'numeric' })}</td>`;
+                
+                                case 'timestamp':
+                                    if (!value) return `<td></td>`;
+                                    return `<td>${new Date(value).toLocaleString()}</td>`;
+                
+                                default:
+                                    return `<td>${value ?? ''}</td>`;
+                            }
                         }).join('');
                 
                         return `
                             <tr>
-                                <td width="6%">${start + i + 1}</td>
+                                <td>${startIndex + i + 1}</td>
                                 ${columns}
                                 <td width="10%"><div id="actions">${this.actions(row)}</div></td>
                             </tr>`;
@@ -317,6 +341,33 @@
                     pagination.innerHTML = '';
                     pagination.innerHTML = paginationHtml;
                 } // End Render Pagination
+
+
+
+                // Add Row After Inserting into Database
+                addRow(data) {
+                    this.data.unshift(data);
+                    this.filteredData.unshift(data);
+                    this.renderTableBody();
+                }
+
+
+
+                // Edit Row After Updating in Database
+                editRow(id, updatedData) {
+                    this.data = this.data.map(item => item.id == id ? { ...item, ...updatedData } : item);
+                    this.filteredData = this.filteredData.map(item => item.id == id ? { ...item, ...updatedData } : item);
+                    this.renderTableBody();
+                }
+
+
+
+                // Delete Row After Delete From Database
+                deleteRow(id) {
+                    this.data = this.data.filter(item => item.id != id);
+                    this.filteredData = this.filteredData.filter(item => item.id != id);
+                    this.renderTableBody();
+                }
             }
 
 
@@ -326,15 +377,19 @@
                 const row1 = thead.map(h => `<th>${h.label}</th>`).join('');
 
                 const row2 = thead.map(h => {
-                    if (h.type === 'select') { // Rowper page
+                    if (h.type === 'date') { // Rowper page
+                        return `<th><input class="col-filter" data-key="${h.key}" type="date" style="width:82px;font-size:10px;padding:2px;"></th>`;
+                    }
+                    else if (h.type === 'select') { // Rowper page
                         const opts = h.options.map(option => `<option value="${option}">${option}</option>`).join('');
-                        return `<th><select id="rowsPerPage">${opts}</select></th>`;
-                    } 
-                    else if (h.status && typeof h.status === 'object') { // Status 
-                        const opts = Object.entries(h.status).map(
-                            ([value, text]) => `<option value="${value}">${text}</option>`
+                        return `<th style="width:50px;"><select id="rowsPerPage">${opts}</select></th>`;
+                    }
+                    else if (Array.isArray(h.status)) {
+                        const opts = h.status.map(item => 
+                            `<option value="${item.key}">${item.label}</option>`
                         ).join('');
-                        return `<th><select class="col-filter" data-key="${h.key}">${opts}</select></th>`;
+                    
+                        return `<th style="width:60px;"><select class="col-filter" data-key="status" style="width:60px;font-size:10px;">${opts}</select></th>`;
                     }
                     else if (h.type === 'button') { // Action Button
                         return `<th><button id="exportCSV"><i class="fa-regular fa-file-excel"></i></button></th>`;

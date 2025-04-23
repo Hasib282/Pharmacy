@@ -1,3 +1,4 @@
+let tableInstance = null;
 class GenerateTable {
     constructor({tableId , data, tbody, actions}) {
         this.table = document.querySelector(tableId); // Select Table
@@ -181,7 +182,6 @@ class GenerateTable {
                 const col = typeof colConfig === 'string' ? { key: colConfig, type: 'text' } : colConfig;
                 const value = col.key.split('.').reduce((obj, key) => obj?.[key], row);
                 const type = col.type || 'text';
-                console.log(typeof colConfig);
                 
                 switch (type) {
                     case 'number':
@@ -215,7 +215,7 @@ class GenerateTable {
     
             return `
                 <tr>
-                    <td width="50px">${startIndex + i + 1}</td>
+                    <td>${startIndex + i + 1}</td>
                     ${columns}
                     <td width="10%"><div id="actions">${this.actions(row)}</div></td>
                 </tr>`;
@@ -298,6 +298,33 @@ class GenerateTable {
         pagination.innerHTML = '';
         pagination.innerHTML = paginationHtml;
     } // End Render Pagination
+
+
+
+    // Add Row After Inserting into Database
+    addRow(data) {
+        this.data.unshift(data);
+        this.filteredData.unshift(data);
+        this.renderTableBody();
+    }
+
+
+
+    // Edit Row After Updating in Database
+    editRow(id, updatedData) {
+        this.data = this.data.map(item => item.id == id ? { ...item, ...updatedData } : item);
+        this.filteredData = this.filteredData.map(item => item.id == id ? { ...item, ...updatedData } : item);
+        this.renderTableBody();
+    }
+
+
+
+    // Delete Row After Delete From Database
+    deleteRow(id) {
+        this.data = this.data.filter(item => item.id != id);
+        this.filteredData = this.filteredData.filter(item => item.id != id);
+        this.renderTableBody();
+    }
 }
 
 
@@ -312,7 +339,7 @@ function renderTableHead(thead) {
         }
         else if (h.type === 'select') { // Rowper page
             const opts = h.options.map(option => `<option value="${option}">${option}</option>`).join('');
-            return `<th><select id="rowsPerPage">${opts}</select></th>`;
+            return `<th style="width:50px;"><select id="rowsPerPage">${opts}</select></th>`;
         }
         else if (Array.isArray(h.status)) {
             const opts = h.status.map(item => 

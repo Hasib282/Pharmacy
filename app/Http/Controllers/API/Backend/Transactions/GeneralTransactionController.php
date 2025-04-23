@@ -100,7 +100,7 @@ class GeneralTransactionController extends Controller
         DB::transaction(function () use ($req, $id) {
             $receive = $req->method === 'Receive' ? $req->advance : null;
             $payment = $req->method === 'Payment' ? $req->advance : null;
-            Transaction_Main::on('mysql_second')->insert([
+            $insert = Transaction_Main::on('mysql_second')->create([
                 "tran_id" => $id,
                 "tran_type" => 1,
                 "tran_method" => $req->method,
@@ -132,7 +132,7 @@ class GeneralTransactionController extends Controller
                 $receive = $req->method === 'Receive' ? $advance : null;
                 $payment = $req->method === 'Payment' ? $advance : null;
 
-                Transaction_Detail::on('mysql_second')->insert([
+                Transaction_Detail::on('mysql_second')->create([
                     "tran_id" => $id,
                     "loc_id" => $req->location,
                     "tran_type" => 1,
@@ -158,10 +158,13 @@ class GeneralTransactionController extends Controller
                 $billNet -= $amount;
             }
         });
+
+        $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Transaction Added Successfully'
+            'message' => 'Transaction Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -258,7 +261,7 @@ class GeneralTransactionController extends Controller
                 $receive = $req->method == 'Receive' ? $advance : null;
                 $payment = $req->method == 'Payment' ? $advance : null;
 
-                $update = Transaction_Detail::on('mysql_second')->insert([
+                $update = Transaction_Detail::on('mysql_second')->create([
                     "tran_id" => $req->tranid,
                     "tran_type" => 1,
                     "tran_method" => $req->method,
@@ -284,9 +287,12 @@ class GeneralTransactionController extends Controller
             }
         });
 
+        $updatedData = Transaction_Main::on('mysql_second')->with('User')->findOrFail($req->id);
+
         return response()->json([
             'status'=>true,
             'message' => 'Transaction Updated Successfully',
+            "updatedData" => $updatedData,
         ], 200); 
     } // End Method
 

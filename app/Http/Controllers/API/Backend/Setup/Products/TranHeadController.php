@@ -42,15 +42,18 @@ class TranHeadController extends Controller
             "groupe" => 'required|exists:mysql.transaction__groupes,id'
         ]);
 
-        Transaction_Head::on('mysql')->insert([
+        $insert = Transaction_Head::on('mysql')->create([
             "tran_head_name" => $req->headName,
             "groupe_id" => $req->groupe,
             "company_id" => $req->company,
         ]);
+
+        $data = Transaction_Head::on('mysql')->with('Groupe')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Transaction Heads Added Successfully'
+            'message' => 'Transaction Heads Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -92,10 +95,13 @@ class TranHeadController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Transaction_Head::on('mysql')->with('Groupe')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Transaction Heads Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

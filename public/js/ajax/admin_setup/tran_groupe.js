@@ -35,7 +35,7 @@
 
 
 function ShowTranGroupe(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_groupe_name','type.type_name','tran_method','company_id'],

@@ -40,7 +40,7 @@
 // }; // End Function
 
 function ShowClients(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['user_id','user_name','withs.tran_with_name','user_email', 'user_phone','location.upazila','address','image'],

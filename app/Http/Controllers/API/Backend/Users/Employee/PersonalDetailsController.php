@@ -53,7 +53,7 @@ class PersonalDetailsController extends Controller
             $imageName = StoreUserImage($req, $id);
 
 
-            Login_User::on('mysql')->insert([
+            Login_User::on('mysql')->create([
                 "user_id" => $empId,
                 "company_user_id" => $id,
                 "user_name" => $req->name,
@@ -68,7 +68,7 @@ class PersonalDetailsController extends Controller
 
 
             // Insert Info to User__Info 
-            User_Info::on('mysql_second')->insert([
+            $insert = User_Info::on('mysql_second')->create([
                 "user_id" => $id,
                 "login_user_id" => $empId,
                 "user_name" => $req->name,
@@ -88,7 +88,7 @@ class PersonalDetailsController extends Controller
 
             
             // Insert Employee Personal Details
-            Employee_Personal_Detail::on('mysql_second')->insert([
+            Employee_Personal_Detail::on('mysql_second')->create([
                 'employee_id' =>  $id,
                 'name' => $req->name,
                 "fathers_name" => $req->fathers_name,
@@ -108,10 +108,13 @@ class PersonalDetailsController extends Controller
                 "image" => $imageName,
             ]);
         });
+
+        $data = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Employee Personal Details Added Successfully'
+            'message' => 'Employee Personal Details Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -200,6 +203,7 @@ class PersonalDetailsController extends Controller
         return response()->json([
             'status'=>true,
             'message' => 'Employee Personal Details Updated Successfully',
+            // "updatedData" => $updatedData,
         ], 200);
     } // End Method
 

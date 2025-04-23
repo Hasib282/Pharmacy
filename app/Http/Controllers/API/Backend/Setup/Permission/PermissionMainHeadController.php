@@ -27,13 +27,16 @@ class PermissionMainHeadController extends Controller
             "name" => 'required|unique:mysql.permission__main__heads,name',
         ]);
 
-        Permission_Main_Head::on('mysql')->insert([
+        $insert = Permission_Main_Head::on('mysql')->create([
             "name" => $req->name,
         ]);
+
+        $data = Permission_Main_Head::on('mysql')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Permission Mainheads Added Successfully'
+            'message' => 'Permission Mainheads Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -62,10 +65,13 @@ class PermissionMainHeadController extends Controller
             "name" => $req->name
         ]);
 
+        $updatedData = Permission_Main_Head::on('mysql')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Permission Mainheads Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

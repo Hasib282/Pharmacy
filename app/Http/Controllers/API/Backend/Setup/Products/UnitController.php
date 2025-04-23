@@ -28,15 +28,18 @@ class UnitController extends Controller
             'name' => 'required',
         ]);
 
-        Item_Unit::on('mysql')->insert([
+        $insert = Item_Unit::on('mysql')->create([
             'unit_name' => $req->name,
             'company_id' => $req->company,
             'type_id'=> $type,
         ]);
+
+        $data = Item_Unit::on('mysql')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Unit Added Successfully'
+            'message' => 'Unit Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -64,10 +67,13 @@ class UnitController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Item_Unit::on('mysql')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Unit Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

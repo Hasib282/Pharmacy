@@ -34,7 +34,7 @@
 
 
 function ShowPermissions(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['mainhead.name','name'],

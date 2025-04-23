@@ -41,7 +41,7 @@
 
 
 function ShowRolePermissions(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['name','permissionNames'],

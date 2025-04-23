@@ -27,13 +27,16 @@ class CompanyTypeController extends Controller
             "name" => 'required|unique:mysql.company__types,name',
         ]);
 
-        Company_Type::on('mysql')->insert([
+        $insert = Company_Type::on('mysql')->create([
             "name" => $req->name,
         ]);
         
+        $data = Company_Type::on('mysql')->findOrFail($insert->id);
+
         return response()->json([
             'status'=> true,
-            'message' => 'Company Type Added Successfully'
+            'message' => 'Company Type Added Successfully',
+            "data" => $data,
         ], 200);
     } // End Method
 
@@ -62,11 +65,14 @@ class CompanyTypeController extends Controller
             "name" => $req->name,
             "updated_at" => now()
         ]);
+        
+        $updatedData = Company_Type::on('mysql')->findOrFail($req->id);
 
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Company Type Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

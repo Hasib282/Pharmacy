@@ -41,7 +41,7 @@
 
 
 function ShowClients(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['user_id','user_name','withs.tranwith','user_email', 'user_phone','location.upazila','image'],

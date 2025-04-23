@@ -177,7 +177,7 @@
 // }; // End Function
 
 function ShowDoctors(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['title','name','degree','email', 'phone','chamber','specialization'],

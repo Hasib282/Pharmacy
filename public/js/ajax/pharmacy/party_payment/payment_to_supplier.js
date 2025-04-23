@@ -44,7 +44,7 @@
 // }; // End Function
 
 function ShowPaymentToSuppliers(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'}],

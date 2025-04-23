@@ -97,7 +97,7 @@ class ClientReturnController extends Controller
 
                 DB::transaction(function () use ($req, $id) {
                     $batchDetails = Transaction_Main::on('mysql_second')->where('tran_id', $req->batch)->first();
-                    Transaction_Main::on('mysql_second')->insert([
+                    $insert = Transaction_Main::on('mysql_second')->create([
                         "tran_id" => $id,
                         "tran_type" => $req->type,
                         "tran_method" => $req->method,
@@ -148,7 +148,7 @@ class ClientReturnController extends Controller
         
         
         
-                        Transaction_Detail::on('mysql_second')->insert([
+                        Transaction_Detail::on('mysql_second')->create([
                             "tran_id" => $id,
                             "tran_type" => $req->type,
                             "tran_method" => $req->method,
@@ -179,10 +179,13 @@ class ClientReturnController extends Controller
                 
                 return response()->json([
                     'status'=> true,
-                    'message' => 'Client Return Details Added Successfully'
+                    'message' => 'Client Return Details Added Successfully',
+                    "data" => $data,
                 ], 200);
             }
         }
+
+        $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);
 
         return response()->json([
             'status'=> false,
@@ -218,10 +221,13 @@ class ClientReturnController extends Controller
     //         "updated_at" => now()
     //     ]);
 
+    //     $updatedData = Location_Info::findOrFail($req->id);
+
     //     if($update){
     //         return response()->json([
     //             'status'=>true,
     //             'message' => 'Client Return Details Updated Successfully',
+    //             "updatedData" => $updatedData,
     //         ], 200); 
     //     }
     // } // End Method

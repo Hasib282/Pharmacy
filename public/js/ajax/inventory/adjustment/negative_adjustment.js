@@ -36,7 +36,7 @@
 // }; // End Function
 
 function ShowInventoryNegativeAdjustments(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_id','head.tran_head_name','store.store_name','quantity',{key:'tran_date', type: 'date'}],

@@ -40,7 +40,7 @@
 // }; // End Function
 
 function ShowBanks(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['user_id','name','email', 'phone','location.upazila','address'],

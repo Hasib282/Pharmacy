@@ -38,7 +38,7 @@
 // }; // End Function
 
 function ShowPatients(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['ptn_id','name','email', 'phone','gender','address'],

@@ -44,7 +44,7 @@
 // }; // End Function
 
 function ShowAttendence(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['emp_id','user.user_name','date','in','out','','insert_at','updated_at'],

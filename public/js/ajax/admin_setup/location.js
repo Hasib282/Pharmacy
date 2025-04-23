@@ -33,7 +33,7 @@
 // }; // End Function
 
 function ShowLocations(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['division','district','upazila'],

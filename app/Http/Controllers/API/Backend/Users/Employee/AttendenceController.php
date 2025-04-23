@@ -23,7 +23,7 @@ class AttendenceController extends Controller
 {
     // Show All Attendence
     public function ShowAll(Request $req){
-        $data = Attendence::with('User')->orderBy('insert_at')->whereRaw("DATE(date) = ?", [date('Y-m-d')])->get();
+        $data = Attendence::on('mysql_second')->with('User')->orderBy('insert_at')->whereRaw("DATE(date) = ?", [date('Y-m-d')])->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -40,15 +40,18 @@ class AttendenceController extends Controller
             "in" => 'required',
         ]);
 
-        $insert = Attendence::insert([
+        $insert = Attendence::create([
             "emp_id" => $req->user,
             "date" => $req->date,
             "in" => $req->in,
         ]);
+
+        $data = Attendence::on('mysql_second')->with('User')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Attendence Added Successfully'
+            'message' => 'Attendence Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -95,6 +98,7 @@ class AttendenceController extends Controller
             return response()->json([
                 'status'=>true,
                 'message' => 'Attendence Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

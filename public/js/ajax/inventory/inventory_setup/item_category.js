@@ -31,7 +31,7 @@
 
 
 function ShowInventoryCategorys(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['category_name','company_id'],

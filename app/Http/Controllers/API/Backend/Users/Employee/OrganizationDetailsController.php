@@ -33,17 +33,20 @@ class OrganizationDetailsController extends Controller
         ]);
 
         
-        Employee_Organization_Detail::on('mysql_second')->insert([
+        $insert = Employee_Organization_Detail::on('mysql_second')->create([
             'emp_id' =>  $req->user,
             "joining_date" => $req->joining_date,
             "joining_location" =>  $req->location,
             "department" => $req->department,
             "designation" => $req->designation,
         ]);
+
+        // $data = Employee_Organization_Detail::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Employee Organization Details Added Successfully'
+            'message' => 'Employee Organization Details Added Successfully',
+            // "data" => $data,
         ], 200);  
     } // End Method
 
@@ -83,6 +86,7 @@ class OrganizationDetailsController extends Controller
             return response()->json([
                 'status'=>true,
                 'message' => 'Employee Organization Details Updated Successfully',
+                // "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

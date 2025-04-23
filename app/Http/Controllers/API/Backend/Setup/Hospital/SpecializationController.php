@@ -27,13 +27,16 @@ class SpecializationController extends Controller
             "name" => 'required|unique:mysql_second.specializations,name',
         ]);
 
-        Specialization::on('mysql_second')->insert([
+        $insert = Specialization::on('mysql_second')->create([
             "name" => $req->name,
         ]);
+
+        $data = Specialization::on('mysql_second')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Doctors Specialization Added Successfully'
+            'message' => 'Doctors Specialization Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -63,10 +66,13 @@ class SpecializationController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Specialization::on('mysql_second')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Doctors Specialization Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

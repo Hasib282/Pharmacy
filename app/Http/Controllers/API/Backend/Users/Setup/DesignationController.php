@@ -31,14 +31,17 @@ class DesignationController extends Controller
             "department" => 'required|exists:mysql_second.departments,id'
         ]);
 
-        Designation::on('mysql_second')->insert([
+        $insert = Designation::on('mysql_second')->create([
             "designation" => $req->designations,
             "dept_id" => $req->department,
         ]);
         
+        $data = Designation::on('mysql_second')->with('Department:id,name')->findOrFail($insert->id);
+
         return response()->json([
             'status'=> true,
-            'message' => 'Designation Added Successfully'
+            'message' => 'Designation Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -74,6 +77,7 @@ class DesignationController extends Controller
             return response()->json([
                 'status'=>true,
                 'message' => 'Designation Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

@@ -42,7 +42,7 @@
 
 
 function ShowCompanyPermissions(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['company_id','company_name','permissionNames'],

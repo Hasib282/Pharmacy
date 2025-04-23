@@ -66,7 +66,7 @@ class AdjustmentController extends Controller
                         "updated_at" => now()
                     ]);
 
-                    Transaction_Detail::on('mysql_second')->insert([
+                    $insert = Transaction_Detail::on('mysql_second')->create([
                         "tran_id" => $id,
                         "store_id" => $req->store,
                         "tran_type" => $req->type,
@@ -79,9 +79,12 @@ class AdjustmentController extends Controller
                         "mrp" => $product->mrp,
                     ]);
 
+                    $data = Transaction_Detail::on('mysql_second')->with('Head','Store')->findOrFail($insert->id);
+
                     return response()->json([
                         'status'=> true,
-                        'message' => 'Adjustment Details Added Successfully'
+                        'message' => 'Adjustment Details Added Successfully',
+                        "data" => $data,
                     ], 200);
                 }
                 else if ($req->method === "Negative") {
@@ -98,7 +101,7 @@ class AdjustmentController extends Controller
                         "updated_at" => now()
                     ]);
 
-                    Transaction_Detail::on('mysql_second')->insert([
+                    $insert = Transaction_Detail::on('mysql_second')->create([
                         "tran_id" => $id,
                         "store_id" => $req->store,
                         "tran_type" => $req->type,
@@ -111,9 +114,12 @@ class AdjustmentController extends Controller
                         "mrp" => $product->mrp,
                     ]);
 
+                    $data = Transaction_Detail::on('mysql_second')->with('Head','Store')->findOrFail($insert->id);
+                    
                     return response()->json([
                         'status'=> true,
-                        'message' => 'Adjustment Details Added Successfully'
+                        'message' => 'Adjustment Details Added Successfully',
+                        "data" => $data,
                     ], 200);
                 }
                 else {
@@ -190,10 +196,17 @@ class AdjustmentController extends Controller
                 "mrp" => $product->mrp,
                 "updated_at" => now()
             ]);
+
+            $updatedData = Transaction_Detail::on('mysql_second')
+            ->with('Head','Store')
+            ->where('tran_id', $req->tranId)
+            ->where('tran_head_id', $req->product)
+            ->first();
     
             return response()->json([
                 'status'=>true,
                 'message' => 'Adjustment Details Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         } 
         else {

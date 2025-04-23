@@ -30,7 +30,7 @@
 // }; // End Function
 
 function ShowPharmacyStockSummarys(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_head_name','groupe.tran_groupe_name','category.category_name','manufecturer.manufacturer_name','form.form_name','quantity','unit.unit_name',{key:'cp', type: 'number'},{key:'mrp', type: 'number'}],

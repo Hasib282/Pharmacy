@@ -95,7 +95,7 @@ class IssueController extends Controller
                 $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
 
                 DB::transaction(function () use ($req, $id) {
-                    Transaction_Main::on('mysql_second')->insert([
+                    $insert = Transaction_Main::on('mysql_second')->create([
                         "tran_id" => $id,
                         "tran_type" => $req->type,
                         "tran_method" => $req->method,
@@ -145,7 +145,7 @@ class IssueController extends Controller
                                 "updated_at" => now()
                             ]);
 
-                            Transaction_Detail::on('mysql_second')->insert([
+                            Transaction_Detail::on('mysql_second')->create([
                                 "tran_id" => $id,
                                 "store_id" => $req->store,
                                 "tran_type" => $req->type,
@@ -211,7 +211,7 @@ class IssueController extends Controller
                                         ]);
             
             
-                                        Transaction_Detail::on('mysql_second')->insert([
+                                        Transaction_Detail::on('mysql_second')->create([
                                             "tran_id" => $id,
                                             "store_id" => $req->store,
                                             "tran_type" => $req->type,
@@ -262,7 +262,7 @@ class IssueController extends Controller
                                             "updated_at" => now()
                                         ]);
             
-                                        Transaction_Detail::on('mysql_second')->insert([
+                                        Transaction_Detail::on('mysql_second')->create([
                                             "tran_id" => $id,
                                             "store_id" => $req->store,
                                             "tran_type" => $req->type,
@@ -304,10 +304,13 @@ class IssueController extends Controller
                         }
                     }
                 });
+
+                $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);
                 
                 return response()->json([
                     'status'=> true,
-                    'message' => 'Issue Details Added Successfully'
+                    'message' => 'Issue Details Added Successfully',
+                    "data" => $data,
                 ], 200);
             }
         }
@@ -452,7 +455,7 @@ class IssueController extends Controller
                             ]);
 
 
-                            Transaction_Detail::on('mysql_second')->insert([
+                            Transaction_Detail::on('mysql_second')->create([
                                 "tran_id" => $req->tranid,
                                 "tran_type" => $transaction->tran_type,
                                 "tran_method" => $transaction->tran_method,
@@ -502,7 +505,7 @@ class IssueController extends Controller
                                 "updated_at" => now()
                             ]);
 
-                            Transaction_Detail::on('mysql_second')->insert([
+                            Transaction_Detail::on('mysql_second')->create([
                                 "tran_id" => $req->tranid,
                                 "store_id" => $req->store,
                                 "tran_type" => $transaction->tran_type,
@@ -545,9 +548,12 @@ class IssueController extends Controller
             }
         });
 
+        $updatedData = Transaction_Main::on('mysql_second')->with('User')->findOrFail($req->id);
+
         return response()->json([
             'status'=>true,
             'message' => 'Issue Details Updated Successfully',
+            "updatedData" => $updatedData,
         ], 200); 
     } // End Method
 

@@ -51,16 +51,19 @@ class TranWithController extends Controller
             "tranMethod" => 'required|in:Receive,Payment,Both',
         ]);
 
-        Transaction_With::on('mysql_second')->insert([
+        $insert = Transaction_With::on('mysql_second')->create([
             "tran_with_name" => $req->name,
             "user_role" => $req->role,
             "tran_type" => $req->tranType,
             "tran_method" => $req->tranMethod,
         ]);
+
+        $data = Transaction_With::on('mysql_second')->with('Role','Type')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Transaction With Added Successfully'
+            'message' => 'Transaction With Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -103,6 +106,7 @@ class TranWithController extends Controller
             return response()->json([
                 'status'=>true,
                 'message' => 'Transaction With Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

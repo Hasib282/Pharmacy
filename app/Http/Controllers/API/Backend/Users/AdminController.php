@@ -59,7 +59,7 @@ class AdminController extends Controller
             $id = GenerateUserId(2, 'AD');
             $imageName = StoreUserImage($req, $id);
 
-            Login_User::on('mysql')->insert([
+            Login_User::on('mysql')->create([
                 "user_id" => $adminId,
                 "company_user_id" => $id,
                 "user_name" => $req->name,
@@ -73,7 +73,7 @@ class AdminController extends Controller
             ]);
             
             
-            User_Info::on('mysql_second')->insert([
+            $insert = User_Info::on('mysql_second')->create([
                 "user_id" => $id,
                 "login_user_id" => $adminId,
                 "user_name" => $req->name,
@@ -86,10 +86,13 @@ class AdminController extends Controller
                 "company_id" =>  $req->company,
             ]);
         });
+
+        $data = User_Info::on('mysql_second')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Admin Details Added Successfully'
+            'message' => 'Admin Details Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -143,6 +146,7 @@ class AdminController extends Controller
         return response()->json([
             'status'=>true,
             'message' => 'Admin Details Updated Successfully',
+            "updatedData" => $updatedData,
         ], 200); 
     } // End Method
 

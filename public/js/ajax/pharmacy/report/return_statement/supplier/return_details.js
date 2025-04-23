@@ -51,7 +51,7 @@
 // }; // End Function
 
 function ShowPharmacySupplierReturnDetails(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_id','user.user_name','head.tran_head_name','quantity_actual',{key:'cp', type: 'number'},{key:'totCP', type: 'number'},{key:'discount', type: 'number'},{key:'tot_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due', type: 'number'},{key:'tran_date', type: 'date'}],

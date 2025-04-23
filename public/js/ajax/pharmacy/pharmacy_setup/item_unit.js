@@ -30,7 +30,7 @@
 // }; // End Function
 
 function ShowPharmacyUnits(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['unit_name','company_id'],

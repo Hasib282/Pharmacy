@@ -39,6 +39,7 @@ class CompanyController extends Controller
             "domain" => 'required',
         ]);
 
+        $data = null;
 
         DB::transaction(function () use ($req) {
             // Generates Auto Increment Company Id
@@ -46,7 +47,7 @@ class CompanyController extends Controller
             $id = ($latestId) ? 'CO' . str_pad((intval(substr($latestId->company_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'CO000000001';
             $imageName = StoreUserImage($req, $id);
 
-            Company_Details::on('mysql')->insert([
+            $insert = Company_Details::on('mysql')->create([
                 "company_id" => $id,
                 "company_type" => $req->type,
                 "company_name" => $req->name,
@@ -57,11 +58,14 @@ class CompanyController extends Controller
                 "domain" => $req->domain,
                 "logo" => $imageName,
             ]);
+            
+            $data = Company_Details::on('mysql')->with('Type')->findOrFail($insert->id);
         });
         
         return response()->json([
             'status'=> true,
-            'message' => 'Company Details Added Successfully'
+            'message' => 'Company Details Added Successfully',
+            "data" => $data,
         ], 200);
     } // End Method
 
@@ -108,10 +112,13 @@ class CompanyController extends Controller
                 "updated_at" => now(),
             ]);
         });
+
+        $updatedData = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
         
         return response()->json([
             'status'=>true,
             'message' => 'Company Details Updated Successfully',
+            "updatedData" => $updatedData,
         ], 200); 
     } // End Method
 

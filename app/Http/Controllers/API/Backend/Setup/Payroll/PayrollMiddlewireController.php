@@ -17,7 +17,8 @@ class PayrollMiddlewireController extends Controller
     public function ShowAll(Request $req){
         $currentYear = Carbon::now()->year; 
         $currentMonth = Carbon::now()->month;
-        $data = Payroll_Middlewire::on('mysql_second')->with('Employee','Head')
+        $data = Payroll_Middlewire::on('mysql_second')
+            ->with('Employee','Head')
             ->orderBy('emp_id','asc')
             ->whereYear('date', $currentYear)
             ->whereMonth('date', $currentMonth)
@@ -71,16 +72,19 @@ class PayrollMiddlewireController extends Controller
             ], 422);
         }
         else{
-            Payroll_Middlewire::on('mysql_second')->insert([
+            $insert = Payroll_Middlewire::on('mysql_second')->create([
                 "emp_id" => $req->user,
                 "head_id" => $req->head,
                 "amount" => $req->amount,
                 "date" => $date,
             ]);
 
+            $data = Payroll_Middlewire::on('mysql_second')->with('Employee','Head')->findOrFail($insert->id);
+
             return response()->json([
                 'status'=> true,
-                'message' => 'Payroll Middlewire Added Successfully'
+                'message' => 'Payroll Middlewire Added Successfully',
+                "data" => $data,
             ], 200);
         }
     } // End Method
@@ -144,11 +148,14 @@ class PayrollMiddlewireController extends Controller
                 "amount" => $req->amount,
                 "date" => $req->date,
             ]);
+
+            $updatedData = Payroll_Middlewire::on('mysql_second')->with('Employee','Head')->findOrFail($req->id);
     
             if($update){
                 return response()->json([
                     'status'=>true,
                     'message' => 'Payroll Middlewire Updated Successfully',
+                    "updatedData" => $updatedData,
                 ], 200); 
             }
         }

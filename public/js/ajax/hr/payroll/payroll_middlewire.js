@@ -50,7 +50,7 @@
 // }; // End Function
 
 function ShowPayrollMiddlewire(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['emp_id','employee.user_name','head.tran_head_name','amount','date','date'],

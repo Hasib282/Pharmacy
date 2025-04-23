@@ -27,13 +27,16 @@ class MainHeadController extends Controller
             "name" => 'required|unique:mysql.transaction__main__heads,type_name',
         ]);
 
-        Transaction_Main_Head::on('mysql')->insert([
+        $insert = Transaction_Main_Head::on('mysql')->create([
             "type_name" => $req->name,
         ]);
+
+        $data = Transaction_Main_Head::on('mysql')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'MainHead Added Successfully'
+            'message' => 'MainHead Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -63,10 +66,13 @@ class MainHeadController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Transaction_Main_Head::on('mysql')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'MainHead Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

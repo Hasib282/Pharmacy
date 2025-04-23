@@ -38,7 +38,7 @@ class BankController extends Controller
         $id = ($latestId) ? 'B' . str_pad((intval(substr($latestId->user_id, 1)) + 1), 9, '0', STR_PAD_LEFT) : 'B000000001';
 
 
-        Bank::insert([
+        $insert = Bank::on('mysql')->create([
             "user_id" => $id,
             "name" => $req->name,
             "phone" => $req->phone,
@@ -46,10 +46,13 @@ class BankController extends Controller
             "loc_id" => $req->location,
             "address" => $req->address,
         ]);
+
+        $data = Bank::on('mysql')->with('Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Bank Details Added Successfully'
+            'message' => 'Bank Details Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -88,10 +91,13 @@ class BankController extends Controller
             "updated_at" => now(),
         ]);
 
+        $updatedData = Bank::on('mysql')->with('Location')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Bank Details Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

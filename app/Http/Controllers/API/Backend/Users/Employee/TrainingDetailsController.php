@@ -51,11 +51,14 @@ class TrainingDetailsController extends Controller
             ];
         }
 
-        Employee_Training_Detail::on('mysql_second')->insert($trainingDetails);
+        $insert = Employee_Training_Detail::on('mysql_second')->create($trainingDetails);
         
+        // $data = Employee_Training_Detail::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
+
         return response()->json([
             'status'=> true,
-            'message' => 'Employee Training Details Added Successfully'
+            'message' => 'Employee Training Details Added Successfully',
+            // "data" => $data,
         ], 200);  
     } // End Method
 
@@ -109,6 +112,7 @@ class TrainingDetailsController extends Controller
         return response()->json([
             'status'=> true,
             'message' => 'Employee Training Details Deleted Successfully',
+            // "updatedData" => $updatedData,
         ], 200); 
     } // End Method
 

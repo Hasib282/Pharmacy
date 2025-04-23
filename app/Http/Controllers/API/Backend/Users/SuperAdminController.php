@@ -42,7 +42,7 @@ class SuperAdminController extends Controller
             $id = GenerateLoginUserId(1, "SA");
             $imageName = StoreUserImage($req, $id);
 
-            Login_User::on('mysql')->insert([
+            $insert = Login_User::on('mysql')->create([
                 "user_id" => $id,
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
@@ -52,10 +52,13 @@ class SuperAdminController extends Controller
                 "image" => $imageName,
             ]);
         });
+
+        $data = Login_User::on('mysql')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'SuperAdmin Details Added Successfully'
+            'message' => 'SuperAdmin Details Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -99,6 +102,7 @@ class SuperAdminController extends Controller
         return response()->json([
             'status'=>true,
             'message' => 'SuperAdmin Details Updated Successfully',
+            "updatedData" => $updatedData,
         ], 200); 
     } // End Method
 

@@ -57,11 +57,14 @@ class ExperienceDetailsController extends Controller
             ];
         }
 
-        Employee_Experience_Detail::on('mysql_second')->insert($experienceDetails);
+        $insert = Employee_Experience_Detail::on('mysql_second')->create($experienceDetails);
+
+        // $data = Employee_Experience_Detail::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Employee Experience Details Added Successfully'
+            'message' => 'Employee Experience Details Added Successfully',
+            // "data" => $data,
         ], 200);  
     } // End Method
 
@@ -105,6 +108,7 @@ class ExperienceDetailsController extends Controller
             return response()->json([
                 'status'=>true,
                 'message' => 'Employee Experience Details Updated Successfully',
+                // "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

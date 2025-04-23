@@ -97,7 +97,7 @@ class SupplierReturnController extends Controller
                 $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
 
                 DB::transaction(function () use ($req, $id) {
-                    Transaction_Main::on('mysql_second')->insert([
+                    $insert = Transaction_Main::on('mysql_second')->create([
                         "tran_id" => $id,
                         "tran_type" => $req->type,
                         "tran_method" => $req->method,
@@ -135,7 +135,7 @@ class SupplierReturnController extends Controller
         
         
         
-                        Transaction_Detail::on('mysql_second')->insert([
+                        Transaction_Detail::on('mysql_second')->create([
                             "tran_id" => $id,
                             "tran_type" => $req->type,
                             "tran_method" => $req->method,
@@ -160,10 +160,13 @@ class SupplierReturnController extends Controller
                         $billAmount -= $product['totAmount'];
                    }
                 });
+
+                $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);
                 
                 return response()->json([
                     'status'=> true,
-                    'message' => 'Supplier Return Details Added Successfully'
+                    'message' => 'Supplier Return Details Added Successfully',
+                    "data" => $data,
                 ], 200);
             }
         }
@@ -203,10 +206,13 @@ class SupplierReturnController extends Controller
     //         "updated_at" => now()
     //     ]);
 
+    //     $updatedData = Location_Info::findOrFail($req->id);
+    
     //     if($update){
     //         return response()->json([
     //             'status'=>true,
     //             'message' => 'Supplier Return Details Updated Successfully',
+    //             "updatedData" => $updatedData,
     //         ], 200); 
     //     }
     // } // End Method

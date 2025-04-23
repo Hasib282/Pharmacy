@@ -57,7 +57,7 @@ class PatientRegistrationController extends Controller
             $age =$age_year . " years, " . $age_month . " months, " . $age_day . " days";
             
 
-            Patient_Information::on('mysql_second')->insert([
+            Patient_Information::on('mysql_second')->create([
                 'ptn_id'=>$ptn_id,
                 'title'=>$req->title,
                 'name'=> $req->name,
@@ -70,7 +70,7 @@ class PatientRegistrationController extends Controller
                 'religion'=> $req->religion,
             ]);
 
-            Patient_Registration::on('mysql_second')->insert([
+            $insert = Patient_Registration::on('mysql_second')->create([
                 'reg_id'=>'R00000000001',
                 'ptn_id'=>$ptn_id,
                 'bed_category'=>$req->bed_category,
@@ -103,7 +103,7 @@ class PatientRegistrationController extends Controller
             //auto generate reg id ends
             
             
-            Patient_Registration::on('mysql_second')->insert([
+            $insert = Patient_Registration::on('mysql_second')->create([
                 'reg_id' => $reg_id,
                 'ptn_id' => $req->ptn_id,
                 'bed_category' => $req->bed_category,
@@ -112,10 +112,13 @@ class PatientRegistrationController extends Controller
                 'sr_id' => $req->sr
             ]);
         }
+
+        $data = Patient_Registration::on('mysql_second')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Patient Registrations Added Successfully'
+            'message' => 'Patient Registrations Added Successfully',
+            "data" => $data,
         ], 200); 
     } // End Method
 
@@ -164,10 +167,13 @@ class PatientRegistrationController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Patient_Registration::on('mysql_second')->findOrFail($req-> id);
+
         if($update){
             return response()->json([
                 'status'=>true,
-                'message'=>'Patient Registrations Updated Successfully'
+                'message'=>'Patient Registrations Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200);
         }
     } // End Method

@@ -97,7 +97,7 @@ class PartyTransactionController extends Controller
                         
                         $receive = $req->method === 'Receive' ? $req->amount : null;
                         $payment = $req->method === 'Payment' ? $req->amount : null;
-                        Transaction_Main::on('mysql_second')->insert([
+                        $insert = Transaction_Main::on('mysql_second')->create([
                             "tran_id" => $id,
                             "tran_type" => 2,
                             "tran_method" => $req->method,
@@ -153,7 +153,7 @@ class PartyTransactionController extends Controller
 
                                         $detail_receive = $req->method === 'Receive' ? $detail_due : null;
                                         $detail_payment = $req->method === 'Payment' ? $detail_due : null;
-                                        Transaction_Detail::on('mysql_second')->insert([
+                                        Transaction_Detail::on('mysql_second')->create([
                                             "tran_id" => $id,
                                             "tran_type" => 2,
                                             "tran_method" => $req->method,
@@ -172,7 +172,7 @@ class PartyTransactionController extends Controller
                                     }
 
 
-                                    Party_Payment_Receive::on('mysql_second')->insert([
+                                    Party_Payment_Receive::on('mysql_second')->create([
                                         "tran_id" => $id,
                                         "tran_type" => 2,
                                         "tran_method" => $req->method,
@@ -232,7 +232,7 @@ class PartyTransactionController extends Controller
                                         $detail_receive = $req->method === 'Receive' ? $detail_paid : null;
                                         $detail_payment = $req->method === 'Payment' ? $detail_paid : null;
 
-                                        Transaction_Detail::on('mysql_second')->insert([
+                                        Transaction_Detail::on('mysql_second')->create([
                                             "tran_id" => $id,
                                             "tran_type" => 2,
                                             "tran_method" => $req->method,
@@ -251,7 +251,7 @@ class PartyTransactionController extends Controller
                                         $detailDiscount = $detailDiscount - $detail_discount;
                                     }
 
-                                    Party_Payment_Receive::on('mysql_second')->insert([
+                                    Party_Payment_Receive::on('mysql_second')->create([
                                         "tran_id" => $id,
                                         "tran_type" => 2,
                                         "tran_method" => $req->method,
@@ -276,9 +276,12 @@ class PartyTransactionController extends Controller
                         }
                     });
 
+                    $data = Transaction_Main::on('mysql_second')->with('User','Withs')->findOrFail($insert->id);
+
                     return response()->json([
                         'status'=> true,
-                        'message' => 'Party Collection Added Successfully'
+                        'message' => 'Party Collection Added Successfully',
+                        "data" => $data,
                     ], 200); 
                 }
             }
@@ -313,10 +316,13 @@ class PartyTransactionController extends Controller
     //         "updated_at" => now()
     //     ]);
 
+    //     $updatedData = Location_Info::findOrFail($req->id);
+    
     //     if($update){
     //         return response()->json([
     //             'status'=>true,
     //             'message' => 'Location Updated Successfully',
+    //             "updatedData" => $updatedData,
     //         ], 200); 
     //     }
     // } // End Method

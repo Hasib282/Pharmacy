@@ -56,7 +56,7 @@ class SupplierController extends Controller
             $id = GenerateUserId(5, 'SU');
             $imageName = StoreUserImage($req, $id);
             
-            User_Info::on('mysql_second')->insert([
+            $insert = User_Info::on('mysql_second')->create([
                 "user_id" => $id,
                 "tran_user_type" => $req->type,
                 "user_name" => $req->name,
@@ -69,10 +69,13 @@ class SupplierController extends Controller
                 "image" => $imageName,
             ]);
         });
+
+        $data = User_Info::on('mysql_second')->with('Withs', 'Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Supplier Details Added Successfully'
+            'message' => 'Supplier Details Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -126,6 +129,7 @@ class SupplierController extends Controller
         return response()->json([
             'status'=>true,
             'message' => 'Supplier Details Updated Successfully',
+            "updatedData" => $updatedData,
         ], 200);
     } // End Method
 

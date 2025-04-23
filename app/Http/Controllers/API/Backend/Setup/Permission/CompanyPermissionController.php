@@ -62,22 +62,23 @@ class CompanyPermissionController extends Controller
 
 
         // Update Company Pemissions Cache
-        $company_data = Company_Details::on('mysql')->with('permissions')->where('company_id', $req->company)->first();
+        $updatedData = Company_Details::on('mysql')->with('permissions')->where('company_id', $req->company)->first();
 
         Cache::forget("permission_mainheads_{$req->company}");
         Cache::forget("permission_ids_{$req->company}");
 
-        Cache::rememberForever("permission_mainheads_{$req->company}", function () use ($company_data) {
-            return $company_data->permissions->pluck('permission_mainhead')->unique()->toArray();
+        Cache::rememberForever("permission_mainheads_{$req->company}", function () use ($updatedData) {
+            return $updatedData->permissions->pluck('permission_mainhead')->unique()->toArray();
         });
         
-        Cache::rememberForever("permission_ids_{$req->company}", function () use ($company_data) {
-            return $company_data->permissions->pluck('id')->unique()->toArray();
+        Cache::rememberForever("permission_ids_{$req->company}", function () use ($updatedData) {
+            return $updatedData->permissions->pluck('id')->unique()->toArray();
         });
         
         return response()->json([
             'status'=> true,
-            'message' => 'Company Permissions Added Successfully'
+            'message' => 'Company Permissions Added Successfully',
+            "updatedData" => $updatedData,
         ], 200);  
     } // End Method
 

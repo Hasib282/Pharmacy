@@ -55,22 +55,23 @@ class CompanyTypePermissionController extends Controller
         $type->permissions()->sync($req->permissions);
 
         // Update Company Type Pemissions Cache
-        $company_type = Company_Type::on('mysql')->with('permissions')->findOrFail($req->type);
+        $updatedData = Company_Type::on('mysql')->with('permissions')->findOrFail($req->type);
 
         Cache::forget("permission_mainheads_{$req->type}");
         Cache::forget("permission_ids_{$req->type}");
 
-        Cache::rememberForever("permission_mainheads_{$req->type}", function () use ($company_type) {
-            return $company_type->permissions->pluck('permission_mainhead')->unique()->toArray();
+        Cache::rememberForever("permission_mainheads_{$req->type}", function () use ($updatedData) {
+            return $updatedData->permissions->pluck('permission_mainhead')->unique()->toArray();
         });
         
-        Cache::rememberForever("permission_ids_{$req->type}", function () use ($company_type) {
-            return $company_type->permissions->pluck('id')->unique()->toArray();
+        Cache::rememberForever("permission_ids_{$req->type}", function () use ($updatedData) {
+            return $updatedData->permissions->pluck('id')->unique()->toArray();
         });
         
         return response()->json([
             'status'=> true,
-            'message' => 'Company Type Permissions Added Successfully'
+            'message' => 'Company Type Permissions Added Successfully',
+            "updatedData" => $updatedData,
         ], 200);  
     } // End Method
 

@@ -27,13 +27,16 @@ class RoleController extends Controller
             "name" => 'required|unique:mysql.roles,name',
         ]);
 
-        Role::on('mysql')->insert([
+        $insert = Role::on('mysql')->create([
             "name" => $req->name,
         ]);
+
+        $data = Role::on('mysql')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'User Role Added Successfully'
+            'message' => 'User Role Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -62,10 +65,13 @@ class RoleController extends Controller
             "name" => $req->name
         ]);
 
+        $updatedData = Role::on('mysql')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'User Role Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

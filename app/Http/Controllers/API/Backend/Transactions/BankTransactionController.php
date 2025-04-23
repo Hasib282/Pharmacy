@@ -66,7 +66,7 @@ class BankTransactionController extends Controller
         DB::transaction(function () use ($req, $id) {
             $receive = $req->method === 'Withdraw' ? $req->amount : null;
             $payment = $req->method === 'Deposit' ? $req->amount : null;
-            Transaction_Main::on('mysql_second')->insert([
+            $insert = Transaction_Main::on('mysql_second')->create([
                 "tran_id" => $id,
                 "tran_type" => 4,
                 "tran_method" => $req->method,
@@ -80,7 +80,7 @@ class BankTransactionController extends Controller
             ]);
 
 
-            Transaction_Detail::on('mysql_second')->insert([
+            Transaction_Detail::on('mysql_second')->create([
                 "tran_id" => $id,
                 "tran_type" => 4,
                 "tran_method" => $req->method,
@@ -96,10 +96,13 @@ class BankTransactionController extends Controller
                 "due" => 0,
             ]);
         });
+
+        $data = Transaction_Main::on('mysql_second')->with('Bank','Head')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Bank Transaction Added Successfully'
+            'message' => 'Bank Transaction Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -151,10 +154,12 @@ class BankTransactionController extends Controller
             ]);
         });
 
+        $updatedData = Transaction_Main::on('mysql_second')->with('Bank','Head')->where('tran_id', $req->id)->first();
         
         return response()->json([
             'status'=>true,
             'message' => 'Bank Transaction Updated Successfully',
+            "updatedData" => $updatedData,
         ], 200); 
         
     } // End Method

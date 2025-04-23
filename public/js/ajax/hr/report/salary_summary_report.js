@@ -35,7 +35,7 @@
 // }; // End Function
 
 function ShowSalarySummary(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_user','user.user_name','bill_amount','tran_date'],

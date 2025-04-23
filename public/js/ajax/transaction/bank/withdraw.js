@@ -34,7 +34,7 @@
 // }; // End Function
 
 function ShowBankWithdraws(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_id','bank.name',{key:'bill_amount', type: 'number'}],

@@ -72,7 +72,7 @@
 // }; // End Function
 
 function ShowPharmacyClientReturns(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'receive', type: 'number'},{key:'due_col', type: 'number'},{key:'due_discount', type: 'number'},{key:'due', type: 'number'}],

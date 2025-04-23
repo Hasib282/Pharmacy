@@ -28,15 +28,18 @@ class CategoryController extends Controller
             'name' => 'required',
         ]);
 
-        Item_Category::on('mysql')->insert([
+        $insert = Item_Category::on('mysql')->create([
             'category_name' => $req->name,
             'company_id' => $req->company,
             'type_id'=> $type,
         ]);
+
+        $data = Item_Category::on('mysql')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Category Added Successfully'
+            'message' => 'Category Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -64,10 +67,13 @@ class CategoryController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Item_Category::on('mysql')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Category Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

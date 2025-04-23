@@ -70,7 +70,8 @@ class PatientController extends Controller
         if($update){
             return response()->json([
                 'status'=>true,
-                'message'=>'updated'
+                'message'=>'updated',
+                "updatedData" => $updatedData,
             ]);
         }
 

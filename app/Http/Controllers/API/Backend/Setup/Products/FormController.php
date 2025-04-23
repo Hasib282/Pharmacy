@@ -28,15 +28,18 @@ class FormController extends Controller
             'name' => 'required',
         ]);
  
-        Item_Form::on('mysql')->insert([
+        $insert = Item_Form::on('mysql')->create([
             'form_name' => $req->name,
             'company_id' => $req->company,
             'type_id'=> $type,
         ]);
+
+        $data = Item_Form::on('mysql')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Form Added Successfully'
+            'message' => 'Form Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -64,10 +67,13 @@ class FormController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Item_Form::on('mysql')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Location Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

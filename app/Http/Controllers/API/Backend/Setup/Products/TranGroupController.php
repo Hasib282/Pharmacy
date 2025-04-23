@@ -44,16 +44,19 @@ class TranGroupController extends Controller
             "method" => 'required|in:Receive,Payment,Both',
         ]);
 
-        Transaction_Groupe::on('mysql')->insert([
+        $insert = Transaction_Groupe::on('mysql')->create([
             "tran_groupe_name" => $req->groupeName,
             "tran_groupe_type" => $req->type,
             "tran_method" => $req->method,
             "company_id" => $req->company,
         ]);
+
+        $data = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Transaction Groupe Added Successfully'
+            'message' => 'Transaction Groupe Added Successfully',
+            "data" => $data,
         ], 200);  
     } // End Method
 
@@ -89,10 +92,13 @@ class TranGroupController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,
                 'message' => 'Transaction Groupe Updated Successfully',
+                "updatedData" => $updatedData,
             ], 200); 
         }
     } // End Method

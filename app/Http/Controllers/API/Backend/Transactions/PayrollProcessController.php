@@ -20,7 +20,7 @@ class PayrollProcessController extends Controller
     public function ShowAll(Request $req){
         $currentYear = Carbon::now()->year; 
         $currentMonth = Carbon::now()->month;
-        $payroll = Payroll_Setup::on('mysql_second')->with('Employee')
+        $data = Payroll_Setup::on('mysql_second')->with('Employee')
         ->select('emp_id', 'amount', \DB::raw('NULL as date'))
         ->unionall(
             Payroll_Middlewire::on('mysql_second')->select('emp_id', 'amount', 'date')
@@ -44,7 +44,7 @@ class PayrollProcessController extends Controller
 
         return response()->json([
             'status'=> true,
-            'data' => $payroll,
+            'data' => $data,
             'tranwith' => $tranwith,
         ], 200);
     } // End Method
@@ -119,10 +119,10 @@ class PayrollProcessController extends Controller
                     }
 
 
-                    Transaction_Detail::on('mysql_second')->insert($transactionDetails);
+                    Transaction_Detail::on('mysql_second')->create($transactionDetails);
 
 
-                    Transaction_Main::on('mysql_second')->insert([
+                    Transaction_Main::on('mysql_second')->create([
                         'tran_id'=>$id,
                         'tran_type'=> '3',
                         'tran_method'=> 'Payment',
@@ -206,10 +206,13 @@ class PayrollProcessController extends Controller
     //         "updated_at" => now()
     //     ]);
 
+    //     $updatedData = Location_Info::findOrFail($req->id);
+    
     //     if($update){
     //         return response()->json([
     //             'status'=>true,
     //             'message' => 'Location Updated Successfully',
+    //             "updatedData" => $updatedData,
     //         ], 200); 
     //     }
     // } // End Method

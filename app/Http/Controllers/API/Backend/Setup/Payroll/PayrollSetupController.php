@@ -13,7 +13,7 @@ class PayrollSetupController extends Controller
 {
     // Show All Payroll Setup
     public function ShowAll(Request $req){
-        $data = Payroll_Setup::on('mysql_second')->with('Employee','Head')->orderBy('emp_id','asc')->get();
+        $data = Payroll_Setup::on('mysql_second')->with()->orderBy('emp_id','asc')->get();
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
         return response()->json([
@@ -48,15 +48,18 @@ class PayrollSetupController extends Controller
             ], 422);
         }
         else{
-            Payroll_Setup::on('mysql_second')->insert([
+            $insert = Payroll_Setup::on('mysql_second')->create([
                 "emp_id" => $req->user,
                 "head_id" => $req->head,
                 "amount" => $req->amount,
             ]);
+
+            $data = Payroll_Setup::on('mysql_second')->with('Employee','Head')->findOrFail($insert->id);
     
             return response()->json([
                 'status'=> true,
-                'message' => 'Payroll Setup Added Successfully'
+                'message' => 'Payroll Setup Added Successfully',
+                "data" => $data,
             ], 200);  
         }
     } // End Method
@@ -107,10 +110,13 @@ class PayrollSetupController extends Controller
                 "amount" => $req->amount,
             ]);
 
+            $updatedData = Payroll_Setup::on('mysql_second')->with('Employee','Head')->findOrFail($req->id);
+
             if($update){
                 return response()->json([
                     'status'=>true,
                     'message' => 'Payroll Setup Updated Successfully',
+                    "updatedData" => $updatedData,
                 ], 200); 
             }
         }

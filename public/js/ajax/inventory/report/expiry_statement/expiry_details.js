@@ -24,7 +24,7 @@
 // }; // End Function
 
 function ShowInventoryExpiryDetails(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['head.tran_head_name',{key:'expiry_date', type: 'date'},'tran_id'],

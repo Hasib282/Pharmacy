@@ -47,7 +47,7 @@
 // }; // End Function
 
 function ShowSalaryDetails(res) {
-    new GenerateTable({
+    tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_user','user.user_name','head.tran_head_name','amount','tran_date'],
