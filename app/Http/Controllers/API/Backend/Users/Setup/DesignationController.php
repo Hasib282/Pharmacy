@@ -73,6 +73,8 @@ class DesignationController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Designation::on('mysql_second')->with('Department:id,name')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,

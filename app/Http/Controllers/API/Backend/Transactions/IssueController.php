@@ -94,6 +94,8 @@ class IssueController extends Controller
     
                 $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
 
+                $data = null;
+                
                 DB::transaction(function () use ($req, $id) {
                     $insert = Transaction_Main::on('mysql_second')->create([
                         "tran_id" => $id,
@@ -303,9 +305,10 @@ class IssueController extends Controller
                             ]);
                         }
                     }
+
+                    $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);
                 });
 
-                $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);
                 
                 return response()->json([
                     'status'=> true,

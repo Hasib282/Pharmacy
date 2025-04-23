@@ -65,6 +65,8 @@ class DepartmentController extends Controller
             "name" => $req->name,
         ]);
 
+        $updatedData = Department::on('mysql_second')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,

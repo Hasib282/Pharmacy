@@ -94,6 +94,8 @@ class DoctorController extends Controller
 
         ]);
 
+        $updatedData = Doctor_Information::on('mysql_second')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,

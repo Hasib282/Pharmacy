@@ -51,6 +51,8 @@ class SupplierController extends Controller
             'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
+        $data = null;
+        
         DB::transaction(function () use ($req) {
             // Calling UserHelper Functions
             $id = GenerateUserId(5, 'SU');
@@ -68,9 +70,10 @@ class SupplierController extends Controller
                 "user_role" =>  5,
                 "image" => $imageName,
             ]);
+
+            $data = User_Info::on('mysql_second')->with('Withs', 'Location')->findOrFail($insert->id);
         });
 
-        $data = User_Info::on('mysql_second')->with('Withs', 'Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -125,6 +128,8 @@ class SupplierController extends Controller
                 "updated_at" => now()
             ]);
         });
+
+        $updatedData = User_Info::on('mysql_second')->with('Withs', 'Location')->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,

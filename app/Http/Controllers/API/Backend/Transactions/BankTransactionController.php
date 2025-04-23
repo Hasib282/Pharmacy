@@ -63,6 +63,8 @@ class BankTransactionController extends Controller
             $id = ($transaction) ? 'BMD' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'BMD000000001';
         }
 
+        $data = null;
+
         DB::transaction(function () use ($req, $id) {
             $receive = $req->method === 'Withdraw' ? $req->amount : null;
             $payment = $req->method === 'Deposit' ? $req->amount : null;
@@ -95,9 +97,10 @@ class BankTransactionController extends Controller
                 "payment" => $payment,
                 "due" => 0,
             ]);
+
+            $data = Transaction_Main::on('mysql_second')->with('Bank','Head')->findOrFail($insert->id);
         });
 
-        $data = Transaction_Main::on('mysql_second')->with('Bank','Head')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,

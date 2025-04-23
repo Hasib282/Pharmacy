@@ -43,7 +43,7 @@ function ShowClients(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['user_id','user_name','withs.tran_with_name','user_email', 'user_phone','location.upazila','address','image'],
+        tbody: ['user_id','user_name','withs.tran_with_name','user_email', 'user_phone','location.upazila','address',{key:'image', type: 'image'}],
         actions: (row) => `
                 <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
                 

@@ -102,6 +102,8 @@ class TranWithController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Transaction_With::on('mysql_second')->with('Role','Type')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,

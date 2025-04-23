@@ -96,6 +96,7 @@ class GeneralTransactionController extends Controller
             $id = ($transaction) ? 'PAY' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'PAY000000001';
         }
         
+        $data = null;
 
         DB::transaction(function () use ($req, $id) {
             $receive = $req->method === 'Receive' ? $req->advance : null;
@@ -157,9 +158,10 @@ class GeneralTransactionController extends Controller
                 $billAdvance -= $advance;
                 $billNet -= $amount;
             }
+
+            $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);
         });
 
-        $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,

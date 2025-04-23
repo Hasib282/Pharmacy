@@ -93,6 +93,8 @@ class PartyTransactionController extends Controller
                     ], 422);
                 }
                 else{
+                    $data = null;
+                    
                     DB::transaction(function () use ($req, $id, $transaction, $totDue, $totAmount, $billDiscount) {
                         
                         $receive = $req->method === 'Receive' ? $req->amount : null;
@@ -274,9 +276,10 @@ class PartyTransactionController extends Controller
                                 }
                             }
                         }
+
+                        $data = Transaction_Main::on('mysql_second')->with('User','Withs')->findOrFail($insert->id);
                     });
 
-                    $data = Transaction_Main::on('mysql_second')->with('User','Withs')->findOrFail($insert->id);
 
                     return response()->json([
                         'status'=> true,

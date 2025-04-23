@@ -52,6 +52,7 @@ class AdminController extends Controller
             'company' => 'required|exists:mysql.company__details,company_id',
         ]);
 
+        $data = null;
 
         DB::transaction(function () use ($req) {
             // Calling UserHelper Functions
@@ -85,9 +86,10 @@ class AdminController extends Controller
                 "store_id" =>  $req->store,
                 "company_id" =>  $req->company,
             ]);
+
+            $data = User_Info::on('mysql_second')->findOrFail($insert->id);
         });
 
-        $data = User_Info::on('mysql_second')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -142,6 +144,8 @@ class AdminController extends Controller
                 "updated_at" => now(),
             ]);
         });
+
+        $updatedData = User_Info::on('mysql_second')->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,

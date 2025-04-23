@@ -94,6 +94,8 @@ class AttendenceController extends Controller
             ]);
         }        
 
+        $updatedData = Attendence::on('mysql_second')->with('User')->findOrFail($req->id);
+
         if($update){
             return response()->json([
                 'status'=>true,

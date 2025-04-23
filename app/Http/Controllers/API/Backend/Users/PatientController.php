@@ -67,6 +67,8 @@ class PatientController extends Controller
             "updated_at" => now()
         ]);
 
+        $updatedData = Patient_Information::on('mysql_second')->findOrFail($req-> id);
+
         if($update){
             return response()->json([
                 'status'=>true,

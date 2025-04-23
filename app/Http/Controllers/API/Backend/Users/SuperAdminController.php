@@ -36,6 +36,7 @@ class SuperAdminController extends Controller
             'image' => 'mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
+        $data = null;
 
         DB::transaction(function () use ($req) {
             // Calling UserHelper Functions
@@ -51,9 +52,10 @@ class SuperAdminController extends Controller
                 "password" => Hash::make($req->password),
                 "image" => $imageName,
             ]);
+
+            $data = Login_User::on('mysql')->findOrFail($insert->id);
         });
 
-        $data = Login_User::on('mysql')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -98,6 +100,8 @@ class SuperAdminController extends Controller
                 "updated_at" => now(),
             ]);
         });
+
+        $updatedData = Login_User::on('mysql')->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,
