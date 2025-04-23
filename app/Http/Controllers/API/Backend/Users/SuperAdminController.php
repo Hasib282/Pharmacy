@@ -38,7 +38,7 @@ class SuperAdminController extends Controller
 
         $data = null;
 
-        DB::transaction(function () use ($req) {
+        DB::transaction(function () use ($req, &$data) {
             // Calling UserHelper Functions
             $id = GenerateLoginUserId(1, "SA");
             $imageName = StoreUserImage($req, $id);

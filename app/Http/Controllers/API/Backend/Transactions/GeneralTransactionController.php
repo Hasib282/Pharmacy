@@ -98,7 +98,7 @@ class GeneralTransactionController extends Controller
         
         $data = null;
 
-        DB::transaction(function () use ($req, $id) {
+        DB::transaction(function () use ($req, $id, &$data) {
             $receive = $req->method === 'Receive' ? $req->advance : null;
             $payment = $req->method === 'Payment' ? $req->advance : null;
             $insert = Transaction_Main::on('mysql_second')->create([

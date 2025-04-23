@@ -46,8 +46,9 @@ class PersonalDetailsController extends Controller
             'store' => 'required|exists:mysql_second.stores,id',
         ]);
  
+        $data = null;
         
-        DB::transaction(function () use ($req) {
+        DB::transaction(function () use ($req, &$data) {
             $empId = GenerateLoginUserId(3, 'EM');
             $id = GenerateUserId(3, 'EM');
             $imageName = StoreUserImage($req, $id);
@@ -107,9 +108,10 @@ class PersonalDetailsController extends Controller
                 "address" => $req->address,
                 "image" => $imageName,
             ]);
+
+            $data = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
         });
 
-        $data = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,

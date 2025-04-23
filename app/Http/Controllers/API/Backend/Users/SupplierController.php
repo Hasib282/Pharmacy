@@ -53,7 +53,7 @@ class SupplierController extends Controller
 
         $data = null;
         
-        DB::transaction(function () use ($req) {
+        DB::transaction(function () use ($req, &$data) {
             // Calling UserHelper Functions
             $id = GenerateUserId(5, 'SU');
             $imageName = StoreUserImage($req, $id);

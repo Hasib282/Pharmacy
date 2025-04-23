@@ -65,7 +65,7 @@ class BankTransactionController extends Controller
 
         $data = null;
 
-        DB::transaction(function () use ($req, $id) {
+        DB::transaction(function () use ($req, $id, &$data) {
             $receive = $req->method === 'Withdraw' ? $req->amount : null;
             $payment = $req->method === 'Deposit' ? $req->amount : null;
             $insert = Transaction_Main::on('mysql_second')->create([

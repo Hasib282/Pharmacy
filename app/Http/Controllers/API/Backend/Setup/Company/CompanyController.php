@@ -41,7 +41,7 @@ class CompanyController extends Controller
 
         $data = null;
 
-        DB::transaction(function () use ($req) {
+        DB::transaction(function () use ($req, &$data) {
             // Generates Auto Increment Company Id
             $latestId = Company_Details::on('mysql')->orderBy('company_id','desc')->first();
             $id = ($latestId) ? 'CO' . str_pad((intval(substr($latestId->company_id, 2)) + 1), 9, '0', STR_PAD_LEFT) : 'CO000000001';

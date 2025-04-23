@@ -52,7 +52,7 @@ class ClientController extends Controller
 
         $data = null;
 
-        DB::transaction(function () use ($req) {
+        DB::transaction(function () use ($req, &$data) {
             // Calling UserHelper Functions
             $id = GenerateUserId(4, 'CL');
             $imageName = StoreUserImage($req, $id);

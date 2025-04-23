@@ -54,7 +54,7 @@ class AdminController extends Controller
 
         $data = null;
 
-        DB::transaction(function () use ($req) {
+        DB::transaction(function () use ($req, &$data) {
             // Calling UserHelper Functions
             $adminId = GenerateLoginUserId(2, 'AD');
             $id = GenerateUserId(2, 'AD');
@@ -90,7 +90,6 @@ class AdminController extends Controller
             $data = User_Info::on('mysql_second')->findOrFail($insert->id);
         });
 
-        
         return response()->json([
             'status'=> true,
             'message' => 'Admin Details Added Successfully',

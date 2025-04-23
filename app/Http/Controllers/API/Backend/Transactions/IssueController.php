@@ -96,7 +96,7 @@ class IssueController extends Controller
 
                 $data = null;
                 
-                DB::transaction(function () use ($req, $id) {
+                DB::transaction(function () use ($req, $id, &$data) {
                     $insert = Transaction_Main::on('mysql_second')->create([
                         "tran_id" => $id,
                         "tran_type" => $req->type,

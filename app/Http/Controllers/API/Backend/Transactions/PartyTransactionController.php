@@ -95,7 +95,7 @@ class PartyTransactionController extends Controller
                 else{
                     $data = null;
                     
-                    DB::transaction(function () use ($req, $id, $transaction, $totDue, $totAmount, $billDiscount) {
+                    DB::transaction(function () use ($req, $id, $transaction, $totDue, $totAmount, $billDiscount, &$data) {
                         
                         $receive = $req->method === 'Receive' ? $req->amount : null;
                         $payment = $req->method === 'Payment' ? $req->amount : null;
