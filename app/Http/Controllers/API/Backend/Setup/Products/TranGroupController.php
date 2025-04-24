@@ -155,7 +155,7 @@ class TranGroupController extends Controller
 
         return response()->json([
             'status' => "success",
-            'groupes'=> $data,
+            'data'=> $data,
         ]);
     } // End Method
 }

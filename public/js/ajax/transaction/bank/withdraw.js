@@ -49,7 +49,7 @@ function ShowBankWithdraws(res) {
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Tran Id', key: 'tran_id' },
         { label: 'Bank Name', key: 'bank.name' },
         { label: 'Amount' },
@@ -120,20 +120,20 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
-        var timestamps = new Date(res.transaction.tran_date);
+        var timestamps = new Date(res.data.tran_date);
         var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'Asia/Dhaka' });
         $('#updateDate').val(formattedDate);
 
-        $('#id').val(res.transaction.tran_id);
+        $('#id').val(res.data.tran_id);
 
-        $('#updateHead').val(res.transaction.head.tran_head_name);
-        $('#updateHead').attr('data-id', res.transaction.tran_head_id);
-        $('#updateHead').attr('data-group', res.transaction.tran_groupe_id);
+        $('#updateHead').val(res.data.head.tran_head_name);
+        $('#updateHead').attr('data-id', res.data.tran_head_id);
+        $('#updateHead').attr('data-group', res.data.tran_groupe_id);
         
-        $('#updateBank').attr('data-id',res.transaction.tran_bank);
-        $('#updateBank').val(res.transaction.bank.name);
+        $('#updateBank').attr('data-id',res.data.tran_bank);
+        $('#updateBank').val(res.data.bank.name);
 
-        $('#updateAmount').val(res.transaction.amount);
+        $('#updateAmount').val(res.data.amount);
         $('#updateDate').focus();
     }
 });

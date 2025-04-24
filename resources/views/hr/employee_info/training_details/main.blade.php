@@ -8,9 +8,9 @@
     {{-- <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                {{-- @if(Auth::user()->hasPermissionToRoute('insert.employeeTraining')) --}}
+                @if(Auth::user()->hasPermissionToRoute('insert.employeeTraining'))
                     <button class="open-modal add" data-modal-id="addModal">Add Training Detail</button>
-                {{-- @endif --}}
+                @endif
             </div>
             <div class="c-9 search">
                 <select name="searchOption" id="searchOption" class="select-small">

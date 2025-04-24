@@ -94,11 +94,17 @@ function ReloadData(url, RenderData, queryParams = {}) {
 
 // Add Button Click Functionality
 function AddModalFunctionality(focusVariable, AddClickEvent){
-    $(document).off('click', '.add').on('click', '.add', function (e) {
+    $(document).off('click', '#add').on('click', '#add', function (e) {
         e.preventDefault();
+        let modalId = $(this).data('modal-id');
+        var modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'block';
+        }
+        
         $('#AddForm')[0].reset();
         $('#previewImage').attr('src', "/images/male.png");
-        
+
         $(focusVariable).focus();
 
         if(typeof AddClickEvent === 'function'){
@@ -112,7 +118,7 @@ function AddModalFunctionality(focusVariable, AddClickEvent){
 
 
 /////////////// ------------------ Insert Ajax Part Start ---------------- /////////////////////////////
-function InsertAjax(link, RenderData, AddData = {}, AddSuccessEvent, method ="POST") {
+function InsertAjax(link, AddData = {}, AddSuccessEvent, method ="POST") {
     $(document).off('submit', '#AddForm').on('submit', '#AddForm', function (e) {
         e.preventDefault();
         let formData = new FormData(this);
@@ -147,6 +153,7 @@ function InsertAjax(link, RenderData, AddData = {}, AddSuccessEvent, method ="PO
                     $('#previewImage').attr('src', "/images/male.png");
 
                     // ReloadData(link, RenderData);
+                    
                     tableInstance.addRow(res.data);
 
                     toastr.success(res.message, 'Added!');
@@ -164,38 +171,56 @@ function InsertAjax(link, RenderData, AddData = {}, AddSuccessEvent, method ="PO
 
 
 ///////////// ------------------ Edit Location Ajax Part Start ---------------- /////////////////////////////
-function EditAjax(link, AddSuccessEvent, AddClickEvent=undefined) {
+function EditAjax(AddEvent=undefined, Id = 'id') {
     $(document).off('click', '#edit').on('click', '#edit', function () {
         let modalId = $(this).data('modal-id');
-        let id = $(this).data('id');
-        let status = $('#status').val();
-        
-        if(typeof AddClickEvent === 'function'){
-            AddClickEvent();
+        var modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'block';
         }
+
+        let id = $(this).data('id');
+        // let status = $('#status').val();
         
-        $.ajax({
-            url: `${apiUrl}/${link}/edit`,
-            method: 'GET',
-            data: { id, status },
-            success: function (res) {
-                if(typeof AddSuccessEvent === 'function'){
-                    AddSuccessEvent(res);
-                }
-                
-                var modal = document.getElementById(modalId);
-                modal.style.display = 'block';
-            }
-        });
+        let data = tableInstance.filteredData.find(row => row[Id] == id);
+
+        if(typeof AddEvent === 'function'){
+            AddEvent(data);
+        }
     });
 }
+// function EditAjax(link, AddSuccessEvent, AddClickEvent=undefined) {
+//     $(document).off('click', '#edit').on('click', '#edit', function () {
+//         let modalId = $(this).data('modal-id');
+//         let id = $(this).data('id');
+//         let status = $('#status').val();
+        
+//         if(typeof AddClickEvent === 'function'){
+//             AddClickEvent();
+//         }
+        
+//         $.ajax({
+//             url: `${apiUrl}/${link}/edit`,
+//             method: 'GET',
+//             data: { id, status },
+//             success: function (res) {
+//                 if(typeof AddSuccessEvent === 'function'){
+//                     AddSuccessEvent(res);
+//                 }
+                
+//                 var modal = document.getElementById(modalId);
+//                 modal.style.display = 'block';
+//             }
+//         });
+//     });
+// }
 
 
 
 
 
 /////////////// ------------------ Update Ajax Part Start ---------------- /////////////////////////////
-function UpdateAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
+function UpdateAjax(link, AditionalData = {}, AdditionalEvent) {
     $(document).off('submit', '#EditForm').on('submit', '#EditForm', function (e) {
         e.preventDefault();
         let formData = new FormData(this);
@@ -222,7 +247,7 @@ function UpdateAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
             success: function (res) {
                 if (res.status) {
                     $('#editModal').hide();
-                    
+
                     $('#EditForm')[0].reset();
 
                     if(typeof AdditionalEvent === 'function'){
@@ -230,7 +255,7 @@ function UpdateAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
                     }
                     
                     // ReloadData(link, RenderData);
-                    tableInstance.editRow(formData.get('id'), res.updatedData);
+                    tableInstance.updateRow(formData.get('id'), res.updatedData);
 
                     toastr.success(res.message, 'Updated!');
                 }
@@ -247,7 +272,7 @@ function UpdateAjax(link, RenderData, AditionalData = {}, AdditionalEvent) {
 
 
 //////////////////// -------------------- Delete Ajax Part Start -------------------- ////////////////////
-function DeleteAjax(link, RenderData) {
+function DeleteAjax(link) {
     $(document).off('click', '#confirm').on('click', '#confirm', function (e) {
         e.preventDefault();
         let id = $(this).attr('data-id');
@@ -259,7 +284,6 @@ function DeleteAjax(link, RenderData) {
             data:{ id, status },
             success: function (res) {
                 if (res.status) {
-                    // ReloadData(link, RenderData);
                     tableInstance.deleteRow(id);
 
                     $('#deleteModal').hide();

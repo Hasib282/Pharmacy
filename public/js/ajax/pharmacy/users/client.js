@@ -58,7 +58,7 @@ function ShowClients(res) {
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Id', key: 'user_id' },
         { label: 'Name', key: 'user_name' },
         { label: 'Client Type', key: 'withs.tran_with_name' },

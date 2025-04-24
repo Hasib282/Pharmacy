@@ -52,10 +52,9 @@ $(document).ready(function () {
 
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Payroll Category', key: 'tran_head_name' },
         { label: 'Company Id', key: 'company_id' },
-       
         { label: 'Action', type: 'button' }
     ]);
     

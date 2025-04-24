@@ -13,12 +13,6 @@
             @method('PUT')
             {{-- id --}}
             <input type="hidden" name="id" id="id">
-            {{-- name --}}
-            <div class="form-input-group">
-                <label for="updateHeadName">Head Name <span class="required" title="Required">*</span></label>
-                <input type="text" name="headName" class="form-input" id="updateHeadName">
-                <span class="error" id="update_headName_error"></span>
-            </div>
             {{-- groupe --}}
             @if (Request::segment(1) != 'hr')
                 <div class="form-input-group">
@@ -29,6 +23,12 @@
                     <span class="error" id="update_groupe_error"></span>
                 </div>
             @endif
+            {{-- name --}}
+            <div class="form-input-group">
+                <label for="updateHeadName">Head Name <span class="required" title="Required">*</span></label>
+                <input type="text" name="headName" class="form-input" id="updateHeadName">
+                <span class="error" id="update_headName_error"></span>
+            </div>
 
             <div class="center">
                 <button type="submit" id="Update" class="btn-blue">Update</button>

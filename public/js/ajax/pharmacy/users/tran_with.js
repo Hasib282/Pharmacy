@@ -52,7 +52,7 @@ $(document).ready(function () {
 
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'User Type', key: 'tran_with_name' },
         { label: 'User Role', key: 'role.name' },
         { label: 'Transaction Method', key: 'tran_method' },

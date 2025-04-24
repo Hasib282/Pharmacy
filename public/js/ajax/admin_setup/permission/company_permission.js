@@ -59,7 +59,7 @@ $(document).ready(function () {
     
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Company Id', key: 'company_id' },
         { label: 'Company Name', key: 'company_name' },
         { label: 'Permissions' },
@@ -93,15 +93,15 @@ $(document).ready(function () {
 
 
     // Pagination Ajax
-    PaginationAjax(ShowCompanyPermissions);
+    // PaginationAjax(ShowCompanyPermissions);
 
 
     // Search Ajax
-    SearchAjax('admin/permission/company_permissions', ShowCompanyPermissions, {type: { selector: "#type"}});
+    // SearchAjax('admin/permission/company_permissions', ShowCompanyPermissions, {type: { selector: "#type"}});
 
 
     // Search By Methods, Roles, Types
-    SearchBySelect('admin/permission/company_permissions', ShowCompanyPermissions, '#type', {type: { selector: "#type"}});
+    // SearchBySelect('admin/permission/company_permissions', ShowCompanyPermissions, '#type', {type: { selector: "#type"}});
 
 
     // Additional Edit Functionality

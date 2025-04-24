@@ -8,28 +8,20 @@ function SingleInputDataCrudeAjax(link, RenderData){
 
 
     // Insert Ajax
-    InsertAjax(link, RenderData, {company: { selector: "#company", attribute: 'data-id' }}, function() {
+    InsertAjax(link, {company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#name').focus();
         $('#company').removeAttr('data-id');
     });
 
 
     //Edit Ajax
-    EditAjax(link, EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax(link, RenderData);
+    UpdateAjax(link);
     
 
     // Delete Ajax
-    DeleteAjax(link, RenderData);
-
-
-    // Pagination Ajax
-    // PaginationAjax(RenderData);
-
-
-    // Search Ajax
-    // SearchAjax(link, RenderData);
+    DeleteAjax(link);
 }

@@ -1,38 +1,3 @@
-// function ShowTranWith(data, startIndex) {
-//     let tableRows = '';
-    
-//     if(data.length > 0){
-//         $.each(data, function(key, item) {
-//             tableRows += `
-//                 <tr>
-//                     <td>${startIndex + key + 1}</td>
-//                     <td>${item.tran_with_name}</td>
-//                     <td>${item.role.name}</td>
-//                     <td>${item.tran_method}</td>
-//                     <td>${item.type.type_name}</td>
-//                     <td>
-//                         <div style="display: flex;gap:5px;">
-                            
-//                             <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                            
-//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                            
-//                         </div>
-//                     </td>
-//                 </tr>
-//             `;
-//         });
-
-//         // Inject the generated rows into the table body
-//         $('.load-data .show-table tbody').html(tableRows);
-//         $('.load-data .show-table tfoot').html('')
-//     }
-//     else{
-//         $('.load-data .show-table tbody').html('');
-//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-//     }
-// }; // End Function
-
 function ShowTranWith(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
@@ -49,33 +14,15 @@ function ShowTranWith(res) {
 
 
 $(document).ready(function () {
-    $(document).off(`.${'SearchBySelect'}`);
-
-
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'User Type', key: 'tran_with_name' },
-        { label: 'User Role', key: 'role.name' },
-        { label: 'Transaction Method', key: 'tran_method' },
-        { label: 'Transaction Type', key: 'tran_type' },
+        { label: 'User Role', type:"select", key: 'user_role', method:"fetch", link:'admin/users/roles/get', name:"name" },
+        { label: 'Transaction Method', type:"select", key: 'tran_method', method:"custom", options:['Receive','Payment','Both'] },
+        { label: 'Transaction Type', type:"select", key: 'tran_type', method:"fetch", link:'admin/mainheads/get', name:"tran_groupe_name" },
         { label: 'Action', type: 'button' }
     ]);
-
-    
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/admin/tranwith`,
-        method: "GET",
-        success: function (res) {
-            let queryParams = GetQueryParams();
-            CreateSelectOptions('#roles', 'All', res.roles, queryParams['role'], 'name')
-            CreateSelectOptions('#types', 'All', res.types, queryParams['type'], 'type_name')
-            CreateSelectOptions('#role', 'Select User Role', res.roles, null, 'name')
-            CreateSelectOptions('#tranType', 'Select Transaction Type', res.types, null, 'type_name')
-        },
-    });
-
     
     // Load Data on Hard Reload
     ReloadData('admin/tranwith', ShowTranWith);
@@ -86,49 +33,48 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('admin/tranwith', ShowTranWith, { company: { selector: "#company", attribute: 'data-id' }}, function() {
+    InsertAjax('admin/tranwith', { company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#name').focus();
         $('#company').removeAttr('data-id');
     });
 
 
     //Edit Ajax
-    EditAjax('admin/tranwith', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('admin/tranwith', ShowTranWith);
+    UpdateAjax('admin/tranwith');
     
 
     // Delete Ajax
-    DeleteAjax('admin/tranwith', ShowTranWith);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowTranWith);
-
-
-    // Search Ajax
-    // SearchAjax('admin/tranwith', ShowTranWith, {type: { selector: "#types"}, method: { selector: "#methods"}, role: { selector: "#roles"}});
-
-
-    // Search By Methods, Roles, Types
-    // SearchBySelect('admin/tranwith', ShowTranWith, '#methods, #roles, #types', {type: { selector: "#types"},    method: { selector: "#methods"}, role: { selector: "#roles"}} );
+    DeleteAjax('admin/tranwith');
 
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
         $('#id').val(res.data.id);
         $('#updateName').val(res.data.tran_with_name);
-
-        // Create options dynamically
-        CreateSelectOptions('#updateRole', 'Select User Role', res.roles, res.data.user_role, 'name')
-        CreateSelectOptions('#updateTranType', 'Select Transaction Type', res.types, res.data.tran_type, 'type_name')
-
+        $('#updateRole').val(res.data.user_role);
+        $('#updateTranType').val(res.data.tran_type);
         $('#updateTranMethod').html('');
         $('#updateTranMethod').append(`<option value="Receive" ${res.data.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
                                     <option value="Payment" ${res.data.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
                                     <option value="Both" ${res.data.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
         $('#updateName').focus();
     }; // End Method
+
+
+
+    // Get Trantype
+    GetSelectInputList('admin/mainheads/get', function (res) {
+        CreateSelectOptions('#tranType', 'Select Tran Type', res.data, null, 'name');
+        CreateSelectOptions('#updateTranType', 'Select Tran Type', res.data, null, 'name');
+    })
+    
+    // Get Roles
+    GetSelectInputList('admin/users/roles/get', function (res) {
+        CreateSelectOptions('#role', 'Select Role', res.data, null, 'name');
+        CreateSelectOptions('#updateRole', 'Select Role', res.data, null, 'name');
+    })
 });

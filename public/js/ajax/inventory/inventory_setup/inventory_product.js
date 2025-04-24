@@ -56,7 +56,7 @@ function ShowInventoryProducts(res) {
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Product Name', key: 'tran_head_name' },
         { label: 'Transaction Groupe', key: 'groupe.tran_groupe_name' },
         { label: 'Category Name', key: 'category.category_name' },

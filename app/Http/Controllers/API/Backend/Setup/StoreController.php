@@ -36,7 +36,7 @@ class StoreController extends Controller
             'address' => $req->address,
         ]);
 
-        $data = Store::on('mysql')->with('Location')->findOrFail($insert->id);
+        $data = Store::on('mysql_second')->with('Location')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,

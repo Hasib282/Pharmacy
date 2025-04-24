@@ -48,7 +48,7 @@ $(document).ready(function () {
 
 // Render The Table Heads
 renderTableHead([
-    { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+    { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
     { label: ' Id', key: 'company_id' },
     { label: ' Employee Name', key: 'user_name' },
     { label: '	Salary Amount' },

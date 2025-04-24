@@ -56,7 +56,7 @@ function ShowPatients(res) {
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Company Id', key: 'ptn_id' },
         { label: 'Name', key: 'name' },
         { label: 'Phone', key: 'phone' },

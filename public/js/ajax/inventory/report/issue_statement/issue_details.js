@@ -73,7 +73,7 @@ function ShowInventoryIssueDetails(res) {
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Tran Id', key: 'tran_id' },
         { label: 'User	', key: 'user.user_name' },
         { label: 'Product Name	', key: 'head.tran_head_name' },

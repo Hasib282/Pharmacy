@@ -1,44 +1,3 @@
-// function ShowCompanies(data, startIndex) {
-//     let tableRows = '';
-    
-//     if(data.length > 0){
-//         $.each(data, function(key, item) {
-//             tableRows += `
-//                 <tr>
-//                     <td>${startIndex + key + 1}</td>
-//                     <td>${item.company_id}</td>
-//                     <td>${item.company_name}</td>
-//                     <td>${item.type.name}</td>
-//                     <td>${item.company_email}</td>
-//                     <td>${item.company_phone}</td>
-//                     <td>${item.address ? item.address : "" }</td>
-//                     <td>${item.domain}</td>
-//                     <td><img src="${apiUrl.replace('/api', '')}/storage/${item.logo ? item.logo : 'tsbd.png'}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
-//                     <td>
-//                         <div style="display: flex;gap:5px;">
-                            
-//                             <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${item.id}"><i class="fa-solid fa-circle-info"></i></button>
-
-//                             <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                                    
-//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                            
-//                         </div>
-//                     </td>
-//                 </tr>
-//             `;
-//         });
-
-//         // Inject the generated rows into the table body
-//         $('.load-data .show-table tbody').html(tableRows);
-//         $('.load-data .show-table tfoot').html('')
-//     }
-//     else{
-//         $('.load-data .show-table tbody').html('');
-//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-//     }
-// }; // End Function
-
 function ShowCompanies(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
@@ -57,15 +16,12 @@ function ShowCompanies(res) {
 
 
 $(document).ready(function () {
-    $(document).off(`.${'SearchBySelect'}`);
-
-
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Company Id', key: 'company_id' },
         { label: 'Name', key: 'company_name' },
-        { label: 'Type Name', key: 'type.name' },
+        { label: 'Type Name', type:"select", key: 'company_type', method:"fetch", link:'admin/companytype/get', name:"name" },
         { label: 'Email', key: 'company_email' },
         { label: 'Phone', key: 'company_phone' },
         { label: 'Address', key: 'address' },
@@ -74,17 +30,6 @@ $(document).ready(function () {
         { label: 'Action', type: 'button' }
     ]);
 
-    
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/admin/companies`,
-        method: "GET",
-        success: function (res) {
-            let queryParams = GetQueryParams();
-            CreateSelectOptions('#companyType', 'All', res.type, queryParams['type'], 'name')
-            CreateSelectOptions('#type', 'Select Company Type', res.type, null, 'name')
-        },
-    });
 
     // Load Data on Hard Reload
     ReloadData('admin/companies', ShowCompanies);
@@ -95,51 +40,45 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('admin/companies', ShowCompanies, {}, function() {
+    InsertAjax('admin/companies', {}, function() {
         $('#type').focus();
     });
 
 
     // Edit Ajax
-    EditAjax('admin/companies', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('admin/companies', ShowCompanies);
+    UpdateAjax('admin/companies');
     
 
     // Delete Ajax
-    DeleteAjax('admin/companies', ShowCompanies);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowCompanies);
-
-
-    // Search Ajax
-    // SearchAjax('admin/companies', ShowCompanies, {type: { selector: "#companyType"}});
-
-
-    // Search By Methods, Roles, Types
-    // SearchBySelect('admin/companies', ShowCompanies, '#companyType', {type: { selector: "#companyType"}});
+    DeleteAjax('admin/companies');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-
-        CreateSelectOptions('#updateType', 'Select Company Type', res.type, res.data.company_type, 'name');
-
-        $('#updateName').val(res.data.company_name);
-        $('#updatePhone').val(res.data.company_phone);
-        $('#updateEmail').val(res.data.company_email);
-        $('#updateAddress').val(res.data.address);
-        $('#updateDomain').val(res.data.domain);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.data.logo ? res.data.logo : 'tsbd.png'}?${new Date().getTime()} `).show();
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#updateType').val(item.company_type);
+        $('#updateName').val(item.company_name);
+        $('#updatePhone').val(item.company_phone);
+        $('#updateEmail').val(item.company_email);
+        $('#updateAddress').val(item.address);
+        $('#updateDomain').val(item.domain);
+        $('#updateWebsite').val(item.website);
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${item.logo ? item.logo : 'tsbd.png'}?${new Date().getTime()} `).show();
         $('#updateName').focus();
     }; // End Method
 
 
     // Show Detals Ajax
     DetailsAjax('admin/companies');
+
+
+    // Get Company Type
+    GetSelectInputList('admin/companytype/get', function (res) {
+        CreateSelectOptions('#type', 'Select Company Type', res.data, null, 'name');
+        CreateSelectOptions('#updateType', 'Select Company Type', res.data, null, 'name');
+    })
 });

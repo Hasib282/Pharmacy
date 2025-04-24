@@ -10,6 +10,19 @@ function GetInputList(link, data = {}, targetList) {
 }
 
 
+// Get Select Input Data 
+function GetSelectInputList(link, selectInput, data = {}) {
+    $.ajax({
+        url: `${apiUrl}/${link}`,
+        data: data,
+        success: function (res) {
+            if(typeof selectInput === 'function'){
+                selectInput(res);
+            }
+        }
+    });
+}
+
 
 // Get Transaction With
 function GetTransactionWith(type, method, targetElement, user = null, AdditionalEvent= null) {
@@ -20,7 +33,8 @@ function GetTransactionWith(type, method, targetElement, user = null, Additional
         success: function (res) {
             if (res.status) {
                 if(AdditionalEvent == 'Ok'){
-                    CreateSelectOptions('#type', 'Select User Type', res.tranwith, null, 'tran_with_name')
+                    CreateSelectOptions('#type', 'Select User Type', res.tranwith, null, 'tran_with_name');
+                    CreateSelectOptions('#updateType', 'Select User Type', res.tranwith, null, 'tran_with_name');
                 }
                 else{
                     $(targetElement).html('');
@@ -44,21 +58,22 @@ function GetTransactionGroupe(type = null, method = null, AdditionalEvent = null
         success: function (res) {
             if (res.status) {
                 if(AdditionalEvent == 'Ok'){
-                    CreateSelectOptions('#groupe', 'Select Transaction Groupe', res.groupes, null, 'tran_groupe_name')
+                    CreateSelectOptions('#groupe', 'Select Transaction Groupe', res.data, null, 'tran_groupe_name')
+                    CreateSelectOptions('#updateGroupe', 'Select Transaction Groupe', res.data, null, 'tran_groupe_name')
                 }
                 else{
                     let groupein = "";
                     let updategroupein = "";
 
                     // Groupin chedckbox
-                    $.each(res.groupes, function(key, groupe) {
+                    $.each(res.data, function(key, groupe) {
                         groupein += `<input type="checkbox" name="groupe" class="groupe-checkbox" value="${groupe.id}" checked>`
                     });
                     $('#groupein').html(groupein);
 
 
                     // Update Groupin chedckbox
-                    $.each(res.groupes, function(key, groupe) {
+                    $.each(res.data, function(key, groupe) {
                         updategroupein += `<input type="checkbox" name="groupe" class="updategroupe-checkbox"
                             value="${groupe.id}" checked>`
                     });
@@ -153,3 +168,8 @@ function getPayrollByUserId(id, grid) {
         }
     });
 }
+
+
+
+
+

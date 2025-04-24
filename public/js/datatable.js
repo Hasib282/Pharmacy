@@ -173,8 +173,18 @@ class GenerateTable {
     // Create the tbody Rows 
     renderTableBody() {
         const tbody = this.table.querySelector('tbody');
+        const tfoot = this.table.querySelector('tfoot');
         const startIndex = (this.currentPage - 1) * this.rowsPerPage;
         const filteredData = this.filteredData.slice(startIndex, startIndex + this.rowsPerPage);
+
+        tbody.innerHTML = '';
+        tfoot.innerHTML = '';
+
+        if (filteredData.length === 0) {
+            tfoot.innerHTML = '<tr><td colspan="15" style="text-align:center;">No Data Found</td></tr>';
+            return;
+        }
+
 
         // Extracting the Rows one By one and create colums
         tbody.innerHTML = filteredData.map((row, i) => { 
@@ -185,16 +195,11 @@ class GenerateTable {
                 
                 switch (type) {
                     case 'number':
-                        return `<td style="text-align:right;">${Number(value).toLocaleString()}</td>`;
-    
-                    case 'status':
-                        const checked = value ? 'checked' : '';
-                        return `<td>
-                            <label class="switch">
-                                <input type="checkbox" ${checked} data-id="${row.id}" class="status-toggle">
-                                <span class="slider round"></span>
-                            </label>
-                        </td>`;
+                        return `<td style="text-align:right;">${Number(value).toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>`;
+                    
+                    case 'calculate':
+                        const calcValue = evaluateExpression(col.expration, row);
+                        return `<td style="text-align:right;">${Number(calcValue).toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>`;
     
                     case 'image':
                         return `<td><img src="${apiUrl.replace('/api', '')}/storage/${value ? value : 'male.png'}?${new Date().getTime()}" alt="Image" height="30px" width="30px"></td>`
@@ -203,10 +208,15 @@ class GenerateTable {
                         if (!value) return `<td></td>`;
                         const date = new Date(value);
                         return `<td>${date.toLocaleDateString('en-US', { day:'numeric', month: 'short', year: 'numeric' })}</td>`;
-    
-                    case 'timestamp':
-                        if (!value) return `<td></td>`;
-                        return `<td>${new Date(value).toLocaleString()}</td>`;
+        
+                    case 'status':
+                        const checked = value ? 'checked' : '';
+                        return `<td>
+                            <label class="switch">
+                                <input type="checkbox" ${checked} data-id="${row.id}" class="status-toggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </td>`;
     
                     default:
                         return `<td>${value ?? ''}</td>`;
@@ -228,6 +238,7 @@ class GenerateTable {
 
     // Create the Pagination 
     renderPagination() {
+        const pagination = document.getElementById('paginate');
         let totalPages = Math.ceil(this.filteredData.length / this.rowsPerPage);
         let currentPage = this.currentPage;
 
@@ -245,59 +256,79 @@ class GenerateTable {
             </li>
         `;
 
-        let paginationHtml = `<nav style="display:flex;align-items:center;gap:10px;"><ul class="pagination">`;
-        
-        // Create Previous Link
-        paginationHtml += currentPage != 1 ? `
-            <li class="page-item">
-                <a class="page-link" data-page="${currentPage - 1}">&#60</a>
-            </li>
-        ` : `
-            <li class="page-item disabled">
-                <span class="page-link">&#60;</span>
-            </li>
-        `;
+        if(totalPages > 1){
+            let paginationHtml = `<nav style="display:flex;align-items:center;gap:10px;"><ul class="pagination">`;
+            
+            // Create Previous Link
+            paginationHtml += currentPage != 1 ? `
+                <li class="page-item">
+                    <a class="page-link" data-page="${currentPage - 1}">&#60</a>
+                </li>
+            ` : `
+                <li class="page-item disabled">
+                    <span class="page-link">&#60;</span>
+                </li>
+            `;
 
 
-        // Create Page Links
-        if (totalPages <= 10) {
-            for (let i = 1; i <= totalPages; i++) paginationHtml += CreatePageItem(i, i === currentPage);
-        } 
-        else {
-            if (currentPage < 8) {
-                for (let i = 1; i <= 10; i++) paginationHtml += CreatePageItem(i, i === currentPage);
-                paginationHtml += AddElipsis() + CreatePageItem(totalPages - 1) + CreatePageItem(totalPages);
-            } 
-            else if (currentPage <= totalPages - 7) {
-                paginationHtml += CreatePageItem(1) + CreatePageItem(2) + AddElipsis();
-                for (let i = currentPage - 3; i <= currentPage + 3; i++) paginationHtml += CreatePageItem(i, i === currentPage);
-                paginationHtml += AddElipsis() + CreatePageItem(totalPages - 1) + CreatePageItem(totalPages);
+            // Create Page Links
+            if (totalPages <= 10) {
+                for (let i = 1; i <= totalPages; i++) paginationHtml += CreatePageItem(i, i === currentPage);
             } 
             else {
-                paginationHtml += CreatePageItem(1) + CreatePageItem(2) + AddElipsis();
-                for (let i = totalPages - 9; i <= totalPages; i++) paginationHtml += CreatePageItem(i, i === currentPage);
+                if (currentPage < 8) {
+                    for (let i = 1; i <= 10; i++) paginationHtml += CreatePageItem(i, i === currentPage);
+                    paginationHtml += AddElipsis() + CreatePageItem(totalPages - 1) + CreatePageItem(totalPages);
+                } 
+                else if (currentPage <= totalPages - 7) {
+                    paginationHtml += CreatePageItem(1) + CreatePageItem(2) + AddElipsis();
+                    for (let i = currentPage - 3; i <= currentPage + 3; i++) paginationHtml += CreatePageItem(i, i === currentPage);
+                    paginationHtml += AddElipsis() + CreatePageItem(totalPages - 1) + CreatePageItem(totalPages);
+                } 
+                else {
+                    paginationHtml += CreatePageItem(1) + CreatePageItem(2) + AddElipsis();
+                    for (let i = totalPages - 9; i <= totalPages; i++) paginationHtml += CreatePageItem(i, i === currentPage);
+                }
             }
+
+
+            // Create Next Link
+            paginationHtml += currentPage != totalPages ? `
+                <li class="page-item">
+                    <a class="page-link" data-page="${currentPage + 1}">&#62</a>
+                </li>
+            ` : `
+                <li class="page-item disabled">
+                    <span class="page-link">&#62;</span>
+                </li>
+            `;
+
+            paginationHtml += `</ul></nav>`;
+            
+            pagination.innerHTML = '';
+            pagination.innerHTML = paginationHtml;
+        } 
+        else{
+            pagination.innerHTML = "";
         }
-
-
-        // Create Next Link
-        paginationHtml += currentPage != totalPages ? `
-            <li class="page-item">
-                <a class="page-link" data-page="${currentPage + 1}">&#62</a>
-            </li>
-        ` : `
-            <li class="page-item disabled">
-                <span class="page-link">&#62;</span>
-            </li>
-        `;
-
-
-        paginationHtml += `</ul></nav>`;
-        
-        const pagination = document.getElementById('paginate');
-        pagination.innerHTML = '';
-        pagination.innerHTML = paginationHtml;
     } // End Render Pagination
+
+
+
+    // Calculate Expressions like {qty * cp}
+    evaluateExpression(expr, data) {
+        return new Function(...Object.keys(data), `return ${expr};`)(...Object.values(data));
+    }
+    // evaluateExpression(expr, data) {
+    //     try {
+    //         // Use Function constructor to create a scoped evaluator with Math functions allowed
+    //         return new Function(...Object.keys(data), 'Math', `return ${expr};`)
+    //                (...Object.values(data), Math);
+    //     } catch (error) {
+    //         console.error('Expression Error:', expr, error.message);
+    //         return 0;
+    //     }
+    // }
 
 
 
@@ -310,8 +341,8 @@ class GenerateTable {
 
 
 
-    // Edit Row After Updating in Database
-    editRow(id, updatedData) {
+    // Update Row After Updating in Database
+    updateRow(id, updatedData) {
         this.data = this.data.map(item => item.id == id ? { ...item, ...updatedData } : item);
         this.filteredData = this.filteredData.map(item => item.id == id ? { ...item, ...updatedData } : item);
         this.renderTableBody();
@@ -337,14 +368,37 @@ function renderTableHead(thead) {
         if (h.type === 'date') { // Rowper page
             return `<th><input class="col-filter" data-key="${h.key}" type="date" style="width:82px;font-size:10px;padding:2px;"></th>`;
         }
-        else if (h.type === 'select') { // Rowper page
+        else if (h.type === 'rowsPerPage') { // Rowper page
             const opts = h.options.map(option => `<option value="${option}">${option}</option>`).join('');
             return `<th style="width:50px;"><select id="rowsPerPage">${opts}</select></th>`;
         }
+        // else if (h.type === 'select') { // Create Select
+        //     const opts = h.options.map(option => `<option value="${option}">${option}</option>`).join('');
+        //     return `<th style="width:50px;"><select id="rowsPerPage">${opts}</select></th>`;
+        // }
+        else if (h.type === 'select') {
+            if (h.method === 'custom') {
+                const opts = [`<option value="">-- Select --</option>`]
+                .concat(h.options.map(option => `<option value="${option}">${option}</option>`))
+                .join('');
+                return `<th><select class="col-filter" data-key="${h.key}" id="${h.key}">${opts}</select></th>`;
+            } 
+            else if (h.method === 'fetch') {
+                setTimeout(() => {
+                    GetSelectInputList(h.link, function (res) {
+                        const opts = [`<option value="">-- Select --</option>`]
+                        .concat(res.data.map(item => `<option value="${item.id}">${item[h.name]}</option>`))
+                        .join('');
+                        document.getElementById(h.key).innerHTML = opts;
+                    }, h.data);
+                }, 0);
+                return `<th><select class="col-filter" data-key="${h.key}" id="${h.key}"><option value="">Loading...</option></select></th>`;
+            }
+        }
         else if (Array.isArray(h.status)) {
-            const opts = h.status.map(item => 
-                `<option value="${item.key}">${item.label}</option>`
-            ).join('');
+            const opts = [`<option value="">-- Select --</option>`]
+            .concat(h.status.map(item => `<option value="${item.key}">${item.label}</option>`))
+            .join('');
         
             return `<th  style="width:60px;"><select class="col-filter" data-key="status" style="width:60px;font-size:10px;">${opts}</select></th>`;
         }

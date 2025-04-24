@@ -106,7 +106,7 @@ class PermissionMainHeadController extends Controller
 
     // Get Permission Mainheads
     public function Get(){
-        $data = Permission_Main_Head::on('mysql')->orderBy('created_at','asc')->get();
+        $data = Permission_Main_Head::on('mysql')->orderBy('id')->get();
         return response()->json([
             'status' => true,
             'data'=> $data,

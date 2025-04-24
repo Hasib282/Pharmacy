@@ -89,7 +89,7 @@ function ShowTransactionPayments(res) {
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Id	', key: 'tran_id' },
         { label: 'User	', key: 'user.user_name' },
         { label: 'Total ' },

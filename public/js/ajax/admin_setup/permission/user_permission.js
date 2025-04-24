@@ -65,7 +65,7 @@ $(document).ready(function () {
 
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'User Id', key: 'user_id' },
         { label: 'User Name', key: 'user_name' },
         { label: 'Company Name', key: 'company.company_name' },

@@ -16,9 +16,6 @@ class BankTransactionController extends Controller
     // Show All Bank Withdraws
     public function ShowAllWithdraws(Request $req){
         $data = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Withdraw')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
-        foreach ($data as $item) {
-            $item->bill_amount = number_format($item->bill_amount, 0, '.', ',');
-        }
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '4')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
@@ -31,11 +28,7 @@ class BankTransactionController extends Controller
     
     // Show All Bank Deposits
     public function ShowAllDeposits(Request $req){
-        $data = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Deposit')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->paginate(15);
-        foreach ($data as $item) {
-            $item->bill_amount = number_format($item->bill_amount, 0, '.', ',');
-        }
-        
+        $data = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Deposit')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '4')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
@@ -98,7 +91,7 @@ class BankTransactionController extends Controller
                 "due" => 0,
             ]);
 
-            $data = Transaction_Main::on('mysql_second')->with('Bank','Head')->findOrFail($insert->id);
+            $data = Transaction_Main::on('mysql_second')->with('Bank')->findOrFail($insert->id);
         });
 
         
@@ -157,7 +150,7 @@ class BankTransactionController extends Controller
             ]);
         });
 
-        $updatedData = Transaction_Main::on('mysql_second')->with('Bank','Head')->where('tran_id', $req->id)->first();
+        $updatedData = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_id', $req->id)->first();
         
         return response()->json([
             'status'=>true,

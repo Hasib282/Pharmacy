@@ -56,7 +56,7 @@ function EditFormInputValue(res){
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Manufacturer Name', key: 'manufacturer_name' },
         { label: 'Company Id	', key: 'company_id' },
         { label: 'Action', type: 'button' }

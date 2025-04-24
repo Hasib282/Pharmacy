@@ -106,7 +106,7 @@ class CompanyTypeController extends Controller
 
     // Get Company Types
     public function Get(){
-        $data = Company_Type::on('mysql')->orderBy('added_at')->paginate(15);
+        $data = Company_Type::on('mysql')->orderBy('id')->get();
         return response()->json([
             'status' => true,
             'data'=> $data,

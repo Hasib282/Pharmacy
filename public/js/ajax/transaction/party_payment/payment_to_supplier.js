@@ -59,7 +59,7 @@ function ShowPaymentToSuppliers(res) {
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Transaction Id', key: 'tran_id' },
         { label: 'User Name', key: 'user.user_name' },
         { label: 'Amount' },

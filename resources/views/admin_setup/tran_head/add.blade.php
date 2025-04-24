@@ -10,12 +10,6 @@
         <!-- form start -->
         <form id="AddForm" method="post">
             @csrf
-            {{-- name --}}
-            <div class="form-input-group">
-                <label for="headName">Head Name <span class="required" title="Required">*</span></label>
-                <input type="text" name="headName" class="form-input" id="headName">
-                <span class="error" id="headName_error"></span>
-            </div>
             {{-- groupe --}}
             @if (Request::segment(1) != 'hr')
                 <div class="form-input-group">
@@ -26,6 +20,12 @@
                     <span class="error" id="groupe_error"></span>
                 </div>
             @endif
+            {{-- name --}}
+            <div class="form-input-group">
+                <label for="headName">Head Name <span class="required" title="Required">*</span></label>
+                <input type="text" name="headName" class="form-input" id="headName">
+                <span class="error" id="headName_error"></span>
+            </div>
             {{-- company --}}
             @if (auth()->user()->user_role == 1)
                 <div class="form-input-group">

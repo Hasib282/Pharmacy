@@ -218,7 +218,7 @@ function ShowPatientRegistration(res) {
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Registration Id', key: 'reg_id' },
         { label: 'Patient', key: 'ptn_id' },
         { label: 'Bed list', key: 'bed_list' },

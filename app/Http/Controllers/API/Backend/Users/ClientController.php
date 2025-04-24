@@ -103,7 +103,7 @@ class ClientController extends Controller
         $data = User_Info::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
-            "type" => 'required|exists:mysql_second.tranaction__withs,id',
+            "type" => 'required|exists:mysql_second.transaction__withs,id',
             "name" => 'required',
             "phone" => 'required|numeric',
             "email" => 'required|email',
