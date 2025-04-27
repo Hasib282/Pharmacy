@@ -2,7 +2,7 @@ function ShowTranGroupe(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_groupe_name','type.type_name','tran_method','company_id'],
+        tbody: ['tran_groupe_name','company_id'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -18,8 +18,6 @@ $(document).ready(function () {
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Transaction Groupe Name', key: 'tran_groupe_name' },
-        { label: 'Transaction Groupe Type', type:"select", key: 'tran_groupe_type', method:"fetch", link:'admin/mainheads/get', name:"type_name" },
-        { label: 'Transaction Method', type:"select", key: 'tran_method', method:"custom", options:['Receive','Payment','Both'] },
         { label: 'Company Id', key: 'company_id' },
         { label: 'Action', type: 'button' }
     ]);
@@ -34,7 +32,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hospital/setup/groupe', {company: { selector: "#company", attribute: 'data-id' }}, function() {
+    InsertAjax('hospital/setup/groupe', {company: { selector: "#company", attribute: 'data-id' },type: 7, method: 'Both'}, function() {
         $('#groupeName').focus();
         $('#company').removeAttr('data-id');
     });
@@ -45,7 +43,7 @@ $(document).ready(function () {
 
 
     // Update Ajax
-    UpdateAjax('hospital/setup/groupe');
+    UpdateAjax('hospital/setup/groupe', {type: 7, method: 'Both'});
     
 
     // Delete Ajax
@@ -57,19 +55,7 @@ $(document).ready(function () {
         $('#id').val(item.id);
         $('#updateGroupeName').val(item.tran_groupe_name);
         $('#updateType').val(item.tran_groupe_type);
-        $('#updateMethod').empty();
-        $('#updateMethod').append(`<option value="" >Select Transaction Method</option>
-                                    <option value="Receive" ${item.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
-                                    <option value="Payment" ${item.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
-                                    <option value="Both" ${item.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
-
+        $('#updateMethod').val(item.tran_method);
         $('#updateGroupeName').focus();
     }; // End Method
-
-
-    // Get Trantype
-    GetSelectInputList('admin/mainheads/get', function (res) {
-        CreateSelectOptions('#type', 'Select Tran Type', res.data, null, 'type_name');
-        CreateSelectOptions('#updateType', 'Select Tran Type', res.data, null, 'type_name');
-    })
 });

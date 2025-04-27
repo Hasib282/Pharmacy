@@ -58,6 +58,7 @@ $(document).ready(function () {
         $('#id').val(item.id);
         $('#updateHeadName').val(item.tran_head_name);
         $('#updateGroupe').val(item.groupe_id);
+        $('#updatePrice').val(item.mrp);
         $('#updateGroupe').focus();
     }; // End Method
 });

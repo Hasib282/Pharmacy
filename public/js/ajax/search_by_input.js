@@ -799,6 +799,15 @@ $(document).ready(function () {
 
         function (targetInput, item) {
             $(targetInput).attr("data-groupe", item.data('groupe'));
+            $('#amount').val(item.data('mrp'));
+            let qty = $('#quantity').val();
+            $('#totAmount').val(item.data('mrp') * qty);
+        },
+
+        function (targetInput) {
+            $(targetInput).removeAttr('data-groupe');
+            $('#amount').val('');
+            $('#totAmount').val('');
         }
     );
 
@@ -840,6 +849,15 @@ $(document).ready(function () {
 
         function (targetInput, item) {
             $(targetInput).attr("data-groupe", item.data('groupe'));
+            $('#updateAmount').val(item.data('mrp'));
+            let qty = $('#quantity').val();
+            $('#updateTotAmount').val(item.data('mrp') * qty);
+        },
+
+        function (targetInput) {
+            $(targetInput).removeAttr('data-groupe');
+            $('#updateAmount').val('');
+            $('#updateTotAmount').val('');
         }
     );
 

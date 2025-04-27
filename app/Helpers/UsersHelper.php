@@ -16,7 +16,7 @@ if (!function_exists('GetTranType')) {
             'hr' => 3,
             'inventory' => 5,
             'pharmacy' => 6,
-            'hospital' => 8,
+            'hospital' => 7,
         ];
 
         return $segments[$type] ?? null;

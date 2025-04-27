@@ -1,5 +1,5 @@
 <div id="editModal" class="modal-container">
-    <div class="modal-subject" style="width: 80%;">
+    <div class="modal-subject" style="width: 100%; margin: 0; padding: 0;">
         <div class="modal-heading banner">
             <div class="center">
                 <h3>Edit {{ $name }}</h3>
@@ -13,62 +13,127 @@
             @method('PUT')
             <div class="rows">
                 <div class="c-6">
+                    {{-- within --}}
+                    <div id="updatewithin" style="display: none"> </div>
+                    {{-- groupein --}}
                     <div id="updategroupein" style="display: none"></div>
+                    {{-- id  --}}
                     <input type="hidden" name="id" id="id">
-                    <input type="hidden" name="dId" id="dId">
+                    {{-- transaction id  --}}
                     <input type="hidden" name="tranId" id="updateTranId">
                     <div class="rows">
-                        <div class="c-12">
+                        {{-- date  --}}
+                        <div class="c-3">
                             <div class="form-input-group">
                                 <label for="updateDate">Date</label>
                                 <input type="text" name="date" class="form-input" id="updateDate"
-                                    value="{{ date('Y-m-d') }}" readonly>
+                                    value="{{ date('Y-m-d') }}" disabled>
                             </div>
                         </div>
-                        <div class="c-12">
+                        {{-- store --}}
+                        <div class="c-3">
                             <div class="form-input-group">
-                                <label for="updateUser">Transaction User</label>
-                                <input type="text" name="user" class="form-input" id="updateUser" autocomplete="off">
+                                <label for="updateStore">Store</label>
+                                <input type="text" name="store" class="form-input" id="updateStore" autocomplete="off"><hr>
+                                <div id="update-store"></div>
+                                <span class="error" id="update_store_error"></span>
+                            </div>
+                        </div>
+                        {{-- supplier --}}
+                        <div class="c-6">
+                            <div class="form-input-group">
+                                <label for="updateUser">Supplier Name</label>
+                                <input type="text" name="user" class="form-input" id="updateUser" autocomplete="off"><hr>
                                 <div id="update-user"></div>
                                 <span class="error" id="update_user_error"></span>
                             </div>
                         </div>
-                        <div class="c-12">
+                        {{-- product  --}}
+                        <div class="c-8">
                             <div class="form-input-group">
-                                <label for="updateHead">Transaction Head</label>
-                                <input type="text" name="head" id="updateHead" class="form-input" autocomplete="off">
-                                <div id="update-head"></div>
-                                <span class="error" id="update_head_error"></span>
+                                <label for="updateProduct">Product Name</label>
+                                <input type="text" name="product" id="updateProduct" class="form-input"
+                                    autocomplete="off"><hr>
+                                <span class="error" id="update_product_error"></span>
                             </div>
                         </div>
-                        <div class="c-4">
+                        {{-- quantity --}}
+                        <div class="c-2">
                             <div class="form-input-group">
                                 <label for="updateQuantity">Quantity</label>
                                 <input type="text" name="quantity" class="form-input" id="updateQuantity" value="1">
                                 <span class="error" id="update_quantity_error"></span>
                             </div>
                         </div>
-                        <div class="c-4">
+                        {{-- unit --}}
+                        <div class="c-2">
                             <div class="form-input-group">
-                                <label for="updateAmount">Amount</label>
-                                <input type="text" name="amount" class="form-input updateAmount" id="updateAmount">
-                                <span class="error" id="update_amount_error"></span>
+                                <label for="updateUnit">Unit</label>
+                                <input type="text" name="unit" class="form-input" id="updateUnit" autocomplete="off"
+                                    disabled>
+                                <span class="error" id="update_unit_error"></span>
                             </div>
                         </div>
-                        <div class="c-4">
+                        {{-- cp  --}}
+                        <div class="c-2">
+                            <div class="form-input-group">
+                                <label for="updateCp">CP</label>
+                                <input type="text" name="cp" class="form-input updateAmount" id="updateCp">
+                                <span class="error" id="update_cp_error"></span>
+                            </div>
+                        </div>
+                        {{-- mrp --}}
+                        <div class="c-2">
+                            <div class="form-input-group">
+                                <label for="updateMrp">Mrp</label>
+                                <input type="text" name="mrp" class="form-input" id="updateMrp">
+                                <span class="error" id="update_mrp_error"></span>
+                            </div>
+                        </div>
+                        {{-- total --}}
+                        <div class="c-3">
                             <div class="form-input-group">
                                 <label for="updateTotAmount">Total</label>
-                                <input type="text" name="totAmount" class="form-input" id="updateTotAmount" readonly>
+                                <input type="text" name="totAmount" class="form-input" id="updateTotAmount" disabled>
                                 <span class="error" id="update_totAmount_error"></span>
                             </div>
                         </div>
+                        {{-- expiry --}}
+                        <div class="c-4">
+                            <div class="form-input-group">
+                                <label for="updateExpiry">Expiry Date</label>
+                                <input type="date" name="expiry" class="form-input" id="updateExpiry"
+                                    value="{{date('Y-m-d')}}">
+                                <span class="error" id="update_expiry_error"></span>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="center">
                         <button type="submit" id="UpdateTransaction" class="btn-blue">Add</button>
                     </div>
                 </div>
-
-
+                {{-- Product list part start --}}
+                <div class="c-6">
+                    <div id="update-product">
+                        <table class="product-table">
+                            <caption class="caption">Product List</caption>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Generic Name</th>
+                                    <th>Manufacture</th>
+                                    <th>Form</th>
+                                    <th>Quantity</th>
+                                    <th>CP</th>
+                                    <th>MRP</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                {{-- transaction grid part start --}}
                 <div class="c-6">
                     <div class="transaction_grid" style="overflow-x:auto;">
                         <table class="show-table">
@@ -82,52 +147,52 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
-                            <tfoot></tfoot>
+                            <tbody>
+
+                            </tbody>
                         </table>
                     </div>
-                    <div class="rows">
-                        <div class="c-6"></div>
-                        <div class="c-6">
-                            <table style="width: 100%">
-                                <tr>
-                                    <td><label for="updateAmountRP">Invoice Amount</label></td>
-                                    <td><input type="text" name="amountRP" class="input-small" id="updateAmountRP"
-                                            value="0" readonly style="text-align: right;"></td>
-                                </tr>
-                                <tr>
-                                    <td><label for="updateTotalDiscount">Discount</label></td>
-                                    <td><input type="text" name="totalDiscount" class="input-small"
-                                            id="updateTotalDiscount" value="0" style="text-align: right;"></td>
-                                </tr>
-                                <tr>
-                                    <td><label for="updateNetAmount">Net Amount</label>
-                                    <td><input type="text" name="netAmount" class="input-small" id="updateNetAmount"
-                                            value="0" readonly style="text-align: right;"></td>
-                                </tr>
-                                <tr>
-                                    <td><label for="updateAdvance">Advance</label>
-                                    <td><input type="text" name="advance" class="input-small" id="updateAdvance"
-                                            value="0" style="text-align: right;">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><label for="updateBalance">Balance</label>
-                                    <td><input type="text" name="balance" class="input-small" id="updateBalance"
-                                            value="0" readonly style="text-align: right;"></td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="center">
-                            <span class="error" id="update_discount_error"></span>
-                            <span class="error" id="update_advance_error"></span>
-                            <span class="error" id="update_message_error"></span>
-                        </div>
-                    </div>
+                </div>
+                {{-- invoice calculation part start --}}
+                <div class="c-6">
+                    <table>
+                        <tr>
+                            <td><label for="updateAmountRP">Invoice Amount</label></td>
+                            <td><input type="text" name="amountRP" class="input-small" id="updateAmountRP" value="0"
+                                    disabled style="text-align: right;"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="updateTotalDiscount">Discount</label></td>
+                            <td><input type="text" name="totalDiscount" class="input-small" id="updateTotalDiscount"
+                                    value="0" style="text-align: right;"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="updateNetAmount">Net Amount</label>
+                            <td><input type="text" name="netAmount" class="input-small" id="updateNetAmount" value="0"
+                                    disabled style="text-align: right;"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="updateAdvance">Advance</label>
+                            <td><input type="text" name="advance" class="input-small" id="updateAdvance" value="0"
+                                    style="text-align: right;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="updateBalance">Balance</label>
+                            <td><input type="text" name="balance" class="input-small" id="updateBalance" value="0"
+                                    disabled style="text-align: right;"></td>
+                        </tr>
+                    </table>
                     <div class="center">
-                        <button id="UpdateMain" class="btn-blue">Submit</button>
+                        <span class="error" id="update_discount_error"></span>
+                        <span class="error" id="update_advance_error"></span>
+                        <span class="error" id="update_message_error"></span>
                     </div>
                 </div>
+            </div>
+            {{--  end of row --}}
+            <div class="center">
+                <button id="UpdateMain" class="btn-blue" style="margin-top: 10px;">Update</button>
             </div>
         </form>
     </div>

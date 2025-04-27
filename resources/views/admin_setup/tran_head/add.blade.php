@@ -26,6 +26,12 @@
                 <input type="text" name="headName" class="form-input" id="headName">
                 <span class="error" id="headName_error"></span>
             </div>
+            {{-- price --}}
+            <div class="form-input-group">
+                <label for="price">Price</label>
+                <input type="text" name="price" class="form-input" id="price" value="0">
+                <span class="error" id="price_error"></span>
+            </div>
             {{-- company --}}
             @if (auth()->user()->user_role == 1)
                 <div class="form-input-group">

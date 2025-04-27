@@ -99,5 +99,6 @@
 
 
 <!-- ajax part start from here -->
+<script src="{{ asset('js/ajax/common_ajax/common_transaction_calculations.js') }}"></script>
 <script src="{{ asset('js/ajax').'/' . $js . '.js' }}"></script>
 <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>

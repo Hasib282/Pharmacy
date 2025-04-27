@@ -39,12 +39,14 @@ class TranHeadController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "headName" => 'required|unique:mysql.transaction__heads,tran_head_name',
-            "groupe" => 'required|exists:mysql.transaction__groupes,id'
+            "groupe" => 'required|exists:mysql.transaction__groupes,id',
+            "price" => 'nullable|numeric',
         ]);
 
         $insert = Transaction_Head::on('mysql')->create([
             "tran_head_name" => $req->headName,
             "groupe_id" => $req->groupe,
+            "mrp" => $req->price,
             "company_id" => $req->company,
         ]);
 
@@ -65,12 +67,14 @@ class TranHeadController extends Controller
 
         $req->validate([
             "headName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($data->id)],
-            "groupe"  => 'required|exists:mysql.transaction__groupes,id'
+            "groupe"  => 'required|exists:mysql.transaction__groupes,id',
+            "price" => 'nullable|numeric',
         ]);
 
         $update = $data->update([
             "tran_head_name" => $req->headName,
             "groupe_id" => $req->groupe,
+            "mrp" => $req->price,
             "updated_at" => now()
         ]);
 
@@ -116,7 +120,7 @@ class TranHeadController extends Controller
         $list = "<ul>";
             if($data->count() > 0){
                 foreach($data as $index => $item) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'" data-groupe="'.$item->groupe_id.'">'.$item->tran_head_name.'</li>';
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'" data-mrp="'.$item->mrp.'" data-groupe="'.$item->groupe_id.'">'.$item->tran_head_name.'</li>';
                 }
             }
             else{

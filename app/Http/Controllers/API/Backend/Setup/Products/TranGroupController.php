@@ -62,7 +62,7 @@ class TranGroupController extends Controller
 
     // Update Transaction Group
     public function Update(Request $req){
-        $data = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4','5'])->findOrFail($req->id);
+        $data = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4'])->findOrFail($req->id);
 
         $req->validate([
             "groupeName" => ['required', Rule::unique('mysql.transaction__groupes', 'tran_groupe_name')->ignore($data->id)],
@@ -92,7 +92,7 @@ class TranGroupController extends Controller
 
     // Delete Transaction Group
     public function Delete(Request $req){
-        Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4','5'])->findOrFail($req->id)->delete();
+        Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4'])->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Transaction Groupe Deleted Successfully',

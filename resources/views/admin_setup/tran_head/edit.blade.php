@@ -29,6 +29,12 @@
                 <input type="text" name="headName" class="form-input" id="updateHeadName">
                 <span class="error" id="update_headName_error"></span>
             </div>
+            {{-- price --}}
+            <div class="form-input-group">
+                <label for="updatePrice">Price </label>
+                <input type="text" name="price" class="form-input" id="updatePrice" value="0">
+                <span class="error" id="update_price_error"></span>
+            </div>
 
             <div class="center">
                 <button type="submit" id="Update" class="btn-blue">Update</button>

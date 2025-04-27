@@ -1473,24 +1473,20 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             // *************************************** Hospital Groupe Routes Start *************************************** //
             Route::controller(TranGroupController::class)->group(function () {
-                Route::get('/groupe', 'ShowAll');
+                Route::get('/groupe', 'Show');
                 Route::post('/groupe', 'Insert');
-                Route::get('/groupe/edit', 'Edit');
                 Route::put('/groupe', 'Update');
                 Route::delete('/groupe', 'Delete');
-                Route::get('/groupe/search', 'Search');
             });
             
 
 
             // *************************************** Hospital Services Routes Start *************************************** //
             Route::controller(TranHeadController::class)->group(function () {
-                Route::get('/services', 'ShowAll');
+                Route::get('/services', 'Show');
                 Route::post('/services', 'Insert');
-                Route::get('/services/edit', 'Edit');
                 Route::put('/services', 'Update');
                 Route::delete('/services', 'Delete');
-                Route::get('/services/search', 'Search');
             });
         }); // End Hospital Setup Routes
 
@@ -1568,48 +1564,40 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/transaction')->group(function () {
             ///////////// --------------- Hospital Admission Fee Routes ----------- ///////////////////
             Route::controller(AdmissionFeeController::class)->group(function(){
-                Route::get('/admission', 'ShowAll');
+                Route::get('/admission', 'Show');
                 Route::post('/admission', 'Insert');
-                Route::get('/admission/edit', 'Edit');
                 Route::put('/admission', 'Update');
                 Route::delete('/admission', 'Delete');
-                Route::get('/admission/search', 'Search');
             });
             
             
             
             ///////////// --------------- Hospital Deposit Routes ----------- ///////////////////
             Route::controller(DepositController::class)->group(function(){
-                Route::get('/deposit', 'ShowAll');
+                Route::get('/deposit', 'Show');
                 Route::post('/deposit', 'Insert');
-                Route::get('/deposit/edit', 'Edit');
                 Route::put('/deposit', 'Update');
                 Route::delete('/deposit', 'Delete');
-                Route::get('/deposit/search', 'Search');
             });
             
             
             
             ///////////// --------------- Hospital Deposit Refund Routes ----------- ///////////////////
             Route::controller(DepositRefundController::class)->group(function(){
-                Route::get('/depositrefund', 'ShowAll');
+                Route::get('/depositrefund', 'Show');
                 Route::post('/depositrefund', 'Insert');
-                Route::get('/depositrefund/edit', 'Edit');
                 Route::put('/depositrefund', 'Update');
                 Route::delete('/depositrefund', 'Delete');
-                Route::get('/depositrefund/search', 'Search');
             });
             
             
             
             ///////////// --------------- Hospital Services Routes ----------- ///////////////////
             Route::controller(ServicesController::class)->group(function(){
-                Route::get('/services', 'ShowAll');
+                Route::get('/services', 'Show');
                 Route::post('/services', 'Insert');
-                Route::get('/services/edit', 'Edit');
                 Route::put('/services', 'Update');
                 Route::delete('/services', 'Delete');
-                Route::get('/services/search', 'Search');
             });
         }); // End Hospital Transaction Routes
         

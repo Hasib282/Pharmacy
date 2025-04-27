@@ -31,6 +31,7 @@ class HospitalTransactionController extends Controller
     
     
     
+
     
     /////////////////////////// ---------------Deposit Methods Start Here ---------- //////////////////////////
     // Show Admission fee
@@ -55,7 +56,10 @@ class HospitalTransactionController extends Controller
     } // End Method
 
 
-/////////////////////////// ---------------Deposit Refunds Methods Start Here ---------- //////////////////////////
+
+
+
+    /////////////////////////// ---------------Deposit Refunds Methods Start Here ---------- //////////////////////////
     // Show Deposit Refunds
     public function ShowDepositRefund(Request $req){
         $name = "Deposit Refund";
@@ -78,11 +82,14 @@ class HospitalTransactionController extends Controller
     } // End Method
 
 
-/////////////////////////// ---------------service Methods Start Here ---------- //////////////////////////
+
+
+
+    /////////////////////////// ---------------service Methods Start Here ---------- //////////////////////////
     // Show Services
     public function ShowServices(Request $req){
         $name = "Service Fee";
-        $js = 'hospital/hospital_transaction/Services';
+        $js = 'hospital/hospital_transaction/services';
         if ($req->ajax()) {
             return view('transaction.hospital.ajaxBlade', compact('name', 'js'));
         }
@@ -96,10 +103,7 @@ class HospitalTransactionController extends Controller
     // Search Services
     public function SearchServices(Request $req){
         $name = "Services Fee";
-        $js = 'hospital/hospital_transaction/admission';
+        $js = 'hospital/hospital_transaction/services';
         return view('transaction.hospital.main', compact('name', 'js'));
     } // End Method
-
-
-
 }
