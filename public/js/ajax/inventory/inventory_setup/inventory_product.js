@@ -85,7 +85,7 @@ $(document).ready(function () {
     
 
     // Insert Ajax
-    InsertAjax('inventory/setup/product', ShowInventoryProducts, 
+    InsertAjax('inventory/setup/product', 
         {
             category : { selector: '#category', attribute: 'data-id' },
             manufacturer : { selector: '#manufacturer', attribute: 'data-id' },
@@ -107,11 +107,11 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('inventory/setup/product', EditFormInputValue, EditModalOn);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('inventory/setup/product', ShowInventoryProducts,
+    UpdateAjax('inventory/setup/product',
         {
             category : { selector: '#updateCategory', attribute: 'data-id' },
             manufacturer : { selector: '#updateManufacturer', attribute: 'data-id' },
@@ -123,68 +123,56 @@ $(document).ready(function () {
     
 
     // Delete Ajax
-    DeleteAjax('inventory/setup/product', ShowInventoryProducts);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowInventoryProducts);
-
-
-    // Search Ajax
-    // SearchAjax('inventory/setup/product', ShowInventoryProducts, {  });
+    DeleteAjax('inventory/setup/product');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#updateProductName').val(res.data.tran_head_name);
-        $('#updateProductName').focus();
-
-        $('#updateGroupe').html('');
-        $('#updateGroupe').append(`<option value="" >Select Product Groupe</option>`);
-        $.each(res.groupes, function (key, groupe) {
-            $('#updateGroupe').append(`<option value="${groupe.id}" ${res.data.groupe_id === groupe.id ? 'selected' : ''}>${groupe.tran_groupe_name}</option>`);
-        });
-
-        if(res.data.category_id){
-            $('#updateCategory').val(res.data.category.category_name);
-            $('#updateCategory').attr('data-id', res.data.category.id);
-        }
-        
-        if(res.data.manufacturer_id){
-            $('#updateManufacturer').val(res.data.manufecturer.manufacturer_name);
-            $('#updateManufacturer').attr('data-id', res.data.manufecturer.id);
-        }
-        
-        if(res.data.form_id){
-            $('#updateForm').val(res.data.form.form_name);
-            $('#updateForm').attr('data-id', res.data.form_id);
-        }
-
-        if(res.data.unit_id){
-            $('#updateUnit').val(res.data.unit.unit_name);
-            $('#updateUnit').attr('data-id', res.data.unit_id);
-        }
-
-        if(res.data.store_id){
-            $('#updateStore').val(res.data.store.store_name);
-            $('#updateStore').attr('data-id', res.data.store_id);
-        }
-
-        $('#updateQuantity').val(res.data.quantity);
-        $('#updateCp').val(res.data.cp);
-        $('#updateMrp').val(res.data.mrp);
-        $('#updateExpiryDate').val(res.data.expired_date);
-    }
-
-
-    // Additional Edit Modal On
-    function EditModalOn(){
+    function EditFormInputValue(item){
         $('#EditForm')[0].reset();
         $('#updateCategory').removeAttr('data-id')
         $('#updateManufacturer').removeAttr('data-id')
         $('#updateForm').removeAttr('data-id')
         $('#updateUnit').removeAttr('data-id')
         $('#updateStore').removeAttr('data-id')
+
+        $('#id').val(item.id);
+        $('#updateProductName').val(item.tran_head_name);
+        $('#updateProductName').focus();
+
+        $('#updateGroupe').html('');
+        $('#updateGroupe').append(`<option value="" >Select Product Groupe</option>`);
+        $.each(res.groupes, function (key, groupe) {
+            $('#updateGroupe').append(`<option value="${groupe.id}" ${item.groupe_id === groupe.id ? 'selected' : ''}>${groupe.tran_groupe_name}</option>`);
+        });
+
+        if(item.category_id){
+            $('#updateCategory').val(item.category.category_name);
+            $('#updateCategory').attr('data-id', item.category.id);
+        }
+        
+        if(item.manufacturer_id){
+            $('#updateManufacturer').val(item.manufecturer.manufacturer_name);
+            $('#updateManufacturer').attr('data-id', item.manufecturer.id);
+        }
+        
+        if(item.form_id){
+            $('#updateForm').val(item.form.form_name);
+            $('#updateForm').attr('data-id', item.form_id);
+        }
+
+        if(item.unit_id){
+            $('#updateUnit').val(item.unit.unit_name);
+            $('#updateUnit').attr('data-id', item.unit_id);
+        }
+
+        if(item.store_id){
+            $('#updateStore').val(item.store.store_name);
+            $('#updateStore').attr('data-id', item.store_id);
+        }
+
+        $('#updateQuantity').val(item.quantity);
+        $('#updateCp').val(item.cp);
+        $('#updateMrp').val(item.mrp);
+        $('#updateExpiryDate').val(item.expired_date);
     }
 });

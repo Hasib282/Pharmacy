@@ -62,18 +62,8 @@ $(document).ready(function () {
         $('#updateName').val(item.name);
         $('#updatePhone').val(item.phone);
         $('#updateEmail').val(item.email);
-
-        // Create options dynamically
-        $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${item.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-            <option value="Chittagong" ${item.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-            <option value="Rajshahi" ${item.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-            <option value="Khulna" ${item.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-            <option value="Sylhet" ${item.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barishal" ${item.location.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
-            <option value="Rangpur" ${item.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-            <option value="Mymensingh" ${item.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-
+        $('#updateDivision').val(item.location.division)
+        
         $('#updateLocation').val(item.location.upazila);
         $('#updateLocation').attr('data-id',item.loc_id);
         $('#updateAddress').val(item.address);

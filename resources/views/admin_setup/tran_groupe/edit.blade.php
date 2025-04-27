@@ -23,26 +23,32 @@
             @if (Request::segment(1) == 'admin')
                 {{-- type --}}
                 <div class="form-input-group">
-                    <label for="updateType">Transaction Type <span class="required" title="Required">*</span></label>
+                    <label for="updateType">Type <span class="required" title="Required">*</span></label>
                     <select name="type" id="updateType">
                         {{-- options will be display dynamically --}}
                     </select>
                     <span class="error" id="update_type_error"></span>
                 </div>
-                {{-- method  --}}
+                {{-- method --}}
                 <div class="form-input-group">
-                    <label for="updateMethod">Transaction Method <span class="required" title="Required">*</span></label>
+                    <label for="updateMethod">Method <span class="required" title="Required">*</span></label>
                     <select name="method" id="updateMethod">
-
+                        <option value="">Select Method</option>
+                        <option value="Receive">Receive</option>
+                        <option value="Payment">Payment</option>
+                        <option value="Both">Both</option>
                     </select>
                     <span class="error" id="update_method_error"></span>
                 </div>
             @elseif (Request::segment(1) == 'transaction')
-                {{-- method  --}}
+                {{-- method --}}
                 <div class="form-input-group">
-                    <label for="updateMethod">Transaction Method <span class="required" title="Required">*</span></label>
+                    <label for="updateMethod">Method <span class="required" title="Required">*</span></label>
                     <select name="method" id="updateMethod">
-
+                        <option value="">Select Method</option>
+                        <option value="Receive">Receive</option>
+                        <option value="Payment">Payment</option>
+                        <option value="Both">Both</option>
                     </select>
                     <span class="error" id="update_method_error"></span>
                 </div>

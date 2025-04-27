@@ -14,7 +14,7 @@ use App\Models\Payroll_Middlewire;
 class PayrollMiddlewireController extends Controller
 {
     // Show All Payroll Middlewire
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $currentYear = Carbon::now()->year; 
         $currentMonth = Carbon::now()->month;
         $data = Payroll_Middlewire::on('mysql_second')

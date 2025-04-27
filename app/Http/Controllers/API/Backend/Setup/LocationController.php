@@ -10,8 +10,8 @@ use App\Models\Location_Info;
 class LocationController extends Controller
 {
     // Show All Locations
-    public function ShowAll(Request $req){
-        $data = Location_Info::on('mysql')->orderBy('added_at')->get();
+    public function Show(Request $req){
+        $data = Location_Info::on('mysql')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -41,17 +41,6 @@ class LocationController extends Controller
             'message' => 'Location Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Locations
-    public function Edit(Request $req){
-        $data = Location_Info::on('mysql')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -93,32 +82,6 @@ class LocationController extends Controller
             'status'=> true,
             'message' => 'Location Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Locations
-    public function Search(Request $req){
-        if($req->searchOption == 1){ // Search By Division
-            $data = Location_Info::on('mysql')->where('division', 'like', '%'.$req->search.'%')
-            ->orderBy('division')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){ // Search By District
-            $data = Location_Info::on('mysql')->where('district', 'like', '%'.$req->search.'%')
-            ->orderBy('district')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 3){ // Search By Upazila
-            $data = Location_Info::on('mysql')->where('upazila', 'like', '%'.$req->search.'%')
-            ->orderBy('upazila')
-            ->paginate(15);
-        }
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

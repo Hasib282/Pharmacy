@@ -164,12 +164,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::middleware([SuperAdminAccess::class])->group(function () {
             // *************************************** Company Type Routes Start *************************************** //
             Route::controller(CompanyTypeController::class)->group(function () {
-                Route::get('/companytype', 'ShowAll');
+                Route::get('/companytype', 'Show');
                 Route::post('/companytype', 'Insert');
-                Route::get('/companytype/edit', 'Edit');
                 Route::put('/companytype', 'Update');
                 Route::delete('/companytype', 'Delete');
-                Route::get('/companytype/search', 'Search');
                 Route::get('/companytype/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -177,14 +175,12 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             // *************************************** Company Controller Start *************************************** //
             Route::controller(CompanyController::class)->group(function () {
-                Route::get('/companies', 'ShowAll');
+                Route::get('/companies', 'Show');
                 Route::post('/companies', 'Insert');
-                Route::get('/companies/edit', 'Edit');
                 Route::put('/companies', 'Update');
                 Route::delete('/companies', 'Delete');
-                Route::get('/companies/search', 'Search');
-                Route::get('/companies/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 Route::get('/companies/details', 'Details');
+                Route::get('/companies/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
             });
         });
 
@@ -195,12 +191,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::middleware([SuperAdminAccess::class])->group(function () {
                 ///////////// --------------- Role Routes ----------- ///////////////////
                 Route::controller(RoleController::class)->group(function () {
-                    Route::get('/roles', 'ShowAll');
+                    Route::get('/roles', 'Show');
                     Route::post('/roles', 'Insert');
-                    Route::get('/roles/edit', 'Edit');
                     Route::put('/roles', 'Update');
                     Route::delete('/roles', 'Delete');
-                    Route::get('/roles/search', 'Search');
                     Route::get('/roles/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 });
 
@@ -208,25 +202,20 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
                 ///////////// --------------- Super Admin Routes ----------- ///////////////////
                 Route::controller(SuperAdminController::class)->group(function () {
-                    Route::get('/superadmins', 'ShowAll');
+                    Route::get('/superadmins', 'Show');
                     Route::post('/superadmins', 'Insert');
-                    Route::get('/superadmins/edit', 'Edit');
                     Route::put('/superadmins', 'Update');
                     Route::delete('/superadmins', 'Delete');
-                    Route::get('/superadmins/search', 'Search');
                 });
             });
             
 
             ///////////// --------------- Admin Routes ----------- ///////////////////
             Route::controller(AdminController::class)->group(function () {
-                Route::get('/admins', 'ShowAll');
+                Route::get('/admins', 'Show');
                 Route::post('/admins', 'Insert');
-                Route::get('/admins/edit', 'Edit');
                 Route::put('/admins', 'Update');
                 Route::delete('/admins', 'Delete');
-                Route::get('/admins/search', 'Search');
-                Route::get('/admins/details', 'Details');
             });
         }); // End User Routes
 
@@ -237,12 +226,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::middleware([SuperAdminAccess::class])->group(function () {
                 ///////////// --------------- Permission Main Heads Routes ----------- ///////////////////
                 Route::controller(PermissionMainHeadController::class)->group(function () {
-                    Route::get('/mainhead', 'ShowAll');
+                    Route::get('/mainhead', 'Show');
                     Route::post('/mainhead', 'Insert');
-                    Route::get('/mainhead/edit', 'Edit');
                     Route::put('/mainhead', 'Update');
                     Route::delete('/mainhead', 'Delete');
-                    Route::get('/mainhead/search', 'Search');
                     Route::get('/mainhead/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 });
                 
@@ -250,12 +237,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 ///////////// --------------- Permission Heads Routes ----------- ///////////////////
                 Route::controller(PermissionHeadController::class)->group(function () {
-                    Route::get('/heads', 'ShowAll');
+                    Route::get('/heads', 'Show');
                     Route::post('/heads', 'Insert');
-                    Route::get('/heads/edit', 'Edit');
                     Route::put('/heads', 'Update');
                     Route::delete('/heads', 'Delete');
-                    Route::get('/heads/search', 'Search');
                     Route::get('/heads/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 });
                 
@@ -303,38 +288,32 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
         // *************************************** Bank Controller Start *************************************** //
         Route::controller(BankController::class)->group(function () {
-            Route::get('/banks', 'ShowAll');
+            Route::get('/banks', 'Show');
             Route::post('/banks', 'Insert')->middleware(SuperAdminAccess::class);
-            Route::get('/banks/edit', 'Edit')->middleware(SuperAdminAccess::class);
             Route::put('/banks', 'Update')->middleware(SuperAdminAccess::class);
             Route::delete('/banks', 'Delete')->middleware(SuperAdminAccess::class);
-            Route::get('/banks/search', 'Search');
-            Route::get('/banks/get', 'Get')->withoutMiddleware(CheckPermission::class);
             Route::get('/banks/details', 'Details');
+            Route::get('/banks/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
 
 
 
         // *************************************** Location Controller Start *************************************** //
         Route::controller(LocationController::class)->group(function () {
-            Route::get('/locations', 'ShowAll');
+            Route::get('/locations', 'Show');
             Route::post('/locations', 'Insert')->middleware(SuperAdminAccess::class);
-            Route::get('/locations/edit', 'Edit')->middleware(SuperAdminAccess::class);
             Route::put('/locations', 'Update')->middleware(SuperAdminAccess::class);
             Route::delete('/locations', 'Delete')->middleware(SuperAdminAccess::class);
-            Route::get('/locations/search', 'Search');
             Route::get('/locations/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
         
 
         // *************************************** Store Routes Start *************************************** //
         Route::controller(StoreController::class)->group(function () {
-            Route::get('/stores', 'ShowAll');
+            Route::get('/stores', 'Show');
             Route::post('/stores', 'Insert');
-            Route::get('/stores/edit', 'Edit');
             Route::put('/stores', 'Update');
             Route::delete('/stores', 'Delete');
-            Route::get('/stores/search', 'Search');
             Route::get('/stores/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
         
@@ -343,12 +322,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::middleware([SuperAdminAccess::class])->group(function () {
             // *************************************** Main Head Routes Start *************************************** //
             Route::controller(MainHeadController::class)->group(function () {
-                Route::get('/mainheads', 'ShowAll');
+                Route::get('/mainheads', 'Show');
                 Route::post('/mainheads', 'Insert');
-                Route::get('/mainheads/edit', 'Edit');
                 Route::put('/mainheads', 'Update');
                 Route::delete('/mainheads', 'Delete');
-                Route::get('/mainheads/search', 'Search');
                 Route::get('/mainheads/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
             });
 
@@ -363,26 +340,21 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             // *************************************** TranGroupe Routes Start *************************************** //
             Route::controller(TranGroupController::class)->group(function () {
-                Route::get('/trangroupes', 'ShowAll');
+                Route::get('/trangroupes', 'Show');
                 Route::post('/trangroupes', 'Insert');
-                Route::get('/trangroupes/edit', 'Edit');
                 Route::put('/trangroupes', 'Update');
                 Route::delete('/trangroupes', 'Delete');
-                Route::get('/trangroupes/search', 'Search');
                 Route::get('/trangroupes/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
-                Route::get('/trangroupes/get/type', 'GetByType')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
             });
             
 
 
             // *************************************** TranHead Routes Start *************************************** //
             Route::controller(TranHeadController::class)->group(function () {
-                Route::get('/tranheads', 'ShowAll');
+                Route::get('/tranheads', 'Show');
                 Route::post('/tranheads', 'Insert');
-                Route::get('/tranheads/edit', 'Edit');
                 Route::put('/tranheads', 'Update');
                 Route::delete('/tranheads', 'Delete');
-                Route::get('/tranheads/search', 'Search');
                 Route::get('/tranheads/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
             });
         });
@@ -400,24 +372,20 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/setup')->group(function () {
             // *************************************** Transaction Groupe Routes Start *************************************** //
             Route::controller(TranGroupController::class)->group(function () {
-                Route::get('/groupes', 'ShowAll');
+                Route::get('/groupes', 'Show');
                 Route::post('/groupes', 'Insert');
-                Route::get('/groupes/edit', 'Edit');
                 Route::put('/groupes', 'Update');
                 Route::delete('/groupes', 'Delete');
-                Route::get('/groupes/search', 'Search');
             });
 
 
 
             // *************************************** Transaction Head Routes Start *************************************** //
             Route::controller(TranHeadController::class)->group(function () {
-                Route::get('/heads', 'ShowAll');
+                Route::get('/heads', 'Show');
                 Route::post('/heads', 'Insert');
-                Route::get('/heads/edit', 'Edit');
                 Route::put('/heads', 'Update');
                 Route::delete('/heads', 'Delete');
-                Route::get('/heads/search', 'Search');
             });
         });
 
@@ -425,24 +393,20 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/users')->group(function () {
             // *************************************** Transaction User Type Routes Start *************************************** //
             Route::controller(TranWithController::class)->group(function () {
-                Route::get('/usertype', 'ShowAll');
+                Route::get('/usertype', 'Show');
                 Route::post('/usertype', 'Insert');
-                Route::get('/usertype/edit', 'Edit');
                 Route::put('/usertype', 'Update');
                 Route::delete('/usertype', 'Delete');
-                Route::get('/usertype/search', 'Search');
             });
 
 
 
             ///////////// --------------- Client Routes ----------- ///////////////////
             Route::controller(ClientController::class)->group(function () {
-                Route::get('/clients', 'ShowAll');
+                Route::get('/clients', 'Show');
                 Route::post('/clients', 'Insert');
-                Route::get('/clients/edit', 'Edit');
                 Route::put('/clients', 'Update');
                 Route::delete('/clients', 'Delete');
-                Route::get('/clients/search', 'Search');
                 Route::get('/clients/details', 'Details');
             });
             
@@ -450,12 +414,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Supplier Routes ----------- ///////////////////
             Route::controller(SupplierController::class)->group(function () {
-                Route::get('/suppliers', 'ShowAll');
+                Route::get('/suppliers', 'Show');
                 Route::post('/suppliers', 'Insert');
-                Route::get('/suppliers/edit', 'Edit');
                 Route::put('/suppliers', 'Update');
                 Route::delete('/suppliers', 'Delete');
-                Route::get('/suppliers/search', 'Search');
                 Route::get('/suppliers/details', 'Details');
             });
         });
@@ -557,12 +519,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/setup')->group(function () {
             // *************************************** Department Routes Start *************************************** //
             Route::controller(DepartmentController::class)->group(function () {
-                Route::get('/departments', 'ShowAll');
+                Route::get('/departments', 'Show');
                 Route::post('/departments', 'Insert');
-                Route::get('/departments/edit', 'Edit');
                 Route::put('/departments', 'Update');
                 Route::delete('/departments', 'Delete');
-                Route::get('/departments/search', 'Search');
                 Route::get('/department/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -570,12 +530,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             // *************************************** Designation Routes Start *************************************** //
             Route::controller(DesignationController::class)->group(function () {
-                Route::get('/designations', 'ShowAll');
+                Route::get('/designations', 'Show');
                 Route::post('/designations', 'Insert');
-                Route::get('/designations/edit', 'Edit');
                 Route::put('/designations', 'Update');
                 Route::delete('/designations', 'Delete');
-                Route::get('/designations/search', 'Search');
                 Route::get('/designation/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
         });
@@ -586,24 +544,18 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/employee')->group(function () {
             // *************************************** Employee Type Routes Start *************************************** //
             Route::controller(TranWithController::class)->group(function () {
-                Route::get('/usertype', 'ShowAll');
+                Route::get('/usertype', 'Show');
                 Route::post('/usertype', 'Insert');
-                Route::get('/usertype/edit', 'Edit');
                 Route::put('/usertype', 'Update');
                 Route::delete('/usertype', 'Delete');
-                Route::get('/usertype/search', 'Search');
             });
 
 
 
             ///////////// --------------- All Employeee Routes ----------- ///////////////////
             Route::controller(EmployeeController::class)->group(function () {
-                Route::get('/all', 'ShowAll');
-                // Route::post('/all', 'Insert');
-                // Route::get('/all/edit', 'Edit');
-                // Route::put('/all', 'Update');
+                Route::get('/all', 'Show');
                 Route::delete('/all', 'Delete');
-                Route::get('/all/search', 'Search');
                 Route::get('/all/details', 'Details');
                 Route::get('/personal/details', 'Details');
                 Route::get('/education/details', 'Details');
@@ -616,26 +568,20 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             
             ///////////// --------------- Employee Personal Details Routes ----------- ///////////////////
             Route::controller(PersonalDetailsController::class)->group(function () {
-                Route::get('/personal', 'ShowAll');
+                Route::get('/personal', 'Show');
                 Route::post('/personal', 'Insert');
-                Route::get('/personal/edit', 'Edit');
                 Route::put('/personal', 'Update');
                 Route::delete('/personal', 'Delete');
-                Route::get('/personal/search', 'Search');
-                // Route::get('/personal/details', 'Details');
             });
 
 
 
             ///////////// --------------- Employee Education Details Routes ----------- ///////////////////
             Route::controller(EducationDetailsController::class)->group(function () {
-                Route::get('/education', 'ShowAll');
+                Route::get('/education', 'Show');
                 Route::post('/education', 'Insert');
-                Route::get('/education/edit', 'Edit');
                 Route::put('/education', 'Update');
                 Route::delete('/education', 'Delete');
-                Route::get('/education/search', 'Search');
-                // Route::get('/education/details', 'Details');
                 Route::get('/education/grid', 'Grid');
             });
 
@@ -643,13 +589,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Employee Training Details Routes ----------- ///////////////////
             Route::controller(TrainingDetailsController::class)->group(function () {
-                Route::get('/training', 'ShowAll');
+                Route::get('/training', 'Show');
                 Route::post('/training', 'Insert');
-                Route::get('/training/edit', 'Edit');
                 Route::put('/training', 'Update');
                 Route::delete('/training', 'Delete');
-                Route::get('/training/search', 'Search');
-                // Route::get('/training/details', 'Details');
                 Route::get('/training/grid', 'Grid');
             });
 
@@ -657,13 +600,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Employee Experience Details Routes ----------- ///////////////////
             Route::controller(ExperienceDetailsController::class)->group(function () {
-                Route::get('/experience', 'ShowAll');
+                Route::get('/experience', 'Show');
                 Route::post('/experience', 'Insert');
-                Route::get('/experience/edit', 'Edit');
                 Route::put('/experience', 'Update');
                 Route::delete('/experience', 'Delete');
-                Route::get('/experience/search', 'Search');
-                // Route::get('/experience/details', 'Details');
                 Route::get('/experience/grid', 'Grid');
             });
 
@@ -671,13 +611,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Employee Organization Details Routes ----------- ///////////////////
             Route::controller(OrganizationDetailsController::class)->group(function () {
-                Route::get('/organization', 'ShowAll');
+                Route::get('/organization', 'Show');
                 Route::post('/organization', 'Insert');
-                Route::get('/organization/edit', 'Edit');
                 Route::put('/organization', 'Update');
                 Route::delete('/organization', 'Delete');
-                Route::get('/organization/search', 'Search');
-                // Route::get('/organization/details', 'Details');
                 Route::get('/organization/grid', 'Grid');
             });
             
@@ -686,12 +623,9 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Employee Attendence Details Routes ----------- ///////////////////
             Route::controller(AttendenceController::class)->group(function () {
-                Route::get('/attendence', 'ShowAll');
+                Route::get('/attendence', 'Show');
                 Route::post('/attendence', 'Insert');
-                Route::get('/attendence/edit', 'Edit');
                 Route::put('/attendence', 'Update');
-                // Route::delete('/attendence', 'Delete');
-                Route::get('/attendence/search', 'Search');
             });
         }); // End Hr Employee Routes
 
@@ -701,43 +635,38 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/payroll')->group(function () {
             // *************************************** HR Head Routes Start *************************************** //
             Route::controller(TranHeadController::class)->group(function () {
-                Route::get('/heads', 'ShowAll');
+                Route::get('/heads', 'Show');
                 Route::post('/heads', 'Insert');
-                Route::get('/heads/edit', 'Edit');
                 Route::put('/heads', 'Update');
                 Route::delete('/heads', 'Delete');
-                Route::get('/heads/search', 'Search');
             });
 
 
             
             ///////////// --------------- Payroll Setup Routes ----------- ///////////////////
             Route::controller(PayrollSetupController::class)->group(function () {
-                Route::get('/setup', 'ShowAll');
+                Route::get('/setup', 'Show');
                 Route::post('/setup', 'Insert');
-                Route::get('/setup/edit', 'Edit');
                 Route::put('/setup', 'Update');
                 Route::delete('/setup', 'Delete');
-                Route::get('/setup/search', 'Search');
+                Route::get('/setup/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
 
 
             ///////////// --------------- Payroll Middlewire Routes ----------- ///////////////////
             Route::controller(PayrollMiddlewireController::class)->group(function () {
-                Route::get('/middlewire', 'ShowAll');
+                Route::get('/middlewire', 'Show');
                 Route::post('/middlewire', 'Insert');
-                Route::get('/middlewire/edit', 'Edit');
                 Route::put('/middlewire', 'Update');
                 Route::delete('/middlewire', 'Delete');
-                Route::get('/middlewire/search', 'Search');
             });
 
 
 
             ///////////// --------------- Payroll Process Routes ----------- ///////////////////
             Route::controller(PayrollProcessController::class)->group(function () {
-                Route::get('/process', 'ShowAll');
+                Route::get('/process', 'Show');
                 Route::post('/process', 'Insert');
                 Route::get('/process/edit', 'Edit');
                 // Route::put('/process', 'Update');

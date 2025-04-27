@@ -11,8 +11,8 @@ use App\Models\Transaction_Main_Head;
 class MainHeadController extends Controller
 {
     // Show All MainHeads
-    public function ShowAll(Request $req){
-        $data = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
+    public function Show(Request $req){
+        $data = Transaction_Main_Head::on('mysql')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -38,17 +38,6 @@ class MainHeadController extends Controller
             'message' => 'MainHead Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit MainHeads
-    public function Edit(Request $req){
-        $data = Transaction_Main_Head::on('mysql')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -90,26 +79,12 @@ class MainHeadController extends Controller
 
 
 
-    // Search MainHeads
-    public function Search(Request $req){
-        $data = Transaction_Main_Head::on('mysql')->where('type_name', 'like', $req->search.'%')
-        ->orderBy('type_name')
-        ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
     // Get Transaction Main Head
     public function Get(){
-        $data = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
+        $data = Transaction_Main_Head::on('mysql')->select('id','type_name')->get();
         return response()->json([
             'status' => true,
             'data'=> $data,
-        ]);
+        ],200);
     } // End Method
 }

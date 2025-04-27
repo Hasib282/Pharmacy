@@ -11,8 +11,8 @@ use App\Models\Company_Type;
 class CompanyTypeController extends Controller
 {
     // Show All Company Types
-    public function ShowAll(Request $req){
-        $data = Company_Type::on('mysql')->orderBy('added_at')->get();
+    public function Show(Request $req){
+        $data = Company_Type::on('mysql')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -37,17 +37,6 @@ class CompanyTypeController extends Controller
             'status'=> true,
             'message' => 'Company Type Added Successfully',
             "data" => $data,
-        ], 200);
-    } // End Method
-
-
-
-    // Edit Company Types
-    public function Edit(Request $req){
-        $data = Company_Type::on('mysql')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -90,23 +79,9 @@ class CompanyTypeController extends Controller
 
 
 
-    // Search Company Types
-    public function Search(Request $req){
-        $data = Company_Type::on('mysql')->where('name', 'like', $req->search.'%')
-        ->orderBy('name')
-        ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
-    // Get Company Types
+    // Get All Company Types
     public function Get(){
-        $data = Company_Type::on('mysql')->orderBy('id')->get();
+        $data = Company_Type::on('mysql')->select('id','name')->get();
         return response()->json([
             'status' => true,
             'data'=> $data,

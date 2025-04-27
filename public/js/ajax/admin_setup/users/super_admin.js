@@ -58,7 +58,7 @@ $(document).ready(function () {
         $('#updateName').val(item.user_name);
         $('#updatePhone').val(item.user_phone);
         $('#updateEmail').val(item.user_email);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : 'male.png'}?${new Date().getTime()} `).show();
         $('#updateName').focus();
     }; // End Method
 });

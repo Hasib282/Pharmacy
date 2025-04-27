@@ -1,40 +1,3 @@
-// function ShowInventoryNegativeAdjustments(data, startIndex) {
-//     let tableRows = '';
-    
-//     if(data.length > 0){
-//         $.each(data, function(key, item) {
-//             tableRows += `
-//                 <tr>
-//                     <td>${startIndex + key + 1}</td>
-//                     <td>${item.tran_id}</td>
-//                     <td>${item.head.tran_head_name}</td>
-//                     <td>${item.store.store_name}</td>
-//                     <td>${item.quantity}</td>
-//                     <td>${new Date(item.tran_date).toISOString().split('T')[0]}</td>
-//                     <td>
-//                         <div style="display: flex;gap:5px;">
-
-//                             <button class="open-modal" data-modal-id="editModal" id="edit"
-//                                     data-id="${item.id}"><i class="fas fa-edit"></i></button>
-
-//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                            
-//                         </div>
-//                     </td>
-//                 </tr>
-//             `;
-//         });
-
-//         // Inject the generated rows into the table body
-//         $('.load-data .show-table tbody').html(tableRows);
-//         $('.load-data .show-table tfoot').html('')
-//     }
-//     else{
-//         $('.load-data .show-table tbody').html('');
-//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-//     }
-// }; // End Function
-
 function ShowInventoryNegativeAdjustments(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
@@ -76,7 +39,7 @@ $(document).ready(function () {
 
     
     // Insert Ajax
-    InsertAjax('inventory/adjustment/negative', ShowInventoryNegativeAdjustments, 
+    InsertAjax('inventory/adjustment/negative', 
         {
             store: { selector: '#store', attribute: 'data-id' },
             product: { selector: '#product', attribute: 'data-id' },
@@ -98,11 +61,11 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('inventory/adjustment/negative', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('inventory/adjustment/negative', ShowInventoryNegativeAdjustments,
+    UpdateAjax('inventory/adjustment/negative',
         {
             store: { selector: '#updateStore', attribute: 'data-id' },
             product: { selector: '#updateProduct', attribute: 'data-id' },
@@ -120,32 +83,24 @@ $(document).ready(function () {
     
 
     // Delete Ajax
-    DeleteAjax('inventory/adjustment/negative', ShowInventoryNegativeAdjustments);
+    DeleteAjax('inventory/adjustment/negative');
 
 
-    // Pagination Ajax
-    // PaginationAjax(ShowInventoryNegativeAdjustments);
-
-
-    // Search Ajax
-    // SearchAjax('inventory/adjustment/negative', ShowInventoryNegativeAdjustments, { type: 5, method: 'Negative' });
-    
-    
     // Search By Date Ajax
     // SearchByDateAjax('inventory/adjustment/negative', ShowInventoryNegativeAdjustments, { type: 5, method: 'Negative' });
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#updateTranId').val(res.data.tran_id);
-        $('#updateStore').attr('data-id', res.data.store_id);
-        $('#updateStore').val(res.data.store.store_name);
-        $('#updateProduct').attr('data-groupe', res.data.tran_groupe_id);
-        $('#updateProduct').attr('data-id', res.data.tran_head_id);
-        $('#updateProduct').val(res.data.head.tran_head_name);
-        $('#updateQuantity').val(res.data.quantity);
-        $('#updateCp').val(res.data.cp);
-        $('#updateMrp').val(res.data.mrp);
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#updateTranId').val(item.tran_id);
+        $('#updateStore').attr('data-id', item.store_id);
+        $('#updateStore').val(item.store.store_name);
+        $('#updateProduct').attr('data-groupe', item.tran_groupe_id);
+        $('#updateProduct').attr('data-id', item.tran_head_id);
+        $('#updateProduct').val(item.head.tran_head_name);
+        $('#updateQuantity').val(item.quantity);
+        $('#updateCp').val(item.cp);
+        $('#updateMrp').val(item.mrp);
     }
 });

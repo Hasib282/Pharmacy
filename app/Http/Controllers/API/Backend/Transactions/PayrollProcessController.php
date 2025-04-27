@@ -17,7 +17,7 @@ use App\Models\Transaction_Head;
 class PayrollProcessController extends Controller
 {
     // Show All Payroll Process
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $currentYear = Carbon::now()->year; 
         $currentMonth = Carbon::now()->month;
         $data = Payroll_Setup::on('mysql_second')->with('Employee')

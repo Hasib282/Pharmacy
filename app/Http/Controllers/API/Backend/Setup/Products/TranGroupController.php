@@ -13,7 +13,7 @@ use App\Models\Transaction_Main_Head;
 class TranGroupController extends Controller
 {
     // Show All Transaction Group
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
         $data = filterByCompany(
@@ -25,12 +25,10 @@ class TranGroupController extends Controller
                 )
                 ->orderBy('added_at')
                 ->get();
-        
-        $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
+
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'types' => $types,
         ], 200);
     } // End Method
 
@@ -58,19 +56,6 @@ class TranGroupController extends Controller
             'message' => 'Transaction Groupe Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Transaction Group
-    public function Edit(Request $req){
-        $data = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($req->id);
-        $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
-        return response()->json([
-            'status'=> true,            
-            'data'=>$data,
-            'types'=>$types,
-        ], 200);
     } // End Method
 
 
@@ -112,26 +97,6 @@ class TranGroupController extends Controller
             'status'=> true,
             'message' => 'Transaction Groupe Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Transaction Group
-    public function Search(Request $req){
-        $data = filterByCompany(
-                    Transaction_Groupe::on('mysql')
-                    ->with('Type')
-                    ->where('tran_groupe_name', 'like', $req->search.'%')
-                    ->where('tran_groupe_type', 'like', '%'.$req->type.'%')
-                    ->where('tran_method', 'like', '%'.$req->method.'%')
-                )
-                ->orderBy('tran_groupe_name')
-                ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

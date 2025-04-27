@@ -67,7 +67,6 @@ $(document).ready(function () {
         { label: 'Working Hours', key: 'timeDiffInHours' },
         { label: 'Insert At', key: 'insert_at' },
         { label: 'Update At', key: 'updated_at' },
-        
         { label: 'Action', type: 'button' }
     ]);
 
@@ -89,45 +88,28 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/employee/attendence', ShowAttendence, {user: { selector: '#user', attribute: 'data-id' }}, function() {
+    InsertAjax('hr/employee/attendence', {user: { selector: '#user', attribute: 'data-id' }}, function() {
         $('#with').focus();
     });
 
 
     //Edit Ajax
-    EditAjax('hr/employee/attendence', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hr/employee/attendence', ShowAttendence);
-    
-
-    // // Delete Ajax
-    // DeleteAjax('hr/employee/attendence', ShowAttendence);
-
-
-    // // Pagination Ajax
-    // PaginationAjax(ShowAttendence);
-
-
-    // Search Ajax
-    // SearchAjax('hr/employee/attendence', ShowAttendence);
-
-
-    // Search By Date
-    // SearchByDateAjax('hr/employee/attendence', ShowAttendence);
+    UpdateAjax('hr/employee/attendence');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
 
-        $('#updateUser').val(res.data.user.user_name);
-        $('#updateDate').val(res.data.date);
-        $('#updateIn').val(res.data.in);
-        $('#updateOut').val(res.data.out);
+        $('#updateUser').val(item.user.user_name);
+        $('#updateDate').val(item.date);
+        $('#updateIn').val(item.in);
+        $('#updateOut').val(item.out);
 
         $('#updateOut').focus();
     }
-
 });

@@ -12,7 +12,7 @@ use App\Models\Bank;
 class BankController extends Controller
 {
     // Show All Banks
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Bank::on('mysql')->with('Location')->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
@@ -54,17 +54,6 @@ class BankController extends Controller
             'message' => 'Bank Details Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Banks
-    public function Edit(Request $req){
-        $data = Bank::on('mysql')->with('Location')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -111,49 +100,6 @@ class BankController extends Controller
             'status'=> true,
             'message' => 'Bank Details Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Banks
-    public function Search(Request $req){
-        if($req->searchOption == 1){ // Search By Name
-            $data = Bank::on('mysql')->with('Location')
-            ->where('name', 'like', '%'.$req->search.'%')
-            ->orderBy('name','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){ // Search By Email
-            $data = Bank::on('mysql')->with('Location')
-            ->where('email', 'like', '%'.$req->search.'%')
-            ->orderBy('email','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 3){ // Search By Phone
-            $data = Bank::on('mysql')->with('Location')
-            ->where('phone', 'like', '%'.$req->search.'%')
-            ->orderBy('phone','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 4){ // Search By Location
-            $data = Bank::on('mysql')->with('Location')
-            ->whereHas('Location', function ($query) use ($req) {
-                $query->where('upazila', 'like', '%'.$req->search.'%');
-                $query->orderBy('upazila','asc');
-            })
-            ->paginate(15);
-        }
-        else if($req->searchOption == 5){ // Search By Address
-            $data = Bank::on('mysql')->with('Location')
-            ->where('address', 'like', '%'.$req->search.'%')
-            ->orderBy('address','asc')
-            ->paginate(15);
-        }
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

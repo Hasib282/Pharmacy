@@ -1,3 +1,39 @@
+function ShowBedCategory(res) {
+    tableInstance = new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['name'],
+        actions: (row) => `
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                        
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `,
+    });
+}
+
+
+
+// Additional Edit Functionality
+function EditFormInputValue(item){
+    $('#id').val(item.id);
+    $('#updateName').val(item.name);
+    $('#updateName').focus();
+}
+
+
+
+$(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
+        { label: 'Name', key: 'name' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
+    SingleInputDataCrudeAjax('hospital/setup/bedcategory', ShowBedCategory);
+});
+
 // function ShowBedCategory(data, startIndex) {
 //     let tableRows = '';
     
@@ -29,42 +65,6 @@
 //         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
 //     }
 // }; // End Function
-
-function ShowBedCategory(res) {
-    tableInstance = new GenerateTable({
-        tableId: '#data-table',
-        data: res.data,
-        tbody: ['name'],
-        actions: (row) => `
-                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                        
-                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
-                `,
-    });
-}
-
-
-
-// Additional Edit Functionality
-function EditFormInputValue(res){
-    $('#id').val(res.data.id);
-    $('#updateName').val(res.data.name);
-    $('#updateName').focus();
-}
-
-
-
-$(document).ready(function () {
-    // Render The Table Heads
-    renderTableHead([
-        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Name', key: 'name' },
-        { label: 'Action', type: 'button' }
-    ]);
-
-
-    SingleInputDataCrudeAjax('hospital/setup/bedcategory', ShowBedCategory);
-});
 
 
 

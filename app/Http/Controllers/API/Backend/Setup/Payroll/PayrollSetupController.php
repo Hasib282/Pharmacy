@@ -12,8 +12,8 @@ use App\Models\Payroll_Setup;
 class PayrollSetupController extends Controller
 {
     // Show All Payroll Setup
-    public function ShowAll(Request $req){
-        $data = Payroll_Setup::on('mysql_second')->with()->orderBy('emp_id','asc')->get();
+    public function Show(Request $req){
+        $data = Payroll_Setup::on('mysql_second')->with('Employee','Head')->orderBy('emp_id','asc')->get();
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
         $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
         return response()->json([
@@ -163,5 +163,16 @@ class PayrollSetupController extends Controller
             'status' => true,
             'data' => $payroll,
         ], 200);
+    } // End Method
+
+
+
+    // Get Payroll Category
+    public function Get(){
+        $data = Transaction_Head::on('mysql')->where('groupe_id','1')->select('id','tran_head_name')->get();
+        return response()->json([
+            'status' => true,
+            'data'=> $data,
+        ],200);
     } // End Method
 }

@@ -1,41 +1,8 @@
-// function ShowDesignations(data, startIndex) {
-//     let tableRows = '';
-    
-//     if(data.length > 0){
-//         $.each(data, function(key, item) {
-//             tableRows += `
-//                 <tr>
-//                     <td>${startIndex + key + 1}</td>
-//                     <td>${item.designation}</td>
-//                     <td>${item.}</td>
-//                     <td>
-//                         <div style="display: flex;gap:5px;">
-//                             <button class="open-modal" data-modal-id="editModal" id="edit"
-//                                     data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                            
-//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                            
-//                         </div>
-//                     </td>
-//                 </tr>
-//             `;
-//         });
-
-//         // Inject the generated rows into the table body
-//         $('.load-data .show-table tbody').html(tableRows);
-//         $('.load-data .show-table tfoot').html('')
-//     }
-//     else{
-//         $('.load-data .show-table tbody').html('');
-//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-//     }
-// }; // End Function
-
 function ShowDesignations(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['designation','department.name'],
+        tbody: ['department.name','designation'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -50,8 +17,8 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Designation', key: 'designation' },
         { label: 'Department Name', key: 'department.name' },
+        { label: 'Designation', key: 'designation' },
         { label: 'Action', type: 'button' }
     ]);
 
@@ -61,7 +28,7 @@ $(document).ready(function () {
     
 
     // Add Modal Open Functionality
-    AddModalFunctionality("#designations", function(){
+    AddModalFunctionality("#department", function(){
         $("#designations").val('');
         $('#department').removeAttr('data-id');
         $('#department').val('');
@@ -69,40 +36,32 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/setup/designations', ShowDesignations, {department: { selector: '#department', attribute: 'data-id' }}, function() {
-        $("#designations").focus();
+    InsertAjax('hr/setup/designations', {department: { selector: '#department', attribute: 'data-id' }}, function() {
+        $("#department").focus();
         $('#department').removeAttr('data-id');
     });
 
 
     //Edit Ajax
-    EditAjax('hr/setup/designations', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hr/setup/designations', ShowDesignations, {department: { selector: '#updateDepartment', attribute: 'data-id' }}, function(){
+    UpdateAjax('hr/setup/designations', {department: { selector: '#updateDepartment', attribute: 'data-id' }}, function(){
         $('#updateDepartment').removeAttr('data-id');
     });
     
 
     // Delete Ajax
-    DeleteAjax('hr/setup/designations', ShowDesignations);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowDesignations);
-
-
-    // Search Ajax
-    // SearchAjax('hr/setup/designations', ShowDesignations, {  });
+    DeleteAjax('hr/setup/designations');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#updateDesignations').val(res.data.designation);
-        $('#updateDepartment').attr('data-id',res.data.dept_id);
-        $('#updateDepartment').val(res.data.department.name);
-        $('#updateDesignations').focus();
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#updateDesignations').val(item.designation);
+        $('#updateDepartment').attr('data-id',item.dept_id);
+        $('#updateDepartment').val(item.department.name);
+        $('#updateDepartment').focus();
     }
 });

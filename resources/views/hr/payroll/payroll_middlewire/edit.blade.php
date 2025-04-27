@@ -14,8 +14,8 @@
             <input type="hidden" name="id" id="id">
             {{-- type --}}
             <div class="form-input-group">
-                <label for="updateWith">Employee Type</label>
-                <select name="with" id="updateWith">
+                <label for="updateType">Employee Type</label>
+                <select name="with" id="updateType">
                     <option value="">Select employee Type</option>
                 </select>
                 <span class="error" id="update_with_error"></span>

@@ -13,30 +13,20 @@ use App\Models\Role;
 class TranWithController extends Controller
 {
     // Show All Tranwith
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
-        if($type != null){
-            $tranwith = Transaction_With::on('mysql_second')
-            ->with('Role','Type')
-            ->where('tran_type', $type)
-            ->orderBy('added_at')
-            ->get();
-        }
-        else{
-            $tranwith = Transaction_With::on('mysql_second')
-            ->with('Role','Type')
-            ->orderBy('added_at')
-            ->get();
-        }
+        $tranwith = Transaction_With::on('mysql_second')
+        ->with('Role','Type')
+        ->when($type, function ($query) use ($type) { // when $type is not null
+            $query->where('tran_type', $type);
+        })
+        ->orderBy('added_at')
+        ->get();
 
-        $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
-        $roles = Role::on('mysql')->whereNotIn('name', ['Super Admin','Admin'])->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $tranwith,
-            'types' => $types,
-            'roles' => $roles,
         ], 200);
     } // End Method
 
@@ -44,17 +34,18 @@ class TranWithController extends Controller
 
     // Insert Tranwith
     public function Insert(Request $req){
+        $type = GetTranType($req->segment(2));
+
         $req->validate([
             "name" => 'required|unique:mysql_second.transaction__withs,tran_with_name',
             "role" => 'required|exists:mysql.roles,id',
-            "tranType" => 'required|exists:mysql.transaction__main__heads,id',
             "tranMethod" => 'required|in:Receive,Payment,Both',
         ]);
 
         $insert = Transaction_With::on('mysql_second')->create([
             "tran_with_name" => $req->name,
             "user_role" => $req->role,
-            "tran_type" => $req->tranType,
+            "tran_type" => $type,
             "tran_method" => $req->tranMethod,
         ]);
 
@@ -69,35 +60,18 @@ class TranWithController extends Controller
 
 
 
-    // Edit Tranwith
-    public function Edit(Request $req){
-        $data = Transaction_With::on('mysql_second')->with('Role','Type')->findOrFail($req->id);
-        $types = Transaction_Main_Head::on('mysql')->orderBy('added_at')->get();
-        $roles = Role::on('mysql')->whereNotIn('name', ['Super Admin','Admin'])->orderBy('added_at')->get();
-        return response()->json([
-            'status'=> true,            
-            'data'=>$data,
-            'types'=>$types,
-            'roles'=>$roles,
-        ], 200);
-    } // End Method
-
-
-
     // Update Tranwith
     public function Update(Request $req){
         $data = Transaction_With::on('mysql_second')->findOrFail($req->id);
         $req->validate([
             "name" => ['required', Rule::unique('mysql_second.transaction__withs', 'tran_with_name')->ignore($data->id)],
             "role"  => 'required|exists:mysql.roles,id',
-            "tranType" => 'required|exists:mysql.transaction__main__heads,id',
             "tranMethod" => 'required|in:Receive,Payment,Both',
         ]);
 
         $update = $data->update([
             "tran_with_name" => $req->name,
             "user_role" => $req->role,
-            "tran_type" => $req->tranType,
             "tran_method" => $req->tranMethod,
             "updated_at" => now()
         ]);
@@ -126,24 +100,6 @@ class TranWithController extends Controller
 
 
 
-    // Search Tranwith
-    public function Search(Request $req){
-        $data = Transaction_With::on('mysql_second')->with('Role','Type')
-        ->where('tran_with_name', 'like', $req->search.'%')
-        ->where('tran_method', 'like', '%'.$req->method.'%')
-        ->where('tran_type', 'like', '%'.$req->type.'%')
-        ->where('user_role', 'like', '%'.$req->role.'%')
-        ->orderBy('tran_with_name')
-        ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
     // Get Tran With By Transaction Method And Type
     public function Get(Request $req){
         if ($req->type == null && $req->method != null) { // Find Transaction With For Party Payment
@@ -161,7 +117,7 @@ class TranWithController extends Controller
         
         return response()->json([
             'status' => true,
-            'tranwith' => $data,
+            'data' => $data,
         ]);
     } // End Method
 }

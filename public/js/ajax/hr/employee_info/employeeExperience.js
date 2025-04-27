@@ -65,19 +65,20 @@ $(document).ready(function () {
         { label: 'Id', key: 'user_id' },
         { label: 'Name', key: 'user_name' },
         { label: 'Employee Type', key: 'withs.tran_with_name' },
-        { label: 'DOB', key: 'dob' },
-        { label: 'Gender	', key: 'gender' },
+        { label: 'DOB', key: 'dob', type:"date" },
+        { label: 'Gender', type:"select", key: 'gender', method:"custom", options:['Male','Female','Others'] },
         { label: 'Email', key: 'user_email' },
         { label: 'Phone', key: 'user_phone' },
         { label: 'Address', key: 'address' },
         { label: 'Image' },
-        { label: 'Status', key: 'status' },
-        { label: 'Action', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}] }
+        { label: 'Status', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}] },
+        { label: 'Action', type: 'button' }
     ]);
 
 
     // Get Transaction With / User Type 
     GetTransactionWith(3, '', '#with', 3, 'Ok');
+
 
     // Load Data on Hard Reload
     ReloadData('hr/employee/experience', ShowEmployeeExperienceDetails);
@@ -92,7 +93,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/employee/experience', ShowEmployeeExperienceDetails, {user: { selector: '#user', attribute: 'data-id' }}, function() {
+    InsertAjax('hr/employee/experience', {user: { selector: '#user', attribute: 'data-id' }}, function() {
         $('#with').focus();
         $('#user').removeAttr('data-id');
         formIndex = 1;
@@ -101,23 +102,15 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('hr/employee/experience', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hr/employee/experience', ShowEmployeeExperienceDetails);
+    UpdateAjax('hr/employee/experience');
     
 
     // Delete Ajax
-    DeleteAjax('hr/employee/experience', ShowEmployeeExperienceDetails);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowEmployeeExperienceDetails);
-
-
-    // Search Ajax
-    // SearchAjax('hr/employee/experience', ShowEmployeeExperienceDetails);
+    DeleteAjax('hr/employee/experience');
     
     
     // Show Detals Ajax
@@ -129,15 +122,15 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#empId').val(res.data.emp_id);
-        $('#update_company_name').val(res.data.company_name);
-        $('#update_department').val(res.data.department);
-        $('#update_designation').val(res.data.designation);
-        $('#update_company_location').val(res.data.company_location);
-        $('#update_start_date').val(res.data.start_date);
-        $('#update_end_date').val(res.data.end_date);
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#empId').val(item.emp_id);
+        $('#update_company_name').val(item.company_name);
+        $('#update_department').val(item.department);
+        $('#update_designation').val(item.designation);
+        $('#update_company_location').val(item.company_location);
+        $('#update_start_date').val(item.start_date);
+        $('#update_end_date').val(item.end_date);
     }
 
 

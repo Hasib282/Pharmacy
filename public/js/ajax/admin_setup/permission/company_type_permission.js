@@ -71,13 +71,9 @@ $(document).ready(function () {
 
 
     // Update Ajax
-    UpdateAjax('admin/permission/company_type_permissions', ShowRolePermissions, {}, function() {
+    UpdateAjax('admin/permission/company_type_permissions', {}, function() {
         $('#select-all').prop('checked', false);
     });
-
-
-    // Search Ajax
-    // SearchAjax('admin/permission/company_type_permissions', ShowRolePermissions, {  });
 
 
     // Additional Edit Functionality

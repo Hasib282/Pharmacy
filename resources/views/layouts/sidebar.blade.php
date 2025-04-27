@@ -1718,7 +1718,7 @@
                     {{-- Hospital Setup Sub Menu --}}
                     @if(auth()->user()->hasPermission(194))
                         <li class="sub-menu-item" data-url="{{route('show.patientRegistration')}}">
-                            <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'patientregistration') ? 'active':''}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'ptnregistration') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-gears"></i>
                                     Patient Registration

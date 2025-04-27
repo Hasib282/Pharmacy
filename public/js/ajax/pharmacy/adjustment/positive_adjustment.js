@@ -74,7 +74,7 @@ $(document).ready(function () {
 
     
     // Insert Ajax
-    InsertAjax('pharmacy/adjustment/positive', ShowPharmacyPositiveAdjustments, 
+    InsertAjax('pharmacy/adjustment/positive', 
         {
             store: { selector: '#store', attribute: 'data-id' },
             product: { selector: '#product', attribute: 'data-id' },
@@ -96,11 +96,11 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('pharmacy/adjustment/positive', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('pharmacy/adjustment/positive', ShowPharmacyPositiveAdjustments,
+    UpdateAjax('pharmacy/adjustment/positive',
         {
             store: { selector: '#updateStore', attribute: 'data-id' },
             product: { selector: '#updateProduct', attribute: 'data-id' },
@@ -118,32 +118,24 @@ $(document).ready(function () {
     
 
     // Delete Ajax
-    DeleteAjax('pharmacy/adjustment/positive', ShowPharmacyPositiveAdjustments);
+    DeleteAjax('pharmacy/adjustment/positive');
 
 
-    // Pagination Ajax
-    // PaginationAjax(ShowPharmacyPositiveAdjustments);
-
-
-    // Search Ajax
-    // SearchAjax('pharmacy/adjustment/positive', ShowPharmacyPositiveAdjustments, { type: 6, method: 'Positive' });
-    
-    
     // Search By Date Ajax
     // SearchByDateAjax('pharmacy/adjustment/positive', ShowPharmacyPositiveAdjustments, { type: 6, method: 'Positive' });
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#updateTranId').val(res.data.tran_id);
-        $('#updateStore').attr('data-id', res.data.store_id);
-        $('#updateStore').val(res.data.store.store_name);
-        $('#updateProduct').attr('data-groupe', res.data.tran_groupe_id);
-        $('#updateProduct').attr('data-id', res.data.tran_head_id);
-        $('#updateProduct').val(res.data.head.tran_head_name);
-        $('#updateQuantity').val(res.data.quantity);
-        $('#updateCp').val(res.data.cp);
-        $('#updateMrp').val(res.data.mrp);
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#updateTranId').val(item.tran_id);
+        $('#updateStore').attr('data-id', item.store_id);
+        $('#updateStore').val(item.store.store_name);
+        $('#updateProduct').attr('data-groupe', item.tran_groupe_id);
+        $('#updateProduct').attr('data-id', item.tran_head_id);
+        $('#updateProduct').val(item.head.tran_head_name);
+        $('#updateQuantity').val(item.quantity);
+        $('#updateCp').val(item.cp);
+        $('#updateMrp').val(item.mrp);
     }
 });

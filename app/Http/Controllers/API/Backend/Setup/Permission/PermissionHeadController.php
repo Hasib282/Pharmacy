@@ -12,13 +12,11 @@ use App\Models\Permission_Main_Head;
 class PermissionHeadController extends Controller
 {
     // Show All Permission Head
-    public function ShowAll(Request $req){
-        $data = Permission_Head::on('mysql')->with('mainhead')->orderBy('created_at','asc')->get();
-        $permissionMainhead = Permission_Main_Head::on('mysql')->orderBy('created_at','asc')->get();
+    public function Show(Request $req){
+        $data = Permission_Head::on('mysql')->with('mainhead')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'permissionMainhead' => $permissionMainhead,
         ], 200);
     } // End Method
 
@@ -43,19 +41,6 @@ class PermissionHeadController extends Controller
             'message' => 'Permission Head Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Permission Head
-    public function Edit(Request $req){
-        $data = Permission_Head::on('mysql')->with('mainhead')->findOrFail($req->id);
-        $permissionMainhead = Permission_Main_Head::on('mysql')->orderBy('created_at','asc')->get();
-        return response()->json([
-            'status'=> true,
-            'data'=>$data,
-            'permissionMainhead'=>$permissionMainhead,
-        ], 200);
     } // End Method
 
 
@@ -94,23 +79,5 @@ class PermissionHeadController extends Controller
             'status'=> true,
             'message' => 'Permission Head Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Permission Head
-    public function Search(Request $req){
-        $data = Permission_Head::on('mysql')->with('mainhead')
-        ->whereHas('mainhead', function ($query) use ($req) {
-            $query->where('id', 'like', '%'.$req->searchHead.'%');
-        })
-        ->where('name', 'like', '%'.$req->search.'%')
-        ->orderBy('name')
-        ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 }

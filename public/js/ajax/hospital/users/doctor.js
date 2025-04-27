@@ -1,3 +1,71 @@
+function ShowDoctors(res) {
+    tableInstance = new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: ['title','name','degree','email', 'phone','chamber','specialization'],
+        actions: (row) => `
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                        
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `,
+    });
+}
+
+
+
+$(document).ready(function () {
+    // Render The Table Heads
+    renderTableHead([
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
+        { label: 'Company Name', key: 'title' },
+        { label: 'Name', key: 'name' },
+        { label: 'Degree', key: 'degree' },
+        { label: 'Email', key: 'email' },
+        { label: 'Phone', key: 'phone' },
+        { label: 'Chamber', key: 'chamber' },
+        { label: 'Spacializatio', key: 'spacialization' },
+        { label: 'Action', type: 'button' }
+    ]);
+
+
+    // Load Data on Hard Reload
+    ReloadData('hospital/users/doctors', ShowDoctors);
+    
+    
+    // Add Modal Open Functionality
+    AddModalFunctionality("#title");
+
+
+    // Insert Ajax
+    InsertAjax('hospital/users/doctors', {specialization: { selector: '#specialization', attribute: 'data-id' }, marketing_head: { selector: '#marketing_head', attribute: 'data-id' }}, function() {
+        $('#title').focus();
+        $('#specialization').removeAttr('data-id');
+        $('#marketing_head').removeAttr('data-id');
+    });
+
+
+    //Edit Ajax
+    EditAjax(EditFormInputValue);
+
+
+    // Update Ajax
+    UpdateAjax('hospital/users/doctors', {specialization: { selector: '#updateSpecialization', attribute: 'data-id' }, marketing_head: { selector: '#updateMarketing_Head', attribute: 'data-id' }});
+    
+
+    // Delete Ajax
+    DeleteAjax('hospital/users/doctors');
+
+
+    // Additional Edit Functionality
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#updateName').val(item.name);
+        $('#updateFloor').val(item.floor);
+        $('#updateTitle').focus();
+    }; // End Method
+});
+
+
 // function ShowData(){
 //     $.ajax({
 //         url: '/api/hospital/users/doctors',
@@ -176,77 +244,3 @@
 //     }
 // }; // End Function
 
-function ShowDoctors(res) {
-    tableInstance = new GenerateTable({
-        tableId: '#data-table',
-        data: res.data,
-        tbody: ['title','name','degree','email', 'phone','chamber','specialization'],
-        actions: (row) => `
-                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                        
-                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
-                `,
-    });
-}
-
-
-
-$(document).ready(function () {
-    // Render The Table Heads
-    renderTableHead([
-        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Name', key: 'title' },
-        { label: 'Name', key: 'name' },
-        { label: 'Degree', key: 'degree' },
-        { label: 'Email', key: 'email' },
-        { label: 'Phone', key: 'phone' },
-        { label: 'Chamber', key: 'chamber' },
-        { label: 'Spacializatio', key: 'spacialization' },
-        { label: 'Action', type: 'button' }
-    ]);
-
-
-    // Load Data on Hard Reload
-    ReloadData('hospital/users/doctors', ShowDoctors);
-    
-    
-    // Add Modal Open Functionality
-    AddModalFunctionality("#title");
-
-
-    // Insert Ajax
-    InsertAjax('hospital/users/doctors', ShowDoctors, {specialization: { selector: '#specialization', attribute: 'data-id' }, marketing_head: { selector: '#marketing_head', attribute: 'data-id' }}, function() {
-        $('#title').focus();
-        $('#specialization').removeAttr('data-id');
-        $('#marketing_head').removeAttr('data-id');
-    });
-
-
-    //Edit Ajax
-    EditAjax('hospital/users/doctors', EditFormInputValue);
-
-
-    // Update Ajax
-    UpdateAjax('hospital/users/doctors', ShowDoctors, {specialization: { selector: '#updateSpecialization', attribute: 'data-id' }, marketing_head: { selector: '#updateMarketing_Head', attribute: 'data-id' }});
-    
-
-    // Delete Ajax
-    DeleteAjax('hospital/users/doctors', ShowDoctors);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowDoctors);
-
-
-    // Search Ajax
-    // SearchAjax('hospital/users/doctors', ShowDoctors);
-
-
-    // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#updateName').val(res.data.name);
-        $('#updateFloor').val(res.data.floor);
-        $('#updateTitle').focus();
-    }; // End Method
-});

@@ -25,7 +25,7 @@ function GetSelectInputList(link, selectInput, data = {}) {
 
 
 // Get Transaction With
-function GetTransactionWith(type, method, targetElement, user = null, AdditionalEvent= null) {
+function GetTransactionWith(type, method, user = null, AdditionalEvent= null) {
     $.ajax({
         url: `${apiUrl}/admin/tranwith/get`,
         method: 'GET',
@@ -33,13 +33,13 @@ function GetTransactionWith(type, method, targetElement, user = null, Additional
         success: function (res) {
             if (res.status) {
                 if(AdditionalEvent == 'Ok'){
-                    CreateSelectOptions('#type', 'Select User Type', res.tranwith, null, 'tran_with_name');
-                    CreateSelectOptions('#updateType', 'Select User Type', res.tranwith, null, 'tran_with_name');
+                    CreateSelectOptions('#type', 'Select User Type', res.data, 'tran_with_name');
+                    CreateSelectOptions('#updateType', 'Select User Type', res.data, 'tran_with_name');
                 }
                 else{
-                    $(targetElement).html('');
-                    $.each(res.tranwith, function (key, withs) {
-                        $(targetElement).append(`<input type="checkbox" class="with-checkbox" name="with" value="${withs.id}" checked>`);
+                    $("#within").html('');
+                    $.each(res.data, function (key, item) {
+                        $("#within").append(`<input type="checkbox" class="with-checkbox" name="with" value="${item.id}" checked>`);
                     });
                 }
             }
@@ -58,8 +58,8 @@ function GetTransactionGroupe(type = null, method = null, AdditionalEvent = null
         success: function (res) {
             if (res.status) {
                 if(AdditionalEvent == 'Ok'){
-                    CreateSelectOptions('#groupe', 'Select Transaction Groupe', res.data, null, 'tran_groupe_name')
-                    CreateSelectOptions('#updateGroupe', 'Select Transaction Groupe', res.data, null, 'tran_groupe_name')
+                    CreateSelectOptions('#groupe', 'Select Groupe', res.data, 'tran_groupe_name')
+                    CreateSelectOptions('#updateGroupe', 'Select Groupe', res.data, 'tran_groupe_name')
                 }
                 else{
                     let groupein = "";

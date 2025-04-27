@@ -11,7 +11,7 @@ use App\Models\Department;
 class DepartmentController extends Controller
 {
     // Show All Departments
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Department::on('mysql_second')->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
@@ -38,17 +38,6 @@ class DepartmentController extends Controller
             'message' => 'Department Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Departments
-    public function Edit(Request $req){
-        $data = Department::on('mysql_second')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -85,21 +74,6 @@ class DepartmentController extends Controller
             'status'=> true,
             'message' => 'Department Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Departments
-    public function Search(Request $req){
-        $data = Department::on('mysql_second')
-        ->where('name', 'like', $req->search.'%')
-        ->orderBy('name','asc')
-        ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

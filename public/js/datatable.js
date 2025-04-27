@@ -208,6 +208,16 @@ class GenerateTable {
                         if (!value) return `<td></td>`;
                         const date = new Date(value);
                         return `<td>${date.toLocaleDateString('en-US', { day:'numeric', month: 'short', year: 'numeric' })}</td>`;
+                    
+                    case 'month':
+                        if (!value) return `<td></td>`;
+                        const month = new Date(value);
+                        return `<td>${month.toLocaleDateString('en-US', { month: 'long' })}</td>`;
+                    
+                    case 'year':
+                        if (!value) return `<td></td>`;
+                        const year = new Date(value);
+                        return `<td>${year.toLocaleDateString('en-US', { year: 'numeric' })}</td>`;
         
                     case 'status':
                         const checked = value ? 'checked' : '';
@@ -372,14 +382,10 @@ function renderTableHead(thead) {
             const opts = h.options.map(option => `<option value="${option}">${option}</option>`).join('');
             return `<th style="width:50px;"><select id="rowsPerPage">${opts}</select></th>`;
         }
-        // else if (h.type === 'select') { // Create Select
-        //     const opts = h.options.map(option => `<option value="${option}">${option}</option>`).join('');
-        //     return `<th style="width:50px;"><select id="rowsPerPage">${opts}</select></th>`;
-        // }
         else if (h.type === 'select') {
             if (h.method === 'custom') {
                 const opts = [`<option value="">-- Select --</option>`]
-                .concat(h.options.map(option => `<option value="${option}">${option}</option>`))
+                .concat(h.options.map(option => (typeof option === 'object' && option !== null) ? `<option value="${option.val}">${option.text}</option>` : `<option value="${option}">${option}</option>`))
                 .join('');
                 return `<th><select class="col-filter" data-key="${h.key}" id="${h.key}">${opts}</select></th>`;
             } 
@@ -392,7 +398,7 @@ function renderTableHead(thead) {
                         document.getElementById(h.key).innerHTML = opts;
                     }, h.data);
                 }, 0);
-                return `<th><select class="col-filter" data-key="${h.key}" id="${h.key}"><option value="">Loading...</option></select></th>`;
+                return `<th><select class="col-filter" data-key="${h.key}" id="${h.key}" style="font-size:10px;"><option value="">Loading...</option></select></th>`;
             }
         }
         else if (Array.isArray(h.status)) {

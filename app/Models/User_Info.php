@@ -34,6 +34,10 @@ class User_Info extends Model
     public function Company(){
         return $this->belongsTo(Company_Details::class,'company_id','company_id');
     }
+    
+    public function Store(){
+        return $this->belongsTo(Store::class,'store_id','id');
+    }
 
     public function Department(){
         return $this->belongsTo(Department::class,'dept_id','id');

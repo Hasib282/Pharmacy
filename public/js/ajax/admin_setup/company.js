@@ -2,7 +2,7 @@ function ShowCompanies(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['company_id','company_name','type.name','company_email', 'company_phone','address','domain',{key:'image', type: 'image'}],
+        tbody: ['company_id','company_name','type.name','company_email', 'company_phone','address','domain',{key:'logo', type: 'image'}],
         actions: (row) => `
                 <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.id}"><i class="fa-solid fa-circle-info"></i></button>
                 
@@ -26,7 +26,7 @@ $(document).ready(function () {
         { label: 'Phone', key: 'company_phone' },
         { label: 'Address', key: 'address' },
         { label: 'Domain', key: 'domain' },
-        { label: 'Image' },
+        { label: 'Logo' },
         { label: 'Action', type: 'button' }
     ]);
 
@@ -78,7 +78,7 @@ $(document).ready(function () {
 
     // Get Company Type
     GetSelectInputList('admin/companytype/get', function (res) {
-        CreateSelectOptions('#type', 'Select Company Type', res.data, null, 'name');
-        CreateSelectOptions('#updateType', 'Select Company Type', res.data, null, 'name');
+        CreateSelectOptions('#type', 'Select Company Type', res.data, 'name');
+        CreateSelectOptions('#updateType', 'Select Company Type', res.data, 'name');
     })
 });

@@ -64,7 +64,7 @@
                 {{-- domain --}}
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="domain">Domain</label>
+                        <label for="domain">Domain <span class="required" title="Required">*</span></label>
                         <input type="text" name="domain" class="form-input" id="domain">
                         <span class="error" id="domain_error"></span>
                     </div>

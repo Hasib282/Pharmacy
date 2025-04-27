@@ -61,23 +61,14 @@ $(document).ready(function () {
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Employee Id', key: 'emp_id' },
         { label: 'Employee Name', key: 'employee.user_name' },
-        { label: 'Payroll Category', key: 'head.tran_head_name' },
+        { label: 'Payroll Category', type:"select", key: 'head_id', method:"fetch", link:'hr/payroll/setup/get', name:'tran_head_name' },
         { label: 'Amount' },
         { label: 'Action', type: 'button' }
     ]);
 
 
     // Get Transaction With / User Type 
-    GetTransactionWith(3, '', '#with', 3, 'Ok');
-    
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/hr/payroll/setup`,
-        method: "GET",
-        success: function (res) {
-            CreateSelectOptions('#head', 'Select Payroll Category', res.heads, null, 'tran_head_name')
-        },
-    });
+    GetTransactionWith(3, null, 3, 'Ok');
 
 
     // Load Data on Hard Reload
@@ -85,8 +76,7 @@ $(document).ready(function () {
     
 
     // Add Modal Open Functionality
-    AddModalFunctionality("#with", function () {
-        $('#with').val('');
+    AddModalFunctionality("#type", function () {
         $('#user').removeAttr('data-id');
         $('#user').val('');
         $('.payroll-grid tbody').html('');
@@ -94,7 +84,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/payroll/setup', ShowPayrollSetup, {user: { selector: '#user', attribute: 'data-id' }, with:{ selector: '#with' }}, function() {
+    InsertAjax('hr/payroll/setup', {user: { selector: '#user', attribute: 'data-id' }, with:{ selector: '#with' }}, function() {
         $('#head').focus();
         let user = $('#user').attr('data-id');
         getPayrollByUserId(user, '.payroll-grid tbody');
@@ -102,45 +92,32 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('hr/payroll/setup', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hr/payroll/setup', ShowPayrollSetup, {user: { selector: '#updateUser', attribute: 'data-id' }});
+    UpdateAjax('hr/payroll/setup', {user: { selector: '#updateUser', attribute: 'data-id' }});
     
 
     // Delete Ajax
-    DeleteAjax('hr/payroll/setup', ShowPayrollSetup);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowPayrollSetup);
-
-
-    // Search Ajax
-    // SearchAjax('hr/payroll/setup', ShowPayrollSetup, {  });
+    DeleteAjax('hr/payroll/setup');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.payroll.id);
-
-        CreateSelectOptions('#updateWith', 'Select Employee Type', res.tranwith, res.payroll.employee.tran_user_type, 'tran_with_name');
-        // $('#updateWith').empty();
-        // $.each(res.tranwith, function (key, withs) {
-        //     $('#updateWith').append(`<option value="${withs.id}">${withs.tran_with_name}</option>`);
-        // });
-        
-        $('#updateUser').val(res.payroll.employee.user_name);
-        $('#updateUser').attr('data-id', res.payroll.emp_id);
-        $('#updateAmount').val(res.payroll.amount);
-        
-        CreateSelectOptions('#updateHead', 'Select Payroll Category', res.heads, res.payroll.head_id, 'tran_head_name');
-        // $('#updateHead').empty();
-        // $.each(res.heads, function (key, head) {
-        //     $('#updateHead').append(`<option value="${head.id}" ${res.payroll.head_id === head.id ? 'selected' : ''}>${head.tran_head_name}</option>`);
-        // });
-        $('#updateWith').focus();
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#updateType').val(item.employee.tran_user_type);
+        $('#updateUser').val(item.employee.user_name);
+        $('#updateUser').attr('data-id', item.emp_id);
+        $('#updateAmount').val(item.amount);
+        $('#updateHead').val(item.head_id);
+        $('#updateType').focus();
     }
 
+
+    // Get Payroll Category
+    GetSelectInputList('hr/payroll/setup/get', function (res) {
+        CreateSelectOptions('#head', "Select Payroll Category", res.data, 'tran_head_name');
+        CreateSelectOptions('#updateHead', "Select Payroll Category", res.data, 'tran_head_name');
+    })
 });

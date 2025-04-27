@@ -46,9 +46,9 @@ function ShowSpecialization(res) {
 
 
 // Additional Edit Functionality
-function EditFormInputValue(res){
-    $('#id').val(res.data.id);
-    $('#updateName').val(res.data.name);
+function EditFormInputValue(item){
+    $('#id').val(item.id);
+    $('#updateName').val(item.name);
     $('#updateName').focus();
 }
 

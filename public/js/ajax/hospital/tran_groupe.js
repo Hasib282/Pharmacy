@@ -1,39 +1,3 @@
-// function ShowTranGroupe(data, startIndex) {
-//     let tableRows = '';
-    
-//     if(data.length > 0){
-//         $.each(data, function(key, item) {
-//             tableRows += `
-//                 <tr>
-//                     <td>${startIndex + key + 1}</td>
-//                     <td>${item.tran_groupe_name}</td>
-//                     <td>${item.type.type_name}</td>
-//                     <td>${item.tran_method}</td>
-//                     <td>${item.company_id}</td>
-//                     <td>
-//                         <div style="display: flex;gap:5px;">
-
-//                             <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                            
-//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                            
-//                         </div>
-//                     </td>
-//                 </tr>
-//             `;
-//         });
-
-//         // Inject the generated rows into the table body
-//         $('.load-data .show-table tbody').html(tableRows);
-//         $('.load-data .show-table tfoot').html('')
-//     }
-//     else{
-//         $('.load-data .show-table tbody').html('');
-//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-//     }
-// }; // End Function
-
-
 function ShowTranGroupe(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
@@ -47,31 +11,18 @@ function ShowTranGroupe(res) {
     });
 }
 
+
+
+$(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Transaction Groupe Name', key: 'tran_groupe_name' },
-        { label: 'Transaction Groupe Type', key: 'type.type_name' },
-        { label: 'Transaction Method', key: 'tran_method' },
+        { label: 'Transaction Groupe Type', type:"select", key: 'tran_groupe_type', method:"fetch", link:'admin/mainheads/get', name:"type_name" },
+        { label: 'Transaction Method', type:"select", key: 'tran_method', method:"custom", options:['Receive','Payment','Both'] },
         { label: 'Company Id', key: 'company_id' },
         { label: 'Action', type: 'button' }
     ]);
-
-
-
-$(document).ready(function () {
-    $(document).off(`.${'SearchBySelect'}`);
-    
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/hospital/setup/groupe`,
-        method: "GET",
-        success: function (res) {
-            let queryParams = GetQueryParams();
-            CreateSelectOptions('#types', 'All', res.types, queryParams['type'], 'type_name')
-            CreateSelectOptions('#type', 'Select Transaction Type', res.types, null, 'type_name')
-        },
-    });
 
 
     // Load Data on Hard Reload
@@ -83,49 +34,42 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hospital/setup/groupe', ShowTranGroupe, {company: { selector: "#company", attribute: 'data-id' }}, function() {
+    InsertAjax('hospital/setup/groupe', {company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#groupeName').focus();
         $('#company').removeAttr('data-id');
     });
 
 
     //Edit Ajax
-    EditAjax('hospital/setup/groupe', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hospital/setup/groupe', ShowTranGroupe);
+    UpdateAjax('hospital/setup/groupe');
     
 
     // Delete Ajax
-    DeleteAjax('hospital/setup/groupe', ShowTranGroupe);
-
-
-    // Pagination Ajax
-    PaginationAjax(ShowTranGroupe);
-
-
-    // Search Ajax
-    SearchAjax('hospital/setup/groupe', ShowTranGroupe, {type: { selector: "#types"}, method: { selector: "#methods"}});
-
-
-    // Search By Methods, Types
-    SearchBySelect('hospital/setup/groupe', ShowTranGroupe, '#methods, #types', {type: { selector: "#types"},    method: { selector: "#methods"}} );
+    DeleteAjax('hospital/setup/groupe');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#updateGroupeName').val(res.data.tran_groupe_name);
-
-        CreateSelectOptions('#updateType', 'Select Transaction Type', res.types, res.data.tran_groupe_type, 'type_name');
-
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#updateGroupeName').val(item.tran_groupe_name);
+        $('#updateType').val(item.tran_groupe_type);
         $('#updateMethod').empty();
         $('#updateMethod').append(`<option value="" >Select Transaction Method</option>
-                                    <option value="Receive" ${res.data.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
-                                    <option value="Payment" ${res.data.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
-                                    <option value="Both" ${res.data.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
+                                    <option value="Receive" ${item.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
+                                    <option value="Payment" ${item.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
+                                    <option value="Both" ${item.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
 
         $('#updateGroupeName').focus();
     }; // End Method
+
+
+    // Get Trantype
+    GetSelectInputList('admin/mainheads/get', function (res) {
+        CreateSelectOptions('#type', 'Select Tran Type', res.data, null, 'type_name');
+        CreateSelectOptions('#updateType', 'Select Tran Type', res.data, null, 'type_name');
+    })
 });

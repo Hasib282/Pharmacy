@@ -67,14 +67,14 @@ $(document).ready(function () {
         { label: 'Id', key: 'user_id' },
         { label: 'Name', key: 'user_name' },
         { label: 'Employee Type', key: 'withs.tran_with_name' },
-        { label: 'DOB', key: 'dob' },
-        { label: 'Gender	', key: 'gender' },
+        { label: 'DOB', key: 'dob', type:"date" },
+        { label: 'Gender', type:"select", key: 'gender', method:"custom", options:['Male','Female','Others'] },
         { label: 'Email', key: 'user_email' },
         { label: 'Phone', key: 'user_phone' },
         { label: 'Address', key: 'address' },
         { label: 'Image' },
-        { label: 'Status', key: 'status' },
-        { label: 'Action', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}] }
+        { label: 'Status', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}] },
+        { label: 'Action', type: 'button' }
     ]);
 
 
@@ -95,7 +95,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/employee/education', ShowEmployeeEducationDetails, {user: { selector: '#user', attribute: 'data-id' }}, function() {
+    InsertAjax('hr/employee/education', {user: { selector: '#user', attribute: 'data-id' }}, function() {
         $('#with').focus();
         $('#user').removeAttr('data-id');
         formIndex = 1;
@@ -104,23 +104,15 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('hr/employee/education', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hr/employee/education', ShowEmployeeEducationDetails);
+    UpdateAjax('hr/employee/education');
     
 
     // Delete Ajax
-    DeleteAjax('hr/employee/education', ShowEmployeeEducationDetails);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowEmployeeEducationDetails);
-
-
-    // Search Ajax
-    // SearchAjax('hr/employee/education', ShowEmployeeEducationDetails, {  });
+    DeleteAjax('hr/employee/education');
 
 
     // Show Detals Ajax
@@ -132,36 +124,36 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#empId').val(res.data.emp_id);
-        $('#update_degree').val(res.data.degree);
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#empId').val(item.emp_id);
+        $('#update_degree').val(item.degree);
         // Create options dynamically
         $('#update_group').empty();
         $('#update_group').append(`
-            <option value="Science" ${res.data.group === 'Science' ? 'selected' : ''}>Science</option>
-            <option value="Commerce" ${res.data.group === 'Commerce' ? 'selected' : ''}>Commerce</option>
-            <option value="Arts" ${res.data.group === 'Arts' ? 'selected' : ''}>Arts</option>
+            <option value="Science" ${item.group === 'Science' ? 'selected' : ''}>Science</option>
+            <option value="Commerce" ${item.group === 'Commerce' ? 'selected' : ''}>Commerce</option>
+            <option value="Arts" ${item.group === 'Arts' ? 'selected' : ''}>Arts</option>
         `);
 
-        $('#update_institution').val(res.data.institution);
+        $('#update_institution').val(item.institution);
 
         // Create options dynamically
         $('#update_result').empty();
         $('#update_result').append(`
-            <option value="First Division/Class" ${res.data.result === 'First Division/Class' ? 'selected' : ''}>First Division/Class</option>
-            <option value="Second Division/Class" ${res.data.result === 'Second Division/Class' ? 'selected' : ''}>Second Division/Class</option>
-            <option value="Third Division/Class" ${res.data.result === 'Third Division/Class' ? 'selected' : ''}>Third Division/Class</option>
-            <option value="Grade" ${res.data.result === 'Grade' ? 'selected' : ''}>Grade</option>
+            <option value="First Division/Class" ${item.result === 'First Division/Class' ? 'selected' : ''}>First Division/Class</option>
+            <option value="Second Division/Class" ${item.result === 'Second Division/Class' ? 'selected' : ''}>Second Division/Class</option>
+            <option value="Third Division/Class" ${item.result === 'Third Division/Class' ? 'selected' : ''}>Third Division/Class</option>
+            <option value="Grade" ${item.result === 'Grade' ? 'selected' : ''}>Grade</option>
         `);
 
-        $('#update_marks').val(res.data.marks);
-        $('#update_scale').val(res.data.scale);
-        $('#update_cgpa').val(res.data.cgpa);
-        $('#update_batch').val(res.data.batch);
+        $('#update_marks').val(item.marks);
+        $('#update_scale').val(item.scale);
+        $('#update_cgpa').val(item.cgpa);
+        $('#update_batch').val(item.batch);
         
         // Show or hide fields based on result
-        handleResultUpdate(res.data.result);
+        handleResultUpdate(item.result);
 
         // Attach change event handler to update fields dynamically
         $('#update_result').on('change', function () {

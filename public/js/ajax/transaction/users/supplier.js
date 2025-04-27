@@ -60,7 +60,7 @@ $(document).ready(function () {
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Id', key: 'user_id' },
         { label: 'Name', key: 'user_name' },
-        { label: 'Client Type', key: 'withs.tran_with_name' },
+        { label: 'Supplier Type', type:"select", key: 'tran_user_type', method:"fetch", link:"admin/tranwith/get", data:{type:1, user:5}, name:"tran_with_name" },
         { label: 'Email', key: 'user_email' },
         { label: 'Phone', key: 'user_phone' },
         { label: 'Location', key: 'location.upazila' },
@@ -69,8 +69,13 @@ $(document).ready(function () {
         { label: 'Action', type: 'button' }
     ]);
 
+
     // Load Data on Hard Reload
     ReloadData('transaction/users/suppliers', ShowSuppliers);
+
+
+    // Get User Type
+    GetTransactionWith(1, null, 5, 'Ok');
     
 
     // Add Modal Open Functionality
@@ -78,71 +83,44 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('transaction/users/suppliers', ShowSuppliers, {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }}, function() {
+    InsertAjax('transaction/users/suppliers', {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }}, function() {
         $('#type').focus();
         $('#location').removeAttr('data-id');
     });
 
 
     // Edit Ajax
-    EditAjax('transaction/users/suppliers', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('transaction/users/suppliers', ShowSuppliers, {location: { selector: '#updateLocation', attribute: 'data-id' }});
+    UpdateAjax('transaction/users/suppliers', {location: { selector: '#updateLocation', attribute: 'data-id' }});
     
 
     // Delete Ajax
-    DeleteAjax('transaction/users/suppliers', ShowSuppliers);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowSuppliers);
-
-
-    // Search Ajax
-    // SearchAjax('transaction/users/suppliers', ShowSuppliers);
+    DeleteAjax('transaction/users/suppliers');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
+    function EditFormInputValue(item){
+        $('#EditForm')[0].reset();
+        $('#updateLocation').removeAttr('data-id');
 
-        CreateSelectOptions('#updateType', 'Select Company Type', res.tranwith, res.data.tran_user_type, 'tran_with_name');
-
-        $('#updateName').val(res.data.user_name);
-        $('#updatePhone').val(res.data.user_phone);
-        $('#updateEmail').val(res.data.user_email);
-
-        // Create options dynamically
-        $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${res.data.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-            <option value="Chittagong" ${res.data.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-            <option value="Rajshahi" ${res.data.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-            <option value="Khulna" ${res.data.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-            <option value="Sylhet" ${res.data.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barisal" ${res.data.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
-            <option value="Rangpur" ${res.data.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-            <option value="Mymensingh" ${res.data.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-
-        // Create options dynamically based on the status value
-        $('#updateGender').empty();
-        $('#updateGender').append(`<option value="Male" ${res.data.gender === 'Male' ? 'selected' : ''}>Male</option>
-                                    <option value="Female" ${res.data.gender === 'Female' ? 'selected' : ''}>Female</option>
-                                    <option value="Others" ${res.data.gender === 'Others' ? 'selected' : ''}>Others</option>`);
-
-        $('#updateLocation').val(res.data.location.upazila);
-        $('#updateLocation').attr('data-id',res.data.loc_id);
-        $('#updateAddress').val(res.data.address);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.data.image ? res.data.image : (res.data.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
+        $('#id').val(item.id);
+        $('#updateType').val(item.tran_user_type);
+        $('#updateName').val(item.user_name);
+        $('#updatePhone').val(item.user_phone);
+        $('#updateEmail').val(item.user_email);
+        $('#updateDivision').val(item.location.division);
+        $('#updateGender').val(item.gender);
+        $('#updateLocation').val(item.location.upazila);
+        $('#updateLocation').attr('data-id',item.loc_id);
+        $('#updateAddress').val(item.address);
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
         $('#updateType').focus();
     }; // End Method
 
 
     // Show Detals Ajax
     DetailsAjax('transaction/users/suppliers');
-
-
-    // Creating Select Options Dynamically
-    GetTransactionWith(1, null, null, 5, 'Ok');
 });

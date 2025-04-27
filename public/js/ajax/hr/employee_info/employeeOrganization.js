@@ -66,14 +66,14 @@ $(document).ready(function () {
         { label: 'Id', key: 'user_id' },
         { label: 'Name', key: 'user_name' },
         { label: 'Employee Type', key: 'withs.tran_with_name' },
-        { label: 'DOB', key: 'dob' },
-        { label: 'Gender	', key: 'gender' },
+        { label: 'DOB', key: 'dob', type:"date" },
+        { label: 'Gender', type:"select", key: 'gender', method:"custom", options:['Male','Female','Others'] },
         { label: 'Email', key: 'user_email' },
         { label: 'Phone', key: 'user_phone' },
         { label: 'Address', key: 'address' },
         { label: 'Image' },
-        { label: 'Status', key: 'status' },
-        { label: 'Action', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}] }
+        { label: 'Status', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}] },
+        { label: 'Action', type: 'button' }
     ]);
 
 
@@ -90,7 +90,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/employee/organization', ShowEmployeeOrganizationDetails, 
+    InsertAjax('hr/employee/organization', 
         {
             user: { selector: '#user', attribute: 'data-id' },
             location: { selector: '#location', attribute: 'data-id' },
@@ -109,11 +109,11 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('hr/employee/organization', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hr/employee/organization', ShowEmployeeOrganizationDetails, 
+    UpdateAjax('hr/employee/organization', 
         {
             location: { selector: '#updateLocation', attribute: 'data-id' },
             department: { selector: '#updateDepartment', attribute: 'data-id' },
@@ -123,15 +123,7 @@ $(document).ready(function () {
     
 
     // Delete Ajax
-    DeleteAjax('hr/employee/organization', ShowEmployeeOrganizationDetails);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowEmployeeOrganizationDetails);
-
-
-    // Search Ajax
-    // SearchAjax('hr/employee/organization', ShowEmployeeOrganizationDetails);
+    DeleteAjax('hr/employee/organization');
 
 
     // Show Detals Ajax
@@ -143,15 +135,15 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#emp_id').val(res.data.emp_id);
-        $('#update_joining_date').val(res.data.joining_date);
-        $('#updateLocation').val(res.data.location.upazila);
-        $('#updateLocation').attr('data-id',res.data.joining_location);
-        $('#updateDepartment').val(res.data.department.name);
-        $('#updateDepartment').attr('data-id',res.data.department.id);
-        $('#updateDesignation').val(res.data.designation.designation);
-        $('#updateDesignation').attr('data-id',res.data.designation.id);
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#emp_id').val(item.emp_id);
+        $('#update_joining_date').val(item.joining_date);
+        $('#updateLocation').val(item.location.upazila);
+        $('#updateLocation').attr('data-id',item.joining_location);
+        $('#updateDepartment').val(item.department.name);
+        $('#updateDepartment').attr('data-id',item.department.id);
+        $('#updateDesignation').val(item.designation.designation);
+        $('#updateDesignation').attr('data-id',item.designation.id);
     }
 });

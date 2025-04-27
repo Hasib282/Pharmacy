@@ -12,7 +12,7 @@ use App\Models\Transaction_Groupe;
 class TranHeadController extends Controller
 {
     // Show All Transaction Heads
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
         $data = filterByCompany(
@@ -59,27 +59,6 @@ class TranHeadController extends Controller
 
 
 
-    // Edit Transaction Heads
-    public function Edit(Request $req){
-        $type = GetTranType($req->segment(2));
-
-        if($type != null){
-            $groupes = Transaction_Groupe::on('mysql')->whereIn('tran_groupe_type', [$type])->orderBy('added_at')->get();
-        }
-        else{
-            $groupes = Transaction_Groupe::on('mysql')->orderBy('added_at')->get();
-        }
-
-        $data = Transaction_Head::on('mysql')->with('Groupe')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,            
-            'data'=>$data,
-            'groupes'=>$groupes,
-        ], 200);
-    } // End Method
-
-
-
     // Update Transaction Heads
     public function Update(Request $req){
         $data = Transaction_Head::on('mysql')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id);
@@ -115,47 +94,6 @@ class TranHeadController extends Controller
             'status'=> true,
             'message' => 'Transaction Heads Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Transaction Heads
-    public function Search(Request $req){
-        $type = GetTranType($req->segment(2));
-
-        $data = Transaction_Head::on('mysql')
-        ->with('Groupe')
-        ->when($type, function ($query) use ($type) { // when $type is not null
-            $query->whereHas('Groupe', function ($q) use ($type) {
-                $q->where('tran_groupe_type', $type);
-            });
-        });
-
-        if($req->searchOption == 1){
-            $data = filterByCompany($data)
-            ->where('tran_head_name', 'like', $req->search.'%')
-            ->orderBy('tran_head_name')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){
-            $data = filterByCompany($data)
-            ->whereHas('Groupe', function ($q) use ($req, $type) {
-                $q->where('tran_groupe_name', 'like', $req->search . '%');
-                $q->orderBy('tran_groupe_name');
-            })
-            ->paginate(15);
-        }
-        else{
-            return response()->json([
-                'status' => false,
-                'message' => 'Wrong Search Option Selected',
-            ], 200);
-        }
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

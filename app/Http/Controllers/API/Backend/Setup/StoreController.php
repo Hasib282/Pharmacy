@@ -11,7 +11,7 @@ use App\Models\Location_Info;
 class StoreController extends Controller
 {
     // Show All Stores
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Store::on('mysql_second')->with('Location')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
@@ -43,17 +43,6 @@ class StoreController extends Controller
             'message' => 'Store Details Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Stores
-    public function Edit(Request $req){
-        $data = Store::on('mysql_second')->with('Location')->where('id', $req->id)->first();
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -100,64 +89,16 @@ class StoreController extends Controller
 
 
 
-    // Search Stores
-    public function Search(Request $req){
-        if($req->searchOption == 1){ // Search By Store Name
-            $data = Store::on('mysql_second')->with('Location')
-            ->where('store_name', 'like', '%'.$req->search.'%')
-            ->where('division', 'like','%'.$req->division.'%')
-            ->orderBy('store_name')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){ // Search By Upazila/Location
-            // Fetch matching locations from the 'mysql' database
-            $locations = Location_Info::on('mysql')
-            ->where('upazila', 'like', $req->search.'%')
-            ->orderBy('upazila')
-            ->pluck('id');
-
-            // Fetch stores from the 'mysql_second' database using the location IDs
-            $data = Store::on('mysql_second')
-            ->with('Location')
-            ->whereIn('location_id', $locations)
-            ->where('division', 'like', $req->division.'%')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 3){ // Search By Address
-            $data = Store::on('mysql_second')->with('Location')
-            ->where('address', 'like', '%'.$req->search.'%')
-            ->where('division', 'like', $req->division.'%')
-            ->orderBy('store_name')
-            ->paginate(15);
-        }
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
     // Get Store By Name
     public function Get(Request $req){
         $data = Store::on('mysql_second')
-        ->where('store_name', 'like', $req->store.'%')
+        ->select('id','store_name')
         ->orderBy('store_name')
-        ->take(10)
         ->get();
 
-        $list = "<ul>";
-            if($data->count() > 0){
-                foreach($data as $index => $item) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->store_name.'</li>';
-                }
-            }
-            else{
-                $list .= '<li>No Data Found</li>';
-            }
-        $list .= "</ul>";
-
-        return $list;
+        return response()->json([
+            'status'=> true,
+            'data' => $data,
+        ], 200);
     } // End Method
 }

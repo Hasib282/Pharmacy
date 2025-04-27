@@ -11,8 +11,8 @@ use App\Models\Role;
 class RoleController extends Controller
 {
     // Show All User Roles
-    public function ShowAll(Request $req){
-        $data = Role::on('mysql')->orderBy('added_at','asc')->get();
+    public function Show(Request $req){
+        $data = Role::on('mysql')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -37,17 +37,6 @@ class RoleController extends Controller
             'status'=> true,
             'message' => 'User Role Added Successfully',
             "data" => $data,
-        ], 200);  
-    } // End Method
-
-
-
-    // Edit User Roles
-    public function Edit(Request $req){
-        $data = Role::on('mysql')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -89,27 +78,12 @@ class RoleController extends Controller
 
 
 
-    // Search User Roles
-    public function Search(Request $req){
-        $data = Role::on('mysql')->where('name', 'like', $req->search.'%')
-        ->orderBy('name','asc')
-        ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
     // Get Roles
     public function Get(){
         $data = Role::on('mysql')
         ->whereNotIn('id', ['1'])
-        ->where('name', 'like', $req->role.'%')
+        ->select('id','name')
         ->orderBy('name')
-        ->take(10)
         ->get();
 
         return response()->json([

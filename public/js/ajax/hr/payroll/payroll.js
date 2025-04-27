@@ -42,8 +42,6 @@ function ShowPayrolls(res) {
 
 
 $(document).ready(function () {
-    $(document).off(`.${'SearchBySelect'}`);
-
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
@@ -74,13 +72,13 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('.payroll-grid tbody').html(res.data);
+    function EditFormInputValue(item){
+        $('.payroll-grid tbody').html(item);
     }
 
 
     /////////////// ----------------------- Payroll Process Part Ajax start here ------------------- //////////////////////////
-    //Process Button Functionality
+    // Process Button Functionality
     $(document).off('click', '#PayrollProcess').on('click', '#PayrollProcess', function (e) {
         e.preventDefault();
         $('#confirmModal').show();

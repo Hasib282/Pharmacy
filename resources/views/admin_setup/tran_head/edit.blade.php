@@ -16,7 +16,7 @@
             {{-- groupe --}}
             @if (Request::segment(1) != 'hr')
                 <div class="form-input-group">
-                    <label for="updateGroupe">Transaction Groupe <span class="required" title="Required">*</span></label>
+                    <label for="updateGroupe">Groupe Name<span class="required" title="Required">*</span></label>
                     <select name="groupe" id="updateGroupe">
                         {{-- options will be display dynamically --}}
                     </select>
@@ -25,7 +25,7 @@
             @endif
             {{-- name --}}
             <div class="form-input-group">
-                <label for="updateHeadName">Head Name <span class="required" title="Required">*</span></label>
+                <label for="updateHeadName">Service/Product Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="headName" class="form-input" id="updateHeadName">
                 <span class="error" id="update_headName_error"></span>
             </div>

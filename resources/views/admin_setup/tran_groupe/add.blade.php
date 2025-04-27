@@ -20,7 +20,7 @@
             @if (Request::segment(1) == 'admin')
                 {{-- type --}}
                 <div class="form-input-group">
-                    <label for="type">Transaction Type <span class="required" title="Required">*</span></label>
+                    <label for="type">Type <span class="required" title="Required">*</span></label>
                     <select name="type" id="type">
                         {{-- options will be display dynamically --}}
                     </select>
@@ -28,9 +28,9 @@
                 </div>
                 {{-- method  --}}
                 <div class="form-input-group">
-                    <label for="method">Transaction Method <span class="required" title="Required">*</span></label>
+                    <label for="method">Method <span class="required" title="Required">*</span></label>
                     <select name="method" id="method">
-                        <option value="">Select Transaction Method</option>
+                        <option value="">Select Method</option>
                         <option value="Receive">Receive</option>
                         <option value="Payment">Payment</option>
                         <option value="Both">Both</option>
@@ -40,9 +40,9 @@
             @elseif (Request::segment(1) == 'transaction')
                 {{-- type --}}
                 <div class="form-input-group">
-                    <label for="method">Transaction Method <span class="required" title="Required">*</span></label>
+                    <label for="method">Method <span class="required" title="Required">*</span></label>
                     <select name="method" id="method">
-                        <option value="">Select Transaction Method</option>
+                        <option value="">Select Method</option>
                         <option value="Receive">Receive</option>
                         <option value="Payment">Payment</option>
                         <option value="Both">Both</option>

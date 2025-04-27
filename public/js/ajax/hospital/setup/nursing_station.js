@@ -1,36 +1,3 @@
-// function ShowNursingStation(data, startIndex) {
-//     let tableRows = '';
-    
-//     if(data.length > 0){
-//         $.each(data, function(key, item) {
-//             tableRows += `
-//                 <tr>
-//                     <td>${startIndex + key + 1}</td>
-//                     <td>${item.name}</td>
-//                     <td>${item.floor}</td>
-//                     <td>
-//                         <div style="display: flex;gap:5px;">
-                            
-//                             <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                        
-//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                            
-//                         </div>
-//                     </td>
-//                 </tr>
-//             `;
-//         });
-
-//         // Inject the generated rows into the table body
-//         $('.load-data .show-table tbody').html(tableRows);
-//         $('.load-data .show-table tfoot').html('')
-//     }
-//     else{
-//         $('.load-data .show-table tbody').html('');
-//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-//     }
-// }; // End Function
-
 function ShowNursingStation(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
@@ -48,7 +15,7 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Name', key: 'name' },
+        { label: 'Nursing Station Name', key: 'name' },
         { label: 'Floor', key: 'floor' },
         { label: 'Action', type: 'button' }
     ]);
@@ -63,36 +30,28 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hospital/setup/nursingstation', ShowNursingStation, {}, function() {
+    InsertAjax('hospital/setup/nursingstation', {}, function() {
         $('#name').focus();
     });
 
 
     //Edit Ajax
-    EditAjax('hospital/setup/nursingstation', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hospital/setup/nursingstation', ShowNursingStation);
+    UpdateAjax('hospital/setup/nursingstation');
     
 
     // Delete Ajax
-    DeleteAjax('hospital/setup/nursingstation', ShowNursingStation);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowNursingStation);
-
-
-    // Search Ajax
-    // SearchAjax('hospital/setup/nursingstation', ShowNursingStation);
+    DeleteAjax('hospital/setup/nursingstation');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#updateName').val(res.data.name);
-        $('#updateFloor').val(res.data.floor);
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#updateName').val(item.name);
+        $('#updateFloor').val(item.floor);
         $('#updateName').focus();
     }; // End Method
 });

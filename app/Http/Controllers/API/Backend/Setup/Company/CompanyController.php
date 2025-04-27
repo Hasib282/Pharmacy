@@ -16,13 +16,11 @@ use App\Models\Transaction_Main;
 class CompanyController extends Controller
 {
     // Show All Companies
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Company_Details::on('mysql')->with('Type')->orderBy('added_at','asc')->get();
-        $type = Company_Type::on('mysql')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'type' => $type,
         ], 200);
     } // End Method
 
@@ -71,19 +69,6 @@ class CompanyController extends Controller
 
 
 
-    // Edit Companies
-    public function Edit(Request $req){
-        $data = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
-        $type = Company_Type::on('mysql')->get();
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-            'type'=> $type,
-        ], 200);
-    } // End Method
-
-
-
     // Update Companies
     public function Update(Request $req){
         $data = Company_Details::on('mysql')->findOrFail($req->id);
@@ -97,8 +82,7 @@ class CompanyController extends Controller
         ]);
 
         DB::transaction(function () use ($req, $data) {
-            $path = 'company/logos/'.$data->logo;
-            $imageName = UpdateUserImage($req, $path, null, $data->company_id, $data->logo);
+            $imageName = UpdateUserImage($req, $data->logo, null, $data->company_id);
 
             $data->update([
                 "company_type" => $req->type,
@@ -127,7 +111,9 @@ class CompanyController extends Controller
     // Delete Companies
     public function Delete(Request $req){
         $company = Company_Details::on('mysql')->findOrFail($req->id);
-        Storage::disk('public')->delete($company->logo);
+        if($company->logo){
+            Storage::disk('public')->delete($company->logo);
+        }
         $company->delete();
         return response()->json([
             'status'=> true,
@@ -137,48 +123,10 @@ class CompanyController extends Controller
 
 
 
-    // Search Companies
-    public function Search(Request $req){
-        if($req->searchOption == 1){
-            $data = Company_Details::on('mysql')->with('Type')
-            ->where('company_name', 'like', $req->search.'%')
-            ->where('company_type', 'like', '%'.$req->type.'%')
-            ->orderBy('company_name','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){
-            $data = Company_Details::on('mysql')->with('Type')
-            ->where('company_email', 'like', $req->search.'%')
-            ->where('company_type', 'like', '%'.$req->type.'%')
-            ->orderBy('company_email','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 3){
-            $data = Company_Details::on('mysql')->with('Type')
-            ->where('company_phone', 'like', $req->search.'%')
-            ->where('company_type', 'like', '%'.$req->type.'%')
-            ->orderBy('company_phone','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 4){
-            $data = Company_Details::on('mysql')->with('Type')
-            ->where('address', 'like', '%'.$req->search.'%')
-            ->where('company_type', 'like', '%'.$req->type.'%')
-            ->orderBy('address','asc')
-            ->paginate(15);
-        }
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
     // Get Companies
     public function Get(Request $req){
-        $data = Company_Details::on('mysql')->select('company_name','company_id')
+        $data = Company_Details::on('mysql')
+        ->select('company_name','company_id')
         ->where('company_name', 'like', $req->company.'%')
         ->orderBy('company_name')
         ->take(10)

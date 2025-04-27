@@ -22,7 +22,15 @@
             <div class="form-input-group">
                 <label for="updateDivision">Division <span class="required" title="Required">*</span></label>
                 <select name="division" id="updateDivision">
-
+                    <option value="">Select Division</option>
+                    <option value="Dhaka">Dhaka</option>
+                    <option value="Chittagong">Chittagong</option>
+                    <option value="Rajshahi">Rajshahi</option>
+                    <option value="Khulna">Khulna</option>
+                    <option value="Sylhet">Sylhet</option>
+                    <option value="Barishal">Barishal</option>
+                    <option value="Rangpur">Rangpur</option>
+                    <option value="Mymensingh">Mymensingh</option>
                 </select>
                 <span class="error" id="update_division_error"></span>
             </div>

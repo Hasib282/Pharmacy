@@ -11,8 +11,8 @@ use App\Models\Permission_Main_Head;
 class PermissionMainHeadController extends Controller
 {
     // Show All Permission Mainheads
-    public function ShowAll(Request $req){
-        $data = Permission_Main_Head::on('mysql')->orderBy('created_at','asc')->get();
+    public function Show(Request $req){
+        $data = Permission_Main_Head::on('mysql')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -38,17 +38,6 @@ class PermissionMainHeadController extends Controller
             'message' => 'Permission Mainheads Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Permission Mainheads
-    public function Edit(Request $req){
-        $data = Permission_Main_Head::on('mysql')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -89,24 +78,9 @@ class PermissionMainHeadController extends Controller
 
 
 
-    // Search Permission Mainheads
-    public function Search(Request $req){
-        $data = Permission_Main_Head::on('mysql')
-        ->where('name', 'like', $req->search.'%')
-        ->orderBy('name')
-        ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
     // Get Permission Mainheads
     public function Get(){
-        $data = Permission_Main_Head::on('mysql')->orderBy('id')->get();
+        $data = Permission_Main_Head::on('mysql')->select('id','name')->orderBy('name')->get();
         return response()->json([
             'status' => true,
             'data'=> $data,

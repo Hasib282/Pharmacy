@@ -22,7 +22,7 @@ use App\Models\Employee_Organization_Detail;
 class AttendenceController extends Controller
 {
     // Show All Attendence
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Attendence::on('mysql_second')->with('User')->orderBy('insert_at')->whereRaw("DATE(date) = ?", [date('Y-m-d')])->get();
         return response()->json([
             'status'=> true,
@@ -53,17 +53,6 @@ class AttendenceController extends Controller
             'message' => 'Attendence Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Attendence
-    public function Edit(Request $req){
-        $data = Attendence::with('User')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -104,17 +93,6 @@ class AttendenceController extends Controller
             ], 200); 
         }
     } // End Method
-
-
-
-    // // Delete Attendence
-    // public function Delete(Request $req){
-    //     Attendence::findOrFail($req->id)->delete();
-    //     return response()->json([
-    //         'status'=> true,
-    //         'message' => 'Attendence Deleted Successfully',
-    //     ], 200); 
-    // } // End Method
 
 
 

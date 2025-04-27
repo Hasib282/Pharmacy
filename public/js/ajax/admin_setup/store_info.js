@@ -55,18 +55,7 @@ $(document).ready(function () {
     function EditFormInputValue(item){
         $('#id').val(item.id);
         $('#update_store_name').val(item.store_name);
-
-        // Create options dynamically
-        $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${item.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-            <option value="Chittagong" ${item.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-            <option value="Rajshahi" ${item.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-            <option value="Khulna" ${item.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-            <option value="Sylhet" ${item.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barishal" ${item.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
-            <option value="Rangpur" ${item.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-            <option value="Mymensingh" ${item.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-
+        $('#updateDivision').val(item.division);
         $('#updateLocation').val(item.location.upazila);
         $('#updateLocation').attr('data-id',item.location_id);
         $('#updateAddress').val(item.address);

@@ -11,11 +11,12 @@ use App\Models\Designation;
 class DesignationController extends Controller
 {
     // Show All Designations
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Designation::on('mysql_second')
         ->with('Department:id,name')
         ->orderBy('added_at','asc')
         ->get();
+        
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -43,17 +44,6 @@ class DesignationController extends Controller
             'message' => 'Designation Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Designations
-    public function Edit(Request $req){
-        $data = Designation::on('mysql_second')->with('Department:id,name')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -93,33 +83,6 @@ class DesignationController extends Controller
             'status'=> true,
             'message' => 'Designation Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Designations
-    public function Search(Request $req){
-        if($req->searchOption == 1){
-            $data = Designation::on('mysql_second')
-            ->with('Department:id,name')
-            ->where('designation', 'like', $req->search.'%')
-            ->orderBy('designation','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){
-            $data = Designation::on('mysql_second')
-            ->with('Department:id,name')
-            ->whereHas('Department', function ($query) use ($req) {
-                $query->where('name', 'like', $req->search . '%');
-                $query->orderBy('name','asc');
-            })
-            ->paginate(15);
-        }
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

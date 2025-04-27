@@ -11,14 +11,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User_Info;
-use App\Models\Transaction_With;
 use App\Models\Transaction_Main;
-use App\Models\Location_Info;
 
 class ClientController extends Controller
 {
     // Show All Clients
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
         $data = User_Info::on('mysql_second')
@@ -83,21 +81,6 @@ class ClientController extends Controller
 
 
 
-    // Edit Clients
-    public function Edit(Request $req){
-        $type = GetTranType($req->segment(2));
-
-        $data = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($req->id);
-        $tranwith = Transaction_With::on('mysql_second')->where('tran_type', $type)->where('user_role', 4)->get();
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-            'tranwith'=> $tranwith,
-        ], 200);
-    } // End Method
-
-
-
     // Update Clients
     public function Update(Request $req){
         $data = User_Info::on('mysql_second')->findOrFail($req->id);
@@ -149,57 +132,6 @@ class ClientController extends Controller
             'status'=> true,
             'message' => 'Client Details Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Clients
-    public function Search(Request $req){
-        $type = GetTranType($req->segment(2));
-
-        $query = User_Info::on('mysql_second')
-        ->with('Withs', 'Location')
-        ->where('user_role', 4)
-        ->whereHas('Withs', function ($q) use ($type) {
-            $q->where('tran_type', $type);
-        });
-
-        // Handle search options
-        switch ($req->searchOption) {
-            case 1: // Search User By Name
-                $query->where('user_name', 'like', '%' . $req->search . '%')->orderBy('user_name', 'asc');
-                break;
-            case 2: // Search By Email
-                $query->where('user_email', 'like', '%' . $req->search . '%')->orderBy('user_email', 'asc');
-                break;
-            case 3: // Search By Phone
-                $query->where('user_phone', 'like', '%' . $req->search . '%')->orderBy('user_phone', 'asc');
-                break;
-            case 4: // Search By Location
-                $locations = Location_Info::on('mysql')
-                ->where('upazila', 'like', $req->search.'%')
-                ->orderBy('upazila')
-                ->pluck('id');
-                
-                $query->whereIn('loc_id', $locations);
-                break;
-            case 5: // Search By Address
-                $query->where('address', 'like', '%' . $req->search . '%')->orderBy('address', 'asc');
-                break;
-            case 6: // Search By User Type
-                $query->whereHas('Withs', function ($withQuery) use ($req) {
-                    $withQuery->where('tran_with_name', 'like', '%' . $req->search . '%')->orderBy('tran_with_name', 'asc');
-                });
-                break;
-        }
-
-        // Execute query and paginate
-        $data = $query->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

@@ -2,7 +2,7 @@ function ShowAdmins(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['user_id','user_name','user_email', 'user_phone', {key:'image', type: 'image'},{key:'status', type: 'status'}],
+        tbody: ['user_id','user_name','user_email', 'user_phone', {key:'image', type: 'image'},{key:'status', type: 'status'},'store.store_name'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -23,6 +23,7 @@ $(document).ready(function () {
         { label: 'Phone', key: 'user_phone' },
         { label: 'Image'},
         { label: 'Status', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}]},
+        { label: 'Store', type:"select", key: 'store_id', method:"fetch", link:'admin/stores/get', name:"store_name" },
         { label: 'Action', type: 'button' }
     ]);
 
@@ -68,4 +69,10 @@ $(document).ready(function () {
 
     // Show Detals Ajax
     DetailsAjax('admin/users/admins');
+
+
+    // Get Store 
+    GetSelectInputList('admin/stores/get', function (res) {
+        CreateSelectOptions('#store', 'Select Store', res.data, 'store_name');
+    })
 });

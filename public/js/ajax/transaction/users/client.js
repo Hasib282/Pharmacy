@@ -1,44 +1,3 @@
-// function ShowClients(data, startIndex) {
-//     let tableRows = '';
-    
-//     if(data.length > 0){
-//         $.each(data, function(key, item) {
-//             tableRows += `
-//                 <tr>
-//                     <td>${startIndex + key + 1}</td>
-//                     <td>${item.user_id}</td>
-//                     <td>${item.user_name}</td>
-//                     <td>${item.withs.tran_with_name}</td>
-//                     <td>${item.user_email}</td>
-//                     <td>${item.user_phone}</td>
-//                     <td>${item.loc_id ? item.location.upazila : ""}</td>
-//                     <td>${item.address ? item.address : "" }</td>
-//                     <td><img src="${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()}" alt="" height="50px" width="50px"></td>
-//                     <td>
-//                         <div style="display: flex;gap:5px;">
-                            
-//                             <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${item.user_id}"><i class="fa-solid fa-circle-info"></i></button>
-
-//                             <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                                    
-//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                            
-//                         </div>
-//                     </td>
-//                 </tr>
-//             `;
-//         });
-
-//         // Inject the generated rows into the table body
-//         $('.load-data .show-table tbody').html(tableRows);
-//         $('.load-data .show-table tfoot').html('')
-//     }
-//     else{
-//         $('.load-data .show-table tbody').html('');
-//         $('.load-data .show-table tfoot').html('<tr><td colspan="11" style="text-align:center;">No Data Found</td></tr>')
-//     }
-// }; // End Function
-
 function ShowClients(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
@@ -60,7 +19,7 @@ $(document).ready(function () {
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Id', key: 'user_id' },
         { label: 'Name', key: 'user_name' },
-        { label: 'Client Type', key: 'withs.tran_with_name' },
+        { label: 'Client Type', type:"select", key: 'tran_user_type', method:"fetch", link:"admin/tranwith/get", data:{type:1,user:4}, name:"tran_with_name" },
         { label: 'Email', key: 'user_email' },
         { label: 'Phone', key: 'user_phone' },
         { label: 'Location', key: 'location.upazila' },
@@ -68,10 +27,14 @@ $(document).ready(function () {
         { label: 'Image' },
         { label: 'Action', type: 'button' }
     ]);
-
-
+    
+    
     // Load Data on Hard Reload
     ReloadData('transaction/users/clients', ShowClients);
+
+
+    // Get User Type
+    GetTransactionWith(1, null, 4, 'Ok');
     
 
     // Add Modal Open Functionality
@@ -79,71 +42,44 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('transaction/users/clients', ShowClients, {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }}, function() {
+    InsertAjax('transaction/users/clients', {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }}, function() {
         $('#type').focus();
         $('#location').removeAttr('data-id');
     });
 
 
     // Edit Ajax
-    EditAjax('transaction/users/clients', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('transaction/users/clients', ShowClients, {location: { selector: '#updateLocation', attribute: 'data-id' }});
+    UpdateAjax('transaction/users/clients', {location: { selector: '#updateLocation', attribute: 'data-id' }});
     
 
     // Delete Ajax
-    DeleteAjax('transaction/users/clients', ShowClients);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowClients);
-
-
-    // Search Ajax
-    // SearchAjax('transaction/users/clients', ShowClients);
+    DeleteAjax('transaction/users/clients');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-
-        CreateSelectOptions('#updateType', 'Select Company Type', res.tranwith, res.data.tran_user_type, 'tran_with_name');
-
-        $('#updateName').val(res.data.user_name);
-        $('#updatePhone').val(res.data.user_phone);
-        $('#updateEmail').val(res.data.user_email);
-
-        // Create options dynamically
-        $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${res.data.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-            <option value="Chittagong" ${res.data.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-            <option value="Rajshahi" ${res.data.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-            <option value="Khulna" ${res.data.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-            <option value="Sylhet" ${res.data.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barisal" ${res.data.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
-            <option value="Rangpur" ${res.data.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-            <option value="Mymensingh" ${res.data.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-
-        // Create options dynamically based on the status value
-        $('#updateGender').empty();
-        $('#updateGender').append(`<option value="Male" ${res.data.gender === 'Male' ? 'selected' : ''}>Male</option>
-                                    <option value="Female" ${res.data.gender === 'Female' ? 'selected' : ''}>Female</option>
-                                    <option value="Others" ${res.data.gender === 'Others' ? 'selected' : ''}>Others</option>`);
-
-        $('#updateLocation').val(res.data.location.upazila);
-        $('#updateLocation').attr('data-id',res.data.loc_id);
-        $('#updateAddress').val(res.data.address);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${res.data.image ? res.data.image : (res.data.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
+    function EditFormInputValue(item){
+        $('#EditForm')[0].reset();
+        $('#updateLocation').removeAttr('data-id');
+        
+        $('#id').val(item.id);
+        $('#updateType').val(item.tran_user_type);
+        $('#updateName').val(item.user_name);
+        $('#updatePhone').val(item.user_phone);
+        $('#updateEmail').val(item.user_email);
+        $('#updateDivision').val(item.location.division);
+        $('#updateGender').val(item.gender);
+        $('#updateLocation').val(item.location.upazila);
+        $('#updateLocation').attr('data-id',item.loc_id);
+        $('#updateAddress').val(item.address);
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
         $('#updateType').focus();
     }; // End Method
 
 
     // Show Detals Ajax
     DetailsAjax('transaction/users/clients');
-
-
-    // Creating Select Options Dynamically
-    GetTransactionWith(1, null, null, 4, 'Ok');
 });

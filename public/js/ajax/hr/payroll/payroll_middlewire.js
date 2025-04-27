@@ -53,7 +53,7 @@ function ShowPayrollMiddlewire(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['emp_id','employee.user_name','head.tran_head_name','amount','date','date'],
+        tbody: ['emp_id','employee.user_name','head.tran_head_name','amount',{key:'date',type:'month'},{key:'date',type:'year'}],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -69,35 +69,24 @@ $(document).ready(function () {
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Employee Id', key: 'emp_id' },
         { label: 'Employee Name', key: 'employee.user_name' },
-        { label: 'Payroll Category', key: 'head.tran_head_name' },
+        { label: 'Payroll Category', type:"select", key: 'head_id', method:"fetch", link:'hr/payroll/setup/get', name:'tran_head_name' },
         { label: 'Amount' },
-        { label: 'Month', key: 'date' },
-        { label: 'Year', key: 'date' },
+        { label: 'Month' },
+        { label: 'Year' },
         { label: 'Action', type: 'button' }
     ]);
 
 
-    $(document).off(`.${'SearchBySelect'}`);
-
     // Get Transaction With / User Type 
-    GetTransactionWith(3, '', '#with', 3, 'Ok');
-    
-    // Creating Select Options Dynamically
-    $.ajax({
-        url: `${apiUrl}/hr/payroll/middlewire`,
-        method: "GET",
-        success: function (res) {
-            CreateSelectOptions('#head', 'Select Payroll Category', res.heads, null, 'tran_head_name')
-        },
-    });
+    GetTransactionWith(3, null, 3, 'Ok');
+
 
     // Load Data on Hard Reload
     ReloadData('hr/payroll/middlewire', ShowPayrollMiddlewire);
     
 
     // Add Modal Open Functionality
-    AddModalFunctionality("#with", function () {
-        $('#with').val('');
+    AddModalFunctionality("#type", function () {
         $('#user').removeAttr('data-id');
         $('#user').val('');
         $('.payroll-grid tbody').html('');
@@ -105,7 +94,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/payroll/middlewire', ShowPayrollMiddlewire, {user: { selector: '#user', attribute: 'data-id' }, with:{ selector: '#with' }}, function() {
+    InsertAjax('hr/payroll/middlewire', {user: { selector: '#user', attribute: 'data-id' }, with:{ selector: '#with' }}, function() {
         $('#head').focus();
         let user = $('#user').attr('data-id');
         getPayrollByUserId(user, '.payroll-grid tbody');
@@ -113,42 +102,33 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('hr/payroll/middlewire', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hr/payroll/middlewire', ShowPayrollMiddlewire, {user: { selector: '#updateUser', attribute: 'data-id' }});
+    UpdateAjax('hr/payroll/middlewire', {user: { selector: '#updateUser', attribute: 'data-id' }});
     
 
     // Delete Ajax
-    DeleteAjax('hr/payroll/middlewire', ShowPayrollMiddlewire);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowPayrollMiddlewire, { month: { selector: '#optionMonth'}, year: { selector: '#optionYear'}});
-
-
-    // Search Ajax
-    // SearchAjax('hr/payroll/middlewire', ShowPayrollMiddlewire, { month: { selector: '#optionMonth'}, year: { selector: '#optionYear'}});
-
-
-    // Search By Month or Year
-    // SearchBySelect('hr/payroll/middlewire', ShowPayrollMiddlewire, '#optionMonth, #optionYear', { month: { selector: '#optionMonth'}, year: { selector: '#optionYear'}})
+    DeleteAjax('hr/payroll/middlewire');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.payroll.id);
-        
-        CreateSelectOptions('#updateWith', 'Select Employee Type', res.tranwith, res.payroll.employee.tran_user_type, 'tran_with_name');
-
-        $('#updateUser').val(res.payroll.employee.user_name);
-        $('#updateUser').attr('data-id', res.payroll.emp_id);
-        $('#updateAmount').val(res.payroll.amount);
-        
-        CreateSelectOptions('#updateHead', 'Select Payroll Category', res.heads, res.payroll.head_id, 'tran_head_name');
-
-        $('#updateDate').val(res.payroll.date)
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#updateType').val(item.employee.tran_user_type);
+        $('#updateUser').val(item.employee.user_name);
+        $('#updateUser').attr('data-id', item.emp_id);
+        $('#updateAmount').val(item.amount);
+        $('#updateHead').val(item.head_id);
+        $('#updateDate').val(item.date)
         $('#updateWith').focus();
     }
+
+
+    // Get Payroll Category
+    GetSelectInputList('hr/payroll/setup/get', function (res) {
+        CreateSelectOptions('#head', "Select Payroll Category", res.data, 'tran_head_name');
+        CreateSelectOptions('#updateHead', "Select Payroll Category", res.data, 'tran_head_name');
+    })
 });

@@ -373,41 +373,41 @@ $(document).ready(function () {
     
     
     
-    /////////////// ------------------ Search Store by Name and add value to input ajax part start ---------------- /////////////////////////////
-    // Store Input Search
-    SearchByInput(
-        'admin/stores/get', 
+    // /////////////// ------------------ Search Store by Name and add value to input ajax part start ---------------- /////////////////////////////
+    // // Store Input Search
+    // SearchByInput(
+    //     'admin/stores/get', 
 
-        function ($input) {
-            return {
-                store: $input.val(),
-            };
-        }, 
+    //     function ($input) {
+    //         return {
+    //             store: $input.val(),
+    //         };
+    //     }, 
 
-        '#store', 
+    //     '#store', 
 
-        '#store-list',
+    //     '#store-list',
 
-        '#store-list li',
-    );
+    //     '#store-list li',
+    // );
 
 
-    // Update Store Input Search
-    SearchByInput(
-        'admin/stores/get', 
+    // // Update Store Input Search
+    // SearchByInput(
+    //     'admin/stores/get', 
 
-        function ($input) {
-            return {
-                store: $input.val(),
-            };
-        }, 
+    //     function ($input) {
+    //         return {
+    //             store: $input.val(),
+    //         };
+    //     }, 
 
-        '#updateStore', 
+    //     '#updateStore', 
 
-        '#update-store',
+    //     '#update-store',
 
-        '#update-store li',
-    );
+    //     '#update-store li',
+    // );
     
     
     
@@ -729,7 +729,7 @@ $(document).ready(function () {
                 }).get();
                 within = 1;
             } else {
-                tranUserType = $('#updateWith').val();
+                tranUserType = $('#updateType').val();
                 within = 0;
             }
 

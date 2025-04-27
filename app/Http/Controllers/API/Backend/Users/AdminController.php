@@ -12,24 +12,22 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Login_User;
 use App\Models\User_Info;
-use App\Models\Transaction_With;
-use App\Models\Transaction_Main;
 
 class AdminController extends Controller
 {
     // Show All Admins
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         if(Auth::user()->user_role == 1) {
             $data = User_Info::on('mysql_second')
+            ->with('Store')
             ->where('user_role', 2)
-            ->orderBy('added_at', 'asc')
             ->get();
         }
         else{
             $data = User_Info::on('mysql_second')
+            ->with('Store')
             ->where('company_id', Auth::user()->company_id)
             ->where('user_role', 2)
-            ->orderBy('added_at', 'asc')
             ->get();
         }
 
@@ -87,7 +85,7 @@ class AdminController extends Controller
                 "company_id" =>  $req->company,
             ]);
 
-            $data = User_Info::on('mysql_second')->findOrFail($insert->id);
+            $data = User_Info::on('mysql_second')->with('Store')->findOrFail($insert->id);
         });
 
         return response()->json([
@@ -95,17 +93,6 @@ class AdminController extends Controller
             'message' => 'Admin Details Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Admins
-    public function Edit(Request $req){
-        $data = User_Info::on('mysql_second')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -144,7 +131,7 @@ class AdminController extends Controller
             ]);
         });
 
-        $updatedData = User_Info::on('mysql_second')->findOrFail($req->id);
+        $updatedData = User_Info::on('mysql_second')->with('Store')->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,
@@ -167,55 +154,5 @@ class AdminController extends Controller
             'status'=> true,
             'message' => 'Admin Details Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Admins
-    public function Search(Request $req){
-        $query = User_Info::on('mysql_second')->where('user_role', 2);
-
-        // Filter Data for Non-super-admin users
-        if (Auth::user()->user_role != 1) {
-            $query->where('company_id', Auth::user()->company_id);
-        }
-
-        // Handle search options
-        switch ($req->searchOption) {
-            case 1: // Search User By Name
-                $query->where('user_name', 'like', '%' . $req->search . '%')->orderBy('user_name', 'asc');
-                break;
-            case 2: // Search By Email
-                $query->where('user_email', 'like', '%' . $req->search . '%')->orderBy('user_email', 'asc');
-                break;
-            case 3: // Search By Phone
-                $query->where('user_phone', 'like', '%' . $req->search . '%')->orderBy('user_phone', 'asc');
-                break;
-        }
-
-        // Execute query and paginate
-        if(Auth::user()->user_role = 1){
-            $data = $query->paginate(15);
-        }
-        else{
-            $data = $query->where('company_id', Auth::user()->company_id)->paginate(15);
-        }
-        
-
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
-    // Show Admin Details
-    public function Details(Request $req){
-        $admin = User_Info::on('mysql_second')->with('Location','Withs')->where('user_id', $req->id)->first();
-        return response()->json([
-            'status'=> true,
-            'data'=>view('users.admin.details', compact('admin'))->render(),
-        ]);
     } // End Method
 }

@@ -86,11 +86,11 @@ function UpdateUrl(url, queryParams) {
 
 //////////////////// -------------------- Create Select Options Dynamically -------------------- ////////////////////
 // For Creating Select Options Dynamically
-function CreateSelectOptions(id, defaultText, data, selectedValue = null, fieldName) {
+function CreateSelectOptions(id, defaultText, data, fieldName) {
     let selectElement = $(id);
     selectElement.empty();
     selectElement.append(`<option value="">${defaultText}</option>`);
     data.forEach(function(item) {
-        selectElement.append(`<option value="${item.id}" ${ selectedValue == item.id ? 'selected' : '' } >${item[fieldName]}</option>`);
+        selectElement.append(`<option value="${item.id}" >${item[fieldName]}</option>`);
     });
 }; // End Method

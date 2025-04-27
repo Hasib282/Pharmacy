@@ -65,14 +65,14 @@ $(document).ready(function () {
         { label: 'Id', key: 'user_id' },
         { label: 'Name', key: 'user_name' },
         { label: 'Employee Type', key: 'withs.tran_with_name' },
-        { label: 'DOB', key: 'dob' },
-        { label: 'Gender	', key: 'gender' },
+        { label: 'DOB', key: 'dob', type:"date" },
+        { label: 'Gender', type:"select", key: 'gender', method:"custom", options:['Male','Female','Others'] },
         { label: 'Email', key: 'user_email' },
         { label: 'Phone', key: 'user_phone' },
         { label: 'Address', key: 'address' },
         { label: 'Image' },
-        { label: 'Status', key: 'status' },
-        { label: 'Action', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}] }
+        { label: 'Status', status: [{key:1, label:'Active' }, { key:0, label:'Inactive'}] },
+        { label: 'Action', type: 'button' }
     ]);
 
 
@@ -93,7 +93,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/employee/training', ShowEmployeeTrainingDetails, {user: { selector: '#user', attribute: 'data-id' }}, function() {
+    InsertAjax('hr/employee/training', {user: { selector: '#user', attribute: 'data-id' }}, function() {
         $('#with').focus();
         $('#user').removeAttr('data-id');
         formIndex = 1;
@@ -102,23 +102,15 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('hr/employee/training', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hr/employee/training', ShowEmployeeTrainingDetails);
+    UpdateAjax('hr/employee/training');
     
 
     // Delete Ajax
-    DeleteAjax('hr/employee/training', ShowEmployeeTrainingDetails);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowEmployeeTrainingDetails);
-
-
-    // Search Ajax
-    // SearchAjax('hr/employee/training', ShowEmployeeTrainingDetails, {  });
+    DeleteAjax('hr/employee/training');
 
 
     // Show Detals Ajax
@@ -130,15 +122,15 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#empId').val(res.data.emp_id);
-        $('#update_training_title').val(res.data.training_title);
-        $('#update_country').val(res.data.country);
-        $('#update_topic').val(res.data.topic);
-        $('#update_institution_name').val(res.data.institution_name);
-        $('#update_start_date').val(res.data.start_date);
-        $('#update_end_date').val(res.data.end_date);
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#empId').val(item.emp_id);
+        $('#update_training_title').val(item.training_title);
+        $('#update_country').val(item.country);
+        $('#update_topic').val(item.topic);
+        $('#update_institution_name').val(item.institution_name);
+        $('#update_start_date').val(item.start_date);
+        $('#update_end_date').val(item.end_date);
     }
     
 

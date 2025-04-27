@@ -20,37 +20,14 @@
                 <span class="error" id="update_name_error"></span>
             </div>
 
-            @if(Request::segment(1) == 'admin')
+            @if(Request::segment(1) == 'transaction' || Request::segment(1) == 'inventory' || Request::segment(1) == 'pharmacy') 
                 {{-- role --}}
-                <div class="form-input-groupe">
+                <div class="form-input-group">
                     <label for="updateRole">User Role <span class="required" title="Required">*</span></label>
                     <select name="role" id="updateRole">
-                        {{-- options will be import dynamically --}}
-                    </select>
-                    <span class="error" id="update_role_error"></span>
-                </div>
-                {{-- type --}}
-                <div class="form-input-group">
-                    <label for="updateTranType">Transaction Type <span class="required" title="Required">*</span></label>
-                    <select name="tranType" id="updateTranType">
-                        {{-- options will be import dynamically --}}
-                    </select>
-                    <span class="error" id="update_tranType_error"></span>
-                </div>
-                {{-- mrthod --}}
-                <div class="form-input-group">
-                    <label for="updateTranMethod">Transaction Method <span class="required" title="Required">*</span></label>
-                    <select name="tranMethod" id="updateTranMethod">
-                        {{-- options will be import dynamically --}}
-                    </select>
-                    <span class="error" id="update_tranMethod_error"></span>
-                </div>
-            @elseif(Request::segment(1) == 'transaction' || Request::segment(1) == 'inventory' || Request::segment(1) == 'pharmacy') 
-                {{-- role --}}
-                <div class="form-input-groupe">
-                    <label for="updateRole">User Role <span class="required" title="Required">*</span></label>
-                    <select name="role" id="updateRole">
-                        {{-- options will be import dynamically --}}
+                        <option value="">Select Role</option>
+                        <option value="4">Client</option>
+                        <option value="5">Supplier</option>
                     </select>
                     <span class="error" id="update_role_error"></span>
                 </div>
@@ -58,11 +35,16 @@
                 <div class="form-input-group">
                     <label for="updateTranMethod">Transaction Method <span class="required" title="Required">*</span></label>
                     <select name="tranMethod" id="updateTranMethod">
-                        {{-- options will be import dynamically --}}
+                        <option value="">Select Transaction Method</option>
+                        <option value="Receive">Receive</option>
+                        <option value="Payment">Payment</option>
+                        <option value="Both">Both</option>
                     </select>
                     <span class="error" id="update_tranMethod_error"></span>
                 </div>
             @endif
+
+            
 
             <div class="center">
                 <button type="submit" id="Update" class="btn-blue">Update</button>

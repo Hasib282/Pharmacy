@@ -1,37 +1,3 @@
-// function ShowTranWith(data, startIndex) {
-//     let tableRows = '';
-    
-//     if(data.length > 0){
-//         $.each(data, function(key, item) {
-//             tableRows += `
-//                 <tr>
-//                     <td>${startIndex + key + 1}</td>
-//                     <td>${item.tran_with_name}</td>
-//                     <td>${item.role.name}</td>
-//                     <td>${item.tran_method}</td>
-//                     <td>
-//                         <div style="display: flex;gap:5px;">
-                            
-//                             <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                            
-//                             <button data-id="${item.id}" id="delete"><i class="fas fa-trash"></i></button>
-                            
-//                         </div>
-//                     </td>
-//                 </tr>
-//             `;
-//         });
-
-//         // Inject the generated rows into the table body
-//         $('.load-data .show-table tbody').html(tableRows);
-//         $('.load-data .show-table tfoot').html('')
-//     }
-//     else{
-//         $('.load-data .show-table tbody').html('');
-//         $('.load-data .show-table tfoot').html('<tr><td colspan="8" style="text-align:center;">No Data Found</td></tr>')
-//     }
-// }; // End Function
-
 function ShowTranWith(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
@@ -47,15 +13,12 @@ function ShowTranWith(res) {
 
 
 $(document).ready(function () {
-    $(document).off(`.${'SearchBySelect'}`);
-
-
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'User Type', key: 'tran_with_name' },
-        { label: 'User Role', key: 'role.name' },
-        { label: 'Transaction Method', key: 'tran_method' },
+        { label: 'User Role', type:"select", key: 'user_role', method:"fetch", link:'admin/users/roles/get', name:"name" },
+        { label: 'Transaction Method', type:"select", key: 'tran_method', method:"custom", options:['Receive','Payment','Both'] },
         { label: 'Action', type: 'button' }
     ]);
     
@@ -69,50 +32,38 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('pharmacy/users/usertype', ShowTranWith, {tranType: 6}, function() {
+    InsertAjax('pharmacy/users/usertype', {tranType: 6}, function() {
         $('#name').focus();
         $('#company').removeAttr('data-id');
     });
 
 
     //Edit Ajax
-    EditAjax('pharmacy/users/usertype', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('pharmacy/users/usertype', ShowTranWith, {tranType: 6});
+    UpdateAjax('pharmacy/users/usertype', {tranType: 6});
     
 
     // Delete Ajax
-    DeleteAjax('pharmacy/users/usertype', ShowTranWith);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowTranWith);
-
-
-    // Search Ajax
-    // SearchAjax('pharmacy/users/usertype', ShowTranWith, {type: 6, method: { selector: "#methods"}, role: { selector: "#roles"}});
-
-
-    // Search By Methods, Roles, Types
-    // SearchBySelect('pharmacy/users/usertype', ShowTranWith, '#methods, #roles', {type: 6, method: { selector: "#methods"}, role: { selector: "#roles"}} );
+    DeleteAjax('pharmacy/users/usertype');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#id').val(res.data.id);
-        $('#updateName').val(res.data.tran_with_name);
+    function EditFormInputValue(item){
+        $('#id').val(item.id);
+        $('#updateName').val(item.tran_with_name);
 
         // Create options dynamically
         $('#updateRole').html('');
-        $('#updateRole').append(`<option value="4" ${res.data.user_role == '4' ? 'selected' : ''}>Client</option>
-                                    <option value="5" ${res.data.user_role == '5' ? 'selected' : ''}>Supplier</option>`);
+        $('#updateRole').append(`<option value="4" ${item.user_role == '4' ? 'selected' : ''}>Client</option>
+                                    <option value="5" ${item.user_role == '5' ? 'selected' : ''}>Supplier</option>`);
 
         $('#updateTranMethod').html('');
-        $('#updateTranMethod').append(`<option value="Receive" ${res.data.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
-                                    <option value="Payment" ${res.data.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
-                                    <option value="Both" ${res.data.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
+        $('#updateTranMethod').append(`<option value="Receive" ${item.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
+                                    <option value="Payment" ${item.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
+                                    <option value="Both" ${item.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
         $('#updateName').focus();
     }; // End Method
 });

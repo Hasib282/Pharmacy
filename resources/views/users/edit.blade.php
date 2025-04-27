@@ -58,9 +58,9 @@
                             <label for="updateGender">Gender <span class="required" title="Required">*</span></label>
                             <select name="gender" id="updateGender">
                                 <option value="">Select Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="others">Others</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Others">Others</option>
                             </select>
                             <span class="error" id="update_gender_error"></span>
                         </div>
@@ -69,7 +69,17 @@
                     <div class="c-4">
                         <div class="form-input-group">
                             <label for="updateDivision">Division <span class="required" title="Required">*</span></label>
-                            <select name="division" id="updateDivision"></select>
+                            <select name="division" id="updateDivision">
+                                <option value="">Select Division</option>
+                                <option value="Dhaka">Dhaka</option>
+                                <option value="Chittagong">Chittagong</option>
+                                <option value="Rajshahi">Rajshahi</option>
+                                <option value="Khulna">Khulna</option>
+                                <option value="Sylhet">Sylhet</option>
+                                <option value="Barisal">Barisal</option>
+                                <option value="Rangpur">Rangpur</option>
+                                <option value="Mymensingh">Mymensingh</option>
+                            </select>
                             <span class="error" id="update_division_error"></span>
                         </div>
                     </div>

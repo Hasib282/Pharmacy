@@ -60,7 +60,7 @@ $(document).ready(function () {
 
     // Get Permission Main Head
     GetSelectInputList('admin/permission/mainhead/get', function (res) {
-        CreateSelectOptions('#mainhead', 'Select Mainhead', res.data, null, 'name');
-        CreateSelectOptions('#updateMainhead', 'Select Mainhead', res.data, null, 'name');
+        CreateSelectOptions('#mainhead', 'Select Mainhead', res.data, 'name');
+        CreateSelectOptions('#updateMainhead', 'Select Mainhead', res.data, 'name');
     })
 });
