@@ -13,7 +13,7 @@ use App\Models\Transaction_Main;
 class IssueController extends Controller
 {
     // Show All Pharmacy Issues
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
         $data = Transaction_Main::on('mysql_second')
@@ -602,26 +602,13 @@ class IssueController extends Controller
 
     // Search Pharmacy Issues
     public function Search(Request $req){
-        if($req->searchOption == 1){
-            $data = Transaction_Main::on('mysql_second')->with('User')
-            ->where('tran_id', "like", '%'. $req->search .'%')
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', $req->type)
-            ->orderBy('tran_id','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){
-            $data = Transaction_Main::on('mysql_second')->with('User')
-            ->whereHas('User', function ($query) use ($req) {
-                $query->where('user_name', 'like', '%'.$req->search.'%');
-                $query->orderBy('user_name','asc');
-            })
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', $req->type)
-            ->paginate(15);
-        }
+        $data = Transaction_Main::on('mysql_second')
+        ->with('User')
+        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        ->where('tran_method',$req->method)
+        ->where('tran_type', $req->type)
+        ->orderBy('tran_id','asc')
+        ->paginate(15);
         
         return response()->json([
             'status' => true,

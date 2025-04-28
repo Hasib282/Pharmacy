@@ -460,7 +460,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::controller(PartyTransactionController::class)->group(function () {
             Route::prefix('/party')->group(function () {
                 ///////////// --------------- Receive From Client Routes ----------- ///////////////////
-                Route::get('/receive', 'ShowAll');
+                Route::get('/receive', 'Show');
                 Route::post('/receive', 'Insert');
                 Route::get('/receive/edit', 'Edit');
                 // Route::put('/receive', 'Update');
@@ -469,7 +469,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
                 ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
-                Route::get('/payment', 'ShowAll');
+                Route::get('/payment', 'Show');
                 Route::post('/payment', 'Insert');
                 Route::get('/payment/edit', 'Edit');
                 // Route::put('/payment', 'Update');
@@ -683,7 +683,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/report/salary')->group(function () {
             ///////////// --------------- Salary Summary Report Routes ----------- ///////////////////
             Route::controller(SalarySummaryController::class)->group(function () {
-                Route::get('/summary', 'ShowAll');
+                Route::get('/summary', 'Show');
                 Route::get('/summary/search', 'Search');
             });
 
@@ -691,7 +691,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Salary Details Report Routes ----------- ///////////////////
             Route::controller(SalaryDetailController::class)->group(function () {
-                Route::get('/details', 'ShowAll');
+                Route::get('/details', 'Show');
                 Route::get('/details/search', 'Search');
             });
         }); // End Hr Report Routes
@@ -814,7 +814,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/transaction')->group(function () {
             ///////////// --------------- Inventory Purchase Routes ----------- ///////////////////
             Route::controller(PurchaseController::class)->group(function () {
-                Route::get('/purchase', 'ShowAll');
+                Route::get('/purchase', 'Show');
                 Route::post('/purchase', 'Insert');
                 Route::get('/purchase/edit', 'Edit');
                 Route::put('/purchase', 'Update');
@@ -827,7 +827,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Inventory Issue Routes ----------- ///////////////////
             Route::controller(IssueController::class)->group(function () {
-                Route::get('/issue', 'ShowAll');
+                Route::get('/issue', 'Show');
                 Route::post('/issue', 'Insert');
                 Route::get('/issue/edit', 'Edit');
                 Route::put('/issue', 'Update');
@@ -841,7 +841,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::prefix('/return')->group(function () {
                 // *************** Inventory Supplier Return Routes *************** //
                 Route::controller(SupplierReturnController::class)->group(function () {
-                    Route::get('/supplier', 'ShowAll');
+                    Route::get('/supplier', 'Show');
                     Route::post('/supplier', 'Insert');
                     // Route::get('/supplier/edit', 'Edit');
                     // Route::put('/supplier', 'Update');
@@ -853,7 +853,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Inventory Client Return Routes *************** //
                 Route::controller(ClientReturnController::class)->group(function () {
-                    Route::get('/client', 'ShowAll');
+                    Route::get('/client', 'Show');
                     Route::post('/client', 'Insert');
                     // Route::get('/client/edit', 'Edit');
                     // Route::put('/client', 'Update');
@@ -869,7 +869,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/adjustment')->group(function () {
             Route::controller(AdjustmentController::class)->group(function () {
                 ///////////// --------------- Inventory Positive Adjustment Routes ----------- ///////////////////
-                Route::get('/positive', 'ShowAll');
+                Route::get('/positive', 'Show');
                 Route::post('/positive', 'Insert');
                 Route::get('/positive/edit', 'Edit');
                 Route::put('/positive', 'Update');
@@ -879,7 +879,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
                 ///////////// --------------- Inventory Negative Adjustment Routes ----------- ///////////////////
-                Route::get('/negative', 'ShowAll');
+                Route::get('/negative', 'Show');
                 Route::post('/negative', 'Insert');
                 Route::get('/negative/edit', 'Edit');
                 Route::put('/negative', 'Update');
@@ -894,7 +894,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::controller(PartyTransactionController::class)->group(function () {
             Route::prefix('/party')->group(function () {
                 ///////////// --------------- Receive From Client Routes ----------- ///////////////////
-                Route::get('/receive', 'ShowAll');
+                Route::get('/receive', 'Show');
                 Route::post('/receive', 'Insert');
                 Route::get('/receive/edit', 'Edit');
                 // Route::put('/receive', 'Update');
@@ -903,7 +903,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
                 ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
-                Route::get('/payment', 'ShowAll');
+                Route::get('/payment', 'Show');
                 Route::post('/payment', 'Insert');
                 Route::get('/payment/edit', 'Edit');
                 // Route::put('/payment', 'Update');
@@ -1147,7 +1147,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/transaction')->group(function () {
             ///////////// --------------- Pharmacy Purchase Routes ----------- ///////////////////
             Route::controller(PurchaseController::class)->group(function () {
-                Route::get('/purchase', 'ShowAll');
+                Route::get('/purchase', 'Show');
                 Route::post('/purchase', 'Insert');
                 Route::get('/purchase/edit', 'Edit');
                 Route::put('/purchase', 'Update');
@@ -1160,7 +1160,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Pharmacy Issue Routes ----------- ///////////////////
             Route::controller(IssueController::class)->group(function () {
-                Route::get('/issue', 'ShowAll');
+                Route::get('/issue', 'Show');
                 Route::post('/issue', 'Insert');
                 Route::get('/issue/edit', 'Edit');
                 Route::put('/issue', 'Update');
@@ -1174,7 +1174,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::prefix('/return')->group(function () {
                 // *************** Pharmacy Supplier Return Routes *************** //
                 Route::controller(SupplierReturnController::class)->group(function () {
-                    Route::get('/supplier', 'ShowAll');
+                    Route::get('/supplier', 'Show');
                     Route::post('/supplier', 'Insert');
                     Route::get('/supplier/edit', 'Edit');
                     Route::put('/supplier', 'Update');
@@ -1186,7 +1186,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Pharmacy Client Return Routes *************** //
                 Route::controller(ClientReturnController::class)->group(function () {
-                    Route::get('/client', 'ShowAll');
+                    Route::get('/client', 'Show');
                     Route::post('/client', 'Insert');
                     Route::get('/client/edit', 'Edit');
                     Route::put('/client', 'Update');
@@ -1202,7 +1202,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/adjustment')->group(function () {
             Route::controller(AdjustmentController::class)->group(function () {
                 ///////////// --------------- Pharmacy Positive Adjustment Routes ----------- ///////////////////
-                Route::get('/positive', 'ShowAll');
+                Route::get('/positive', 'Show');
                 Route::post('/positive', 'Insert');
                 Route::get('/positive/edit', 'Edit');
                 Route::put('/positive', 'Update');
@@ -1212,7 +1212,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
                 ///////////// --------------- Pharmacy Negative Adjustment Routes ----------- ///////////////////
-                Route::get('/negative', 'ShowAll');
+                Route::get('/negative', 'Show');
                 Route::post('/negative', 'Insert');
                 Route::get('/negative/edit', 'Edit');
                 Route::put('/negative', 'Update');
@@ -1227,7 +1227,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::controller(PartyTransactionController::class)->group(function () {
             Route::prefix('/party')->group(function () {
                 ///////////// --------------- Receive From Client Routes ----------- ///////////////////
-                Route::get('/receive', 'ShowAll');
+                Route::get('/receive', 'Show');
                 Route::post('/receive', 'Insert');
                 Route::get('/receive/edit', 'Edit');
                 // Route::put('/receive', 'Update');
@@ -1236,7 +1236,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
                 ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
-                Route::get('/payment', 'ShowAll');
+                Route::get('/payment', 'Show');
                 Route::post('/payment', 'Insert');
                 Route::get('/payment/edit', 'Edit');
                 // Route::put('/payment', 'Update');
@@ -1518,6 +1518,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/services', 'Insert');
                 Route::put('/services', 'Update');
                 Route::delete('/services', 'Delete');
+                Route::get('/services/search', 'Search');
             });
         }); // End Hospital Transaction Routes
         

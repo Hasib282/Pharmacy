@@ -12,7 +12,7 @@ use App\Models\Transaction_Detail;
 class AdjustmentController extends Controller
 {
     // Show All Product/Item Adjustment Data
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
         $method = ucfirst($req->segment(4));
 
@@ -268,30 +268,13 @@ class AdjustmentController extends Controller
 
     // Search Product/Item Adjustment
     public function Search(Request $req){
-        if($req->searchOption == 1){
-            $data = Transaction_Detail::on('mysql_second')
-            ->with('Head','Store')
-            ->where('tran_id', "like", '%'. $req->search .'%')
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', $req->type)
-            ->orderBy('tran_id','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){
-            $head = Transaction_Head::on('mysql')
-            ->where('tran_head_name', 'like', '%'.$req->search.'%')
-            ->orderby('tran_head_name')
-            ->pluck('id');
-
-            $data = Transaction_Detail::on('mysql_second')
-            ->with('Head','Store')
-            ->whereIn('tran_head_id', $head)
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', $req->type)
-            ->paginate(15);
-        }
+        $data = Transaction_Detail::on('mysql_second')
+        ->with('Head','Store')
+        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        ->where('tran_method',$req->method)
+        ->where('tran_type', $req->type)
+        ->orderBy('tran_id','asc')
+        ->get();
         
         return response()->json([
             'status' => true,

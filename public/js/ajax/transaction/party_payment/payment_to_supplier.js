@@ -80,7 +80,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('transaction/party/payment', ShowPaymentToSuppliers, 
+    InsertAjax('transaction/party/payment', 
         {
             user: { selector: '#user', attribute: 'data-id' },
             withs: { selector: '#user', attribute: 'data-with' },
@@ -98,8 +98,8 @@ $(document).ready(function () {
     );
 
 
-    //Edit Ajax
-    EditAjax('transaction/party/payment', EditFormInputValue, EditModalOn);
+    // Edit Ajax
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
@@ -110,20 +110,17 @@ $(document).ready(function () {
     // DeleteAjax('transaction/party/payment', ShowPaymentToSuppliers);
 
 
-    // Pagination Ajax
-    // PaginationAjax(ShowPaymentToSuppliers);
-
-
-    // Search Ajax
-    // SearchAjax('transaction/party/payment', ShowPaymentToSuppliers);
-
-
     // Search By Date
-    // SearchByDateAjax('transaction/party/payment', ShowPaymentToSuppliers);
+    SearchByDateAjax('transaction/party/payment/search', ShowPaymentToSuppliers);
 
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
+        GetTransactionWith(1, 'Payment', '#within')
+        $('.due-grid tbody').html('');
+        $('.due-grid tfoot').html('');
+
+
         $('#updateTranId').val(res.data.tran_id);
 
         getDueListByUserId(res.data.tran_user, '.due-grid tbody');
@@ -131,13 +128,5 @@ $(document).ready(function () {
         $('#updateUser').val(res.data.user.user_name);
         $('#updateAmount').val(res.data.payment);
         $('#updateDiscount').val(res.data.discount);
-    }
-
-
-    // Edit Modal Open Functionality
-    function EditModalOn(){
-        GetTransactionWith(1, 'Payment', '#within')
-        $('.due-grid tbody').html('');
-        $('.due-grid tfoot').html('');
     }
 });

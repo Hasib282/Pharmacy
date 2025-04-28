@@ -314,25 +314,23 @@ class GeneralTransactionController extends Controller
 
     // Search General Transaction
     public function Search(Request $req){
-        if($req->searchOption == 1){
-            $data = Transaction_Main::on('mysql_second')->with('User')
-            ->where('tran_id', "like", '%'. $req->search .'%')
+        if($req->status == 1){
+            $data = Transaction_Main::on('mysql_second')
+            ->with('User')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
-            ->where('tran_type', 1)
+            ->where('tran_type', $req->type)
             ->orderBy('tran_id','asc')
-            ->paginate(15);
+            ->get();
         }
-        else if($req->searchOption == 2){
-            $data = Transaction_Main::on('mysql_second')->with('User')
-            ->whereHas('User', function ($query) use ($req) {
-                $query->where('user_name', 'like', '%'.$req->search.'%');
-                $query->orderBy('user_name','asc');
-            })
+        else if($req->status == 2){
+            $data = Transaction_Mains_Temp::on('mysql_second')
+            ->with('User')
             ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
             ->where('tran_method',$req->method)
-            ->where('tran_type', 1)
-            ->paginate(15);
+            ->where('tran_type', $req->type)
+            ->orderBy('tran_id','asc')
+            ->get();
         }
         
         return response()->json([

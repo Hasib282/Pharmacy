@@ -79,7 +79,7 @@ $(document).ready(function () {
 
 
     // Search By Date
-    // SearchByDateAjax('hospital/transaction/services', ShowServices, {type: 1, method: 'Receive'});
+    SearchByDateAjax('hospital/transaction/services/search', ShowServices, {type: 7, method: 'Receive'});
 
 
     // Additional Edit Functionality

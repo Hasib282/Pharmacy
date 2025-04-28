@@ -278,4 +278,22 @@ class ServicesController extends Controller
             'message' => 'Transaction Deleted Successfully',
         ], 200);
     } // End Method
+
+
+
+    // Search Services
+    public function Search(Request $req){
+        $data = Transaction_Main::on('mysql_second')
+        ->with('Patient')
+        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        ->where('tran_method',$req->method)
+        ->where('tran_type', 7)
+        ->orderBy('tran_id','asc')
+        ->get();
+        
+        return response()->json([
+            'status' => true,
+            'data' => $data,
+        ], 200);
+    } // End Method
 }

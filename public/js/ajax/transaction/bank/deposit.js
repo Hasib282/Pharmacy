@@ -60,6 +60,7 @@ $(document).ready(function () {
     // Load Transaction Groupe
     GetTransactionGroupe(4, "Payment");
 
+
     // Load Data on Hard Reload
     ReloadData('transaction/bank/deposit', ShowBankDeposits);
     
@@ -69,7 +70,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('transaction/bank/deposit', ShowBankDeposits, 
+    InsertAjax('transaction/bank/deposit', 
         {
             method:'Deposit', 
             type:'4', 
@@ -87,11 +88,11 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('transaction/bank/deposit', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
     
     // Update Ajax
-    UpdateAjax('transaction/bank/deposit', ShowBankDeposits,
+    UpdateAjax('transaction/bank/deposit',
         {
             method:'Deposit',
             bank: {selector: '#updateBank', attribute: 'data-id' },
@@ -103,19 +104,11 @@ $(document).ready(function () {
     
 
     // Delete Ajax
-    DeleteAjax('transaction/bank/deposit', ShowBankDeposits);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowBankDeposits);
-
-
-    // Search Ajax
-    // SearchAjax('transaction/bank/deposit', ShowBankDeposits, {type: 4, method: 'Deposit'});
+    DeleteAjax('transaction/bank/deposit');
 
 
     // Search By Date
-    // SearchByDateAjax('transaction/bank/deposit', ShowBankDeposits, {type: 4, method: 'Deposit'})
+    SearchByDateAjax('transaction/bank/deposit/search', ShowBankDeposits, {type: 4, method: 'Deposit'})
 
 
     // Additional Edit Functionality

@@ -16,7 +16,7 @@ use App\Models\Party_Payment_Receive;
 class PartyTransactionController extends Controller
 {
     // Show All Party Collection
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
         $method = ucfirst($req->segment(4)); // Capitalize the first letter
 
@@ -350,30 +350,11 @@ class PartyTransactionController extends Controller
 
         $transaction = Transaction_Main::on('mysql_second')
         ->with('User', 'Withs')
-        ->whereHas('Withs', function ($query) use ($req, $type) {
-            $query->where('tran_type', $type);
-        })
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
         ->where('tran_method', $method)
-        ->where('tran_type', 2);
+        ->where('tran_type', 2)
+        ->get();
 
-        if ($req->searchOption == 1) {
-            $transaction->where('tran_id', 'like', '%' . $req->search . '%')->orderBy('tran_id');
-        } 
-        else if ($req->searchOption == 2) {
-            $transaction->whereHas('User', function ($query) use ($req) {
-                $query->where('user_name', 'like', '%' . $req->search . '%')->orderBy('user_name');
-            });
-        }
-
-        $data = $transaction->paginate(15);
-        
-        if (!isset($type)) {
-            return response()->json([
-                'status' => false,
-                'message' => 'You hit the Wrong Url',
-            ], 400);
-        }
         return response()->json([
             'status' => true,
             'data' => $data,

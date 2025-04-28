@@ -124,18 +124,17 @@ $(document).ready(function () {
 
 
     // Insert Transaction Receive ajax
-    InsertTransaction('transaction/receive', ShowTransactionReceives, 'Receive', '1', function() {
+    InsertTransaction('transaction/receive', 'Receive', '1', function() {
         $('#location').removeAttr('data-id');
         $('#user').removeAttr('data-id');
         $('#user').removeAttr('data-with');
         $('#date').focus();
         $('.transaction_grid tbody').html('');
-        localStorage.removeItem('transactionData');
     });
 
 
     //Edit Ajax
-    EditAjax('transaction/receive', EditFormInputValue, EditModalOn);
+    EditAjax(EditFormInputValue);
 
 
     // Update Transaction Receive ajax
@@ -143,50 +142,15 @@ $(document).ready(function () {
     
 
     // Delete Ajax
-    DeleteAjax('transaction/receive', ShowTransactionReceives);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowTransactionReceives);
-
-
-    // Search Ajax
-    // SearchAjax('transaction/receive', ShowTransactionReceives, { type: 1, method: 'Receive' });
+    DeleteAjax('transaction/receive');
 
 
     // Search By Date
-    // SearchByDateAjax('transaction/receive', ShowTransactionReceives, {type: 1, method: 'Receive'});
+    SearchByDateAjax('transaction/receive/search', ShowTransactionReceives, {type: 1, method: 'Receive'});
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        getTransactionGrid(res.data.tran_id);
-
-        $('#id').val(res.data.id);
-        
-        $('#updateTranId').val(res.data.tran_id);
-
-        var timestamps = new Date(res.data.tran_date);
-        var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
-        $('#updateDate').val(formattedDate);
-        
-        $('#updateUser').attr('data-id',res.data.tran_user);
-        $('#updateUser').attr('data-with',res.data.tran_type_with);
-        $('#updateUser').val(res.data.user.user_name);
-
-
-        $('#updateTotalDiscount').val(res.data.discount);
-
-        $('#updateAdvance').val(res.data.receive);
-
-        
-        $("#updateHead").focus();
-    }
-
-    
-
-    // Edit Modal Open Functionality
-    function EditModalOn(){
+    function EditFormInputValue(item){
         $('#updateHead').val('');
         $('#updateHead').removeAttr('data-id');
         $('#updateHead').removeAttr('data-groupe');
@@ -197,5 +161,27 @@ $(document).ready(function () {
         GetTransactionWith('1', 'Receive', '#within');
         localStorage.removeItem('transactionData');
         $('.transaction_grid tbody').html('');
+
+        getTransactionGrid(item.tran_id);
+
+        $('#id').val(item.id);
+        
+        $('#updateTranId').val(item.tran_id);
+
+        var timestamps = new Date(item.tran_date);
+        var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
+        $('#updateDate').val(formattedDate);
+        
+        $('#updateUser').attr('data-id',item.tran_user);
+        $('#updateUser').attr('data-with',item.tran_type_with);
+        $('#updateUser').val(item.user.user_name);
+
+
+        $('#updateTotalDiscount').val(item.discount);
+
+        $('#updateAdvance').val(item.receive);
+
+        
+        $("#updateHead").focus();
     }
 });

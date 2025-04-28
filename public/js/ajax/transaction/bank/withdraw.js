@@ -60,6 +60,7 @@ $(document).ready(function () {
     // Load Transaction Groupe
     GetTransactionGroupe(4, "Receive");
 
+
     // Load Data on Hard Reload
     ReloadData('transaction/bank/withdraw', ShowBankWithdraws);
     
@@ -69,7 +70,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('transaction/bank/withdraw', ShowBankWithdraws, 
+    InsertAjax('transaction/bank/withdraw', 
         {
             method:'Withdraw', 
             type:'4', 
@@ -87,11 +88,11 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('transaction/bank/withdraw', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
     
     // Update Ajax
-    UpdateAjax('transaction/bank/withdraw', ShowBankWithdraws,
+    UpdateAjax('transaction/bank/withdraw',
         {
             method:'Withdraw',
             bank: {selector: '#updateBank', attribute: 'data-id' },
@@ -103,19 +104,11 @@ $(document).ready(function () {
     
 
     // Delete Ajax
-    DeleteAjax('transaction/bank/withdraw', ShowBankWithdraws);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowBankWithdraws);
-
-
-    // Search Ajax
-    // SearchAjax('transaction/bank/withdraw', ShowBankWithdraws, {type: 4, method: 'Withdraw'});
+    DeleteAjax('transaction/bank/withdraw');
 
 
     // Search By Date
-    // SearchByDateAjax('transaction/bank/withdraw', ShowBankWithdraws, {type: 4, method: 'Withdraw'});
+    SearchByDateAjax('transaction/bank/withdraw/search', ShowBankWithdraws, {type: 4, method: 'Withdraw'});
 
 
     // Additional Edit Functionality

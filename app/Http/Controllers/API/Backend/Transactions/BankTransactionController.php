@@ -176,26 +176,13 @@ class BankTransactionController extends Controller
 
     // Search Bank Transactions
     public function Search(Request $req){
-        if($req->searchOption == 1){
-            $data = Transaction_Main::on('mysql_second')->with('Bank')
-            ->where('tran_id', "like", '%'. $req->search .'%')
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', 4)
-            ->orderBy('tran_id','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){
-            $data = Transaction_Main::on('mysql_second')->with('Bank')
-            ->whereHas('Bank', function ($query) use ($req) {
-                $query->where('name', 'like', '%'.$req->search.'%');
-                $query->orderBy('name','asc');
-            })
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', 4)
-            ->paginate(15);
-        }
+        $data = Transaction_Main::on('mysql_second')
+        ->with('Bank')
+        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        ->where('tran_method',$req->method)
+        ->where('tran_type', 4)
+        ->orderBy('tran_id','asc')
+        ->get();
         
         return response()->json([
             'status' => true,

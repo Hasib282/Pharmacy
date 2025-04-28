@@ -39,8 +39,9 @@ function SearchAjax(url, RenderData, data={}){
 function SearchByDateAjax(url, RenderData, data={}){
     $(document).off('change', '#startDate, #endDate').on('change', '#startDate, #endDate', function(e){
         e.preventDefault();
-        let updatedData = UpdateSearchParameters(data);
-        LoadBackendData(`${apiUrl}/${url}/search`, RenderData, updatedData);
+        $('#startDate').length ? data.startDate = $('#startDate').val() : '';
+        $('#endDate').length ? data.endDate = $('#endDate').val() : '';
+        ReloadData(url, RenderData, data);
     });
 }; // End Method
 
