@@ -414,11 +414,12 @@ $(document).ready(function () {
     /////////////// ------------------ Search Manufacturer by Name and add value to input ajax part start ---------------- /////////////////////////////
     // Manufacturer Input Search
     SearchByInput(
-        $('#manufacturer').data('url'),  
+        'inventory/setup/manufacturer/get',  
 
         function ($input) {
             return {
                 manufacturer: $input.val(),
+                type: $('#type').val()
             };
         }, 
 
@@ -432,11 +433,12 @@ $(document).ready(function () {
 
     // Update Manufacturer Input Search
     SearchByInput(
-        $('#updateManufacturer').data('url'), 
+        'inventory/setup/manufacturer/get', 
 
         function ($input) {
             return {
                 manufacturer: $input.val(),
+                type: $('#updateType').val()
             };
         }, 
 
@@ -452,11 +454,12 @@ $(document).ready(function () {
     /////////////// ------------------ Search Category by Name and add value to input ajax part start ---------------- /////////////////////////////
     // Category Input Search
     SearchByInput(
-        $('#category').data('url'),  
+        'inventory/setup/category/get',  
 
         function ($input) {
             return {
                 category: $input.val(),
+                type: $('#type').val()
             };
         }, 
 
@@ -470,11 +473,12 @@ $(document).ready(function () {
 
     // Update Category Input Search
     SearchByInput(
-        $('#updateCategory').data('url'), 
+        'inventory/setup/category/get', 
 
         function ($input) {
             return {
                 category: $input.val(),
+                type: $('#updateType').val()
             };
         }, 
 
@@ -490,11 +494,12 @@ $(document).ready(function () {
     /////////////// ------------------ Search Form by Name and add value to input ajax part start ---------------- /////////////////////////////
     // Form Input Search
     SearchByInput(
-        $('#form').data('url'),  
+        'inventory/setup/form/get',  
 
         function ($input) {
             return {
                 form: $input.val(),
+                type: $('#type').val()
             };
         }, 
 
@@ -508,11 +513,12 @@ $(document).ready(function () {
 
     // Update Form Input Search
     SearchByInput(
-        $('#updateForm').data('url'), 
+        'inventory/setup/form/get', 
 
         function ($input) {
             return {
                 form: $input.val(),
+                type: $('#updateType').val()
             };
         }, 
 
@@ -528,11 +534,12 @@ $(document).ready(function () {
     /////////////// ------------------ Search Unit by Name and add value to input ajax part start ---------------- /////////////////////////////
     // Unit Input Search
     SearchByInput(
-        $('#unit').data('url'),  
+        'inventory/setup/unit/get',  
 
         function ($input) {
             return {
                 unit: $input.val(),
+                type: $('#type').val()
             };
         }, 
 
@@ -546,11 +553,12 @@ $(document).ready(function () {
 
     // Update Unit Input Search
     SearchByInput(
-        $('#updateUnit').data('url'), 
+        'inventory/setup/unit/get', 
 
         function ($input) {
             return {
                 unit: $input.val(),
+                type: $('#updateType').val()
             };
         }, 
 
@@ -1265,7 +1273,15 @@ $(document).ready(function () {
 
         '#doctor-list',
 
-        '#doctor-list li',
+        '#doctor-list tbody tr',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            $(targetInput).val(item.find('td:first').text());
+        }
     );
 
 
@@ -1283,7 +1299,15 @@ $(document).ready(function () {
 
         '#update-doctor',
 
-        '#update-doctor li',
+        '#update-doctor tbody tr',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            $(targetInput).val(item.find('td:first').text());
+        }
     );
 
 
@@ -1359,31 +1383,25 @@ $(document).ready(function () {
 
         function (targetInput, item) {
             $(targetInput).val(item.find('td:first').text());
-            // $(targetInput).attr("data-groupe", item.data('groupe'));
-            // $('#updateMrp').val(item.attr('data-mrp'));
-            // $('#updateCp').val(item.attr('data-cp'));
-            // $('#updateUnit').val(item.attr('data-unit'));
-            // $('#updateUnit').attr('data-id',item.data('unit-id'));
-            // let qty = $('#updateQuantity').val();
+            $('#updateTitle').val(item.attr('data-title'));
+            $('#updateName').val(item.attr('data-name'));
+            $('#updatePhone').val(item.attr('data-phone'));
+            $('#updateEmail').val(item.attr('data-email'));
+            $('#updateGender').val(item.attr('data-gender'));
+            $('#updateNationality').val(item.attr('data-nationality'));
+            $('#updateReligion').val(item.attr('data-religion'));
+            $('#updateAddress').val(item.attr('data-address'));
+        },
 
-            // const path = window.location.pathname;
-            // const pathSegments = path.split("/");
-            
-            // if(pathSegments[3] === 'issue'){
-            //     $('#updateTotAmount').val(item.attr('data-mrp') * qty);
-            // }
-            // else if(pathSegments[3] === 'purchase'){
-            //     $('#updateTotAmount').val(item.attr('data-cp') * qty);
-            // }
-        }, 
-
-        // function (targetInput) {
-        //     $(targetInput).removeAttr('data-groupe');
-        //     $('#updateUnit').removeAttr('data-id');
-        //     $('#updateMrp').val('');
-        //     $('#updateCp').val('');
-        //     $('#updateUnit').val('');
-        //     $('#updateTotAmount').val('');
-        // }
+        function (targetInput) {
+            $('#updateTitle').val('');
+            $('#updateName').val('');
+            $('#updatePhone').val('');
+            $('#updateEmail').val('');
+            $('#updateGender').val('');
+            $('#updateNationality').val('');
+            $('#updateReligion').val('');
+            $('#updateAddress').val('');
+        }
     );
 });

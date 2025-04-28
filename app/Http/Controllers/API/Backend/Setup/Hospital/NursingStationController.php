@@ -10,7 +10,7 @@ use App\Models\Nursing_Station;
 class NursingStationController extends Controller
 {
     // Show All Nursing station
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Nursing_Station::on('mysql_second')->get();
         return response()->json([
             'status'=> true,
@@ -39,17 +39,6 @@ class NursingStationController extends Controller
             'message' => 'Nursing station Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Nursing station
-    public function Edit(Request $req){
-        $data = Nursing_Station::on('mysql_second')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -88,29 +77,6 @@ class NursingStationController extends Controller
             'status'=> true,
             'message' => 'Nursing station Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Nursing station
-    public function Search(Request $req){
-        if($req->searchOption == 1){ // Search By Name
-            $data = Nursing_Station::on('mysql_second')
-            ->where('name', 'like', $req->search.'%')
-            ->orderBy('name')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){ // Search By Floor
-            $data = Nursing_Station::on('mysql_second')
-            ->where('floor', 'like', $req->search.'%')
-            ->orderBy('name')
-            ->paginate(15);
-        }
-
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

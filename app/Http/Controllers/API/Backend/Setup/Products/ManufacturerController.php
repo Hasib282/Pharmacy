@@ -10,7 +10,7 @@ use App\Models\Item_Manufacturer;
 class ManufacturerController extends Controller
 {
     // Show All Item/Product MAnufacturer
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
         $data = filterByCompany(Item_Manufacturer::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->get();
         return response()->json([
@@ -41,17 +41,6 @@ class ManufacturerController extends Controller
             'message' => 'Manufacturer Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Item/Product MAnufacturer
-    public function Edit(Request $req){
-        $data = Item_Manufacturer::on('mysql')->where('id', $req->id)->first();
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -91,28 +80,9 @@ class ManufacturerController extends Controller
 
 
 
-    // Search Item/Product MAnufacturer
-    public function Search(Request $req){
-        $type = GetTranType($req->segment(2));
-        $data = filterByCompany(
-                            Item_Manufacturer::on('mysql')
-                            ->where('type_id', $type)
-                            ->where('manufacturer_name', 'like', '%'.$req->search.'%')
-                        )
-                        ->orderBy('manufacturer_name','asc')
-                        ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
     // Get Manufacturer
     public function Get(Request $req){
-        $type = GetTranType($req->segment(2));
+        $type = GetTranType($req->type);
         $data = filterByCompany(
                             Item_Manufacturer::on('mysql')
                             ->where('type_id', $type)

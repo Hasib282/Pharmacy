@@ -10,7 +10,7 @@ use App\Models\Item_Unit;
 class UnitController extends Controller
 {
     // Show All Item/Product Unit
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
         $data = filterByCompany(Item_Unit::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->get();
         return response()->json([
@@ -41,17 +41,6 @@ class UnitController extends Controller
             'message' => 'Unit Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Item/Product Unit
-    public function Edit(Request $req){
-        $data = Item_Unit::on('mysql')->where('id', $req->id)->first();
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -91,28 +80,9 @@ class UnitController extends Controller
 
 
 
-    // Search Item/Product Unit
-    public function Search(Request $req){
-        $type = GetTranType($req->segment(2));
-        $data = filterByCompany(
-                    Item_Unit::on('mysql')
-                    ->where('type_id', $type)
-                    ->where('unit_name', 'like', '%'.$req->search.'%')
-                )
-                ->orderBy('unit_name','asc')
-                ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
     // Get Unit
     public function Get(Request $req){
-        $type = GetTranType($req->segment(2));
+        $type = GetTranType($req->type);
         $data = filterByCompany(
                     Item_Unit::on('mysql')
                     ->where('type_id', $type)

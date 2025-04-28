@@ -22,10 +22,10 @@
     <tr>
         <td style="width: 60%; vertical-align: top;">
             <p><strong>Invoice To:</strong> <br>
-            <strong>Name:</strong> {{ $transactionMain->user->user_name }} <br>
-            <strong>Address:</strong> {{ $transactionMain->user->address }} <br>
-            <strong>Email:</strong> {{ $transactionMain->user->user_email }} <br>
-            <strong>Phone:</strong> {{ $transactionMain->user->user_phone }}</p>
+            <strong>Name:</strong> {{ $transactionMain->tran_user ? $transactionMain->user->user_name : $transactionMain->patient->name }} <br>
+            <strong>Address:</strong> {{ $transactionMain->tran_user ? $transactionMain->user->address : $transactionMain->patient->address }} <br>
+            <strong>Email:</strong> {{ $transactionMain->tran_user ? $transactionMain->user->user_email : $transactionMain->patient->email }} <br>
+            <strong>Phone:</strong> {{ $transactionMain->tran_user ? $transactionMain->user->user_phone : $transactionMain->patient->phone }}</p>
         </td>
         <td style="width: 40%; vertical-align: top;">
             <p><strong>Invoice Date:</strong> {{ $transactionMain->tran_date }} <br>

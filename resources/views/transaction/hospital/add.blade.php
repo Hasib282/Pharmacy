@@ -12,8 +12,6 @@
             @csrf
             <div class="rows">
                 <div class="c-6" style="margin-bottom: 10px;">
-                    {{-- within --}}
-                    <div id="within" style="display: none"> </div>
                     {{-- groupein --}}
                     <div id="groupein" style="display: none"></div>
                     <div class="rows">
@@ -31,7 +29,7 @@
                                 <label for="patient">Patient Search</label>
                                 <input type="text" name="patient" class="form-input" id="patient" autocomplete="off"><hr>
                                 <div id="patient-list"></div>
-                                <span class="error" id="patient_id_error"></span>
+                                <span class="error" id="ptn_id_error"></span>
                             </div>
                         </div>
 
@@ -79,6 +77,7 @@
                             <div class="form-input-group">
                                 <label for="gender">Gender</label>
                                 <select name="gender" id="gender" class="form-input">
+                                    <option value="">Select Gender</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                     <option value="other">Other</option>
@@ -114,7 +113,8 @@
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="religion">Religion</label>
-                                <select name="religion" id="religion">
+                                <select name="religion" id="religion" class="form-input">
+                                    <option value="">Select Religion</option>
                                     <option value="Islam" checked>Islam</option>
                                     <option value="Hinduism">Hinduism</option>
                                     <option value="Buddhism">Buddhism</option>
@@ -173,83 +173,63 @@
                         <button type="submit" id="InsertTransaction" class="btn-blue">Add</button>
                     </div>
                 </div>
-                {{-- product list part start --}}
-                <div class="c-6">
-                    <div id="product-list">
-                        <table class="product-table">
-                            <caption class="caption">Product List</caption>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Generic Name</th>
-                                    <th>Manufacture</th>
-                                    <th>Form</th>
-                                    <th>Quantity</th>
-                                    <th>CP</th>
-                                    <th>MRP</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
                 {{-- transaction grid part start --}}
                 <div class="c-6">
-                    <div class="transaction_grid" style="overflow-x:auto;">
-                        <table class="show-table">
-                            <thead>
+                    <div class="cols">
+                        <div class="transaction_grid" style="overflow-x:auto;">
+                            <table class="show-table">
+                                <thead>
+                                    <tr>
+                                        <th>SL:</th>
+                                        <th>Name</th>
+                                        <th>QTY</th>
+                                        <th>Unit Price</th>
+                                        <th>Total</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+    
+                                </tbody>
+                            </table>
+                        </div>
+                        {{-- invoice calculation part start --}}
+                        <div>
+                            <table>
                                 <tr>
-                                    <th>SL:</th>
-                                    <th>Name</th>
-                                    <th>QTY</th>
-                                    <th>Unit Price</th>
-                                    <th>Total</th>
-                                    <th>Remove</th>
+                                    <td><label for="amountRP">Invoice Amount</label></td>
+                                    <td><input type="text" name="amountRP" class="input-small" id="amountRP" value="0" disabled
+                                            style="text-align: right;"></td>
                                 </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                {{-- invoice calculation part start --}}
-                <div class="c-6">
-                    <table>
-                        <tr>
-                            <td><label for="amountRP">Invoice Amount</label></td>
-                            <td><input type="text" name="amountRP" class="input-small" id="amountRP" value="0" disabled
-                                    style="text-align: right;"></td>
-                        </tr>
-                        <tr>
-                            <td><label for="totalDiscount">Discount</label></td>
-                            <td><input type="text" name="totalDiscount" class="input-small" id="totalDiscount" value="0"
-                                    style="text-align: right;"></td>
-                        </tr>
-                        <tr>
-                            <td><label for="netAmount">Net Amount</label>
-                            <td><input type="text" name="netAmount" class="input-small" id="netAmount" value="0"
-                                    disabled style="text-align: right;">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label for="advance">Advance</label>
-                            <td><input type="text" name="advance" class="input-small" id="advance" value="0"
-                                    style="text-align: right;">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label for="balance">Balance</label>
-                            <td><input type="text" name="balance" class="input-small" id="balance" value="0" disabled
-                                    style="text-align: right;"></td>
-                        </tr>
-                    </table>
-                    <div class="center" style="margin-top: 10px;">
-                        <span class="error" id="discount_error"></span>
-                        <span class="error" id="advance_error"></span>
-                        <span class="error" id="message_error"></span>
+                                <tr>
+                                    <td><label for="totalDiscount">Discount</label></td>
+                                    <td><input type="text" name="totalDiscount" class="input-small" id="totalDiscount" value="0"
+                                            style="text-align: right;"></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="netAmount">Net Amount</label>
+                                    <td><input type="text" name="netAmount" class="input-small" id="netAmount" value="0"
+                                            disabled style="text-align: right;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="advance">Advance</label>
+                                    <td><input type="text" name="advance" class="input-small" id="advance" value="0"
+                                            style="text-align: right;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="balance">Balance</label>
+                                    <td><input type="text" name="balance" class="input-small" id="balance" value="0" disabled
+                                            style="text-align: right;"></td>
+                                </tr>
+                            </table>
+                            <div class="center" style="margin-top: 10px;">
+                                <span class="error" id="discount_error"></span>
+                                <span class="error" id="advance_error"></span>
+                                <span class="error" id="message_error"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@ use App\Models\Patient_Information;
 class PatientRegistrationController extends Controller
 {
     // Show All Patient Registrations
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Patient_Registration::on('mysql_second')->get();//with is used to bring data from the doctors table ->with('doctors')
         return response()->json([
             'status'=> true,
@@ -41,6 +41,7 @@ class PatientRegistrationController extends Controller
                 'title'=>'required',
                 'name'=> 'required',
                 'phone'=> 'required',
+                'email'=> 'nullable|email',
                 'gender'=> 'required',
                 'bed_category'=>'required',
                 'bed_list'=>'required',
@@ -121,18 +122,6 @@ class PatientRegistrationController extends Controller
             "data" => $data,
         ], 200); 
     } // End Method
-
-
-
-    //Edit Patient Registrations
-    public function Edit(Request $req){
-        $data = Patient_Registration::on('mysql_second')->findOrFail($req-> id);
-
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
-    }
 
 
 

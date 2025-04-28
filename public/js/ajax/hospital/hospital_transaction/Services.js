@@ -2,13 +2,13 @@ function ShowServices(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due_col', type: 'number'},{key:'due_discount', type: 'number'},{key:'due', type: 'number'}],
+        tbody: ['tran_id','patient.name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due_col', type: 'number'},{key:'due_disc', type: 'number'},{key:'due', type: 'number'}],
         actions: (row) => `
                 <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
 
-                <button data-modal-id="editModal" id="edit" data-id="${row.tran_id}"><i class="fas fa-edit"></i></button>
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
-                <button data-id="${row.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
     });
 }
@@ -18,7 +18,7 @@ $(document).ready(function () {
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Transaction Id', key: 'tran_id' },
-        { label: 'User', key: 'user.user_name' },
+        { label: 'User', key: 'patient.name' },
         { label: 'Total' },
         { label: 'Discount' },
         { label: 'Net Total' },
@@ -35,12 +35,12 @@ $(document).ready(function () {
 
 
     // Load Data on Hard Reload
-    ReloadData('hospital/transaction/services', ShowTransactionReceives);
+    ReloadData('hospital/transaction/services', ShowServices);
     
 
     // Add Modal Open Functionality
     AddModalFunctionality("#date", function(){
-        GetTransactionWith('1', 'Receive', '#within');
+        $('#date').focus();
         localStorage.removeItem('transactionData');
         $('.transaction_grid tbody').html('');
     });
@@ -51,146 +51,69 @@ $(document).ready(function () {
 
 
     // Insert Transaction Receive ajax
-    InsertTransaction('hospital/transaction/services', ShowTransactionReceives, 'Receive', '1', function() {
-        $('#location').removeAttr('data-id');
-        $('#user').removeAttr('data-id');
-        $('#user').removeAttr('data-with');
+    InsertTransaction('hospital/transaction/services', 'Receive', '7', function() {
+        $('#patient').removeAttr('data-id');
         $('#date').focus();
         $('.transaction_grid tbody').html('');
-        localStorage.removeItem('transactionData');
     });
 
 
-    //Edit Ajax
-    EditAjax('hospital/transaction/services', EditFormInputValue, EditModalOn);
+    // Edit Ajax
+    EditAjax(EditFormInputValue);
 
 
     // Update Transaction Receive ajax
-    UpdateTransaction('hospital/transaction/services', ShowTransactionReceives, 'Receive', '1');
+    UpdateTransaction('hospital/transaction/services', 'Receive', '7');
     
 
     // Delete Ajax
-    DeleteAjax('hospital/transaction/services', ShowTransactionReceives);
+    DeleteAjax('hospital/transaction/services');
 
 
     // Pagination Ajax
-    // PaginationAjax(ShowTransactionReceives);
+    // PaginationAjax(ShowServices);
 
 
     // Search Ajax
-    // SearchAjax('hospital/transaction/services', ShowTransactionReceives, { type: 1, method: 'Receive' });
+    // SearchAjax('hospital/transaction/services', ShowServices, { type: 1, method: 'Receive' });
 
 
     // Search By Date
-    // SearchByDateAjax('hospital/transaction/services', ShowTransactionReceives, {type: 1, method: 'Receive'});
+    // SearchByDateAjax('hospital/transaction/services', ShowServices, {type: 1, method: 'Receive'});
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        getTransactionGrid(res.data.tran_id);
+    function EditFormInputValue(item){
+        $('#updateHead').val('');
+        $('#updateHead').removeAttr('data-id');
+        $('#updateHead').removeAttr('data-groupe');
+        $('#updatePatient').val();
+        $('#updatePatient').removeAttr('data-id');
+        $('#updateQty').val('1');
+        $('#updateAmount').val('');
+        $('#updateTotAmount').val('');
+        localStorage.removeItem('transactionData');
+        $('.transaction_grid tbody').html('');
 
-        $('#id').val(res.data.id);
+        getTransactionGrid(item.tran_id);
+
+        $('#id').val(item.id);
         
-        $('#updateTranId').val(res.data.tran_id);
+        $('#updateTranId').val(item.tran_id);
 
-        var timestamps = new Date(res.data.tran_date);
+        var timestamps = new Date(item.tran_date);
         var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
         $('#updateDate').val(formattedDate);
         
-        $('#updateUser').attr('data-id',res.data.tran_user);
-        $('#updateUser').attr('data-with',res.data.tran_type_with);
-        $('#updateUser').val(res.data.user.user_name);
+        $('#updatePatient').attr('data-id',item.ptn_id);
+        $('#updatePatient').val(item.patient.name);
 
 
-        $('#updateTotalDiscount').val(res.data.discount);
+        $('#updateTotalDiscount').val(item.discount);
 
-        $('#updateAdvance').val(res.data.receive);
+        $('#updateAdvance').val(item.receive);
 
         
         $("#updateHead").focus();
     }
-
-    
-
-    // Edit Modal Open Functionality
-    function EditModalOn(){
-        $('#updateHead').val('');
-        $('#updateHead').removeAttr('data-id');
-        $('#updateHead').removeAttr('data-groupe');
-        $('#updateQuantity').val('1');
-        $('#updateAmount').val('');
-        $('#updateTotAmount').val('');
-        $('#dId').val('');
-        GetTransactionWith('1', 'Receive', '#within');
-        localStorage.removeItem('transactionData');
-        $('.transaction_grid tbody').html('');
-    }
-
-
-
-    // // Additional Edit Functionality
-    // function EditFormInputValue(res){
-    //     getTransactionGrid(res.data.tran_id);
-
-    //     $('#id').val(res.data.id);
-        
-    //     $('#updateTranId').val(res.data.tran_id);
-
-    //     var timestamps = new Date(res.data.tran_date);
-    //     var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
-    //     $('#updateDate').val(formattedDate);
-
-    //     $('#updateStore').val(res.data.store.store_name);
-    //     $('#updateStore').attr('data-id', res.data.store_id);
-        
-    //     $('#updateUser').attr('data-id',res.data.tran_user);
-    //     $('#updateUser').attr('data-with',res.data.tran_type_with);
-    //     $('#updateUser').val(res.data.user.user_name);
-
-    //     $('#updateTotalDiscount').val(res.data.discount);
-
-    //     $('#updateAdvance').val(res.data.payment);
-
-        
-    //     $("#updateProduct").focus();
-    // }
-
-
-    // function EditModalOn() {
-    //     $('#updateProduct').val('');
-    //     $('#updateProduct').removeAttr('data-id');
-    //     $('#updateProduct').removeAttr('data-groupe');
-    //     $('#updateUnit').val('');
-    //     $('#updateUnit').removeAttr('data-id');
-    //     $('#updateQuantity').val('1');
-    //     $('#updateCp').val('');
-    //     $('#updateMrp').val('');
-    //     let currentDate = new Date().toISOString().split('T')[0];
-    //     $('#updateExpiry').val(currentDate);
-    //     $('#updateTotAmount').val('');
-    //     $('#dId').val('');
-    //     GetTransactionWith(6, 'Payment', '#updatewithin');
-    //     localStorage.removeItem('transactionData');
-    //     $('.transaction_grid tbody').html('');
-    // }
-
-
-    // Insert Into Local Storage
-    // InsertLocalStorage();
-
-
-    // // Insert Pharmacy Purchase ajax
-    // InsertTransaction('pharmacy/transaction/purchase', ShowPharmacyPurchases, 'Purchase', '6', function() {
-    //     $('#location').removeAttr('data-id');
-    //     $('#user').removeAttr('data-id');
-    //     $('#user').removeAttr('data-with');
-    //     $('#store').removeAttr('data-id');
-    //     $('#status').val('1');
-    //     $('.transaction_grid tbody').html('');
-    //     localStorage.removeItem('transactionData');
-    // });
-
-
-    // // Update Pharmacy Issue ajax
-    // UpdateTransaction('pharmacy/transaction/purchase', ShowPharmacyPurchases, 'Purchase', "6");
 });

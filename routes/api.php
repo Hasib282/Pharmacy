@@ -710,12 +710,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/setup')->group(function () {
             ///////////// --------------- Inventory Manufacturer Routes ----------- ///////////////////
             Route::controller(ManufacturerController::class)->group(function () {
-                Route::get('/manufacturer', 'ShowAll');
+                Route::get('/manufacturer', 'Show');
                 Route::post('/manufacturer', 'Insert');
-                Route::get('/manufacturer/edit', 'Edit');
                 Route::put('/manufacturer', 'Update');
                 Route::delete('/manufacturer', 'Delete');
-                Route::get('/manufacturer/search', 'Search');
                 Route::get('/manufacturer/get',  'Get')->withoutMiddleware(CheckPermission::class);
             });
     
@@ -723,12 +721,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Inventory Category Routes ----------- ///////////////////
             Route::controller(CategoryController::class)->group(function () {
-                Route::get('/category', 'ShowAll');
+                Route::get('/category', 'Show');
                 Route::post('/category', 'Insert');
-                Route::get('/category/edit', 'Edit');
                 Route::put('/category', 'Update');
                 Route::delete('/category', 'Delete');
-                Route::get('/category/search', 'Search');
                 Route::get('/category/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
@@ -736,12 +732,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Inventory Unit Routes ----------- ///////////////////
             Route::controller(UnitController::class)->group(function () {
-                Route::get('/unit', 'ShowAll');
+                Route::get('/unit', 'Show');
                 Route::post('/unit', 'Insert');
-                Route::get('/unit/edit', 'Edit');
                 Route::put('/unit', 'Update');
                 Route::delete('/unit', 'Delete');
-                Route::get('/unit/search', 'Search');
                 Route::get('/unit/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
@@ -749,12 +743,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Inventory Form Routes ----------- ///////////////////
             Route::controller(FormController::class)->group(function () {
-                Route::get('/form', 'ShowAll');
+                Route::get('/form', 'Show');
                 Route::post('/form', 'Insert');
-                Route::get('/form/edit', 'Edit');
                 Route::put('/form', 'Update');
                 Route::delete('/form', 'Delete');
-                Route::get('/form/search', 'Search');
                 Route::get('/form/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
@@ -762,24 +754,20 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             // *************************************** Item Groupe Routes Start *************************************** //
             Route::controller(TranGroupController::class)->group(function () {
-                Route::get('/groupes', 'ShowAll');
+                Route::get('/groupes', 'Show');
                 Route::post('/groupes', 'Insert');
-                Route::get('/groupes/edit', 'Edit');
                 Route::put('/groupes', 'Update');
                 Route::delete('/groupes', 'Delete');
-                Route::get('/groupes/search', 'Search');
             });
 
 
 
             ///////////// --------------- Inventory Products Routes ----------- ///////////////////
             Route::controller(ProductsController::class)->group(function () {
-                Route::get('/product', 'ShowAll');
+                Route::get('/product', 'Show');
                 Route::post('/product', 'Insert');
-                Route::get('/product/edit', 'Edit');
                 Route::put('/product', 'Update');
                 Route::delete('/product', 'Delete');
-                Route::get('/product/search', 'Search');
                 Route::get('/product/get', 'Get')->withoutMiddleware(CheckPermission::class);
                 Route::get('/product/get/list', 'GetProductList')->withoutMiddleware(CheckPermission::class);
             });
@@ -791,24 +779,20 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/users')->group(function () {
             // *************************************** Transaction User Type Routes Start *************************************** //
             Route::controller(TranWithController::class)->group(function () {
-                Route::get('/usertype', 'ShowAll');
+                Route::get('/usertype', 'Show');
                 Route::post('/usertype', 'Insert');
-                Route::get('/usertype/edit', 'Edit');
                 Route::put('/usertype', 'Update');
                 Route::delete('/usertype', 'Delete');
-                Route::get('/usertype/search', 'Search');
             });
 
 
 
             ///////////// --------------- Client Routes ----------- ///////////////////
             Route::controller(ClientController::class)->group(function () {
-                Route::get('/clients', 'ShowAll');
+                Route::get('/clients', 'Show');
                 Route::post('/clients', 'Insert');
-                Route::get('/clients/edit', 'Edit');
                 Route::put('/clients', 'Update');
                 Route::delete('/clients', 'Delete');
-                Route::get('/clients/search', 'Search');
                 Route::get('/clients/details', 'Details');
             });
             
@@ -816,12 +800,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Supplier Routes ----------- ///////////////////
             Route::controller(SupplierController::class)->group(function () {
-                Route::get('/suppliers', 'ShowAll');
+                Route::get('/suppliers', 'Show');
                 Route::post('/suppliers', 'Insert');
-                Route::get('/suppliers/edit', 'Edit');
                 Route::put('/suppliers', 'Update');
                 Route::delete('/suppliers', 'Delete');
-                Route::get('/suppliers/search', 'Search');
                 Route::get('/suppliers/details', 'Details');
             });
         });
@@ -1066,76 +1048,60 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/setup')->group(function () {
             ///////////// --------------- Pharmacy Manufacturer Routes ----------- ///////////////////
             Route::controller(ManufacturerController::class)->group(function () {
-                Route::get('/manufacturer', 'ShowAll');
+                Route::get('/manufacturer', 'Show');
                 Route::post('/manufacturer', 'Insert');
-                Route::get('/manufacturer/edit', 'Edit');
                 Route::put('/manufacturer', 'Update');
                 Route::delete('/manufacturer', 'Delete');
-                Route::get('/manufacturer/search', 'Search');
-                Route::get('/manufacturer/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
             
             ///////////// --------------- Pharmacy Category Routes ----------- ///////////////////
             Route::controller(CategoryController::class)->group(function () {
-                Route::get('/category', 'ShowAll');
+                Route::get('/category', 'Show');
                 Route::post('/category', 'Insert');
-                Route::get('/category/edit', 'Edit');
                 Route::put('/category', 'Update');
                 Route::delete('/category', 'Delete');
-                Route::get('/category/search', 'Search');
-                Route::get('/category/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
 
             ///////////// --------------- Pharmacy Unit Routes ----------- ///////////////////
             Route::controller(UnitController::class)->group(function () {
-                Route::get('/unit', 'ShowAll');
+                Route::get('/unit', 'Show');
                 Route::post('/unit', 'Insert');
-                Route::get('/unit/edit', 'Edit');
                 Route::put('/unit', 'Update');
                 Route::delete('/unit', 'Delete');
-                Route::get('/unit/search', 'Search');
-                Route::get('/unit/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
 
             ///////////// --------------- Pharmacy Form Routes ----------- ///////////////////
             Route::controller(FormController::class)->group(function () {
-                Route::get('/form', 'ShowAll');
+                Route::get('/form', 'Show');
                 Route::post('/form', 'Insert');
-                Route::get('/form/edit', 'Edit');
                 Route::put('/form', 'Update');
                 Route::delete('/form', 'Delete');
-                Route::get('/form/search', 'Search');
-                Route::get('/form/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
     
 
             // *************************************** Item Groupe Routes Start *************************************** //
             Route::controller(TranGroupController::class)->group(function () {
-                Route::get('/groupes', 'ShowAll');
+                Route::get('/groupes', 'Show');
                 Route::post('/groupes', 'Insert');
-                Route::get('/groupes/edit', 'Edit');
                 Route::put('/groupes', 'Update');
                 Route::delete('/groupes', 'Delete');
-                Route::get('/groupes/search', 'Search');
             });
 
 
 
             ///////////// --------------- Pharmacy Products Routes ----------- ///////////////////
             Route::controller(ProductsController::class)->group(function () {
-                Route::get('/product', 'ShowAll');
+                Route::get('/product', 'Show');
                 Route::post('/product', 'Insert');
-                Route::get('/product/edit', 'Edit');
                 Route::put('/product', 'Update');
                 Route::delete('/product', 'Delete');
-                Route::get('/product/search', 'Search');
                 Route::get('/product/get', 'Get')->withoutMiddleware(CheckPermission::class);
                 Route::get('/product/get/list', 'GetProductList')->withoutMiddleware(CheckPermission::class);
             });
@@ -1146,24 +1112,20 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/users')->group(function () {
             // *************************************** Transaction User Type Routes Start *************************************** //
             Route::controller(TranWithController::class)->group(function () {
-                Route::get('/usertype', 'ShowAll');
+                Route::get('/usertype', 'Show');
                 Route::post('/usertype', 'Insert');
-                Route::get('/usertype/edit', 'Edit');
                 Route::put('/usertype', 'Update');
                 Route::delete('/usertype', 'Delete');
-                Route::get('/usertype/search', 'Search');
             });
 
 
 
             ///////////// --------------- Client Routes ----------- ///////////////////
             Route::controller(ClientController::class)->group(function () {
-                Route::get('/clients', 'ShowAll');
+                Route::get('/clients', 'Show');
                 Route::post('/clients', 'Insert');
-                Route::get('/clients/edit', 'Edit');
                 Route::put('/clients', 'Update');
                 Route::delete('/clients', 'Delete');
-                Route::get('/clients/search', 'Search');
                 Route::get('/clients/details', 'Details');
             });
             
@@ -1171,12 +1133,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Supplier Routes ----------- ///////////////////
             Route::controller(SupplierController::class)->group(function () {
-                Route::get('/suppliers', 'ShowAll');
+                Route::get('/suppliers', 'Show');
                 Route::post('/suppliers', 'Insert');
-                Route::get('/suppliers/edit', 'Edit');
                 Route::put('/suppliers', 'Update');
                 Route::delete('/suppliers', 'Delete');
-                Route::get('/suppliers/search', 'Search');
                 Route::get('/suppliers/details', 'Details');
             });
         });
@@ -1421,12 +1381,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/setup')->group(function () {
             ///////////// --------------- Doctor Specialization Routes ----------- ///////////////////
             Route::controller(SpecializationController::class)->group(function () {
-                Route::get('/specialization', 'ShowAll');
+                Route::get('/specialization', 'Show');
                 Route::post('/specialization', 'Insert');
-                Route::get('/specialization/edit', 'Edit');
                 Route::put('/specialization', 'Update');
                 Route::delete('/specialization', 'Delete');
-                Route::get('/specialization/search', 'Search');
                 Route::get('/specialization/get', 'Get');
             });
 
@@ -1434,12 +1392,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Bed catagory Routes ----------- ///////////////////
             Route::controller(BedCatagoryController::class)->group(function () {
-                Route::get('/bedcategory', 'ShowAll');
+                Route::get('/bedcategory', 'Show');
                 Route::post('/bedcategory', 'Insert');
-                Route::get('/bedcategory/edit', 'Edit');
                 Route::put('/bedcategory', 'Update');
                 Route::delete('/bedcategory', 'Delete');
-                Route::get('/bedcategory/search', 'Search');
                 Route::get('/bedcategory/get', 'Get');
             });
 
@@ -1447,12 +1403,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Bed list Routes ----------- ///////////////////
             Route::controller(BedListController::class)->group(function () {
-                Route::get('/bedlist', 'ShowAll');
+                Route::get('/bedlist', 'Show');
                 Route::post('/bedlist', 'Insert');
-                Route::get('/bedlist/edit', 'Edit');
                 Route::put('/bedlist', 'Update');
                 Route::delete('/bedlist', 'Delete');
-                Route::get('/bedlist/search', 'Search');
                 Route::get('/bedlist/get', 'Get');
             });
 
@@ -1460,12 +1414,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Nursing Station Routes ----------- ///////////////////
             Route::controller(NursingStationController::class)->group(function(){
-                Route::get('/nursingstation', 'ShowAll');
+                Route::get('/nursingstation', 'Show');
                 Route::post('/nursingstation', 'Insert');
-                Route::get('/nursingstation/edit', 'Edit');
                 Route::put('/nursingstation', 'Update');
                 Route::delete('/nursingstation', 'Delete');
-                Route::get('/nursingstation/search', 'Search');
                 Route::get('/nursingstation/get', 'Get');
             });
 
@@ -1493,12 +1445,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
         ///////////// --------------- Patient Registration Routes ----------- ///////////////////
         Route::controller(PatientRegistrationController::class)->group(function(){
-            Route::get('/ptnregistration', 'ShowAll');
+            Route::get('/ptnregistration', 'Show');
             Route::post('/ptnregistration', 'Insert');
-            Route::get('/ptnregistration/edit', 'Edit');
             Route::put('/ptnregistration', 'Update');
             Route::delete('/ptnregistration', 'Delete');
-            Route::get('/ptnregistration/search', 'Search');
             Route::get('/ptnregistration/get', 'Get');
             Route::get('/ptnregistration/get/patient', 'GetPatient');
         });
@@ -1509,12 +1459,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/users')->group(function () {
             ///////////// --------------- Doctor Information Routes ----------- ///////////////////
             Route::controller(DoctorController::class)->group(function(){
-                Route::get('/doctors', 'ShowAll');
+                Route::get('/doctors', 'Show');
                 Route::post('/doctors', 'Insert');
-                Route::get('/doctors/edit', 'Edit');
                 Route::put('/doctors', 'Update');
                 Route::delete('/doctors', 'Delete');
-                Route::get('/doctors/search', 'Search');
                 Route::get('/doctors/get', 'Get');
             });
 
@@ -1522,40 +1470,12 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Patient Registration Routes ----------- ///////////////////
             Route::controller(PatientController::class)->group(function(){
-                Route::get('/patients', 'ShowAll');
+                Route::get('/patients', 'Show');
                 Route::post('/patients', 'Insert');
-                Route::get('/patients/edit', 'Edit');
                 Route::put('/patients', 'Update');
                 Route::delete('/patients', 'Delete');
-                Route::get('/patients/search', 'Search');
                 Route::get('/patients/get', 'Get');
             });
-            
-            
-            
-            // ///////////// --------------- SR Registration Routes ----------- ///////////////////
-            // Route::controller(SRController::class)->group(function(){
-            //     Route::get('/sr', 'ShowAll');
-            //     Route::post('/sr', 'Insert');
-            //     Route::get('/sr/edit', 'Edit');
-            //     Route::put('/sr', 'Update');
-            //     Route::delete('/sr', 'Delete');
-            //     Route::get('/sr/search', 'Search');
-            //     Route::get('/sr/get', 'Get');
-            // });
-            
-            
-            
-            // ///////////// --------------- Marketing Head Registration Routes ----------- ///////////////////
-            // Route::controller(MarketingHeadController::class)->group(function(){
-            //     Route::get('/marketinghead', 'ShowAll');
-            //     Route::post('/marketinghead', 'Insert');
-            //     Route::get('/marketinghead/edit', 'Edit');
-            //     Route::put('/marketinghead', 'Update');
-            //     Route::delete('/marketinghead', 'Delete');
-            //     Route::get('/marketinghead/search', 'Search');
-            //     Route::get('/marketinghead/get', 'Get');
-            // });
         }); // End Hospital Users Routes
         
         

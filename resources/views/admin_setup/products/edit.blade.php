@@ -10,6 +10,8 @@
         <!-- form start -->
         <form id="EditForm" method="post">
             @csrf
+            @method('PUT')
+            <input type="hidden" name="type" id="updateType" value="{{ Request::segment(1) }}">
             {{-- id  --}}
             <input type="hidden" name="id" id="id">
             {{-- name --}}
@@ -29,28 +31,28 @@
             {{-- category --}}
             <div class="form-input-group">
                 <label for="updateCategory">Category Name</label>
-                <input type="text" name="category" class="form-input" id="updateCategory" data-url="{{ Request::segment(1) }}/setup/category/get" autocomplete="off"><hr>
+                <input type="text" name="category" class="form-input" id="updateCategory" autocomplete="off"><hr>
                 <div id='update-category'></div>
                 <span class="error" id="update_category_error"></span>
             </div>
             {{-- manufacturer --}}
             <div class="form-input-group">
                 <label for="updateManufacturer">Manufacture Name</label>
-                <input type="text" name="manufacturer" class="form-input" id="updateManufacturer" data-url="{{ Request::segment(1) }}/setup/manufacturer/get" autocomplete="off"><hr>
+                <input type="text" name="manufacturer" class="form-input" id="updateManufacturer" autocomplete="off"><hr>
                 <div id='update-manufacturer'></div>
                 <span class="error" id="update_manufacturer_error"></span>
             </div>
             {{-- form  --}}
             <div class="form-input-group">
                 <label for="updateForm">Item Form Name</label>
-                <input type="text" name="form" class="form-input" id="updateForm" data-url="{{ Request::segment(1) }}/setup/form/get" autocomplete="off"><hr>
+                <input type="text" name="form" class="form-input" id="updateForm" autocomplete="off"><hr>
                 <div id='update-form'></div>
                 <span class="error" id="update_form_error"></span>
             </div>
             {{-- unit --}}
             <div class="form-input-group">
                 <label for="updateUnit">Unit Name</label>
-                <input type="text" name="unit" class="form-input" id="updateUnit" data-url="{{ Request::segment(1) }}/setup/unit/get" autocomplete="off"><hr>
+                <input type="text" name="unit" class="form-input" id="updateUnit" autocomplete="off"><hr>
                 <div id='update-unit'></div>
                 <span class="error" id="update_unit_error"></span>
             </div>

@@ -10,7 +10,7 @@ use App\Models\Item_Form;
 class FormController extends Controller
 {
     // Show All Item/Product Form
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
         $data = filterByCompany(Item_Form::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->get();
         return response()->json([
@@ -41,17 +41,6 @@ class FormController extends Controller
             'message' => 'Form Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Item/Product Form
-    public function Edit(Request $req){
-        $data = Item_Form::on('mysql')->where('id', $req->id)->first();
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -91,28 +80,9 @@ class FormController extends Controller
 
 
 
-    // Search Item/Product Form
-    public function Search(Request $req){
-        $type = GetTranType($req->segment(2));
-        $data = filterByCompany(
-                    Item_Form::on('mysql')
-                    ->where('type_id', $type)
-                    ->where('form_name', 'like', '%'.$req->search.'%')
-                )
-                ->orderBy('form_name','asc')
-                ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
-    } // End Method
-
-
-
     // Get Item/Product Form
     public function Get(Request $req){
-        $type = GetTranType($req->segment(2));
+        $type = GetTranType($req->type);
         $data = filterByCompany(
                     Item_Form::on('mysql')
                     ->where('type_id', $type)

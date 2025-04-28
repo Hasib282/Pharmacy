@@ -1,5 +1,5 @@
 <div id="addModal" class="modal-container">
-    <div class="modal-subject" style="width: 40%;">
+    <div class="modal-subject" style="width: 60%;">
         <div class="modal-heading banner">
             <div class="center">
                 <h3>Add {{ $name }}</h3>
@@ -82,6 +82,7 @@
                     <div class="form-input-group">
                         <label for="gender">Gender</label>
                         <select name="gender" id="gender" class="form-input">
+                            <option value="">Select Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="other">Other</option>
@@ -117,7 +118,8 @@
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="religion">Religion</label>
-                        <select name="religion" id="religion">
+                        <select name="religion" id="religion" class="form-input">
+                            <option value="">Select Religion</option>
                             <option value="Islam" checked>Islam</option>
                             <option value="Hinduism">Hinduism</option>
                             <option value="Buddhism">Buddhism</option>

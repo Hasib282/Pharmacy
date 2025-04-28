@@ -19,6 +19,10 @@ class Transaction_Main extends Model
     public function User(){
         return $this->belongsTo(User_Info::class,'tran_user','user_id');
     }
+    
+    public function Patient(){
+        return $this->belongsTo(Patient_Information::class,'ptn_id','ptn_id');
+    }
 
     public function Location(){
         return $this->belongsTo(Location_Info::class,'loc_id','id');

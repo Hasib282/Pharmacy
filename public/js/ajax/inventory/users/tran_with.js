@@ -51,8 +51,8 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
+        { label: 'User Role', type:"select", key: 'user_role', method:"custom", options:[{val:4,text:"Client"}, {val:5,text:'Supplier'}] },
         { label: 'User Type', key: 'tran_with_name' },
-        { label: 'User Role', type:"select", key: 'user_role', method:"fetch", link:'admin/users/roles/get', name:"name" },
         { label: 'Transaction Method', type:"select", key: 'tran_method', method:"custom", options:['Receive','Payment','Both'] },
         { label: 'Action', type: 'button' }
     ]);
@@ -89,16 +89,8 @@ $(document).ready(function () {
     function EditFormInputValue(item){
         $('#id').val(item.id);
         $('#updateName').val(item.tran_with_name);
-
-        // Create options dynamically
-        $('#updateRole').html('');
-        $('#updateRole').append(`<option value="4" ${item.user_role == '4' ? 'selected' : ''}>Client</option>
-                                    <option value="5" ${item.user_role == '5' ? 'selected' : ''}>Supplier</option>`);
-
-        $('#updateTranMethod').html('');
-        $('#updateTranMethod').append(`<option value="Receive" ${item.tran_method === 'Receive' ? 'selected' : ''}>Receive</option>
-                                    <option value="Payment" ${item.tran_method === 'Payment' ? 'selected' : ''}>Payment</option>
-                                    <option value="Both" ${item.tran_method === 'Both' ? 'selected' : ''}>Both</option>`);
+        $('#updateRole').val(item.user_role);
+        $('#updateTranMethod').val(item.tran_method);
         $('#updateName').focus();
     }; // End Method
 });

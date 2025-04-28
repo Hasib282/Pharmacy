@@ -398,7 +398,7 @@ class GeneralTransactionController extends Controller
                 DB::raw('SUM(tot_amount) as total_amount'),
                 'tran_groupe_id',
                 'expiry_date'
-            )    
+            )
             ->where('tran_id', 'like', $request->tranId)
             ->groupBy('tran_head_id', 'tran_groupe_id', 'amount', 'quantity_actual', 'mrp', 'cp', 'unit_id', 'expiry_date')
             ->orderBy('tran_id','asc')
@@ -416,7 +416,7 @@ class GeneralTransactionController extends Controller
                 DB::raw('SUM(tot_amount) as total_amount'),
                 'tran_groupe_id',
                 'expiry_date'
-            )    
+            )
             ->where('tran_id', 'like', $request->tranId)
             ->groupBy('tran_head_id', 'tran_groupe_id', 'amount', 'quantity_actual', 'mrp', 'cp', 'unit_id', 'expiry_date')
             ->orderBy('tran_id','asc')

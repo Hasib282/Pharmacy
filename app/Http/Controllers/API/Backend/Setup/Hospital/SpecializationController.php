@@ -11,7 +11,7 @@ use App\Models\Specialization;
 class SpecializationController extends Controller
 {
     // Show All Doctors Specialization
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Specialization::on('mysql_second')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
@@ -38,17 +38,6 @@ class SpecializationController extends Controller
             'message' => 'Doctors Specialization Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Doctors Specialization
-    public function Edit(Request $req){
-        $data = Specialization::on('mysql_second')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -86,21 +75,6 @@ class SpecializationController extends Controller
             'status'=> true,
             'message' => 'Doctors Specialization Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Doctors Specialization
-    public function Search(Request $req){
-        $data = Specialization::on('mysql_second')
-        ->where('name', 'like', $req->search.'%')
-        ->orderBy('name')
-        ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

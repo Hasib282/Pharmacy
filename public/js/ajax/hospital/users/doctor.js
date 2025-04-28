@@ -17,7 +17,7 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Company Name', key: 'title' },
+        { label: 'Title', key: 'title' },
         { label: 'Name', key: 'name' },
         { label: 'Degree', key: 'degree' },
         { label: 'Email', key: 'email' },

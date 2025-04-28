@@ -11,7 +11,7 @@ use App\Models\Bed_Category;
 class BedCatagoryController extends Controller
 {
     // Show All Bed Category
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Bed_Category::on('mysql_second')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
@@ -38,17 +38,6 @@ class BedCatagoryController extends Controller
             'message' => 'Bed Category Added Successfully',
             "data" => $data,
         ], 200);  
-    } // End Method
-
-
-
-    // Edit Bed Category
-    public function Edit(Request $req){
-        $data = Bed_Category::on('mysql_second')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
     } // End Method
 
 
@@ -86,21 +75,6 @@ class BedCatagoryController extends Controller
             'status'=> true,
             'message' => 'Bed Category Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Bed Category
-    public function Search(Request $req){
-        $data = Bed_Category::on('mysql_second')
-        ->where('name', 'like', $req->search.'%')
-        ->orderBy('name')
-        ->paginate(15);
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

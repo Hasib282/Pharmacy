@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('loc_id')->nullable()->comment('location_infos');
             $table->unsignedBigInteger('tran_type_with')->nullable();
             $table->string('tran_user')->nullable();
+            $table->string('ptn_id')->nullable();
             $table->string('user_name')->nullable();
             $table->string('user_phone')->nullable();
             $table->string('user_address')->nullable();

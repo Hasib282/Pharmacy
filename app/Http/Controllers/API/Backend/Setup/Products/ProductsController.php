@@ -13,7 +13,7 @@ use App\Models\Transaction_Groupe;
 class ProductsController extends Controller
 {
     // Show All Pharmacy Item/Products
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         // Update Product Quantity
         // DB::connection('mysql')
         // ->table('transaction__heads as h')
@@ -65,7 +65,7 @@ class ProductsController extends Controller
             "category_id" => $req->category,
             "manufacturer_id" => $req->manufacturer,
             "form_id" => $req->form,
-            "unit_id" => $req->unit,
+            "unit_id" => $req->unit?:1,
             'company_id' => $req->company,
         ]);
 
@@ -80,26 +80,12 @@ class ProductsController extends Controller
 
 
 
-    // Edit Pharmacy Item/Products
-    public function Edit(Request $req){
-        $type = GetTranType($req->segment(2));
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', $type)->orderBy('added_at','asc')->get();
-        $data = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=>$data,
-            'groupes' => $groupes,
-        ], 200);
-    } // End Method
-
-
-
     // Update Pharmacy Item/Products
     public function Update(Request $req){
         $data = Transaction_Head::findOrFail($req->id);
         
         $req->validate([
-            "productName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($data->id)],
+            "productName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($req->id)],
             "groupe" => 'required|exists:mysql.transaction__groupes,id',
             "category" => 'nullable|exists:mysql.item__categories,id',
             "manufacturer" => 'nullable|exists:mysql.item__manufacturers,id',
@@ -116,7 +102,7 @@ class ProductsController extends Controller
             "category_id" => $req->category,
             "manufacturer_id" => $req->manufacturer,
             "form_id" => $req->form,
-            "unit_id" => $req->unit,
+            "unit_id" => $req->unit ?: 1,
             "quantity" => $req->quantity,
             "cp" => $req->cp,
             "mrp" => $req->mrp,
@@ -144,67 +130,6 @@ class ProductsController extends Controller
             'status'=> true,
             'message' => 'Product Deleted Successfully',
         ], 200); 
-    } // End Method
-
-
-
-    // Search Pharmacy Item/Products
-    public function Search(Request $req){
-        $type = GetTranType($req->segment(2));
-        $query = filterByCompany(Transaction_Head::on('mysql')
-                    ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
-                    ->whereHas('Groupe', function ($q) use($type){
-                        $q->where('tran_groupe_type', $type);
-                    }) // Base query
-                );
-
-        if($req->searchOption == 1){
-            $query->where('tran_head_name', 'like', '%'.$req->search.'%')
-            ->orderBy('tran_head_name','asc');
-        }
-        else if($req->searchOption == 2){
-            $query->whereHas('Groupe', function ($q) use ($req){
-                $q->where('tran_groupe_name', 'like', '%' . $req->search . '%');
-                $q->orderBy('tran_groupe_name','asc');
-            });
-        }
-        else if($req->searchOption == 3){
-            $query->whereHas('Category', function ($q) use ($req) {
-                $q->where('category_name', 'like', '%' . $req->search . '%');
-                $q->orderBy('category_name','asc');
-            });
-        }
-        else if($req->searchOption == 4){
-            $query->whereHas('Manufecturer', function ($q) use ($req) {
-                $q->where('manufacturer_name', 'like', '%' . $req->search . '%');
-                $q->orderBy('manufacturer_name','asc');
-            });
-        }
-        else if($req->searchOption == 5){
-            $query->whereHas('Form', function ($q) use ($req) {
-                $q->where('form_name', 'like', '%' . $req->search . '%');
-                $q->orderBy('form_name','asc');
-            });
-        }
-        else if($req->searchOption == 6){
-            $query->whereHas('Unit', function ($q) use ($req) {
-                $q->where('unit_name', 'like', '%' . $req->search . '%');
-                $q->orderBy('unit_name','asc');
-            });
-        }
-        else if($req->searchOption == 7){
-            $query->where('expiry_date', 'like', '%' . $req->search . '%')
-            ->orderBy('expiry_date','asc');
-        }
-
-        $data = $query->paginate(15);
-
-
-        
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
     } // End Method
 
 

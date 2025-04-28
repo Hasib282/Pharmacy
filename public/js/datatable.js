@@ -387,7 +387,7 @@ function renderTableHead(thead) {
                 const opts = [`<option value="">-- Select --</option>`]
                 .concat(h.options.map(option => (typeof option === 'object' && option !== null) ? `<option value="${option.val}">${option.text}</option>` : `<option value="${option}">${option}</option>`))
                 .join('');
-                return `<th><select class="col-filter" data-key="${h.key}" id="${h.key}">${opts}</select></th>`;
+                return `<th><select class="col-filter" data-key="${h.key}">${opts}</select></th>`;
             } 
             else if (h.method === 'fetch') {
                 setTimeout(() => {

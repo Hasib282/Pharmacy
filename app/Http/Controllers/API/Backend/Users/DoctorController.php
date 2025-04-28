@@ -11,7 +11,7 @@ use App\Models\Doctor_Information;
 class DoctorController extends Controller
 {
     // Show All Doctors
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Doctor_Information::on('mysql_second')->get();
         return response()->json([
             'status' => true,
@@ -52,17 +52,6 @@ class DoctorController extends Controller
             'status'=>true,
             'message'=>'Doctors information Added Successfully',
             "data" => $data,
-        ], 200);
-    } // End Method
-
-
-
-    // Edit Doctors
-    public function Edit(Request $req){
-        $data = Doctor_Information::on('mysql_second')->findorfail($req->id);
-        return response()->json([
-            'status'=>true,
-            'data'=> $data,
         ], 200);
     } // End Method
 
@@ -115,6 +104,8 @@ class DoctorController extends Controller
             'message'=> 'Doctors Information Deleted Successfully'
         ], 200);
     } // End Method
+
+    
 
     // Get Doctors
     public function Get(Request $req){

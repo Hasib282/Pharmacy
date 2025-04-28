@@ -10,6 +10,7 @@
         <!-- form start -->
         <form id="AddForm" method="post">
             @csrf
+            <input type="hidden" name="type" id="type" value="{{ Request::segment(1) }}">
             {{-- name --}}
             <div class="form-input-group">
                 <label for="productName">{{ $name }} Name</label>
@@ -27,28 +28,28 @@
             {{-- category --}}
             <div class="form-input-group">
                 <label for="category">Category Name</label>
-                <input type="text" name="category" class="form-input" id="category"  data-url="{{ Request::segment(1) }}/setup/category/get" autocomplete="off"><hr>
+                <input type="text" name="category" class="form-input" id="category" autocomplete="off"><hr>
                 <div id='category-list'></div>
                 <span class="error" id="category_error"></span>
             </div>
             {{-- manufacturer --}}
             <div class="form-input-group">
                 <label for="manufacturer">Manufacture Name</label>
-                <input type="text" name="manufacturer" class="form-input" id="manufacturer"  data-url="{{ Request::segment(1) }}/setup/manufacturer/get" autocomplete="off"><hr>
+                <input type="text" name="manufacturer" class="form-input" id="manufacturer" autocomplete="off"><hr>
                 <div id='manufacturer-list'></div>
                 <span class="error" id="manufacturer_error"></span>
             </div>
             {{-- form  --}}
             <div class="form-input-group">
                 <label for="form">Product Form Name</label>
-                <input type="text" name="form" class="form-input" id="form"  data-url="{{ Request::segment(1) }}/setup/form/get" autocomplete="off"><hr>
+                <input type="text" name="form" class="form-input" id="form" autocomplete="off"><hr>
                 <div id='form-list'></div>
                 <span class="error" id="form_error"></span>
             </div>
             {{-- unit --}}
             <div class="form-input-group">
                 <label for="unit">Product Unit Name</label>
-                <input type="text" name="unit" class="form-input" id="unit"  data-url="{{ Request::segment(1) }}/setup/unit/get" autocomplete="off"><hr>
+                <input type="text" name="unit" class="form-input" id="unit" autocomplete="off"><hr>
                 <div id='unit-list'></div>
                 <span class="error" id="unit_error"></span>
             </div>

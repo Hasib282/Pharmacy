@@ -19,7 +19,10 @@
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="updateTitle">Title</label>
-                        <input type="text" name="title" class="form-input" id="updateTitle">
+                        <select name="title" id="title">
+                            <option value="Mr.">Mr.</option>
+                            <option value="Mrs.">Mrs.</option>
+                        </select>
                         <span class="error" id="update_title_error"></span>
                     </div>
                 </div>
@@ -86,7 +89,16 @@
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="updateReligion">Religion</label>
-                        <input type="text" name="religion" class="form-input" id="updateReligion">
+                        <select name="religion" id="updateReligion" class="form-input">
+                            <option value="">Select Religion</option>
+                            <option value="Islam" checked>Islam</option>
+                            <option value="Hinduism">Hinduism</option>
+                            <option value="Buddhism">Buddhism</option>
+                            <option value="Christianity">Christianity</option>
+                            <option value="Jainists">Jainists</option>
+                            <option value="Folk religions">Folk religions</option>
+                            <option value="Others">Others</option>
+                        </select>
                         <span class="error" id="update_religion_error"></span>
                     </div>
                 </div>

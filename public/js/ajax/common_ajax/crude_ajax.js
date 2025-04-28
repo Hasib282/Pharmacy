@@ -337,7 +337,7 @@ function getTransactionGrid(tranId) {
         data: { tranId, status },
         success: function (res) {
             if(res.status){
-                let transactions = res.transaction;
+                let transactions = res.data;
 
                 // Retrieve existing productGrids from local storage
                 let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
@@ -384,7 +384,7 @@ function DisplayTransactionGrid() {
         let dynamicColumn = '';
 
         // Set the value of dynamicColumn based on conditions
-        if (segment1 === 'transaction') {
+        if (segment1 === 'transaction' || segment1 === 'hospital') {
             dynamicColumn = `<td>${products.amount}</td>`;
         } else if (segment3 === 'purchase') {
             dynamicColumn = `<td>${products.cp}</td>`;
@@ -633,7 +633,7 @@ function InsertLocalStorage(isIssue = false) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function InsertTransaction(url, RenderData, method, type, AddSuccessEvent) {
+function InsertTransaction(url, method, type, AddSuccessEvent) {
     $(document).off('click', '#InsertMain').on('click', '#InsertMain', function (e) {
         e.preventDefault();
         let products = localStorage.getItem('transactionData');
@@ -646,6 +646,7 @@ function InsertTransaction(url, RenderData, method, type, AddSuccessEvent) {
 
         let withs = $('#user').attr('data-with');
         let user = $('#user').attr('data-id');
+        let ptn_id = $('#patient').attr('data-id');
         let name = $('#name').val();
         let phone = $('#phone').val();
         let address = $('#address').val();
@@ -659,7 +660,7 @@ function InsertTransaction(url, RenderData, method, type, AddSuccessEvent) {
         $.ajax({
             url: `${apiUrl}/${url}`,
             method: 'POST',
-            data: { products:JSON.stringify(products), name, phone, address, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
+            data: { products:JSON.stringify(products), name, phone, address, type, method, withs, user, ptn_id, store, amountRP, discount, netAmount, advance, balance, company },
             success: function (res) {
                 if (res.status) {
                     $('#AddForm')[0].reset();
@@ -668,7 +669,8 @@ function InsertTransaction(url, RenderData, method, type, AddSuccessEvent) {
                         AddSuccessEvent();
                     }
 
-                    ReloadData(url, RenderData);
+                    localStorage.removeItem('transactionData');
+                    tableInstance.addRow(res.data);
                     toastr.success(res.message, 'Added!');
                 }
             }
@@ -678,7 +680,7 @@ function InsertTransaction(url, RenderData, method, type, AddSuccessEvent) {
 
 
 
-function UpdateTransaction(url, RenderData, method, type, AddSuccessEvent = undefined) {
+function UpdateTransaction(url, method, type, AddSuccessEvent = undefined) {
     $(document).off('click', '#UpdateMain').on('click', '#UpdateMain', function (e) {
         e.preventDefault();
         let products = localStorage.getItem('transactionData');
@@ -716,7 +718,7 @@ function UpdateTransaction(url, RenderData, method, type, AddSuccessEvent = unde
                     }
 
                     localStorage.removeItem('transactionData');
-                    ReloadData(url, RenderData);
+                    tableInstance.updateRow(document.getElementById('id').value, res.updatedData);
                     toastr.success(res.message, 'Updated!');
                 }
             }

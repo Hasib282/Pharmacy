@@ -2,7 +2,7 @@ function ShowPharmacyProducts(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_head_name','groupe.tran_groupe_name','category.category_name','manufecturer.manufacturer_name','form.form_name','quantity','unit.unit_name',{key:'cp', type: 'number'},{key:'mrp', type: 'number'},{key:'expiry_date', type: 'date'},'company_id'],
+        tbody: ['groupe.tran_groupe_name','tran_head_name','category.category_name','manufecturer.manufacturer_name','form.form_name','quantity','unit.unit_name',{key:'cp', type: 'number'},{key:'mrp', type: 'number'},{key:'expiry_date', type: 'date'},'company_id'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -15,15 +15,15 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
+        { label: 'Groupe Name', type:"select", key: 'groupe_id', method:"fetch", link:'admin/trangroupes/get', name:"tran_groupe_name", data:{type:6} },
         { label: 'Product Name', key: 'tran_head_name' },
-        { label: 'Transaction Groupe', key: 'groupe.tran_groupe_name' },
         { label: 'Category Name', key: 'category.category_name' },
         { label: 'Manufacturer', key: 'manufecturer.manufacturer_name' },
         { label: 'Item Form Name	', key: 'form.form_name' },
         { label: 'QTY', key: 'quantity' },
         { label: 'Unite', key: 'unit.unit_name' },
-        { label: 'CP', key: 'cp' },
-        { label: 'MRP', key: 'mrp' },
+        { label: 'CP' },
+        { label: 'MRP' },
         { label: 'Expiry', key: 'expiry_date', type:'date' },
         { label: 'Company Id', key: 'company_id' },
         { label: 'Action', type: 'button' }
@@ -96,12 +96,7 @@ $(document).ready(function () {
         $('#id').val(item.id);
         $('#updateProductName').val(item.tran_head_name);
         $('#updateProductName').focus();
-
-        $('#updateGroupe').html('');
-        $('#updateGroupe').append(`<option value="" >Select Product Groupe</option>`);
-        $.each(res.groupes, function (key, groupe) {
-            $('#updateGroupe').append(`<option value="${groupe.id}" ${item.groupe_id === groupe.id ? 'selected' : ''}>${groupe.tran_groupe_name}</option>`);
-        });
+        $('#updateGroupe').val(item.groupe_id);
 
         if(item.category_id){
             $('#updateCategory').val(item.category.category_name);

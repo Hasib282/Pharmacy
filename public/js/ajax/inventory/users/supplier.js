@@ -21,7 +21,7 @@ $(document).ready(function () {
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Id', key: 'user_id' },
         { label: 'Name', key: 'user_name' },
-        { label: 'Supplier Type', key: 'withs.tran_with_name' },
+        { label: 'Client Type', type:"select", key: 'tran_user_type', method:"fetch", link:"admin/tranwith/get", data:{type:5,user:5}, name:"tran_with_name" },
         { label: 'Email', key: 'user_email' },
         { label: 'Phone', key: 'user_phone' },
         { label: 'Location', key: 'location.upazila' },
@@ -33,6 +33,10 @@ $(document).ready(function () {
 
     // Load Data on Hard Reload
     ReloadData('inventory/users/suppliers', ShowSuppliers);
+
+
+    // Creating Select Options Dynamically
+    GetTransactionWith(5, null, 5, 'Ok');
     
 
     // Add Modal Open Functionality
@@ -60,31 +64,16 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(item){
+        $('#EditForm')[0].reset();
+        $('#updateLocation').removeAttr('data-id');
+
         $('#id').val(item.id);
-
-        CreateSelectOptions('#updateType', 'Select Company Type', res.tranwith, item.tran_user_type, 'tran_with_name');
-
+        $('#updateType').val(item.tran_user_type);
         $('#updateName').val(item.user_name);
         $('#updatePhone').val(item.user_phone);
         $('#updateEmail').val(item.user_email);
-
-        // Create options dynamically
-        $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${item.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-            <option value="Chittagong" ${item.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-            <option value="Rajshahi" ${item.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-            <option value="Khulna" ${item.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-            <option value="Sylhet" ${item.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barisal" ${item.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
-            <option value="Rangpur" ${item.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-            <option value="Mymensingh" ${item.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-
-        // Create options dynamically based on the status value
-        $('#updateGender').empty();
-        $('#updateGender').append(`<option value="Male" ${item.gender === 'Male' ? 'selected' : ''}>Male</option>
-                                    <option value="Female" ${item.gender === 'Female' ? 'selected' : ''}>Female</option>
-                                    <option value="Others" ${item.gender === 'Others' ? 'selected' : ''}>Others</option>`);
-
+        $('#updateDivision').val(item.location.division);
+        $('#updateGender').val(item.gender);
         $('#updateLocation').val(item.location.upazila);
         $('#updateLocation').attr('data-id',item.loc_id);
         $('#updateAddress').val(item.address);
@@ -94,9 +83,5 @@ $(document).ready(function () {
 
 
     // Show Detals Ajax
-    DetailsAjax('inventory/users/suppliers');
-
-
-    // Creating Select Options Dynamically
-    GetTransactionWith(5, null, null, 5, 'Ok');
+    DetailsAjax('transaction/users/suppliers');
 });
