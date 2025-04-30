@@ -371,7 +371,7 @@ class GenerateTable {
 
 // Create the thead Rows 
 function renderTableHead(thead) {
-    const head = document.querySelector('.data-table thead');
+    const head = document.querySelector('#data-table thead');
     const row1 = thead.map(h => `<th>${h.label}</th>`).join('');
 
     const row2 = thead.map(h => {

@@ -86,7 +86,7 @@
                         <div class="c-6">
                             <div class="form-input-group">
                                 <label for="updatePbatch">Batch</label>
-                                <input type="text" name="pbatch" class="form-input" id="updatPbatch" autocomplete="off"><hr>
+                                <input type="text" name="pbatch" class="form-input" id="updatePbatch" autocomplete="off"><hr>
                                 <div id="update-pbatch"></div>
                                 <span class="error" id="update_pbatch_error"></span>
                             </div>

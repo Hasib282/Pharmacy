@@ -1390,7 +1390,16 @@ return [
 
 
 
-
+    281 => [
+        ['uri' => 'admin/locations', 'method' => 'POST'],
+    ],
+    282 => [
+        ['uri' => 'admin/locations/edit', 'method' => 'GET'],
+        ['uri' => 'admin/locations', 'method' => 'PUT'],
+    ],
+    283 => [
+        ['uri' => 'admin/locations', 'method' => 'DELETE'],
+    ],
 
 
 
@@ -1400,18 +1409,6 @@ return [
 
 
     // ----------------------------- Not Assigned Menu Permissions ----------------------------- //
-    281 => [
-        ['uri' => 'pharmacy', 'method' => 'GET'],
-        ['uri' => 'pharmacy', 'method' => 'POST'],
-    ],
-    282 => [
-        ['uri' => 'pharmacy', 'method' => 'GET'],
-        ['uri' => 'pharmacy', 'method' => 'POST'],
-    ],
-    283 => [
-        ['uri' => 'pharmacy', 'method' => 'GET'],
-        ['uri' => 'pharmacy', 'method' => 'POST'],
-    ],
     284 => [
         ['uri' => 'pharmacy', 'method' => 'GET'],
         ['uri' => 'pharmacy', 'method' => 'POST'],

@@ -15,12 +15,10 @@ class BankTransactionController extends Controller
 {
     // Show All Bank Withdraws
     public function ShowAllWithdraws(Request $req){
-        $data = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Withdraw')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '4')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
+        $data = Transaction_Detail::on('mysql_second')->with('Bank','Head')->where('tran_method','Withdraw')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'groupes' => $groupes,
         ], 200);
     } // End Method
 
@@ -28,12 +26,10 @@ class BankTransactionController extends Controller
     
     // Show All Bank Deposits
     public function ShowAllDeposits(Request $req){
-        $data = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_method','Deposit')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '4')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
+        $data = Transaction_Detail::on('mysql_second')->with('Bank','Head')->where('tran_method','Deposit')->where('tran_type','4')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'groupes' => $groupes,
         ], 200);
     } // End Method
     
@@ -61,7 +57,7 @@ class BankTransactionController extends Controller
         DB::transaction(function () use ($req, $id, &$data) {
             $receive = $req->method === 'Withdraw' ? $req->amount : null;
             $payment = $req->method === 'Deposit' ? $req->amount : null;
-            $insert = Transaction_Main::on('mysql_second')->create([
+            Transaction_Main::on('mysql_second')->create([
                 "tran_id" => $id,
                 "tran_type" => 4,
                 "tran_method" => $req->method,
@@ -75,7 +71,7 @@ class BankTransactionController extends Controller
             ]);
 
 
-            Transaction_Detail::on('mysql_second')->create([
+            $insert = Transaction_Detail::on('mysql_second')->create([
                 "tran_id" => $id,
                 "tran_type" => 4,
                 "tran_method" => $req->method,
@@ -91,7 +87,7 @@ class BankTransactionController extends Controller
                 "due" => 0,
             ]);
 
-            $data = Transaction_Main::on('mysql_second')->with('Bank')->findOrFail($insert->id);
+            $data = Transaction_Detail::on('mysql_second')->with('Bank','Head')->findOrFail($insert->id);
         });
 
         
@@ -104,31 +100,20 @@ class BankTransactionController extends Controller
 
 
 
-    // Edit Bank Transactions
-    public function Edit(Request $req){
-        $data = Transaction_Detail::on('mysql_second')->with('Bank','Head')->where('tran_id', $req->id )->first();
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
-    } // End Method
-
-
-
     // Update Bank Transactions
     public function Update(Request $req){
         $req->validate([
-            "bank"  => 'required|exists:mysql.banks,id',
+            "bank"  => 'required|exists:mysql.banks,user_id',
             "head"  => 'required|exists:mysql.transaction__heads,id',
             "amount"  => 'required|numeric',
         ]);
 
-        $transaction = Transaction_Main::on('mysql_second')->where('tran_id', $req->id)->first();
+        $transaction = Transaction_Detail::on('mysql_second')->findOrFail($req->id);
         
         DB::transaction(function () use ($req, $transaction) {
             $receive = $req->method === 'Withdraw' ? $req->amount : null;
             $payment = $req->method === 'Deposit' ? $req->amount : null;
-            Transaction_Main::on('mysql_second')->where('tran_id', $req->id)->update([
+            Transaction_Main::on('mysql_second')->where('tran_id', $transaction->tran_id)->update([
                 "tran_bank" => $req->bank,
                 "bill_amount" => $req->amount,
                 "net_amount" => $req->amount,
@@ -138,7 +123,7 @@ class BankTransactionController extends Controller
             ]);
 
 
-            Transaction_Detail::on('mysql_second')->where('tran_id', $req->id)->update([
+            $transaction->update([
                 "tran_bank" => $req->bank,
                 "tran_head_id" => $req->head,
                 "amount" => $req->amount,
@@ -150,7 +135,7 @@ class BankTransactionController extends Controller
             ]);
         });
 
-        $updatedData = Transaction_Main::on('mysql_second')->with('Bank')->where('tran_id', $req->id)->first();
+        $updatedData = Transaction_Detail::on('mysql_second')->with('Bank','Head')->findOrFail($req->id);
         
         return response()->json([
             'status'=>true,
@@ -164,8 +149,9 @@ class BankTransactionController extends Controller
 
     // Delete Bank Transactions
     public function Delete(Request $req){
-        Transaction_Main::on('mysql_second')->where("tran_id", $req->id)->delete();
-        Transaction_Detail::on('mysql_second')->where("tran_id", $req->id)->delete();
+        $data = Transaction_Detail::on('mysql_second')->findOrFail($req->id);
+        Transaction_Main::on('mysql_second')->where('tran_id',$data->tran_id)->delete();
+        $data->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Bank Transaction Deleted Successfully',
@@ -176,8 +162,8 @@ class BankTransactionController extends Controller
 
     // Search Bank Transactions
     public function Search(Request $req){
-        $data = Transaction_Main::on('mysql_second')
-        ->with('Bank')
+        $data = Transaction_Detail::on('mysql_second')
+        ->with('Bank','Head')
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
         ->where('tran_method',$req->method)
         ->where('tran_type', 4)

@@ -115,18 +115,18 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
+    function EditFormInputValue(item){
         GetTransactionWith(1, 'Payment', '#within')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
 
 
-        $('#updateTranId').val(res.data.tran_id);
+        $('#updateTranId').val(item.tran_id);
 
-        getDueListByUserId(res.data.tran_user, '.due-grid tbody');
-        $('#updateUser').attr('data-id',res.data.tran_user);
-        $('#updateUser').val(res.data.user.user_name);
-        $('#updateAmount').val(res.data.payment);
-        $('#updateDiscount').val(res.data.discount);
+        getDueListByUserId(item.tran_user, '.due-grid tbody');
+        $('#updateUser').attr('data-id',item.tran_user);
+        $('#updateUser').val(item.user.user_name);
+        $('#updateAmount').val(item.payment);
+        $('#updateDiscount').val(item.discount);
     }
 });

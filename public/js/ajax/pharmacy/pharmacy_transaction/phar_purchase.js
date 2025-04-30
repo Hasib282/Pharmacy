@@ -81,34 +81,37 @@ function ShowPharmacyPurchases(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due_col', type: 'number'},{key:'due_discount', type: 'number'},{key:'due', type: 'number'}],
+        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due_col', type: 'number'},{key:'due_disc', type: 'number'},{key:'due', type: 'number'}],
         actions: (row) => `
+                ${$('#status').val() == 2 ? 
+                    `<button class="open-modal" data-modal-id="verifyModal" id="verify" data-id="${row.tran_id}"><i class="fa-solid fa-check"></i> Verify</button>`
+                    :
+                    ""
+                }
+
                 <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
 
-                <button data-modal-id="editModal" id="edit" data-id="${row.tran_id}"><i class="fas fa-edit"></i></button>
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
-                <button data-id="${row.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
     });
 }
 
 
 $(document).ready(function () {
-    $(document).off(`.${'SearchBySelect'}`);
-
-
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Id', key: 'tran_id' },
         { label: 'User', key: 'user.user_name' },
-        { label: 'Total	', key: 'bill_amount' },
-        { label: '	Discount', key: 'discount' },
-        { label: 'Net Total', key: 'net_amount' },
-        { label: 'Advance', key: 'payment' },
-        { label: 'Due Col', key: 'due_col' },
-        { label: 'Due Discount', key: 'due_disc' },
-        { label: 'Due', key: 'due' },
+        { label: 'Total' },
+        { label: 'Discount' },
+        { label: 'Net Total' },
+        { label: 'Advance' },
+        { label: 'Due Col' },
+        { label: 'Due Discount' },
+        { label: 'Due' },
         { label: 'Action', type: 'button' }
     ]);
 
@@ -129,69 +132,43 @@ $(document).ready(function () {
     });
 
 
-    // Insert Ajax
-    // InsertAjax('pharmacy/transaction/purchase', ShowPharmacyPurchases, {}, function() {
-    //     $('#division').focus();
-    // });
+    // Insert Into Local Storage
+    InsertLocalStorage();
+
+
+    // Insert Pharmacy Purchase ajax
+    InsertTransaction('pharmacy/transaction/purchase', 'Purchase', '6', function() {
+        $('#location').removeAttr('data-id');
+        $('#user').removeAttr('data-id');
+        $('#user').removeAttr('data-with');
+        $('#status').val('1');
+        $('.transaction_grid tbody').html('');
+        localStorage.removeItem('transactionData');
+    });
 
 
     //Edit Ajax
-    EditAjax('pharmacy/transaction/purchase', EditFormInputValue, EditModalOn);
+    EditAjax(EditFormInputValue);
 
 
-    // Update Ajax
-    // UpdateAjax('pharmacy/transaction/purchase', ShowPharmacyPurchases);
+    // Update Pharmacy Issue ajax
+    UpdateTransaction('pharmacy/transaction/purchase', 'Purchase', "6");
     
 
     // Delete Ajax
-    DeleteAjax('pharmacy/transaction/purchase', ShowPharmacyPurchases);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowPharmacyPurchases);
-
-
-    // Search Ajax
-    // SearchAjax('pharmacy/transaction/purchase', ShowPharmacyPurchases, { type: 6, method: 'Purchase', status: { selector: "#status"} });
+    DeleteAjax('pharmacy/transaction/purchase');
 
 
     // Search By Date
-    // SearchByDateAjax('pharmacy/transaction/purchase', ShowPharmacyPurchases, { type: 6, method: 'Purchase', status: { selector: "#status"} });
+    SearchByDateAjax('pharmacy/transaction/purchase/search', ShowPharmacyPurchases, { type: 6, method: 'Purchase' });
 
 
     // Search By Methods, Roles, Types
-    // SearchBySelect('pharmacy/transaction/purchase', ShowPharmacyPurchases, '#status', { type: 6, method: 'Purchase', status: { selector: "#status"} } );
+    SearchBySelect('pharmacy/transaction/purchase/search', ShowPharmacyPurchases, '#status', { type: 6, method: 'Purchase' } );
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        getTransactionGrid(res.data.tran_id);
-
-        $('#id').val(res.data.id);
-        
-        $('#updateTranId').val(res.data.tran_id);
-
-        var timestamps = new Date(res.data.tran_date);
-        var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
-        $('#updateDate').val(formattedDate);
-
-        $('#updateStore').val(res.data.store.store_name);
-        $('#updateStore').attr('data-id', res.data.store_id);
-        
-        $('#updateUser').attr('data-id',res.data.tran_user);
-        $('#updateUser').attr('data-with',res.data.tran_type_with);
-        $('#updateUser').val(res.data.user.user_name);
-
-        $('#updateTotalDiscount').val(res.data.discount);
-
-        $('#updateAdvance').val(res.data.payment);
-
-        
-        $("#updateProduct").focus();
-    }
-
-
-    function EditModalOn() {
+    function EditFormInputValue(item){
         $('#updateProduct').val('');
         $('#updateProduct').removeAttr('data-id');
         $('#updateProduct').removeAttr('data-groupe');
@@ -207,27 +184,33 @@ $(document).ready(function () {
         GetTransactionWith(6, 'Payment', '#updatewithin');
         localStorage.removeItem('transactionData');
         $('.transaction_grid tbody').html('');
+
+
+        getTransactionGrid(item.tran_id);
+
+        $('#id').val(item.id);
+        
+        $('#updateTranId').val(item.tran_id);
+
+        var timestamps = new Date(item.tran_date);
+        var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
+        $('#updateDate').val(formattedDate);
+
+        $('#updateStore').val(item.store_id);
+        
+        $('#updateUser').attr('data-id',item.tran_user);
+        $('#updateUser').attr('data-with',item.tran_type_with);
+        $('#updateUser').val(item.user.user_name);
+
+        $('#updateTotalDiscount').val(item.discount);
+
+        $('#updateAdvance').val(item.payment);
+        
+        $("#updateProduct").focus();
     }
 
 
-    // Insert Into Local Storage
-    InsertLocalStorage();
-
-
-    // Insert Pharmacy Purchase ajax
-    InsertTransaction('pharmacy/transaction/purchase', ShowPharmacyPurchases, 'Purchase', '6', function() {
-        $('#location').removeAttr('data-id');
-        $('#user').removeAttr('data-id');
-        $('#user').removeAttr('data-with');
-        $('#store').removeAttr('data-id');
-        $('#status').val('1');
-        $('.transaction_grid tbody').html('');
-        localStorage.removeItem('transactionData');
-    });
-
-
-    // Update Pharmacy Issue ajax
-    UpdateTransaction('pharmacy/transaction/purchase', ShowPharmacyPurchases, 'Purchase', "6");
+    
 
 
     /////////////// ------------------ Verify Pharmacy Purchase Ajax Part Start ---------------- /////////////////////////////
@@ -266,4 +249,11 @@ $(document).ready(function () {
     });
     
     /////////////// ------------------ Verify Pharmacy Purchase Ajax Part End ---------------- /////////////////////////////
+
+
+    // Get Store 
+    GetSelectInputList('admin/stores/get', function (res) {
+        CreateSelectOptions('#store', 'Select Store', res.data, 'store_name');
+        CreateSelectOptions('#updateStore', 'Select Store', res.data, 'store_name');
+    })
 });

@@ -36,8 +36,9 @@
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="updateStore">Store</label>
-                                <input type="text" name="store" class="form-input" id="updateStore" autocomplete="off"><hr>
-                                <div id="update-store"></div>
+                                <select name="store" id="updateStore">
+
+                                </select>
                                 <span class="error" id="update_store_error"></span>
                             </div>
                         </div>
@@ -64,11 +65,7 @@
                             <div class="form-input-group">
                                 <label for="updateHead">Product Name</label>
                                 <input type="text" name="head" id="updateHead" class="form-input">
-                                <div id="update-head">
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                <div id="update-head"></div>
                                 <span class="error" id="update_head_error"></span>
                             </div>
                         </div>
@@ -97,7 +94,7 @@
                             </div>
                         </div>
                         <div class="center">
-                            <button type="submit" id="Update" class="btn-blue">Add</button>
+                            <button type="submit" id="UpdateTransaction" class="btn-blue">Add</button>
                         </div>
                     </div>
                 </div>

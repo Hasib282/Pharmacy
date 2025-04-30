@@ -547,6 +547,12 @@ function InsertLocalStorage(isIssue = false) {
             return;
         }
 
+        
+        
+        
+        // let mrp = $('#price').val();
+        
+
         let product = isUpdate ? ($('#updateProduct').attr('data-id') || $('#updateHead').attr('data-id')) :($('#product').attr('data-id') || $('#head').attr('data-id'));
         let name = isUpdate ? ($('#updateProduct').val() || $('#updateHead').val()) : ($('#product').val() || $('#head').val());
         let groupe = isUpdate ? ($('#updateProduct').attr('data-groupe') || $('#updateHead').attr('data-groupe')) : ($('#product').attr('data-groupe') || $('#head').attr('data-groupe'));
@@ -560,6 +566,8 @@ function InsertLocalStorage(isIssue = false) {
         let expiry = isUpdate ? $('#updateExpiry').val() : $('#expiry').val();
         let amount = isUpdate ? $('#updateAmount').val() : $('#amount').val();
         let batch = isUpdate ? $('#updatePbatch').attr('data-id') : $('#pbatch').attr('data-id');
+        let pbatch = isUpdate ? $('#updateProduct').attr('data-batch') : $('#product').attr('data-batch');
+
         
         const path = window.location.pathname;
         const pathSegments = path.split("/");
@@ -584,9 +592,10 @@ function InsertLocalStorage(isIssue = false) {
             expiry,
             amount,
             batch,
+            pbatch,
         };
 
-        // console.log(batch);
+        console.log(batch);
         
         
 
@@ -650,7 +659,7 @@ function InsertTransaction(url, method, type, AddSuccessEvent) {
         let name = $('#name').val();
         let phone = $('#phone').val();
         let address = $('#address').val();
-        let store = $('#store').attr('data-id');
+        let store = $('#store').val();
         let amountRP = $('#amountRP').val();
         let discount = $('#totalDiscount').val();
         let netAmount = $('#netAmount').val();
@@ -726,6 +735,42 @@ function UpdateTransaction(url, method, type, AddSuccessEvent = undefined) {
     });
 }
 
+
+
+
+
+//////////////////// -------------------- Search By Date Ajax Part Start -------------------- ////////////////////
+function SearchByDateAjax(url, RenderData, data={}){
+    $(document).off('change', '#startDate, #endDate').on('change', '#startDate, #endDate', function(e){
+        e.preventDefault();
+        $('#startDate').length ? data.startDate = $('#startDate').val() : '';
+        $('#endDate').length ? data.endDate = $('#endDate').val() : '';
+        $('#status').length ? data.status = $('#status').val() : '';
+        ReloadData(url, RenderData, data);
+    });
+}; // End Method
+
+
+
+
+
+//////////////////// -------------------- Search By Select Input Change Ajax Part Start -------------------- ////////////////////
+function SearchBySelect(url, RenderData, id, data={}){
+    $(document).off('change', id).on('change', id, function(e){
+        e.preventDefault();
+        $('#startDate').length ? data.startDate = $('#startDate').val() : '';
+        $('#endDate').length ? data.endDate = $('#endDate').val() : '';
+        $(id).length ? data.status = $(id).val() : '';
+        ReloadData(url, RenderData, data);
+    });
+}; // End Method
+
+
+
+
+
+
+
 $(document).ready(function () {
     //////////////////// -------------------- Delete Ajax Part Start -------------------- ////////////////////
     // Delete Button Functionality
@@ -759,6 +804,4 @@ $(document).ready(function () {
         DisplayTransactionGrid();
     })
     //////////////////// -------------------- Remove Product From Local Storage Part End -------------------- ////////////////////
-
-    
 });

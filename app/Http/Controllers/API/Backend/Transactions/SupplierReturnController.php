@@ -183,17 +183,6 @@ class SupplierReturnController extends Controller
 
 
 
-    // // Edit Supplier Return
-    // public function Edit(Request $req){
-    //     $location = Location_Info::findOrFail($req->id);
-    //     return response()->json([
-    //         'status'=> true,
-    //         'location'=> $location,
-    //     ], 200);
-    // } // End Method
-
-
-
     // // Update Supplier Return
     // public function Update(Request $req){
     //     $req->validate([
@@ -224,12 +213,13 @@ class SupplierReturnController extends Controller
 
     // Delete Supplier Return
     public function Delete(Request $req){
-        $details = Transaction_Detail::on('mysql_second')->where("tran_id", $req->id)->get();
-        DB::transaction(function () use ($req, $details) {
+        $data = Transaction_Main::on('mysql_second')->findOrfail($req->id);
+        $details = Transaction_Detail::on('mysql_second')->where("tran_id", $data->tran_id)->get();
+        DB::transaction(function () use ($req, $details, &$data) {
             foreach($details as $item){
                 $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
                 if($product){
-                    $quantity = $product->quantity + $item->quantity;
+                    $quantity = $product->quantity - $item->quantity;
 
                     $product->update([
                         "quantity" => $quantity
@@ -247,8 +237,8 @@ class SupplierReturnController extends Controller
                 }
             }
 
-            Transaction_Main::on('mysql_second')->where("tran_id", $req->id)->delete();
-            Transaction_Detail::on('mysql_second')->where("tran_id", $req->id)->delete();
+            Transaction_Detail::on('mysql_second')->where("tran_id", $data->tran_id)->delete();
+            $data->delete();
         });
 
         return response()->json([

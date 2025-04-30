@@ -1,16 +1,16 @@
 $(document).ready(function () {
     // General function to calculate total amount
-    $(document).off('keyup', '#quantity, #amount').on('keyup', '#quantity, #amount', function (e) {
+    $(document).off('keyup', '#quantity, .amount').on('keyup', '#quantity, .amount', function (e) {
         let quantity = $('#quantity').val();
-        let amount = $('#amount').val();
+        let amount = $('.amount').val();
         let totalAmount = quantity * amount;
         $('#totAmount').val(totalAmount);
     });
 
 
-    $(document).off('keyup', '#updateQuantity, #updateAmount').on('keyup', '#updateQuantity, #updateAmount', function (e) {
+    $(document).off('keyup', '#updateQuantity, .updateAmount').on('keyup', '#updateQuantity, .updateAmount', function (e) {
         let quantity = $('#updateQuantity').val();
-        let amount = $('#updateAmount').val();
+        let amount = $('.updateAmount').val();
         let totalAmount = quantity * amount;
         $('#updateTotAmount').val(totalAmount);
     });

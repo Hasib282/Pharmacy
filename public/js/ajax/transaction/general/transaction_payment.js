@@ -75,13 +75,13 @@ function ShowTransactionPayments(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due_col', type: 'number'},{key:'due_discount', type: 'number'},{key:'due', type: 'number'}],
+        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due_col', type: 'number'},{key:'due_disc', type: 'number'},{key:'due', type: 'number'}],
         actions: (row) => `
                 <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
 
-                <button data-modal-id="editModal" id="edit" data-id="${row.tran_id}"><i class="fas fa-edit"></i></button>
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
-                <button data-id="${row.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
     });
 }
@@ -90,12 +90,12 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Id	', key: 'tran_id' },
-        { label: 'User	', key: 'user.user_name' },
-        { label: 'Total ' },
-        { label: 'Discount ' },
+        { label: 'Id', key: 'tran_id' },
+        { label: 'User', key: 'user.user_name' },
+        { label: 'Total' },
+        { label: 'Discount' },
         { label: 'Net Total' },
-        { label: 'Advance ' },
+        { label: 'Advance' },
         { label: 'Due Col' },
         { label: 'Due Discount' },
         { label: 'Due' },
@@ -139,7 +139,7 @@ $(document).ready(function () {
 
 
     // Update Transaction Payment ajax
-    UpdateTransaction('transaction/payment', ShowTransactionPayments, 'Payment', '1');
+    UpdateTransaction('transaction/payment', 'Payment', '1');
     
 
     // Delete Ajax
@@ -147,7 +147,7 @@ $(document).ready(function () {
 
 
     // Search By Date
-    SearchByDateAjax('transaction/payment/search', ShowTransactionPayments, {type: 1, method: 'Payment'});
+    SearchByDateAjax('transaction/payment/search', ShowTransactionPayments, {type: 1, method: 'Payment', status:1});
 
 
     // Additional Edit Functionality

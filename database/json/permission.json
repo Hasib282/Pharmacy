@@ -492,5 +492,12 @@
     
     { "permission_mainhead":"7", "name":"Show Party Statement Summary Report" },
     
-    { "permission_mainhead":"7", "name":"Show Party Statement Details Report" }
+    { "permission_mainhead":"7", "name":"Show Party Statement Details Report" },
+    
+
+
+    
+    { "permission_mainhead":"1", "name":"Add Locations" },
+    { "permission_mainhead":"1", "name":"Edit Locations" },
+    { "permission_mainhead":"1", "name":"Delete Locations" }
 ]

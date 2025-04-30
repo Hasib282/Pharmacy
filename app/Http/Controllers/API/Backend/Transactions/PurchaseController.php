@@ -184,26 +184,6 @@ class PurchaseController extends Controller
 
 
 
-    // Edit Item/Product Purchase
-    public function Edit(Request $req){
-        if($req->status == 1){
-            $data = Transaction_Main::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
-            return response()->json([
-                'status'=> true,
-                'data'=> $data,
-            ], 200);
-        }
-        else if($req->status == 2){
-            $data = Transaction_Mains_Temp::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
-            return response()->json([
-                'status'=> true,
-                'data'=> $data,
-            ], 200);
-        }
-    } // End Method
-
-
-
     // Update Item/Product Purchase
     public function Update(Request $req){
         $req->validate([
@@ -355,10 +335,10 @@ class PurchaseController extends Controller
         });
 
         if($req->status == 1){
-            $updatedData = Transaction_Main::on('mysql_second')->findOrfail($req->id);
+            $updatedData = Transaction_Main::on('mysql_second')->with('User')->findOrfail($req->id);
         }
         else if($req->status == 2){
-            $updatedData = Transaction_Mains_Temp::on('mysql_second')->findOrfail($req->id);
+            $updatedData = Transaction_Mains_Temp::on('mysql_second')->with('User')->findOrfail($req->id);
         }
 
         return response()->json([
@@ -373,7 +353,8 @@ class PurchaseController extends Controller
     // Delete Item/Product Purchase
     public function Delete(Request $req){
         if($req->status == 1){
-            $details = Transaction_Detail::on('mysql_second')->where("tran_id", $req->id)->get();
+            $data = Transaction_Main::on('mysql_second')->findOrfail($req->id);
+            $details = Transaction_Detail::on('mysql_second')->where("tran_id", $data->tran_id)->get();
 
             foreach($details as $item){
                 $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
@@ -387,14 +368,15 @@ class PurchaseController extends Controller
                 }
             }
 
-            Transaction_Main::on('mysql_second')->where("tran_id", $req->id)->delete();
-            Transaction_Detail::on('mysql_second')->where("tran_id", $req->id)->delete();
+            Transaction_Detail::on('mysql_second')->where("tran_id", $data)->delete();
+            $data->delete();
         }
         else if($req->status == 2){
-            $details = Transaction_Details_Temp::on('mysql_second')->where("tran_id", $req->id)->get();
+            $data = Transaction_Mains_Temp::on('mysql_second')->findOrfail($req->id);
+            $details = Transaction_Details_Temp::on('mysql_second')->where("tran_id", $date->tran_id)->get();
 
-            Transaction_Mains_Temp::on('mysql_second')->where("tran_id", $req->id)->delete();
-            Transaction_Details_Temp::on('mysql_second')->where("tran_id", $req->id)->delete();
+            Transaction_Details_Temp::on('mysql_second')->where("tran_id", $data->tran_id)->delete();
+            $data->delete();
         }
 
         return response()->json([

@@ -293,17 +293,6 @@ class PartyTransactionController extends Controller
 
 
 
-    // Edit Party Collection
-    public function Edit(Request $req){
-        $data = Transaction_Main::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
-        return response()->json([
-            'status'=> true,
-            'data'=>$data,
-        ], 200);
-    } // End Method
-
-
-
     // // Update Party Collection
     // public function Update(Request $req){
     //     $req->validate([
@@ -366,7 +355,8 @@ class PartyTransactionController extends Controller
     // Get Transacetion Due List By User Id
     public function GetDueList(Request $req){
         if($req->id != ""){
-            $data = Transaction_Main::on('mysql_second')->where('tran_user', 'like', '%'.$req->id.'%')
+            $data = Transaction_Main::on('mysql_second')
+            ->where('tran_user', 'like', '%'.$req->id.'%')
             ->where('due', '>', 0)
             ->orderBy('tran_date','asc')
             ->get();

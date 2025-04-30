@@ -80,10 +80,17 @@
                 <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
         </div>
         <div class="c-3">
+            <label for="status">Status</label>
+            <select name="status" id="status">
+                <option value="1" {{ $searchStatusValue=='1' ? 'selected' : '' }}>Verified</option>
+                <option value="2" {{ $searchStatusValue=='2' ? 'selected' : '' }}>Pending</option>
+            </select>
+        </div>
+        <div class="c-2">
             <label for="startDate">Start Date</label>
             <input type="date" name="startDate" id="startDate" class="form-input" value="{{ $startDateValue ? $startDateValue : date('Y-m-d') }}">
         </div>
-        <div class="c-3" >
+        <div class="c-2" >
             <label for="endDate">End Date</label>
             <input type="date" name="endDate" id="endDate" class="form-input" value="{{ $endDateValue ? $endDateValue : date('Y-m-d') }}">
         </div>

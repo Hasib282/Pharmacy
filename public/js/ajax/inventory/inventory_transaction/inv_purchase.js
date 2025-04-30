@@ -79,13 +79,19 @@ function ShowInventoryPurchases(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due_col', type: 'number'},{key:'due_discount', type: 'number'},{key:'due', type: 'number'}],
+        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due_col', type: 'number'},{key:'due_disc', type: 'number'},{key:'due', type: 'number'}],
         actions: (row) => `
+                ${$('#status').val() == 2 ? 
+                    `<button class="open-modal" data-modal-id="verifyModal" id="verify" data-id="${row.tran_id}"><i class="fa-solid fa-check"></i> Verify</button>`
+                    :
+                    ""
+                }
+
                 <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
 
-                <button data-modal-id="editModal" id="edit" data-id="${row.tran_id}"><i class="fas fa-edit"></i></button>
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
-                <button data-id="${row.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
     });
 }
@@ -93,21 +99,18 @@ function ShowInventoryPurchases(res) {
 
 
 $(document).ready(function () {
-    $(document).off(`.${'SearchBySelect'}`);
-
-
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Id', key: 'tran_id' },
-        { label: 'User', key: 'user_name' },
-        { label: 'Total	', key: 'bill_amount' },
-        { label: '	Discount', key: 'discount' },
-        { label: 'Net Total', key: 'net_amount' },
-        { label: 'Advance', key: 'payment' },
-        { label: 'Due Col', key: 'due_col' },
-        { label: 'Due Discount', key: 'due_disc' },
-        { label: 'Due', key: 'due' },
+        { label: 'User', key: 'user.user_name' },
+        { label: 'Total' },
+        { label: 'Discount' },
+        { label: 'Net Total' },
+        { label: 'Advance' },
+        { label: 'Due Col' },
+        { label: 'Due Discount' },
+        { label: 'Due' },
         { label: 'Action', type: 'button' }
     ]);
 
@@ -127,69 +130,42 @@ $(document).ready(function () {
     });
 
 
-    // Insert Ajax
-    // InsertAjax('inventory/transaction/purchase', ShowInventoryPurchases, {}, function() {
-    //     $('#division').focus();
-    // });
+    // Insert Into Local Storage
+    InsertLocalStorage();
+
+
+    // Insert Inventory Purchase ajax
+    InsertTransaction('inventory/transaction/purchase', 'Purchase', '5', function() {
+        $('#location').removeAttr('data-id');
+        $('#user').removeAttr('data-id');
+        $('#user').removeAttr('data-with');
+        $('#status').val('1');
+        $('.transaction_grid tbody').html('');
+    });
 
 
     //Edit Ajax
-    EditAjax('inventory/transaction/purchase', EditFormInputValue, EditModalOn);
+    EditAjax(EditFormInputValue);
 
 
-    // Update Ajax
-    // UpdateAjax('inventory/transaction/purchase', ShowInventoryPurchases);
+    // Update Inventory Purchase ajax
+    UpdateTransaction('inventory/transaction/purchase', 'Purchase', "5");
     
 
     // Delete Ajax
-    DeleteAjax('inventory/transaction/purchase', ShowInventoryPurchases);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowInventoryPurchases);
-
-
-    // Search Ajax
-    // SearchAjax('inventory/transaction/purchase', ShowInventoryPurchases, { type: 5, method: 'Purchase', status: { selector: "#status"} });
+    DeleteAjax('inventory/transaction/purchase');
 
 
     // Search By Date
-    // SearchByDateAjax('inventory/transaction/purchase', ShowInventoryPurchases, { type: 5, method: 'Purchase', status: { selector: "#status"} });
+    SearchByDateAjax('inventory/transaction/purchase/search', ShowInventoryPurchases, { type: 6, method: 'Purchase' });
 
 
     // Search By Methods, Roles, Types
-    // SearchBySelect('inventory/transaction/purchase', ShowInventoryPurchases, '#status', { type: 5, method: 'Purchase', status: { selector: "#status"} } );
+    SearchBySelect('inventory/transaction/purchase/search', ShowInventoryPurchases, '#status', { type: 6, method: 'Purchase' } );
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        getTransactionGrid(res.data.tran_id);
-
-        $('#id').val(res.data.id);
-        
-        $('#updateTranId').val(res.data.tran_id);
-
-        var timestamps = new Date(res.data.tran_date);
-        var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
-        $('#updateDate').val(formattedDate);
-
-        $('#updateStore').val(res.data.store.store_name);
-        $('#updateStore').attr('data-id', res.data.store_id);
-        
-        $('#updateUser').attr('data-id',res.data.tran_user);
-        $('#updateUser').attr('data-with',res.data.tran_type_with);
-        $('#updateUser').val(res.data.user.user_name);
-
-        $('#updateTotalDiscount').val(res.data.discount);
-
-        $('#updateAdvance').val(res.data.payment);
-
-        
-        $("#updateProduct").focus();
-    }
-
-
-    function EditModalOn() {
+    function EditFormInputValue(item){
         $('#updateProduct').val('');
         $('#updateProduct').removeAttr('data-id');
         $('#updateProduct').removeAttr('data-groupe');
@@ -205,27 +181,33 @@ $(document).ready(function () {
         GetTransactionWith(5, 'Payment', '#updatewithin');
         localStorage.removeItem('transactionData');
         $('.transaction_grid tbody').html('');
+
+
+        getTransactionGrid(item.tran_id);
+
+        $('#id').val(item.id);
+        
+        $('#updateTranId').val(item.tran_id);
+
+        var timestamps = new Date(item.tran_date);
+        var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
+        $('#updateDate').val(formattedDate);
+
+        $('#updateStore').val(item.store_id);
+        
+        $('#updateUser').attr('data-id',item.tran_user);
+        $('#updateUser').attr('data-with',item.tran_type_with);
+        $('#updateUser').val(item.user.user_name);
+
+        $('#updateTotalDiscount').val(item.discount);
+
+        $('#updateAdvance').val(item.payment);
+        
+        $("#updateProduct").focus();
     }
 
     
-    // Insert Into Local Storage
-    InsertLocalStorage();
-
-
-    // Insert Inventory Purchase ajax
-    InsertTransaction('inventory/transaction/purchase', ShowInventoryPurchases, 'Purchase', '5', function() {
-        $('#location').removeAttr('data-id');
-        $('#user').removeAttr('data-id');
-        $('#user').removeAttr('data-with');
-        $('#store').removeAttr('data-id');
-        $('#status').val('1');
-        $('.transaction_grid tbody').html('');
-        localStorage.removeItem('transactionData');
-    });
-
-
-    // Update Inventory Purchase ajax
-    UpdateTransaction('inventory/transaction/purchase', ShowInventoryPurchases, 'Purchase', "5");
+    
 
 
     /////////////// ------------------ Verify Inventory Purchase Ajax Part Start ---------------- /////////////////////////////
@@ -267,82 +249,9 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-    
-
-
-    /////////////// ------------------ Update Inventory Purchase ajax part start ---------------- /////////////////////////////
-    $(document).off('click', '#UpdateMain').on('click', '#UpdateMain', function (e) {
-        e.preventDefault();
-        let products = localStorage.getItem('transactionData');
-        if (!products) {
-            $('#update_message_error').html('No product added' || '');
-            return;
-        }
-
-        products = JSON.parse(products);
-
-        let tranid = $('#updateTranId').val();
-        let id = $('#id').val();
-        let method = 'Purchase';
-        let amountRP = $('#updateAmountRP').val();
-        let totalDiscount = $('#updateTotalDiscount').val();
-        let netAmount = $('#updateNetAmount').val();
-        let advance = $('#updateAdvance').val();
-        let balance = $('#updateBalance').val();
-        let status = $('#status').val();
-        $.ajax({
-            url: `${apiUrl}/inventory/transaction/purchase`,
-            method: 'PUT',
-            data: { products:JSON.stringify(products), status, id, tranid, method, amountRP, totalDiscount, netAmount, advance, balance },
-            success: function (res) {
-                if (res.status) {
-                    ReloadData('inventory/transaction/purchase', ShowInventoryPurchases);
-                    $('#editModal').hide();
-                    // $('#status').val('1');
-                    localStorage.removeItem('transactionData');
-                    toastr.success(res.message, 'Updated!');
-                }
-            }
-        });
-    });
+    // Get Store 
+    GetSelectInputList('admin/stores/get', function (res) {
+        CreateSelectOptions('#store', 'Select Store', res.data, 'store_name');
+        CreateSelectOptions('#updateStore', 'Select Store', res.data, 'store_name');
+    })
 });

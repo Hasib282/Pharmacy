@@ -20,11 +20,9 @@ class GeneralTransactionController extends Controller
     // Show All General Transaction Receives
     public function ShowAllReceive(Request $req){
         $data = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Receive')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '1')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'groupes' => $groupes,
         ], 200);
     } // End Method
     
@@ -33,11 +31,9 @@ class GeneralTransactionController extends Controller
     // Show All General Transaction Payment
     public function ShowAllPayment(Request $req){
         $data = Transaction_Main::on('mysql_second')->with('User')->where('tran_method','Payment')->where('tran_type','1')->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])->orderBy('tran_date','asc')->get();
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '1')->whereIn('tran_method',["Payment",'Both'])->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'groupes' => $groupes,
         ], 200);
     } // End Method
 
@@ -172,17 +168,6 @@ class GeneralTransactionController extends Controller
 
 
 
-    // Edit General Transaction
-    public function Edit(Request $req){
-        $data = Transaction_Main::on('mysql_second')->with('Location','User','withs','Store')->where('tran_id', $req->id )->first();
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
-    } // End Method
-
-
-
     // Update General Transaction
     public function Update(Request $req){
         $req->validate([
@@ -243,7 +228,7 @@ class GeneralTransactionController extends Controller
 
 
             // Delete the previous transaction details
-            Transaction_Detail::on('mysql_second')->where('tran_id', $req->tranid)->delete();
+            Transaction_Detail::on('mysql_second')->where('tran_id', $transaction->tran_id)->delete();
 
 
             $billDiscount = $req->totalDiscount;
@@ -302,8 +287,9 @@ class GeneralTransactionController extends Controller
 
     // Delete General Transaction
     public function Delete(Request $req){
-        Transaction_Main::on('mysql_second')->where("tran_id", $req->id)->delete();
-        Transaction_Detail::on('mysql_second')->where("tran_id", $req->id)->delete();
+        $data = Transaction_Main::on('mysql_second')->findOrFail($req->id);
+        Transaction_Detail::on('mysql_second')->where("tran_id", $data->tran_id)->delete();
+        $data->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Transaction Deleted Successfully',

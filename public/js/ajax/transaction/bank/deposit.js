@@ -1,47 +1,12 @@
-// function ShowBankDeposits(data, startIndex) {
-//     let tableRows = '';
-    
-//     if(data.length > 0){
-//         $.each(data, function(key, item) {
-//             tableRows += `
-//                 <tr>
-//                     <td>${startIndex + key + 1}</td>
-//                     <td>${item.tran_id}</td>
-//                     <td>${item.bank.name}</td>
-//                     <td style="text-align: right">${item.bill_amount} Tk.</td>
-//                     <td>
-//                         <div style="display: flex;gap:5px;">
-
-//                             <button class="open-modal" data-modal-id="editModal" id="edit"
-//                                     data-id="${item.tran_id}"><i class="fas fa-edit"></i></button>
-                        
-//                             <button data-id="${item.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
-                        
-//                         </div>
-//                     </td>
-//                 </tr>
-//             `;
-//         });
-
-//         // Inject the generated rows into the table body
-//         $('.load-data .show-table tbody').html(tableRows);
-//         $('.load-data .show-table tfoot').html('')
-//     }
-//     else{
-//         $('.load-data .show-table tbody').html('');
-//         $('.load-data .show-table tfoot').html('<tr><td colspan="5" style="text-align:center;">No Data Found</td></tr>')
-//     }
-// }; // End Function
-
 function ShowBankDeposits(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_id','bank.name',{key:'bill_amount', type: 'number'}],
+        tbody: ['tran_id','bank.name',{key:'amount', type: 'number'}],
         actions: (row) => `
-                <button data-modal-id="editModal" id="edit" data-id="${row.tran_id}"><i class="fas fa-edit"></i></button>
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
-                <button data-id="${row.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
     });
 }
@@ -66,7 +31,11 @@ $(document).ready(function () {
     
 
     // Add Modal Open Functionality
-    AddModalFunctionality("#date");
+    AddModalFunctionality("#date", function () {
+        $('#bank').removeAttr('data-id');
+        $('#head').removeAttr('data-id');
+        $('#head').removeAttr('data-groupe');
+    });
 
 
     // Insert Ajax
@@ -87,7 +56,7 @@ $(document).ready(function () {
     );
 
 
-    //Edit Ajax
+    // Edit Ajax
     EditAjax(EditFormInputValue);
 
     
@@ -112,21 +81,26 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        var timestamps = new Date(res.data.tran_date);
+    function EditFormInputValue(item){
+        $('#updateBank').removeAttr('data-id');
+        $('#updateHead').removeAttr('data-id');
+        $('#updateHead').removeAttr('data-groupe');
+        console.log(item);
+        
+        var timestamps = new Date(item.tran_date);
         var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'Asia/Dhaka' });
         $('#updateDate').val(formattedDate);
 
-        $('#id').val(res.data.tran_id);
+        $('#id').val(item.id);
 
-        $('#updateHead').val(res.data.head.tran_head_name);
-        $('#updateHead').attr('data-id', res.data.tran_head_id);
-        $('#updateHead').attr('data-group', res.data.tran_groupe_id);
+        $('#updateHead').val(item.head.tran_head_name);
+        $('#updateHead').attr('data-id', item.tran_head_id);
+        $('#updateHead').attr('data-group', item.tran_groupe_id);
         
-        $('#updateBank').attr('data-id',res.data.tran_bank);
-        $('#updateBank').val(res.data.bank.name);
+        $('#updateBank').attr('data-id',item.tran_bank);
+        $('#updateBank').val(item.bank.name);
 
-        $('#updateAmount').val(res.data.amount);
+        $('#updateAmount').val(item.amount);
         $('#updateDate').focus();
     }
 });

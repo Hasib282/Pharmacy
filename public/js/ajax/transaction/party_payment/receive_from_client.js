@@ -116,17 +116,17 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
+    function EditFormInputValue(item){
         GetTransactionWith(1, 'Receive', '#within');
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
-        
-        $('#updateTranId').val(res.data.tran_id);
 
-        getDueListByUserId(res.data.tran_user, '.due-grid tbody');
-        $('#updateUser').attr('data-id',res.data.tran_user);
-        $('#updateUser').val(res.data.user.user_name);
-        $('#updateAmount').val(res.data.receive);
-        $('#updateDiscount').val(res.data.discount);
+        $('#updateTranId').val(item.tran_id);
+
+        getDueListByUserId(item.tran_user, '.due-grid tbody');
+        $('#updateUser').attr('data-id',item.tran_user);
+        $('#updateUser').val(item.user.user_name);
+        $('#updateAmount').val(item.receive);
+        $('#updateDiscount').val(item.discount);
     }
 });

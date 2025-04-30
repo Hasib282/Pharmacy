@@ -429,7 +429,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             ///////////// --------------- Transaction Receive Routes ----------- ///////////////////
             Route::get('/receive', 'ShowAllReceive');
             Route::post('/receive', 'Insert');
-            Route::get('/receive/edit', 'Edit');
             Route::put('/receive', 'Update');
             Route::delete('/receive', 'Delete');
             Route::get('/receive/search', 'Search');
@@ -439,7 +438,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             ///////////// --------------- Transaction Payment Routes ----------- ///////////////////
             Route::get('/payment', 'ShowAllPayment');
             Route::post('/payment', 'Insert');
-            Route::get('/payment/edit', 'Edit');
             Route::put('/payment', 'Update');
             Route::delete('/payment', 'Delete');
             Route::get('/payment/search', 'Search');
@@ -462,7 +460,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 ///////////// --------------- Receive From Client Routes ----------- ///////////////////
                 Route::get('/receive', 'Show');
                 Route::post('/receive', 'Insert');
-                Route::get('/receive/edit', 'Edit');
                 // Route::put('/receive', 'Update');
                 // Route::delete('/receive', 'Delete');
                 Route::get('/receive/search', 'Search');
@@ -471,7 +468,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
                 Route::get('/payment', 'Show');
                 Route::post('/payment', 'Insert');
-                Route::get('/payment/edit', 'Edit');
                 // Route::put('/payment', 'Update');
                 // Route::delete('/payment', 'Delete');
                 Route::get('/payment/search', 'Search');
@@ -489,7 +485,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 ///////////// --------------- Bank Withdraw Routes ----------- ///////////////////
                 Route::get('/withdraw', 'ShowAllWithdraws');
                 Route::post('/withdraw', 'Insert');
-                Route::get('/withdraw/edit', 'Edit');
                 Route::put('/withdraw', 'Update');
                 Route::delete('/withdraw', 'Delete');
                 Route::get('/withdraw/search', 'Search');
@@ -499,7 +494,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 ///////////// --------------- Bank Deposit Routes ----------- ///////////////////
                 Route::get('/deposit', 'ShowAllDeposits');
                 Route::post('/deposit', 'Insert');
-                Route::get('/deposit/edit', 'Edit');
                 Route::put('/deposit', 'Update');
                 Route::delete('/deposit', 'Delete');
                 Route::get('/deposit/search', 'Search');
@@ -896,7 +890,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 ///////////// --------------- Receive From Client Routes ----------- ///////////////////
                 Route::get('/receive', 'Show');
                 Route::post('/receive', 'Insert');
-                Route::get('/receive/edit', 'Edit');
                 // Route::put('/receive', 'Update');
                 // Route::delete('/receive', 'Delete');
                 Route::get('/receive/search', 'Search');
@@ -905,7 +898,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
                 Route::get('/payment', 'Show');
                 Route::post('/payment', 'Insert');
-                Route::get('/payment/edit', 'Edit');
                 // Route::put('/payment', 'Update');
                 // Route::delete('/payment', 'Delete');
                 Route::get('/payment/search', 'Search');
@@ -1229,7 +1221,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 ///////////// --------------- Receive From Client Routes ----------- ///////////////////
                 Route::get('/receive', 'Show');
                 Route::post('/receive', 'Insert');
-                Route::get('/receive/edit', 'Edit');
                 // Route::put('/receive', 'Update');
                 // Route::delete('/receive', 'Delete');
                 Route::get('/receive/search', 'Search');
@@ -1238,7 +1229,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 ///////////// --------------- Payment To Supplier Routes ----------- ///////////////////
                 Route::get('/payment', 'Show');
                 Route::post('/payment', 'Insert');
-                Route::get('/payment/edit', 'Edit');
                 // Route::put('/payment', 'Update');
                 // Route::delete('/payment', 'Delete');
                 Route::get('/payment/search', 'Search');

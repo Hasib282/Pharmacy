@@ -33,9 +33,10 @@
                         {{-- store --}}
                         <div class="c-3">
                             <div class="form-input-group">
-                                <label for="updateStore">Store</label>
-                                <input type="text" name="store" class="form-input" id="updateStore" autocomplete="off"><hr>
-                                <div id="update-store"></div>
+                                <label for="updateStore">Store <span class="required" title="Required">*</span></label>
+                                <select name="store" id="updateStore">
+
+                                </select>
                                 <span class="error" id="update_store_error"></span>
                             </div>
                         </div>

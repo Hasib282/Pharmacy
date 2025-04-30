@@ -72,13 +72,13 @@ function ShowInventoryIssues(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'receive', type: 'number'},{key:'due_col', type: 'number'},{key:'due_discount', type: 'number'},{key:'due', type: 'number'}],
+        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'receive', type: 'number'},{key:'due_col', type: 'number'},{key:'due_disc', type: 'number'},{key:'due', type: 'number'}],
         actions: (row) => `
                 <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
 
-                <button data-modal-id="editModal" id="edit" data-id="${row.tran_id}"><i class="fas fa-edit"></i></button>
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
-                <button data-id="${row.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
     });
 }
@@ -90,14 +90,14 @@ $(document).ready(function () {
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Id', key: 'tran_id' },
-        { label: 'User', key: 'user_name' },
-        { label: 'Total	', key: 'bill_amount' },
-        { label: '	Discount', key: 'discount' },
-        { label: 'Net Total', key: 'net_amount' },
-        { label: 'Advance', key: 'receive' },
-        { label: 'Due Col', key: 'due_col' },
-        { label: 'Due Discount', key: 'due_disc' },
-        { label: 'Due', key: 'due' },
+        { label: 'User', key: 'user.user_name' },
+        { label: 'Total' },
+        { label: 'Discount' },
+        { label: 'Net Total' },
+        { label: 'Advance' },
+        { label: 'Due Col' },
+        { label: 'Due Discount' },
+        { label: 'Due' },
         { label: 'Action', type: 'button' }
     ]);
 
@@ -114,8 +114,7 @@ $(document).ready(function () {
     // Add Modal Open Functionality
     AddModalFunctionality("#product", function(){
         GetTransactionWith(5, 'Receive', '#within');
-        $('#store').val("Store 1")
-        $('#store').attr("data-id", '1');
+        $('#store').val(1)
         $('#user').val('General Customer')
         $('#user').attr('data-id', 'CL000000001')
         $('#user').attr('data-with', 4);
@@ -124,38 +123,51 @@ $(document).ready(function () {
     });
 
 
-    // Insert Ajax
-    // InsertAjax('inventory/transaction/issue', ShowInventoryIssues, {}, function() {
-    //     $('#division').focus();
-    // });
+    // Insert Into Local Storage
+    InsertLocalStorage(true);
+
+
+    // Insert Inventory Issue ajax
+    InsertTransaction('inventory/transaction/issue', 'Issue', '5', function() {
+        $('#store').val("Store 1")
+        $('#store').attr("data-id", '1');
+        $('#user').val('General Customer')
+        $('#user').attr('data-id', 'CL000000001')
+        $('#user').attr('data-with', 4);
+        $('.transaction_grid tbody').html('');
+        $('#product').focus();
+    });
 
 
     //Edit Ajax
-    EditAjax('inventory/transaction/issue', EditFormInputValue, EditModalOn);
+    EditAjax(EditFormInputValue);
 
 
-    // Update Ajax
-    // UpdateAjax('inventory/transaction/issue', ShowInventoryIssues);
+    // Update Inventory Issue ajax
+    UpdateTransaction('inventory/transaction/issue', 'Issue', "5");
     
 
     // Delete Ajax
-    DeleteAjax('inventory/transaction/issue', ShowInventoryIssues);
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowInventoryIssues);
-
-
-    // Search Ajax
-    // SearchAjax('inventory/transaction/issue', ShowInventoryIssues, { type: 5, method: 'Issue' });
+    DeleteAjax('inventory/transaction/issue');
 
 
     // Search By Ajax
-    // SearchByDateAjax('inventory/transaction/issue', ShowInventoryIssues, { type: 5, method: 'Issue' });
+    SearchByDateAjax('inventory/transaction/issue', ShowInventoryIssues, { type: 5, method: 'Issue' });
 
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
+        $('#updateProduct').val('');
+        $('#updateProduct').removeAttr('data-id');
+        $('#updateProduct').removeAttr('data-groupe');
+        $('#updateQuantity').val('1');
+        $('#updateMrp').val('');
+        $('#updateTotAmount').val('');
+        $('#dId').val('');
+        GetTransactionWith(5, 'Receive', '#updatewithin');
+        localStorage.removeItem('transactionData');
+        $('.transaction_grid tbody').html('');
+        
         getTransactionGrid(res.data.tran_id);
         $('#id').val(res.data.id);
         
@@ -163,8 +175,7 @@ $(document).ready(function () {
         var timestamps = new Date(res.data.tran_date);
         var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
         $('#updateDate').val(formattedDate);
-        $('#updateStore').val(res.data.store.store_name);
-        $('#updateStore').attr('data-id', res.data.store_id);
+        $('#updateStore').val(res.data.store_id);
         $('#updateUser').attr('data-id',res.data.tran_user);
         $('#updateUser').attr('data-with',res.data.tran_type_with);
         $('#updateUser').val(res.data.user.user_name);
@@ -176,37 +187,11 @@ $(document).ready(function () {
         $("#updateProduct").focus();
     }
 
+    
 
-    function EditModalOn() {
-        $('#updateProduct').val('');
-        $('#updateProduct').removeAttr('data-id');
-        $('#updateProduct').removeAttr('data-groupe');
-        $('#updateQuantity').val('1');
-        $('#updateMrp').val('');
-        $('#updateTotAmount').val('');
-        $('#dId').val('');
-        GetTransactionWith(5, 'Receive', '#updatewithin');
-        localStorage.removeItem('transactionData');
-        $('.transaction_grid tbody').html('');
-    }
-
-    // Insert Into Local Storage
-    InsertLocalStorage(true);
-
-
-    // Insert Inventory Issue ajax
-    InsertTransaction('inventory/transaction/issue', ShowInventoryIssues, 'Issue', '5', function() {
-        $('#store').val("Store 1")
-        $('#store').attr("data-id", '1');
-        $('#user').val('General Customer')
-        $('#user').attr('data-id', 'CL000000001')
-        $('#user').attr('data-with', 4);
-        $('.transaction_grid tbody').html('');
-        $('#product').focus();
-        localStorage.removeItem('transactionData');
-    });
-
-
-    // Update Inventory Issue ajax
-    UpdateTransaction('inventory/transaction/issue', ShowInventoryIssues, 'Issue', "5");
+    // Get Store 
+    GetSelectInputList('admin/stores/get', function (res) {
+        CreateSelectOptions('#store', 'Select Store', res.data, 'store_name');
+        CreateSelectOptions('#updateStore', 'Select Store', res.data, 'store_name');
+    })
 });
