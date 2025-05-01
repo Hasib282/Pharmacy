@@ -73,14 +73,14 @@ $(document).ready(function () {
 
     // Add Modal Open Functionality
     AddModalFunctionality("#date", function(){
-        GetTransactionWith(6, 'Payment', '#within')
+        GetTransactionWith(6, 'Payment')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
     });
 
 
     // Insert Ajax
-    InsertAjax('pharmacy/party/payment', ShowPaymentToSuppliers, 
+    InsertAjax('pharmacy/party/payment', 
         {
             user: { selector: '#user', attribute: 'data-id' },
             withs: { selector: '#user', attribute: 'data-with' },
@@ -99,7 +99,7 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('pharmacy/party/payment', EditFormInputValue, EditModalOn);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
@@ -110,34 +110,22 @@ $(document).ready(function () {
     // DeleteAjax('pharmacy/party/payment', ShowPaymentToSuppliers);
 
 
-    // Pagination Ajax
-    // PaginationAjax(ShowPaymentToSuppliers);
-
-
-    // Search Ajax
-    // SearchAjax('pharmacy/party/payment', ShowPaymentToSuppliers);
-
-
     // Search By Date
-    // SearchByDateAjax('pharmacy/party/payment', ShowPaymentToSuppliers);
+    SearchByDateAjax('pharmacy/party/payment/search', ShowPaymentToSuppliers);
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#updateTranId').val(res.data.tran_id);
-
-        getDueListByUserId(res.data.tran_user, '.due-grid tbody');
-        $('#updateUser').attr('data-id',res.data.tran_user);
-        $('#updateUser').val(res.data.user.user_name);
-        $('#updateAmount').val(res.data.payment);
-        $('#updateDiscount').val(res.data.discount);
-    }
-
-
-    // Edit Modal Open Functionality
-    function EditModalOn(){
-        GetTransactionWith(6, 'Payment', '#within')
+    function EditFormInputValue(item){
+        GetTransactionWith(6, 'Payment')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
+
+        $('#updateTranId').val(item.tran_id);
+
+        getDueListByUserId(item.tran_user, '.due-grid tbody');
+        $('#updateUser').attr('data-id',item.tran_user);
+        $('#updateUser').val(item.user.user_name);
+        $('#updateAmount').val(item.payment);
+        $('#updateDiscount').val(item.discount);
     }
 });

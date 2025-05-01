@@ -77,12 +77,12 @@
                                 <span class="error" id="update_quantity_error"></span>
                             </div>
                         </div>
-                        {{-- price --}}
+                        {{-- amount --}}
                         <div class="c-4">
                             <div class="form-input-group">
-                                <label for="updatePrice">Price</label>
-                                <input type="text" name="price" class="form-input amount" id="updatePrice" disabled>
-                                <span class="error" id="update_price_error"></span>
+                                <label for="updateAmount">Price</label>
+                                <input type="text" name="amount" class="form-input amount" id="updateAmount" disabled>
+                                <span class="error" id="update_amount_error"></span>
                             </div>
                         </div>
                         {{-- total --}}

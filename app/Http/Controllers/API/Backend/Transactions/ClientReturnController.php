@@ -130,7 +130,7 @@ class ClientReturnController extends Controller
                         $discount = round( ($billDiscount * $product['totAmount']) / $billAmount);
         
                         // Update Quantity and Return Quantity Acording to Batch Id
-                        $batch = Transaction_Detail::on('mysql_second')->where('tran_id', $req->batch)->where('tran_head_id', $product['product'])->where('batch_id', $product['batch'])->first();
+                        $batch = Transaction_Detail::on('mysql_second')->where('tran_id', $req->batch)->where('tran_head_id', $product['product'])->where('batch_id', $product['pbatch'])->first();
                         $rem_quantity = $batch->quantity - $product['quantity'];
                         $ret_quantity = $batch->quantity_return + $product['quantity'];
                         $batch->update([
@@ -140,7 +140,7 @@ class ClientReturnController extends Controller
         
         
                         // Update Purchase Quantity Acording to Batch Id
-                        $batch = Transaction_Detail::on('mysql_second')->where('tran_id', $product['batch'])->where('tran_head_id', $product['product'])->first();
+                        $batch = Transaction_Detail::on('mysql_second')->where('tran_id', $product['pbatch'])->where('tran_head_id', $product['product'])->first();
                         $rem_quantity = $batch->quantity + $product['quantity'];
                         $rem_issue = $batch->quantity_issue - $product['quantity'];
                         $batch->update([
@@ -161,13 +161,13 @@ class ClientReturnController extends Controller
                             "user_address" => $batchDetails->user_address,
                             "tran_groupe_id" => $product['groupe'],
                             "tran_head_id" => $product['product'],
-                            "amount" => $product['mrp'],
+                            "amount" => $product['amount'],
                             "quantity_actual" => $product['quantity'],
                             "quantity" => $product['quantity'],
                             "unit_id" => $p->unit_id,
                             "tot_amount" => $product['totAmount'],
                             "discount" => $discount,
-                            "mrp" => $product['mrp'],
+                            "mrp" => $product['amount'],
                             "cp" => $p->cp,
                             "expiry_date" => $p->expiry_date,
                             "store_id" => $req->store,

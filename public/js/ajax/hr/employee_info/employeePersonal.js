@@ -83,7 +83,7 @@ $(document).ready(function () {
 
 
     // Get Transaction With / User Type 
-    GetTransactionWith(3, '', '#type', 3, 'Ok');
+    GetTransactionWith(3, '', 3, 'Ok');
 
 
     // Load Data on Hard Reload

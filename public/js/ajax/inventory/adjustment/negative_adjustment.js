@@ -20,7 +20,7 @@ $(document).ready(function () {
         { label: ' Id', key: 'tran_id' },
         { label: 'Product Name', key: 'head.tran_head_name' },
         { label: 'Store Name', key: 'store.store_name' },
-        { label: 'Quantity', key: 'quantity' },
+        { label: 'Quantity' },
         { label: 'Date', key:'tran_date', type:"date" },
         { label: 'Action', type: 'button' }
     ]);
@@ -41,7 +41,6 @@ $(document).ready(function () {
     // Insert Ajax
     InsertAjax('inventory/adjustment/negative', 
         {
-            store: { selector: '#store', attribute: 'data-id' },
             product: { selector: '#product', attribute: 'data-id' },
             groupe: { selector: '#product', attribute: 'data-groupe' },
             company: { selector: '#company', attribute: 'data-id' },
@@ -67,7 +66,6 @@ $(document).ready(function () {
     // Update Ajax
     UpdateAjax('inventory/adjustment/negative',
         {
-            store: { selector: '#updateStore', attribute: 'data-id' },
             product: { selector: '#updateProduct', attribute: 'data-id' },
             groupe: { selector: '#updateProduct', attribute: 'data-groupe' },
             method: 'Negative',
@@ -87,15 +85,14 @@ $(document).ready(function () {
 
 
     // Search By Date Ajax
-    // SearchByDateAjax('inventory/adjustment/negative', ShowInventoryNegativeAdjustments, { type: 5, method: 'Negative' });
+    SearchByDateAjax('inventory/adjustment/negative/seaarch', ShowInventoryNegativeAdjustments, { type: 5, method: 'Negative' });
 
 
     // Additional Edit Functionality
     function EditFormInputValue(item){
         $('#id').val(item.id);
         $('#updateTranId').val(item.tran_id);
-        $('#updateStore').attr('data-id', item.store_id);
-        $('#updateStore').val(item.store.store_name);
+        $('#updateStore').val(item.store_id);
         $('#updateProduct').attr('data-groupe', item.tran_groupe_id);
         $('#updateProduct').attr('data-id', item.tran_head_id);
         $('#updateProduct').val(item.head.tran_head_name);
@@ -103,4 +100,11 @@ $(document).ready(function () {
         $('#updateCp').val(item.cp);
         $('#updateMrp').val(item.mrp);
     }
+
+
+    // Get Store 
+    GetSelectInputList('admin/stores/get', function (res) {
+        CreateSelectOptions('#store', 'Select Store', res.data, 'store_name');
+        CreateSelectOptions('#updateStore', 'Select Store', res.data, 'store_name');
+    })
 });

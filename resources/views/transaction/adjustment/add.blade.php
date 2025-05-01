@@ -29,8 +29,9 @@
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="store">Store</label>
-                                <input type="text" name="store" class="form-input" id="store" autocomplete="off"><hr>
-                                <div id="store-list"></div>
+                                <select name="store" id="store">
+
+                                </select>
                                 <span class="error" id="store_error"></span>
                             </div>
                         </div>

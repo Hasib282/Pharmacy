@@ -674,7 +674,7 @@ $(document).ready(function () {
         $('#product').attr("data-batch",$(this).attr('data-batch'))
         $('#product').attr("data-quantity",$(this).attr('data-quantity'))
         $('#quantity').val($(this).attr('data-quantity'))
-        $('#price').val($(this).attr('data-price'))
+        $('#amount').val($(this).attr('data-amount'))
         $('#totAmount').val($(this).attr('data-tot'))
         $('#quantity').focus();
     });

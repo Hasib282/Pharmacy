@@ -75,8 +75,6 @@
         <script src="{{ asset('js/ajax/common_ajax/custom_helper_function.js') }}"></script>
         <script src="{{ asset('js/ajax/common_ajax/get_data.js') }}"></script>
         <script src="{{ asset('js/ajax/common_ajax/crude_ajax.js') }}"></script>
-        <script src="{{ asset('js/ajax/common_ajax/search_pagination.js') }}"></script>
-        <script src="{{ asset('js/ajax/common_ajax/render_pagination.js') }}"></script>
         {{-- add extra ajax file if needed --}}
         @yield('ajax')
         {{-- custom sidebar ajax --}}

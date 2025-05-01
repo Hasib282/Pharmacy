@@ -134,17 +134,6 @@ class AdjustmentController extends Controller
 
 
 
-    // Edit Product/Item Adjustment
-    public function Edit(Request $req){
-        $data = Transaction_Detail::on('mysql_second')->with('Store','Head')->findOrFail($req->id);
-        return response()->json([
-            'status'=> true,
-            'data'=> $data,
-        ], 200);
-    } // End Method
-
-
-
     // Update Product/Item Adjustment
     public function Update(Request $req){
         $req->validate([

@@ -384,7 +384,7 @@ function DisplayTransactionGrid() {
         let dynamicColumn = '';
 
         // Set the value of dynamicColumn based on conditions
-        if (segment1 === 'transaction' || segment1 === 'hospital') {
+        if (segment1 === 'transaction' || segment1 === 'hospital' || segment3 === 'return') {
             dynamicColumn = `<td>${products.amount}</td>`;
         } else if (segment3 === 'purchase') {
             dynamicColumn = `<td>${products.cp}</td>`;
@@ -400,6 +400,7 @@ function DisplayTransactionGrid() {
                 <td>${products.quantity}</td>
                 ${dynamicColumn}
                 <td>${products.totAmount}</td>
+                ${segment3 === 'return' ? '<td>'+ products.pbatch + '</td>' : ""}
                 <td><div class="center"><button class="remove" data-index="${index}"><i class="fas fa-trash"></i></button></div></td>
             </tr>`
         );
@@ -537,7 +538,7 @@ function displayErrors(errors, isEdit = false) {
 
 
 /////////////// ------------------ Insert or Update Product Details Into Local Storage Ajax Part Start ---------------- /////////////////////////////
-function InsertLocalStorage(isIssue = false) {
+function InsertLocalStorage(isIssue = false, isReturn = false) {
     $(document).off('click', '#InsertTransaction, #UpdateTransaction').on('click', '#InsertTransaction, #UpdateTransaction', function (e) {
         e.preventDefault();
 
@@ -594,9 +595,6 @@ function InsertLocalStorage(isIssue = false) {
             batch,
             pbatch,
         };
-
-        console.log(batch);
-        
         
 
         // Retrieve existing productIssue from local storage
@@ -621,8 +619,9 @@ function InsertLocalStorage(isIssue = false) {
         isUpdate ? $('#updateQuantity').val('1') :$('#quantity').val('1');
         isUpdate ? $('#updateMrp').val('') :$('#mrp').val('');
         isUpdate ? $('#updateTotAmount').val('') :$('#totAmount').val('');
-        isUpdate ? $("#updateHead").focus() :$("#head").focus();
-        isUpdate ? $("#updateProduct").focus() :$("#product").focus();
+        !isReturn ? isUpdate ? $("#updateHead").focus() :$("#head").focus() : "";
+        !isReturn ? isUpdate ? $("#updateProduct").focus() :$("#product").focus() : "";
+        isReturn ? isUpdate ? $("#batch-details-list tbody tr").focus() :$("#batch-details-list tbody tr").focus() : "";
 
         isUpdate ? $('#updateUnit').val('') : $('#unit').val('');
         isUpdate ? $('#updateUnit').removeAttr('data-id') : $('#unit').removeAttr('data-id');
@@ -666,10 +665,11 @@ function InsertTransaction(url, method, type, AddSuccessEvent) {
         let advance = $('#advance').val();
         let balance = $('#balance').val();
         let company = $('#company').attr('data-id');
+        let batch = $('#batch').val();
         $.ajax({
             url: `${apiUrl}/${url}`,
             method: 'POST',
-            data: { products:JSON.stringify(products), name, phone, address, type, method, withs, user, ptn_id, store, amountRP, discount, netAmount, advance, balance, company },
+            data: { products:JSON.stringify(products), name, phone, address, type, method, withs, user, ptn_id, store, amountRP, discount, netAmount, advance, balance, company, batch },
             success: function (res) {
                 if (res.status) {
                     $('#AddForm')[0].reset();

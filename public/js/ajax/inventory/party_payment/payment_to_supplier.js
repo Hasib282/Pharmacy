@@ -64,7 +64,7 @@ $(document).ready(function () {
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Transaction Id', key: 'tran_id' },
         { label: 'User Name', key: 'user.user_name' },
-        { label: 'Amount', key: 'bill_amount' },
+        { label: 'Amount' },
         { label: 'Action', type: 'button' }
     ]);
 
@@ -75,14 +75,14 @@ $(document).ready(function () {
 
     // Add Modal Open Functionality
     AddModalFunctionality("#date", function(){
-        GetTransactionWith(5, 'Payment', '#within')
+        GetTransactionWith(5, 'Payment')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
     });
 
 
     // Insert Ajax
-    InsertAjax('inventory/party/payment', ShowPaymentToSuppliers, 
+    InsertAjax('inventory/party/payment', 
         {
             user: { selector: '#user', attribute: 'data-id' },
             withs: { selector: '#user', attribute: 'data-with' },
@@ -101,7 +101,7 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('inventory/party/payment', EditFormInputValue, EditModalOn);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
@@ -112,34 +112,22 @@ $(document).ready(function () {
     // DeleteAjax('inventory/party/payment', ShowPaymentToSuppliers);
 
 
-    // Pagination Ajax
-    // PaginationAjax(ShowPaymentToSuppliers);
-
-
-    // Search Ajax
-    // SearchAjax('inventory/party/payment', ShowPaymentToSuppliers);
-
-
     // Search By Date
-    // SearchByDateAjax('inventory/party/payment', ShowPaymentToSuppliers);
+    SearchByDateAjax('inventory/party/payment/search', ShowPaymentToSuppliers);
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#updateTranId').val(res.data.tran_id);
-
-        getDueListByUserId(res.data.tran_user, '.due-grid tbody');
-        $('#updateUser').attr('data-id',res.data.tran_user);
-        $('#updateUser').val(res.data.user.user_name);
-        $('#updateAmount').val(res.data.payment);
-        $('#updateDiscount').val(res.data.discount);
-    }
-
-
-    // Edit Modal Open Functionality
-    function EditModalOn(){
-        GetTransactionWith(5, 'Payment', '#within')
+    function EditFormInputValue(item){
+        GetTransactionWith(5, 'Payment')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
+
+        $('#updateTranId').val(item.tran_id);
+
+        getDueListByUserId(item.tran_user, '.due-grid tbody');
+        $('#updateUser').attr('data-id',item.tran_user);
+        $('#updateUser').val(item.user.user_name);
+        $('#updateAmount').val(item.payment);
+        $('#updateDiscount').val(item.discount);
     }
 });

@@ -512,7 +512,7 @@ class GeneralTransactionController extends Controller
                 }
 
                 $list .= '
-                <tr data-id="' . htmlspecialchars($batch->tran_head_id) . '" data-name="' . htmlspecialchars($batch->head->tran_head_name) . '" data-groupe="' . htmlspecialchars($batch->tran_groupe_id) . '" data-quantity="' . htmlspecialchars($batch->quantity) . '" data-price="' . htmlspecialchars($amount) . '" data-tot="' . htmlspecialchars($batch->tot_amount) . '" data-batch="' . htmlspecialchars($batch->batch_id) . '">
+                <tr data-id="' . htmlspecialchars($batch->tran_head_id) . '" data-name="' . htmlspecialchars($batch->head->tran_head_name) . '" data-groupe="' . htmlspecialchars($batch->tran_groupe_id) . '" data-quantity="' . htmlspecialchars($batch->quantity) . '" data-amount="' . htmlspecialchars($amount) . '" data-tot="' . htmlspecialchars($batch->tot_amount) . '" data-batch="' . htmlspecialchars($batch->batch_id) . '">
                     <td>' . htmlspecialchars($batch->head->tran_head_name) . '</td>
                     <td style="text-align: center">' . htmlspecialchars($batch->quantity) . '</td>
                     <td style="text-align: right">' . $amount . '</td>

@@ -76,13 +76,13 @@ function ShowPharmacySupplierReturns(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due_col', type: 'number'},{key:'due_discount', type: 'number'},{key:'due', type: 'number'}],
+        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'payment', type: 'number'},{key:'due_col', type: 'number'},{key:'due_disc', type: 'number'},{key:'due', type: 'number'}],
         actions: (row) => `
                 <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
 
-                <button data-modal-id="editModal" id="edit" data-id="${row.tran_id}"><i class="fas fa-edit"></i></button>
+                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
-                <button data-id="${row.tran_id}" id="delete"><i class="fas fa-trash"></i></button>
+                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
     });
 }
@@ -95,13 +95,13 @@ $(document).ready(function () {
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Id', key: 'tran_id' },
         { label: 'User', key: 'user.user_name' },
-        { label: 'Total	', key: 'bill_amount' },
-        { label: '	Discount', key: 'discount' },
-        { label: 'Net Total', key: 'net_amount' },
-        { label: 'Advance', key: 'payment' },
-        { label: 'Due Col', key: 'due_col' },
-        { label: 'Due Discount', key: 'due_disc' },
-        { label: 'Due', key: 'due' },
+        { label: 'Total' },
+        { label: 'Discount' },
+        { label: 'Net Total' },
+        { label: 'Advance' },
+        { label: 'Due Col' },
+        { label: 'Due Discount' },
+        { label: 'Due' },
         { label: 'Action', type: 'button' }
     ]);
 
@@ -128,14 +128,25 @@ $(document).ready(function () {
     });
 
 
-    // Insert Ajax
-    // InsertAjax('pharmacy/transaction/return/supplier', ShowPharmacySupplierReturns, {}, function() {
-    //     $('#division').focus();
-    // });
+    // Insert Into Local Storage
+    InsertLocalStorage(false, true);
+
+
+    // Insert Inventory Purchase ajax
+    InsertTransaction('pharmacy/transaction/return/supplier', 'Supplier Return', '6', function() {
+        $('#batch').removeAttr('data-id');
+        $('#user').removeAttr('data-id');
+        $('#user').removeAttr('data-with');
+        $('#product').removeAttr('data-batch');
+        $('#product').removeAttr('data-quantity');
+        $('#product').removeAttr('data-groupe');
+        $('.transaction_grid tbody').html('');
+        $("#store").focus();
+    });
 
 
     //Edit Ajax
-    // EditAjax('pharmacy/transaction/return/supplier', EditFormInputValue);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
@@ -146,93 +157,90 @@ $(document).ready(function () {
     DeleteAjax('pharmacy/transaction/return/supplier', ShowPharmacySupplierReturns);
 
 
-    // Pagination Ajax
-    // PaginationAjax(ShowPharmacySupplierReturns);
-
-
-    // Search Ajax
-    // SearchAjax('pharmacy/transaction/return/supplier', ShowPharmacySupplierReturns, { type: 6, method: 'Supplier Return' });
-    
-    
     // Search By Date Ajax
-    // SearchByDateAjax('pharmacy/transaction/return/supplier', ShowPharmacySupplierReturns, { type: 6, method: 'Supplier Return' });
+    SearchByDateAjax('pharmacy/transaction/return/supplier/search', ShowPharmacySupplierReturns, { type: 6, method: 'Supplier Return' });
 
 
     // Additional Edit Functionality
-    // function EditFormInputValue(res){
-    //     $('#id').val(res.location.id);
-    //     // Create options dynamically
-    //     $('#updateDivision').empty();
-    //     $('#updateDivision').append(`<option value="Dhaka" ${res.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-    //                                 <option value="Chittagong" ${res.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-    //                                 <option value="Rajshahi" ${res.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-    //                                 <option value="Khulna" ${res.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-    //                                 <option value="Sylhet" ${res.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-    //                                 <option value="Barishal" ${res.location.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
-    //                                 <option value="Rangpur" ${res.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-    //                                 <option value="Mymensingh" ${res.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-    //     $('#updateDistrict').val(res.location.district);
-    //     $('#updateUpazila').val(res.location.upazila);
-    //     $('#updateDivision').focus();
-    // }
+    function EditFormInputValue(res){
+        $('#id').val(res.location.id);
+        // Create options dynamically
+        $('#updateDivision').empty();
+        $('#updateDivision').append(`<option value="Dhaka" ${res.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
+                                    <option value="Chittagong" ${res.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
+                                    <option value="Rajshahi" ${res.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
+                                    <option value="Khulna" ${res.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
+                                    <option value="Sylhet" ${res.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
+                                    <option value="Barishal" ${res.location.division === 'Barishal' ? 'selected' : ''}>Barishal</option>
+                                    <option value="Rangpur" ${res.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
+                                    <option value="Mymensingh" ${res.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
+        $('#updateDistrict').val(res.location.district);
+        $('#updateUpazila').val(res.location.upazila);
+        $('#updateDivision').focus();
+    }
 
 
-
-
-
-    // Remove Product from Local Storage
-    $(document).off("click", '.remove').on("click", '.remove', function (e){
-        let index = $(this).attr('data-index');
-        let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
-
-        productGrids.splice(index, 1);
-        localStorage.setItem('transactionData', JSON.stringify(productGrids));
-        DisplayTransactionGrid();
+    // Get Store 
+    GetSelectInputList('admin/stores/get', function (res) {
+        CreateSelectOptions('#store', 'Select Store', res.data, 'store_name');
+        CreateSelectOptions('#updateStore', 'Select Store', res.data, 'store_name');
     })
 
 
 
-    // Function to Display ProductGrids in The Transaction Grid Table
-    function DisplayTransactionGrid() {
-        let productIssues = JSON.parse(localStorage.getItem('transactionData')) || [];
-        $('.transaction_grid tbody').html("");
+    // // Remove Product from Local Storage
+    // $(document).off("click", '.remove').on("click", '.remove', function (e){
+    //     let index = $(this).attr('data-index');
+    //     let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
 
-        let total = 0;
-        productIssues.forEach((products, index) => {
-            $('.transaction_grid tbody').append(`
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${products.name}</td>
-                    <td>${products.quantity}</td>
-                    <td>${products.cp}</td>
-                    <td>${products.totAmount}</td>
-                    <td>${products.batch}</td>
-                    <td><div class="center"><button class="remove" data-index="${index}"><i class="fas fa-trash"></i></button></div></td>
-                </tr>`
-            );
+    //     productGrids.splice(index, 1);
+    //     localStorage.setItem('transactionData', JSON.stringify(productGrids));
+    //     DisplayTransactionGrid();
+    // })
 
-            total = total + Number(products.totAmount);
-        });
+
+
+    // // Function to Display ProductGrids in The Transaction Grid Table
+    // function DisplayTransactionGrid() {
+    //     let productIssues = JSON.parse(localStorage.getItem('transactionData')) || [];
+    //     $('.transaction_grid tbody').html("");
+
+    //     let total = 0;
+    //     productIssues.forEach((products, index) => {
+    //         $('.transaction_grid tbody').append(`
+    //             <tr>
+    //                 <td>${index + 1}</td>
+    //                 <td>${products.name}</td>
+    //                 <td>${products.quantity}</td>
+    //                 <td>${products.cp}</td>
+    //                 <td>${products.totAmount}</td>
+    //                 <td>${products.batch}</td>
+    //                 <td><div class="center"><button class="remove" data-index="${index}"><i class="fas fa-trash"></i></button></div></td>
+    //             </tr>`
+    //         );
+
+    //         total = total + Number(products.totAmount);
+    //     });
         
 
-        // Calculate Add Modal Bill
-        $("#amountRP").val(total);
-        let discount = Number($("#totalDiscount").val());
-        let netAmount = total - discount;
-        $("#netAmount").val(netAmount);
-        let advance = Number($("#advance").val());
-        let balance = netAmount - advance;
-        $("#balance").val(balance);
+    //     // Calculate Add Modal Bill
+    //     $("#amountRP").val(total);
+    //     let discount = Number($("#totalDiscount").val());
+    //     let netAmount = total - discount;
+    //     $("#netAmount").val(netAmount);
+    //     let advance = Number($("#advance").val());
+    //     let balance = netAmount - advance;
+    //     $("#balance").val(balance);
 
-        // Calculate Edit Modal Bill
-        $("#updateAmountRP").val(total);
-        let updateDiscount = Number($("#updateTotalDiscount").val());
-        let updateNetAmount = total - updateDiscount;
-        $("#updateNetAmount").val(updateNetAmount);
-        let updateAdvance = Number($("#updateAdvance").val());
-        let updateBalance = updateNetAmount - updateAdvance;
-        $("#updateBalance").val(updateBalance);
-    }
+    //     // Calculate Edit Modal Bill
+    //     $("#updateAmountRP").val(total);
+    //     let updateDiscount = Number($("#updateTotalDiscount").val());
+    //     let updateNetAmount = total - updateDiscount;
+    //     $("#updateNetAmount").val(updateNetAmount);
+    //     let updateAdvance = Number($("#updateAdvance").val());
+    //     let updateBalance = updateNetAmount - updateAdvance;
+    //     $("#updateBalance").val(updateBalance);
+    // }
 
 
 
@@ -251,170 +259,170 @@ $(document).ready(function () {
 
 
 
-    /////////////// ------------------ Add and Delete Purchase Product Details Into Local Storage Ajax Part Start ---------------- /////////////////////////////
-    // Function to validate form data
-    function validateAddFormData() {
-        let isValid = true;
-        let errors = {};
+    // /////////////// ------------------ Add and Delete Purchase Product Details Into Local Storage Ajax Part Start ---------------- /////////////////////////////
+    // // Function to validate form data
+    // function validateAddFormData() {
+    //     let isValid = true;
+    //     let errors = {};
 
-        let product = $('#product').attr('data-id');
-        let batch = $('#product').attr('data-batch');
-        let pq = Number($('#product').attr('data-quantity'));
-        let quantity = Number($('#quantity').val());
-        let cp = $('#price').val();
-        let totAmount = $('#totAmount').val();
+    //     let product = $('#product').attr('data-id');
+    //     let batch = $('#product').attr('data-batch');
+    //     let pq = Number($('#product').attr('data-quantity'));
+    //     let quantity = Number($('#quantity').val());
+    //     let cp = $('#price').val();
+    //     let totAmount = $('#totAmount').val();
 
-        // Validate Product
-        if (!product) {
-            isValid = false;
-            errors.product = "Product name is required.";
-        }
-        else if (isProductDuplicate(product, batch)) {
-            isValid = false;
-            errors.product = "This product has already been added.";
-        }
+    //     // Validate Product
+    //     if (!product) {
+    //         isValid = false;
+    //         errors.product = "Product name is required.";
+    //     }
+    //     else if (isProductDuplicate(product, batch)) {
+    //         isValid = false;
+    //         errors.product = "This product has already been added.";
+    //     }
 
         
-        // Validate Quantity
-        if (!quantity || isNaN(quantity) || quantity <= 0) {
-            isValid = false;
-            errors.quantity = "Quantity must be a positive number.";
-        }
-        else if(quantity > pq){
-            isValid = false;
-            errors.quantity = "Quantity is bigger than the invoice quantity.";
-        }
+    //     // Validate Quantity
+    //     if (!quantity || isNaN(quantity) || quantity <= 0) {
+    //         isValid = false;
+    //         errors.quantity = "Quantity must be a positive number.";
+    //     }
+    //     else if(quantity > pq){
+    //         isValid = false;
+    //         errors.quantity = "Quantity is bigger than the invoice quantity.";
+    //     }
 
-        // Validate MRP
-        if (!cp || isNaN(cp) || cp <= 0) {
-            isValid = false;
-            errors.cp = "MRP must be a positive number.";
-        }
+    //     // Validate MRP
+    //     if (!cp || isNaN(cp) || cp <= 0) {
+    //         isValid = false;
+    //         errors.cp = "MRP must be a positive number.";
+    //     }
         
 
-        // Validate Total Amount
-        if (!totAmount || isNaN(totAmount) || totAmount <= 0) {
-            isValid = false;
-            errors.totAmount = "Total amount must be a positive number.";
-        }
+    //     // Validate Total Amount
+    //     if (!totAmount || isNaN(totAmount) || totAmount <= 0) {
+    //         isValid = false;
+    //         errors.totAmount = "Total amount must be a positive number.";
+    //     }
 
-        displayErrors(errors);
-        return isValid;
-    }
-
-
-    // Function to check for duplicate products
-    function isProductDuplicate(product, batch) {
-        let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
-        return productGrids.some(products => products.product == product && products.batch == batch);
-    }
+    //     displayErrors(errors);
+    //     return isValid;
+    // }
 
 
+    // // Function to check for duplicate products
+    // function isProductDuplicate(product, batch) {
+    //     let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
+    //     return productGrids.some(products => products.product == product && products.batch == batch);
+    // }
 
-    // Function to display error messages
-    function displayErrors(errors) {
-        $('#product_error').html(errors.product || '');
-        $('#quantity_error').html(errors.quantity || '');
-        $('#price_error').html(errors.cp || '');
-        $('#totAmount_error').html(errors.totAmount || '');
-    }
+
+
+    // // Function to display error messages
+    // function displayErrors(errors) {
+    //     $('#product_error').html(errors.product || '');
+    //     $('#quantity_error').html(errors.quantity || '');
+    //     $('#price_error').html(errors.cp || '');
+    //     $('#totAmount_error').html(errors.totAmount || '');
+    // }
     
     
     
-    // Insert Product Into Local Storage
-    $(document).off('click', '#Add').on('click', '#Add', function (e) {
-        e.preventDefault();
-        // Validate form data
-        if (!validateAddFormData()) {
-            return;
-        }
+    // // Insert Product Into Local Storage
+    // $(document).off('click', '#Add').on('click', '#Add', function (e) {
+    //     e.preventDefault();
+    //     // Validate form data
+    //     if (!validateAddFormData()) {
+    //         return;
+    //     }
 
-        let product = Number($('#product').attr('data-id'));
-        let batch = $('#product').attr('data-batch');
-        let name = $('#product').val();
-        let groupe = $('#product').attr('data-groupe');
-        let quantity = $('#quantity').val();
-        let cp = $('#price').val();
-        let totAmount = $('#totAmount').val();
-
-
-        let productGrid = {
-            product,
-            name,
-            groupe,
-            quantity,
-            cp,
-            totAmount,
-            batch
-        };
-
-        // Retrieve existing productGrids from local storage
-        let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
-
-        // Add the new productGrids to the list
-        productGrids.push(productGrid);
-
-        // Save updated productGrids back to local storage
-        localStorage.setItem('transactionData', JSON.stringify(productGrids));
-
-        DisplayTransactionGrid();
+    //     let product = Number($('#product').attr('data-id'));
+    //     let batch = $('#product').attr('data-batch');
+    //     let name = $('#product').val();
+    //     let groupe = $('#product').attr('data-groupe');
+    //     let quantity = $('#quantity').val();
+    //     let cp = $('#price').val();
+    //     let totAmount = $('#totAmount').val();
 
 
-        $('#product').val('');
-        $('#product').removeAttr('data-id');
-        $('#product').removeAttr('data-groupe');
-        $('#product').removeAttr('data-batch');
-        $('#quantity').val('1');
-        $('#price').val('');
-        $('#totAmount').val('');
-        $("#batch").focus();
+    //     let productGrid = {
+    //         product,
+    //         name,
+    //         groupe,
+    //         quantity,
+    //         cp,
+    //         totAmount,
+    //         batch
+    //     };
 
-    });
-    /////////////// ------------------ Add and Delete Purchase Product Details Into Local Storage Ajax Part End ---------------- /////////////////////////////
+    //     // Retrieve existing productGrids from local storage
+    //     let productGrids = JSON.parse(localStorage.getItem('transactionData')) || [];
+
+    //     // Add the new productGrids to the list
+    //     productGrids.push(productGrid);
+
+    //     // Save updated productGrids back to local storage
+    //     localStorage.setItem('transactionData', JSON.stringify(productGrids));
+
+    //     DisplayTransactionGrid();
+
+
+    //     $('#product').val('');
+    //     $('#product').removeAttr('data-id');
+    //     $('#product').removeAttr('data-groupe');
+    //     $('#product').removeAttr('data-batch');
+    //     $('#quantity').val('1');
+    //     $('#price').val('');
+    //     $('#totAmount').val('');
+    //     $("#batch").focus();
+
+    // });
+    // /////////////// ------------------ Add and Delete Purchase Product Details Into Local Storage Ajax Part End ---------------- /////////////////////////////
     
 
-    /////////////// ------------------ Add Pharmacy Supplier Return Ajax Part Start ---------------- /////////////////////////////
-    $(document).off('click', '#Insert').on('click', '#Insert', function (e) {
-        e.preventDefault();
-        let products = localStorage.getItem('transactionData');
-        if (!products) {
-            $('#message_error').html('No product added' || '');
-            return;
-        }
+    // /////////////// ------------------ Add Pharmacy Supplier Return Ajax Part Start ---------------- /////////////////////////////
+    // $(document).off('click', '#Insert').on('click', '#Insert', function (e) {
+    //     e.preventDefault();
+    //     let products = localStorage.getItem('transactionData');
+    //     if (!products) {
+    //         $('#message_error').html('No product added' || '');
+    //         return;
+    //     }
 
-        products = JSON.parse(products);
+    //     products = JSON.parse(products);
 
-        let method = 'Supplier Return';
-        let type = '6';
-        let withs = $('#user').attr('data-with');
-        let user = $('#user').attr('data-id');
-        let store = $('#store').attr('data-id');
-        let amountRP = $('#amountRP').val();
-        let discount = $('#totalDiscount').val();
-        let netAmount = $('#netAmount').val();
-        let advance = $('#advance').val();
-        let balance = $('#balance').val();
-        let batch = $('#batch').val();
-        let company = $('#company').attr('data-id');
-        $.ajax({
-            url: `${apiUrl}/pharmacy/transaction/return/supplier`,
-            method: 'POST',
-            data: { products:JSON.stringify(products), batch, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
-            success: function (res) {
-                if (res.status) {
-                    $('#AddForm')[0].reset();
-                    $('#store').removeAttr('data-id');
-                    $('#user').removeAttr('data-id');
-                    $('#user').removeAttr('data-with');
-                    $('#batch').removeAttr('data-id');
-                    $('.transaction_grid tbody').html('');
-                    $('#batch-details-list tbody').html('');
-                    ReloadData('pharmacy/transaction/return/supplier', ShowPharmacySupplierReturns);
-                    $('#store').focus();
-                    localStorage.removeItem('transactionData');
-                    toastr.success('Supplier Return Added Successfully', 'Added!');
-                }
-            }
-        });
-    });
+    //     let method = 'Supplier Return';
+    //     let type = '6';
+    //     let withs = $('#user').attr('data-with');
+    //     let user = $('#user').attr('data-id');
+    //     let store = $('#store').attr('data-id');
+    //     let amountRP = $('#amountRP').val();
+    //     let discount = $('#totalDiscount').val();
+    //     let netAmount = $('#netAmount').val();
+    //     let advance = $('#advance').val();
+    //     let balance = $('#balance').val();
+    //     let batch = $('#batch').val();
+    //     let company = $('#company').attr('data-id');
+    //     $.ajax({
+    //         url: `${apiUrl}/pharmacy/transaction/return/supplier`,
+    //         method: 'POST',
+    //         data: { products:JSON.stringify(products), batch, type, method, withs, user, store, amountRP, discount, netAmount, advance, balance, company },
+    //         success: function (res) {
+    //             if (res.status) {
+    //                 $('#AddForm')[0].reset();
+    //                 $('#store').removeAttr('data-id');
+    //                 $('#user').removeAttr('data-id');
+    //                 $('#user').removeAttr('data-with');
+    //                 $('#batch').removeAttr('data-id');
+    //                 $('.transaction_grid tbody').html('');
+    //                 $('#batch-details-list tbody').html('');
+    //                 ReloadData('pharmacy/transaction/return/supplier', ShowPharmacySupplierReturns);
+    //                 $('#store').focus();
+    //                 localStorage.removeItem('transactionData');
+    //                 toastr.success('Supplier Return Added Successfully', 'Added!');
+    //             }
+    //         }
+    //     });
+    // });
 });

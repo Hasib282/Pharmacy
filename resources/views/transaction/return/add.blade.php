@@ -73,12 +73,12 @@
                                 <span class="error" id="quantity_error"></span>
                             </div>
                         </div>
-                        {{-- price --}}
+                        {{-- amount --}}
                         <div class="c-4">
                             <div class="form-input-group">
-                                <label for="price">Price</label>
-                                <input type="text" name="price" class="form-input amount" id="price" disabled>
-                                <span class="error" id="price_error"></span>
+                                <label for="amount">Price</label>
+                                <input type="text" name="amount" class="form-input amount" id="amount" disabled>
+                                <span class="error" id="amount_error"></span>
                             </div>
                         </div>
                         {{-- total --}}

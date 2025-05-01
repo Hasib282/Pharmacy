@@ -64,7 +64,7 @@ $(document).ready(function () {
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Transaction Id', key: 'tran_id' },
         { label: 'User Name', key: 'user.user_name' },
-        { label: 'Amount', key: 'bill_amount' },
+        { label: 'Amount' },
         { label: 'Action', type: 'button' }
     ]);
 
@@ -75,14 +75,14 @@ $(document).ready(function () {
 
     // Add Modal Open Functionality
     AddModalFunctionality("#date", function(){
-        GetTransactionWith(5, 'Receive', '#within')
+        GetTransactionWith(5, 'Receive')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
     });
 
 
     // Insert Ajax
-    InsertAjax('inventory/party/receive', ShowReceiveFromClients, 
+    InsertAjax('inventory/party/receive', 
         {
             user: { selector: '#user', attribute: 'data-id' },
             withs: { selector: '#user', attribute: 'data-with' },
@@ -101,7 +101,7 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax('inventory/party/receive', EditFormInputValue, EditModalOn);
+    EditAjax(EditFormInputValue);
 
 
     // Update Ajax
@@ -112,34 +112,22 @@ $(document).ready(function () {
     // DeleteAjax('inventory/party/receive', ShowReceiveFromClients);
 
 
-    // Pagination Ajax
-    // PaginationAjax(ShowReceiveFromClients);
-
-
-    // Search Ajax
-    // SearchAjax('inventory/party/receive', ShowReceiveFromClients);
-
-
     // Search By Date
-    // SearchByDateAjax('inventory/party/receive', ShowReceiveFromClients);
+    SearchByDateAjax('inventory/party/receive', ShowReceiveFromClients);
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(res){
-        $('#updateTranId').val(res.data.tran_id);
-
-        getDueListByUserId(res.data.tran_user, '.due-grid tbody');
-        $('#updateUser').attr('data-id',res.data.tran_user);
-        $('#updateUser').val(res.data.user.user_name);
-        $('#updateAmount').val(res.data.receive);
-        $('#updateDiscount').val(res.data.discount);
-    }
-
-
-    // Edit Modal Open Functionality
-    function EditModalOn(){
-        GetTransactionWith(5, 'Receive', '#within')
+    function EditFormInputValue(item){
+        GetTransactionWith(5, 'Receive')
         $('.due-grid tbody').html('');
         $('.due-grid tfoot').html('');
+
+        $('#updateTranId').val(item.tran_id);
+
+        getDueListByUserId(item.tran_user, '.due-grid tbody');
+        $('#updateUser').attr('data-id',item.tran_user);
+        $('#updateUser').val(item.user.user_name);
+        $('#updateAmount').val(item.receive);
+        $('#updateDiscount').val(item.discount);
     }
 });
