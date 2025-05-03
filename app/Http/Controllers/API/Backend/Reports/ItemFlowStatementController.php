@@ -13,7 +13,7 @@ use App\Models\Transaction_Groupe;
 class ItemFlowStatementController extends Controller
 {
     // Show All Item Flow Statement
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
         $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '$type')->orderBy('added_at','asc')->get();

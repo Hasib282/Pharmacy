@@ -22,16 +22,6 @@ class UsersController extends Controller
 
 
 
-    // Roles Search
-    public function SearchRoles(Request $req){
-        $name = "User Role";
-        $js = 'admin_setup/users/roles';
-        return view('common_modals.single_input.main', compact('name', 'js'));
-    } // End Method
-    /////////////////////////// --------------- Roles Methods End ---------- //////////////////////////
-
-
-
     
 
     /////////////////////////// --------------- Admin Methods start---------- //////////////////////////
@@ -45,15 +35,6 @@ class UsersController extends Controller
         else{
             return view('users.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Search Admin
-    public function SearchAdmins(Request $request){
-        $name = "Admin";
-        $js = "admin";
-        return view('users.main', compact('name', 'js'));
     } // End Method
 
 
@@ -75,15 +56,6 @@ class UsersController extends Controller
 
 
 
-    // Search SuperAdmins
-    public function SearchSuperAdmins(Request $request){
-        $name = "Super Admin";
-        $js = "super_admin";
-        return view('users.main', compact('name', 'js'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Client Methods start---------- //////////////////////////
@@ -97,14 +69,6 @@ class UsersController extends Controller
         else{
             return view('users.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-    // Search Client
-    public function SearchClients(Request $request){
-        $name = "Client";
-        $js = "client";
-        return view('users.main', compact('name', 'js'));
     } // End Method
 
 
@@ -126,15 +90,6 @@ class UsersController extends Controller
 
 
 
-    // Search Suppplier by Name
-    public function SearchSuppliers(Request $request){
-        $name = "Supplier";
-        $js = "supplier";
-        return view('users.main', compact('name', 'js'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Doctor Methods Start Here ---------- //////////////////////////
@@ -148,15 +103,6 @@ class UsersController extends Controller
         else{
             return view('users.doctor.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Search Doctors
-    public function SearchDoctors(Request $req){
-        $name = "Doctor";
-        $js = 'doctor';
-        return view('users.doctor.main', compact('name', 'js'));
     } // End Method
     
     
@@ -175,65 +121,4 @@ class UsersController extends Controller
             return view('users.patient.main', compact('name', 'js'));
         }
     } // End Method
-
-
-
-    // Search Patients
-    public function SearchPatients(Request $req){
-        $name = "Patient";
-        $js = 'patient';
-        return view('users.patient.main', compact('name', 'js'));
-    } // End Method
-
-
-
-
-
-    // /////////////////////////// --------------- Sales Representative Methods Start Here ---------- //////////////////////////
-    // // Show Sales Representatives
-    // public function ShowSR(Request $req){
-    //     $name = "Sales Representative";
-    //     $js = 'sr';
-    //     if ($req->ajax()) {
-    //         return view('users.ajaxBlade', compact('name','js'));
-    //     }
-    //     else{
-    //         return view('users.main', compact('name', 'js'));
-    //     }
-    // } // End Method
-
-
-
-    // // Search Sales Representatives
-    // public function SearchSR(Request $req){
-    //     $name = "Sales Representative";
-    //     $js = 'sr';
-    //     return view('users.main', compact('name', 'js'));
-    // } // End Method
-    
-    
-    
-
-
-    // /////////////////////////// --------------- Marketing Heads Methods Start Here ---------- //////////////////////////
-    // // Show Marketing Heads
-    // public function ShowMarketingHeads(Request $req){
-    //     $name = "Marketing Head";
-    //     $js = 'marketng_head';
-    //     if ($req->ajax()) {
-    //         return view('users.ajaxBlade', compact('name','js'));
-    //     }
-    //     else{
-    //         return view('users.main', compact('name', 'js'));
-    //     }
-    // } // End Method
-
-
-
-    // // Search Marketing Heads
-    // public function SearchMarketingHeads(Request $req){
-    //     $name = "Marketing Head";
-    //     $js = 'marketng_head';
-    //     return view('users.main', compact('name', 'js'));
-    // } // End Method
 }

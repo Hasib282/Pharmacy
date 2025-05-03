@@ -173,32 +173,33 @@ class GenerateTable {
     // Create the tbody Rows 
     renderTableBody() {
         const tbody = this.table.querySelector('tbody');
-        const tfoot = this.table.querySelector('tfoot');
+        const pagination = document.getElementById('paginate');
         const startIndex = (this.currentPage - 1) * this.rowsPerPage;
-        const filteredData = this.filteredData.slice(startIndex, startIndex + this.rowsPerPage);
+        const datas = this.filteredData.slice(startIndex, startIndex + this.rowsPerPage);
 
         tbody.innerHTML = '';
-        tfoot.innerHTML = '';
+        pagination.innerHTML = '';
 
-        if (filteredData.length === 0) {
-            tfoot.innerHTML = '<tr><td colspan="15" style="text-align:center;">No Data Found</td></tr>';
+        if (datas.length === 0) {
+            this.renderTableFooter([]);
+            tbody.innerHTML = '<tr><td colspan="15" style="text-align:center;">No Data Found</td></tr>';
             return;
         }
 
 
         // Extracting the Rows one By one and create colums
-        tbody.innerHTML = filteredData.map((row, i) => { 
-            const columns = this.tbody.map(colConfig => { // Create Colums acording to tbody values
-                const col = typeof colConfig === 'string' ? { key: colConfig, type: 'text' } : colConfig;
-                const value = col.key.split('.').reduce((obj, key) => obj?.[key], row);
-                const type = col.type || 'text';
+        tbody.innerHTML = datas.map((row, i) => { 
+            const columns = this.tbody.map(col => { // Create Colums acording to tbody values
+                const data = typeof col === 'string' ? { key: col, type: 'text' } : col;
+                const value = data.key.split('.').reduce((obj, key) => obj?.[key], row);
+                const type = data.type || 'text';
                 
                 switch (type) {
                     case 'number':
                         return `<td style="text-align:right;">${Number(value).toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>`;
                     
                     case 'calculate':
-                        const calcValue = evaluateExpression(col.expration, row);
+                        const calcValue = evaluateExpression(data.expration, row);
                         return `<td style="text-align:right;">${Number(calcValue).toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>`;
     
                     case 'image':
@@ -241,7 +242,79 @@ class GenerateTable {
                 </tr>`;
         }).join('');
 
+        this.renderTableFooter(datas);
         this.renderPagination();
+    }
+
+
+
+    // Create the tfoot Rows 
+    renderTableFooter(datas) {
+        const tfoot = this.table.querySelector('tfoot');
+        tfoot.innerHTML = '';
+    
+        if (!datas || datas.length === 0) return;
+
+        // Find first index of column with a footer type
+        const firstFooterIndex = this.tbody.findIndex(col => {
+            const data = typeof col === 'string' ? { key: col, type: 'text' } : col;
+            return ['sum', 'avg', 'custom'].includes(data.footerType);
+        });
+
+        const colSpan = firstFooterIndex + 1;
+
+        // If no footer columns are found, exit
+        if (firstFooterIndex === -1 || colSpan >= this.tbody.length + 1) return;
+    
+        const footerCells = this.tbody.map((col, index) => {
+            if (index < firstFooterIndex) return ''; // skip printing <td> before first footer
+
+            const data = typeof col === 'string' ? { key: col, type: 'text' } : col;
+            const key = data.key;
+            const footerType = data.footerType;
+    
+            if (!footerType || (data.type !== 'number' && data.type !== 'calculate' && footerType !== 'custom')) {
+                return '<td></td>';
+            }
+    
+            // Handle 'custom' type
+            if (footerType === 'custom' && typeof data.footerRender === 'function') {
+                return `<td style="text-align:right; font-weight:bold;">${data.footerRender(datas)}</td>`;
+            }
+    
+            // Aggregate numeric or calculated values
+            let total = 0;
+            datas.forEach(row => {
+                let value = 0;
+                if (data.type === 'calculate' && data.expration) {
+                    value = evaluateExpression(data.expration, row);
+                } else {
+                    value = key.split('.').reduce((obj, k) => obj?.[k], row);
+                }
+                total += Number(value) || 0;
+            });
+    
+            if (footerType === 'sum') {
+                return `<td style="text-align:right; font-weight:bold;">${total.toLocaleString('en-US')}</td>`;
+            }
+    
+            if (footerType === 'avg') {
+                const avg = total / (datas.length || 1);
+                return `<td style="text-align:right; font-weight:bold;">${avg.toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>`;
+            }
+    
+            return '<td></td>';
+        }).join('');
+    
+        const footerHtml = `
+            <tr>
+                <td style="font-weight:bold;" colspan="${colSpan}">Total</td>
+                ${footerCells}
+                <td></td>
+            </tr>
+        `;
+    
+        tfoot.innerHTML = footerHtml;
     }
 
 
@@ -370,8 +443,8 @@ class GenerateTable {
 
 
 // Create the thead Rows 
-function renderTableHead(thead) {
-    const head = document.querySelector('#data-table thead');
+function renderTableHead(thead, tableId ='#data-table') {
+    const head = document.querySelector(`${tableId} thead`);
     const row1 = thead.map(h => `<th>${h.label}</th>`).join('');
 
     const row2 = thead.map(h => {

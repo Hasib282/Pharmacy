@@ -26,16 +26,7 @@ class HRSetupController extends Controller
 
 
 
-    // Departments Search
-    public function SearchDepartments(Request $req){
-        $name = "Department";
-        $js = 'hr/department';
-        return view('common_modals.single_input.main', compact('name', 'js'));
-    } // End Method
-
-    /////////////////////////// --------------- Department Table Methods End---------- //////////////////////////
-
-
+    
 
     /////////////////////////// --------------- Designations Table Methods start ---------- //////////////////////////
     // Show All Designations
@@ -48,14 +39,4 @@ class HRSetupController extends Controller
             return view('hr.designation.main', compact('name'));
         }
     } // End Method
-
-
-
-    // Designation Search
-    public function SearchDesignations(Request $req){
-        $name = "Designation";
-        return view('hr.designation.main', compact('name'));
-    } // End Method
-
-    /////////////////////////// --------------- Designations Table Methods End ---------- //////////////////////////
 }

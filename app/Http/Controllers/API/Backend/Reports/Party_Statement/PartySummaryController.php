@@ -12,7 +12,7 @@ use App\Models\Transaction_Main;
 class PartySummaryController extends Controller
 {
     // Show All Salary Details Report
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $transactions = Transaction_Main::on('mysql_second')
         ->with('User', 'Bank', 'Withs', 'Type')
         ->whereNotIn('tran_type',['2','4'])

@@ -28,17 +28,8 @@ class PayRollController extends Controller
         else{
             return view('hr.payroll.payroll_setup.main', compact('name'));
         }
-    } // End Method 
-
-
-
-    // Search Payroll Setup by user
-    public function SearchPayrollSetup(Request $req){
-        $name = "Payroll Setup";
-        return view('hr.payroll.payroll_setup.main', compact('name'));
     } // End Method
 
-    /////////////// ----------------------- Payroll Setup Part End Here ------------------- ////////////////
 
 
 
@@ -54,17 +45,7 @@ class PayRollController extends Controller
             return view('hr.payroll.payroll_middlewire.main', compact('name'));
         }
     } // End Method
-
-
-
-    // Search Payroll Middlewire by user
-    public function SearchPayrollMiddlewire(Request $req){
-        $name = "Payroll Middlewire";
-        return view('hr.payroll.payroll_middlewire.main', compact('name'));
-    } // End Method
-
-    /////////////// ----------------------- Payroll Middlewire Part End Here ------------------- ////////////////
-
+    
 
 
 
@@ -79,15 +60,5 @@ class PayRollController extends Controller
         else{
             return view('hr.payroll.payroll_installment.main', compact('name'));
         }
-    } // End Method 
-
-
-
-    // Search Payroll by user
-    public function SearchPayroll(Request $req){
-        $name = "Salary Process";
-        return view('hr.payroll.payroll_installment.main', compact('name'));
     } // End Method
-
-    ////////////// ------------------------ Payroll Part End Here --------------------- ////////////////////////////
 }

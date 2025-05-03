@@ -12,7 +12,7 @@ use App\Models\Transaction_Head;
 class ProfitabilityStatementController extends Controller
 {
     // Show All Profitability Statement
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
         $data = Transaction_Detail::on('mysql_second')->With('User','Head')

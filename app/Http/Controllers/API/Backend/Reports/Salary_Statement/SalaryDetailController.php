@@ -11,7 +11,7 @@ use App\Models\Transaction_Detail;
 class SalaryDetailController extends Controller
 {
     // Show All Salary Details Report
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $salary = Transaction_Detail::on('mysql_second')->with('User','Head')
         ->where('tran_method','Payment')
         ->where('tran_type', 3)

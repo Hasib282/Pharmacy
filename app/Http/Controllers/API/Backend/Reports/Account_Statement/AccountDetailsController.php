@@ -25,7 +25,7 @@ class AccountDetailsController extends Controller
 
     
     // Show All Salary Details Report
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $general = $this->GetAccountDetailsStatement(1);
         $party = $this->GetAccountDetailsStatement(2);
         $payroll = $this->GetAccountDetailsStatement(3);

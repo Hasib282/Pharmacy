@@ -119,18 +119,15 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(UsersController::class)->group(function () {
                 ///////////// --------------- Role routes ----------- ///////////////////
                 Route::get('/roles', 'ShowRoles')->name('show.roles');
-                Route::get('/roles/search', 'SearchRoles')->name('search.roles');
                 
 
                 ///////////// --------------- Admin Routes ----------- ///////////////////
                 Route::get('/admins', 'ShowAdmins')->name('show.admins');
-                Route::get('/admins/search', 'SearchAdmins')->name('search.admins');
 
 
 
                 ///////////// --------------- Super Admin Routes ----------- ///////////////////
                 Route::get('/superadmins', 'ShowSuperAdmins')->name('show.superAdmins');
-                Route::get('/superadmins/search', 'SearchSuperAdmins')->name('search.superAdmins');
             }); // End Users Controller
         }); // End User Route
 
@@ -141,31 +138,26 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(PermissionController::class)->group(function () {
                 ///////////// --------------- Permission Main Heads routes ----------- ///////////////////
                 Route::get('/mainhead', 'ShowPermissionMainheads')->name('show.permissionMainheads');
-                Route::get('/mainhead/search', 'SearchPermissionMainheads')->name('search.permissionMainheads');
                 
                 
                 
                 ///////////// --------------- Permission Heads routes ----------- ///////////////////
                 Route::get('/heads', 'ShowPermissions')->name('show.permissions');
-                Route::get('/heads/search', 'SearchPermissions')->name('search.permissions');
 
 
 
                 ///////////// --------------- Company Type Permission routes ----------- ///////////////////
                 Route::get('/company_type_permissions', 'ShowCompanyTypePermissions')->name('show.companyTypePermissions');
-                Route::get('/company_type_permissions/search', 'SearchCompanyTypePermissions')->name('search.companyTypePermissions');
                 
                 
                 
                 ///////////// --------------- Company Permission routes ----------- ///////////////////
                 Route::get('/company_permissions', 'ShowCompanyPermissions')->name('show.companyPermissions');
-                Route::get('/company_permissions/search', 'SearchCompanyPermissions')->name('search.companyPermissions');
                 
                 
                 
                 ///////////// --------------- User Permission routes ----------- ///////////////////
                 Route::get('/userpermissions', 'ShowUserPermissions')->name('show.userPermissions');
-                Route::get('/userpermissions/search', 'SearchUserPermissions')->name('search.userPermissions');
             }); // End Permission Controller
         }); // End Permission Routes
 
@@ -177,54 +169,45 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
         Route::controller(AdminSetupController::class)->group(function () {
             // *************************************** Main Heads Routes Start *************************************** //
             Route::get('/companytype', 'ShowCompanyType')->name('show.companytype');
-            Route::get('/companytype/search', 'SearchCompanyType')->name('search.companytype');
 
 
 
             // *************************************** Company Routes Start *************************************** //
             Route::get('/companies', 'ShowCompanies')->name('show.companies');
-            Route::get('/companies/search', 'SearchCompanies')->name('search.companies');
 
 
 
             // *************************************** Bank Routes Start *************************************** //
             Route::get('/banks', 'ShowBanks')->name('show.banks');
-            Route::get('/banks/search', 'SearchBanks')->name('search.banks');
             
 
 
             // *************************************** Location Routes Start *************************************** //
             Route::get('/locations', 'ShowLocations')->name('show.locations');
-            Route::get('/locations/search', 'SearchLocations')->name('search.locations');
             
 
 
             // *************************************** Store Routes Start *************************************** //
             Route::get('/stores', 'ShowStores')->name('show.stores');
-            Route::get('/stores/search', 'SearchStores')->name('search.stores');
 
 
 
             // *************************************** Main Heads Routes Start *************************************** //
             Route::get('/mainheads', 'ShowTransactionMainHead')->name('show.mainhead');
-            Route::get('/mainheads/search', 'SearchTransactionMainHead')->name('search.mainhead');
             
 
 
             // *************************************** TranWith(User Type) Routes Start *************************************** //
             Route::get('/tranwith', 'ShowTranWith')->name('show.usertype');
-            Route::get('/tranwith/search', 'SearchTranWith')->name('search.usertype');
 
 
             /// *************************************** TranGroupe Routes Start *************************************** //
             Route::get('/trangroupes', 'ShowTransactionGroupes')->name('show.groupes');
-            Route::get('/trangroupes/search', 'SearchTransactionGroupes')->name('search.groupes');
 
 
 
             // *************************************** TranHead Routes Start *************************************** //
             Route::get('/tranheads', 'ShowTransactionHeads')->name('show.heads');
-            Route::get('/tranheads/search', 'SearchTransactionHeads')->name('search.heads');
         }); // End Admin Setup Controller
     }); // End Admin Routes
 
@@ -241,13 +224,11 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(AdminSetupController::class)->group(function () {
                 // *************************************** TranGroupe Routes Start *************************************** //
                 Route::get('/groupes', 'ShowTransactionGroupes')->name('show.tranGroupes');
-                Route::get('/groupes/search', 'SearchTransactionGroupes')->name('search.tranGroupes');
 
 
 
                 // *************************************** TranHead Routes Start *************************************** //
                 Route::get('/heads', 'ShowTransactionHeads')->name('show.tranHeads');
-                Route::get('/heads/search', 'SearchTransactionHeads')->name('search.tranHeads');
             }); // End Admin Setup Controller
         });
 
@@ -257,20 +238,17 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(AdminSetupController::class)->group(function () {
                 // *************************************** Transaction User Type Routes Start *************************************** //
                 Route::get('/usertype', 'ShowTranWith')->name('show.tranUserType');
-                Route::get('/usertype/search', 'SearchTranWith')->name('search.tranUserTypr');
             });
 
 
             Route::controller(UsersController::class)->group(function () {
                 ///////////// --------------- Client Routes ----------- ///////////////////
                 Route::get('/clients', 'ShowClients')->name('show.clients');
-                Route::get('/clients/search', 'SearchClients')->name('search.clients');
 
 
 
                 ///////////// --------------- Supplire Routes ----------- ///////////////////
                 Route::get('/suppliers', 'ShowSuppliers')->name('show.suppliers');
-                Route::get('/suppliers/search', 'SearchSuppliers')->name('search.suppliers');
             });
         });
 
@@ -326,13 +304,11 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(HRSetupController::class)->group(function () {
                 // *************************************** Department Routes Start *************************************** //
                 Route::get('/departments', 'ShowDepartments')->name('show.departments');
-                Route::get('/departments/search', 'SearchDepartments')->name('search.departments');
 
 
 
                 // *************************************** Designations Routes Start *************************************** //
                 Route::get('/designations', 'ShowDesignations')->name('show.designations');
-                Route::get('/designations/search', 'SearchDesignations')->name('search.designations');
             });
         }); // End HR Setup Routes
         
@@ -346,7 +322,6 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(AdminSetupController::class)->group(function () {
                 // *************************************** Employee Type Routes Start *************************************** //
                 Route::get('/usertype', 'ShowTranWith')->name('show.hrUserType');
-                Route::get('/usertype/search', 'SearchTranWith')->name('search.hrUserType');
             });
 
 
@@ -354,43 +329,36 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(EmployeeInfoController::class)->group(function () {
                 ///////////// --------------- Employee Routes ----------- ///////////////////
                 Route::get('/all', 'ShowEmployees')->name('show.employees');
-                Route::get('/all/search', 'SearchEmployees')->name('search.employees');
 
 
 
                 ///////////// --------------- Employee Personal Details Routes ----------- ///////////////////
                 Route::get('/personal',  'PersonalDetails')->name('show.employeePersonal');
-                Route::get('/personal/search',  'SearchPersonalDetails')->name('search.employeePersonal');
 
 
 
                 ///////////// --------------- Employee Education Details Routes ----------- ///////////////////
                 Route::get('/education',  'EducationDetails')->name('show.employeeEducation');
-                Route::get('/education/search',  'SearchEducationDetails')->name('search.employeeEducation');
                 
                 
 
                 ///////////// --------------- Employee Training Details Routes ----------- ///////////////////
                 Route::get('/training',  'TrainingDetails')->name('show.employeeTraining');
-                Route::get('/training/search',  'SearchTrainingDetails')->name('search.employeeTraining');
 
 
 
                 ///////////// --------------- Employee Experience Details Routes ----------- ///////////////////
                 Route::get('/experience',  'ExperienceDetails')->name('show.employeeExperience');
-                Route::get('/experience/search',  'SearchExperienceDetails')->name('search.employeeExperience');
                 
 
 
                 ///////////// --------------- Employee Organization Routes ----------- ///////////////////
                 Route::get('/organization',  'OrganizationDetails')->name('show.employeeOrganization');
-                Route::get('/organization/search',  'SearchOrganizationDetails')->name('search.employeeOrganization');
                 
 
 
                 ///////////// --------------- Attendence Routes ----------- ///////////////////
-                Route::get('/attendence','ShowEmployeeAttendence')->name('show.employeeAttendence'); 
-                Route::get('/attendence/search','SearchEmployeeAttendence')->name('search.employeeAttendence');
+                Route::get('/attendence','ShowEmployeeAttendence')->name('show.employeeAttendence');
             });
         }); // End Hr Employee Routes
 
@@ -403,7 +371,6 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(AdminSetupController::class)->group(function () {
                 // *************************************** TranHead Routes Start *************************************** //
                 Route::get('/heads', 'ShowTransactionHeads')->name('show.hrHeads');
-                Route::get('/heads/search', 'SearchTransactionHeads')->name('search.hrHeads');
             }); // End Admin Setup Controller
 
 
@@ -411,19 +378,18 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(PayRollController::class)->group(function(){
                 ///////////// --------------- Payroll Setup Routes ----------- ///////////////////
                 Route::get('/setup','ShowPayrollSetup')->name('show.payrollSetup');
-                Route::get('/setup/search','SearchPayrollSetup')->name('search.payrollSetup');
 
 
 
                 ///////////// --------------- Payroll Middlewire Routes ----------- ///////////////////
                 Route::get('/middlewire','ShowPayrollMiddlewire')->name('show.payrollMiddlewire');
-                Route::get('/middlewire/search','SearchPayrollMiddlewire')->name('search.payrollMiddlewire');
                 
                 
                 
                 ///////////// --------------- Payroll Installment(Salary Payment) Routes ----------- ///////////////////
                 Route::get('/process','ShowPayroll')->name('show.payroll');
                 Route::get('/process/search', 'SearchPayroll')->name('search.payroll');
+
             });
         }); // End Hr Payroll Routes
 
@@ -461,48 +427,36 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 ///////////////////// ------------------ Item/Product Manufacturer Routes Start ------------------ /////////////////////
                 // Crude Routes Start
                 Route::get('/manufacturer',  'ShowManufacturer')->name('show.invManufacturer');
-                Route::get('/manufacturer/search',  'SearchManufacturer')->name('search.invManufacturer');
 
 
 
                 ///////////////////// ------------------ Item/Product Category Routes Start ------------------ /////////////////////
                 // Crude Routes Start
                 Route::get('/category', 'ShowItemCategory')->name('show.invCategory');
-                Route::get('/category/search', 'SearchItemCategory')->name('search.invCategory');
 
 
 
                 //////////////// ------------------ Item/Product Form Routes Start ------------------- //////////////////
                 // Crude Routes Start
                 Route::get('/form', 'ShowForm')->name('show.invForm');
-                Route::get('/form/search', 'SearchForm')->name('search.invForm');
 
 
 
                 //////////////// ------------------ Item/Product Unit Routes Start ------------------- //////////////////
                 // Crude Routes Start
                 Route::get('/unit', 'ShowUnit')->name('show.invUnit');
-                Route::get('/unit/search', 'SearchUnit')->name('search.invUnit');
 
 
 
                 //////////////// ------------------ Inventory Product Routes Start ------------------- //////////////////
                 // Crud Routes Start
                 Route::get('/product', 'ShowInventoryProduct')->name('show.invProduct');
-                Route::get('/product/search', 'SearchInventoryProduct')->name('search.invProduct');
             });
 
 
             Route::controller(AdminSetupController::class)->group(function () {
-                // *************************************** Inventory User Type Routes Start *************************************** //
-                // Route::get('/usertype', 'ShowTranWith')->name('show.invUserType');
-                // Route::get('/usertype/search', 'SearchTranWith')->name('search.invUserType');
-
-
-
                 /// *************************************** Item Groupe Routes Start *************************************** //
                 Route::get('/groupes', 'ShowTransactionGroupes')->name('show.invGroupes');
-                Route::get('/groupes/search', 'SearchTransactionGroupes')->name('search.invGroupes');
             }); // End Admin Setup Controller
         }); // End Inventory Setup Routes
 
@@ -512,20 +466,17 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(AdminSetupController::class)->group(function () {
                 // *************************************** Inventory User Type Routes Start *************************************** //
                 Route::get('/usertype', 'ShowTranWith')->name('show.invUserType');
-                Route::get('/usertype/search', 'SearchTranWith')->name('search.invUserType');
             });
 
 
             Route::controller(UsersController::class)->group(function () {
                 ///////////// --------------- Client Routes ----------- ///////////////////
                 Route::get('/clients', 'ShowClients')->name('show.invClients');
-                Route::get('/clients/search', 'SearchClients')->name('search.invClients');
 
 
 
                 ///////////// --------------- Supplire Routes ----------- ///////////////////
                 Route::get('/suppliers', 'ShowSuppliers')->name('show.invSuppliers');
-                Route::get('/suppliers/search', 'SearchSuppliers')->name('search.invSuppliers');
             });
         });
 
@@ -703,44 +654,32 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(PharmacySetupController::class)->group(function(){
                 ///////////// --------------- Pharmacy Manufacturer Routes ----------- ///////////////////
                 Route::get('/manufacturer',  'ShowManufacturer')->name('show.pharmacyManufacturer');
-                Route::get('/manufacturer/search',  'SearchManufacturer')->name('search.pharmacyManufacturer');
 
 
 
                 ///////////// --------------- Pharmacy Category Routes ----------- ///////////////////
                 Route::get('/category', 'ShowItemCategory')->name('show.pharmacyCategory');
-                Route::get('/category/search', 'SearchItemCategory')->name('search.pharmacyCategory');
 
 
 
                 ///////////// --------------- Pharmacy Form Routes ----------- ///////////////////
                 Route::get('/form', 'ShowForm')->name('show.pharmacyForm');
-                Route::get('/form/search', 'SearchForm')->name('search.pharmacyForm');
 
 
 
                 ///////////// --------------- Pharmacy Unit Routes ----------- ///////////////////
                 Route::get('/unit', 'ShowUnit')->name('show.pharmacyUnit');
-                Route::get('/unit/search', 'SearchUnit')->name('search.pharmacyUnit');
 
 
 
                 ///////////// --------------- Pharmacy Products Routes ----------- ///////////////////
                 Route::get('/product', 'ShowPharmacyProduct')->name('show.pharmacyProduct');
-                Route::get('/product/search', 'SearchPharmacyProduct')->name('search.pharmacyProduct');
             }); // End Pharmacy Setup Controller
 
 
             Route::controller(AdminSetupController::class)->group(function () {
-                // *************************************** Pharmacy User Type Routes Start *************************************** //
-                // Route::get('/usertype', 'ShowTranWith')->name('show.pharmacyUserType');
-                // Route::get('/usertype/search', 'SearchTranWith')->name('search.pharmacyUserType');
-
-
-
                 /// *************************************** Item Groupe Routes Start *************************************** //
                 Route::get('/groupes', 'ShowTransactionGroupes')->name('show.pharmacyGroupes');
-                Route::get('/groupes/search', 'SearchTransactionGroupes')->name('search.pharmacyGroupes');
             }); // End Admin Setup Controller
         }); // End Pharmacy Setup Routes
 
@@ -750,20 +689,17 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(AdminSetupController::class)->group(function () {
                 // *************************************** Inventory User Type Routes Start *************************************** //
                 Route::get('/usertype', 'ShowTranWith')->name('show.pharmacyUserType');
-                Route::get('/usertype/search', 'SearchTranWith')->name('search.pharmacyUserType');
             });
 
 
             Route::controller(UsersController::class)->group(function () {
                 ///////////// --------------- Client Routes ----------- ///////////////////
                 Route::get('/clients', 'ShowClients')->name('show.pharmacyClients');
-                Route::get('/clients/search', 'SearchClients')->name('search.pharmacyClients');
 
 
 
                 ///////////// --------------- Supplire Routes ----------- ///////////////////
                 Route::get('/suppliers', 'ShowSuppliers')->name('show.pharmacySuppliers');
-                Route::get('/suppliers/search', 'SearchSuppliers')->name('search.pharmacySuppliers');
             });
         });
 
@@ -940,40 +876,33 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::prefix('/setup')->group(function () {
                 ///////////// --------------- Doctor Specialization Routes Start ----------- ///////////////////
                 Route::get('/specialization',  'ShowSpecialization')->name('show.specialization');
-                Route::get('/specialization/search',  'SearchSpecialization')->name('search.specialization');
 
 
 
                 ///////////// --------------- Bed Catagoary Routes  ----------- ///////////////////
                 Route::get('/bedcategory',  'ShowBedCategory')->name('show.bedcategory');
-                Route::get('/bedcategory/search',  'SearchBedCategory')->name('search.bedcategory');
 
 
                 
                 ///////////// --------------- Bed list Routes Start ----------- ///////////////////
                 Route::get('/bedlist',  'ShowBedList')->name('show.bedlist');
-                Route::get('/bedlist/search',  'SearchBedList')->name('search.bedlist');
 
 
                 ///////////////////// ------------------ Hospital Group Routes Start ------------------ /////////////////////
                 Route::get('/groupe',  'ShowHospitalGroupe')->name('show.hospitalGroupe');
-                Route::get('/groupe/search',  'SearchHospitalGroupe')->name('search.hospitalGroupe');
                 
                 
                 ///////////////////// ------------------ Hospital Services Routes Start ------------------ /////////////////////
                 Route::get('/services',  'ShowHospitalServices')->name('show.hospitalServices');
-                Route::get('/services/search',  'SearchHospitalServices')->name('search.hospitalServices');
                 
                 
                 ///////////////////// ------------------ Nursing Station Routes Start ------------------ /////////////////////
                 Route::get('/nursingstation',  'ShowNursingStation')->name('show.nursingStation');
-                Route::get('/nursingstation/search',  'SearchNursingStation')->name('search.nursingStation');
             }); // End Hospital Setup Routes
 
 
             ///////////////////// ------------------ Patient Registration Routes Start ------------------ /////////////////////
             Route::get('/ptnregistration',  'ShowPatientRegistrations')->name('show.patientRegistration');
-            Route::get('/ptnregistration/search',  'SearchPatientRegistrations')->name('search.patientRegistration');
         });
         
         
@@ -984,25 +913,11 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::controller(UsersController::class)->group(function(){
                 ///////////////////// ------------------ Doctors Information Routes Start ------------------ /////////////////////
                 Route::get('/doctors',  'ShowDoctors')->name('show.doctors');
-                Route::get('/doctors/search',  'SearchDoctors')->name('search.doctors');
 
 
 
                 ///////////////////// ------------------ Patient Registration Routes Start ------------------ /////////////////////
                 Route::get('/patients',  'ShowPatients')->name('show.patients');
-                Route::get('/patients/search',  'SearchPatients')->name('search.patients');
-                
-                
-                
-                // ///////////////////// ------------------ SR Routes Start ------------------ /////////////////////
-                // Route::get('/sr',  'ShowSR')->name('show.sr');
-                // Route::get('/sr/search',  'SearchSR')->name('search.sr');
-
-
-
-                // ///////////////////// ------------------ Merketing Head Routes Start ------------------ /////////////////////
-                // Route::get('/marketinghead',  'ShowMarketingHeads')->name('show.marketinghead');
-                // Route::get('/marketinghead/search',  'SearchMarketingHeads')->name('search.marketinghead');
             });
         }); // End Hospital Users Routes
         

@@ -13,7 +13,7 @@ use App\Models\Permission_Head;
 class CompanyTypePermissionController extends Controller
 {
     // Show All Company Type Permissions
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $data = Company_Type::on('mysql')->with('permissions')->orderBy('id')->get();
         return response()->json([
             'status'=> true,

@@ -2,7 +2,7 @@ function ShowBankDeposits(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_id','bank.name',{key:'amount', type: 'number'}],
+        tbody: ['tran_id','bank.name',{key:'amount', type: 'number',footerType:'sum'}],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         

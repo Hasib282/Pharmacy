@@ -12,7 +12,7 @@ use App\Models\Transaction_Head;
 class SupplierReturnDetailController extends Controller
 {
     // Show All Supplier Return Details Statement
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
         $data = Transaction_Detail::on('mysql_second')->with('User','Head')

@@ -19,16 +19,6 @@ class PermissionController extends Controller
             return view('common_modals.single_input.main', compact('name', 'js'));
         }
     } // End Method
-
-
-
-    // Search Permission Main Heads 
-    public function SearchPermissionMainheads(){
-        $name = "Permission Main Head";
-        $js = 'admin_setup/permission/permission_mainheads';
-        return view('common_modals.single_input.main', compact('name', 'js'));
-    } // End Method
-    /////////////////////////// --------------- Permission Main Heads Methods End ---------- //////////////////////////
     
     
     
@@ -48,15 +38,6 @@ class PermissionController extends Controller
 
 
 
-    // Search Permissions 
-    public function SearchPermissions(){
-        $name = "Permissions";
-        return view('admin_setup.permission.permissions.main', compact('name'));
-    } // End Method
-    /////////////////////////// --------------- Permissions Methods End ---------- //////////////////////////
-
-
-
 
 
     /////////////////////////// --------------- Copmany Type Permission Methods Start ---------- //////////////////////////
@@ -73,15 +54,6 @@ class PermissionController extends Controller
 
 
 
-    // Search CopmanyType Permissions 
-    public function SearchCompanyTypePermissions(){
-        $name = "CopmanyType Permission";
-        return view('admin_setup.permission.company_type_permission.main', compact('name'));
-    } // End Method
-    /////////////////////////// --------------- Copmany Type Permission Methods End ---------- //////////////////////////
-
-
-
 
 
     /////////////////////////// --------------- Company Permission Methods Start ---------- //////////////////////////
@@ -95,15 +67,6 @@ class PermissionController extends Controller
             return view('admin_setup.permission.company_permission.main', compact('name'));
         }
     } // End Method
-
-
-
-    // Search Company Permissions 
-    public function SearchCompanyPermissions(){
-        $name = "Company Permission";
-        return view('admin_setup.permission.company_permission.main', compact('name'));
-    } // End Method
-    /////////////////////////// --------------- Company Permission Methods End ---------- //////////////////////////
     
     
     
@@ -120,13 +83,4 @@ class PermissionController extends Controller
             return view('admin_setup.permission.user_permission.main', compact('name'));
         }
     } // End Method
-
-
-
-    // Search User Permissions 
-    public function SearchUserPermissions(){
-        $name = "User Permission";
-        return view('admin_setup.permission.user_permission.main', compact('name'));
-    } // End Method
-    /////////////////////////// --------------- User Permission Methods End ---------- //////////////////////////
 }

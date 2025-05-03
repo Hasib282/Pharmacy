@@ -16,7 +16,7 @@ use App\Models\Permission_Head;
 class UserPermissionController extends Controller
 {
     // Show All User Permissions
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $roles = Role::on('mysql')->whereNotIn('id', ['1'])->get();
         if(Auth::user()->user_role == 1){
             $data = Login_User::on('mysql')->whereNotIn('user_role', ['1','4','5'])->with('permissions','company')->orderBy('user_id')->get();

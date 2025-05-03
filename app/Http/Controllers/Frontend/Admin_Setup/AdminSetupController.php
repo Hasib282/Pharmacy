@@ -22,15 +22,6 @@ class AdminSetupController extends Controller
 
 
 
-    // Search Companies
-    public function SearchCompanies(Request $request){
-        $name = "Company Details";
-        $js = "company";
-        return view('admin_setup.company.main', compact('name', 'js'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Company Type Table Methods start ---------- //////////////////////////
@@ -44,15 +35,6 @@ class AdminSetupController extends Controller
         else{
             return view('common_modals.single_input.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Company Type Search
-    public function SearchCompanyType(Request $req){
-        $name = "Company Type";
-        $js = 'admin_setup/main_head';
-        return view('common_modals.single_input.main', compact('name', 'js'));
     } // End Method
 
 
@@ -73,14 +55,6 @@ class AdminSetupController extends Controller
 
 
 
-    // Search Bank Details
-    public function SearchBanks(Request $request){
-        $name = "Bank Details";
-        return view('admin_setup.bank.main', compact('name'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Location Table Methods start ---------- //////////////////////////
@@ -97,14 +71,6 @@ class AdminSetupController extends Controller
 
 
 
-    // Search Locations
-    public function SearchLocations(Request $req){
-        $name = "Location";
-        return view('admin_setup.location.main', compact('name'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Store Table Methods start ---------- //////////////////////////
@@ -117,14 +83,6 @@ class AdminSetupController extends Controller
         else{
             return view('admin_setup.store.main', compact('name'));
         }
-    } // End Method
-
-
-
-    // Search Stores
-    public function SearchStores(Request $req){
-        $name = "Store Details";
-        return view('admin_setup.store.main', compact('name'));
     } // End Method
 
 
@@ -146,15 +104,6 @@ class AdminSetupController extends Controller
 
 
 
-    // Transaction Main Head Search
-    public function SearchTransactionMainHead(Request $req){
-        $name = "Transaction Main Head";
-        $js = 'admin_setup/main_head';
-        return view('common_modals.single_input.main', compact('name', 'js'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Tran With Table Methods start ---------- //////////////////////////
@@ -167,14 +116,6 @@ class AdminSetupController extends Controller
         else{
             return view('admin_setup.tran_with.main', compact('name'));
         }
-    } // End Method
-
-
-
-    // Search Transaction With
-    public function SearchTranWith(Request $req){
-        $name = "User Type";
-        return view('admin_setup.tran_with.main', compact('name'));
     } // End Method
 
 
@@ -195,14 +136,6 @@ class AdminSetupController extends Controller
 
 
 
-    // Transaction Groupes Search
-    public function SearchTransactionGroupes(Request $req){
-        $name = "Transaction Groupe";
-        return view('admin_setup.tran_groupe.main', compact('name'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Transaction Heads Table Methods start ---------- //////////////////////////
@@ -215,13 +148,5 @@ class AdminSetupController extends Controller
         else{
             return view('admin_setup.tran_head.main', compact('name'));
         }
-    } // End Method
-
-
-
-    // Transaction Heads Search
-    public function SearchTransactionHeads(Request $req){
-        $name = "Transaction Head";
-        return view('admin_setup.tran_head.main', compact('name'));
     } // End Method
 }

@@ -11,7 +11,7 @@ use App\Models\Transaction_Main;
 class SalarySummaryController extends Controller
 {
     // Show All Salary Summary Report
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $salary = Transaction_Main::on('mysql_second')->with('User')
         ->where('tran_method','Payment')
         ->where('tran_type', 3)

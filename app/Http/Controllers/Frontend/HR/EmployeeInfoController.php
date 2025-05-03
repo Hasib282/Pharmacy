@@ -32,16 +32,6 @@ class EmployeeInfoController extends Controller
 
 
 
-    // Search Employees
-    public function SearchEmployees(Request $req){
-        $name = "Employee Details";
-        return view('hr.employee_info.employees.main', compact('name'));
-    } // End Method
-
-    /////////////////////////// --------------- All Employees Details Table Methods End---------- //////////////////////////
-
-
-
 
 
     /////////////////////////// --------------- Employee Personal Details Table Methods Start---------- //////////////////////////
@@ -57,15 +47,7 @@ class EmployeeInfoController extends Controller
     } // End Method
 
 
-    // Search Employee Personal Details
-    public function SearchPersonalDetails(Request $req){
-        $name = "Personal Details";
-        return view('hr.employee_info.personal_details.main', compact('name'));
-    } // End Method
-
-    /////////////////////////// --------------- Employee Personal Details Table Methods End---------- //////////////////////////
-
-
+    
 
 
     /////////////////////////// --------------- Employee Education Details Table Methods Start---------- //////////////////////////
@@ -81,14 +63,6 @@ class EmployeeInfoController extends Controller
     } // End Method
 
 
-
-    // Search Employee Education Details by Name
-    public function SearchEducationDetails(Request $req){
-        $name = "Personal Details";
-        return view('hr.employee_info.education_details.main', compact('name'));
-    } // End Method
-
-    /////////////////////////// --------------- Employee Education Details Table Methods End---------- //////////////////////////
 
 
 
@@ -106,14 +80,6 @@ class EmployeeInfoController extends Controller
 
 
 
-    // Search Employee by Name
-    public function SearchTrainingDetails(Request $req){
-        $name = "Training Details";
-        return view('hr.employee_info.training_details.main', compact('name'));
-    } // End Method
-
-    /////////////////////////// --------------- Employee Training Details Table Methods End---------- //////////////////////////
-
 
 
     /////////////////////////// --------------- Employee Experience Details Table Methods Start---------- //////////////////////////
@@ -128,17 +94,9 @@ class EmployeeInfoController extends Controller
         }
     } // End Method
 
-
-
-    // Search Employee by Name
-    public function SearchExperienceDetails(Request $req){
-        $name = "Experience Details";
-        return view('hr.employee_info.experience_details.main', compact('name'));
-    } // End Method
-
-    /////////////////////////// --------------- Employee Experience Details Table Methods End---------- //////////////////////////
     
-    
+
+
     
     /////////////////////////// --------------- Employee Organization Details Table Methods Start---------- //////////////////////////
     // Show All Employee Details
@@ -152,16 +110,6 @@ class EmployeeInfoController extends Controller
         }
     } // End Method
 
-
-
-    // Search Employee by Name
-    public function SearchOrganizationDetails(Request $req){
-        $name = "Organization Details";
-        return view('hr.employee_info.organization_details.main', compact('name'));
-    } // End Method
-
-    /////////////////////////// --------------- Employee Organization Details Table Methods Start---------- //////////////////////////
-    
     
     
     
@@ -177,14 +125,4 @@ class EmployeeInfoController extends Controller
             return view('hr.attendence.main', compact('name'));
         }
     } // End Method
-
-
-
-    // Search Employee by Name
-    public function SearchEmployeeAttendence(Request $req){
-        $name = "Attendence";
-        return view('hr.attendence.main', compact('name'));
-    } // End Method
-
-    /////////////////////////// --------------- Employee Organization Details Table Methods Start---------- //////////////////////////
 }

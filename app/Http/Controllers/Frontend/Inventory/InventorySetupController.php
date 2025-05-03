@@ -22,15 +22,6 @@ class InventorySetupController extends Controller
 
 
 
-    // Search Manufacturer
-    public function SearchManufacturer(Request $req){
-        $name = "Manufacturer";
-        $js = 'inventory/inventory_setup/item_manufacturer';
-        return view('common_modals.single_input.main', compact('name', 'js'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Item/Product Category Methods Start Here ---------- //////////////////////////
@@ -44,15 +35,6 @@ class InventorySetupController extends Controller
         else{
             return view('common_modals.single_input.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Search Item/Product Category
-    public function SearchItemCategory(Request $req){
-        $name = "Item Category";
-        $js = 'inventory/inventory_setup/item_category';
-        return view('common_modals.single_input.main', compact('name', 'js'));
     } // End Method
     
 
@@ -70,15 +52,6 @@ class InventorySetupController extends Controller
         else{
             return view('common_modals.single_input.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Search Item/Product Unit
-    public function SearchUnit(Request $req){
-        $name = "Item Unit";
-        $js = 'inventory/inventory_setup/item_unit';
-        return view('common_modals.single_input.main', compact('name', 'js'));
     } // End Method
     
 
@@ -100,15 +73,6 @@ class InventorySetupController extends Controller
 
 
 
-    // Search Item/Product Form
-    public function SearchForm(Request $req){
-        $name = "Item Form";
-        $js = 'inventory/inventory_setup/item_form';
-        return view('common_modals.single_input.main', compact('name', 'js'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Inventory Product Table Methods Start ---------- //////////////////////////
@@ -122,14 +86,5 @@ class InventorySetupController extends Controller
         else{
             return view('admin_setup.products.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Inventory Product Search
-    public function SearchInventoryProduct(Request $req){
-        $name = "Inventory Product";
-        $js = 'inventory/inventory_setup/inventory_product';
-        return view('admin_setup.products.main', compact('name', 'js'));
     } // End Method
 }

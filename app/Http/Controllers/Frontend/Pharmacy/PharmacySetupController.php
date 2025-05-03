@@ -22,15 +22,6 @@ class PharmacySetupController extends Controller
 
 
 
-    // Search Manufacturer
-    public function SearchManufacturer(Request $req){
-        $name = "Manufacturer";
-        $js = 'pharmacy/pharmacy_setup/item_manufacturer';
-        return view('common_modals.single_input.main', compact('name', 'js'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Item/Product Category Methods Start Here ---------- //////////////////////////
@@ -44,15 +35,6 @@ class PharmacySetupController extends Controller
         else{
             return view('common_modals.single_input.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Search Item/Product Category
-    public function SearchItemCategory(Request $req){
-        $name = "Item Category";
-        $js = 'pharmacy/pharmacy_setup/item_category';
-        return view('common_modals.single_input.main', compact('name', 'js'));
     } // End Method
     
 
@@ -70,15 +52,6 @@ class PharmacySetupController extends Controller
         else{
             return view('common_modals.single_input.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Search Item/Product Uni
-    public function SearchUnit(Request $req){
-        $name = "Item Unit";
-        $js = 'pharmacy/pharmacy_setup/item_unit';
-        return view('common_modals.single_input.main', compact('name', 'js'));
     } // End Method
     
 
@@ -100,15 +73,6 @@ class PharmacySetupController extends Controller
 
 
 
-    // Search Item/Product Form
-    public function SearchForm(Request $req){
-        $name = "Item Form";
-        $js = 'pharmacy/pharmacy_setup/item_form';
-        return view('common_modals.single_input.main', compact('name', 'js'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Pharmacy Product Table Methods Start ---------- //////////////////////////
@@ -122,14 +86,5 @@ class PharmacySetupController extends Controller
         else{
             return view('admin_setup.products.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Pharmacy Product Search
-    public function SearchPharmacyProduct(Request $req){
-        $name = "Pharmacy Product";
-        $js = 'pharmacy/pharmacy_setup/pharmacy_product';
-        return view('admin_setup.products.main', compact('name', 'js'));
     } // End Method
 }

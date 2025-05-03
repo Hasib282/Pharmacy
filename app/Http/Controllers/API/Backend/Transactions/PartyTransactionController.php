@@ -337,7 +337,7 @@ class PartyTransactionController extends Controller
         $type = GetTranType($req->segment(2));
         $method = ucfirst($req->segment(4)); // Capitalize the first letter
 
-        $transaction = Transaction_Main::on('mysql_second')
+        $data = Transaction_Main::on('mysql_second')
         ->with('User', 'Withs')
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
         ->where('tran_method', $method)

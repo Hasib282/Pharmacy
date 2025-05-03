@@ -12,7 +12,7 @@ use App\Models\Transaction_Head;
 class ExpiryStatementController extends Controller
 {
     // Show All Expiry Statement
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
         $data = Transaction_Detail::on('mysql_second')->with('Head')

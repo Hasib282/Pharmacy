@@ -248,7 +248,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 ///////////// --------------- Company Type Permissions Routes ----------- ///////////////////
                 Route::controller(CompanyTypePermissionController::class)->group(function () {
-                    Route::get('/company_type_permissions', 'ShowAll');
+                    Route::get('/company_type_permissions', 'Show');
                     Route::get('/company_type_permissions/edit', 'Edit');
                     Route::put('/company_type_permissions', 'Update');
                     Route::get('/company_type_permissions/search', 'Search');
@@ -258,7 +258,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 ///////////// --------------- Company Permissions Routes ----------- ///////////////////
                 Route::controller(CompanyPermissionController::class)->group(function () {
-                    Route::get('/company_permissions', 'ShowAll');
+                    Route::get('/company_permissions', 'Show');
                     Route::get('/company_permissions/edit', 'Edit');
                     Route::put('/company_permissions', 'Update');
                     Route::get('/company_permissions/search', 'Search');
@@ -273,7 +273,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             
             ///////////// --------------- User Permission Routes ----------- ///////////////////
             Route::controller(UserPermissionController::class)->group(function () {
-                Route::get('/userpermissions', 'ShowAll');
+                Route::get('/userpermissions', 'Show');
                 Route::get('/userpermissions/edit', 'Edit');
                 Route::put('/userpermissions', 'Update');
                 Route::get('/userpermissions/search', 'Search');
@@ -913,7 +913,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/report')->group(function () {
             ///////////// --------------- Inventory Item Flow Statement Routes ----------- ///////////////////
             Route::controller(ItemFlowStatementController::class)->group(function () {
-                Route::get('/item/flow', 'ShowAll');
+                Route::get('/item/flow', 'Show');
                 Route::get('/item/flow/search', 'Search');
             });
     
@@ -923,7 +923,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::prefix('/purchase')->group(function () {
                 // *************** Inventory Purchase Summary Statement Routes *************** //
                 Route::controller(PurchaseSummaryController::class)->group(function () {
-                    Route::get('/summary', 'ShowAll');
+                    Route::get('/summary', 'Show');
                     Route::get('/summary/search', 'Search');
                 });
                 
@@ -931,7 +931,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Inventory Purchase Detail Statement Routes *************** //
                 Route::controller(PurchaseDetailController::class)->group(function () {
-                    Route::get('/details', 'ShowAll');
+                    Route::get('/details', 'Show');
                     Route::get('/details/search', 'Search');
                 });
             });
@@ -942,7 +942,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::prefix('/issue')->group(function () {
                 // *************** Inventory Issue Summary Statement Routes *************** //
                 Route::controller(IssueSummaryController::class)->group(function () {
-                    Route::get('/summary', 'ShowAll');
+                    Route::get('/summary', 'Show');
                     Route::get('/summary/search', 'Search');
                 });
                 
@@ -950,7 +950,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Inventory Issue Detail Statement Routes *************** //
                 Route::controller(IssueDetailController::class)->group(function () {
-                    Route::get('/details', 'ShowAll');
+                    Route::get('/details', 'Show');
                     Route::get('/details/search', 'Search');
                 });
             });
@@ -961,7 +961,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::prefix('/return')->group(function () {
                 // *************** Inventory Client Return Summary Statement Routes *************** //
                 Route::controller(ClientReturnSummaryController::class)->group(function () {
-                    Route::get('/client/summary', 'ShowAll');
+                    Route::get('/client/summary', 'Show');
                     Route::get('/client/summary/search', 'Search');
                 });
                 
@@ -969,7 +969,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Inventory Client Return Detail Statement Routes *************** //
                 Route::controller(ClientReturnDetailController::class)->group(function () {
-                    Route::get('/client/details', 'ShowAll');
+                    Route::get('/client/details', 'Show');
                     Route::get('/client/details/search', 'Search');
                 });
 
@@ -977,7 +977,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
                 // *************** Inventory Supplier Return Summary Statement Routes *************** //
                 Route::controller(SupplierReturnSummaryController::class)->group(function () {
-                    Route::get('/supplier/summary', 'ShowAll');
+                    Route::get('/supplier/summary', 'Show');
                     Route::get('/supplier/summary/search', 'Search');
                 });
                 
@@ -985,7 +985,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Inventory Supplier Return Detail Statement Routes *************** //
                 Route::controller(SupplierReturnDetailController::class)->group(function () {
-                    Route::get('/supplier/details', 'ShowAll');
+                    Route::get('/supplier/details', 'Show');
                     Route::get('/supplier/details/search', 'Search');
                 });
             });
@@ -996,7 +996,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::prefix('/stock')->group(function () {
                 // *************** Inventory Stock Summary Statement Routes *************** //
                 Route::controller(StockSummaryController::class)->group(function () {
-                    Route::get('/summary', 'ShowAll');
+                    Route::get('/summary', 'Show');
                     Route::get('/summary/search', 'Search');
                 });
                 
@@ -1004,7 +1004,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Inventory Stock Detail Statement Routes *************** //
                 Route::controller(StockDetailController::class)->group(function () {
-                    Route::get('/details', 'ShowAll');
+                    Route::get('/details', 'Show');
                     Route::get('/details/search', 'Search');
                 });
             });
@@ -1013,7 +1013,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Inventory Profitability Statement Routes ----------- ///////////////////
             Route::controller(ProfitabilityStatementController::class)->group(function () {
-                Route::get('/profitability/statement', 'ShowAll');
+                Route::get('/profitability/statement', 'Show');
                 Route::get('/profitability/statement/search', 'Search');
             });
 
@@ -1021,7 +1021,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Inventory Expiry Statement Routes ----------- ///////////////////
             Route::controller(ExpiryStatementController::class)->group(function () {
-                Route::get('/expiry/statement', 'ShowAll');
+                Route::get('/expiry/statement', 'Show');
                 Route::get('/expiry/statement/search', 'Search');
             });
         }); // End Inventory Report Routes
@@ -1244,7 +1244,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/report')->group(function () {
             ///////////// --------------- Pharmacy Item Flow Statement Routes ----------- ///////////////////
             Route::controller(ItemFlowStatementController::class)->group(function () {
-                Route::get('/item/flow', 'ShowAll');
+                Route::get('/item/flow', 'Show');
                 Route::get('/item/flow/search', 'Search');
             });
     
@@ -1254,7 +1254,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::prefix('/purchase')->group(function () {
                 // *************** Pharmacy Purchase Summary Statement Routes *************** //
                 Route::controller(PurchaseSummaryController::class)->group(function () {
-                    Route::get('/summary', 'ShowAll');
+                    Route::get('/summary', 'Show');
                     Route::get('/summary/search', 'Search');
                 });
                 
@@ -1262,7 +1262,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Pharmacy Purchase Detail Statement Routes *************** //
                 Route::controller(PurchaseDetailController::class)->group(function () {
-                    Route::get('/details', 'ShowAll');
+                    Route::get('/details', 'Show');
                     Route::get('/details/search', 'Search');
                 });
             });
@@ -1273,7 +1273,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::prefix('/issue')->group(function () {
                 // *************** Pharmacy Issue Summary Statement Routes *************** //
                 Route::controller(IssueSummaryController::class)->group(function () {
-                    Route::get('/summary', 'ShowAll');
+                    Route::get('/summary', 'Show');
                     Route::get('/summary/search', 'Search');
                 });
                 
@@ -1281,7 +1281,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Pharmacy Issue Detail Statement Routes *************** //
                 Route::controller(IssueDetailController::class)->group(function () {
-                    Route::get('/details', 'ShowAll');
+                    Route::get('/details', 'Show');
                     Route::get('/details/search', 'Search');
                 });
             });
@@ -1292,7 +1292,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::prefix('/return')->group(function () {
                 // *************** Pharmacy Client Return Summary Statement Routes *************** //
                 Route::controller(ClientReturnSummaryController::class)->group(function () {
-                    Route::get('/client/summary', 'ShowAll');
+                    Route::get('/client/summary', 'Show');
                     Route::get('/client/summary/search', 'Search');
                 });
                 
@@ -1300,7 +1300,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Pharmacy Client Return Detail Statement Routes *************** //
                 Route::controller(ClientReturnDetailController::class)->group(function () {
-                    Route::get('/client/details', 'ShowAll');
+                    Route::get('/client/details', 'Show');
                     Route::get('/client/details/search', 'Search');
                 });
 
@@ -1308,7 +1308,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
                 // *************** Pharmacy Supplier Return Summary Statement Routes *************** //
                 Route::controller(SupplierReturnSummaryController::class)->group(function () {
-                    Route::get('/supplier/summary', 'ShowAll');
+                    Route::get('/supplier/summary', 'Show');
                     Route::get('/supplier/summary/search', 'Search');
                 });
                 
@@ -1316,7 +1316,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Pharmacy Supplier Return Detail Statement Routes *************** //
                 Route::controller(SupplierReturnDetailController::class)->group(function () {
-                    Route::get('/supplier/details', 'ShowAll');
+                    Route::get('/supplier/details', 'Show');
                     Route::get('/supplier/details/search', 'Search');
                 });
             });
@@ -1327,7 +1327,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::prefix('/stock')->group(function () {
                 // *************** Pharmacy Stock Summary Statement Routes *************** //
                 Route::controller(StockSummaryController::class)->group(function () {
-                    Route::get('/summary', 'ShowAll');
+                    Route::get('/summary', 'Show');
                     Route::get('/summary/search', 'Search');
                 });
                 
@@ -1335,7 +1335,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 // *************** Pharmacy Stock Detail Statement Routes *************** //
                 Route::controller(StockDetailController::class)->group(function () {
-                    Route::get('/details', 'ShowAll');
+                    Route::get('/details', 'Show');
                     Route::get('/details/search', 'Search');
                 });
             });
@@ -1344,7 +1344,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Pharmacy Profitability Statement Routes ----------- ///////////////////
             Route::controller(ProfitabilityStatementController::class)->group(function () {
-                Route::get('/profitability/statement', 'ShowAll');
+                Route::get('/profitability/statement', 'Show');
                 Route::get('/profitability/statement/search', 'Search');
             });
 
@@ -1352,7 +1352,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             ///////////// --------------- Pharmacy Expiry Statement Routes ----------- ///////////////////
             Route::controller(ExpiryStatementController::class)->group(function () {
-                Route::get('/expiry/statement', 'ShowAll');
+                Route::get('/expiry/statement', 'Show');
                 Route::get('/expiry/statement/search', 'Search');
             });
         }); // End Pharmacy Report Routes
@@ -1748,7 +1748,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/account')->group(function () {
             ///////////// --------------- Account Summary Statement Routes ----------- ///////////////////
             Route::controller(AccountSummaryController::class)->group(function () {
-                Route::get('/summary', 'ShowAll');
+                Route::get('/summary', 'Show');
                 Route::get('/summary/search', 'Search');
             });
             
@@ -1756,7 +1756,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             
             ///////////// --------------- Account Summary(By Groupe) Statement Routes ----------- ///////////////////
             Route::controller(AccountSummaryByGroupController::class)->group(function () {
-                Route::get('/summarygroupe', 'ShowAll');
+                Route::get('/summarygroupe', 'Show');
                 Route::get('/summarygroupe/search', 'Search');
             });
             
@@ -1764,7 +1764,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             
             ///////////// --------------- Account Details Statement Routes ----------- ///////////////////
             Route::controller(AccountDetailsController::class)->group(function () {
-                Route::get('/details', 'ShowAll');
+                Route::get('/details', 'Show');
                 Route::get('/details/search', 'Search');
             });
         }); // End Account Statement Routes
@@ -1775,7 +1775,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         Route::prefix('/party')->group(function () {
             ///////////// --------------- Party Summary Statement Routes ----------- ///////////////////
             Route::controller(PartySummaryController::class)->group(function () {
-                Route::get('/summary', 'ShowAll');
+                Route::get('/summary', 'Show');
                 Route::get('/summary/search', 'Search');
             });
             
@@ -1783,7 +1783,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             
             ///////////// --------------- Party Detail Statement Routes ----------- ///////////////////
             Route::controller(PartyDetailsController::class)->group(function () {
-                Route::get('/details', 'ShowAll');
+                Route::get('/details', 'Show');
                 Route::get('/details/search', 'Search');
             });
         }); // End Party Statement Routes

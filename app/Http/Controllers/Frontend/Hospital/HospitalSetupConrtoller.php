@@ -22,15 +22,6 @@ class HospitalSetupConrtoller extends Controller
 
 
 
-    // Search Specialization
-    public function SearchSpecialization(Request $req){
-        $name = "Specialization";
-        $js = 'hospital/setup/specialization';
-        return view('common_modals.single_input.main', compact('name', 'js'));
-    } // End Method
-
-
-
     /////////////////////////// --------------- Bed Category Methods Start Here ---------- //////////////////////////
     // Show Bed Category
     public function ShowBedCategory(Request $req){
@@ -42,15 +33,6 @@ class HospitalSetupConrtoller extends Controller
         else{
             return view('common_modals.single_input.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Search Bed Category
-    public function SearchBedCategory(Request $req){
-        $name = "Bed Category";
-        $js = 'hospital/setup/bed_category';
-        return view('common_modals.single_input.main', compact('name', 'js'));
     } // End Method
 
     
@@ -67,15 +49,6 @@ class HospitalSetupConrtoller extends Controller
             return view('admin_setup.hospital.bed_list.main', compact('name', 'js'));
         }
     } // End Method
-
-
-
-    // Search BedList
-    public function SearchBedList(Request $req){
-        $name = "Bed List";
-        $js = 'hospital/setup/bed_list';
-        return view('admin_setup.hospital.bed_list.main', compact('name', 'js'));
-    } // End Method
     
     
     
@@ -91,15 +64,6 @@ class HospitalSetupConrtoller extends Controller
         else{
             return view('admin_setup.hospital.nursing_station.main', compact('name', 'js'));
         }
-    } // End Method
-
-
-
-    // Search Nursing Station
-    public function SearchNursingStation(Request $req){
-        $name = "Nursing Station";
-        $js = '';
-        return view('admin_setup.hospital.nursing_station.main', compact('name', 'js'));
     } // End Method
 
 
@@ -121,15 +85,6 @@ class HospitalSetupConrtoller extends Controller
 
 
 
-    // Search PatientRegistrations
-    public function SearchPatientRegistrations(Request $req){
-        $name = "Patient Registration";
-        $js = 'patient_registration';
-        return view('admin_setup.hospital.patient_registration.main', compact('name', 'js'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Transaction Groupe Table Methods start ---------- //////////////////////////
@@ -146,14 +101,6 @@ class HospitalSetupConrtoller extends Controller
 
 
 
-    // Transaction Groupes Search
-    public function SearchHospitalGroupe(Request $req){
-        $name = "HospitalGroupe";
-        return view('admin_setup.tran_groupe.main', compact('name'));
-    } // End Method
-
-
-
 
 
     /////////////////////////// --------------- Transaction Heads Table Methods start ---------- //////////////////////////
@@ -166,13 +113,5 @@ class HospitalSetupConrtoller extends Controller
         else{
             return view('admin_setup.tran_head.main', compact('name'));
         }
-    } // End Method
-
-
-
-    // Transaction Heads Search
-    public function SearchHospitalServices(Request $req){
-        $name = "HospitalServices";
-        return view('admin_setup.tran_head.main', compact('name'));
     } // End Method
 }

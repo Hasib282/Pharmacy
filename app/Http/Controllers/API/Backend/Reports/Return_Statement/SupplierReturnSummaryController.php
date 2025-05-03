@@ -11,7 +11,7 @@ use App\Models\Transaction_Main;
 class SupplierReturnSummaryController extends Controller
 {
     // Show All Supplier Return Summary Statement
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
         $data = Transaction_Main::on('mysql_second')->with('User')

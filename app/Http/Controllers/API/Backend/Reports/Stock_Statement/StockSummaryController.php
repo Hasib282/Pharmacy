@@ -11,7 +11,7 @@ use App\Models\Transaction_Head;
 class StockSummaryController extends Controller
 {
     // Show All Stock Summary Statement
-    public function ShowAll(Request $req){
+    public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
         $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
