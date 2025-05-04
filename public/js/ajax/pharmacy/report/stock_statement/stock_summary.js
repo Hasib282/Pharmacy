@@ -33,7 +33,7 @@ function ShowPharmacyStockSummarys(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_head_name','groupe.tran_groupe_name','category.category_name','manufecturer.manufacturer_name','form.form_name','quantity','unit.unit_name',{key:'cp', type: 'number'},{key:'mrp', type: 'number'}],
+        tbody: ['tran_head_name','groupe.tran_groupe_name','category.category_name','manufecturer.manufacturer_name','form.form_name',{key:'quantity',type:'number'},'unit.unit_name',{key:'cp', type: 'number'},{key:'mrp', type: 'number'}],
     });
 }
 
@@ -41,13 +41,13 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Product Name', key: 'head.tran_head_name' },
+        { label: 'Product Name', key: 'tran_head_name' },
         { label: 'Transaction Groupe', key: 'groupe.tran_groupe_name' },
         { label: 'Category Name', key: 'category.category_name' },
         { label: 'Manufacturer', key: 'manufecturer.manufacturer_name' },
         { label: 'Item Form Name', key: 'form.form_name' },
         { label: 'QTY' },
-        { label: 'Unit', key: 'unit.unit_name' },
+        { label: 'Unit' },
         { label: 'CP' },
         { label: 'MRP' },
     ]);
@@ -55,16 +55,4 @@ $(document).ready(function () {
 
     // Load Data on Hard Reload
     ReloadData('pharmacy/report/stock/summary', ShowPharmacyStockSummarys);
-    
-
-    // Pagination Ajax
-    // PaginationAjax(ShowPharmacyStockSummarys);
-
-
-    // Search Ajax
-    // SearchAjax('pharmacy/report/stock/summary', ShowPharmacyStockSummarys);
-
-
-    // Search By Month or Year
-    // SearchByDateAjax('pharmacy/report/stock/summary', ShowPharmacyStockSummarys)
 });

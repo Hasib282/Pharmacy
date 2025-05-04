@@ -114,7 +114,7 @@ class GenerateTable {
         this.filteredData = this.data.filter(row => {
             return Object.keys(filters).every(key => {
                 const value = key.split('.').reduce((obj, k) => obj?.[k], row);
-                return (value ?? '').toString().toLowerCase().includes(filters[key]);
+                return (value ?? '').toString().toLowerCase().includes((filters[key] ?? '').toLowerCase());
             });
         });
 

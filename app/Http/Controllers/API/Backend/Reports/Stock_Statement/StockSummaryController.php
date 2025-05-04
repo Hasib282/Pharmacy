@@ -14,12 +14,13 @@ class StockSummaryController extends Controller
     public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
-        $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
+        $data = Transaction_Head::on('mysql')
+        ->with("Unit","Form","Manufecturer","Category",'Groupe')
         ->whereHas('Groupe', function ($query) use ($type){
             $query->where('tran_groupe_type', $type);
         })
         ->orderBy('tran_head_name','asc')
-        ->paginate(15);
+        ->get();
 
         return response()->json([
             'status'=> true,
@@ -33,57 +34,13 @@ class StockSummaryController extends Controller
     public function Search(Request $req){
         $type = GetTranType($req->segment(2));
 
-        if($req->searchOption == 1){
-            $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
-            ->whereHas('Groupe', function ($query) use ($type){
-                $query->where('tran_groupe_type', $type);
-            })
-            ->where('tran_head_name', 'like', $req->search.'%')
-            ->orderBy('tran_head_name','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){
-            $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
-            ->whereHas('Groupe', function ($query) use ($req, $type){
-                $query->where('tran_groupe_type', $type);
-                $query->where('tran_groupe_name', 'like', $req->search . '%');
-                $query->orderBy('tran_groupe_name','asc');
-            })
-            ->paginate(15);
-        }
-        else if($req->searchOption == 3){
-            $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
-            ->whereHas('Groupe', function ($query) use ($type){
-                $query->where('tran_groupe_type', $type);
-            })
-            ->whereHas('Category', function ($query) use ($req) {
-                $query->where('category_name', 'like', $req->search . '%');
-                $query->orderBy('category_name','asc');
-            })
-            ->paginate(15);
-        }
-        else if($req->searchOption == 4){
-            $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
-            ->whereHas('Groupe', function ($query) use ($type){
-                $query->where('tran_groupe_type', $type);
-            })
-            ->whereHas('Manufecturer', function ($query) use ($req) {
-                $query->where('manufacturer_name', 'like', $req->search . '%');
-                $query->orderBy('manufacturer_name','asc');
-            })
-            ->paginate(15);
-        }
-        else if($req->searchOption == 5){
-            $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
-            ->whereHas('Groupe', function ($query) use ($type){
-                $query->where('tran_groupe_type', $type);
-            })
-            ->whereHas('Form', function ($query) use ($req) {
-                $query->where('form_name', 'like', $req->search . '%');
-                $query->orderBy('form_name','asc');
-            })
-            ->paginate(15);
-        }
+        $data = Transaction_Head::on('mysql')
+        ->with("Unit","Form","Manufecturer","Category",'Groupe')
+        ->whereHas('Groupe', function ($query) use ($type){
+            $query->where('tran_groupe_type', $type);
+        })
+        ->orderBy('tran_head_name','asc')
+        ->get();
         
         return response()->json([
             'status' => true,

@@ -746,6 +746,7 @@ function SearchByDateAjax(url, RenderData, data={}){
         $('#startDate').length ? data.startDate = $('#startDate').val() : '';
         $('#endDate').length ? data.endDate = $('#endDate').val() : '';
         $('#status').length ? data.status = $('#status').val() : '';
+        $('#product-search').length ? data.search_id = $('#product-search').attr('data-id') : '';
         ReloadData(url, RenderData, data);
     });
 }; // End Method

@@ -63,16 +63,22 @@
     {{-- Add Button And Search Fields --}}
     <div class="add-search">
         <div class="rows" style="align-items:center;">
-            <div class="c-3"></div>
-            <div class="c-3">
+            <div class="c-2"></div>
+            <div class="c-2">
                 <label for="startDate">Start Date</label>
                 <input type="date" name="startDate" id="startDate" class="form-input" value="{{ $startDateValue ? $startDateValue : date('Y-m-d') }}">
             </div>
-            <div class="c-3" >
+            <div class="c-2" >
                 <label for="endDate">End Date</label>
                 <input type="date" name="endDate" id="endDate" class="form-input" value="{{ $endDateValue ? $endDateValue : date('Y-m-d') }}">
             </div>
-            <div class="c-1"></div>
+            <div class="c-4">
+                <div id="groupein" style="display: none"></div>
+                <label for="product-search">Search Here</label>
+                <input type="text" name="search" id="product-search" class="form-input" placeholder="Search Product here..."
+                    value="{{ $searchValue ? $searchValue : '' }}" data-id="{{ $searchIdValue ? $searchIdValue : '' }}" autocomplete="off" style="width: 100%; margin: 0;"><hr>
+                <div id="product-search-list"></div>
+            </div>
             <div class="c-1">
                 <a class="btn-blue" id="print"><i class="fa-solid fa-print"></i> Print</a>
             </div>
@@ -95,4 +101,5 @@
 
     <!-- ajax part start from here -->
     <script src="{{ asset('js/ajax').'/'. $js .'.js' }}"></script>
+    <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
 @endsection

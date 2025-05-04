@@ -23,11 +23,11 @@
 //     }
 // }; // End Function
 
-function ShowInventoryExpiryDetails(res) {
+function ShowPharmacyExpiryDetails(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['head.tran_head_name',{key:'expiry_date', type: 'date'},'tran_id'],
+        tbody: ['head.tran_head_name',{key:'expiry_date', type: 'date'},{key:'quantity',type:'number'},'tran_id'],
     });
 }
 
@@ -39,23 +39,15 @@ $(document).ready(function () {
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Product Name', key: 'head.tran_head_name' },
         { label: 'Expiry Date', key: 'expiry_date', type:'date' },
+        { label: 'Quantity' },
         { label: 'Batch Id', key: 'tran_id' },
-        { label: 'Action', type: 'button' }
     ]);
 
 
     // Load Data on Hard Reload
     ReloadData('pharmacy/report/expiry/statement', ShowPharmacyExpiryDetails);
-    
-
-    // Pagination Ajax
-    // PaginationAjax(ShowPharmacyExpiryDetails);
-
-
-    // Search Ajax
-    // SearchAjax('pharmacy/report/expiry/statement', ShowPharmacyExpiryDetails);
 
 
     // Search By Month or Year
-    // SearchByDateAjax('pharmacy/report/expiry/statement', ShowPharmacyExpiryDetails)
+    SearchByDateAjax('pharmacy/report/expiry/statement/search', ShowPharmacyExpiryDetails)
 });

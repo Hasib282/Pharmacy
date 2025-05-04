@@ -15,13 +15,14 @@ class ExpiryStatementController extends Controller
     public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
-        $data = Transaction_Detail::on('mysql_second')->with('Head')
+        $data = Transaction_Detail::on('mysql_second')
+        ->with('Head')
         ->whereIn('tran_method', ['Purchase', 'Positive'])
         ->where('tran_type', $type)
         ->where('quantity', '>', 0)
         ->where("expiry_date", '<=', [date('Y-m-d')])
         ->orderBy('tran_id', 'asc')
-        ->paginate(15);
+        ->get();
 
         return response()->json([
             'status'=> true,
@@ -35,34 +36,43 @@ class ExpiryStatementController extends Controller
     public function Search(Request $req){
         $type = GetTranType($req->segment(2));
 
-        if($req->searchOption == 1){
-            $heads = Transaction_Head::on('mysql')
-            ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
-            ->whereHas('Groupe', function ($q) use ($type) {
-                $q->where('tran_groupe_type', $type);
-            })
-            ->where('tran_head_name', 'like', $req->search.'%')
-            ->orderBy('tran_head_name','asc')
-            ->pluck('id'); // Base query
+        $data = Transaction_Detail::on('mysql_second')
+        ->with('Head')
+        ->whereIn('tran_method', ['Purchase', 'Positive'])
+        ->where('tran_type', $type)
+        ->where('quantity', '>', 0)
+        ->where("expiry_date", '<=', $req->startDate)
+        ->orderBy('tran_id', 'asc')
+        ->get();
 
-            $data = Transaction_Detail::on('mysql_second')
-            ->with('Head')
-            ->whereIn('tran_head_id', $heads)
-            ->where("expiry_date", '<=', $req->startDate)
-            ->whereIn('tran_method', ['Purchase', 'Positive'])
-            ->where('tran_type', $type)
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){
-            $data = Transaction_Detail::on('mysql_second')
-            ->with('Head')
-            ->where('tran_id', "like", '%'. $req->search .'%')
-            ->where("expiry_date", '<=', $req->startDate)
-            ->whereIn('tran_method', ['Purchase', 'Positive'])
-            ->where('tran_type', $type)
-            ->orderBy('tran_id','asc')
-            ->paginate(15);
-        }
+        // if($req->searchOption == 1){
+        //     $heads = Transaction_Head::on('mysql')
+        //     ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
+        //     ->whereHas('Groupe', function ($q) use ($type) {
+        //         $q->where('tran_groupe_type', $type);
+        //     })
+        //     ->where('tran_head_name', 'like', $req->search.'%')
+        //     ->orderBy('tran_head_name','asc')
+        //     ->pluck('id'); // Base query
+
+        //     $data = Transaction_Detail::on('mysql_second')
+        //     ->with('Head')
+        //     ->whereIn('tran_head_id', $heads)
+        //     ->where("expiry_date", '<=', $req->startDate)
+        //     ->whereIn('tran_method', ['Purchase', 'Positive'])
+        //     ->where('tran_type', $type)
+        //     ->paginate(15);
+        // }
+        // else if($req->searchOption == 2){
+        //     $data = Transaction_Detail::on('mysql_second')
+        //     ->with('Head')
+        //     ->where('tran_id', "like", '%'. $req->search .'%')
+        //     ->where("expiry_date", '<=', $req->startDate)
+        //     ->whereIn('tran_method', ['Purchase', 'Positive'])
+        //     ->where('tran_type', $type)
+        //     ->orderBy('tran_id','asc')
+        //     ->paginate(15);
+        // }
         
         return response()->json([
             'status' => true,
