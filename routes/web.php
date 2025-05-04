@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 // Middlewares
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Middleware\ValidUser;
 use App\Http\Middleware\CheckPermission;
 // use App\Http\Middleware\SuperAdminAccess;
@@ -903,6 +904,10 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
 
             ///////////////////// ------------------ Patient Registration Routes Start ------------------ /////////////////////
             Route::get('/ptnregistration',  'ShowPatientRegistrations')->name('show.patientRegistration');
+
+
+            ///////////////////// ------------------ Patient Appoinment Routes Start ------------------ /////////////////////
+            Route::get('/ptnappointment',  'ShowPatientAppointment')->name('show.patientAppointment');
         });
         
         

@@ -86,6 +86,8 @@ use App\Http\Controllers\API\Backend\Setup\Hospital\BedCatagoryController;
 use App\Http\Controllers\API\Backend\Setup\Hospital\BedListController;
 use App\Http\Controllers\API\Backend\Setup\Hospital\NursingStationController;
 use App\Http\Controllers\API\Backend\Setup\Hospital\PatientRegistrationController;
+use App\Http\Controllers\API\Backend\Setup\Hospital\AppointmentController;
+
 
 
 /////////////////////////////////////// Transaction Controlles Part Start /////////////////////////////////////
@@ -1441,6 +1443,17 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::delete('/ptnregistration', 'Delete');
             Route::get('/ptnregistration/get', 'Get');
             Route::get('/ptnregistration/get/patient', 'GetPatient');
+        });
+
+
+
+        ///////////// --------------- Appointment Registration Routes ----------- ///////////////////
+        Route::controller(AppointmentController::class)->group(function(){
+            Route::get('/ptnappointment', 'Show');
+            Route::post('/ptnappointment', 'Insert');
+            Route::put('/ptnappointment', 'Update');
+            Route::delete('/ptnappointment', 'Delete');
+            Route::get('/ptnappointment/get', 'Get');
         });
         
         
