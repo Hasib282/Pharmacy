@@ -1714,6 +1714,18 @@
                             @endif
                         </ul>
                     </li>
+
+                     {{-- Hospital Setup Sub Menu --}}
+                     @if(auth()->user()->hasPermission(194))
+                     <li class="sub-menu-item" data-url="{{route('show.patientAppointment')}}">
+                         <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'ptnappointment') ? 'active':''}}">
+                             <p>
+                                 <i class="fa-solid fa-gears"></i>
+                                 APPOINMENT
+                             </p>
+                         </div>
+                     </li>
+                 @endif
                     
                     {{-- Hospital Setup Sub Menu --}}
                     @if(auth()->user()->hasPermission(194))
@@ -1721,7 +1733,7 @@
                             <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'ptnregistration') ? 'active':''}}">
                                 <p>
                                     <i class="fa-solid fa-gears"></i>
-                                    Patient Registration
+                                    PATIENTS  REGISTRATION
                                 </p>
                             </div>
                         </li>

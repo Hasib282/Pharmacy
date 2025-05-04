@@ -114,4 +114,17 @@ class HospitalSetupConrtoller extends Controller
             return view('admin_setup.tran_head.main', compact('name'));
         }
     } // End Method
+
+
+     /////////////////////////// --------------- Hospital Appointment ---------- //////////////////////////
+    // Show All Transaction Heads
+    public function ShowPatientAppointment(Request $req){
+        $name = "Hospital Appointment";
+        if ($req->ajax()) {
+            return view('admin_setup.hospital.appointment.ajaxBlade', compact('name'));
+        }
+        else{
+            return view('admin_setup.hospital.appointment.main', compact('name'));
+        }
+    } // End Method
 }
