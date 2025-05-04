@@ -338,6 +338,18 @@ label{
     padding: 2px 10px;
     border: none;
 }
+
+#PayrollProcess{
+    background-color: #00a7ffd9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+#PayrollProcess:hover{
+    background: #0088ffbd;
+}
 /* ---------------------------------- Button Design End At Here --------------------------- */
 
 

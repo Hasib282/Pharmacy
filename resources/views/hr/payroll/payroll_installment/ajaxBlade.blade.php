@@ -52,7 +52,9 @@
 <div class="add-search">
     <div class="rows">
         <div class="c-3">
-                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            {{-- @if(Auth::user()->hasPermissionToRoute('insert.payroll')) --}}
+                <button id="PayrollProcess" data-modal-id="confirmModal"><i class="fa-solid fa-rotate"></i> Process Payroll</button>
+            {{-- @endif --}}
         </div>
         <div class="c-6">
 

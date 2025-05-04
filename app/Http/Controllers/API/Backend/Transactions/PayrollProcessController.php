@@ -118,8 +118,7 @@ class PayrollProcessController extends Controller
                         ];
                     }
 
-
-                    Transaction_Detail::on('mysql_second')->create($transactionDetails);
+                    Transaction_Detail::on('mysql_second')->insert($transactionDetails);
 
 
                     Transaction_Main::on('mysql_second')->create([

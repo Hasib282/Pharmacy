@@ -199,7 +199,7 @@ class GenerateTable {
                         return `<td style="text-align:right;">${Number(value).toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>`;
                     
                     case 'calculate':
-                        const calcValue = evaluateExpression(data.expration, row);
+                        const calcValue = this.evaluateExpression(data.expration, row);
                         return `<td style="text-align:right;">${Number(calcValue).toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>`;
     
                     case 'image':
@@ -208,7 +208,7 @@ class GenerateTable {
                     case 'date':
                         if (!value) return `<td></td>`;
                         const date = new Date(value);
-                        return `<td>${date.toLocaleDateString('en-US', { day:'numeric', month: 'short', year: 'numeric' })}</td>`;
+                        return `<td style="text-align:center;">${date.toLocaleDateString('en-US', { day:'numeric', month: 'short', year: 'numeric' })}</td>`;
                     
                     case 'month':
                         if (!value) return `<td></td>`;
@@ -238,12 +238,19 @@ class GenerateTable {
                 <tr>
                     <td>${startIndex + i + 1}</td>
                     ${columns}
-                    <td width="10%"><div id="actions">${this.actions(row)}</div></td>
+                    ${this.renderActions(row)}
                 </tr>`;
         }).join('');
 
         this.renderTableFooter(datas);
         this.renderPagination();
+    }
+
+
+
+    // Render Action Buttons
+    renderActions(row) {
+        return typeof this.actions === 'function' ? `<td width="10%"><div id="actions">${this.actions(row)}</div></td>` : "";
     }
 
 
@@ -287,7 +294,7 @@ class GenerateTable {
             datas.forEach(row => {
                 let value = 0;
                 if (data.type === 'calculate' && data.expration) {
-                    value = evaluateExpression(data.expration, row);
+                    value = this.evaluateExpression(data.expration, row);
                 } else {
                     value = key.split('.').reduce((obj, k) => obj?.[k], row);
                 }
@@ -302,15 +309,12 @@ class GenerateTable {
                 const avg = total / (datas.length || 1);
                 return `<td style="text-align:right; font-weight:bold;">${avg.toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>`;
             }
-    
-            return '<td></td>';
         }).join('');
     
         const footerHtml = `
             <tr>
                 <td style="font-weight:bold;" colspan="${colSpan}">Total</td>
                 ${footerCells}
-                <td></td>
             </tr>
         `;
     

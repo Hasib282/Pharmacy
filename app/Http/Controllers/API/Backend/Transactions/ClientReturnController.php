@@ -118,8 +118,11 @@ class ClientReturnController extends Controller
         
                     $billDiscount = $req->discount;
                     $billAmount = $req->amountRP;
+                    $billNet = $req->netAmount;
+                    $billAdvance = $req->advance;
                     $products = json_decode($req->products, true);
                     foreach($products as $product){
+                        $totalAmount = $product['totAmount'];
                         // Update Quantity in Product Table
                         $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
                         $quantity = $p->quantity + $product['quantity'];
@@ -127,7 +130,10 @@ class ClientReturnController extends Controller
                             "quantity" => $quantity
                         ]);
         
-                        $discount = round( ($billDiscount * $product['totAmount']) / $billAmount);
+                        $discount = round( ($billDiscount * $totalAmount) / $billAmount);
+                        $amount = $totalAmount - $discount;
+                        $advance = round( ($billAdvance * $amount) / $billNet );
+                        $due = $amount - $advance;
         
                         // Update Quantity and Return Quantity Acording to Batch Id
                         $batch = Transaction_Detail::on('mysql_second')->where('tran_id', $req->batch)->where('tran_head_id', $product['product'])->where('batch_id', $product['pbatch'])->first();
@@ -169,13 +175,18 @@ class ClientReturnController extends Controller
                             "discount" => $discount,
                             "mrp" => $product['amount'],
                             "cp" => $p->cp,
+                            "receive" => $advance,
+                            "payment" => 0,
+                            "due" => $due,
                             "expiry_date" => $p->expiry_date,
                             "store_id" => $req->store,
                             "batch_id" => $req->batch,
                         ]);
         
                         $billDiscount -= $discount;
-                        $billAmount -= $product['totAmount'];
+                        $billAmount -= $totalAmount;
+                        $billAdvance -= $advance;
+                        $billNet -= $amount;
                    }
 
                    $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);

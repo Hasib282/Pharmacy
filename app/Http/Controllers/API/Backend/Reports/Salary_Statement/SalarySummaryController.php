@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Backend\Reports\Salary_Statement;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 use App\Models\Transaction_Main;
 
@@ -28,23 +29,20 @@ class SalarySummaryController extends Controller
 
     // Search Salary Summary Report
     public function Search(Request $req){
-        $currentYear = $req->year;
-        $currentMonth = $req->month;
-        $salary = Transaction_Main::on('mysql_second')->with('User')
-        ->whereHas('User', function ($query) use ($req) {
-            $query->where('user_name', 'like', '%'.$req->search.'%');
-            $query->orWhere('user_id', 'like', '%'.$req->search.'%');
-        })
+        $start = Carbon::parse($req->startDate)->startOfMonth()->toDateString(); // 2025-01-01
+        $end = Carbon::parse($req->endDate)->endOfMonth()->toDateString();
+        
+        $data = Transaction_Main::on('mysql_second')
+        ->with('User')
         ->where('tran_type', 3)
         ->where('tran_method','Payment')
-        ->whereYear('tran_date', $currentYear)
-        ->whereMonth('tran_date', $currentMonth)
+        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$start, $end])
         ->orderBy('id','asc')
-        ->paginate(15);
+        ->get();
         
         return response()->json([
             'status' => true,
-            'data' => $salary,
+            'data' => $data,
         ], 200);
     } // End Method
 

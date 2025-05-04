@@ -1,65 +1,8 @@
-// function ShowPharmacyIssueSummarys(data, startIndex) {
-//     let tableRows = '';
-//     let totalBillAmount = 0;
-//     let totalDiscount = 0;
-//     let totalNetAmount = 0;
-//     let totalAdvance = 0;
-//     let totalDueCol = 0;
-//     let totalDueDiscount = 0;
-//     let totalDue = 0;
-    
-//     if(data.length > 0){
-//         $.each(data, function(key, item) {
-//             tableRows += `
-//                 <tr>
-//                     <td>${startIndex + key + 1}</td>
-//                     <td>${item.tran_id}</td>
-//                     <td>${item.user.user_name}</td>
-//                     <td style="text-align: right">${item.bill_amount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//                     <td style="text-align: right">${item.discount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//                     <td style="text-align: right">${item.net_amount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//                     <td style="text-align: right">${(item.receive ?? 0).toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//                     <td style="text-align: right">${item.due_col.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//                     <td style="text-align: right">${item.due_disc.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//                     <td style="text-align: right">${item.due.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//                     <td>${new Date(item.tran_date).toLocaleDateString('en-CA')}</td>
-//                 </tr>
-//             `;
-
-//             totalBillAmount += item.bill_amount;
-//             totalDiscount += item.discount;
-//             totalNetAmount += item.net_amount;
-//             totalAdvance += item.receive;
-//             totalDueCol += item.due_col;
-//             totalDueDiscount += item.due_disc;
-//             totalDue += item.due;
-//         });
-
-//         // Inject the generated rows into the table body
-//         $('.load-data .show-table tbody').html(tableRows);
-//         $('.load-data .show-table tfoot').html(`
-//             <td colspan="3">Total:</td>
-//             <td style="text-align: right">${totalBillAmount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//             <td style="text-align: right">${totalDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//             <td style="text-align: right">${totalNetAmount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//             <td style="text-align: right">${totalAdvance.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//             <td style="text-align: right">${totalDueCol.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//             <td style="text-align: right">${totalDueDiscount.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//             <td style="text-align: right">${totalDue.toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>
-//             <td></td>`
-//         );
-//     }
-//     else{
-//         $('.load-data .show-table tbody').html('');
-//         $('.load-data .show-table tfoot').html('<tr><td colspan="13" style="text-align:center;">No Data Found</td></tr>')
-//     }
-// }; // End Function
-
 function ShowPharmacyIssueSummarys(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number'},{key:'discount', type: 'number'},{key:'net_amount', type: 'number'},{key:'receive', type: 'number'},{key:'due_col', type: 'number'},{key:'due_disc', type: 'number'},{key:'due', type: 'number'},{key:'tran_date', type: 'date'}],
+        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number',footerType:'sum'},{key:'discount', type: 'number',footerType:'sum'},{key:'net_amount', type: 'number',footerType:'sum'},{key:'receive', type: 'number',footerType:'sum'},{key:'due_col', type: 'number',footerType:'sum'},{key:'due_disc', type: 'number',footerType:'sum'},{key:'due', type: 'number',footerType:'sum'},{key:'tran_date', type: 'date'}],
     });
 }
 
@@ -72,11 +15,11 @@ $(document).ready(function () {
         { label: 'Total' },
         { label: 'Discount' },
         { label: 'Net Total' },
-        { label: 'Advance Payment' },
+        { label: 'Advance' },
         { label: 'Due Col' },
         { label: 'Due Discount' },
         { label: 'Due' },
-        { label: 'Date', key: 'tran_date', type:"date" },
+        { label: 'Date' },
     ]);
 
 
@@ -84,14 +27,6 @@ $(document).ready(function () {
     ReloadData('pharmacy/report/issue/summary', ShowPharmacyIssueSummarys);
     
 
-    // Pagination Ajax
-    // PaginationAjax(ShowPharmacyIssueSummarys);
-
-
-    // Search Ajax
-    // SearchAjax('pharmacy/report/issue/summary', ShowPharmacyIssueSummarys, { type:'6', method:'Issue' });
-
-
     // Search By Month or Year
-    // SearchByDateAjax('pharmacy/report/issue/summary', ShowPharmacyIssueSummarys, { type:'6', method:'Issue' })
+    SearchByDateAjax('pharmacy/report/issue/summary/search', ShowPharmacyIssueSummarys, { method:'Issue' })
 });

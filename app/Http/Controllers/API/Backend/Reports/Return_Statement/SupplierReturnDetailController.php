@@ -15,12 +15,13 @@ class SupplierReturnDetailController extends Controller
     public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
-        $data = Transaction_Detail::on('mysql_second')->with('User','Head')
+        $data = Transaction_Detail::on('mysql_second')
+        ->with('User','Head')
         ->where('tran_method', 'Supplier Return')
         ->where('tran_type', $type)
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
         ->orderBy('id', 'asc')
-        ->paginate(15);
+        ->get();
 
         return response()->json([
             'status'=> true,
@@ -34,43 +35,13 @@ class SupplierReturnDetailController extends Controller
     public function Search(Request $req){
         $type = GetTranType($req->segment(2));
 
-        if($req->searchOption == 1){
-            $data = Transaction_Detail::on('mysql_second')->with('User','Head')
-            ->where('tran_id', "like", '%'. $req->search .'%')
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', $req->type)
-            ->orderBy('tran_id','asc')
-            ->paginate(15);
-        }
-        else if($req->searchOption == 2){
-            $data = Transaction_Detail::on('mysql_second')->with('User','Head')
-            ->whereHas('User', function ($query) use ($req) {
-                $query->where('user_name', 'like', $req->search.'%');
-                $query->orderBy('user_name','asc');
-            })
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', $req->type)
-            ->paginate(15);
-        }
-        else if($req->searchOption == 3){
-            $heads = Transaction_Head::on('mysql')
-            ->with('Groupe')
-            ->whereHas('Groupe', function ($q) use ($type){
-                $q->where('tran_groupe_type', $type);
-            })
-            ->where('tran_head_name', 'like', $req->search.'%')
-            ->orderBy('tran_head_name','asc')
-            ->pluck('id'); // Base query
-
-            $data = Transaction_Detail::on('mysql_second')->with('User','Head')
-            ->whereIn('tran_head_id', $heads)
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_method',$req->method)
-            ->where('tran_type', $req->type)
-            ->paginate(15);
-        }
+        $data = Transaction_Detail::on('mysql_second')
+        ->with('User','Head')
+        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        ->where('tran_method',$req->method)
+        ->where('tran_type', $type)
+        ->orderBy('tran_id','asc')
+        ->get();
         
         return response()->json([
             'status' => true,

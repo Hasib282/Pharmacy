@@ -50,22 +50,19 @@ function ShowSalaryDetails(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_user','user.user_name','head.tran_head_name','amount','tran_date'],
+        tbody: ['tran_user','user.user_name','head.tran_head_name',{key:'amount',type:'number',footerType:'sum'},{key:'tran_date',type:'date'}],
     });
 }
 
 $(document).ready(function () {
-    $(document).off(`.${'SearchBySelect'}`);
-
-
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: ' Id', key: 'tran_user' },
-        { label: ' Employee Name', key: 'user.user_name' },
-        { label: ' Payroll Category', key: 'head.tran_head_name' },
-        { label: ' Amount' },
-        { label: ' Date' }
+        { label: 'Id', key: 'tran_user' },
+        { label: 'Employee Name', key: 'user.user_name' },
+        { label: 'Payroll Category', key: 'head.tran_head_name' },
+        { label: 'Amount' },
+        { label: 'Date' }
     ]);
 
     
@@ -73,14 +70,6 @@ $(document).ready(function () {
     ReloadData('hr/report/salary/details', ShowSalaryDetails);
     
 
-    // Pagination Ajax
-    // PaginationAjax(ShowSalaryDetails, { month: { selector: '#month'}, year: { selector: '#year'}});
-
-
-    // Search Ajax
-    // SearchAjax('hr/report/salary/details', ShowSalaryDetails, { month: { selector: '#month'}, year: { selector: '#year'}});
-
-
-    // Search By Month or Year
-    // SearchBySelect('hr/report/salary/details', ShowSalaryDetails, '#month, #year', { month: { selector: '#month'}, year: { selector: '#year'}})
+    // Search By Date
+    SearchByDateAjax('hr/report/salary/details/search', ShowSalaryDetails);
 });

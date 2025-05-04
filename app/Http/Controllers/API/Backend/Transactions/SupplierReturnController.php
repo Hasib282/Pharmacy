@@ -115,8 +115,11 @@ class SupplierReturnController extends Controller
         
                     $billDiscount = $req->discount;
                     $billAmount = $req->amountRP;
+                    $billNet = $req->netAmount;
+                    $billAdvance = $req->advance;
                     $products = json_decode($req->products, true);
                     foreach($products as $product){
+                        $totalAmount = $product['totAmount'];
                         // Update Quantity in Product Table
                         $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
                         $quantity = $p->quantity - $product['quantity'];
@@ -125,6 +128,9 @@ class SupplierReturnController extends Controller
                         ]);
         
                         $discount = round( ($billDiscount * $product['totAmount']) / $billAmount);
+                        $amount = $totalAmount - $discount;
+                        $advance = round( ($billAdvance * $amount) / $billNet );
+                        $due = $amount - $advance;
         
                         // Update Quantity and Return Quantity Acording to Batch Id
                         $batch = Transaction_Detail::on('mysql_second')->where('tran_id', $req->batch)->where('tran_head_id', $product['product'])->first();
@@ -153,13 +159,18 @@ class SupplierReturnController extends Controller
                             "discount" => $discount,
                             "mrp" => $p->mrp,
                             "cp" => $product['amount'],
+                            "receive" => 0,
+                            "payment" => $advance,
+                            "due" => $due,
                             "expiry_date" => $p->expiry_date,
                             "store_id" => $req->store,
                             "batch_id" => $req->batch,
                         ]);
         
                         $billDiscount -= $discount;
-                        $billAmount -= $product['totAmount'];
+                        $billAmount -= $totalAmount;
+                        $billAdvance -= $advance;
+                        $billNet -= $amount;
                    }
                    
                    $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);

@@ -1,7 +1,6 @@
 @php
-    $searchValue = request()->query('search');
-    $monthValue = request()->query('month');
-    $yearValue = request()->query('year');
+    $startDateValue = request()->query('startDate');
+    $endDateValue = request()->query('endDate');
 @endphp
 
 @extends('layouts.layout')
@@ -70,16 +69,21 @@
 
     {{-- Add Button And Search Fields --}}
     <div class="add-search">
-        <div class="rows">
+        <div class="rows" style="align-items:center;">
+            <div class="c-3"></div>
             <div class="c-3">
-                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                <label for="startDate">Start Date</label>
+                <input type="month" name="startDate" id="startDate" class="form-input" value="{{ $startDateValue ? $startDateValue : date('Y-m') }}">
             </div>
-            <div class="c-6">
-
+            <div class="c-3" >
+                <label for="endDate">End Date</label>
+                <input type="month" name="endDate" id="endDate" class="form-input" value="{{ $endDateValue ? $endDateValue : date('Y-m') }}">
             </div>
-            <div class="c-3" style="padding: 0;">
-                <input type="text" id="globalSearch" placeholder="Search..." />
+            <div class="c-1"></div>
+            <div class="c-1">
+                <a class="btn-blue" id="print"><i class="fa-solid fa-print"></i> Print</a>
             </div>
+            <div class="c-1"></div>
         </div>
     </div>
 
