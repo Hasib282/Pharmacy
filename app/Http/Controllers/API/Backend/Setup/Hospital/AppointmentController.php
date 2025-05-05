@@ -16,7 +16,7 @@ class AppointmentController extends Controller
 
 
     public function Show(Request $req){
-        $data = Appoinment::on('mysql_second')->get();
+        $data = Appoinment::on('mysql_second')->with('Doctor','Patient')->get();
 
         return response()->json([
             'status'=>true,
@@ -108,12 +108,57 @@ class AppointmentController extends Controller
             ]);
         }
 
-        $data = Appoinment::on('mysql_second')->findOrFail($insert->id);
+        $data = Appoinment::on('mysql_second')->with('Doctor','Patient')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
             'message' => 'Patient Registrations Added Successfully',
             "data" => $data,
         ], 200); 
+    } // End Method
+
+
+
+    // update Patient Appointment
+
+
+    public function Update(Request $req){
+        $req->validate([
+            'patient' =>'required|exists:mysql_second.patient__information,ptn_id',
+            'doctor'=> 'required|exists:mysql_second.doctor__information,id',//|exists:mysql_second.
+            'date'=> 'required',
+            'appointment'=> 'required',
+            'schedule'=> 'required',
+        ]);
+
+        $update = Appoinment::on('mysql_second')->findOrFail($req->id)->update([
+                'appoinment_serial'=>$req->appointment,
+                'ptn_id'=>$req->patient,
+                'name'=>$req->name,
+                'mobile'=> $req->ptn_phone,
+                'doctor'=> $req->doctor,
+                'date'=> $req->date,
+                'schedule'=> $req->schedule,
+                "updated_at" => now()
+        ]);
+
+        $updatedData = Appoinment::on('mysql_second')->with('Doctor','Patient')->findOrFail($req-> id);
+        return response()->json([
+            'status'=> true,
+            'message' => 'Patient Registrations Added Successfully',
+            "updatedData" => $updatedData,
+        ], 200); 
+
+        
+    }
+
+
+    // Delete Patient Registrations
+    public function Delete(Request $req){
+        Appoinment::on('mysql_second')->findOrFail($req->id)->delete();
+        return response()->json([
+            'status'=> true,
+            'message'=> 'Patient Registrations Deleted Successfully'
+        ], 200);
     } // End Method
 }

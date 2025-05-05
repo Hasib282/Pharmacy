@@ -8,19 +8,21 @@
         </div>
        
          <!-- form start -->
-         <form id="AddForm" method="POST" enctype="multipart/form-data">
+         <form id="EditForm" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('POST')
+            @method('PUT')
 
             
             <div class="rows">
-                <!--  patient id toggle -->
+                {{-- id  --}}
+                <input type="hidden" name="id" id="id">
+                <!--  patient id -->
                 <div class="c-12">
                     <div class="form-input-group">
-                        <label for="updatePtn_Id">Patient Id</label>
-                        <input type="text" name="ptn_id" class="form-input" id="updatePtn_Id">
-                        <div id="ptn-list"></div>
-                        <span class="error" id="update_ptn_id_error"></span>
+                        <label for="updatePatient">Patient Id</label>
+                        <input type="text" name="patient" class="form-input" id="updatePatient" autocomplete="off">
+                        <div id="update-patient"></div>
+                        <span class="error" id="update_patient_error"></span>
                     </div>
                 </div>
 
@@ -127,49 +129,56 @@
                     </div>
                 </div>
 
-                <!-- Bed Category -->
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="updateBed_Category">Bed Category<span class="required">*</span></label>
-                        <input type="text" name="bed_category" class="form-input" id="updateBed_Category"><hr>
-                        <div id='update-bed_category'></div>
-                        <span class="error" id="update_bed_category_error"></span>
-                    </div>
+            <!-- Doctor -->
+            <div class="c-12">
+                <div class="form-input-group">
+                    <label for="updateDoctor">Doctor<span class="required">*</span></label>
+                    <input type="text" name="doctor" class="form-input" id="updateDoctor" autocomplete="off"><hr>
+                    <div id='update-doctor'></div>
+                    <span class="error" id="update_doctor_error"></span>
                 </div>
+            </div>
 
-                <!-- Bed list -->
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="updateBed_List">Bed List<span class="required">*</span></label>
-                        <input type="text" name="bed_list" class="form-input" id="updateBed_List"><hr>
-                        <div id='update-bed_list'></div>
-                        <span class="error" id="update_bed_list_error"></span>
-                    </div>
+            <!-- Date -->
+            <div class="c-4">
+                <div class="form-input-group">
+                    <label for="updateDate">Date<span class="required">*</span></label>
+                    <input type="date" name="date" class="form-input" id="updateDate">
+                    <span class="error" id="update_date_error"></span>
                 </div>
+            </div>
 
-                <!-- Doctor -->
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="updateDoctor">Doctor<span class="required">*</span></label>
-                        <input type="text" name="doctor" class="form-input" id="updateDoctor"><hr>
-                        <div id='update-doctor'></div>
-                        <span class="error" id="update_doctor_error"></span>
-                    </div>
+              <!-- schedule -->
+              <div class="c-4">
+                <div class="form-input-group">
+                    <label for="updateSchedule">Schedule</label>
+                    <select name="schedule" id="updateSchedule" class="form-input">
+                        <option value="">Select schedule</option>
+                        <option value="Morining" checked>Morining</option>
+                        <option value="Evening">Evening</option>
+                       
+                    </select>
+                    <span class="error" id="update_schedule_error"></span>
                 </div>
+            </div>
 
-                <!-- Sells Representative (SR) ID -->
-                <div class="c-6">
+            
+                <!-- Appointment -->
+            <div class="c-4">
                     <div class="form-input-group">
-                        <label for="updateSr">Sells Representative (SR)<span class="required">*</span></label>
-                        <input type="text" name="sr" class="form-input" id="updateSr"><hr>
-                        <div id='update-sr'></div>
-                        <span class="error" id="update_sr_error"></span>
+                        <label for="updateAppointment">Appointment Serial</label>
+                        <input type="text" name="appointment" class="form-input" id="updateAppointment">
+                        <span class="error" id="update_appointment_error"></span>
                     </div>
                 </div>
             </div>
+
+
+               
+             
             
             <div class="center">
-                <button type="submit" class="btn-blue" id="Insert">Submit</button>
+                <button type="submit" class="btn-blue" id="Update">Submit</button>
             </div>
         </form>
     </div>
