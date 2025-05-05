@@ -150,7 +150,7 @@ $(document).ready(function () {
 
 
     // Search By Ajax
-    SearchByDateAjax('pharmacy/transaction/issue', ShowPharmacyIssues, { type: 6, method: 'Issue' });
+    SearchByDateAjax('pharmacy/transaction/issue/search', ShowPharmacyIssues, { type: 6, method: 'Issue' });
 
 
     // Additional Edit Functionality

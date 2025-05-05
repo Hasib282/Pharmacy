@@ -152,7 +152,7 @@ $(document).ready(function () {
 
 
     // Search By Ajax
-    SearchByDateAjax('inventory/transaction/issue', ShowInventoryIssues, { type: 5, method: 'Issue' });
+    SearchByDateAjax('inventory/transaction/issue/search', ShowInventoryIssues, { type: 5, method: 'Issue' });
 
 
     // Additional Edit Functionality

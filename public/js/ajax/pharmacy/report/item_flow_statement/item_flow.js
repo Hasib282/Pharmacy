@@ -58,10 +58,41 @@
 // }; // End Function
 
 function ShowPharmacyItemflowStatements(res) {
+    // Remove any existing opening balance row to avoid duplication
+    $('#data-table thead .opening-balance-row').remove();
+
+    // Create the opening balance row manually
+    let openingRow = `
+        <tr class="opening-balance-row">
+            <th></th>
+            <th>Opening Balance</th>
+            <th colspan="5"></th>
+            <th style="text-align:right;">${Number(res.openingBalance ?? 0).toLocaleString('en-US')}</th>
+            <th></th>
+            <th></th>
+        </tr>
+    `;
+
+    // Inject this row into the thead as the last row
+    $('#data-table thead').append(openingRow);
+
+
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_method','quantity_actual','quantity_actual','quantity_actual','quantity_actual','balance','tran_id',{key:'tran_date', type: 'date'}],
+        tbody: [
+            'tran_id',
+            'tran_method',
+            {key:'quantity_actual', type:'calculate', expration:'(tran_method === "Purchase" || tran_method === "Positive") ? quantity_actual : 0'},
+            {key:'quantity_actual', type:'calculate', expration:'(tran_method === "Issue" || tran_method === "Negative") ? quantity_actual : 0'},
+            {key:'quantity_actual', type:'calculate', expration:'tran_method === "Supplier Return" ? quantity_actual : 0'},
+            {key:'quantity_actual', type:'calculate', expration:'tran_method === "Client Return" ? quantity_actual : 0'},
+            {key:'balance', type:'calculate', expration:'(tran_method == "Purchase" || tran_method == "Client Return" || tran_method == "Positive" ? quantity_actual : 0) - (tran_method == "Issue" || tran_method == "Supplier Return" || tran_method == "Negative" ? quantity_actual : 0)', footerType:'sum'},
+            'batch_id',
+            {key:'tran_date', type: 'date'}
+        ],
+        actions: undefined,
+        balance:res.openingBalance,
     });
 }
 
@@ -69,13 +100,14 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
+        { label: 'Tran Id', key: 'tran_id' },
         { label: 'Status', key: 'tran_method' },
         { label: 'Receive' },
         { label: 'Issue' },
         { label: 'Supplier Return' },
         { label: 'Client Return' },
         { label: 'Balance' },
-        { label: 'Tran Id', key: 'tran_id' },
+        { label: 'Batch Id', key:'batch_id' },
         { label: 'Date', key: 'tran_date', type:"date" }
     ]);
 
@@ -130,7 +162,7 @@ $(document).ready(function () {
             ReloadData('pharmacy/report/item/flow/search', ShowPharmacyItemflowStatements, data);
         },
 
-        '#data-table tbody',
+        '#data-table tbody,#data-table tfoot',
 
         // function (targetInput, item) {
         //     $(targetInput).attr("data-groupe", item.data('groupe'));

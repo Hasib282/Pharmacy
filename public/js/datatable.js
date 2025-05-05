@@ -1,6 +1,6 @@
 let tableInstance = null;
 class GenerateTable {
-    constructor({tableId , data, tbody, actions}) {
+    constructor({tableId , data, tbody, actions, balance=0}) {
         this.table = document.querySelector(tableId); // Select Table
         this.data = data; // Original Data
         this.filteredData = [...data]; // Copy of Original data
@@ -10,6 +10,8 @@ class GenerateTable {
         this.sortOrder = 'asc';
         this.tbody = tbody;
         this.actions = actions;
+        this.balance = balance;
+        this.currBalance = 0;
         this.init();
     }
 
@@ -180,6 +182,9 @@ class GenerateTable {
         tbody.innerHTML = '';
         pagination.innerHTML = '';
 
+        // Assigning Opening Balance into Current Balanace
+        this.currBalance = this.balance;
+
         if (datas.length === 0) {
             this.renderTableFooter([]);
             tbody.innerHTML = '<tr><td colspan="15" style="text-align:center;">No Data Found</td></tr>';
@@ -199,7 +204,12 @@ class GenerateTable {
                         return `<td style="text-align:right;">${Number(value).toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>`;
                     
                     case 'calculate':
-                        const calcValue = this.evaluateExpression(data.expration, row);
+                        let calcValue = this.evaluateExpression(data.expration, row);
+                        // calculate the balance 
+                        if(data.key === 'balance') {
+                            calcValue = this.currBalance + calcValue; 
+                            this.currBalance = calcValue;
+                        }
                         return `<td style="text-align:right;">${Number(calcValue).toLocaleString('en-US', { minimumFractionDigits: 0 })}</td>`;
     
                     case 'image':
@@ -269,6 +279,7 @@ class GenerateTable {
         });
 
         const colSpan = firstFooterIndex + 1;
+        let hasBalance = false;
 
         // If no footer columns are found, exit
         if (firstFooterIndex === -1 || colSpan >= this.tbody.length + 1) return;
@@ -302,6 +313,11 @@ class GenerateTable {
             });
     
             if (footerType === 'sum') {
+                // calculate the balance 
+                if (data.key === 'balance') {
+                    hasBalance = true;
+                    total = this.currBalance;
+                }
                 return `<td style="text-align:right; font-weight:bold;">${total.toLocaleString('en-US')}</td>`;
             }
     
@@ -313,7 +329,7 @@ class GenerateTable {
     
         const footerHtml = `
             <tr>
-                <td style="font-weight:bold;" colspan="${colSpan}">Total</td>
+                <td style="font-weight:bold;" colspan="${colSpan}">${hasBalance ? 'Closing Balance' : 'Total'}</td>
                 ${footerCells}
             </tr>
         `;
