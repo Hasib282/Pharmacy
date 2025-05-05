@@ -11,4 +11,12 @@ class Appoinment extends Model
     protected  $connection = 'mysql_second';
     protected $guarded  =  [];
     public $timestamps = false;
+
+    public function Doctor(){
+        return $this->belongsTo(Doctor_Information::class,'Doctor','id');
+    } 
+
+    public function Patient(){
+        return $this->belongsTo(Patient_Information::class,'ptn_id','ptn_id');
+    }
 }
