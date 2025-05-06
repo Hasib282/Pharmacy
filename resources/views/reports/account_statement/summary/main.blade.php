@@ -76,26 +76,58 @@
 
     {{-- Add Button And Search Fields --}}
     <div class="add-search">
-        <div class="rows">
-            <div class="c-3">
-                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+        <div class="rows" style="align-items:center;">
+            <div class="c-3"></div>
+            <div class="c-2">
+                <label for="startDate">Start Date</label>
+                <input type="date" name="startDate" id="startDate" class="form-input"
+                    value="{{ $startDateValue ? $startDateValue : date('Y-m-d') }}">
             </div>
-            <div class="c-6">
-
+            <div class="c-2">
+                <label for="endDate">End Date</label>
+                <input type="date" name="endDate" id="endDate" class="form-input"
+                    value="{{ $endDateValue ? $endDateValue : date('Y-m-d') }}">
             </div>
-            <div class="c-3" style="padding: 0;">
-                <input type="text" id="globalSearch" placeholder="Search..." />
+            <div class="c-2">
+                <label for="typeOption">Transaction Type</label>
+                <select name="typeOption" id="typeOption">
+                    options will be display dynamically
+                </select>
             </div>
+            <div class="c-1"></div>
+            <div class="c-1">
+                <a class="btn-blue" id="print"><i class="fa-solid fa-print"></i> Print</a>
+            </div>
+            <div class="c-1"></div>
         </div>
     </div>
 
     {{-- Datatable Part --}}
     <div class="load-data">
         <table class="data-table" id="data-table">
-            <caption>{{ $name }} Details</caption>
-            <thead></thead>
-            <tbody></tbody>
-            <tfoot></tfoot>
+            <caption>{{ $name }}</caption>
+            <thead>
+                <tr>
+                    <th style="text-align: right;">Opening Balance</th>
+                    <th></th>
+                    <th style="text-align: right; width:14%;" id="opening"></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td style="text-align: right;">Grand Total:</td>
+                    <td style="text-align: right; width:14%;" id="grandReceive"></td>
+                    <td style="text-align: right; width:14%;" id="grandPayment"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Closing Balance</td>
+                    <td></td>
+                    <td style="text-align: right; width:14%;" id="closing"></td>
+                </tr>
+            </tfoot>
         </table>
 
         <div id="paginate"></div>

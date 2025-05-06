@@ -64,23 +64,42 @@
 
     {{-- Add Button And Search Fields --}}
     <div class="add-search">
-        <div class="rows">
-            <div class="c-3">
-                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+        <div class="rows" style="align-items:center;">
+            <div class="c-3"></div>
+            <div class="c-2">
+                <label for="startDate">Start Date</label>
+                <input type="date" name="startDate" id="startDate" class="form-input"
+                    value="{{ $startDateValue ? $startDateValue : date('Y-m-d') }}">
             </div>
-            <div class="c-6">
-
+            <div class="c-2">
+                <label for="endDate">End Date</label>
+                <input type="date" name="endDate" id="endDate" class="form-input"
+                    value="{{ $endDateValue ? $endDateValue : date('Y-m-d') }}">
             </div>
-            <div class="c-3" style="padding: 0;">
-                <input type="text" id="globalSearch" placeholder="Search..." />
+            <div class="c-2">
+                <label for="methodOption">Method</label>
+                <select name="methodOption" id="methodOption">
+                    <option value="">Select Method</option>
+                    <option value="Receive" {{ $searchMethodValue=='Receive' ? 'selected' : '' }}>Receive</option>
+                    <option value="Payment" {{ $searchMethodValue=='Payment' ? 'selected' : '' }}>Payment</option>
+                    <option value="Purchase" {{ $searchMethodValue=='Purchase' ? 'selected' : '' }}>Purchase</option>
+                    <option value="Issue" {{ $searchMethodValue=='Issue' ? 'selected' : '' }}>Issue</option>
+                    <option value="Client Return" {{ $searchMethodValue=='Client Return' ? 'selected' : '' }}>Client Return</option>
+                    <option value="Supplier Return" {{ $searchMethodValue=='Supplier Return' ? 'selected' : '' }}>Supplier Return</option>
+                </select>
             </div>
+            <div class="c-1"></div>
+            <div class="c-1">
+                <a class="btn-blue" id="print"><i class="fa-solid fa-print"></i> Print</a>
+            </div>
+            <div class="c-1"></div>
         </div>
     </div>
 
     {{-- Datatable Part --}}
     <div class="load-data">
         <table class="data-table" id="data-table">
-            <caption>{{ $name }} Details</caption>
+            <caption>Party Details Report</caption>
             <thead></thead>
             <tbody></tbody>
             <tfoot></tfoot>

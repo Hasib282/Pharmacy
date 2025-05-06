@@ -77,57 +77,54 @@ class AccountSummaryController extends Controller
 
     // Create a Common Function for Getting Data Easily
     public function FindAccountSummaryStatement($tranType, $req) {
-        if($req->searchOption == 1){
-            $groupes = Transaction_Groupe::on('mysql')
-            ->where('tran_groupe_name', 'like', '%'.$req->search.'%')
-            ->orderBy('tran_groupe_name','asc')
-            ->pluck('id');
+        // if($req->searchOption == 1){
+        //     $groupes = Transaction_Groupe::on('mysql')
+        //     ->where('tran_groupe_name', 'like', '%'.$req->search.'%')
+        //     ->orderBy('tran_groupe_name','asc')
+        //     ->pluck('id');
 
-            return Transaction_Detail::on('mysql_second')
-            ->with('Groupe', 'Head')
-            // ->whereHas('Groupe', function ($query) use ($req) {
-            //     $query->where('tran_groupe_name', 'like', '%'.$req->search.'%');
-            //     $query->orderBy('tran_groupe_name','asc');
-            // })
-            ->whereIn('tran_groupe_id', $groupes)
-            ->select(
-                'tran_date', 
-                'tran_head_id', 
-                'tran_groupe_id', 
-                DB::raw('SUM(receive) as total_receive'), 
-                DB::raw('SUM(payment) as total_payment')
-            )
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_type', $tranType)
-            ->orderBy('tran_date', 'asc')
-            ->groupBy('tran_head_id','tran_groupe_id','tran_date')
-            ->get();
-        }
-        else if($req->searchOption == 2){
-            $heads = Transaction_Head::on('mysql')
-            ->where('tran_head_name', 'like', $req->search.'%')
-            ->orderBy('tran_head_name','asc')
-            ->pluck('id'); // Base query
+            
+        // }
+        // else if($req->searchOption == 2){
+        //     $heads = Transaction_Head::on('mysql')
+        //     ->where('tran_head_name', 'like', $req->search.'%')
+        //     ->orderBy('tran_head_name','asc')
+        //     ->pluck('id'); // Base query
 
-            return Transaction_Detail::on('mysql_second')->with('Groupe', 'Head')
-            // ->whereHas('Head', function ($query) use ($req) {
-            //     $query->where('tran_head_name', 'like', '%'.$req->search.'%');
-            //     $query->orderBy('tran_head_name','asc');
-            // })
-            ->whereIn('tran_head_id', $heads)
-            ->select(
-                'tran_date', 
-                'tran_head_id', 
-                'tran_groupe_id', 
-                DB::raw('SUM(receive) as total_receive'), 
-                DB::raw('SUM(payment) as total_payment')
-            )
-            ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-            ->where('tran_type', $tranType)
-            ->orderBy('tran_date', 'asc')
-            ->groupBy('tran_head_id','tran_groupe_id', 'tran_date')
-            ->get();
-        }
+        //     return Transaction_Detail::on('mysql_second')->with('Groupe', 'Head')
+        //     // ->whereHas('Head', function ($query) use ($req) {
+        //     //     $query->where('tran_head_name', 'like', '%'.$req->search.'%');
+        //     //     $query->orderBy('tran_head_name','asc');
+        //     // })
+        //     ->whereIn('tran_head_id', $heads)
+        //     ->select(
+        //         'tran_date', 
+        //         'tran_head_id', 
+        //         'tran_groupe_id', 
+        //         DB::raw('SUM(receive) as total_receive'), 
+        //         DB::raw('SUM(payment) as total_payment')
+        //     )
+        //     ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        //     ->where('tran_type', $tranType)
+        //     ->orderBy('tran_date', 'asc')
+        //     ->groupBy('tran_head_id','tran_groupe_id', 'tran_date')
+        //     ->get();
+        // }
+
+        return Transaction_Detail::on('mysql_second')
+        ->with('Groupe', 'Head')
+        ->select(
+            'tran_date', 
+            'tran_head_id', 
+            'tran_groupe_id', 
+            DB::raw('SUM(receive) as total_receive'), 
+            DB::raw('SUM(payment) as total_payment')
+        )
+        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        ->where('tran_type', $tranType)
+        ->orderBy('tran_date', 'asc')
+        ->groupBy('tran_head_id','tran_groupe_id','tran_date')
+        ->get();
         
     } // End Method
 

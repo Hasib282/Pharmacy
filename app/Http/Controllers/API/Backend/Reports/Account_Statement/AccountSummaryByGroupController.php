@@ -71,10 +71,10 @@ class AccountSummaryByGroupController extends Controller
 
     // Create a Common Function for Getting Data Easily
     public function FindAccountSummaryGroupeStatement($tranType, $req) {
-        $groupes = Transaction_Groupe::on('mysql')
-            ->where('tran_groupe_name', 'like', $req->search.'%')
-            ->orderBy('tran_groupe_name','asc')
-            ->pluck('id');
+        // $groupes = Transaction_Groupe::on('mysql')
+        //     ->where('tran_groupe_name', 'like', $req->search.'%')
+        //     ->orderBy('tran_groupe_name','asc')
+        //     ->pluck('id');
 
         return Transaction_Detail::on('mysql_second')
         ->with('Groupe')
@@ -84,7 +84,7 @@ class AccountSummaryByGroupController extends Controller
             DB::raw('SUM(receive) as total_receive'), 
             DB::raw('SUM(payment) as total_payment')
         )
-        ->whereIn('tran_groupe_id', $groupes)
+        // ->whereIn('tran_groupe_id', $groupes)
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
         ->where('tran_type', $tranType)
         ->orderBy('tran_date', 'asc')

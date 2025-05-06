@@ -13,7 +13,7 @@ class PartySummaryController extends Controller
 {
     // Show All Salary Details Report
     public function Show(Request $req){
-        $transactions = Transaction_Main::on('mysql_second')
+        $data = Transaction_Main::on('mysql_second')
         ->with('User', 'Bank', 'Withs', 'Type')
         ->whereNotIn('tran_type',['2','4'])
         ->select(
@@ -34,11 +34,11 @@ class PartySummaryController extends Controller
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
         ->groupBy('tran_type', 'tran_method', 'tran_type_with', 'tran_user', 'tran_bank')
         ->orderBy('tran_id','asc')
-        ->paginate(15);
+        ->get();
         
         return response()->json([
             'status'=> true,
-            'data' => $transactions,
+            'data' => $data,
         ], 200);
     } // End Method
 
@@ -46,11 +46,8 @@ class PartySummaryController extends Controller
 
     // Search Salary Details Report
     public function Search(Request $req){
-        $transactions = Transaction_Main::on('mysql_second')
+        $data = Transaction_Main::on('mysql_second')
         ->with('User', 'Bank', 'Withs', 'Type')
-        ->whereHas($req->searchOption == 1 ? 'User' : 'Withs', function ($query) use ($req) {
-            $query->where($req->searchOption == 1 ? 'user_name' : 'tran_with_name', 'like', $req->search.'%');
-        })
         ->whereNotIn('tran_type',['2','4'])
         ->select(
             'tran_type',
@@ -72,12 +69,12 @@ class PartySummaryController extends Controller
             return $query->where('tran_method', $req->method);
         })
         ->groupBy('tran_type', 'tran_method', 'tran_type_with', 'tran_user', 'tran_bank')
-        ->orderBy('tran_date','asc')
-        ->paginate(15);
+        ->orderBy('tran_id','asc')
+        ->get();
         
         return response()->json([
             'status' => true,
-            'data' => $transactions,
+            'data' => $data,
         ], 200);
     } // End Method
 
