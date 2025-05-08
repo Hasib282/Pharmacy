@@ -58,6 +58,12 @@ use App\Http\Controllers\Frontend\Hospital\HospitalUsersConrtoller;
 use App\Http\Controllers\Frontend\Hospital\HospitalTransactionController;
 
 
+//Hotel Controllers
+use App\Http\Controllers\Frontend\Hotel\HotelReportController;
+use App\Http\Controllers\Frontend\Hotel\HotelSetupController;
+use App\Http\Controllers\Frontend\Hotel\HotelTransactionController;
+
+
 // Report Controllers
 use App\Http\Controllers\Frontend\Report\AccountStatementController;
 use App\Http\Controllers\Frontend\Report\PartyStatementController;
@@ -981,13 +987,25 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
     
     Route::prefix('/hotel')->group(function () {
         // *************************************** Hotel Setup Routes Start *************************************** //
+        Route::controller(HotelSetupController::class)->group(function(){
         Route::prefix('/setup')->group(function () {
             // Route::controller(AccountStatementController::class)->group(function () {
             //     ///////////// --------------- Account Summary Statement Routes ----------- ///////////////////
             //     Route::get('/summary', 'ShowAccountSummaryStatement')->name('show.accountSummary');
             //     Route::get('/summary/search', 'SearchAccountSummaryStatement')->name('search.accountSummary');
             // });
-        }); // End Hotel Setup Routes
+
+            Route::get('/floor',  'ShowFloor')->name('show.floor');
+            Route::get('/roomcatagory',  'ShowRoomCatagory')->name('show.roomcatagory');
+            Route::get('/roomlist',  'ShowRoomList')->name('show.roomlist');
+            Route::get('/group',  'ShowGroup')->name('show.group');
+            Route::get('/service',  'ShowService')->name('show.service');
+
+
+        }); 
+        
+    });
+        // End Hotel Setup Routes
         
         
         

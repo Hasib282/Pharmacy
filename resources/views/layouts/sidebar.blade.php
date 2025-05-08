@@ -1923,37 +1923,74 @@
                             </p>
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup') ? 'rotate':''}}"></i>
                         </div>
-                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup') ? 'show':''}}">              
-                            {{-- @if(auth()->user()->hasPermission(194))
-                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
-                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'specialization') ? 'active':''}}">
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup') ? 'show':''}}">    
+                            
+                             {{-- Hotel,Setup Sub Menu  Floor --}}
+                           @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.floor')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'floor') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-industry"></i>
-                                            Specialization
+                                            Floor
                                         </p>
                                     </div>
                                 </li>
                             @endif
+
+
+                            {{-- Hotel,Setup Sub Menu  Floor Room Catagory --}}
                             @if(auth()->user()->hasPermission(194))
-                                <li class="sub-menu1-item" data-url="{{route('show.bedcatagory')}}">
-                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedcatagory') ? 'active':''}}">
+                                <li class="sub-menu1-item" data-url="{{route('show.roomcatagory')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'roomcatagory') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-industry"></i>
-                                            Bed Catagory
+                                            Room Catagory
                                         </p>
                                     </div>
                                 </li>
                             @endif
+
+
+                            {{-- Hotel,Setup Sub Menu  Room List --}}
                             @if(auth()->user()->hasPermission(194))
-                                <li class="sub-menu1-item" data-url="{{route('show.bedlist')}}">
-                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedlist') ? 'active':''}}">
+                                <li class="sub-menu1-item" data-url="{{route('show.roomlist')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'roomlist') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-industry"></i>
-                                            Bed List
+                                            Room List
                                         </p>
                                     </div>
                                 </li>
-                            @endif --}}
+                            @endif 
+
+
+
+                            {{-- Hotel,Setup Sub Menu  Group --}}
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.group')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'group') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Group
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif 
+
+
+                            {{-- Hotel,Setup Sub Menu Service --}}
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item"  data-url="{{route('show.service')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'service') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                           Service
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif 
+
+                            
                         </ul>
                     </li>
 
@@ -1962,7 +1999,7 @@
                         <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'active':''}}">
                             <p>
                                 <i class="fa-solid fa-users-gear"></i>
-                                USERS
+                                Hotel Booking/Appointment
                             </p>
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
                         </div>
