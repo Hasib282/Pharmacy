@@ -79,9 +79,9 @@
     </div>
 
 
-    @include('admin_setup.hospital.bed_list.add')
+    @include('admin_setup.hotel.room_list.add')
 
-    @include('admin_setup.hospital.bed_list.edit')
+    @include('admin_setup.hotel.room_list.edit')
 
     @include('common_modals.delete')
 

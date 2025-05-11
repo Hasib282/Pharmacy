@@ -13,10 +13,10 @@ class HotelSetupController extends Controller
             $name = "Floor";
             $js = 'hotel/setup/floor';
             if ($req->ajax()) {
-                return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
+                return view('admin_setup.hotel.floor.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('common_modals.single_input.main', compact('name', 'js'));
+                return view('admin_setup.hotel.floor.main', compact('name', 'js'));
             }
         }// End Method
 
@@ -27,10 +27,10 @@ class HotelSetupController extends Controller
             $name = "Room Catagory";
             $js = 'hotel/setup/roomcatagory';
             if ($req->ajax()) {
-                return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
+                return view('admin_setup.hotel.room_catagory.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('common_modals.single_input.main', compact('name', 'js'));
+                return view('admin_setup.hotel.room_catagory.main', compact('name', 'js'));
             }
         }// End Method
 
@@ -39,12 +39,12 @@ class HotelSetupController extends Controller
         // Show Room List
         public function ShowRoomList(Request $req){
             $name = "Room List";
-            $js = 'hotel/setup/roomlist';
+            $js = 'hotel/setup/room_list';
             if ($req->ajax()) {
-                return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
+                return view('admin_setup.hotel.room_list.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('common_modals.single_input.main', compact('name', 'js'));
+                return view('admin_setup.hotel.room_list.main', compact('name', 'js'));
             }
         }// End Method
 

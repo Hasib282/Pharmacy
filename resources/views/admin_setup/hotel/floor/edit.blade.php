@@ -12,26 +12,38 @@
             @method('put')
             {{-- id  --}}
             <input type="hidden" name="id" id="id">
-            {{-- bed category --}}
+            {{-- Floor Name --}}
             <div class="form-input-group">
-                <label for="updateBed_Category">Bed Category <span class="required" title="Required">*</span></label>
-                <input type="text" name="bed_catagory" id="updateBed_Category" class="form-input" autocomplete="off"><hr>
-                <div id='update-bed_category'></div>
-                <span class="error" id="update_bed_category_error"></span>
+                <label for="floor_name">Floor Name <span class="required" title="Required">*</span></label>
+                <input type="text" name="floor_name" id="update_floor_name" class="form-input" autocomplete="off">
+                <span class="error" id="floor_name_error"></span>
             </div>
-            {{-- bedlist name --}}
+
+            {{-- Number of Rooms --}}
             <div class="form-input-group">
-                <label for="updateName">Bed List Name <span class="required" title="Required">*</span></label>
-                <input type="text" name="name" class="form-input" id="updateName">
-                <span class="error" id="update_name_error"></span>
+                <label for="number_of_rooms">Number of Rooms <span class="required" title="Required">*</span></label>
+                <input type="number" name="number_of_rooms" id="update_number_of_rooms" class="form-input" min="1">
+                <span class="error" id="number_of_rooms_error"></span>
             </div>
-            {{-- nursing station --}}
+
+            {{-- Starting Floor --}}
             <div class="form-input-group">
-                <label for="updateNursing_Station">Nursing Station <span class="required" title="Required">*</span></label>
-                <input type="text" name="nursing_station" class="form-input" id="updateNursing_Station" autocomplete="off"><hr>
-                <div id='update-nursing_station'></div>
-                <span class="error" id="update_nursing_station_error"></span>
+                <label for="update_floor">Starting Floor <span class="required" title="Required">*</span></label>
+                <input type="text" name="starting_floor" id="update_floor" class="form-input">
+                <span class="error" id="update_floor_error"></span>
             </div>
+
+            {{-- Action / Status --}}
+            <div class="form-input-group">
+                <label for="update_action">Action / Status <span class="required" title="Required">*</span></label>
+                <select name="action" id="update_action" class="form-input">
+                    <option value="">Select Action/Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                <span class="error" id="update_action_error"></span>
+            </div>
+
             <div class="center">
                 <button type="submit" id="Update" class="btn-blue">Update</button>
             </div>

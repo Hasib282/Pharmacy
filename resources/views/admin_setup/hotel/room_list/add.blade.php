@@ -9,25 +9,49 @@
 
         <form id="AddForm" method="post">
             @csrf
-            {{-- bed category --}}
+            {{-- room_number --}}
             <div class="form-input-group">
-                <label for="bed_category">Bed Category <span class="required" title="Required">*</span></label>
-                <input type="text" name="bed_category" id="bed_category" class="form-input" autocomplete="off"><hr>
-                <div id='bed_category-list'></div>
-                <span class="error" id="bed_category_error"></span>
+                <label for="room_number">Room Number <span class="required" title="Required">*</span></label>
+                <input type="text" name="room_number" id="room_number" class="form-input" autocomplete="off">
+                <hr>
+                <div id='room_number-list'></div>
+                <span class="error" id="room_number_error"></span>
             </div>
-            {{-- bedlist name --}}
+            {{-- room_catagory --}}
+
             <div class="form-input-group">
-                <label for="name">BedList Name <span class="required" title="Required">*</span></label>
-                <input type="text" name="name" class="form-input" id="name">
-                <span class="error" id="name_error"></span>
+                <label for="room_catagory">Room Catagory <span class="required" title="Required">*</span></label>
+                <input type="text" name="room_catagory" id="room_catagory" class="form-input" autocomplete="off">
+                <hr>
+                <div id='room_catagory-list'></div>
+                <span class="error" id="room_catagory_error"></span>
             </div>
-            {{-- nursing station --}}
+
+            {{-- floor --}}
             <div class="form-input-group">
-                <label for="nursing_station">Nursing station <span class="required" title="Required">*</span></label>
-                <input type="text" name="nursing_station" class="form-input" id="nursing_station" autocomplete="off"><hr>
-                <div id='nursing_station-list'></div>
-                <span class="error" id="nursing_station_error"></span>
+                <label for="floor">Floor <span class="required" title="Required">*</span></label>
+                <input type="text" name="floor" class="form-input" id="floor" autocomplete="off">
+                <hr>
+                <div id='floor-list'></div>
+                <span class="error" id="floor_error"></span>
+            </div>
+
+            {{-- price --}}
+            <div class="form-input-group">
+                <label for="price">Price <span class="required" title="Required">*</span></label>
+                <input type="text" name="price" class="form-input" id="price" autocomplete="off">
+                <hr>
+                <div id='price-list'></div>
+                <span class="error" id="price_error"></span>
+            </div>
+
+            {{-- capacity --}}
+            <div class="form-input-group">
+                <label for="capacity">Capacity <span class="required" title="Required">*</span></label>
+                <input type="text" name="capacity" class="form-input" id="capacity" autocomplete="off">
+                <hr>
+                <div id='capacity-list'></div>
+                <span class="error" id="capacity_error"></span>
             </div>
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Submit</button>

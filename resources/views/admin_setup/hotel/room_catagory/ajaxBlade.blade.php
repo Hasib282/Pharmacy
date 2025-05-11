@@ -78,13 +78,13 @@
 </div>
 
 
-@include('admin_setup.hospital.bed_list.add')
+@include('admin_setup.hotel.room_catagory.add')
 
-@include('admin_setup.hospital.bed_list.edit')
+@include('admin_setup.hotel.room_catagory.edit')
 
 @include('common_modals.delete')
 
 
 {{-- ajax part start from here --}}
-<script src="{{ asset('js/ajax').'/'. $js . '.js' }}"></script>
+<script src="{{ asset('js/ajax/hotel/setup/room_catagory.js'}}"></script>
 <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>

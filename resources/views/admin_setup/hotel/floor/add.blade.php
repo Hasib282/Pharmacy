@@ -9,26 +9,39 @@
 
         <form id="AddForm" method="post">
             @csrf
-            {{-- bed category --}}
+
+            {{-- Floor Name --}}
             <div class="form-input-group">
-                <label for="bed_category">Bed Category <span class="required" title="Required">*</span></label>
-                <input type="text" name="bed_category" id="bed_category" class="form-input" autocomplete="off"><hr>
-                <div id='bed_category-list'></div>
-                <span class="error" id="bed_category_error"></span>
+                <label for="floor_name">Floor Name <span class="required" title="Required">*</span></label>
+                <input type="text" name="floor_name" id="floor_name" class="form-input" autocomplete="off">
+                <span class="error" id="floor_name_error"></span>
             </div>
-            {{-- bedlist name --}}
+
+            {{-- Number of Rooms --}}
             <div class="form-input-group">
-                <label for="name">BedList Name <span class="required" title="Required">*</span></label>
-                <input type="text" name="name" class="form-input" id="name">
-                <span class="error" id="name_error"></span>
+                <label for="number_of_rooms">Number of Rooms <span class="required" title="Required">*</span></label>
+                <input type="number" name="number_of_rooms" id="number_of_rooms" class="form-input" min="1">
+                <span class="error" id="number_of_rooms_error"></span>
             </div>
-            {{-- nursing station --}}
+
+            {{-- Starting Floor --}}
             <div class="form-input-group">
-                <label for="nursing_station">Nursing station <span class="required" title="Required">*</span></label>
-                <input type="text" name="nursing_station" class="form-input" id="nursing_station" autocomplete="off"><hr>
-                <div id='nursing_station-list'></div>
-                <span class="error" id="nursing_station_error"></span>
+                <label for="starting_floor">Starting Floor <span class="required" title="Required">*</span></label>
+                <input type="text" name="starting_floor" id="starting_floor" class="form-input">
+                <span class="error" id="starting_floor_error"></span>
             </div>
+
+            {{-- Action / Status --}}
+            <div class="form-input-group">
+                <label for="action">Action / Status <span class="required" title="Required">*</span></label>
+                <select name="action" id="action" class="form-input">
+                    <option value="">Select Action/Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                <span class="error" id="action_error"></span>
+            </div>
+
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Submit</button>
             </div>

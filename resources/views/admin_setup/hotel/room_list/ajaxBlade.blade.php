@@ -8,7 +8,7 @@
 {{-- <div class="add-search">
     <div class="rows">
         <div class="c-2">
-            @if(Auth::user()->hasPermissionToRoute('insert.stores'))
+            @if (Auth::user()->hasPermissionToRoute('insert.stores'))
             <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
             @endif
         </div>
@@ -54,7 +54,8 @@
 <div class="add-search">
     <div class="rows">
         <div class="c-3">
-                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add
+                {{ $name }} </button>
         </div>
         <div class="c-6">
 
@@ -78,13 +79,13 @@
 </div>
 
 
-@include('admin_setup.hospital.bed_list.add')
+@include('admin_setup.hotel.room_list.add')
 
-@include('admin_setup.hospital.bed_list.edit')
+@include('admin_setup.hotel.room_list.edit')
 
 @include('common_modals.delete')
 
 
 {{-- ajax part start from here --}}
-<script src="{{ asset('js/ajax').'/'. $js . '.js' }}"></script>
+<script src="{{ asset('js/ajax') . '/' . $js . '.js' }}"></script>
 <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
