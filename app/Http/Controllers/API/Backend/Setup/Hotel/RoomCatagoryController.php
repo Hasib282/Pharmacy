@@ -39,12 +39,39 @@ class RoomCatagoryController extends Controller
         ],200);
     }
 
+
+    
+    // Update Room Category
+    public function Update(Request $req){
+        $data = Room_Catagory::on('mysql_second')->findOrFail($req->id);
+        
+        $req->validate([
+           "update_name" => 'required|string|max:255',
+        ]);
+
+        $update = $data->update([
+            "name" => $req->update_name,
+            "updated_at" => now()
+        ]);
+
+        $updatedData = Room_Catagory::on('mysql_second')->findOrFail($req->id);
+
+        if($update){
+            return response()->json([
+                'status'=>true,
+                'message' => 'Room Category Updated Successfully',
+                "updatedData" => $updatedData,
+            ], 200); 
+        }
+    } // End Method
+
+
         //delete room catagory
     public function Delete(Request $req){
         Room_Catagory::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
-            'message'=> 'Room_Catagory data Deleted Successfully'
+            'message'=> 'Room Catagory data Deleted Successfully'
         ], 200);
     }
 

@@ -49,6 +49,39 @@ class RoomListController extends Controller
     }
 
 
+        //Update Room_List
+    public function Update(Request $req){
+        $data = Room_List::on('mysql_second')->findOrFail($req->id);
+        
+        $req-> validate([
+            "update_room_number" => 'required',
+            "update_room_catagory" => 'required',
+            "update_floor" => 'required',
+            "update_price" => 'required',
+            "update_capacity" => 'required',
+        ]);
+
+        $update = $data->update([
+            "room_number" => $req->update_room_number,
+            "room_catagory" => $req->update_room_catagory,
+            "floor" => $req->update_floor,
+            "price" => $req->update_price,
+            "capacity" => $req->update_capacity,
+            "updated_at" => now()
+        ]);
+
+        $updatedData = Room_List::on('mysql_second')->findOrFail($req->id);
+
+        if($update){
+            return response()->json([
+                'status'=>true,
+                'message' => 'Room List Updated Successfully',
+                "updatedData" => $updatedData,
+            ], 200); 
+        }
+    } // End Method
+
+
 
     //delete Room_List
     public function Delete(Request $req){

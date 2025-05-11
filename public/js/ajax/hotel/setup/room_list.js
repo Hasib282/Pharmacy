@@ -46,9 +46,30 @@ $(document).ready(function () {
     EditAjax(EditFormInputValue);
 
 
+    // Update Ajax
+    UpdateAjax('hotel/setup/room_list');
+
+
 
     // Delete Ajax
     DeleteAjax('hotel/setup/room_list');
+
+
+
+    // Additional Edit Functionality
+    function EditFormInputValue(item) {
+        $('#id').val(item.id);
+        $('#update_room_number').val(item.room_number);
+        $('#update_room_catagory').val(item.room_catagory);
+        $('#update_floor').val(item.floor);
+        $('#update_price').val(item.price);
+        $('#update_capacity').val(item.capacity);
+        $('#update_room_number').focus();
+
+
+
+    }; // End Method
+
 
 
 

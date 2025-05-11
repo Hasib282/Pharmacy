@@ -36,8 +36,23 @@ $(document).ready(function () {
     // Edit Ajax
     EditAjax(EditFormInputValue);
 
+
+    // Update Ajax
+    UpdateAjax('hotel/setup/room_catagory');
+
     // Delete Ajax
     DeleteAjax('hotel/setup/room_catagory');
+
+
+
+
+    // Additional Edit Functionality
+    function EditFormInputValue(item) {
+        $('#id').val(item.id);
+        $('#update_name').val(item.name);
+        
+    }; // End Method
+
 
 
 
