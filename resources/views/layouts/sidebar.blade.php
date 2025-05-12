@@ -1995,7 +1995,7 @@
                     </li>
 
                     {{-- Hotel User Sub Menu --}}
-                    <li class="sub-menu-item">
+                    <li class="sub-menu-item"data-url="{{route('show.booking')}}">
                         <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'active':''}}">
                             <p>
                                 <i class="fa-solid fa-users-gear"></i>

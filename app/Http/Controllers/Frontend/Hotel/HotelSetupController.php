@@ -13,10 +13,10 @@ class HotelSetupController extends Controller
             $name = "Floor";
             $js = 'hotel/setup/floor';
             if ($req->ajax()) {
-                return view('admin_setup.hotel.floor.ajaxBlade', compact('name', 'js'));
+                return view('admin_setup.hotel.setup.floor.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('admin_setup.hotel.floor.main', compact('name', 'js'));
+                return view('admin_setup.hotel.setup.floor.main', compact('name', 'js'));
             }
         }// End Method
 
@@ -25,12 +25,12 @@ class HotelSetupController extends Controller
         // Show Room Catagory
         public function ShowRoomCatagory(Request $req){
             $name = "Room Catagory";
-            $js = 'hotel/setup/roomcatagory';
+            $js = 'hotel/setup/room_catagory';
             if ($req->ajax()) {
-                return view('admin_setup.hotel.room_catagory.ajaxBlade', compact('name', 'js'));
+                return view('admin_setup.hotel.setup.room_catagory.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('admin_setup.hotel.room_catagory.main', compact('name', 'js'));
+                return view('admin_setup.hotel.setup.room_catagory.main', compact('name', 'js'));
             }
         }// End Method
 
@@ -41,10 +41,10 @@ class HotelSetupController extends Controller
             $name = "Room List";
             $js = 'hotel/setup/room_list';
             if ($req->ajax()) {
-                return view('admin_setup.hotel.room_list.ajaxBlade', compact('name', 'js'));
+                return view('admin_setup.hotel.setup.room_list.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('admin_setup.hotel.room_list.main', compact('name', 'js'));
+                return view('admin_setup.hotel.setup.room_list.main', compact('name', 'js'));
             }
         }// End Method
 
@@ -75,5 +75,20 @@ class HotelSetupController extends Controller
                 return view('common_modals.single_input.main', compact('name', 'js'));
             }
         }// End Method
+
+        
+        
+        // Show booking
+        public function ShowBooking(Request $req){
+            $name = "Hotel Booking";
+            $js = 'hotel/booking';
+            if ($req->ajax()) {
+                return view('admin_setup.hotel.hotel_booking.ajaxBlade', compact('name', 'js'));
+            }
+            else{
+                return view('admin_setup.hotel.hotel_booking.main', compact('name', 'js'));
+            }
+        }// End Method
+    
     
 }

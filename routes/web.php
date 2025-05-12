@@ -1003,6 +1003,10 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
 
 
         }); 
+
+        // Hotel booking routes
+        Route::get('/booking',  'ShowBooking')->name('show.booking');
+       
         
     });
         // End Hotel Setup Routes
