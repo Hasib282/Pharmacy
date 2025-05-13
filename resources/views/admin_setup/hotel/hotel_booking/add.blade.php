@@ -17,11 +17,11 @@
                 <!-- Patient Type Selection -->
                 <div class="c-12">
                     <div style="display: flex; gap: 10px; padding: 10px 0;">
-                        <label for="oldPatient">
-                            <input type="radio" name="patient_type" value="old" id="oldPatient">  Old Patient
+                        <label for="oldGuest">
+                            <input type="radio" name="guest_type" value="old" id="oldGuest">  Old Guest
                         </label>
-                        <label for="newPatient">
-                            <input type="radio" name="patient_type" value="new" id="newPatient" checked>  New Patient
+                        <label for="newGuest">
+                            <input type="radio" name="guest_type" value="new" id="newGuest" checked>  New Guest
                         </label>
                     </div>
                 </div>
@@ -30,10 +30,10 @@
                 <div class="c-12">
                     <div class="togglePatientid" style="display: none;">
                         <div class="form-input-group">
-                            <label for="patient">Patient Search</label>
-                            <input type="text" name="patient" class="form-input" id="patient" autocomplete="off"><hr>
-                            <div id="patient-list"></div>
-                            <span class="error" id="patient_id_error"></span>
+                            <label for="guest">Guest Search</label>
+                            <input type="text" name="guest" class="form-input" id="guest" autocomplete="off"><hr>
+                            <div id="guest-list"></div>
+                            <span class="error" id="guest_id_error"></span>
                         </div>
                     </div>
                 </div>
@@ -77,6 +77,38 @@
                     </div>
                 </div>
 
+
+                 <!-- Nid -->
+                 <div class="c-4">
+                    <div class="form-input-group">
+                        <label for="nid">Nid</label>
+                        <input type="text" name="nid" class="form-input" id="nid">
+                        <span class="error" id="nid_error"></span>
+                    </div>
+                </div>
+
+
+                 <!-- Passport -->
+                 <div class="c-4">
+                    <div class="form-input-group">
+                        <label for="passport">Passport</label>
+                        <input type="text" name="passport" class="form-input" id="passport">
+                        <span class="error" id="passport_error"></span>
+                    </div>
+                </div>
+
+                     <!-- Driving lisence -->
+                <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="driving_lisence">Driving Lisence</label>
+                            <input type="text" name="driving_lisence" class="form-input" id="driving_lisence">
+                            <span class="error" id=driving_lisence_error"></span>
+                        </div>
+                </div>
+    
+
+            
+
                 <!-- Gender -->
                 <div class="c-4">
                     <div class="form-input-group">
@@ -91,20 +123,7 @@
                     </div>
                 </div>
 
-                <!-- Age -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label>Age (Y/M/D)</label>
-                        <div class="age-fields" style="display: flex; gap: 5px;">
-                            <input type="text" name="age_years" class="form-input" id="age_years" placeholder="Years" value="0">
-                            <input type="text" name="age_months" class="form-input" id="age_months" placeholder="Months"
-                                min="0" max="12" value="0">
-                            <input type="text" name="age_days" class="form-input" id="age_days" placeholder="Days"
-                                min="0" max="31" value="0">
-                        </div>
-                    </div>
-                </div>
-                
+         
                 <!-- Nationality -->
                 <div class="c-4">
                     <div class="form-input-group">
@@ -144,59 +163,68 @@
                     </div>
                 </div>
                 
-                <!-- Doctor -->
-                <div class="c-12">
-                    <div class="form-input-group">
-                        <label for="doctor">Doctor<span class="required">*</span></label>
-                        <input type="text" name="doctor" class="form-input" id="doctor" autocomplete="off"><hr>
-                        <div id='doctor-list'></div>
-                        <span class="error" id="doctor_error"></span>
-                    </div>
-                </div>
-
-                <!-- Date -->
+          
+                <!-- check in -->
                 <div class="c-4">
                     <div class="form-input-group">
-                        <label for="date">Date<span class="required">*</span></label>
-                        <input type="date" name="date" class="form-input" id="date">
-                        <span class="error" id="date_error"></span>
+                        <label for="Check_in">check in Date<span class="required">*</span></label>
+                        <input type="date" name="Check_in" class="form-input" id="Check_in">
+                        <span class="error" id="Check_in_error"></span>
                     </div>
                 </div>
 
-                 <!-- schedule -->
+                <!-- check out -->
+                <div class="c-4">
+                    <div class="form-input-group">
+                        <label for="Check_out">check out Date<span class="required">*</span></label>
+                        <input type="date" name="Check_out" class="form-input" id="Check_out">
+                        <span class="error" id="Check_out_error"></span>
+                    </div>
+                </div>
+
+
+                <!-- Adult -->
+                <div class="c-4">
+                    <div class="form-input-group">
+                        <label for="adult">Adult</label>
+                        <input type="text" name="adult" class="form-input" id="adult">
+                        <span class="error" id="adult_error"></span>
+                    </div>
+                </div>
+
+
+                <!-- children -->
+                <div class="c-4">
+                    <div class="form-input-group">
+                        <label for="children">Children</label>
+                        <input type="text" name="children" class="form-input" id="children">
+                        <span class="error" id="children_error"></span>
+                    </div>
+                </div>
+
+
+
+
+                 <!-- status -->
                  <div class="c-4">
                     <div class="form-input-group">
-                        <label for="schedule">Schedule</label>
-                        <select name="schedule" id="schedule" class="form-input">
-                            <option value="">Select schedule</option>
-                            <option value="Morining" checked>Morining</option>
-                            <option value="Evening">Evening</option>
+                        <label for="status">Status</label>
+                        <label for="status"></label>
+                        <select name="status" id="status" class="form-input">
+                            <option value="">Select room status</option>
+                            <option value="Booking" checked>Booking</option>
+                            <option value="Check in">Check in</option>
+                            <option value="Check out">Check out</option>
+                            <option value="Maintanience">Maintanience</option>
                            
                         </select>
-                        <span class="error" id="schedule_error"></span>
+                        <span class="error" id="status_error"></span>
                     </div>
                 </div>
 
-                
-                <!-- Appointment -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="appointment">Appointment Serial</label>
-                        <input type="text" name="appointment" class="form-input" id="appointment">
-                        <span class="error" id="appointment_error"></span>
-                    </div>
+                <div class="center">
+                    <button type="submit" class="btn-blue" id="Insert">Submit</button>
                 </div>
-            </div>
-               
-           
-
-                
-
-                
-            
-            <div class="center">
-                <button type="submit" class="btn-blue" id="Insert">Submit</button>
-            </div>
         </form>
     </div>
 </div>
