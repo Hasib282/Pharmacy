@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Backend\Setup\Hospital;
+namespace App\Http\Controllers\API\Backend\Setup;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

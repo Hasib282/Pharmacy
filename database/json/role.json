@@ -3,5 +3,7 @@
     { "name": "Admin" },
     { "name": "Employee" },
     { "name": "Client" },
-    { "name": "Supplier" }
+    { "name": "Supplier" },
+    { "name": "Patient" },
+    { "name": "Guest" }
 ]

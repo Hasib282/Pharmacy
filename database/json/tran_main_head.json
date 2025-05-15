@@ -5,5 +5,8 @@
     { "type_name": "Bank" },
     { "type_name": "Inventory" },
     { "type_name": "Pharmacy" },
-    { "type_name": "Miscellaneous" }
+    { "type_name": "Hospital" },
+    { "type_name": "Hotel" },
+    { "type_name": "Resturant" },
+    { "type_name": "Diagonosis" }
 ]

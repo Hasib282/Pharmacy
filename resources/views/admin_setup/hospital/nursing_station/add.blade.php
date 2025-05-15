@@ -10,14 +10,18 @@
         <form id="AddForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
+            {{-- name --}}
             <div class="form-input-group">
                 <label for="name"> Name <span class="required" title="Required">*</span></label>
                 <input type="text" name="name" class="form-input" id="name">
                 <span class="error" id="name_error"></span>
             </div>
+
+            {{-- floor --}}
             <div class="form-input-group">
                 <label for="floor">Floor <span class="required" title="Required">*</span></label>
-                <input type="text" name="floor" class="form-input" id="floor">
+                <input type="text" name="floor" class="form-input" id="floor" autocomplete="off"><hr>
+                <div id="floor-list"></div>
                 <span class="error" id="floor_error"></span>
             </div>
         

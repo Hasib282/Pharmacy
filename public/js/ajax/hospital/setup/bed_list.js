@@ -59,14 +59,14 @@ $(document).ready(function () {
     function EditFormInputValue(item){
         $('#EditForm')[0].reset();
         $('#id').val('');
-        $('#updateName').val('');
+        $('#updateBed_List').val('');
         $('#updateBed_Category').val('');
         $('#updateBed_Category').removeAttr('data-id');
         $('#updateNursing_Station').val('');
         $('#updateNursing_Station').removeAttr('data-id');
 
         $('#id').val(item.id);
-        $('#updateName').val(item.name);
+        $('#updateBed_List').val(item.name);
         $('#updateBed_Category').val(item.category.name);
         $('#updateBed_Category').attr('data-id',item.category.id);
         $('#updateNursing_Station').val(item.nursing.name);

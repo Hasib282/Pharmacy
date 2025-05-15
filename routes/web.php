@@ -883,6 +883,11 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::prefix('/setup')->group(function () {
                 ///////////// --------------- Doctor Specialization Routes Start ----------- ///////////////////
                 Route::get('/specialization',  'ShowSpecialization')->name('show.specialization');
+                
+                
+                
+                ///////////// --------------- Hospital Floors Routes Start ----------- ///////////////////
+                Route::get('/floor',  'ShowFloor')->name('show.hospitalFloors');
 
 
 

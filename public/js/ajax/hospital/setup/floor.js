@@ -1,8 +1,8 @@
-function ShowNursingStation(res) {
+function ShowFloor(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['name','floor.name'],
+        tbody: ['name'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -11,47 +11,53 @@ function ShowNursingStation(res) {
     });
 }
 
+
+
+
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Nursing Station Name', key: 'name' },
-        { label: 'Floor', key: 'floor.name' },
+        { label: 'Floor Name', key: 'name' },
         { label: 'Action', type: 'button' }
+
     ]);
 
 
     // Load Data on Hard Reload
-    ReloadData('hospital/setup/nursingstation', ShowNursingStation);
-    
-    
+    ReloadData('hospital/setup/floor', ShowFloor);
+
+
     // Add Modal Open Functionality
     AddModalFunctionality("#name");
 
 
     // Insert Ajax
-    InsertAjax('hospital/setup/nursingstation', {floor:{ selector: '#floor', attribute: 'data-id' }}, function() {
+    InsertAjax('hospital/setup/floor', {}, function(){
         $('#name').focus();
     });
 
 
-    //Edit Ajax
+    // Edit Ajax
     EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hospital/setup/nursingstation', {floor:{ selector: '#updateFloor', attribute: 'data-id' }});
-    
+    UpdateAjax('hospital/setup/floor');
+
 
     // Delete Ajax
-    DeleteAjax('hospital/setup/nursingstation');
+    DeleteAjax('hospital/setup/floor');
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(item){
+    function EditFormInputValue(item) {
         $('#id').val(item.id);
         $('#updateName').val(item.name);
-        $('#updateFloor').val(item.floor);
         $('#updateName').focus();
     }; // End Method
 });
+
+
+
+

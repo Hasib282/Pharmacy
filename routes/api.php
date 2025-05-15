@@ -82,20 +82,16 @@ use App\Http\Controllers\API\Backend\Setup\Payroll\PayrollMiddlewireController;
 
 // Hospital Setup Controller
 use App\Http\Controllers\API\Backend\Setup\Hospital\SpecializationController;
-use App\Http\Controllers\API\Backend\Setup\Hospital\BedCatagoryController;
-use App\Http\Controllers\API\Backend\Setup\Hospital\BedListController;
 use App\Http\Controllers\API\Backend\Setup\Hospital\NursingStationController;
 use App\Http\Controllers\API\Backend\Setup\Hospital\PatientRegistrationController;
 use App\Http\Controllers\API\Backend\Setup\Hospital\AppointmentController;
 
 
 
-// Hotel Setup Controller
-use App\Http\Controllers\API\Backend\Setup\Hotel\FloorController;
-use App\Http\Controllers\API\Backend\Setup\Hotel\GroupController;
-use App\Http\Controllers\API\Backend\Setup\Hotel\RoomCatagoryController;
-use App\Http\Controllers\API\Backend\Setup\Hotel\RoomListController;
-use App\Http\Controllers\API\Backend\Setup\Hotel\ServiceController;
+// Hospital & Hotel Common Setup Controller
+use App\Http\Controllers\API\Backend\Setup\FloorController;
+use App\Http\Controllers\API\Backend\Setup\BedCatagoryController;
+use App\Http\Controllers\API\Backend\Setup\BedListController;
 
 
 
@@ -1392,6 +1388,17 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
 
+            // *************************************** Hotel Floor Routes Start *************************************** //
+            Route::controller(FloorController::class)->group(function () {
+                Route::get('/floor', 'Show');
+                Route::post('/floor', 'Insert');
+                Route::put('/floor', 'Update');
+                Route::delete('/floor', 'Delete');
+                Route::get('/floor/get', 'Get');
+            });
+
+
+
             ///////////// --------------- Bed catagory Routes ----------- ///////////////////
             Route::controller(BedCatagoryController::class)->group(function () {
                 Route::get('/bedcategory', 'Show');
@@ -1573,6 +1580,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             // });
 
 
+
             // *************************************** Hotel Floor Routes Start *************************************** //
             Route::controller(FloorController::class)->group(function () {
                 Route::get('/floor', 'Show');
@@ -1584,49 +1592,42 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
 
-
             // *************************************** Hotel Room Catagory Routes *************************************** //
-            Route::controller(RoomCatagoryController::class)->group(function () {
-                Route::get('/room_catagory', 'Show');
-                Route::post('/room_catagory', 'Insert');
-                Route::put('/room_catagory', 'Update');
-                Route::delete('/room_catagory', 'Delete');
-                Route::get('/room_catagory/get', 'Get');
+            Route::controller(BedCatagoryController::class)->group(function () {
+                Route::get('/roomcatagory', 'Show');
+                Route::post('/roomcatagory', 'Insert');
+                Route::put('/roomcatagory', 'Update');
+                Route::delete('/roomcatagory', 'Delete');
             });
-
 
 
 
             // *************************************** Hotel Room List Routes Start *************************************** //
-            Route::controller(RoomListController::class)->group(function () {
-                Route::get('/room_list', 'Show');
-                Route::post('/room_list', 'Insert');
-                Route::put('/room_list', 'Update');
-                Route::delete('/room_list', 'Delete');
-                Route::get('/room_list/get', 'Get');
+            Route::controller(BedListController::class)->group(function () {
+                Route::get('/roomlist', 'Show');
+                Route::post('/roomlist', 'Insert');
+                Route::put('/roomlist', 'Update');
+                Route::delete('/roomlist', 'Delete');
             });
 
 
 
-
             // *************************************** Hotel Group Routes Start *************************************** //
-            Route::controller(GroupController::class)->group(function () {
+            Route::controller(TranGroupController::class)->group(function () {
                 Route::get('/group', 'Show');
                 Route::post('/group', 'Insert');
                 Route::put('/group', 'Update');
                 Route::delete('/group', 'Delete');
-                Route::get('/group/get', 'Get');
             });
 
 
 
             // *************************************** Hotel Service Routes Start *************************************** //
-            Route::controller(ServiceController::class)->group(function () {
+            Route::controller(TranHeadController::class)->group(function () {
                 Route::get('/service', 'Show');
                 Route::post('/service', 'Insert');
                 Route::put('/service', 'Update');
                 Route::delete('/service', 'Delete');
-                Route::get('/service/get', 'Get');
             });
         }); // End Hotel Setup Routes
         

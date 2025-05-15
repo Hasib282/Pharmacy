@@ -1,13 +1,17 @@
 @php
+    $searchDivisionValue = request()->query('division');
     $searchValue = request()->query('search');
     $searchOptionValue = request()->query('searchOption');
 @endphp
 
+@extends('layouts.layout')
+@section('main-content')
     {{-- Add Button And Search Fields --}}
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add
+                    {{ $name }} </button>
             </div>
             <div class="c-6">
 
@@ -30,14 +34,15 @@
         <div id="paginate"></div>
     </div>
 
-    
-    @include('admin_setup.hospital.nursing_station.add')
 
-    @include('admin_setup.hospital.nursing_station.edit')
-    
+    @include('admin_setup.floor.add')
+
+    @include('admin_setup.floor.edit')
+
     @include('common_modals.delete')
 
-    <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/hospital/setup/nursing_station.js') }}"></script>
-    <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
 
+    {{-- ajax part start from here --}}
+    <script src="{{ asset('js/ajax').'/'. $js . '.js' }}"></script>
+    <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
+@endsection

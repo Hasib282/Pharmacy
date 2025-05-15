@@ -86,5 +86,5 @@
 
 
 {{-- ajax part start from here --}}
-<script src="{{ asset('js/ajax/hotel/setup/room_catagory.js'}}"></script>
+<script src="{{ asset('js/ajax/hotel/setup/room_catagory.js') }}"></script>
 <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>

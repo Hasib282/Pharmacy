@@ -1,8 +1,11 @@
 @php
+    $searchDivisionValue = request()->query('division');
     $searchValue = request()->query('search');
     $searchOptionValue = request()->query('searchOption');
 @endphp
 
+@extends('layouts.layout')
+@section('main-content')
     {{-- Add Button And Search Fields --}}
     <div class="add-search">
         <div class="rows">
@@ -30,14 +33,15 @@
         <div id="paginate"></div>
     </div>
 
-    
-    @include('admin_setup.hospital.nursing_station.add')
 
-    @include('admin_setup.hospital.nursing_station.edit')
-    
+    @include('admin_setup.bed_list.add')
+
+    @include('admin_setup.bed_list.edit')
+
     @include('common_modals.delete')
 
-    <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/hospital/setup/nursing_station.js') }}"></script>
+    
+    {{-- ajax part start from here --}}
+    <script src="{{ asset('js/ajax').'/'. $js . '.js' }}"></script>
     <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
-
+@endsection

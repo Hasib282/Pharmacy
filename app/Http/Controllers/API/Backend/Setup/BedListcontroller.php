@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Backend\Setup\Hospital;
+namespace App\Http\Controllers\API\Backend\Setup;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class BedListController extends Controller
 {
     // Show All Bed List
     public function Show(Request $req){
-        $data = Bed_List::on('mysql_second')->with('category','nursing')->orderBy('added_at')->get();
+        $data = Bed_List::on('mysql_second')->with('category','nursing','floor')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -24,18 +24,22 @@ class BedListController extends Controller
     // Insert Bed List
     public function Insert(Request $req){
         $req->validate([
-            "name" => 'required|unique:mysql_second.bed__lists,name',
+            "bed_list" => 'required|unique:mysql_second.bed__lists,name',
             "bed_category" => 'required|exists:mysql_second.bed__categories,id',
-            "nursing_station" => 'required|exists:mysql_second.nursing__stations,id',
+            "nursing_station" => 'nullable|exists:mysql_second.nursing__stations,id',
+            "floor" => 'nullable|exists:mysql_second.floors,id',
         ]);
 
         $insert = Bed_List::on('mysql_second')->create([
-            "name" => $req->name,
+            "name" => $req->bed_list,
             "category" => $req->bed_category,
             "nursing_station" => $req->nursing_station,
+            "floor" => $req->floor,
+            "price" => $req->price,
+            "capacity" => $req->capacity,
         ]);
 
-        $data = Bed_List::on('mysql_second')->with('category','nursing')->findOrFail($insert->id);
+        $data = Bed_List::on('mysql_second')->with('category','nursing','floor')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -51,19 +55,23 @@ class BedListController extends Controller
         $data = Bed_List::on('mysql_second')->findOrFail($req->id);
         
         $req->validate([
-            "name" => ['required',Rule::unique('mysql_second.bed__lists', 'name')->ignore($data->id)],
+            "bed_list" => ['required',Rule::unique('mysql_second.bed__lists', 'name')->ignore($data->id)],
             "bed_category" => 'required|exists:mysql_second.bed__categories,id',
-            "nursing_station" => 'required|exists:mysql_second.nursing__stations,id',
+            "nursing_station" => 'nullable|exists:mysql_second.nursing__stations,id',
+            "floor" => 'nullable|exists:mysql_second.floors,id',
         ]);
 
         $update = $data->update([
-            "name" => $req->name,
+            "name" => $req->bed_list,
             "category" => $req->bed_category,
             "nursing_station" => $req->nursing_station,
+            "floor" => $req->floor,
+            "price" => $req->price,
+            "capacity" => $req->capacity,
             "updated_at" => now()
         ]);
 
-        $updatedData = Bed_List::on('mysql_second')->with('category','nursing')->findOrFail($req->id);
+        $updatedData = Bed_List::on('mysql_second')->with('category','nursing','floor')->findOrFail($req->id);
 
         if($update){
             return response()->json([
@@ -90,7 +98,7 @@ class BedListController extends Controller
     // Get Bed List
     public function Get(Request $req){
         $data = Bed_List::on('mysql_second')
-        ->with('category','nursing')
+        ->with('category','nursing','floor')
         ->where('name', 'like', $req->bed_list.'%')
         ->where('category',  $req->bed_category)
         ->orderBy('name')

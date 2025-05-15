@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this::call([
+        $this->call([
             // Auth Seeders
             CompanyTypeSeeder::class,
             CompanyDetailsSeeder::class,
@@ -41,7 +41,6 @@ class DatabaseSeeder extends Seeder
             BankInfoSeeder::class,
             PermissionMainHeadSeeder::class,
             PermissionHeadSeeder::class,
-            // RoutePermissionSeeder::class,
             
             // Client Side Setup Seeder
             StoreSeeder::class,
@@ -52,9 +51,5 @@ class DatabaseSeeder extends Seeder
             ClientInfoSeeder::class,
             SupplierInfoSeeder::class,
         ]);
-        
-        
-
-
     }
 }

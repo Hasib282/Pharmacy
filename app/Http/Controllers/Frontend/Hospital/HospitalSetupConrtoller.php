@@ -22,6 +22,21 @@ class HospitalSetupConrtoller extends Controller
 
 
 
+    /////////////////////////// --------------- Floor List Methods Start Here ---------- //////////////////////////
+    // Show Floor
+    public function ShowFloor(Request $req){
+        $name = "Floor";
+        $js = 'hospital/setup/floor';
+        if ($req->ajax()) {
+            return view('admin_setup.floor.ajaxBlade', compact('name', 'js'));
+        }
+        else{
+            return view('admin_setup.floor.main', compact('name', 'js'));
+        }
+    }// End Method
+
+
+
     /////////////////////////// --------------- Bed Category Methods Start Here ---------- //////////////////////////
     // Show Bed Category
     public function ShowBedCategory(Request $req){
@@ -43,10 +58,10 @@ class HospitalSetupConrtoller extends Controller
         $name = "Bed List";
         $js = 'hospital/setup/bed_list';
         if ($req->ajax()) {
-            return view('admin_setup.hospital.bed_list.ajaxBlade', compact('name', 'js'));
+            return view('admin_setup.bed_list.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.hospital.bed_list.main', compact('name', 'js'));
+            return view('admin_setup.bed_list.main', compact('name', 'js'));
         }
     } // End Method
     

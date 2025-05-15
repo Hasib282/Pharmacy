@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('user_id')->unique();
             $table->string('login_user_id')->nullable()->comment('login__users');
+            $table->string('title')->nullable();
             $table->string('user_name')->nullable();
             $table->string('user_email')->nullable();
             $table->string('user_phone')->nullable();
@@ -23,8 +24,13 @@ return new class extends Migration
             $table->bigInteger('user_role')->comment('roles');
             $table->unsignedBigInteger('tran_user_type')->nullable();
             $table->date('dob')->nullable();
+            $table->string('nationality')->nullable();
+            $table->string('religion')->nullable();
             $table->string('nid')->nullable();
+            $table->string('passport')->nullable();
+            $table->string('driving_lisence')->nullable();
             $table->string('address')->nullable();
+            $table->string('arrival_from')->nullable();
             $table->string('password')->nullable();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('store_id')->nullable();
@@ -38,6 +44,8 @@ return new class extends Migration
                     ->onUpdate('cascade');
             $table->foreign('store_id')->references('id')->on('stores')
                     ->onUpdate('cascade');
+
+            // $table->string('age')->nullable();// Store age as "4 years, 9 months, 23 days"
         });
     }
 

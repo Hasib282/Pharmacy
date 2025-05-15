@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql_second')->create('groups', function (Blueprint $table) {
+        Schema::create('room__facilities', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('room_id');
+            $table->string('facility_name');
+            $table->timestamp('added_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql_second')->dropIfExists('groups');
+        Schema::dropIfExists('room__facilities');
     }
 };

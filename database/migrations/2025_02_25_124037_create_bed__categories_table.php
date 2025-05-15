@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::connection('mysql_second')->create('bed__categories', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('description')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1:active, 0:Inactive');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
-           
         });
     }
 

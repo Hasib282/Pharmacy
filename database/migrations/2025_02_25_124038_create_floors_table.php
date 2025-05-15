@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::connection('mysql_second')->create('floors', function (Blueprint $table) {
             $table->id();
-            $table->string('floor_name');
-            $table->integer("no_of_rooms");
-            $table->integer("starting_floor_no");
-            $table->string("action");
-            $table->timestamps();
+            $table->string('name');
+            $table->integer("no_of_rooms")->nullable();
+            $table->integer("start_room_no")->nullable();
+            $table->tinyInteger('status')->default('1')->comment('1:active, 0:Inactive');
+            $table->timestamp('added_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

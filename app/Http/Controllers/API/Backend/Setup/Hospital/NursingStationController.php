@@ -11,7 +11,7 @@ class NursingStationController extends Controller
 {
     // Show All Nursing station
     public function Show(Request $req){
-        $data = Nursing_Station::on('mysql_second')->get();
+        $data = Nursing_Station::on('mysql_second')->with('Floor')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -24,7 +24,7 @@ class NursingStationController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "name" => 'required',
-            "floor" => 'required|numeric'
+            "floor" => 'required|exists:mysql_second.floors,id'
         ]);
 
         $insert = Nursing_Station::on('mysql_second')->create([
@@ -32,7 +32,7 @@ class NursingStationController extends Controller
             "floor" => $req->floor,
         ]);
 
-        $data = Nursing_Station::on('mysql_second')->findOrFail($insert->id);
+        $data = Nursing_Station::on('mysql_second')->with('Floor')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -49,7 +49,7 @@ class NursingStationController extends Controller
         
         $req->validate([
             "name" => 'required',
-            "floor"=> 'required'
+            "floor"=> 'required|exists:mysql_second.floors,id'
         ]);
 
         $update = $data->update([
@@ -57,7 +57,7 @@ class NursingStationController extends Controller
             "floor" => $req->floor,
         ]);
 
-        $updatedData = Nursing_Station::on('mysql_second')->findOrFail($req->id);
+        $updatedData = Nursing_Station::on('mysql_second')->with('Floor')->findOrFail($req->id);
 
         if($update){
             return response()->json([
@@ -84,9 +84,9 @@ class NursingStationController extends Controller
     // Get Nursing station
     public function Get(Request $req){
         $data = Nursing_Station::on('mysql_second')
+        ->with('Floor')
         ->where('name', 'like', $req->nursing_station.'%')
         ->orderBy('name')
-        ->take(10)
         ->get();
 
         $list = "<ul>";

@@ -20,4 +20,8 @@ class Bed_List extends Model
     public function nursing(){
         return $this->belongsTo(Nursing_Station::class,'nursing_station','id');
     }
+
+    public function floor(){
+        return $this->belongsTo(Floor::class,'floor','id');
+    }
 }

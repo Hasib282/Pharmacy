@@ -1047,6 +1047,44 @@ $(document).ready(function () {
 
         '#update-specialization li',
     );
+    
+    
+    
+    /////////////// ------------------ Search Floor by Name and add value to input ajax part start ---------------- /////////////////////////////
+    // Floor Input Search
+    SearchByInput(
+        'hospital/setup/floor/get',  
+
+        function ($input) {
+            return {
+                floor: $input.val(),
+            };
+        }, 
+
+        '#floor',
+
+        '#floor-list',
+
+        '#floor-list li',
+    );
+
+
+    // Update Specialization Input Search
+    SearchByInput(
+        'hospital/setup/floor/get', 
+
+        function ($input) {
+            return {
+                floor: $input.val(),
+            };
+        }, 
+
+        '#updateFloor', 
+
+        '#update-floor',
+
+        '#update-floor li',
+    );
 
 
 

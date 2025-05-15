@@ -7,49 +7,52 @@ use Illuminate\Http\Request;
 
 class HotelSetupController extends Controller
 {
-
+        /////////////////////////// --------------- Floor List Methods Start Here ---------- //////////////////////////
         // Show Floor
         public function ShowFloor(Request $req){
             $name = "Floor";
             $js = 'hotel/setup/floor';
             if ($req->ajax()) {
-                return view('admin_setup.hotel.setup.floor.ajaxBlade', compact('name', 'js'));
+                return view('admin_setup.floor.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('admin_setup.hotel.setup.floor.main', compact('name', 'js'));
+                return view('admin_setup.floor.main', compact('name', 'js'));
             }
         }// End Method
 
 
 
+        /////////////////////////// --------------- Room Category Methods Start Here ---------- //////////////////////////
         // Show Room Catagory
         public function ShowRoomCatagory(Request $req){
             $name = "Room Catagory";
             $js = 'hotel/setup/room_catagory';
             if ($req->ajax()) {
-                return view('admin_setup.hotel.setup.room_catagory.ajaxBlade', compact('name', 'js'));
+                return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('admin_setup.hotel.setup.room_catagory.main', compact('name', 'js'));
+                return view('common_modals.single_input.main', compact('name', 'js'));
             }
         }// End Method
 
 
 
+        /////////////////////////// --------------- Room List Methods Start Here ---------- //////////////////////////
         // Show Room List
         public function ShowRoomList(Request $req){
             $name = "Room List";
             $js = 'hotel/setup/room_list';
             if ($req->ajax()) {
-                return view('admin_setup.hotel.setup.room_list.ajaxBlade', compact('name', 'js'));
+                return view('admin_setup.bed_list.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('admin_setup.hotel.setup.room_list.main', compact('name', 'js'));
+                return view('admin_setup.bed_list.main', compact('name', 'js'));
             }
         }// End Method
 
 
 
+        /////////////////////////// --------------- Hotel Services Groupe Methods Start Here ---------- //////////////////////////
         // Show group
         public function ShowGroup(Request $req){
             $name = "Group";
@@ -64,6 +67,7 @@ class HotelSetupController extends Controller
 
 
 
+        /////////////////////////// --------------- Hotel Services Methods Start Here ---------- //////////////////////////
         // Show Service
         public function ShowService(Request $req){
             $name = "Service";
@@ -78,6 +82,7 @@ class HotelSetupController extends Controller
 
         
         
+        /////////////////////////// --------------- Hotel Booking Methods Start Here ---------- //////////////////////////
         // Show booking
         public function ShowBooking(Request $req){
             $name = "Hotel Booking";

@@ -205,8 +205,8 @@
 
 
 
-                 <!-- status -->
-                 <div class="c-4">
+                <!-- status -->
+                <div class="c-4">
                     <div class="form-input-group">
                         <label for="status">Status</label>
                         <label for="status"></label>
@@ -221,10 +221,10 @@
                         <span class="error" id="status_error"></span>
                     </div>
                 </div>
-
-                <div class="center">
-                    <button type="submit" class="btn-blue" id="Insert">Submit</button>
-                </div>
+            </div>
+            <div class="center">
+                <button type="submit" class="btn-blue" id="Insert">Submit</button>
+            </div>
         </form>
     </div>
 </div>

@@ -11,4 +11,8 @@ class Nursing_Station extends Model
     protected $guarded = [];
     
     public $timestamps = false;
+
+    public function Floor(){
+        return $this->belongsTo(Floor::class,'floor','id');
+    }
 }

@@ -1657,6 +1657,17 @@
                                     </div>
                                 </li>
                             @endif
+
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.hospitalFloors')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'floor') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Floors
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
                             
                             @if(auth()->user()->hasPermission(194))
                                 <li class="sub-menu1-item" data-url="{{route('show.nursingStation')}}">

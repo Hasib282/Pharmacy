@@ -18,7 +18,8 @@
             </div>
             <div class="form-input-group">
                 <label for="updateFloor">Floor <span class="required" title="Required">*</span></label>
-                <input type="text" name="floor" class="form-input" id="updateFloor">
+                <input type="text" name="floor" class="form-input" id="updateFloor" autocomplete="off"><hr>
+                <div id="update-floor"></div>
                 <span class="error" id="update_floor_error"></span>
             </div>
            

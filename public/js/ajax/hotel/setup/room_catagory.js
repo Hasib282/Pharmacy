@@ -25,25 +25,25 @@ $(document).ready(function () {
 
 
     // Load Data on Hard Reload
-    ReloadData('hotel/setup/room_catagory', ShowRoomCatagory);
+    ReloadData('hotel/setup/roomcatagory', ShowRoomCatagory);
+
 
     // Insert Ajax
-    InsertAjax('hotel/setup/room_catagory', function () {
+    InsertAjax('hotel/setup/roomcatagory', function () {
         $('#name').focus();
-
     });
+
 
     // Edit Ajax
     EditAjax(EditFormInputValue);
 
 
     // Update Ajax
-    UpdateAjax('hotel/setup/room_catagory');
+    UpdateAjax('hotel/setup/roomcatagory');
+
 
     // Delete Ajax
-    DeleteAjax('hotel/setup/room_catagory');
-
-
+    DeleteAjax('hotel/setup/roomcatagory');
 
 
     // Additional Edit Functionality
@@ -52,11 +52,4 @@ $(document).ready(function () {
         $('#update_name').val(item.name);
         
     }; // End Method
-
-
-
-
-
-
-
 });
