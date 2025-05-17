@@ -56,12 +56,12 @@ class HotelSetupController extends Controller
         // Show group
         public function ShowGroup(Request $req){
             $name = "Group";
-            $js = 'hotel/setup/group';
+            $js = 'hotel/tran_groupe';
             if ($req->ajax()) {
-                return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
+                return view('admin_setup.tran_groupe.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('common_modals.single_input.main', compact('name', 'js'));
+                return view('admin_setup.tran_groupe.main', compact('name', 'js'));
             }
         }// End Method
 
@@ -71,12 +71,12 @@ class HotelSetupController extends Controller
         // Show Service
         public function ShowService(Request $req){
             $name = "Service";
-            $js = 'hotel/setup/service';
+            $js = 'hotel/tran_head';
             if ($req->ajax()) {
-                return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
+                return view('admin_setup.tran_head.ajaxBlade', compact('name', 'js'));
             }
             else{
-                return view('common_modals.single_input.main', compact('name', 'js'));
+                return view('admin_setup.tran_head.main', compact('name', 'js'));
             }
         }// End Method
 
@@ -86,7 +86,7 @@ class HotelSetupController extends Controller
         // Show booking
         public function ShowBooking(Request $req){
             $name = "Hotel Booking";
-            $js = 'hotel/booking';
+            $js = 'hotel/setup/hotel_booking';
             if ($req->ajax()) {
                 return view('admin_setup.hotel.hotel_booking.ajaxBlade', compact('name', 'js'));
             }

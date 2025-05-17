@@ -51,7 +51,8 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add
+                    {{ $name }} </button>
             </div>
             <div class="c-6">
 
@@ -74,14 +75,14 @@
         <div id="paginate"></div>
     </div>
 
-    
-    @include('admin_setup.hospital.appointment.add')
 
-    @include('admin_setup.hospital.appointment.edit')
-    
+    @include('admin_setup.hotel.hotel_booking.add')
+
+    @include('admin_setup.hotel.hotel_booking.edit')
+
     @include('common_modals.delete')
 
     <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/hospital/setup/appointment.js') }}"></script>
+    <script src="{{ asset('js/ajax') . '/' . $js . '.js' }}"></script>
     <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
 @endsection

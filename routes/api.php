@@ -114,6 +114,9 @@ use App\Http\Controllers\API\Backend\Transactions\DepositController;
 use App\Http\Controllers\API\Backend\Transactions\DepositRefundController;
 use App\Http\Controllers\API\Backend\Transactions\ServicesController;
 
+// Hotel Transactions
+use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBookingController;
+
 
 
 
@@ -1630,6 +1633,16 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::delete('/service', 'Delete');
             });
         }); // End Hotel Setup Routes
+
+ // *************************************** Hotel Booking Start *************************************** //
+        Route::controller(AppointmentController::class)->group(function(){
+            Route::get('/booking', 'Show');
+            Route::post('/booking', 'Insert');
+            Route::put('/booking', 'Update');
+            Route::delete('/booking', 'Delete');
+            Route::get('/booking/get', 'Get');
+        });
+        
         
         
         
