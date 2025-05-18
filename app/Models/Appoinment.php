@@ -16,7 +16,7 @@ class Appoinment extends Model
         return $this->belongsTo(Doctor_Information::class,'Doctor','id');
     } 
 
-    public function Patient(){
-        return $this->belongsTo(Patient_Information::class,'ptn_id','ptn_id');
+    public function User(){
+        return $this->belongsTo(User_Info::class,'user_id','user_id');
     }
 }
