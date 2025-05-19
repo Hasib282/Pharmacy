@@ -89,6 +89,21 @@ class AdminSetupController extends Controller
 
 
 
+    /////////////////////////// --------------- Payment Method Table Methods start ---------- //////////////////////////
+    // Show All Payment Method
+    public function ShowPaymentMethod(Request $req){
+        $name = "Payment Method";
+        $js = 'admin_setup/payment_method';
+        if ($req->ajax()) {
+            return view('common_modals.single_input.ajaxBlade', compact('name', 'js'));
+        }
+        else{
+            return view('common_modals.single_input.main', compact('name', 'js'));
+        }
+    } // End Method
+    
+    
+    
     /////////////////////////// --------------- Transaction Main Head Table Methods start ---------- //////////////////////////
     // Show All Transaction Main Head
     public function ShowTransactionMainHead(Request $req){

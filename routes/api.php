@@ -63,6 +63,7 @@ use App\Http\Controllers\API\Backend\Setup\Permission\UserPermissionController;
 
 // Admin Setup Controllers
 use App\Http\Controllers\API\Backend\Setup\StoreController;
+use App\Http\Controllers\API\Backend\Setup\PaymentMethodController;
 
 
 // Products Setup Controllers
@@ -317,7 +318,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::delete('/locations', 'Delete')->middleware(SuperAdminAccess::class);
             Route::get('/locations/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
-        
+
 
         // *************************************** Store Routes Start *************************************** //
         Route::controller(StoreController::class)->group(function () {
@@ -327,6 +328,19 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::delete('/stores', 'Delete');
             Route::get('/stores/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
+        
+        
+
+        // *************************************** PaymentMethodController Routes Start *************************************** //
+        Route::controller(PaymentMethodController::class)->group(function () {
+            Route::get('/payment_method', 'Show');
+            Route::post('/payment_method', 'Insert');
+            Route::put('/payment_method', 'Update');
+            Route::delete('/payment_method', 'Delete');
+            Route::get('/payment_method/get', 'Get')->withoutMiddleware(CheckPermission::class);
+        });
+
+        
         
 
 

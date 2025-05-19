@@ -191,6 +191,17 @@
                             </div>
                         </li>
                     @endif
+
+                    @if(auth()->user()->hasPermission(9))
+                        <li class="sub-menu-item" data-url="{{route('show.paymentMethod')}}">
+                            <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'payment_method') ? 'active':''}}">
+                                <p>
+                                    <i class="fa-solid fa-shop"></i>
+                                    Payment Method
+                                </p>
+                            </div>
+                        </li>
+                    @endif
                             
                     @if(auth()->user()->user_role == 1)
                         <li class="sub-menu-item" data-url="{{route('show.mainhead')}}">

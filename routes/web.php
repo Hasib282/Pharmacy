@@ -198,6 +198,11 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::get('/stores', 'ShowStores')->name('show.stores');
 
 
+            
+            // *************************************** Paymentmethod Routes Start *************************************** //
+            Route::get('/payment_method', 'ShowPaymentMethod')->name('show.paymentMethod');
+
+
 
             // *************************************** Main Heads Routes Start *************************************** //
             Route::get('/mainheads', 'ShowTransactionMainHead')->name('show.mainhead');
