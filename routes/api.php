@@ -61,6 +61,10 @@ use App\Http\Controllers\API\Backend\Setup\Permission\CompanyPermissionControlle
 use App\Http\Controllers\API\Backend\Setup\Permission\UserPermissionController;
 
 
+//Corporate Controller
+use App\Http\Controllers\API\Backend\Setup\CorporateController;
+
+
 // Admin Setup Controllers
 use App\Http\Controllers\API\Backend\Setup\StoreController;
 use App\Http\Controllers\API\Backend\Setup\PaymentMethodController;
@@ -258,6 +262,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 
                 
                 
+                
                 ///////////// --------------- Company Type Permissions Routes ----------- ///////////////////
                 Route::controller(CompanyTypePermissionController::class)->group(function () {
                     Route::get('/company_type_permissions', 'Show');
@@ -382,6 +387,15 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::delete('/tranheads', 'Delete');
                 Route::get('/tranheads/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
             });
+        });
+
+
+        Route::controller(CorporateController::class)->group(function () {
+            Route::get('/corporate', 'Show');
+            Route::post('/corporate', 'Insert');
+            Route::put('/corporate', 'Update');
+            Route::delete('/corporate', 'Delete');
+            Route::get('/corporate/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
     });
 

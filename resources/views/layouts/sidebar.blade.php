@@ -231,10 +231,23 @@
                             </div>
                         </li>
                     @endif
+
+                    @if(auth()->user()->hasPermission(9))
+                    <li class="sub-menu-item" data-url="{{route('show.corporate')}}">
+                        <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'advance_receive') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-shop"></i>
+                                Corporate
+                            </p>
+                        </div>
+                    </li>
+                @endif
                 </ul>
             </li>
             <hr>
         @endif
+
+
 
 
         <!-- General Transaction Menue -->

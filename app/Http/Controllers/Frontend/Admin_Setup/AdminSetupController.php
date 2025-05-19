@@ -119,6 +119,22 @@ class AdminSetupController extends Controller
 
 
 
+     /////////////////////////// ---------------Advance Receive Table Methods start ---------- //////////////////////////
+    
+    public function ShowCorporate(Request $req){
+        $name = "Corporate";
+        $js = 'admin_setup/main_head';
+        if ($req->ajax()) {
+            return view('admin_setup.corporate.ajaxBlade', compact('name', 'js'));
+        }
+        else{
+            return view('admin_setup.corporate.main', compact('name', 'js'));
+        }
+    } // End Method
+
+
+
+
 
 
     /////////////////////////// --------------- Tran With Table Methods start ---------- //////////////////////////
