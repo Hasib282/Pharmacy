@@ -206,6 +206,11 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
 
             // *************************************** Main Heads Routes Start *************************************** //
             Route::get('/mainheads', 'ShowTransactionMainHead')->name('show.mainhead');
+
+
+
+            // *************************************** Corporate Routes Start *************************************** //
+            Route::get('/corporate', 'ShowCorporate')->name('show.corporate');
             
 
 
