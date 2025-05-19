@@ -80,7 +80,7 @@ $(document).ready(function () {
      function EditFormInputValue(item){
         $('#id').val(item.id);
         $('#updatePatient').val(item.user.user_id);
-        $('#updatePatient').attr('data-id',item.doctor.user_id);
+        $('#updatePatient').attr('data-id',item.user.user_id);
         $('#updateTitle').val(item.user.title);
         $('#updateName').val(item.user.user_name);
         $('#updatePhone').val(item.user.user_phone);
@@ -94,8 +94,14 @@ $(document).ready(function () {
         $('#updateDate').val(item.date);  
         $('#updateSchedule').val(item.schedule);  
         $('#updateAppointment').val(item.appoinment_serial);  
+
+        const age = calculateAge(item.user.dob);
+
+        $('#updateAge_years').val(age.years);
+        $('#updateAge_months').val(age.months);
+        $('#updateAge_days').val(age.days);
         // $('#updateTitle').val(item.);
-        $('#updatePtn_Id').focus();
+        $('#updatePatient').focus();
     }; // End Method
 });
 

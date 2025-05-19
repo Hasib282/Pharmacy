@@ -29,7 +29,7 @@ class EmployeeController extends Controller
 
     // Delete Employee Details
     public function Delete(Request $req){
-        User_Info::on('mysql_second')->findOrFail($req->id)->delete();
+        User_Info::on('mysql_second')->where('user_role', 3)->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Employee Details Deleted Successfully',

@@ -56,6 +56,12 @@ class AppointmentController extends Controller
                 'appointment'=> 'required',
                 'schedule'=> 'required',
             ]);
+
+            $age_year = $req->age_years;
+            $age_month = $req->age_months;
+            $age_day = $req->age_days;
+            
+            $dob = now()->subYears($age_year)->subMonths($age_month)->subDays($age_day);
             
 
             User_Info::on('mysql_second')->create([
@@ -66,7 +72,7 @@ class AppointmentController extends Controller
                 'user_phone'=> $req->phone,
                 'user_email'=> $req->email,
                 'user_role'=> 6,
-                // 'age'=>$age,
+                'dob'=>$dob,
                 'gender'=> $req->gender,
                 'nationality'=> $req->nationality,
                 'religion'=> $req->religion,

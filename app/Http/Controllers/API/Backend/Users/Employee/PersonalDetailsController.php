@@ -109,7 +109,7 @@ class PersonalDetailsController extends Controller
                 "image" => $imageName,
             ]);
 
-            $data = User_Info::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
+            $data = User_Info::on('mysql_second')->where('user_role', 3)->with('Withs','Location')->findOrFail($insert->id);
         });
 
         
@@ -124,7 +124,7 @@ class PersonalDetailsController extends Controller
 
     // Update Employee Personal Details
     public function Update(Request $req){
-        $data = User_Info::on('mysql_second')->where('user_id', $req->employee_id)->first();
+        $data = User_Info::on('mysql_second')->where('user_role', 3)->where('user_id', $req->employee_id)->first();
         
         $req->validate([
             'name' => 'required',
@@ -200,7 +200,7 @@ class PersonalDetailsController extends Controller
 
     // Delete Employee Personal Details
     public function Delete(Request $req){
-        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->where('user_role', 3)->findOrFail($req->id);
         if($data->image){
             Storage::disk('public')->delete($data->image);
         }

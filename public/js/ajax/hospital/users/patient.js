@@ -2,7 +2,7 @@ function ShowPatients(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['ptn_id','title','name','email', 'phone','gender','address'],
+        tbody: ['user_id','title','user_name','user_email', 'user_phone','gender','address'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -18,11 +18,11 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Patient Id', key: 'ptn_id' },
+        { label: 'Patient Id', key: 'user_id' },
         { label: 'Title', key: 'title' },
-        { label: 'Name', key: 'name' },
-        { label: 'Email', key: 'email' },
-        { label: 'Phone', key: 'phone' },
+        { label: 'Name', key: 'user_name' },
+        { label: 'Email', key: 'user_email' },
+        { label: 'Phone', key: 'user_phone' },
         { label: 'Gender', key: 'gender'},
         { label: 'Address', key: 'address' },
         { label: 'Action', type: 'button' }
@@ -52,15 +52,17 @@ $(document).ready(function () {
     // Additional Edit Functionality
     function EditFormInputValue(item){
         $('#id').val(item.id);
-        $('#updateName').val(item.name);
+        $('#updateName').val(item.user_name);
         $('#updateTitle').val(item.title);
-        $('#updatePhone').val(item.phone);
+        $('#updatePhone').val(item.user_phone);
         $('#updateAddress').val(item.address);
-        $('#updateEmail').val(item.email);
+        $('#updateEmail').val(item.user_email);
 
-        $('#updateAge_years').val(item.age_years);
-        $('#updateAge_months').val(item.age_months);
-        $('#updateAge_days').val(item.age_days);
+        const age = calculateAge(item.dob);
+
+        $('#updateAge_years').val(age.years);
+        $('#updateAge_months').val(age.months);
+        $('#updateAge_days').val(age.days);
         
         $('#updateGender').val(item.gender);
         $('#updateNationality').val(item.nationality);

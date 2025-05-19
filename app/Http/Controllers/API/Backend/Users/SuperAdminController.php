@@ -65,7 +65,7 @@ class SuperAdminController extends Controller
 
     // Update SuperAdmins
     public function Update(Request $req){
-        $data = Login_User::on('mysql')->findOrFail($req->id);
+        $data = Login_User::on('mysql')->where('user_role', 1)->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
@@ -86,7 +86,7 @@ class SuperAdminController extends Controller
             ]);
         });
 
-        $updatedData = Login_User::on('mysql')->findOrFail($req->id);
+        $updatedData = Login_User::on('mysql')->where('user_role', 1)->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,
@@ -99,7 +99,7 @@ class SuperAdminController extends Controller
 
     // Delete SuperAdmins
     public function Delete(Request $req){
-        $data = Login_User::on('mysql')->findOrFail($req->id);
+        $data = Login_User::on('mysql')->where('user_role', 1)->findOrFail($req->id);
         if($data->image){
             Storage::disk('public')->delete($data->image);
         }

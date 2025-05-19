@@ -83,7 +83,7 @@ class SupplierController extends Controller
 
     // Update Suppliers
     public function Update(Request $req){
-        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->where('user_role', 5)->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
@@ -110,7 +110,7 @@ class SupplierController extends Controller
             ]);
         });
 
-        $updatedData = User_Info::on('mysql_second')->with('Withs', 'Location')->findOrFail($req->id);
+        $updatedData = User_Info::on('mysql_second')->where('user_role', 5)->with('Withs', 'Location')->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,
@@ -123,7 +123,7 @@ class SupplierController extends Controller
 
     // Delete Suppliers
     public function Delete(Request $req){
-        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->where('user_role', 5)->findOrFail($req->id);
         if($data->image){
             Storage::disk('public')->delete($data->image);
         }
@@ -138,7 +138,7 @@ class SupplierController extends Controller
 
     // Show Supplier Details
     public function Details(Request $req){
-        $supplier = User_Info::on('mysql_second')->with('Location','Withs')->where('user_id', "=", $req->id)->first();
+        $supplier = User_Info::on('mysql_second')->where('user_role', 5)->with('Location','Withs')->where('user_id', "=", $req->id)->first();
         $transaction = Transaction_Main::on('mysql_second')->where('tran_user', "=", $req->id)->get();
         return response()->json([
             'status'=> true,

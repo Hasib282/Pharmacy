@@ -94,3 +94,32 @@ function CreateSelectOptions(id, defaultText, data, fieldName) {
         selectElement.append(`<option value="${item.id}" >${item[fieldName]}</option>`);
     });
 }; // End Method
+
+
+
+
+//////////////////// -------------------- Calculate Age From Date of Birth -------------------- ////////////////////
+// For Calculating Age From Date Of Birth
+function calculateAge(date) {
+    const dob = new Date(date);
+    const today = new Date();
+
+    let years = today.getFullYear() - dob.getFullYear();
+    let months = today.getMonth() - dob.getMonth();
+    let days = today.getDate() - dob.getDate();
+
+    // Adjust if days are negative
+    if (days < 0) {
+        months--;
+        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+
+    // Adjust if months are negative
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    return { years, months, days };
+}

@@ -15,16 +15,20 @@ class Booking extends Model
     public function User(){
         return $this->belongsTo(User_info::class,'user_id','user_id');
     }
+    
+    public function Sr(){
+        return $this->belongsTo(User_info::class,'sr_id','user_id');
+    }
 
     public function Category(){
         return $this->belongsTo(Bed_Category::class,'bed_category','id');
     }
 
     public function List(){
-        return $this->belongsTo(Bed_Category::class,'bed_list','id');
+        return $this->belongsTo(Bed_List::class,'bed_list','id');
     }
 
     public function Doctors(){
-        return $this->belongsTo(Bed_Category::class,'doctor','id');
+        return $this->belongsTo(Doctor_Information::class,'doctor','id');
     }
 }

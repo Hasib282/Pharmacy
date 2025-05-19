@@ -83,7 +83,7 @@ class ClientController extends Controller
 
     // Update Clients
     public function Update(Request $req){
-        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->where('user_role', 4)->findOrFail($req->id);
 
         $req->validate([
             "type" => 'required|exists:mysql_second.transaction__withs,id',
@@ -97,7 +97,7 @@ class ClientController extends Controller
         DB::transaction(function () use ($req, $data) {
             $imageName = UpdateUserImage($req, $data->image, null, $data->user_id);
 
-            $update = User_Info::on('mysql_second')->findOrFail($req->id)->update([
+            $update = User_Info::on('mysql_second')->where('user_role', 4)->findOrFail($req->id)->update([
                 "tran_user_type" => $req->type,
                 "user_name" => $req->name,
                 "user_phone" => $req->phone,
@@ -123,7 +123,7 @@ class ClientController extends Controller
 
     // Delete Clients
     public function Delete(Request $req){
-        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->where('user_role', 4)->findOrFail($req->id);
         if($data->image){
             Storage::disk('public')->delete($data->image);
         }
@@ -138,7 +138,7 @@ class ClientController extends Controller
 
     // Show Client Details
     public function Details(Request $req){
-        $client = User_Info::on('mysql_second')->with('Location','Withs')->where('user_id', "=", $req->id)->first();
+        $client = User_Info::on('mysql_second')->where('user_role', 4)->with('Location','Withs')->where('user_id', "=", $req->id)->first();
         $transaction = Transaction_Main::on('mysql_second')->where('tran_user', "=", $req->id)->get();
         return response()->json([
             'status'=> true,

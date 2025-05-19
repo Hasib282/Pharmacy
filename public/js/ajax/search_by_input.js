@@ -1355,7 +1355,7 @@ $(document).ready(function () {
     /////////////// ------------------ Search Patients And add value to input ajax part start ---------------- /////////////////////////////
     // Patient Input Search
     SearchByInput(
-        'hospital/ptnregistration/get/patient',  
+        'hospital/users/patients/get',  
 
         function ($input) {
             return {
@@ -1383,6 +1383,12 @@ $(document).ready(function () {
             $('#nationality').val(item.attr('data-nationality'));
             $('#religion').val(item.attr('data-religion'));
             $('#address').val(item.attr('data-address'));
+
+            const age = calculateAge(item.attr('data-dob'));
+
+            $('#age_years').val(age.years);
+            $('#age_months').val(age.months);
+            $('#age_days').val(age.days);
         },
 
         function (targetInput) {
@@ -1394,6 +1400,9 @@ $(document).ready(function () {
             $('#nationality').val('');
             $('#religion').val('');
             $('#address').val('');
+            $('#age_years').val('');
+            $('#age_months').val('');
+            $('#age_days').val('');
         }
     );
 
@@ -1401,7 +1410,7 @@ $(document).ready(function () {
     
     // Update Patient Input Search
     SearchByInput(
-        'hospital/ptnregistration/get/patient', 
+        'hospital/users/patients/get', 
 
         function ($input) {
             return {
@@ -1429,6 +1438,12 @@ $(document).ready(function () {
             $('#updateNationality').val(item.attr('data-nationality'));
             $('#updateReligion').val(item.attr('data-religion'));
             $('#updateAddress').val(item.attr('data-address'));
+
+            const age = calculateAge(item.attr('data-dob'));
+
+            $('#updateAge_years').val(age.years);
+            $('#updateAge_months').val(age.months);
+            $('#updateAge_days').val(age.days);
         },
 
         function (targetInput) {
@@ -1440,6 +1455,9 @@ $(document).ready(function () {
             $('#updateNationality').val('');
             $('#updateReligion').val('');
             $('#updateAddress').val('');
+            $('#updateAge_years').val('');
+            $('#updateAge_months').val('');
+            $('#updateAge_days').val('');
         }
     );
 });

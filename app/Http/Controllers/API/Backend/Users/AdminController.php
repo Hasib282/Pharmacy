@@ -99,7 +99,7 @@ class AdminController extends Controller
 
     // Update Admins
     public function Update(Request $req){
-        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->where('user_role', 2)->findOrFail($req->id);
 
         $req->validate([
             "name" => 'required',
@@ -109,7 +109,7 @@ class AdminController extends Controller
 
 
         DB::transaction(function () use ($req, $data) {
-            $login_user = Login_User::on('mysql')->where('user_id', $data->login_user_id)->first();
+            $login_user = Login_User::on('mysql')->where('user_role', 2)->where('user_id', $data->login_user_id)->first();
             // Calling UserHelper Functions
             $imageName = UpdateUserImage($req, $data->image, $login_user->company_id, $data->user_id);
 
@@ -131,7 +131,7 @@ class AdminController extends Controller
             ]);
         });
 
-        $updatedData = User_Info::on('mysql_second')->with('Store')->findOrFail($req->id);
+        $updatedData = User_Info::on('mysql_second')->where('user_role', 2)->with('Store')->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,
@@ -144,7 +144,7 @@ class AdminController extends Controller
 
     // Delete Admins
     public function Delete(Request $req){
-        $data = User_Info::on('mysql_second')->findOrFail($req->id);
+        $data = User_Info::on('mysql_second')->where('user_role', 2)->findOrFail($req->id);
         if($data->image){
             Storage::disk('public')->delete($data->image);
         }

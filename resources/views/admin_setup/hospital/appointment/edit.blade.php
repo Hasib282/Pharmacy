@@ -83,10 +83,10 @@
                     <div class="form-input-group">
                         <label>Age (Y/M/D)</label>
                         <div class="age-fields" style="display: flex; gap: 5px;">
-                            <input type="text" name="age_years" class="form-input" id="age_years" placeholder="Years" value="0">
-                            <input type="text" name="age_months" class="form-input" id="age_months" placeholder="Months"
+                            <input type="text" name="age_years" class="form-input" id="updateAge_years" placeholder="Years" value="0">
+                            <input type="text" name="age_months" class="form-input" id="updateAge_months" placeholder="Months"
                                 min="0" max="12" value="0">
-                            <input type="text" name="age_days" class="form-input" id="age_days" placeholder="Days"
+                            <input type="text" name="age_days" class="form-input" id="updateAge_days" placeholder="Days"
                                 min="0" max="31" value="0">
                         </div>
                     </div>

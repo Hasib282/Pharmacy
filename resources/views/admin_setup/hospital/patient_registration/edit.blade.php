@@ -8,19 +8,21 @@
         </div>
        
          <!-- form start -->
-         <form id="AddForm" method="POST" enctype="multipart/form-data">
+         <form id="EditForm" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('POST')
+            @method('PUT')
 
             
             <div class="rows">
+                {{-- id  --}}
+                <input type="hidden" name="id" id="id">
                 <!--  patient id toggle -->
                 <div class="c-12">
                     <div class="form-input-group">
-                        <label for="updatePtn_Id">Patient Id</label>
-                        <input type="text" name="ptn_id" class="form-input" id="updatePtn_Id">
+                        <label for="updatePatient">Patient Id</label>
+                        <input type="text" name="patient" class="form-input" id="updatePatient">
                         <div id="ptn-list"></div>
-                        <span class="error" id="update_ptn_id_error"></span>
+                        <span class="error" id="update_patient_error"></span>
                     </div>
                 </div>
 
@@ -81,10 +83,10 @@
                     <div class="form-input-group">
                         <label>Age (Y/M/D)</label>
                         <div class="age-fields" style="display: flex; gap: 5px;">
-                            <input type="text" name="age_years" class="form-input" id="age_years" placeholder="Years" value="0">
-                            <input type="text" name="age_months" class="form-input" id="age_months" placeholder="Months"
+                            <input type="text" name="age_years" class="form-input" id="updateAge_years" placeholder="Years" value="0">
+                            <input type="text" name="age_months" class="form-input" id="updateAge_months" placeholder="Months"
                                 min="0" max="12" value="0">
-                            <input type="text" name="age_days" class="form-input" id="age_days" placeholder="Days"
+                            <input type="text" name="age_days" class="form-input" id="updateAge_days" placeholder="Days"
                                 min="0" max="31" value="0">
                         </div>
                     </div>
@@ -169,7 +171,7 @@
             </div>
             
             <div class="center">
-                <button type="submit" class="btn-blue" id="Insert">Submit</button>
+                <button type="submit" class="btn-blue" id="Update">Submit</button>
             </div>
         </form>
     </div>
