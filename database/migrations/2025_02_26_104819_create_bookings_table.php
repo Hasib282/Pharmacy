@@ -11,17 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql_second')->create('patient__registrations', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('ptn_id')->nullable();
-            $table->string('reg_id')->nullable();
+            $table->string('booking_id')->nullable();
+            $table->string('user_id')->nullable();
             $table->unsignedBigInteger('bed_category')->nullable();
             $table->unsignedBigInteger('bed_list')->nullable();
             $table->unsignedBigInteger('doctor')->nullable();
             $table->string('sr_id')->nullable();
             $table->string('addmission_by')->nullable();
             $table->string('discharge_by')->nullable();
-            $table->date('discharge_date')->nullable();
+            $table->integer('adult')->nullable();
+            $table->integer('children')->nullable();
+            $table->timestamp('check_in')->nullable();
+            $table->timestamp('check_out')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1:active, 0:Inactive');
             $table->timestamp('added_at')->useCurrent();//admission date
             $table->timestamp('updated_at')->nullable();
@@ -35,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql_second')->dropIfExists('patient__registrations');
+        Schema::connection('mysql_second')->dropIfExists('bookings');
     }
 };

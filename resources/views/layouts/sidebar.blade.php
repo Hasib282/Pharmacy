@@ -1978,11 +1978,11 @@
 
                             {{-- Hotel,Setup Sub Menu  Group --}}
                             @if(auth()->user()->hasPermission(194))
-                                <li class="sub-menu1-item" data-url="{{route('show.group')}}">
-                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'group') ? 'active':''}}">
+                                <li class="sub-menu1-item" data-url="{{route('show.groupe')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'groupe') ? 'active':''}}">
                                         <p>
                                             <i class="fa-solid fa-industry"></i>
-                                            Group
+                                            Groupe
                                         </p>
                                     </div>
                                 </li>
@@ -2012,20 +2012,7 @@
                                 <i class="fa-solid fa-users-gear"></i>
                                 Hotel Booking/Appointment
                             </p>
-                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
                         </div>
-                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'show':''}}">              
-                            {{-- @if(auth()->user()->hasPermission(194))
-                                <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
-                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users' && Request::segment(3) == 'specialization') ? 'active':''}}">
-                                        <p>
-                                            <i class="fa-solid fa-industry"></i>
-                                            Specialization
-                                        </p>
-                                    </div>
-                                </li>
-                            @endif --}}
-                        </ul>
                     </li>
                     
                     {{-- Hotel Transaction Sub Menu --}}

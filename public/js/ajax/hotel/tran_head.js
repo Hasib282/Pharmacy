@@ -17,7 +17,7 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Transaction Groupe', type:"select", key: 'groupe_id', method:"fetch", link:'admin/trangroupes/get', name:"tran_groupe_name", data:{type:'7'} },
+        { label: 'Transaction Groupe', type:"select", key: 'groupe_id', method:"fetch", link:'admin/trangroupes/get', name:"tran_groupe_name", data:{type:8} },
         { label: 'Transaction Head Name', key: 'tran_head_name' },
         { label: 'Price' },
         { label: 'Company Id', key: 'company_id' },
@@ -30,7 +30,7 @@ $(document).ready(function () {
 
     
     // Load Data on Hard Reload
-    ReloadData('hospital/setup/services', ShowTranHead);
+    ReloadData('hotel/setup/services', ShowTranHead);
     
 
     // Add Modal Open Functionality
@@ -38,7 +38,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hospital/setup/services', {company: { selector: "#company", attribute: 'data-id' }}, function() {
+    InsertAjax('hotel/setup/services', {company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#groupe').focus();
         $('#company').removeAttr('data-id');
     });
@@ -49,11 +49,11 @@ $(document).ready(function () {
 
 
     // Update Ajax
-    UpdateAjax('hospital/setup/services');
+    UpdateAjax('hotel/setup/services');
     
 
     // Delete Ajax
-    DeleteAjax('hospital/setup/services');
+    DeleteAjax('hotel/setup/services');
 
 
     // Additional Edit Functionality

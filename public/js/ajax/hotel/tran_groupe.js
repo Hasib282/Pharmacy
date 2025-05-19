@@ -24,7 +24,7 @@ $(document).ready(function () {
 
 
     // Load Data on Hard Reload
-    ReloadData('hospital/setup/groupe', ShowTranGroupe);
+    ReloadData('hotel/setup/groupe', ShowTranGroupe);
     
 
     // Add Modal Open Functionality
@@ -32,7 +32,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hospital/setup/groupe', {company: { selector: "#company", attribute: 'data-id' },type: 7, method: 'Both'}, function() {
+    InsertAjax('hotel/setup/groupe', {company: { selector: "#company", attribute: 'data-id' },type: 8, method: 'Both'}, function() {
         $('#groupeName').focus();
         $('#company').removeAttr('data-id');
     });
@@ -43,11 +43,11 @@ $(document).ready(function () {
 
 
     // Update Ajax
-    UpdateAjax('hospital/setup/groupe', {type: 8, method: 'Both'});
+    UpdateAjax('hotel/setup/groupe', {type: 8, method: 'Both'});
     
 
     // Delete Ajax
-    DeleteAjax('hospital/setup/groupe');
+    DeleteAjax('hotel/setup/groupe');
 
 
     // Additional Edit Functionality

@@ -1003,7 +1003,7 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             Route::get('/floor',  'ShowFloor')->name('show.floor');
             Route::get('/roomcatagory',  'ShowRoomCatagory')->name('show.roomcatagory');
             Route::get('/roomlist',  'ShowRoomList')->name('show.roomlist');
-            Route::get('/group',  'ShowGroup')->name('show.group');
+            Route::get('/groupe',  'ShowGroupe')->name('show.groupe');
             Route::get('/service',  'ShowService')->name('show.service');
 
 

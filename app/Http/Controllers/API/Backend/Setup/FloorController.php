@@ -24,15 +24,12 @@ class FloorController extends Controller
     public function Insert(Request $req){
         $req-> validate([
             "name" => 'required|string|max:255',
-            "number_of_rooms" => 'nullable|integer',
-            "starting_floor" => 'nullable',
         ]);
 
         $data= Floor::on('mysql_second')->create([
             "name" => $req->name,
-            "no_of_rooms" => $req->number_of_rooms,
-            "start_room_no" => $req->starting_floor,
         ]);
+
         return response()->json([
             'status'=>true,
             'message'=>'Floor Added Successfully',
@@ -48,14 +45,10 @@ class FloorController extends Controller
         
         $req->validate([
             "name" => 'required|string|max:255',
-            "number_of_rooms" => 'nullable|integer',
-            "starting_floor" => 'nullable',
         ]);
 
         $update = $data->update([
             "name" => $req->name,
-            "no_of_rooms" => $req->number_of_rooms,
-            "start_room_no" => $req->starting_floor,
             "updated_at" => now()
         ]);
 

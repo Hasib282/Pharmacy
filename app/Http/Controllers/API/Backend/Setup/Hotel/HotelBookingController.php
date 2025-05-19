@@ -28,7 +28,7 @@ class HotelBookingController extends Controller
     public function Insert(Request $req){
         if($req->guest_type == "new"){
             // Generate guest ID using the helper function
-            $guest_id = GenerateUserId('guest', 'G');
+            $guest_id = GenerateUserId(7, 'GT');
         
 
             // validation
@@ -39,8 +39,6 @@ class HotelBookingController extends Controller
                 'nid'=> 'required',
                 'passport'=> 'required',
                 'driving_lisence'=> 'required',
-                
-                
             ]);
 
 
@@ -57,8 +55,6 @@ class HotelBookingController extends Controller
                 "nationality"=> $req->nationality,
                 'religion'=> $req->religion,
                 'address'=> $req->address,
-                 // 'age'=>$age,
-               
             ]);
 
             $insert = Appoinment::on('mysql_second')->create([
@@ -66,7 +62,6 @@ class HotelBookingController extends Controller
                 'check_in'=>$ptn_id,
                 'adult'=>$req->name,
                 'children'=> $req->phone,
-                
             ]);
         }
         else{

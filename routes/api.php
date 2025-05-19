@@ -1617,20 +1617,20 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
             // *************************************** Hotel Group Routes Start *************************************** //
             Route::controller(TranGroupController::class)->group(function () {
-                Route::get('/group', 'Show');
-                Route::post('/group', 'Insert');
-                Route::put('/group', 'Update');
-                Route::delete('/group', 'Delete');
+                Route::get('/groupe', 'Show');
+                Route::post('/groupe', 'Insert');
+                Route::put('/groupe', 'Update');
+                Route::delete('/groupe', 'Delete');
             });
 
 
 
             // *************************************** Hotel Service Routes Start *************************************** //
             Route::controller(TranHeadController::class)->group(function () {
-                Route::get('/service', 'Show');
-                Route::post('/service', 'Insert');
-                Route::put('/service', 'Update');
-                Route::delete('/service', 'Delete');
+                Route::get('/services', 'Show');
+                Route::post('/services', 'Insert');
+                Route::put('/services', 'Update');
+                Route::delete('/services', 'Delete');
             });
         }); // End Hotel Setup Routes
 

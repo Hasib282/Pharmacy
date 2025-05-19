@@ -54,7 +54,7 @@ class HotelSetupController extends Controller
 
         /////////////////////////// --------------- Hotel Services Groupe Methods Start Here ---------- //////////////////////////
         // Show group
-        public function ShowGroup(Request $req){
+        public function ShowGroupe(Request $req){
             $name = "Group";
             $js = 'hotel/tran_groupe';
             if ($req->ajax()) {

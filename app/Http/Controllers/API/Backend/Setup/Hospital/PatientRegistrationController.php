@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Api\Backend\Setup\Hospital;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Models\Patient_Registration;
-use App\Models\Patient_Information;
+use App\Models\Booking;
+use App\Models\User_info;
 
 class PatientRegistrationController extends Controller
 {
     // Show All Patient Registrations
     public function Show(Request $req){
-        $data = Patient_Registration::on('mysql_second')->get();//with is used to bring data from the doctors table ->with('doctors')
+        $data = Booking::on('mysql_second')->with('User','Category','List','Doctors')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -24,17 +24,7 @@ class PatientRegistrationController extends Controller
     // Insert Patient Registrations
     public function Insert(Request $req){
         if($req->patient_type == "new"){
-            //Patient id auto generate
-            $patient_id = Patient_Information::on('mysql_second')->select('ptn_id')->orderby('ptn_id','desc')->first();
-            if($patient_id){
-                $newptn_id = intval(substr($patient_id->ptn_id,1));
-                $newptn_id++;
-            }
-            else{
-                $newptn_id = 1;
-            }
-            $ptn_id= "P".str_pad($newptn_id,11,'0',STR_PAD_LEFT);
-            //Patient id auto generation ends
+            $ptn_id = GenerateUserId(6, 'PT');
 
             // validation
             $req->validate([
@@ -58,20 +48,20 @@ class PatientRegistrationController extends Controller
             $age =$age_year . " years, " . $age_month . " months, " . $age_day . " days";
             
 
-            Patient_Information::on('mysql_second')->create([
-                'ptn_id'=>$ptn_id,
+            User_info::on('mysql_second')->create([
+                'user_id'=>$ptn_id,
                 'title'=>$req->title,
-                'name'=> $req->name,
+                'user_name'=> $req->name,
                 'address'=> $req->address,
-                'phone'=> $req->phone,
-                'email'=> $req->email,
-                'age'=>$age,
+                'user_phone'=> $req->phone,
+                'user_email'=> $req->email,
+                // 'age'=>$age,
                 'gender'=> $req->gender,
                 'nationality'=> $req->nationality,
                 'religion'=> $req->religion,
             ]);
 
-            $insert = Patient_Registration::on('mysql_second')->create([
+            $insert = Booking::on('mysql_second')->create([
                 'reg_id'=>'R00000000001',
                 'ptn_id'=>$ptn_id,
                 'bed_category'=>$req->bed_category,
@@ -82,15 +72,15 @@ class PatientRegistrationController extends Controller
         }
         else{
             $req->validate([
-                'ptn_id' =>'required|exists:mysql_second.patient__information,ptn_id',
-                'bed_category' =>'required',
-                'bed_list' =>'required',
-                'doctor' => 'required',//|exists:mysql_second.doctor__information.id',
-                'sr' => 'required'
+                'ptn_id' =>'required|exists:mysql_second.user__infos,user_id',
+                'bed_category' =>'required|exists:mysql_second.bed__categories,id',
+                'bed_list' =>'required|exists:mysql_second.bed__lists,id',
+                'doctor' => 'required|exists:mysql_second.doctor__information,id',
+                'sr' => 'required|exists:mysql_second.user__infos,user_id'
             ]);
 
             //auto generate reg id
-            $reg_id = Patient_Registration::on('mysql_second')->select('reg_id')->where('ptn_id',$req->ptn_id)->orderby('reg_id','desc')->first();
+            $reg_id = Booking::on('mysql_second')->select('reg_id')->where('ptn_id',$req->ptn_id)->orderby('reg_id','desc')->first();
             
             if($reg_id){
                 $newreg_id = intval(substr($reg_id->reg_id, 1));
@@ -104,7 +94,7 @@ class PatientRegistrationController extends Controller
             //auto generate reg id ends
             
             
-            $insert = Patient_Registration::on('mysql_second')->create([
+            $insert = Booking::on('mysql_second')->create([
                 'reg_id' => $reg_id,
                 'ptn_id' => $req->ptn_id,
                 'bed_category' => $req->bed_category,
@@ -114,7 +104,7 @@ class PatientRegistrationController extends Controller
             ]);
         }
 
-        $data = Patient_Registration::on('mysql_second')->findOrFail($insert->id);
+        $data = Booking::on('mysql_second')->with('User','Category','List','Doctors')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -128,35 +118,24 @@ class PatientRegistrationController extends Controller
     // Update Patient Registrations
     public function Update(Request $req){
         $req->validate([
-            'pid'=> 'required',
-            'rid'=>'required',
-            'title'=>'required',
-            'name'=> 'required',
-            'address'=> 'required',
-            'age'=> 'required',
-            'gender'=> 'required',
-            'nationality'=> 'required',
-            'religion'=> 'required',
-            'doctor'=> 'required',
-            'sr'=> 'required'
+            'ptn_id' =>'required|exists:mysql_second.user__infos,user_id',
+            'bed_category' =>'required|exists:mysql_second.bed__categories,id',
+            'bed_list' =>'required|exists:mysql_second.bed__lists,id',
+            'doctor' => 'required|exists:mysql_second.doctor__information,id',
+            'sr' => 'required|exists:mysql_second.user__infos,user_id'
         ]);
 
-        $update = Patient_Registration::on('mysql_second')->findOrFail($req-> id)->update([
-            'pid'=> $req->pid,
-            'rid'=>$req->rid,
-            'title'=>$req->title,
-            'name'=> $req->name,
-            'address'=> $req->address,
-            'age'=> $req->age,
-            'gender'=> $req->gender,
-            'nationality'=> $req->nationality,
-            'religion'=> $req->religion,
-            'doctor'=> $req->doctor,
-            'sr'=> $req->sr,
+        $update = Booking::on('mysql_second')->findOrFail($req-> id)->update([
+            'reg_id' => $reg_id,
+            'ptn_id' => $req->ptn_id,
+            'bed_category' => $req->bed_category,
+            'bed_list' => $req->bed_list,
+            'doctor' => $req->doctor,
+            'sr_id' => $req->sr,
             "updated_at" => now()
         ]);
 
-        $updatedData = Patient_Registration::on('mysql_second')->findOrFail($req-> id);
+        $updatedData = Booking::on('mysql_second')->with('User','Category','List','Doctors')->findOrFail($req-> id);
 
         if($update){
             return response()->json([
@@ -171,7 +150,7 @@ class PatientRegistrationController extends Controller
 
     // Delete Patient Registrations
     public function Delete(Request $req){
-        Patient_Registration::on('mysql_second')->findOrFail($req->id)->delete();
+        Booking::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message'=> 'Patient Registrations Deleted Successfully'
@@ -182,7 +161,7 @@ class PatientRegistrationController extends Controller
 
     // Get Patient Information
     public function GetPatient(Request $req){
-        $data = Patient_Information::on('mysql_second')
+        $data = User_info::on('mysql_second')
             ->where('ptn_id', 'like', 'P%'.$req->patient.'%')
             ->orWhere('phone', 'like', $req->patient.'%')
             ->orWhere('name', 'like', $req->patient.'%')
