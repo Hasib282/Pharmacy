@@ -24,4 +24,8 @@ class Bed_List extends Model
     public function floor(){
         return $this->belongsTo(Floor::class,'floor','id');
     }
+    
+    public function Booking(){
+        return $this->hasMany(Booking::class,'bed_list','id');
+    }
 }

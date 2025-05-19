@@ -2014,6 +2014,16 @@
                             </p>
                         </div>
                     </li>
+
+                    {{-- Hotel User Sub Menu --}}
+                    <li class="sub-menu-item"data-url="{{route('show.bedstatus')}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-users-gear"></i>
+                                Bed Status
+                            </p>
+                        </div>
+                    </li>
                     
                     {{-- Hotel Transaction Sub Menu --}}
                     <li class="sub-menu-item">

@@ -1011,6 +1011,9 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
 
         // Hotel booking routes
         Route::get('/booking',  'ShowBooking')->name('show.booking');
+
+         // Hotel bed Status routes
+         Route::get('/bedstatus',  'ShowBedstatus')->name('show.bedstatus');
        
         
     });

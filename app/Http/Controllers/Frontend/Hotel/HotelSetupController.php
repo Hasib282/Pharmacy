@@ -95,5 +95,18 @@ class HotelSetupController extends Controller
             }
         }// End Method
     
+
+             /////////////////////////// --------------- Hotel Bed Status Methods Start Here ---------- //////////////////////////
+        // Show booking
+        public function ShowBedstatus(Request $req){
+            $name = "Bed Status";
+            $js = 'hotel/bed_status';
+            if ($req->ajax()) {
+                return view('admin_setup.hotel.bed_status.ajaxBlade', compact('name', 'js'));
+            }
+            else{
+                return view('admin_setup.hotel.bed_status.main', compact('name', 'js'));
+            }
+        }// End Method
     
 }
