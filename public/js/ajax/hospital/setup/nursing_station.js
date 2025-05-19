@@ -51,7 +51,8 @@ $(document).ready(function () {
     function EditFormInputValue(item){
         $('#id').val(item.id);
         $('#updateName').val(item.name);
-        $('#updateFloor').val(item.floor);
+        $('#updateFloor').val(item.floor.name);
+        $('#updateFloor').attr('data-id',item.floor.id);
         $('#updateName').focus();
     }; // End Method
 });

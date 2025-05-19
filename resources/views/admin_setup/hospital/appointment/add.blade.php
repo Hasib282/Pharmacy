@@ -138,9 +138,9 @@
                 <!-- Address -->
                 <div class="c-12">
                     <div class="form-input-group">
-                        <label for="updateAddress">Address</label>
-                        <input type="text" name="address" class="form-input" id="updateAddress">
-                        <span class="error" id="update_address_error"></span>
+                        <label for="address">Address</label>
+                        <input type="text" name="address" class="form-input" id="address">
+                        <span class="error" id="address_error"></span>
                     </div>
                 </div>
                 

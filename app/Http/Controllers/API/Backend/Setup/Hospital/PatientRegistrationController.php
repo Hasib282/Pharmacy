@@ -162,10 +162,13 @@ class PatientRegistrationController extends Controller
     // Get Patient Information
     public function GetPatient(Request $req){
         $data = User_info::on('mysql_second')
-            ->where('ptn_id', 'like', 'P%'.$req->patient.'%')
-            ->orWhere('phone', 'like', $req->patient.'%')
-            ->orWhere('name', 'like', $req->patient.'%')
-            ->orderBy('name')
+            ->where('user_role', 6)
+            ->where(function($query) use ($req) {
+                $query->where('user_id', 'like', 'P%' . $req->patient . '%')
+                    ->orWhere('user_phone', 'like', $req->patient . '%')
+                    ->orWhere('user_name', 'like', $req->patient . '%');
+            })
+            ->orderBy('user_name')
             ->take(10)
             ->get();
         
@@ -185,11 +188,11 @@ class PatientRegistrationController extends Controller
                         if($data->count() > 0){
                             foreach($data as $index => $item) {
                                 // $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->ptn_id.'" data-title="'.$item->title.'" data-name="'.$item->name.'" data-phone="'.$item->phone.'" data-email="'.$item->email.'" data-gender="'.$item->gender.'" data-nationality="'.$item->nationality.'" data-religion="'.$item->religion.'" data-address="'.$item->address.'">'.$item->name. '('.$item->ptn_id.')</li>';
-                                $list .= '<tr tabindex="' . ($index + 1) . '" data-id="'.$item->ptn_id.'" data-title="'.$item->title.'" data-name="'.$item->name.'" data-phone="'.$item->phone.'" data-email="'.$item->email.'" data-gender="'.$item->gender.'" data-nationality="'.$item->nationality.'" data-religion="'.$item->religion.'" data-address="'.$item->address.'">
-                                            <td>' .$item->ptn_id. '</td>
-                                            <td>' .$item->name. '</td>
-                                            <td>' .$item->phone. '</td>
-                                            <td>' .$item->email. '</td>
+                                $list .= '<tr tabindex="' . ($index + 1) . '" data-id="'.$item->user_id.'" data-title="'.$item->title.'" data-name="'.$item->user_name.'" data-phone="'.$item->user_phone.'" data-email="'.$item->user_email.'" data-gender="'.$item->gender.'" data-nationality="'.$item->nationality.'" data-religion="'.$item->religion.'" data-address="'.$item->address.'">
+                                            <td>' .$item->user_id. '</td>
+                                            <td>' .$item->user_name. '</td>
+                                            <td>' .$item->user_phone. '</td>
+                                            <td>' .$item->user_email. '</td>
                                             <td>' .$item->gender. '</td>
                                             <td>' .$item->address. '</td>
                                         </tr>';

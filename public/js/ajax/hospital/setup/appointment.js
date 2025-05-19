@@ -2,7 +2,7 @@ function ShowAppointment(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['appoinment_serial','ptn_id','name','mobile','doctor.name', 'date','schedule'],
+        tbody: ['appoinment_serial','user_id','name','mobile','doctor.name', 'date','schedule'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -17,7 +17,7 @@ $(document).ready(function () {
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Patient Serial', key: 'appoinment_serial' },
-        { label: 'Patient Id', key: 'ptn_id' },
+        { label: 'Patient Id', key: 'user_id' },
         { label: 'Name', key: 'name' },
         { label: 'Phone', key: 'moblie' },
         { label: 'Doctor', key: 'doctor.name' },
@@ -79,23 +79,23 @@ $(document).ready(function () {
      // Additional Edit Functionality
      function EditFormInputValue(item){
         $('#id').val(item.id);
-        $('#updatePatient').val(item.ptn_id);        //id
-        $('#updatePatient').attr('data-id',item.ptn_id);        //id
-        $('#updateTitle').val(item.patient.title);  //title
-        $('#updateName').val(item.patient.name);    //name
-        $('#updatePhone').val(item.patient.phone);  //phone
-        $('#updateEmail').val(item.patient.email); // email 
-        $('#updateGender').val(item.patient.gender);     //gender
-        $('#updateNationality').val(item.patient.nationality);    //Nationality
-        $('#updateReligion').val(item.patient.religion);    
-        $('#updateAddress').val(item.patient.address);      
+        $('#updatePatient').val(item.user.user_id);
+        $('#updatePatient').attr('data-id',item.doctor.user_id);
+        $('#updateTitle').val(item.user.title);
+        $('#updateName').val(item.user.user_name);
+        $('#updatePhone').val(item.user.user_phone);
+        $('#updateEmail').val(item.user.user_email);
+        $('#updateGender').val(item.user.gender);
+        $('#updateNationality').val(item.user.nationality);
+        $('#updateReligion').val(item.user.religion);    
+        $('#updateAddress').val(item.user.address);
         $('#updateDoctor').val(item.doctor.name);      
-        $('#updateDoctor').attr('data-id',item.doctor.id);    //doctor
+        $('#updateDoctor').attr('data-id',item.doctor.id);
         $('#updateDate').val(item.date);  
         $('#updateSchedule').val(item.schedule);  
         $('#updateAppointment').val(item.appoinment_serial);  
         // $('#updateTitle').val(item.);
-        $('#updatePtn_Ide').focus();
+        $('#updatePtn_Id').focus();
     }; // End Method
 });
 

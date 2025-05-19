@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('passport')->nullable();
             $table->string('driving_lisence')->nullable();
             $table->string('address')->nullable();
-            $table->string('arrival_from')->nullable();
+            $table->string('corporate_id')->nullable();
             $table->string('password')->nullable();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('store_id')->nullable();
