@@ -8,5 +8,6 @@
     { "type_name": "Hospital" },
     { "type_name": "Hotel" },
     { "type_name": "Resturant" },
-    { "type_name": "Diagonosis" }
+    { "type_name": "Diagonosis" },
+    { "type_name": "School" }
 ]

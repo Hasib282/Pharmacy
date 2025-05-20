@@ -21,14 +21,14 @@ class UsersController extends Controller
     } // End Method
 
 
-
     
 
-    /////////////////////////// --------------- Admin Methods start---------- //////////////////////////
-    // Show Admins
-    public function ShowAdmins(Request $req){
-        $name = "Admin";
-        $js = "admin";
+    
+    /////////////////////////// --------------- Super Admin Methods start---------- //////////////////////////
+    // Show Super Admins
+    public function ShowSuperAdmins(Request $req){
+        $name = "Super Admin";
+        $js = "super_admin";
         if ($req->ajax()) {
             return view('users.ajaxBlade', compact('name', 'js'));
         }
@@ -36,16 +36,16 @@ class UsersController extends Controller
             return view('users.main', compact('name', 'js'));
         }
     } // End Method
-
-
-
-
-
-    /////////////////////////// --------------- Super Admin Methods start---------- //////////////////////////
-    // Show Super Admins
-    public function ShowSuperAdmins(Request $req){
-        $name = "Super Admin";
-        $js = "super_admin";
+    
+    
+    
+    
+    
+    /////////////////////////// --------------- Admin Methods start---------- //////////////////////////
+    // Show Admins
+    public function ShowAdmins(Request $req){
+        $name = "Admin";
+        $js = "admin";
         if ($req->ajax()) {
             return view('users.ajaxBlade', compact('name', 'js'));
         }
@@ -119,6 +119,23 @@ class UsersController extends Controller
         }
         else{
             return view('users.patient.main', compact('name', 'js'));
+        }
+    } // End Method
+    
+    
+    
+
+    
+    /////////////////////////// --------------- Guest Methods Start Here ---------- //////////////////////////
+    // Show Guests
+    public function ShowGuests(Request $req){
+        $name = "Guest";
+        $js = 'guest';
+        if ($req->ajax()) {
+            return view('users.guest.ajaxBlade', compact('name','js'));
+        }
+        else{
+            return view('users.guest.main', compact('name', 'js'));
         }
     } // End Method
 }

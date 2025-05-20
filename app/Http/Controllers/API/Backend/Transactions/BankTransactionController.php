@@ -44,12 +44,14 @@ class BankTransactionController extends Controller
         ]);
 
         // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Main::on('mysql_second')->where('tran_type', 4)->where('tran_method', $req->method)->latest('tran_id')->first();
+        // $transaction = Transaction_Main::on('mysql_second')->where('tran_type', 4)->where('tran_method', $req->method)->latest('tran_id')->first();
         if($req->method === 'Withdraw'){
-            $id = ($transaction) ? 'BMW' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'BMW000000001';
+            $id = GenerateTranId(4, 'Withdraw', 'BMW');
+            // $id = ($transaction) ? 'BMW' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'BMW000000001';
         }
-        else if($req->method === 'Deposit'){
-            $id = ($transaction) ? 'BMD' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'BMD000000001';
+        else if($req->method === ''){
+            $id = GenerateTranId(4, 'Deposit', 'BMD');
+            // $id = ($transaction) ? 'BMD' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'BMD000000001';
         }
 
         $data = null;

@@ -1,5 +1,5 @@
 <div id="addModal" class="modal-container">
-    <div class="modal-subject" style="width: 60%;">
+    <div class="modal-subject" style="width: 100%;margin:0;padding:0;">
         <div class="modal-heading banner">
             <div class="center">
                 <h3>Add {{ $name }}</h3>
@@ -12,245 +12,298 @@
             @csrf
             @method('POST')
 
-            
-            <div class="rows">
-                <!-- Patient Type Selection -->
-                <div class="c-12">
-                    <div style="display: flex; gap: 10px; padding: 10px 0;">
-                        <label for="oldGuest">
-                            <input type="radio" name="guest_type" value="old" id="oldGuest">  Old Guest
-                        </label>
-                        <label for="newGuest">
-                            <input type="radio" name="guest_type" value="new" id="newGuest" checked>  New Guest
-                        </label>
-                    </div>
-                </div>
-                
-                <!--  patient id toggle -->
-                <div class="c-12">
-                    <div class="togglePatientid" style="display: none;">
+            <!-- Patient Type Selection -->
+            <div style="display: flex; gap: 10px; padding: 10px 0;">
+                <label for="oldGuest">
+                    <input type="radio" name="guest_type" value="old" id="oldGuest"> Old Guest
+                </label>
+                <label for="newGuest">
+                    <input type="radio" name="guest_type" value="new" id="newGuest" checked> New Guest
+                </label>
+                <label for="corporateGuest">
+                    <input type="radio" name="guest_type" value="corporate" id="corporateGuest"> Corporate Guest
+                </label>
+            </div>
+
+            <fieldset>
+                <legend>Booking Details</legend>
+                <div class="rows">
+                    <!-- check in -->
+                    <div class="c-3">
                         <div class="form-input-group">
-                            <label for="guest">Guest Search</label>
-                            <input type="text" name="guest" class="form-input" id="guest" autocomplete="off"><hr>
-                            <div id="guest-list"></div>
-                            <span class="error" id="guest_id_error"></span>
+                            <label for="check_in">Check In<span class="required">*</span></label>
+                            <input type="datetime-local" name="check_in" class="input-small" id="check_in">
+                            <span class="error" id="check_in_error"></span>
+                        </div>
+                    </div>
+
+                    <!-- check out -->
+                    <div class="c-3">
+                        <div class="form-input-group">
+                            <label for="check_out">Check Out</label>
+                            <input type="datetime-local" name="check_out" class="input-small" id="check_out">
+                            <span class="error" id="check_out_error"></span>
+                        </div>
+                    </div>
+                    <!-- Booking Reference (SR) ID -->
+                    <div class="c-3">
+                        <div class="form-input-group">
+                            <label for="sr">Booking Reference (SR)</label>
+                            <input type="text" name="sr" class="input-small" id="sr" autocomplete="off"><hr>
+                            <div id='sr-list'></div>
+                            <span class="error" id="sr_error"></span>
+                        </div>
+                    </div>
+                    <!-- status -->
+                    <div class="c-3">
+                        <div class="form-input-group">
+                            <label for="status">Status <span class="required">*</span></label>
+                            <select name="status" id="status" class="input-small">
+                                <option value="">Select room status</option>
+                                <option value="2" selected>Booking</option>
+                                <option value="1">Check in</option>
+                                <option value="0">Check out</option>
+                                <option value="3">Maintanience</option>
+                            </select>
+                            <span class="error" id="status_error"></span>
                         </div>
                     </div>
                 </div>
+            </fieldset>
 
-                <!--Title-->
-                <div class="c-2">
-                    <div class="form-input-group">
-                        <label for="title">Title</label>
-                        <select name="title" id="title">
-                            <option value="Mr.">Mr.</option>
-                            <option value="Mrs.">Mrs.</option>
-                        </select>
-                        <span class="error" id="title_error"></span>
+            <fieldset>
+                <legend>Room Details</legend>
+                <div class="rows">
+                    <!-- Bed Category -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="bed_category">Room Category<span class="required">*</span></label>
+                            <input type="text" name="bed_category" class="input-small" id="bed_category" autocomplete="off"><hr>
+                            <div id='bed_category-list'></div>
+                            <span class="error" id="bed_category_error"></span>
+                        </div>
+                    </div>
+    
+                    <!-- Bed list -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="bed_list">Room No<span class="required">*</span></label>
+                            <input type="text" name="bed_list" class="input-small" id="bed_list" autocomplete="off"><hr>
+                            <div id='bed_list-list'></div>
+                            <span class="error" id="bed_list_error"></span>
+                        </div>
+                    </div>
+                    <!-- Adult -->
+                    <div class="c-2">
+                        <div class="form-input-group">
+                            <label for="adult">Adult <span class="required">*</span></label>
+                            <input type="number" name="adult" class="input-small" id="adult" value="0">
+                            <span class="error" id="adult_error"></span>
+                        </div>
+                    </div>
+                    <!-- children -->
+                    <div class="c-2">
+                        <div class="form-input-group">
+                            <label for="children">Children <span class="required">*</span></label>
+                            <input type="number" name="children" class="input-small" id="children" value="0">
+                            <span class="error" id="children_error"></span>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Name -->
-                <div class="c-10">
-                    <div class="form-input-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" class="form-input" id="name">
-                        <span class="error" id="name_error"></span>
+            </fieldset>
+
+            <fieldset>
+                <legend>Guest Details</legend>
+                <div class="rows">
+                    <!--  guest search toggle -->
+                    <div class="c-12">
+                        <div class="toggleGuestid" style="display: none;">
+                            <div class="form-input-group">
+                                <label for="guest">Guest Search <span class="required">*</span></label>
+                                <input type="text" name="guest" class="input-small" id="guest" autocomplete="off"><hr>
+                                <div id="guest-list"></div>
+                                <span class="error" id="guest_error"></span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- phone -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="phone">Phone</label>
-                        <input type="text" name="phone" class="form-input" id="phone">
-                        <span class="error" id="phone_error"></span>
+
+                    <!--Title-->
+                    <div class="c-2">
+                        <div class="form-input-group">
+                            <label for="title">Title</label>
+                            <select name="title" id="title" class="input-small">
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                            </select>
+                            <span class="error" id="title_error"></span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- email -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="email">Email</label>
-                        <input type="text" name="email" class="form-input" id="email">
-                        <span class="error" id="email_error"></span>
+                    <!-- Name -->
+                    <div class="c-10">
+                        <div class="form-input-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" class="input-small" id="name">
+                            <span class="error" id="name_error"></span>
+                        </div>
                     </div>
-                </div>
 
-
-                 <!-- Nid -->
-                 <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="nid">Nid</label>
-                        <input type="text" name="nid" class="form-input" id="nid">
-                        <span class="error" id="nid_error"></span>
+                    <!-- phone -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" name="phone" class="input-small" id="phone">
+                            <span class="error" id="phone_error"></span>
+                        </div>
                     </div>
-                </div>
 
-
-                 <!-- Passport -->
-                 <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="passport">Passport</label>
-                        <input type="text" name="passport" class="form-input" id="passport">
-                        <span class="error" id="passport_error"></span>
+                    <!-- email -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="email">Email</label>
+                            <input type="text" name="email" class="input-small" id="email">
+                            <span class="error" id="email_error"></span>
+                        </div>
                     </div>
-                </div>
 
-                     <!-- Driving lisence -->
-                <div class="c-4">
+                    <!-- Gender -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="gender">Gender</label>
+                            <select name="gender" id="gender" class="input-small">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span class="error" id="gender_error"></span>
+                        </div>
+                    </div>
+
+                    <!-- Religion -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="religion">Religion</label>
+                            <select name="religion" id="religion" class="input-small">
+                                <option value="">Select Religion</option>
+                                <option value="Islam" checked>Islam</option>
+                                <option value="Hinduism">Hinduism</option>
+                                <option value="Buddhism">Buddhism</option>
+                                <option value="Christianity">Christianity</option>
+                                <option value="Jainists">Jainists</option>
+                                <option value="Folk religions">Folk religions</option>
+                                <option value="Others">Others</option>
+                            </select>
+                            <span class="error" id="religion_error"></span>
+                        </div>
+                    </div>
+
+                    <!-- Nationality -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="nationality">Nationality</label>
+                            <input type="text" name="nationality" class="input-small" id="nationality" value="Bangladeshi">
+                            <span class="error" id="nationality_error"></span>
+                        </div>
+                    </div>
+
+                    <!-- Nid -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="nid">Nid</label>
+                            <input type="text" name="nid" class="input-small" id="nid">
+                            <span class="error" id="nid_error"></span>
+                        </div>
+                    </div>
+
+                    <!-- Passport -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="passport">Passport</label>
+                            <input type="text" name="passport" class="input-small" id="passport">
+                            <span class="error" id="passport_error"></span>
+                        </div>
+                    </div>
+
+                    <!-- Driving lisence -->
+                    <div class="c-4">
                         <div class="form-input-group">
                             <label for="driving_lisence">Driving Lisence</label>
-                            <input type="text" name="driving_lisence" class="form-input" id="driving_lisence">
-                            <span class="error" id=driving_lisence_error"></span>
+                            <input type="text" name="driving_lisence" class="input-small" id="driving_lisence">
+                            <span class="error" id="driving_lisence_error"></span>
                         </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="c-12">
+                        <div class="form-input-group">
+                            <label for="address">Address</label>
+                            <input type="text" name="address" class="input-small" id="address">
+                            <span class="error" id="address_error"></span>
+                        </div>
+                    </div>
                 </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Payment Part</legend>
+                <div class="rows">
+                    <!-- Service Name -->
+                    {{-- <div class="c-3">
+                        <div class="form-input-group">
+                            <label for="service_name">Service Name</label>
+                            <input type="text" name="service_name" class="input-small" id="service_name" readonly>
+                            <span class="error" id="service_name_error"></span>
+                        </div>
+                    </div> --}}
+                    <!-- Total Amount -->
+                    <div class="c-2">
+                        <div class="form-input-group">
+                            <label for="total">Bed Charge</label>
+                            <input type="number" name="total" class="input-small" id="total" readonly value="0">
+                            <span class="error" id="total_error"></span>
+                        </div>
+                    </div>
+                    <!-- Discount -->
+                    <div class="c-1">
+                        <div class="form-input-group">
+                            <label for="discount">Discount</label>
+                            <input type="number" name="discount" class="input-small" id="discount" min="0" max="100" value="0">
+                            <span class="error" id="discount_error"></span>
+                        </div>
+                    </div>
+                    <!-- Advance -->
+                    <div class="c-2">
+                        <div class="form-input-group">
+                            <label for="advance">Advance</label>
+                            <input type="number" name="advance" class="input-small" id="advance" value="0">
+                            <span class="error" id="advance_error"></span>
+                        </div>
+                    </div>
+                    <!-- Balance -->
+                    <div class="c-2">
+                        <div class="form-input-group">
+                            <label for="balance">Balance</label>
+                            <input type="number" name="balance" class="input-small" id="balance" readonly value="0">
+                            <span class="error" id="balance_error"></span>
+                        </div>
+                    </div>
+                    <!-- Payment Method -->
+                    <div class="c-3">
+                        <div class="form-input-group">
+                            <label for="payment_method">Payment Method</label>
+                            <select name="payment_method" id="payment_method" class="input-small">
     
-
-            
-
-                <!-- Gender -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="gender">Gender</label>
-                        <select name="gender" id="gender" class="form-input">
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                        </select>
-                        <span class="error" id="gender_error"></span>
+                            </select>
+                            <span class="error" id="payment_method_error"></span>
+                        </div>
                     </div>
                 </div>
+            </fieldset>
 
-         
-                <!-- Nationality -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="nationality">Nationality</label>
-                        <input type="text" name="nationality" class="form-input" id="nationality" value="Bangladeshi">
-                        <span class="error" id="nationality_error"></span>
-                    </div>
-                </div>
-
-                <!-- Religion -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="religion">Religion</label>
-                        <select name="religion" id="religion" class="form-input">
-                            <option value="">Select Religion</option>
-                            <option value="Islam" checked>Islam</option>
-                            <option value="Hinduism">Hinduism</option>
-                            <option value="Buddhism">Buddhism</option>
-                            <option value="Christianity">Christianity</option>
-                            <option value="Jainists">Jainists</option>
-                            <option value="Folk religions">Folk religions</option>
-                            <option value="Others">Others</option>
-                        </select>
-                        <span class="error" id="religion_error"></span>
-                    </div>
-                </div>
-                
-                
-                
-                
-                <!-- Address -->
-                <div class="c-12">
-                    <div class="form-input-group">
-                        <label for="updateAddress">Address</label>
-                        <input type="text" name="address" class="form-input" id="updateAddress">
-                        <span class="error" id="update_address_error"></span>
-                    </div>
-                </div>
-                
-          
-                <!-- check in -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="Check_in">check in Date<span class="required">*</span></label>
-                        <input type="date" name="Check_in" class="form-input" id="Check_in">
-                        <span class="error" id="Check_in_error"></span>
-                    </div>
-                </div>
-
-                <!-- check out -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="Check_out">check out Date<span class="required">*</span></label>
-                        <input type="date" name="Check_out" class="form-input" id="Check_out">
-                        <span class="error" id="Check_out_error"></span>
-                    </div>
-                </div>
-
-
-                <!-- Adult -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="adult">Adult</label>
-                        <input type="text" name="adult" class="form-input" id="adult">
-                        <span class="error" id="adult_error"></span>
-                    </div>
-                </div>
-
-
-                <!-- children -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="children">Children</label>
-                        <input type="text" name="children" class="form-input" id="children">
-                        <span class="error" id="children_error"></span>
-                    </div>
-                </div>
-
-
-
-
-                <!-- status -->
-                <div class="c-4">
-                    <div class="form-input-group">
-                        <label for="status">Status</label>
-                        <label for="status"></label>
-                        <select name="status" id="status" class="form-input">
-                            <option value="">Select room status</option>
-                            <option value="Booking" checked>Booking</option>
-                            <option value="Check in">Check in</option>
-                            <option value="Check out">Check out</option>
-                            <option value="Maintanience">Maintanience</option>
-                           
-                        </select>
-                        <span class="error" id="status_error"></span>
-                    </div>
-                </div>
-            </div>
             <div class="center">
                 <button type="submit" class="btn-blue" id="Insert">Submit</button>
             </div>
         </form>
     </div>
 </div>
-
-<!-- JavaScript to Toggle Fields -->
-{{-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const newPatientRadio = document.getElementById("newPatient");
-        const oldPatientRadio = document.getElementById("oldPatient");
-        const newPatientFields = document.getElementById("newPatientFields");
-        const oldPatientFields = document.getElementById("oldPatientFields");
-
-        function toggleFields() {
-            if (newPatientRadio.checked) {
-                newPatientFields.style.display = "block";
-                oldPatientFields.style.display = "none";
-            } else {
-                newPatientFields.style.display = "none";
-                oldPatientFields.style.display = "block";
-            }
-        }
-
-        // Run toggleFields on page load to set correct visibility
-        toggleFields();
-
-        newPatientRadio.addEventListener("change", toggleFields);
-        oldPatientRadio.addEventListener("change", toggleFields);
-    });
-</script> --}}

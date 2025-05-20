@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('children')->nullable();
             $table->timestamp('check_in')->nullable();
             $table->timestamp('check_out')->nullable();
+            $table->string('tran_id')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1:active, 0:Inactive');
             $table->timestamp('added_at')->useCurrent();//admission date
             $table->timestamp('updated_at')->nullable();

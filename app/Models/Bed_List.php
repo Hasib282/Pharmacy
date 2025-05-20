@@ -28,4 +28,8 @@ class Bed_List extends Model
     public function Booking(){
         return $this->hasMany(Booking::class,'bed_list','id');
     }
+
+    public function latestBooking(){
+        return $this->hasOne(Booking::class, 'bed_list', 'id')->latestOfMany();
+    }
 }

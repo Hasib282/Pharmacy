@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('batch_id')->nullable();
             $table->timestamp('tran_date')->useCurrent();
             $table->unsignedBigInteger('store_id')->nullable();
+            $table->unsignedBigInteger('payment_mode')->nullable();
             $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');
             $table->timestamp('updated_at')->nullable();
             

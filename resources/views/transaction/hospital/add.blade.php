@@ -19,7 +19,7 @@
                         <div class="c-3">
                             <div class="form-input-group">
                                 <label for="date">Date</label>
-                                <input type="text" name="date" class="form-input" id="date" value="{{ date('Y-m-d') }}"
+                                <input type="text" name="date" class="input-small" id="date" value="{{ date('Y-m-d') }}"
                                     readonly>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                         <div class="c-9">
                             <div class="form-input-group">
                                 <label for="patient">Patient Search</label>
-                                <input type="text" name="patient" class="form-input" id="patient" autocomplete="off"><hr>
+                                <input type="text" name="patient" class="input-small" id="patient" autocomplete="off"><hr>
                                 <div id="patient-list"></div>
                                 <span class="error" id="ptn_id_error"></span>
                             </div>
@@ -49,7 +49,7 @@
                         <div class="c-10">
                             <div class="form-input-group">
                                 <label for="name">Name</label>
-                                <input type="text" name="name" class="form-input" id="name">
+                                <input type="text" name="name" class="input-small" id="name">
                                 <span class="error" id="name_error"></span>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="phone">Phone</label>
-                                <input type="text" name="phone" class="form-input" id="phone">
+                                <input type="text" name="phone" class="input-small" id="phone">
                                 <span class="error" id="phone_error"></span>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="email">Email</label>
-                                <input type="text" name="email" class="form-input" id="email">
+                                <input type="text" name="email" class="input-small" id="email">
                                 <span class="error" id="email_error"></span>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="gender">Gender</label>
-                                <select name="gender" id="gender" class="form-input">
+                                <select name="gender" id="gender" class="input-small">
                                     <option value="">Select Gender</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -91,10 +91,10 @@
                             <div class="form-input-group">
                                 <label>Age (Y/M/D)</label>
                                 <div class="age-fields" style="display: flex; gap: 5px;">
-                                    <input type="text" name="age_years" class="form-input" id="age_years" placeholder="Years" value="0">
-                                    <input type="text" name="age_months" class="form-input" id="age_months" placeholder="Months"
+                                    <input type="text" name="age_years" class="input-small" id="age_years" placeholder="Years" value="0">
+                                    <input type="text" name="age_months" class="input-small" id="age_months" placeholder="Months"
                                         min="0" max="12" value="0">
-                                    <input type="text" name="age_days" class="form-input" id="age_days" placeholder="Days"
+                                    <input type="text" name="age_days" class="input-small" id="age_days" placeholder="Days"
                                         min="0" max="31" value="0">
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="nationality">Nationality</label>
-                                <input type="text" name="nationality" class="form-input" id="nationality" value="Bangladeshi">
+                                <input type="text" name="nationality" class="input-small" id="nationality" value="Bangladeshi">
                                 <span class="error" id="nationality_error"></span>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                         <div class="c-4">
                             <div class="form-input-group">
                                 <label for="religion">Religion</label>
-                                <select name="religion" id="religion" class="form-input">
+                                <select name="religion" id="religion" class="input-small">
                                     <option value="">Select Religion</option>
                                     <option value="Islam" checked>Islam</option>
                                     <option value="Hinduism">Hinduism</option>
@@ -131,7 +131,7 @@
                         <div class="c-12">
                             <div class="form-input-group">
                                 <label for="address">Address</label>
-                                <input type="text" name="address" class="form-input" id="address">
+                                <input type="text" name="address" class="input-small" id="address">
                                 <span class="error" id="address_error"></span>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                         <div class="c-7">
                             <div class="form-input-group">
                                 <label for="head">Services</label>
-                                <input type="text" name="head" id="head" class="form-input" autocomplete="off"><hr>
+                                <input type="text" name="head" id="head" class="input-small" autocomplete="off"><hr>
                                 <div id="head-list"></div>
                                 <span class="error" id="head_error"></span>
                             </div>
@@ -148,7 +148,7 @@
                         <div class="c-1">
                             <div class="form-input-group">
                                 <label for="quantity">QTY</label>
-                                <input type="text" name="quantity" class="form-input" id="quantity" value="1">
+                                <input type="text" name="quantity" class="input-small" id="quantity" value="1">
                                 <span class="error" id="quantity_error"></span>
                             </div>
                         </div>
@@ -156,7 +156,7 @@
                         <div class="c-2">
                             <div class="form-input-group">
                                 <label for="amount">Price</label>
-                                <input type="text" name="amount" class="form-input" id="amount">
+                                <input type="text" name="amount" class="input-small" id="amount">
                                 <span class="error" id="amount_error"></span>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                         <div class="c-2">
                             <div class="form-input-group">
                                 <label for="totAmount">Total</label>
-                                <input type="text" name="totAmount" class="form-input" id="totAmount" disabled>
+                                <input type="text" name="totAmount" class="input-small" id="totAmount" disabled>
                                 <span class="error" id="totAmount_error"></span>
                             </div>
                         </div>

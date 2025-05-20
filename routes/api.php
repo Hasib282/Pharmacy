@@ -29,6 +29,7 @@ use App\Http\Controllers\API\Backend\Users\ClientController;
 use App\Http\Controllers\API\Backend\Users\SupplierController;
 use App\Http\Controllers\API\Backend\Users\DoctorController;
 use App\Http\Controllers\API\Backend\Users\PatientController;
+use App\Http\Controllers\API\Backend\Users\GuestController;
 
 
 // Users Employee Controllers
@@ -1662,8 +1663,10 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             });
         }); // End Hotel Setup Routes
 
- // *************************************** Hotel Booking Start *************************************** //
-        Route::controller(AppointmentController::class)->group(function(){
+
+
+        // *************************************** Hotel Booking Start *************************************** //
+        Route::controller(HotelBookingController::class)->group(function(){
             Route::get('/booking', 'Show');
             Route::post('/booking', 'Insert');
             Route::put('/booking', 'Update');
@@ -1672,8 +1675,9 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         });
 
 
-         // *************************************** Hotel Booking Start *************************************** //
-         Route::controller(HotelBedStatusController::class)->group(function(){
+
+        // *************************************** Hotel Bed Status Start *************************************** //
+        Route::controller(HotelBedStatusController::class)->group(function(){
             Route::get('/bedstatus', 'Show');
             Route::post('/bedstatus', 'Insert');
             Route::put('/bedstatus', 'Update');
@@ -1686,7 +1690,14 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         
         // *************************************** Hotel Users Routes Start *************************************** //
         Route::prefix('/users')->group(function () {
-            
+            // *************************************** Hotel Bed Status Start *************************************** //
+            Route::controller(GuestController::class)->group(function(){
+                Route::get('/guests', 'Show');
+                Route::post('/guests', 'Insert');
+                Route::put('/guests', 'Update');
+                Route::delete('/guests', 'Delete');
+                Route::get('/guests/get', 'Get');
+            });
         }); // End Hotel Users Routes
         
         

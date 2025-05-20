@@ -28,7 +28,8 @@
         },
         "files": [
             "app/Helpers/UsersHelper.php",
-            "app/Helpers/QueryHelper.php"
+            "app/Helpers/QueryHelper.php",
+            "app/Helpers/TransactionHelper.php"
         ]
     },
     "autoload-dev": {

@@ -44,6 +44,7 @@ return new class extends Migration
             $table->double('due_disc')->default(0)->nullable();
             $table->date('expiry_date')->nullable();
             $table->unsignedBigInteger('store_id')->nullable();
+            $table->unsignedBigInteger('payment_mode')->nullable();
             $table->string('batch_id')->nullable();
             $table->timestamp('tran_date')->useCurrent();
             $table->tinyInteger('status')->default('1')->comment('1 for Active 0 for Inactive');

@@ -1147,6 +1147,22 @@ $(document).ready(function () {
         '#bed_list-list',
 
         '#bed_list-list li',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            $('#total').val(item.attr('data-price'));
+            $('#balance').val(item.attr('data-price'));
+            $('#adult').val(item.attr('data-capacity'));
+        },
+
+        function (targetInput) {
+            $('#total').val(0);
+            $('#balance').val(0);
+            $('#adult').val(0);
+        }
     );
 
 
@@ -1166,6 +1182,23 @@ $(document).ready(function () {
         '#update-bed_list',
 
         '#update-bed_list li',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            $('#updateTotal').val(item.attr('data-price'));
+            $('#updateBalance').val(item.attr('data-price'));
+            $('#updateAdult').val(item.attr('data-capacity'));
+            
+        },
+
+        function (targetInput) {
+            $('#updateTotal').val(0);
+            $('#updateBalance').val(0);
+            $('#updateAdult').val(0);
+        }
     );
 
 
@@ -1458,6 +1491,111 @@ $(document).ready(function () {
             $('#updateAge_years').val('');
             $('#updateAge_months').val('');
             $('#updateAge_days').val('');
+        }
+    );
+    
+    
+    
+    /////////////// ------------------ Search guests And add value to input ajax part start ---------------- /////////////////////////////
+    // Guest Input Search
+    SearchByInput(
+        'hotel/users/guests/get',  
+
+        function ($input) {
+            return {
+                guest: $input.val(),
+            };
+        }, 
+
+        '#guest', 
+
+        '#guest-list',
+
+        '#guest-list tbody tr',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            $(targetInput).val(item.find('td:first').text());
+            $('#title').val(item.attr('data-title'));
+            $('#name').val(item.attr('data-name'));
+            $('#phone').val(item.attr('data-phone'));
+            $('#email').val(item.attr('data-email'));
+            $('#gender').val(item.attr('data-gender'));
+            $('#religion').val(item.attr('data-religion'));
+            $('#nationality').val(item.attr('data-nationality'));
+            $('#nid').val(item.attr('data-nid'));
+            $('#passport').val(item.attr('data-passport'));
+            $('#driving_license').val(item.attr('data-driving_license'));
+            $('#address').val(item.attr('data-address'));
+        },
+
+        function (targetInput) {
+            $('#title').val('');
+            $('#name').val('');
+            $('#phone').val('');
+            $('#email').val('');
+            $('#gender').val('');
+            $('#religion').val('');
+            $('#nationality').val('');
+            $('#nid').val('');
+            $('#passport').val('');
+            $('#driving_license').val('');
+            $('#address').val('');
+        }
+    );
+
+
+
+    // Update Guest Input Search
+    SearchByInput(
+        'hotel/users/guests/get', 
+
+        function ($input) {
+            return {
+                guest: $input.val(),
+            };
+        }, 
+
+        '#updateGuest', 
+
+        '#update-guest',
+
+        '#update-guest tbody tr',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            $(targetInput).val(item.find('td:first').text());
+            $('#updateTitle').val(item.attr('data-title'));
+            $('#updateName').val(item.attr('data-name'));
+            $('#updatePhone').val(item.attr('data-phone'));
+            $('#updateEmail').val(item.attr('data-email'));
+            $('#updateGender').val(item.attr('data-gender'));
+            $('#updateReligion').val(item.attr('data-religion'));
+            $('#updateNationality').val(item.attr('data-nationality'));
+            $('#updateNid').val(item.attr('data-nid'));
+            $('#updatePassport').val(item.attr('data-passport'));
+            $('#updateDriving_license').val(item.attr('data-driving_license'));
+            $('#updateAddress').val(item.attr('data-address'));
+        },
+
+        function (targetInput) {
+            $('#updateTitle').val('');
+            $('#updateName').val('');
+            $('#updatePhone').val('');
+            $('#updateEmail').val('');
+            $('#updateGender').val('');
+            $('#updateReligion').val('');
+            $('#updateNationality').val('');
+            $('#updateNid').val(item.attr('data-nid'));
+            $('#updatePassport').val(item.attr('data-passport'));
+            $('#updateDriving_license').val(item.attr('data-driving_license'));
+            $('#updateAddress').val('');
         }
     );
 });

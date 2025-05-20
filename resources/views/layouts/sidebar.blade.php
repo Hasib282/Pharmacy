@@ -1960,8 +1960,8 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup') ? 'show':''}}">    
                             
-                             {{-- Hotel,Setup Sub Menu  Floor --}}
-                           @if(auth()->user()->hasPermission(194))
+                            {{-- Hotel,Setup Sub Menu  Floor --}}
+                            @if(auth()->user()->hasPermission(194))
                                 <li class="sub-menu1-item" data-url="{{route('show.floor')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'floor') ? 'active':''}}">
                                         <p>
@@ -2024,29 +2024,52 @@
                                     </div>
                                 </li>
                             @endif 
-
                             
                         </ul>
                     </li>
 
                     {{-- Hotel User Sub Menu --}}
                     <li class="sub-menu-item"data-url="{{route('show.booking')}}">
-                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'active':''}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'booking') ? 'active':''}}">
                             <p>
                                 <i class="fa-solid fa-users-gear"></i>
-                                Hotel Booking/Appointment
+                                Hotel Booking
                             </p>
                         </div>
                     </li>
 
-                    {{-- Hotel User Sub Menu --}}
+                    {{-- Hotel Bed Status Sub Menu --}}
                     <li class="sub-menu-item"data-url="{{route('show.bedstatus')}}">
-                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'active':''}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'bedstatus') ? 'active':''}}">
                             <p>
                                 <i class="fa-solid fa-users-gear"></i>
                                 Bed Status
                             </p>
                         </div>
+                    </li>
+
+                    {{-- Hotel Users Sub Menu --}}
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-gears"></i>
+                                Users
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'show':''}}">    
+                            {{-- Hotel Users Sub Menu Guest List--}}
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.hotelGuests')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users' && Request::segment(3) == 'guests') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Guest List
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                        </ul>
                     </li>
                     
                     {{-- Hotel Transaction Sub Menu --}}

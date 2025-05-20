@@ -2,144 +2,196 @@
 
 namespace App\Http\Controllers\API\Backend\Setup\Hotel;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-use App\Models\Appoinment;
+use App\Models\Booking;
 use App\Models\User_Info;
+use App\Models\Transaction_Main;
+use App\Models\Transaction_Detail;
+use App\Models\Transaction_Head;
 
 class HotelBookingController extends Controller
 {
-    
-    // Show appointment data
-
-
+    // Show All Booking/Reservation
     public function Show(Request $req){
-        $data = Appoinment::on('mysql_second')->with('User')->get();
+        $data = Booking::on('mysql_second')->with('User','Category','List','Sr','Bill')->get();
 
         return response()->json([
             'status'=>true,
             'data'=>$data
         ],200);
-    }
+    } // End Method
 
 
     
-    // Insert Patient Appointment
+    // Insert Booking/Reservation
     public function Insert(Request $req){
-        if($req->guest_type == "new"){
-            // Generate guest ID using the helper function
-            $guest_id = GenerateUserId(7, 'GT');
+        // common validations for both new and existing guests
+        $rules = [
+            'check_in' => 'required',
+            'children' => 'required|numeric',
+            'adult' => 'required|numeric',
+            'status' => 'required',
+            'bed_category' => 'required|exists:mysql_second.bed__categories,id',
+            'bed_id' => 'required|exists:mysql_second.bed__lists,id',
+            'sr' => 'nullable|exists:mysql_second.user__infos,user_id',
+            'payment_method' => 'required|exists:mysql.payment__methods,id',
+        ];
+
+        // Conditional validation for "new" guest
+        if ($req->guest_type === 'new') {
+            $rules = array_merge($rules, [
+                'title' => 'required',
+                'name' => 'required',
+                'phone' => 'required',
+            ]);
+        } else {
+            $rules['guest'] = 'required|exists:mysql_second.user__infos,user_id';
+        }
+
+        $req->validate($rules);
+
+        $data = null;
+
+        DB::transaction(function () use ($req, &$data ) {
+            $guest_id = $req->guest;
+            $groupe = GetTranType($req->segment(2));
+            $head = Transaction_Head::on('mysql')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$req->bed_list)->first();
+
+            //auto generate booking id
+            $id = Booking::on('mysql_second')->orderby('booking_id','desc')->first();
+            $booking_id = $id ? 'HBI' . str_pad((intval(substr($id->booking_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : 'HBI000000001';
+            
+            if($req->guest_type == "new"){
+                // Generate guest ID using the helper function
+                $guest_id = GenerateUserId(7, 'GT');
+
+                User_Info::on('mysql_second')->create([
+                    'user_id'=>$guest_id,
+                    'title'=>$req->title,
+                    'user_name'=> $req->name,
+                    'user_email'=> $req->email,
+                    'user_phone'=> $req->phone,
+                    'user_role'=> 7,
+                    'nid'=> $req->nid,
+                    'passport'=> $req->passport,
+                    'driving_lisence'=> $req->driving_lisence,
+                    'gender'=> $req->gender,
+                    "nationality"=> $req->nationality,
+                    'religion'=> $req->religion,
+                    'address'=> $req->address,
+                ]);
+            }
+
+            $tran_id = GenerateTranId(8,'Receive','HTR');
+            
+            $insert = Booking::on('mysql_second')->create([
+                'booking_id' => $booking_id,
+                'user_id' => $guest_id,
+                'bed_category' => $req->bed_category,
+                'bed_list' => $req->bed_id,
+                'sr_id' => $req->sr,
+                'adult'=>$req->adult,
+                'children'=> $req->children,
+                'check_in'=> $req->check_in,
+                'check_out'=> $req->check_out,
+                'tran_id' => $tran_id,
+                'status' => $req->status
+            ]);
+
+            Transaction_Main::on('mysql_second')->create([
+                "tran_id" => $tran_id,
+                "tran_type" => 8,
+                "tran_method" => 'Receive',
+                "tran_user" => $guest_id,
+                "bill_amount" => $req->total,
+                "discount" => $req->discount,
+                "net_amount" => $req->total - $req->discount,
+                "receive" => $req->advance,
+                "payment" => 0,
+                "due" => $req->balance,
+                "payment_mode" => $req->payment_method,
+            ]);
+
+            Transaction_Detail::on('mysql_second')->create([
+                "tran_id" => $tran_id,
+                "tran_type" => 8,
+                "tran_method" => 'Receive',
+                "tran_user" => $guest_id,
+                "tran_groupe_id" => $groupe,
+                "tran_head_id" => $head->id,
+                "amount" => $req->total,
+                "quantity_actual" => 1,
+                "quantity" => 1,
+                "tot_amount" => $req->total,
+                "discount" => $req->discount,
+                "receive" => $req->advance,
+                "payment" => 0,
+                "due" => $req->balance,
+                "payment_mode" => $req->payment_method,
+            ]);
+
+            $data = Booking::on('mysql_second')->with('User','Category','List','Sr','Bill')->findOrFail($insert->id);
+        });
         
-
-            // validation
-            $req->validate([
-                'title'=>'required',
-                'name'=> 'required',
-                'phone'=> 'required',
-                'nid'=> 'required',
-                'passport'=> 'required',
-                'driving_lisence'=> 'required',
-            ]);
-
-
-            User_Info::on('mysql_second')->create([
-                'user_id'=>$guest_id,
-                'title'=>$req->title,
-                'user_name'=> $req->name,
-                'user_email'=> $req->email,
-                'user_phone'=> $req->phone,
-                'nid'=> $req->nid,
-                'passport'=> $req->passport,
-                'driving_lisence'=> $req->driving_lisence,
-                'gender'=> $req->gender,
-                "nationality"=> $req->nationality,
-                'religion'=> $req->religion,
-                'address'=> $req->address,
-            ]);
-
-            $insert = Appoinment::on('mysql_second')->create([
-                'appoinment_serial'=>'R0000000001',
-                'check_in'=>$ptn_id,
-                'adult'=>$req->name,
-                'children'=> $req->phone,
-            ]);
-        }
-        else{
-            $req->validate([
-                'patient' =>'required|exists:mysql_second.patient__information,ptn_id',
-                'doctor'=> 'required',//|exists:mysql_second.
-                'date'=> 'required',
-                'appointment'=> 'required',
-                'schedule'=> 'required',
-            ]);
-
-            
-            //auto generate reg id ends
-            
-            
-            $insert = Appoinment::on('mysql_second')->create([
-                'appoinment_serial'=>$req->appointment,
-                'ptn_id'=>$req->patient,
-                'name'=>$req->name,
-                'mobile'=> $req->phone,
-                'doctor'=> $req->doctor,
-                'date'=> $req->date,
-                'schedule'=> $req->schedule
-            ]);
-        }
-
-        $data = Appoinment::on('mysql_second')->with('Doctor','Patient')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
-            'message' => 'Patient Registrations Added Successfully',
+            'message' => 'Booking Added Successfully',
             "data" => $data,
         ], 200); 
     } // End Method
 
 
 
-    // update Patient Appointment
-
-
+    // Update Booking/Reservation
     public function Update(Request $req){
         $req->validate([
-            'patient' =>'required|exists:mysql_second.patient__information,ptn_id',
-            'doctor'=> 'required|exists:mysql_second.doctor__information,id',//|exists:mysql_second.
-            'date'=> 'required',
-            'appointment'=> 'required',
-            'schedule'=> 'required',
+            'guest' => 'required|exists:mysql_second.user__infos,user_id',
+            'check_in' => 'required',
+            'children' => 'required',
+            'adult' => 'required',
+            'status' => 'required',
+            'bed_category' =>'required|exists:mysql_second.bed__categories,id',
+            'bed_list' =>'required|exists:mysql_second.bed__lists,id',
+            'sr' =>'nullable|exists:mysql_second.user__infos,user_id',
+            'payment_method' =>'required|exists:mysql.payment__methods,id',
         ]);
 
-        $update = Appoinment::on('mysql_second')->findOrFail($req->id)->update([
-                'appoinment_serial'=>$req->appointment,
-                'ptn_id'=>$req->patient,
-                'name'=>$req->name,
-                'mobile'=> $req->ptn_phone,
-                'doctor'=> $req->doctor,
-                'date'=> $req->date,
-                'schedule'=> $req->schedule,
-                "updated_at" => now()
+        $update = Booking::on('mysql_second')->findOrFail($req->id)->update([
+            'booking_id'=> $req->booking_id,
+            'user_id' => $req->guest_id,
+            'bed_category' => $req->bed_category,
+            'bed_list' => $req->bed_list,
+            'sr_id' => $req->sr,
+            'adult'=>$req->name,
+            'children'=> $req->phone,
+            'check_in'=> $req->check_in,
+            'check_out'=> $req->check_out,
+            'status' => $req->status,
+            "updated_at" => now()
         ]);
 
-        $updatedData = Appoinment::on('mysql_second')->with('Doctor','Patient')->findOrFail($req-> id);
-        return response()->json([
-            'status'=> true,
-            'message' => 'Patient Registrations Added Successfully',
-            "updatedData" => $updatedData,
-        ], 200); 
-
+        $updatedData = Booking::on('mysql_second')->with('User','Category','List','Sr','Bill')->findOrFail($req-> id);
         
-    }
-
-
-    // Delete Patient Registrations
-    public function Delete(Request $req){
-        Appoinment::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
-            'message'=> 'Patient Registrations Deleted Successfully'
+            'message' => 'Booking Added Successfully',
+            "updatedData" => $updatedData,
         ], 200);
     } // End Method
 
+
+
+    // Delete Booking/Reservation
+    public function Delete(Request $req){
+        Booking::on('mysql_second')->findOrFail($req->id)->delete();
+
+        return response()->json([
+            'status'=> true,
+            'message'=> 'Booking Deleted Successfully'
+        ], 200);
+    } // End Method
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+use App\Models\Transaction_Head;
 use App\Models\Bed_List;
 
 class BedListController extends Controller
@@ -30,6 +31,7 @@ class BedListController extends Controller
             "floor" => 'nullable|exists:mysql_second.floors,id',
         ]);
 
+        // Insert Bed List
         $insert = Bed_List::on('mysql_second')->create([
             "name" => $req->bed_list,
             "category" => $req->bed_category,
@@ -37,6 +39,15 @@ class BedListController extends Controller
             "floor" => $req->floor,
             "price" => $req->price,
             "capacity" => $req->capacity,
+        ]);
+
+        // Insert Transaction Head
+        $groupe = GetTranType($req->segment(2));
+        Transaction_Head::on('mysql')->create([
+            "tran_head_name" => 'Bed-'.$req->bed_list,
+            "groupe_id" => $groupe,
+            "mrp" => $req->price,
+            "company_id" => $req->company,
         ]);
 
         $data = Bed_List::on('mysql_second')->with('category','nursing','floor')->findOrFail($insert->id);
@@ -61,6 +72,14 @@ class BedListController extends Controller
             "floor" => 'nullable|exists:mysql_second.floors,id',
         ]);
 
+        // Update Transaction Head
+        $groupe = GetTranType($req->segment(2));
+        Transaction_Head::on('mysql')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$data->name)->update([
+            "tran_head_name" => 'Bed-'.$req->bed_list,
+            "mrp" => $req->price
+        ]);
+
+        // Update Bed List
         $update = $data->update([
             "name" => $req->bed_list,
             "category" => $req->bed_category,
@@ -70,6 +89,7 @@ class BedListController extends Controller
             "capacity" => $req->capacity,
             "updated_at" => now()
         ]);
+
 
         $updatedData = Bed_List::on('mysql_second')->with('category','nursing','floor')->findOrFail($req->id);
 
@@ -107,7 +127,7 @@ class BedListController extends Controller
         $list = "<ul>";
             if($data->count() > 0){
                 foreach($data as $index => $item) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'">'.$item->name.'</li>';
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->id.'" data-price="'.$item->price.'"  data-capacity="'.$item->capacity.'">'.$item->name.'</li>';
                 }
             }
             else{

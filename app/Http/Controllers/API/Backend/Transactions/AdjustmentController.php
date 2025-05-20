@@ -50,12 +50,13 @@ class AdjustmentController extends Controller
         if ($req->type && isset($prefixes[$req->type])) {
             $prefix = $prefixes[$req->type][$req->method] ?? null;
             if ($prefix) {
-                $transaction = Transaction_Detail::on('mysql_second')->where('tran_type', $req->type)
-                    ->where('tran_method', $req->method)
-                    ->latest('tran_id')
-                    ->first();
+                $id = GenerateTranId($req->type, $req->method, $prefix);
+                // $transaction = Transaction_Detail::on('mysql_second')->where('tran_type', $req->type)
+                //     ->where('tran_method', $req->method)
+                //     ->latest('tran_id')
+                //     ->first();
     
-                $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
+                // $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
                 
                 // Get Selected Product Details By Id
                 $product = Transaction_Head::on('mysql')->findOrFail($req->product);

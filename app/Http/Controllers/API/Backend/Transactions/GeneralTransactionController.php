@@ -84,12 +84,14 @@ class GeneralTransactionController extends Controller
         }
 
         // Generates Auto Increment Purchase Id
-        $transaction = Transaction_Main::on('mysql_second')->where('tran_type', 1)->where('tran_method', $req->method)->latest('tran_id')->first();
+        // $transaction = Transaction_Main::on('mysql_second')->where('tran_type', 1)->where('tran_method', $req->method)->latest('tran_id')->first();
         if($req->method === 'Receive'){
-            $id = ($transaction) ? 'REC' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'REC000000001';
+            // $id = ($transaction) ? 'REC' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'REC000000001';
+            $id = GenerateTranId(1, 'Receive', 'REC');
         }
         else if($req->method === 'Payment'){
-            $id = ($transaction) ? 'PAY' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'PAY000000001';
+            // $id = ($transaction) ? 'PAY' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'PAY000000001';
+            $id = GenerateTranId(1, 'Payment', 'PAY');
         }
         
         $data = null;

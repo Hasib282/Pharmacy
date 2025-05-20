@@ -33,13 +33,10 @@ $(document).ready(function () {
 
     // Insert Ajax
     InsertAjax('hotel/setup/roomlist', {floor:{ selector: '#floor', attribute: 'data-id' },bed_category: { selector: '#bed_category', attribute: 'data-id' }}, function () {
-        $('#room_number').focus();
-        $('#room_catagory').focus();
-        $('#floor').focus();
-        $('#price').focus();
-        $('#capacity').focus();
-
-
+        $('#bed_list').removeAttr('data-id');
+        $('#bed_category').removeAttr('data-id');
+        $('#floor').removeAttr('data-id');
+        $('#bed_category').focus();
     });
 
     // Edit Ajax

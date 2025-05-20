@@ -31,4 +31,8 @@ class Booking extends Model
     public function Doctors(){
         return $this->belongsTo(Doctor_Information::class,'doctor','id');
     }
+    
+    public function Bill(){
+        return $this->belongsTo(Transaction_Main::class,'tran_id','tran_id');
+    }
 }

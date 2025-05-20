@@ -54,14 +54,14 @@ use App\Http\Controllers\Frontend\Pharmacy\PharmacyReportController;
 
 //Hospital Controllers
 use App\Http\Controllers\Frontend\Hospital\HospitalSetupConrtoller;
-use App\Http\Controllers\Frontend\Hospital\HospitalUsersConrtoller;
+use App\Http\Controllers\Frontend\Hospital\HospitalReportConrtoller;
 use App\Http\Controllers\Frontend\Hospital\HospitalTransactionController;
 
 
 //Hotel Controllers
-use App\Http\Controllers\Frontend\Hotel\HotelReportController;
 use App\Http\Controllers\Frontend\Hotel\HotelSetupController;
 use App\Http\Controllers\Frontend\Hotel\HotelTransactionController;
+use App\Http\Controllers\Frontend\Hotel\HotelReportController;
 
 
 // Report Controllers
@@ -106,16 +106,15 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
     });
 
 
-    // Route::middleware(CheckPermission::class)->group(function () {
-        // *************************************** Profile Controller Routes Start *************************************** //
-        Route::controller(ProfileController::class)->group(function () {
-            Route::get('/profile/{id}', 'ShowProfile')->name('show.profile');
-            Route::post('/edit/profile', 'EditProfile')->name('edit.profile');
-            Route::get('/update/profile', 'UpdateProfile')->name('update.profile');
-        });
+    // *************************************** Profile Controller Routes Start *************************************** //
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/profile/{id}', 'ShowProfile')->name('show.profile');
+        Route::post('/edit/profile', 'EditProfile')->name('edit.profile');
+        Route::get('/update/profile', 'UpdateProfile')->name('update.profile');
+    });
 
 
-        
+    
 
 
     /////-----/////-----/////-----/////-----/////-----///// Admin Setup Routes Start /////-----/////-----/////-----/////-----/////-----/////
@@ -1001,46 +1000,48 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
     /////-----/////-----/////-----/////-----/////-----///// Hotel Routes Start /////-----/////-----/////-----/////-----/////-----/////
     
     Route::prefix('/hotel')->group(function () {
-        // *************************************** Hotel Setup Routes Start *************************************** //
         Route::controller(HotelSetupController::class)->group(function(){
-        Route::prefix('/setup')->group(function () {
-            // Route::controller(AccountStatementController::class)->group(function () {
-            //     ///////////// --------------- Account Summary Statement Routes ----------- ///////////////////
-            //     Route::get('/summary', 'ShowAccountSummaryStatement')->name('show.accountSummary');
-            //     Route::get('/summary/search', 'SearchAccountSummaryStatement')->name('search.accountSummary');
-            // });
+            // *************************************** Hotel Setup Routes Start *************************************** //
+            Route::prefix('/setup')->group(function () {
+                Route::get('/floor',  'ShowFloor')->name('show.floor');
+                
+                Route::get('/roomcatagory',  'ShowRoomCatagory')->name('show.roomcatagory');
+                
+                Route::get('/roomlist',  'ShowRoomList')->name('show.roomlist');
+                
+                Route::get('/groupe',  'ShowGroupe')->name('show.groupe');
 
-            Route::get('/floor',  'ShowFloor')->name('show.floor');
-            Route::get('/roomcatagory',  'ShowRoomCatagory')->name('show.roomcatagory');
-            Route::get('/roomlist',  'ShowRoomList')->name('show.roomlist');
-            Route::get('/groupe',  'ShowGroupe')->name('show.groupe');
-            Route::get('/service',  'ShowService')->name('show.service');
+                Route::get('/service',  'ShowService')->name('show.service');
+            }); // End Hotel Setup Routes
 
 
-        }); 
+            // Hotel booking routes
+            Route::get('/booking',  'ShowBooking')->name('show.booking');
 
-        // Hotel booking routes
-        Route::get('/booking',  'ShowBooking')->name('show.booking');
 
-         // Hotel bed Status routes
-         Route::get('/bedstatus',  'ShowBedstatus')->name('show.bedstatus');
-       
-        
-    });
-        // End Hotel Setup Routes
-        
-        
-        
+            // Hotel bed Status routes
+            Route::get('/bedstatus',  'ShowBedstatus')->name('show.bedstatus');
+        }); // End Hotel Setup Controller
+
+
+
         // *************************************** Hotel Users Routes Start *************************************** //
         Route::prefix('/users')->group(function () {
-            
+            Route::controller(UsersController::class)->group(function(){
+                // Hotel Guests routes
+                Route::get('/guests',  'ShowGuests')->name('show.hotelGuests');
+            });
         }); // End Hotel Users Routes
         
         
         
         // *************************************** Hotel Transaction Routes Start *************************************** //
         Route::prefix('/transaction')->group(function () {
-            
+            Route::controller(HotelTransactionController::class)->group(function(){
+                ///////////// --------------- Services Fee Routes Start ----------- ///////////////////
+                Route::get('/services',  'ShowServices')->name('show.services');
+                Route::get('/services/search',  'SearchServices')->name('search.services');
+            });
         }); // End Hotel Transaction Routes
         
         
@@ -1248,5 +1249,4 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
     }); // End Report Routes 
     
     /////-----/////-----/////-----/////-----/////-----///// Report Routes End /////-----/////-----/////-----/////-----/////-----/////
-    // });
 });

@@ -1,5 +1,4 @@
 @php
-    $searchDivisionValue = request()->query('division');
     $searchValue = request()->query('search');
     $searchOptionValue = request()->query('searchOption');
 @endphp
@@ -7,9 +6,7 @@
 {{-- Add Button And Search Fields --}}
 <div class="add-search">
     <div class="rows">
-        <div class="c-3">
-        
-        </div>
+        <div class="c-3"></div>
         <div class="c-6">
 
         </div>
@@ -31,6 +28,9 @@
     <div id="paginate"></div>
 </div>
 
-{{-- ajax part start from here --}}
-<script src="{{ asset('js/ajax').'/'. $js . '.js' }}"></script>
-<script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
+@include('users.guest.edit')
+
+@include('common_modals.delete')
+
+<!-- ajax part start from here -->
+<script src="{{ asset('js/ajax/hotel/users/guest.js') }}"></script>

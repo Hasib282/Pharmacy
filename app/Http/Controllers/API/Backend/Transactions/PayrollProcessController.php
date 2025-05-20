@@ -93,9 +93,11 @@ class PayrollProcessController extends Controller
                 ->orderBy('emp_id')
                 ->get();
 
-                $transaction = Transaction_Main::on('mysql_second')->where('tran_type', '3')->latest('tran_id')->first();
-                $id = ($transaction) ? 'PRP' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : 'PRP000000001';
+                // $transaction = Transaction_Main::on('mysql_second')->where('tran_type', '3')->latest('tran_id')->first();
+                // $id = ($transaction) ? 'PRP' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : 'PRP000000001';
                 
+                $id = GenerateTranId(3, 'Payment', 'PRP');
+
                 if($payrolls->count() > 0){
                     $salary = 0;
                     $transactionDetails = [];

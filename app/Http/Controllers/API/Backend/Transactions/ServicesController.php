@@ -34,7 +34,7 @@ class ServicesController extends Controller
         $req->validate([
             "method" => 'required',
             "type" => 'required|exists:mysql.transaction__main__heads,id',
-            "ptn_id" => 'required|exists:mysql_second.patient__information,ptn_id',
+            "ptn_id" => 'required|exists:mysql_second.user_info,user_id',
             "amountRP" => 'required',
             "discount" => 'required',
             "netAmount" => 'required',
