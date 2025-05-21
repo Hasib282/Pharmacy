@@ -1039,8 +1039,8 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
         Route::prefix('/transaction')->group(function () {
             Route::controller(HotelTransactionController::class)->group(function(){
                 ///////////// --------------- Services Fee Routes Start ----------- ///////////////////
-                Route::get('/services',  'ShowServices')->name('show.services');
-                Route::get('/services/search',  'SearchServices')->name('search.services');
+                Route::get('/services',  'ShowServices')->name('show.hotelServices');
+                Route::get('/services/search',  'SearchServices')->name('search.hotelServices');
             });
         }); // End Hotel Transaction Routes
         

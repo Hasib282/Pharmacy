@@ -2081,7 +2081,10 @@
                             </p>
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction') ? 'rotate':''}}"></i>
                         </div>
-                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction') ? 'show':''}}">              
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction') ? 'show':''}}">   
+                            
+                            
+                            
                             {{-- @if(auth()->user()->hasPermission(194))
                                 <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction' && Request::segment(3) == 'specialization') ? 'active':''}}">
@@ -2092,6 +2095,21 @@
                                     </div>
                                 </li>
                             @endif --}}
+
+
+
+                                 
+                                
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.hotelServices')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction' && Request::segment(3) == 'services') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Services
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
                         </ul>
                     </li>
                     

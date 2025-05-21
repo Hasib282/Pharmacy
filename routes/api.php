@@ -120,9 +120,14 @@ use App\Http\Controllers\API\Backend\Transactions\DepositController;
 use App\Http\Controllers\API\Backend\Transactions\DepositRefundController;
 use App\Http\Controllers\API\Backend\Transactions\ServicesController;
 
+
+
 // Hotel Transactions
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBookingController;
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBedStatusController;
+
+//hotel service(transaction)
+use App\Http\Controllers\API\Backend\Transactions\HotelServiceController;
 
 
 
@@ -1704,7 +1709,16 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         
         // *************************************** Hotel Transaction Routes Start *************************************** //
         Route::prefix('/transaction')->group(function () {
-            
+          
+          
+            // *************************************** Hotel Service Start *************************************** //
+            Route::controller(HotelServiceController::class)->group(function(){
+                Route::get('/services', 'Show');
+                Route::post('/services', 'Insert');
+                Route::put('/services', 'Update');
+                Route::delete('/services', 'Delete');
+                Route::get('/services/get', 'Get');
+            });
         }); // End Hotel Transaction Routes
         
         

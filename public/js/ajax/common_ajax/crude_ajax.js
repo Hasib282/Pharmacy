@@ -655,6 +655,7 @@ function InsertTransaction(url, method, type, AddSuccessEvent) {
         let withs = $('#user').attr('data-with');
         let user = $('#user').attr('data-id');
         let ptn_id = $('#patient').attr('data-id');
+        let guest_id = $('#guest').attr('data-id');
         let name = $('#name').val();
         let phone = $('#phone').val();
         let address = $('#address').val();
@@ -669,7 +670,7 @@ function InsertTransaction(url, method, type, AddSuccessEvent) {
         $.ajax({
             url: `${apiUrl}/${url}`,
             method: 'POST',
-            data: { products:JSON.stringify(products), name, phone, address, type, method, withs, user, ptn_id, store, amountRP, discount, netAmount, advance, balance, company, batch },
+            data: { products:JSON.stringify(products), name, phone, address, type, method, withs, user, ptn_id, guest_id, store, amountRP, discount, netAmount, advance, balance, company, batch },
             success: function (res) {
                 if (res.status) {
                     $('#AddForm')[0].reset();
