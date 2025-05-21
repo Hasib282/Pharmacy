@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Payment_Mode;
+use App\Models\Payment_Method;
 use Illuminate\Support\Facades\File;
 
 class PaymentModeSeeder extends Seeder
@@ -18,7 +18,7 @@ class PaymentModeSeeder extends Seeder
         $data = collect(json_decode($json));
 
         $data->each(function($item){
-            Payment_Mode::on('mysql_second')->create([
+            Payment_Method::on('mysql')->create([
                 "name"=>$item->name,
             ]);
         });
