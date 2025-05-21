@@ -375,7 +375,7 @@ class PurchaseController extends Controller
         }
         else if($req->status == 2){
             $data = Transaction_Mains_Temp::on('mysql_second')->findOrfail($req->id);
-            $details = Transaction_Details_Temp::on('mysql_second')->where("tran_id", $date->tran_id)->get();
+            $details = Transaction_Details_Temp::on('mysql_second')->where("tran_id", $data->tran_id)->get();
 
             Transaction_Details_Temp::on('mysql_second')->where("tran_id", $data->tran_id)->delete();
             $data->delete();
