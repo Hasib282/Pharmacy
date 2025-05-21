@@ -4,8 +4,7 @@ namespace App\Http\Controllers\API\Backend\Setup\Hotel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Appoinment;
-use App\Models\Bed_Category;
+
 use App\Models\Bed_List;
 
 

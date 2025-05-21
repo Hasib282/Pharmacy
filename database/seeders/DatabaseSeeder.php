@@ -50,6 +50,10 @@ class DatabaseSeeder extends Seeder
             
             ClientInfoSeeder::class,
             SupplierInfoSeeder::class,
+            FloorSeeder::class,
+            BedCategorySeeder::class,
+            PaymentModeSeeder::class,
+            SpecializationSeeder::class,
         ]);
     }
 }
