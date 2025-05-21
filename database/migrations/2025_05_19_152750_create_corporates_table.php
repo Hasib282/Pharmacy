@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('discount');
-            $table->timestamps();
+            $table->timestamp('added_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

@@ -13,25 +13,16 @@
             @method('PUT')
             {{-- id --}}
             <input type="hidden" name="id" id="id">
-            {{-- groupe --}}
-            @if (Request::segment(1) != 'hr')
-                <div class="form-input-group">
-                    <label for="updateGroupe">Groupe Name<span class="required" title="Required">*</span></label>
-                    <select name="groupe" id="updateGroupe">
-                        {{-- options will be display dynamically --}}
-                    </select>
-                    <span class="error" id="update_groupe_error"></span>
-                </div>
-            @endif
+           
             {{-- name --}}
             <div class="form-input-group">
-                <label for="updateHeadName">Service/Product Name <span class="required" title="Required">*</span></label>
-                <input type="text" name="headName" class="form-input" id="updateHeadName">
-                <span class="error" id="update_headName_error"></span>
+                <label for="updateName">Corporate Name<span class="required" title="Required">*</span></label>
+                <input type="text" name="name" class="form-input" id="updateName">
+                <span class="error" id="update_name_error"></span>
             </div>
             {{-- price --}}
             <div class="form-input-group">
-                <label for="updatePrice">Price </label>
+                <label for="updatePrice">Discount Rate</label>
                 <input type="text" name="price" class="form-input" id="updatePrice" value="0">
                 <span class="error" id="update_price_error"></span>
             </div>

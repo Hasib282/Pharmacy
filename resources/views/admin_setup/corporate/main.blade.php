@@ -23,7 +23,7 @@
     {{-- Datatable Part --}}
     <div class="load-data">
         <table class="data-table" id="data-table">
-            <caption>{{ $name }} Details</caption>
+            <caption>{{ $name }} price</caption>
             <thead></thead>
             <tbody></tbody>
             <tfoot></tfoot>
@@ -33,14 +33,14 @@
     </div>
 
 
-    @include('admin_setup.tran_head.add')
+    @include('admin_setup.corporate.add')
 
-    @include('admin_setup.tran_head.edit')
+    @include('admin_setup.corporate.edit')
 
     @include('common_modals.delete')
 
 
     <!-- ajax part start from here -->
-    <script src="{{ asset('js/ajax/' . (Request::segment(1) == 'admin' ? 'admin_setup' : Request::segment(1)) . '/tran_head.js') }}"></script>
+    <script src="{{ asset('js/ajax').'/'. $js . '.js' }}"></script>
     <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>
 @endsection
