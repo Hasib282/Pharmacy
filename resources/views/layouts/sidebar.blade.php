@@ -2038,6 +2038,17 @@
                         </div>
                     </li>
 
+                  {{-- Bed Transfer User Sub Menu --}}
+                    <li class="sub-menu-item"data-url="{{route('show.bed_transfer')}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'bed_transfer') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-users-gear"></i>
+                                Bed Transfer 
+                            </p>
+                        </div>
+                    </li>
+    
+
                     {{-- Hotel Bed Status Sub Menu --}}
                     <li class="sub-menu-item"data-url="{{route('show.bedstatus')}}">
                         <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'bedstatus') ? 'active':''}}">
