@@ -13,7 +13,7 @@ class BedListController extends Controller
 {
     // Show All Bed List
     public function Show(Request $req){
-        $data = Bed_List::on('mysql_second')->with('category','nursing','floor')->orderBy('added_at')->get();
+        $data = Bed_List::on('mysql_second')->with('bed_category','nursing','floor')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -44,13 +44,13 @@ class BedListController extends Controller
         // Insert Transaction Head
         $groupe = GetTranType($req->segment(2));
         Transaction_Head::on('mysql')->create([
-            "tran_head_name" => 'Bed-'.$req->bed_list,
+            "tran_head_name" => 'Bed-'.$req->bed_category_name.'-'.$req->bed_list,
             "groupe_id" => $groupe,
             "mrp" => $req->price,
             "company_id" => $req->company,
         ]);
 
-        $data = Bed_List::on('mysql_second')->with('category','nursing','floor')->findOrFail($insert->id);
+        $data = Bed_List::on('mysql_second')->with('bed_category','nursing','floor')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -63,8 +63,8 @@ class BedListController extends Controller
 
     // Update Bed List
     public function Update(Request $req){
-        $data = Bed_List::on('mysql_second')->findOrFail($req->id);
-        
+        $data = Bed_List::on('mysql_second')->with('bed_category')->findOrFail($req->id);
+        // dd($data);
         $req->validate([
             "bed_list" => ['required',Rule::unique('mysql_second.bed__lists', 'name')->ignore($data->id)],
             "bed_category" => 'required|exists:mysql_second.bed__categories,id',
@@ -74,8 +74,11 @@ class BedListController extends Controller
 
         // Update Transaction Head
         $groupe = GetTranType($req->segment(2));
-        Transaction_Head::on('mysql')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$data->name)->update([
-            "tran_head_name" => 'Bed-'.$req->bed_list,
+        // $abc = Transaction_Head::on('mysql')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$data->bed_category->name.'-'.$data->name)->first();
+        // dd($abc);
+
+        Transaction_Head::on('mysql')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$data->bed_category->name.'-'.$data->name)->update([
+            "tran_head_name" => 'Bed-'.$req->bed_category_name.'-'.$req->bed_list,
             "mrp" => $req->price
         ]);
 
@@ -91,7 +94,7 @@ class BedListController extends Controller
         ]);
 
 
-        $updatedData = Bed_List::on('mysql_second')->with('category','nursing','floor')->findOrFail($req->id);
+        $updatedData = Bed_List::on('mysql_second')->with('bed_category','nursing','floor')->findOrFail($req->id);
 
         if($update){
             return response()->json([
@@ -118,7 +121,7 @@ class BedListController extends Controller
     // Get Bed List
     public function Get(Request $req){
         $data = Bed_List::on('mysql_second')
-        ->with('category','nursing','floor')
+        ->with('bed_category','nursing','floor')
         ->where('name', 'like', $req->bed_list.'%')
         ->where('category',  $req->bed_category)
         ->orderBy('name')

@@ -2,7 +2,7 @@ function ShowBedList(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['category.name','name','nursing.name'],
+        tbody: ['bed_category.name','name','nursing.name'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -17,7 +17,7 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Bed Category Name', key: 'category.name' },
+        { label: 'Bed Category Name', key: 'bed_category.name' },
         { label: 'Bed List Name', key: 'name' },
         { label: 'NursingName', key: 'nursing.name' },
         { label: 'Action', type: 'button' }
@@ -67,8 +67,8 @@ $(document).ready(function () {
 
         $('#id').val(item.id);
         $('#updateBed_List').val(item.name);
-        $('#updateBed_Category').val(item.category.name);
-        $('#updateBed_Category').attr('data-id',item.category.id);
+        $('#updateBed_Category').val(item.bed_category.name);
+        $('#updateBed_Category').attr('data-id',item.bed_category.id);
         $('#updateNursing_Station').val(item.nursing.name);
         $('#updateNursing_Station').attr('data-id',item.nursing.id);
         $('#updateBed_Category').focus();

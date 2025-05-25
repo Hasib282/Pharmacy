@@ -44,6 +44,8 @@
                 <input type="text" name="company" class="form-input" id="company" data-id="{{auth()->user()->company_id}}" style="display: none">
             @endif
 
+            <input type="checkbox" name="editable" id="editable"> <label for="editable">Editable</label>
+
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Submit</button>
             </div>

@@ -12,7 +12,7 @@
             {{-- bed category --}}
             <div class="form-input-group">
                 <label for="bed_category">@if (Request::segment(1) == 'hotel') Room Category @else Bed Category @endif <span class="required">*</span></label>
-                <input type="text" name="bed_category" id="bed_category" class="form-input" autocomplete="off"><hr>
+                <input type="text" name="bed_category_name" id="bed_category" class="form-input" autocomplete="off"><hr>
                 <div id='bed_category-list'></div>
                 <span class="error" id="bed_category_error"></span>
             </div>

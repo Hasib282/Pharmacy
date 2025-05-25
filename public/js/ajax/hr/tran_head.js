@@ -57,7 +57,7 @@ $(document).ready(function () {
     function EditFormInputValue(item){
         $('#id').val(item.id);
         $('#updateHeadName').val(item.tran_head_name);
-        
+        $('#updateEditable').val(item.editable);
         $('#updateHeadName').focus();
     }; // End Method
 });

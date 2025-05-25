@@ -23,6 +23,7 @@ return new class extends Migration
             $table->double('cp')->default(0);
             $table->double('mrp')->default(0);
             $table->date('expiry_date')->nullable();
+            $table->boolean('editable')->default(0);
             $table->string('company_id')->nullable();
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
