@@ -94,7 +94,26 @@ class HotelSetupController extends Controller
                 return view('admin_setup.hotel.hotel_booking.main', compact('name', 'js'));
             }
         }// End Method
+
+
+
+        /////////////////////////// --------------- Hotel Booking Methods Start Here ---------- //////////////////////////
+        // Show booking
+        public function ShowBedTransfer(Request $req){
+            $name = "BedTransfer";
+            $js = 'hotel/setup/bed_transfer';
+            if ($req->ajax()) {
+                return view('admin_setup.hotel.bed_transfer.ajaxBlade', compact('name', 'js'));
+            }
+            else{
+                return view('admin_setup.hotel.bed_transfer.main', compact('name', 'js'));
+            }
+        }// End Method
     
+
+
+
+
 
              /////////////////////////// --------------- Hotel Bed Status Methods Start Here ---------- //////////////////////////
         // Show booking

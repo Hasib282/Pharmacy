@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::connection('mysql_second')->create('bed__transfers', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+             $table->string('user_id');
+            $table->unsignedBigInteger('from_bed');
+             $table->unsignedBigInteger('to_bed');
+            $table->timestamp('transfer_date')->nullable();
+             $table->timestamp('transfer_by')->nullable();
+            $table->timestamp('added_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
