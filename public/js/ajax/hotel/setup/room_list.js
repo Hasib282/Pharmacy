@@ -2,7 +2,7 @@ function ShowRoomList(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['category.name', 'name', 'floor.name', 'price', 'capacity'],
+        tbody: ['bed_category.name', 'name', 'floor.name', 'price', 'capacity'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -18,7 +18,7 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Room Catagory', key: 'category.name' },
+        { label: 'Room Catagory', key: 'bed_category.name' },
         { label: 'Room Number', key: 'name' },
         { label: 'Floor', key: 'floor.name' },
         { label: 'Price', key: 'price' },
@@ -65,8 +65,8 @@ $(document).ready(function () {
 
         $('#id').val(item.id);
         $('#updateBed_List').val(item.name);
-        $('#updateBed_Category').val(item.category.name);
-        $('#updateBed_Category').attr('data-id',item.category.id);
+        $('#updateBed_Category').val(item.bed_category.name);
+        $('#updateBed_Category').attr('data-id',item.bed_category.id);
         $('#updateFloor').val(item.floor.name);
         $('#updateFloor').attr('data-id',item.floor.id);
         $('#updatePrice').val(item.price);

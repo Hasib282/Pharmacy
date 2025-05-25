@@ -36,6 +36,9 @@
                 <span class="error" id="update_price_error"></span>
             </div>
 
+
+            <input type="checkbox" name="editable" id="updateEditable"> <label for="updateEditable">Editable</label>
+
             <div class="center">
                 <button type="submit" id="Update" class="btn-blue">Update</button>
             </div>

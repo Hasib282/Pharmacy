@@ -13,7 +13,7 @@ class Bed_List extends Model
 
     public $timestamps = false;
 
-    public function category(){
+    public function bed_category(){
         return $this->belongsTo(Bed_Category::class,'category','id');
     }
 
