@@ -125,6 +125,7 @@ use App\Http\Controllers\API\Backend\Transactions\ServicesController;
 // Hotel Transactions
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBookingController;
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBedStatusController;
+use App\Http\Controllers\API\Backend\Setup\Hotel\HotelTransferController;
 
 //hotel service(transaction)
 use App\Http\Controllers\API\Backend\Transactions\HotelServiceController;
@@ -1676,7 +1677,16 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::post('/booking', 'Insert');
             Route::put('/booking', 'Update');
             Route::delete('/booking', 'Delete');
-            Route::get('/booking/get', 'Get');
+        });
+
+
+
+        // *************************************** Hotel Bed Transfer Start *************************************** //
+        Route::controller(HotelTransferController::class)->group(function(){
+            Route::get('/bed_transfer', 'Show');
+            Route::post('/bed_transfer', 'Insert');
+            Route::put('/bed_transfer', 'Update');
+            Route::delete('/bed_transfer', 'Delete');
         });
 
 
