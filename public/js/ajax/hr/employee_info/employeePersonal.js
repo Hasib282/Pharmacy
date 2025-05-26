@@ -184,4 +184,11 @@ $(document).ready(function () {
     
     // Show Detals Ajax
     DetailsAjax('hr/employee/personal');
+
+
+    // Get Store 
+    GetSelectInputList('admin/stores/get', function (res) {
+        CreateSelectOptions('#store', 'Select Store', res.data, 'store_name');
+        CreateSelectOptions('#updateStore', 'Select Store', res.data, 'store_name');
+    })
 });
