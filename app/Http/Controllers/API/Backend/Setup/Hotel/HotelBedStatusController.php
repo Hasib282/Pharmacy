@@ -13,7 +13,7 @@ class HotelBedStatusController extends Controller
 {
     // Show Bed Status By Bed List
     public function Show(Request $req){
-        $data = Bed_List::on('mysql_second')->with('category','latestBooking.User')->orderBy('id')->get();
+        $data = Bed_List::on('mysql_second')->with('bed_category','latestBooking.User')->orderBy('id')->get();
         // $data = Bed_List::on('mysql_second')->with('category','Booking')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
