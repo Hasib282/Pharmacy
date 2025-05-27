@@ -75,7 +75,7 @@
                 <legend>Room Details</legend>
                 <div class="rows">
                     <!-- Bed Category -->
-                    <div class="c-4">
+                    <div class="c-3">
                         <div class="form-input-group">
                             <label for="bed_category">Room Category<span class="required">*</span></label>
                             <input type="text" name="bed_category" class="input-small" id="bed_category" autocomplete="off"><hr>
@@ -83,14 +83,21 @@
                             <span class="error" id="bed_category_error"></span>
                         </div>
                     </div>
-    
                     <!-- Bed list -->
-                    <div class="c-4">
+                    <div class="c-3">
                         <div class="form-input-group">
                             <label for="bed_list">Room No<span class="required">*</span></label>
                             <input type="text" name="bed_list" class="input-small" id="bed_list" autocomplete="off"><hr>
                             <div id='bed_list-list'></div>
                             <span class="error" id="bed_list_error"></span>
+                        </div>
+                    </div>
+                    <!-- Bed Charge -->
+                    <div class="c-2">
+                        <div class="form-input-group">
+                            <label for="total">Bed Charge</label>
+                            <input type="number" name="total" class="input-small" id="total" readonly value="0">
+                            <span class="error" id="total_error"></span>
                         </div>
                     </div>
                     <!-- Adult -->
@@ -119,9 +126,9 @@
                     <div class="c-12">
                         <div class="toggleGuestid" style="display: none;">
                             <div class="form-input-group">
-                                <label for="guest">Guest Search <span class="required">*</span></label>
-                                <input type="text" name="guest" class="input-small" id="guest" autocomplete="off"><hr>
-                                <div id="guest-list"></div>
+                                <label for="guest-all">Guest Search <span class="required">*</span></label>
+                                <input type="text" name="guest" class="input-small" id="guest-all" autocomplete="off"><hr>
+                                <div id="guest-all-list"></div>
                                 <span class="error" id="guest_error"></span>
                             </div>
                         </div>
@@ -248,44 +255,12 @@
             <fieldset>
                 <legend>Payment Part</legend>
                 <div class="rows">
-                    <!-- Service Name -->
-                    {{-- <div class="c-3">
-                        <div class="form-input-group">
-                            <label for="service_name">Service Name</label>
-                            <input type="text" name="service_name" class="input-small" id="service_name" readonly>
-                            <span class="error" id="service_name_error"></span>
-                        </div>
-                    </div> --}}
-                    <!-- Total Amount -->
-                    <div class="c-2">
-                        <div class="form-input-group">
-                            <label for="total">Bed Charge</label>
-                            <input type="number" name="total" class="input-small" id="total" readonly value="0">
-                            <span class="error" id="total_error"></span>
-                        </div>
-                    </div>
-                    <!-- Discount -->
-                    <div class="c-1">
-                        <div class="form-input-group">
-                            <label for="discount">Discount</label>
-                            <input type="number" name="discount" class="input-small" id="discount" min="0" max="100" value="0">
-                            <span class="error" id="discount_error"></span>
-                        </div>
-                    </div>
                     <!-- Advance -->
                     <div class="c-2">
                         <div class="form-input-group">
                             <label for="advance">Advance</label>
                             <input type="number" name="advance" class="input-small" id="advance" value="0">
                             <span class="error" id="advance_error"></span>
-                        </div>
-                    </div>
-                    <!-- Balance -->
-                    <div class="c-2">
-                        <div class="form-input-group">
-                            <label for="balance">Balance</label>
-                            <input type="number" name="balance" class="input-small" id="balance" readonly value="0">
-                            <span class="error" id="balance_error"></span>
                         </div>
                     </div>
                     <!-- Payment Method -->

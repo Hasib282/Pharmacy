@@ -39,7 +39,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hotel/booking', {guest: { selector: '#guest', attribute: 'data-id' },bed_category: { selector: '#bed_category', attribute: 'data-id' }, bed_id: { selector: '#bed_list', attribute: 'data-id' }, sr: { selector: '#sr', attribute: 'data-id' } }, function () {
+    InsertAjax('hotel/booking', {guest: { selector: '#guest-all', attribute: 'data-id' },bed_category: { selector: '#bed_category', attribute: 'data-id' }, bed_id: { selector: '#bed_list', attribute: 'data-id' }, sr: { selector: '#sr', attribute: 'data-id' } }, function () {
         $('#title').focus();
         $('#guest').removeAttr('data-id');
         $('#bed_category').removeAttr('data-id');
@@ -54,7 +54,7 @@ $(document).ready(function () {
 
 
     // Update Ajax
-    UpdateAjax('hotel/booking', { doctor: { selector: '#updateDoctor', attribute: 'data-id' } });
+    UpdateAjax('hotel/booking', {guest: { selector: '#updateGuest-all', attribute: 'data-id' },bed_category: { selector: '#updateBed_Category', attribute: 'data-id' }, bed_id: { selector: '#updateBed_List', attribute: 'data-id' }, sr: { selector: '#updateSr', attribute: 'data-id' } });
 
 
     // Delete Ajax
@@ -74,11 +74,12 @@ $(document).ready(function () {
         $('#updateBed_Category').attr('data-id', item.category?.id);
         $('#updateBed_List').val(item.list?.name);
         $('#updateBed_List').attr('data-id', item.list?.id);
+        $('#updateTotal').val(item.list?.price);
         $('#updateAdult').val(item.adult);
         $('#updateChildren').val(item.children);
 
-        $('#updateGuest').val(item.user?.user_id);
-        $('#updateGuest').attr('data-id', item.user?.user_id);
+        $('#updateGuest-all').val(item.user?.user_id);
+        $('#updateGuest-all').attr('data-id', item.user?.user_id);
         $('#updateTitle').val(item.user?.title);
         $('#updateName').val(item.user?.user_name);
         $('#updatePhone').val(item.user?.user_phone);
@@ -91,7 +92,6 @@ $(document).ready(function () {
         $('#updateReligion').val(item.user?.religion);
         $('#updateAddress').val(item.user?.address);
 
-        $('#updateTotal').val(item.bill.bill_amount);
         $('#updateDiscount').val(item.bill.discount);
         $('#updateAdvance').val(item.bill.receive);
         $('#updateBalance').val(item.bill.due);

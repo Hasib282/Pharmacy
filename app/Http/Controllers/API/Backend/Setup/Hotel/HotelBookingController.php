@@ -106,12 +106,12 @@ class HotelBookingController extends Controller
                 "tran_type" => 8,
                 "tran_method" => 'Receive',
                 "tran_user" => $guest_id,
-                "bill_amount" => $req->total,
-                "discount" => $req->discount,
-                "net_amount" => $req->total - $req->discount,
+                "bill_amount" => $req->advance,
+                "discount" => 0,
+                "net_amount" => $req->advance,
                 "receive" => $req->advance,
                 "payment" => 0,
-                "due" => $req->balance,
+                "due" => 0,
                 "payment_mode" => $req->payment_method,
             ]);
 
@@ -120,16 +120,16 @@ class HotelBookingController extends Controller
                 "tran_type" => 8,
                 "tran_method" => 'Receive',
                 "tran_user" => $guest_id,
-                "tran_groupe_id" => $groupe,
-                "tran_head_id" => $head->id,
-                "amount" => $req->total,
+                "tran_groupe_id" => 9,
+                "tran_head_id" => 9,
+                "amount" => $req->advance,
                 "quantity_actual" => 1,
                 "quantity" => 1,
-                "tot_amount" => $req->total,
-                "discount" => $req->discount,
+                "tot_amount" => $req->advance,
+                "discount" => 0,
                 "receive" => $req->advance,
                 "payment" => 0,
-                "due" => $req->balance,
+                "due" => 0,
                 "payment_mode" => $req->payment_method,
             ]);
 
@@ -155,24 +155,41 @@ class HotelBookingController extends Controller
             'adult' => 'required',
             'status' => 'required',
             'bed_category' =>'required|exists:mysql_second.bed__categories,id',
-            'bed_list' =>'required|exists:mysql_second.bed__lists,id',
+            'bed_id' =>'required|exists:mysql_second.bed__lists,id',
             'sr' =>'nullable|exists:mysql_second.user__infos,user_id',
             'payment_method' =>'required|exists:mysql.payment__methods,id',
         ]);
 
-        $update = Booking::on('mysql_second')->findOrFail($req->id)->update([
-            'booking_id'=> $req->booking_id,
-            'user_id' => $req->guest_id,
-            'bed_category' => $req->bed_category,
-            'bed_list' => $req->bed_list,
-            'sr_id' => $req->sr,
-            'adult'=>$req->name,
-            'children'=> $req->phone,
-            'check_in'=> $req->check_in,
-            'check_out'=> $req->check_out,
-            'status' => $req->status,
-            "updated_at" => now()
-        ]);
+        $data = Booking::on('mysql_second')->findOrFail($req->id);
+
+        DB::transaction(function () use ($req, &$data ) {
+            $update = Booking::on('mysql_second')->findOrFail($req->id)->update([
+                'user_id' => $req->guest,
+                'bed_category' => $req->bed_category,
+                'bed_list' => $req->bed_id,
+                'sr_id' => $req->sr,
+                'adult'=>$req->adult,
+                'children'=> $req->children,
+                'check_in'=> $req->check_in,
+                'check_out'=> $req->check_out,
+                'status' => $req->status,
+                "updated_at" => now()
+            ]);
+
+            Transaction_Main::on('mysql_second')->where('tran_id',$data->tran_id)->Update([
+                "bill_amount" => $req->advance,
+                "net_amount" => $req->advance,
+                "receive" => $req->advance,
+                "payment_mode" => $req->payment_method,
+            ]);
+
+            Transaction_Detail::on('mysql_second')->where('tran_id',$data->tran_id)->Update([
+                "amount" => $req->advance,
+                "tot_amount" => $req->advance,
+                "receive" => $req->advance,
+                "payment_mode" => $req->payment_method,
+            ]);
+        });
 
         $updatedData = Booking::on('mysql_second')->with('User','Category','List','Sr','Bill')->findOrFail($req-> id);
         

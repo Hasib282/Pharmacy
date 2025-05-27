@@ -31,13 +31,12 @@
                         {{-- Guest Search --}}
                         <div class="c-9">
                             <div class="form-input-group">
-                                <label for="updateGuest">Guest Search <span class="required">*</span></label>
-                                <input type="text" name="guest" class="input-small" id="updateGuest" autocomplete="off">
-                                <div id="update-guest"></div>
+                                <label for="updateGuest-all">Guest Search <span class="required">*</span></label>
+                                <input type="text" name="guest" class="input-small" id="updateGuest-all" autocomplete="off">
+                                <div id="update-guest-all"></div>
                                 <span class="error" id="update_guest_error"></span>
                             </div>
                         </div>
-
                         <!--Title-->
                         <div class="c-2">
                             <div class="form-input-group">
@@ -49,7 +48,6 @@
                                 <span class="error" id="update_title_error"></span>
                             </div>
                         </div>
-                        
                         <!-- Name -->
                         <div class="c-10">
                             <div class="form-input-group">
@@ -58,7 +56,6 @@
                                 <span class="error" id="update_name_error"></span>
                             </div>
                         </div>
-                        
                         <!-- phone -->
                         <div class="c-4">
                             <div class="form-input-group">
@@ -67,7 +64,6 @@
                                 <span class="error" id="update_phone_error"></span>
                             </div>
                         </div>
-
                         <!-- email -->
                         <div class="c-4">
                             <div class="form-input-group">
@@ -76,8 +72,6 @@
                                 <span class="error" id="update_email_error"></span>
                             </div>
                         </div>
-
-                    
                         <!-- Address -->
                         <div class="c-12">
                             <div class="form-input-group">
@@ -86,8 +80,6 @@
                                 <span class="error" id="update_address_error"></span>
                             </div>
                         </div>
-
-
                         {{-- Services  --}}
                         <div class="c-6">
                             <div class="form-input-group">
@@ -97,8 +89,6 @@
                                 <span class="error" id="update_head_error"></span>
                             </div>
                         </div>
-
-
                         {{-- quantity --}}
                         <div class="c-1">
                             <div class="form-input-group">
@@ -107,18 +97,14 @@
                                 <span class="error" id="update_quantity_error"></span>
                             </div>
                         </div>
-
-
                         {{-- price --}}
                         <div class="c-2">
                             <div class="form-input-group">
                                 <label for="updateAmount">Price</label>
-                                <input type="text" name="amount" class="form-input" id="updateAmount">
+                                <input type="text" name="amount" class="form-input amount" id="updateAmount">
                                 <span class="error" id="update_amount_error"></span>
                             </div>
                         </div>
-
-
                         {{-- total --}}
                         <div class="c-3">
                             <div class="form-input-group">
@@ -127,8 +113,6 @@
                                 <span class="error" id="update_totAmount_error"></span>
                             </div>
                         </div>
-
-                        
                     </div>
                     <div class="center">
                         <button type="submit" id="UpdateTransaction" class="btn-blue">Add</button>

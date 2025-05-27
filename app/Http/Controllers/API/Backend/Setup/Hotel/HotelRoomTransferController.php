@@ -7,26 +7,27 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Bed_Transfer;
 
-class HotelTransferController extends Controller
+class HotelRoomTransferController extends Controller
 {
-    // Show All Bed Transfers
+    // Show All Room Transfer Data
     public function Show(Request $req)
     {
         $data = Bed_Transfer::on('mysql_second')->orderBy('added_at')->get();
-
         return response()->json([
             'status' => true,
             'data' => $data,
         ], 200);
     }
 
-    // Insert Bed Transfer
+
+
+    // Insert Room Transfer Data
     public function Insert(Request $req)
     {
         $req->validate([
-            "guest_id"      => 'required|unique:mysql_second.Bed_Transfer,guest_id',
-            "from_bed"      => 'required',
-            "bed_list"        => 'required',
+            "guest_id"      => 'required|exists:mysql_second.user__infos,user_id',
+            "from_bed"      => 'required|exists:mysql_second.bed__lists,id',
+            "bed_list"        => 'required|exists:mysql_second.bed__lists,id',
             "transfer_date" => 'required|datetime',
         
         ]);
@@ -39,24 +40,27 @@ class HotelTransferController extends Controller
             "transfer_by"   => $req->transfer_by,
         ]);
 
+        $data = Bed_Transfer::on('mysql_second')->findOrFail($insert->id);
+
         return response()->json([
             'status'  => true,
-            'message' => 'Bed Transfer added successfully',
-            'data'    => $insert,
+            'message' => 'Room Transfer Completed successfully',
+            'data'    => $data,
         ], 200);
     }
 
-    // Update Bed Transfer
+
+
+    // Update Room Transfer Data
     public function Update(Request $req)
     {
         $data = Bed_Transfer::on('mysql_second')->findOrFail($req->id);
 
         $req->validate([
-            "guest_id"      => ['required', Rule::unique('mysql_second.Bed_Transfer', 'guest_id')->ignore($data->id)],
-            "from_bed"      => 'required',
-            "bed_list"        => 'required',
+            "guest_id"      => 'required|exists:mysql_second.user__infos,user_id',
+            "from_bed"      => 'required|exists:mysql_second.bed__lists,id',
+            "bed_list"        => 'required|exists:mysql_second.bed__lists,id',
             "transfer_date" => 'required|datetime',
-            
         ]);
 
         $data->update([
@@ -64,26 +68,27 @@ class HotelTransferController extends Controller
             "from_bed"      => $req->from_bed,
             "to_bed"        => $req->bed_list,
             "transfer_date" => $req->transfer_date,
-            
             "updated_at"    => now(),
         ]);
 
+        $updatedData = Bed_Transfer::on('mysql_second')->findOrFail($req->id);
+
         return response()->json([
             'status'      => true,
-            'message'     => 'Bed Transfer updated successfully',
-            'updatedData' => $data,
+            'message'     => 'Room Transfer updated successfully',
+            "updatedData" => $updatedData,
         ], 200);
     }
 
-    // Delete Bed Transfer
+
+
+    // Delete Room Transfer Data
     public function Delete(Request $req)
     {
-        $data = Bed_Transfer::on('mysql_second')->findOrFail($req->id);
-        $data->delete();
-
+        $data = Bed_Transfer::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'  => true,
-            'message' => 'Bed Transfer deleted successfully',
+            'message' => 'Room Transfer deleted successfully',
         ], 200);
     }
 }

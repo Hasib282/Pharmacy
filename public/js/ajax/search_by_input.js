@@ -1523,6 +1523,107 @@ $(document).ready(function () {
             $('#name').val(item.attr('data-name'));
             $('#phone').val(item.attr('data-phone'));
             $('#email').val(item.attr('data-email'));
+            $('#address').val(item.attr('data-address'));
+            $('#bed_category').val(item.attr('data-category-name'));
+            $('#bed_category').attr('data-id',item.attr('data-category-id'));
+            $('#from_bed').val(item.attr('data-list-name'));
+            $('#from_bed').attr('data-id',item.attr('data-list-id'));
+        },
+
+        function (targetInput) {
+            $('#title').val('');
+            $('#name').val('');
+            $('#phone').val('');
+            $('#email').val('');
+            $('#address').val('');
+            $('#bed_category').val('');
+            $('#bed_category').removeAttr('data-id');
+            $('#from_bed').val('');
+            $('#from_bed').removeAttr('data-id');
+        }
+    );
+
+
+
+    // Update Guest Input Search
+    SearchByInput(
+        'hotel/users/guests/get', 
+
+        function ($input) {
+            return {
+                guest: $input.val(),
+            };
+        }, 
+
+        '#updateGuest', 
+
+        '#update-guest',
+
+        '#update-guest tbody tr',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            $(targetInput).val(item.find('td:first').text());
+            $('#updateTitle').val(item.attr('data-title'));
+            $('#updateName').val(item.attr('data-name'));
+            $('#updatePhone').val(item.attr('data-phone'));
+            $('#updateEmail').val(item.attr('data-email'));
+            $('#updateGender').val(item.attr('data-gender'));
+            $('#updateReligion').val(item.attr('data-religion'));
+            $('#updateNationality').val(item.attr('data-nationality'));
+            $('#updateNid').val(item.attr('data-nid'));
+            $('#updatePassport').val(item.attr('data-passport'));
+            $('#updateDriving_license').val(item.attr('data-driving_license'));
+            $('#updateAddress').val(item.attr('data-address'));
+        },
+
+        function (targetInput) {
+            $('#updateTitle').val('');
+            $('#updateName').val('');
+            $('#updatePhone').val('');
+            $('#updateEmail').val('');
+            $('#updateGender').val('');
+            $('#updateReligion').val('');
+            $('#updateNationality').val('');
+            $('#updateNid').val(item.attr('data-nid'));
+            $('#updatePassport').val(item.attr('data-passport'));
+            $('#updateDriving_license').val(item.attr('data-driving_license'));
+            $('#updateAddress').val('');
+        }
+    );
+    
+    
+    
+    /////////////// ------------------ Search All Guests And add value to input ajax part start ---------------- /////////////////////////////
+    // All Guest Input Search
+    SearchByInput(
+        'hotel/users/guests/getall',  
+
+        function ($input) {
+            return {
+                guest: $input.val(),
+            };
+        }, 
+
+        '#guest-all', 
+
+        '#guest-all-list',
+
+        '#guest-all-list tbody tr',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            $(targetInput).val(item.find('td:first').text());
+            $('#title').val(item.attr('data-title'));
+            $('#name').val(item.attr('data-name'));
+            $('#phone').val(item.attr('data-phone'));
+            $('#email').val(item.attr('data-email'));
             $('#gender').val(item.attr('data-gender'));
             $('#religion').val(item.attr('data-religion'));
             $('#nationality').val(item.attr('data-nationality'));
@@ -1559,11 +1660,11 @@ $(document).ready(function () {
             };
         }, 
 
-        '#updateGuest', 
+        '#updateGuest-all', 
 
-        '#update-guest',
+        '#update-guest-all',
 
-        '#update-guest tbody tr',
+        '#update-guest-all tbody tr',
 
         undefined, 
 

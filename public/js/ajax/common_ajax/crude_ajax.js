@@ -384,7 +384,7 @@ function DisplayTransactionGrid() {
         let dynamicColumn = '';
 
         // Set the value of dynamicColumn based on conditions
-        if (segment1 === 'transaction' || segment1 === 'hospital' || segment3 === 'return') {
+        if (segment1 === 'transaction' || segment1 === 'hospital' || segment3 === 'return' || segment1 === 'hotel') {
             dynamicColumn = `<td>${products.amount}</td>`;
         } else if (segment3 === 'purchase') {
             dynamicColumn = `<td>${products.cp}</td>`;

@@ -105,4 +105,8 @@ class User_Info extends Model
     public function role(){
         return $this->hasOne(Role::class, 'id', 'user_role');
     }
+
+    public function latestBooking(){
+        return $this->hasOne(Booking::class, 'user_id', 'user_id')->latestOfMany();
+    }
 }

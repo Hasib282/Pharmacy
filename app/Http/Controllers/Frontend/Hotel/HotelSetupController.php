@@ -97,11 +97,11 @@ class HotelSetupController extends Controller
 
 
 
-        /////////////////////////// --------------- Hotel Booking Methods Start Here ---------- //////////////////////////
-        // Show booking
-        public function ShowBedTransfer(Request $req){
-            $name = "BedTransfer";
-            $js = 'hotel/setup/bed_transfer';
+        /////////////////////////// --------------- Hotel Room Transfer Methods Start Here ---------- //////////////////////////
+        // Show Hotel Room Transfer
+        public function ShowRoomTransfer(Request $req){
+            $name = "Room Transfer";
+            $js = 'hotel/room_transfer';
             if ($req->ajax()) {
                 return view('admin_setup.hotel.bed_transfer.ajaxBlade', compact('name', 'js'));
             }

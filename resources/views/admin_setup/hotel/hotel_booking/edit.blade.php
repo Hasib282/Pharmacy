@@ -22,7 +22,7 @@
                     <div class="c-3">
                         <div class="form-input-group">
                             <label for="updateCheck_in">Check In<span class="required">*</span></label>
-                            <input type="datetime-local" name="Check_in" class="input-small" id="updateCheck_in">
+                            <input type="datetime-local" name="check_in" class="input-small" id="updateCheck_in">
                             <span class="error" id="update_check_in_error"></span>
                         </div>
                     </div>
@@ -38,8 +38,8 @@
                     <!-- Booking Reference (SR) ID -->
                     <div class="c-3">
                         <div class="form-input-group">
-                            <label for="updateSr">Booking Reference (SR)</label>
-                            <input type="text" name="sr" class="input-small" id="updateSr"><hr>
+                            <label for="updateSR">Booking Reference (SR)</label>
+                            <input type="text" name="sr" class="input-small" id="updateSR"><hr>
                             <div id='update-sr'></div>
                             <span class="error" id="update_sr_error"></span>
                         </div>
@@ -65,22 +65,29 @@
                 <legend>Room Details</legend>
                 <div class="rows">
                     <!-- Bed Category -->
-                    <div class="c-4">
+                    <div class="c-3">
                         <div class="form-input-group">
-                            <label for="updateBed_Category">Bed Category<span class="required">*</span></label>
+                            <label for="updateBed_Category">Room Category<span class="required">*</span></label>
                             <input type="text" name="bed_category" class="input-small" id="updateBed_Category"><hr>
                             <div id='update-bed_category'></div>
                             <span class="error" id="update_bed_category_error"></span>
                         </div>
                     </div>
-
                     <!-- Bed list -->
-                    <div class="c-4">
+                    <div class="c-3">
                         <div class="form-input-group">
                             <label for="updateBed_List">Bed List<span class="required">*</span></label>
                             <input type="text" name="bed_list" class="input-small" id="updateBed_List"><hr>
                             <div id='update-bed_list'></div>
                             <span class="error" id="update_bed_list_error"></span>
+                        </div>
+                    </div>
+                    <!-- Bed Charge -->
+                    <div class="c-2">
+                        <div class="form-input-group">
+                            <label for="updateTotal">Bed Charge</label>
+                            <input type="number" name="total" class="input-small" id="updateTotal" readonly value="0">
+                            <span class="error" id="update_total_error"></span>
                         </div>
                     </div>
                     <!-- Adult -->
@@ -108,9 +115,9 @@
                     <!--  guest search -->
                     <div class="c-12">
                         <div class="form-input-group">
-                            <label for="updateGuest">Guest Search <span class="required">*</span></label>
-                            <input type="text" name="guest" class="input-small" id="updateGuest" autocomplete="off">
-                            <div id="update-guest"></div>
+                            <label for="updateGuest-all">Guest Search <span class="required">*</span></label>
+                            <input type="text" name="guest" class="input-small" id="updateGuest-all" autocomplete="off">
+                            <div id="update-guest-all"></div>
                             <span class="error" id="update_guest_error"></span>
                         </div>
                     </div>
@@ -237,44 +244,12 @@
             <fieldset>
                 <legend>Payment Part</legend>
                 <div class="rows">
-                    <!-- Service Name -->
-                    {{-- <div class="c-3">
-                        <div class="form-input-group">
-                            <label for="service_name">Service Name</label>
-                            <input type="text" name="service_name" class="input-small" id="service_name" readonly>
-                            <span class="error" id="service_name_error"></span>
-                        </div>
-                    </div> --}}
-                    <!-- Total Amount -->
-                    <div class="c-2">
-                        <div class="form-input-group">
-                            <label for="updateTotal">Bed Charge</label>
-                            <input type="number" name="total" class="input-small" id="updateTotal" readonly value="0">
-                            <span class="error" id="update_total_error"></span>
-                        </div>
-                    </div>
-                    <!-- Discount -->
-                    <div class="c-1">
-                        <div class="form-input-group">
-                            <label for="updateDiscount">Discount</label>
-                            <input type="number" name="discount" class="input-small" id="updateDiscount" min="0" max="100" value="0">
-                            <span class="error" id="update_discount_error"></span>
-                        </div>
-                    </div>
                     <!-- Advance -->
                     <div class="c-2">
                         <div class="form-input-group">
                             <label for="updateAdvance">Advance</label>
                             <input type="number" name="advance" class="input-small" id="updateAdvance" value="0">
                             <span class="error" id="update_advance_error"></span>
-                        </div>
-                    </div>
-                    <!-- Balance -->
-                    <div class="c-2">
-                        <div class="form-input-group">
-                            <label for="updateBalance">Balance</label>
-                            <input type="number" name="balance" class="input-small" id="updateBalance" readonly value="0">
-                            <span class="error" id="update_balance_error"></span>
                         </div>
                     </div>
                     <!-- Payment Method -->

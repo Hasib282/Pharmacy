@@ -121,9 +121,12 @@ class BedListController extends Controller
     // Get Bed List
     public function Get(Request $req){
         $data = Bed_List::on('mysql_second')
-        ->with('bed_category','nursing','floor')
+        ->with('bed_category','nursing','floor','latestBooking')
         ->where('name', 'like', $req->bed_list.'%')
         ->where('category',  $req->bed_category)
+        ->whereDoesntHave('latestBooking', function ($q) {
+            $q->whereIn('status', [1, 2, 3]);
+        })
         ->orderBy('name')
         ->get();
 

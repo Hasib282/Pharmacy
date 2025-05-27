@@ -5,6 +5,10 @@
     { "tran_head_name": "Cheque Deposit to Bank",       "groupe_id":3,      "category_id":null,     "manufacturer_id":null,     "form_id":null,     "unit_id":1 },
     { "tran_head_name": "Cash Withdraw from Bank",      "groupe_id":4,      "category_id":null,     "manufacturer_id":null,     "form_id":null,     "unit_id":1 },
     { "tran_head_name": "Cheque Withdraw from Bank",    "groupe_id":4,      "category_id":null,     "manufacturer_id":null,     "form_id":null,     "unit_id":1 },
+    { "tran_head_name": "Deposit",                      "groupe_id":5,      "category_id":null,     "manufacturer_id":null,     "form_id":null,     "unit_id":1 },
+    { "tran_head_name": "Deposit Refund",               "groupe_id":5,      "category_id":null,     "manufacturer_id":null,     "form_id":null,     "unit_id":1 },
+    { "tran_head_name": "Deposit",                      "groupe_id":9,      "category_id":null,     "manufacturer_id":null,     "form_id":null,     "unit_id":1 },
+    { "tran_head_name": "Deposit Refund",               "groupe_id":9,      "category_id":null,     "manufacturer_id":null,     "form_id":null,     "unit_id":1 },
     
     { "tran_head_name": "1stCef 500 mg", "category_id": 299, "form_id": 2, "manufacturer_id": 164, "groupe_id": 6, "unit_id": 1 },
     { "tran_head_name": "3Bion 100 mg+200 mg+200 mcg", "category_id": 1673, "form_id": 1, "manufacturer_id": 134, "groupe_id": 6, "unit_id": 1 },

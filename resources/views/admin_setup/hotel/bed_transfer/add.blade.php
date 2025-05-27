@@ -1,5 +1,5 @@
 <div id="addModal" class="modal-container">
-    <div class="modal-subject" style="width: 40%;">
+    <div class="modal-subject" style="width: 60%;padding:0;margin:0 auto;">
         <div class="modal-heading banner">
             <div class="center">
                 <h3>Add {{ $name }}</h3>
@@ -10,6 +10,7 @@
         <form id="AddForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
+            <input type="hidden" name="booking_id" id="bookingId">
             <fieldset>
                 <legend>Guest Details</legend>
                 <div class="rows">
@@ -45,7 +46,7 @@
                     </div>
 
                     <!-- phone -->
-                    <div class="c-4">
+                    <div class="c-6">
                         <div class="form-input-group">
                             <label for="phone">Phone</label>
                             <input type="text" name="phone" class="input-small" id="phone">
@@ -54,7 +55,7 @@
                     </div>
 
                     <!-- email -->
-                    <div class="c-4">
+                    <div class="c-6">
                         <div class="form-input-group">
                             <label for="email">Email</label>
                             <input type="text" name="email" class="input-small" id="email">
@@ -73,49 +74,60 @@
                 </div>
             </fieldset>
 
-            <!-- Bed Category -->
-            <div class="form-input-group">
-                <label for="bed_category">Room Category<span class="required">*</span></label>
-                <input type="text" name="bed_category" class="input-small" id="bed_category" autocomplete="off"><hr>
-                <div id='bed_category-list'></div>
-                <span class="error" id="bed_category_error"></span>
-            </div>
-
-            {{-- From Bed --}}
-            <div class="form-input-group">
-                <label for="from_bed">From Bed <span class="required" title="Required">*</span></label>
-                <input type="text" name="from_bed" class="form-input" id="from_bed" autocomplete="off"><hr>
-                <div id="from_bed-list"></div>
-                <span class="error" id="from_bed_error"></span>
-            </div>
-
-            <!-- To Bed -->
-            <div class="form-input-group">
-                <label for="bed_list">To Bed <span class="required">*</span></label>
-                <input type="text" name="bed_list" class="input-small" id="bed_list" autocomplete="off"><hr>
-                <div id='bed_list-list'></div>
-                <span class="error" id="bed_list_error"></span>
-            </div>
-
-             {{-- Transfer Date --}}
-            <div class="form-input-group">
-                <label for="transfer">Check In<span class="required">*</span></label>
-                <input type="datetime-local" name="transfer" class="input-small" id="transfer">
-                <span class="error" id="transfer_error"></span>
-            </div>
-
-             {{-- Transfer By --}}
-            <div class="form-input-group">
-                <label for="transfer_by">Transfer By <span class="required" title="Required">*</span></label>
-                <input type="text" name="transfer_by" class="form-input" id="transfer_by" autocomplete="off"><hr>
-                <div id="transfer_by-list"></div>
-                <span class="error" id="transfer_by_error"></span>
-            </div>
-
-
-            <div class="center">
-                <button type="submit" class="btn-blue" id="Insert">Submit</button>
-            </div>
+            <fieldset>
+                <legend>Transfer Details</legend>
+                <div class="rows">
+                    <!-- Bed Category -->
+                    <div class="c-12">
+                        <div class="form-input-group">
+                            <label for="bed_category">Room Category<span class="required">*</span></label>
+                            <input type="text" name="bed_category" class="input-small" id="bed_category" autocomplete="off"><hr>
+                            <div id='bed_category-list'></div>
+                            <span class="error" id="bed_category_error"></span>
+                        </div>
+                    </div>
+                    {{-- From Bed --}}
+                    <div class="c-6">
+                        <div class="form-input-group">
+                            <label for="from_bed">From Bed <span class="required" title="Required">*</span></label>
+                            <input type="text" name="from_bed" class="input-small" id="from_bed" autocomplete="off">
+                            <div id="from_bed-list"></div>
+                            <span class="error" id="from_bed_error"></span>
+                        </div>
+                    </div>
+                    <!-- To Bed -->
+                    <div class="c-6">
+                        <div class="form-input-group">
+                            <label for="bed_list">To Bed <span class="required">*</span></label>
+                            <input type="text" name="bed_list" class="input-small" id="bed_list" autocomplete="off"><hr>
+                            <div id='bed_list-list'></div>
+                            <span class="error" id="bed_list_error"></span>
+                        </div>
+                    </div>
+                    {{-- Transfer Date --}}
+                    <div class="c-6">
+                        <div class="form-input-group">
+                            <label for="transfer">Transfer Date<span class="required">*</span></label>
+                            <input type="datetime-local" name="transfer" class="input-small" id="transfer">
+                            <span class="error" id="transfer_error"></span>
+                        </div>
+                    </div>
+                    {{-- Transfer By --}}
+                    <div class="c-6">
+                        <div class="form-input-group">
+                            <label for="transfer_by">Transfer By <span class="required" title="Required">*</span></label>
+                            <input type="text" name="transfer_by" class="input-small" id="transfer_by" autocomplete="off"><hr>
+                            <div id="transfer_by-list"></div>
+                            <span class="error" id="transfer_by_error"></span>
+                        </div>
+                    </div>
+                    <div class="c-12">
+                        <div class="center">
+                            <button type="submit" class="btn-blue" id="Insert">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
         </form>
     </div>
 </div>
