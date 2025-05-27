@@ -126,6 +126,7 @@ use App\Http\Controllers\API\Backend\Transactions\ServicesController;
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBookingController;
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelRoomStatusController;
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelRoomTransferController;
+use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBillClearenceController;
 
 //hotel service(transaction)
 use App\Http\Controllers\API\Backend\Transactions\HotelServiceController;

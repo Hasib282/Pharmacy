@@ -9,12 +9,11 @@ use App\Models\Bed_List;
 
 
 
-class HotelBedStatusController extends Controller
+class HotelRoomStatusController extends Controller
 {
-    // Show Bed Status By Bed List
+    // Show Room Status By Room List
     public function Show(Request $req){
         $data = Bed_List::on('mysql_second')->with('bed_category','latestBooking.User')->orderBy('id')->get();
-        // $data = Bed_List::on('mysql_second')->with('category','Booking')->orderBy('added_at')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
