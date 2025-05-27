@@ -124,7 +124,7 @@ use App\Http\Controllers\API\Backend\Transactions\ServicesController;
 
 // Hotel Transactions
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBookingController;
-use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBedStatusController;
+use App\Http\Controllers\API\Backend\Setup\Hotel\HotelRoomStatusController;
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelRoomTransferController;
 
 //hotel service(transaction)
@@ -1692,12 +1692,23 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
         // *************************************** Hotel Bed Status Start *************************************** //
-        Route::controller(HotelBedStatusController::class)->group(function(){
-            Route::get('/bedstatus', 'Show');
-            Route::post('/bedstatus', 'Insert');
-            Route::put('/bedstatus', 'Update');
-            Route::delete('/bedstatus', 'Delete');
-            Route::get('/bedstatus/get', 'Get');
+        Route::controller(HotelRoomStatusController::class)->group(function(){
+            Route::get('/roomstatus', 'Show');
+            Route::post('/roomstatus', 'Insert');
+            Route::put('/roomstatus', 'Update');
+            Route::delete('/roomstatus', 'Delete');
+            Route::get('/roomstatus/get', 'Get');
+        });
+        
+        
+        
+        // *************************************** Hotel Bill Clearence Start *************************************** //
+        Route::controller(HotelBillClearenceController::class)->group(function(){
+            Route::get('/billclearence', 'Show');
+            Route::post('/billclearence', 'Insert');
+            Route::put('/billclearence', 'Update');
+            Route::delete('/billclearence', 'Delete');
+            Route::get('/billclearence/get', 'Get');
         });
         
         

@@ -90,7 +90,7 @@
                     <div class="c-6">
                         <div class="form-input-group">
                             <label for="from_bed">From Bed <span class="required" title="Required">*</span></label>
-                            <input type="text" name="from_bed" class="input-small" id="from_bed" autocomplete="off">
+                            <input type="text" name="from_bed" class="input-small" id="from_bed" autocomplete="off" disabled>
                             <div id="from_bed-list"></div>
                             <span class="error" id="from_bed_error"></span>
                         </div>

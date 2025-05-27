@@ -19,7 +19,7 @@
                     <div class="c-12">
                         <div class="form-input-group">
                             <label for="updateGuest">Guest Search <span class="required">*</span></label>
-                            <input type="text" name="guest" class="input-small" id="updateGuest" autocomplete="off">
+                            <input type="text" name="guest" class="input-small" id="updateGuest" autocomplete="off"><hr>
                             <div id="update-guest"></div>
                             <span class="error" id="update_guest_error"></span>
                         </div>
@@ -91,7 +91,7 @@
                     <div class="c-6">
                         <div class="form-input-group">
                             <label for="updateFrom_bed">From Bed <span class="required" title="Required">*</span></label>
-                            <input type="text" name="from_bed" class="form-input" id="updateFrom_bed" autocomplete="off"><hr>
+                            <input type="text" name="from_bed" class="form-input" id="updateFrom_bed" autocomplete="off" disabled>
                             <span class="error" id="update_from_bed_error"></span>
                         </div>
                     </div>

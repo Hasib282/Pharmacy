@@ -2049,12 +2049,12 @@
                     </li>
     
 
-                    {{-- Hotel Bed Status Sub Menu --}}
-                    <li class="sub-menu-item"data-url="{{route('show.bedstatus')}}">
-                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'bedstatus') ? 'active':''}}">
+                    {{-- Hotel Room Status Sub Menu --}}
+                    <li class="sub-menu-item"data-url="{{route('show.roomStatus')}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'roomstatus') ? 'active':''}}">
                             <p>
                                 <i class="fa-solid fa-users-gear"></i>
-                                Bed Status
+                                Room Status
                             </p>
                         </div>
                     </li>
@@ -2145,6 +2145,16 @@
                                 </li>
                             @endif --}}
                         </ul>
+                    </li>
+
+                    {{-- Hotel Bill Clearence Sub Menu --}}
+                    <li class="sub-menu-item"data-url="{{route('show.billClearence')}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'billclearence') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-users-gear"></i>
+                                Bill Clearence
+                            </p>
+                        </div>
                     </li>
                     
                     {{-- Hotel Reports Sub Menu --}}

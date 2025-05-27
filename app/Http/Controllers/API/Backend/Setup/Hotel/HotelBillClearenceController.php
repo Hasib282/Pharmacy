@@ -7,12 +7,26 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Bed_Transfer;
 
-class HotelRoomTransferController extends Controller
+class HotelBillClearenceController extends Controller
 {
-    // Show All Room Transfer Data
+    // Show All Hotel Bill Clearence Data
     public function Show(Request $req)
     {
         $data = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User')->orderBy('added_at')->get();
+        // $transactionMain = Transaction_Main::on('mysql_second')->where('tran_id', $req->id)->first();
+        // $transDetailsInvoice = Transaction_Detail::on('mysql_second')->
+        // select(
+        //     'tran_head_id', 
+        //     'amount', 
+        //     DB::raw('SUM(quantity) as sum_quantity'), 
+        //     DB::raw('SUM(quantity_actual) as sum_quantity_actual'), 
+        //     DB::raw('SUM(tot_amount) as sum_tot_amount'), 
+        //     DB::raw('COUNT(*) as count')
+        // )
+        // ->where('tran_id', $req->id)
+        // ->groupBy('tran_head_id','amount')
+        // ->get();
+        
         return response()->json([
             'status' => true,
             'data' => $data,
@@ -21,7 +35,7 @@ class HotelRoomTransferController extends Controller
 
 
 
-    // Insert Room Transfer Data
+    // Insert Hotel Bill Clearence Data
     public function Insert(Request $req)
     {
         $req->validate([
@@ -44,14 +58,14 @@ class HotelRoomTransferController extends Controller
 
         return response()->json([
             'status'  => true,
-            'message' => 'Room Transfer Completed successfully',
+            'message' => 'Hotel Bill Clearence Completed successfully',
             'data'    => $data,
         ], 200);
     }
 
 
 
-    // Update Room Transfer Data
+    // Update Hotel Bill Clearence Data
     public function Update(Request $req)
     {
         $data = Bed_Transfer::on('mysql_second')->findOrFail($req->id);
@@ -75,20 +89,20 @@ class HotelRoomTransferController extends Controller
 
         return response()->json([
             'status'      => true,
-            'message'     => 'Room Transfer updated successfully',
+            'message'     => 'Hotel Bill Clearence updated successfully',
             "updatedData" => $updatedData,
         ], 200);
     }
 
 
 
-    // Delete Room Transfer Data
+    // Delete Hotel Bill Clearence Data
     public function Delete(Request $req)
     {
         $data = Bed_Transfer::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'  => true,
-            'message' => 'Room Transfer deleted successfully',
+            'message' => 'Hotel Bill Clearence deleted successfully',
         ], 200);
     }
 }

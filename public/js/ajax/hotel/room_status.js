@@ -1,4 +1,4 @@
-function ShowBedstatus(res) {
+function ShowRoomstatus(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
@@ -11,7 +11,7 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
-        { label: 'Bed Catagory', key: 'bed_category.name' },
+        { label: 'Room Catagory', key: 'bed_category.name' },
         { label: 'Room Number', key: 'name' },
         { label: 'Guest Name', key: '' },
         { label: 'Status', key: 'status' },
@@ -19,7 +19,7 @@ $(document).ready(function () {
 
 
     // Load Data on Hard Reload
-    ReloadData('hotel/bedstatus', ShowBedstatus);
+    ReloadData('hotel/roomstatus', ShowRoomstatus);
 
 });
 
