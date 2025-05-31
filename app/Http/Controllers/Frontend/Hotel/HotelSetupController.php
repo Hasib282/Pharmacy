@@ -18,7 +18,7 @@ class HotelSetupController extends Controller
         else{
             return view('admin_setup.floor.main', compact('name', 'js'));
         }
-    }// End Method
+    } // End Method
 
 
 
@@ -33,7 +33,7 @@ class HotelSetupController extends Controller
         else{
             return view('common_modals.single_input.main', compact('name', 'js'));
         }
-    }// End Method
+    } // End Method
 
 
 
@@ -48,7 +48,7 @@ class HotelSetupController extends Controller
         else{
             return view('admin_setup.bed_list.main', compact('name', 'js'));
         }
-    }// End Method
+    } // End Method
 
 
 
@@ -63,7 +63,7 @@ class HotelSetupController extends Controller
         else{
             return view('admin_setup.tran_groupe.main', compact('name', 'js'));
         }
-    }// End Method
+    } // End Method
 
 
 
@@ -78,7 +78,7 @@ class HotelSetupController extends Controller
         else{
             return view('admin_setup.tran_head.main', compact('name', 'js'));
         }
-    }// End Method
+    } // End Method
 
     
     
@@ -93,7 +93,7 @@ class HotelSetupController extends Controller
         else{
             return view('admin_setup.hotel.hotel_booking.main', compact('name', 'js'));
         }
-    }// End Method
+    } // End Method
 
 
 
@@ -103,12 +103,12 @@ class HotelSetupController extends Controller
         $name = "Room Transfer";
         $js = 'hotel/room_transfer';
         if ($req->ajax()) {
-            return view('admin_setup.hotel.bed_transfer.ajaxBlade', compact('name', 'js'));
+            return view('admin_setup.bed_transfer.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.hotel.bed_transfer.main', compact('name', 'js'));
+            return view('admin_setup.bed_transfer.main', compact('name', 'js'));
         }
-    }// End Method
+    } // End Method
 
 
 
@@ -117,16 +117,16 @@ class HotelSetupController extends Controller
 
     /////////////////////////// --------------- Hotel Room Status Methods Start Here ---------- //////////////////////////
     // Show Room Status
-    public function ShowRoomstatus(Request $req){
+    public function ShowRoomStatus(Request $req){
         $name = "Room Status";
         $js = 'hotel/room_status';
         if ($req->ajax()) {
-            return view('admin_setup.hotel.bed_status.ajaxBlade', compact('name', 'js'));
+            return view('admin_setup.bed_status.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.hotel.bed_status.main', compact('name', 'js'));
+            return view('admin_setup.bed_status.main', compact('name', 'js'));
         }
-    }// End Method
+    } // End Method
     
     
     

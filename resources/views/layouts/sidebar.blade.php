@@ -1750,17 +1750,17 @@
                         </ul>
                     </li>
 
-                     {{-- Hospital Setup Sub Menu --}}
-                     @if(auth()->user()->hasPermission(194))
-                     <li class="sub-menu-item" data-url="{{route('show.patientAppointment')}}">
-                         <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'ptnappointment') ? 'active':''}}">
-                             <p>
-                                 <i class="fa-solid fa-gears"></i>
-                                 APPOINMENT
-                             </p>
-                         </div>
-                     </li>
-                 @endif
+                    {{-- Hospital Setup Sub Menu --}}
+                    @if(auth()->user()->hasPermission(194))
+                        <li class="sub-menu-item" data-url="{{route('show.patientAppointment')}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'ptnappointment') ? 'active':''}}">
+                                <p>
+                                    <i class="fa-solid fa-gears"></i>
+                                    APPOINMENT
+                                </p>
+                            </div>
+                        </li>
+                    @endif
                     
                     {{-- Hospital Setup Sub Menu --}}
                     @if(auth()->user()->hasPermission(194))
@@ -1773,6 +1773,28 @@
                             </div>
                         </li>
                     @endif
+
+
+                    {{-- Bed Transfer User Sub Menu --}}
+                    <li class="sub-menu-item"data-url="{{route('show.bedTransfer')}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'bedtransfer') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-users-gear"></i>
+                                Bed Transfer 
+                            </p>
+                        </div>
+                    </li>
+    
+
+                    {{-- Bed Status Sub Menu --}}
+                    <li class="sub-menu-item"data-url="{{route('show.bedStatus')}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'bedstatus') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-users-gear"></i>
+                                Bed Status
+                            </p>
+                        </div>
+                    </li>
 
                     {{-- Hospital User Sub Menu --}}
                     <li class="sub-menu-item">
@@ -2038,7 +2060,7 @@
                         </div>
                     </li>
 
-                  {{-- Room Transfer User Sub Menu --}}
+                    {{-- Room Transfer User Sub Menu --}}
                     <li class="sub-menu-item"data-url="{{route('show.roomTransfer')}}">
                         <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'roomtransfer') ? 'active':''}}">
                             <p>

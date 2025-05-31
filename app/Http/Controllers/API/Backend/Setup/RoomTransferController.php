@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Backend\Setup\Hotel;
+namespace App\Http\Controllers\API\Backend\Setup;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Bed_Transfer;
 use App\Models\Booking;
 
-class HotelRoomTransferController extends Controller
+class RoomTransferController extends Controller
 {
     // Show All Room Transfer Data
     public function Show(Request $req)

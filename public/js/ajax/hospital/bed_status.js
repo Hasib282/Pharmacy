@@ -1,4 +1,4 @@
-function ShowBedStatus(res) {
+function ShowRoomstatus(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
@@ -19,7 +19,8 @@ $(document).ready(function () {
 
 
     // Load Data on Hard Reload
-    ReloadData('hospital/bedstatus', ShowBedStatus);
+    ReloadData('hotel/roomstatus', ShowRoomstatus);
+
 });
 
 

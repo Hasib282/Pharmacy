@@ -928,6 +928,14 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
 
             ///////////////////// ------------------ Patient Appoinment Routes Start ------------------ /////////////////////
             Route::get('/ptnappointment',  'ShowPatientAppointment')->name('show.patientAppointment');
+
+
+            ///////////////////// ------------------ Patient Bed Transfer Routes Start ------------------ /////////////////////
+            Route::get('/bedtransfer',  'ShowBedTransfer')->name('show.bedTransfer');
+
+            
+            ///////////////////// ------------------ Patient Bed Status Routes Start ------------------ /////////////////////
+            Route::get('/bedstatus',  'ShowBedStatus')->name('show.bedStatus');
         });
         
         
@@ -1018,11 +1026,11 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             // Hotel booking routes
             Route::get('/booking',  'ShowBooking')->name('show.booking');
 
-            // room Transfer routes
+            // Room Transfer routes
             Route::get('/roomtransfer',  'ShowRoomTransfer')->name('show.roomTransfer');
 
             // Hotel Room Status routes
-            Route::get('/roomstatus',  'ShowRoomstatus')->name('show.roomStatus');
+            Route::get('/roomstatus',  'ShowRoomStatus')->name('show.roomStatus');
 
             // Hotel Bill Clearence
             Route::get('/billclearence',  'ShowBillClearence')->name('show.billClearence');

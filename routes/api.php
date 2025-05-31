@@ -124,8 +124,8 @@ use App\Http\Controllers\API\Backend\Transactions\ServicesController;
 
 // Hotel Transactions
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBookingController;
-use App\Http\Controllers\API\Backend\Setup\Hotel\HotelRoomStatusController;
-use App\Http\Controllers\API\Backend\Setup\Hotel\HotelRoomTransferController;
+use App\Http\Controllers\API\Backend\Setup\RoomStatusController;
+use App\Http\Controllers\API\Backend\Setup\RoomTransferController;
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBillClearenceController;
 
 //hotel service(transaction)
@@ -1511,6 +1511,27 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::delete('/ptnappointment', 'Delete');
             Route::get('/ptnappointment/get', 'Get');
         });
+
+
+
+        // *************************************** Hotel Bed Transfer Start *************************************** //
+        Route::controller(RoomTransferController::class)->group(function(){
+            Route::get('/bedtransfer', 'Show');
+            Route::post('/bedtransfer', 'Insert');
+            Route::put('/bedtransfer', 'Update');
+            Route::delete('/bedtransfer', 'Delete');
+        });
+
+
+
+        // *************************************** Hotel Bed Status Start *************************************** //
+        Route::controller(RoomStatusController::class)->group(function(){
+            Route::get('/bedstatus', 'Show');
+            Route::post('/bedstatus', 'Insert');
+            Route::put('/bedstatus', 'Update');
+            Route::delete('/bedstatus', 'Delete');
+            Route::get('/bedstatus/get', 'Get');
+        });
         
         
         
@@ -1685,7 +1706,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
         // *************************************** Hotel Bed Transfer Start *************************************** //
-        Route::controller(HotelRoomTransferController::class)->group(function(){
+        Route::controller(RoomTransferController::class)->group(function(){
             Route::get('/roomtransfer', 'Show');
             Route::post('/roomtransfer', 'Insert');
             Route::put('/roomtransfer', 'Update');
@@ -1695,7 +1716,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 
         // *************************************** Hotel Bed Status Start *************************************** //
-        Route::controller(HotelRoomStatusController::class)->group(function(){
+        Route::controller(RoomStatusController::class)->group(function(){
             Route::get('/roomstatus', 'Show');
             Route::post('/roomstatus', 'Insert');
             Route::put('/roomstatus', 'Update');

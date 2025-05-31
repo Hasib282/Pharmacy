@@ -142,4 +142,39 @@ class HospitalSetupConrtoller extends Controller
             return view('admin_setup.hospital.appointment.main', compact('name'));
         }
     } // End Method
+
+
+
+
+
+    /////////////////////////// --------------- Hospital Bed Transfer Methods Start Here ---------- //////////////////////////
+    // Show Hospital Bed Transfer
+    public function ShowBedTransfer(Request $req){
+        $name = "Bed Transfer";
+        $js = 'hospital/bed_transfer';
+        if ($req->ajax()) {
+            return view('admin_setup.bed_transfer.ajaxBlade', compact('name', 'js'));
+        }
+        else{
+            return view('admin_setup.bed_transfer.main', compact('name', 'js'));
+        }
+    } // End Method
+
+
+
+
+
+
+    /////////////////////////// --------------- Hospital Bed Status Methods Start Here ---------- //////////////////////////
+    // Show Hospital Bed Status
+    public function ShowBedStatus(Request $req){
+        $name = "Bed Status";
+        $js = 'hospital/bed_status';
+        if ($req->ajax()) {
+            return view('admin_setup.bed_status.ajaxBlade', compact('name', 'js'));
+        }
+        else{
+            return view('admin_setup.bed_status.main', compact('name', 'js'));
+        }
+    } // End Method
 }

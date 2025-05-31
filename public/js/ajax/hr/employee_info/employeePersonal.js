@@ -95,7 +95,7 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hr/employee/personal', {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }, store: { selector: '#store', attribute: 'data-id' }}, function() {
+    InsertAjax('hr/employee/personal', {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }}, function() {
         $('#name').focus();
         $('#location').removeAttr('data-id');
         $('#previewImage').attr('src',`#`).hide();

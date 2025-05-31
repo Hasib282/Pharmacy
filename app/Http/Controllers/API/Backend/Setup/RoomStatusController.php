@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Backend\Setup\Hotel;
+namespace App\Http\Controllers\API\Backend\Setup;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,7 +9,7 @@ use App\Models\Bed_List;
 
 
 
-class HotelRoomStatusController extends Controller
+class RoomStatusController extends Controller
 {
     // Show Room Status By Room List
     public function Show(Request $req){
