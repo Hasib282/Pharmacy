@@ -249,7 +249,19 @@ class HotelBookingController extends Controller
     // Show Booking Clearence Invoice/Receipt
     public function Invoice(Request $req)
     {
-        $transactionMain = Transaction_Main::on('mysql_second')->where('booking_id', $req->id)->first();
+        $booking = Booking::on('mysql_second')->with('User','Category','List','Sr','Bill')->where('booking_id', $req->id)->first();
+        $transactionMain = Transaction_Main::on('mysql_second')
+        ->select(
+            DB::raw('SUM(bill_amount) as sum_bill_amount'), 
+            DB::raw('SUM(discount) as sum_discount'), 
+            DB::raw('SUM(net_amount) as sum_net_amount'), 
+            DB::raw('SUM(receive) as sum_receive'), 
+            DB::raw('SUM(payment) as sum_payment'), 
+            DB::raw('SUM(due) as sum_due'), 
+        )
+        ->where('booking_id', $req->id)
+        ->first();
+        
         $transDetailsInvoice = Transaction_Detail::on('mysql_second')->
         select(
             'tran_head_id', 
@@ -257,13 +269,15 @@ class HotelBookingController extends Controller
             DB::raw('SUM(quantity) as sum_quantity'), 
             DB::raw('SUM(quantity_actual) as sum_quantity_actual'), 
             DB::raw('SUM(tot_amount) as sum_tot_amount'), 
-            DB::raw('COUNT(*) as count')
+            DB::raw('COUNT(*) as count'),
+            'tran_id',
+            'tran_date'
         )
         ->where('booking_id', $req->id)
-        ->groupBy('tran_head_id','amount')
+        ->groupBy('tran_head_id','amount', 'tran_id', 'tran_date')
         ->get();
         
-        $pdf = Pdf::loadView('common_modals.billclearence', compact('transactionMain', 'transDetailsInvoice'));
+        $pdf = Pdf::loadView('common_modals.billclearence', compact('transactionMain', 'transDetailsInvoice', 'booking'));
         return $pdf->stream();
     } // End Method
 }

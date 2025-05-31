@@ -8,7 +8,7 @@
         Phone no: {{ auth()->user()->company ? auth()->user()->company->company_phone : '01314353560' }}
     </p>
     <p style="margin-top: 10px;">
-        <strong style="font-size: 25px;">Bill Clearence</strong> <br>
+        <strong style="font-size: 25px;">Retail Invoice</strong> <br>
         {{-- {{$transactionMain->store->store_name}} --}}
     </p>
 </div>
@@ -52,28 +52,28 @@
 
 
 {{-- product details part --}}
-<table style="width: 100%; border-collapse: collapse;font-size:12px;">
+<table style="width: 100%; border-collapse: collapse;">
     <caption class="caption">Invoice Details</caption>
     <thead style="border-top: 1px dashed; border-bottom: 1px dashed;">
         <tr>
             <th style="text-align:left;width:5%;">#SL</th>
-            <th style="text-align:left;width:13%;">Bill No</th>
-            <th style="text-align:left;width:12%;">Date</th>
-            <th style="text-align:left;width:35%;">Product</th>
-            <th style="text-align:right;width:15%;">Unit Price</th>
-            <th style="text-align:right;width:5%;">Qty</th>
-            <th style="text-align:right;width:15%;">Total</th>
+            <th style="text-align:left;width:10%;">Bill No</th>
+            <th style="text-align:left;width:10%;">Date</th>
+            <th style="text-align:left;width:40%;">Product</th>
+            <th style="text-align:right;width:10%;">Qty</th>
+            <th style="text-align:right;width:10%;">Unit Price</th>
+            <th style="text-align:right;width:10%;">Total</th>
         </tr>
     </thead>
     <tbody>
         @foreach($transDetailsInvoice as $key => $item)
         <tr>
             <td>{{ $key+1 }}</td>
-            <td>{{ $item->tran_id }}</td>
-            <td>{{ \Carbon\Carbon::parse($item->tran_date)->format('d M Y') }}</td>
-            <td>{{ $item->head->tran_head_name }} </td>
-            <td style="text-align:right"> {{ number_format($item->amount) }} </td>
+            <td>{{ $key+1 }}</td>
+            <td>{{ $key+1 }}</td>
+            <td> {{ $item->head->tran_head_name }} </td>
             <td style="text-align:right"> {{ $item->sum_quantity_actual }} </td>
+            <td style="text-align:right"> {{ number_format($item->amount) }} </td>
             <td style="text-align:right"> {{ number_format($item->sum_tot_amount) }} </td>
         </tr>
         @endforeach
@@ -81,54 +81,26 @@
     <tfoot style="border-top:1px dashed;">
         <tr>
             <td style="text-align:right" colspan="6">Total:</td>
-            <td style="text-align:right">{{ number_format($transactionMain->sum_bill_amount) }}</td>
+            <td style="text-align:right">{{ number_format($transactionMain->bill_amount) }}</td>
         </tr>
         <tr>
             <td style="text-align:right" colspan="6">(-) Discount:</td>
-            <td style="text-align:right">{{ number_format($transactionMain->sum_discount) }}</td>
+            <td style="text-align:right">{{ number_format($transactionMain->discount) }}</td>
         </tr>
         <tr >
             <td style="text-align:right;" colspan="6">Net Total:</td>
-            <td style="text-align:right">{{ number_format($transactionMain->sum_net_amount) }}</td>
+            <td style="text-align:right">{{ number_format($transactionMain->net_amount) }}</td>
         </tr>
         <tr>
             <td style="text-align:right" colspan="6">Advance:</td>
             <td style="text-align:right">
-                {{ number_format($transactionMain->sum_receive != null ? $transactionMain->sum_receive : $transactionMain->sum_payment ) }}
+                {{ number_format($transactionMain->receive != null ? $transactionMain->receive : $transactionMain->payment ) }}
             </td>
         </tr>
         <tr>
             <td style="text-align:right" colspan="6">Due:</td>
             <td style="text-align:right">
-                {{ number_format($transactionMain->sum_due) }}
-            </td>
-        </tr>
-        <tr style="border-top:1px dashed;">
-            <td style="text-align:right" colspan="6">Deposit:</td>
-            <td style="text-align:right">
-                0
-                {{-- {{ number_format($transactionMain->sum_due) }} --}}
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:right" colspan="6">Refund:</td>
-            <td style="text-align:right">
-                0
-                {{-- {{ number_format($transactionMain->sum_due) }} --}}
-            </td>
-        </tr>
-        <tr style="border-top:1px dashed;">
-            <td style="text-align:right" colspan="6">Net Deposit:</td>
-            <td style="text-align:right">
-                0
-                {{-- {{ number_format($transactionMain->sum_due) }} --}}
-            </td>
-        </tr>
-        <tr style="border-top:1px dashed;">
-            <td style="text-align:right" colspan="6">Receiveable:</td>
-            <td style="text-align:right">
-                0
-                {{-- {{ number_format($transactionMain->sum_due) }} --}}
+                {{ number_format($transactionMain->net_amount-$transactionMain->receive- $transactionMain->payment) }}
             </td>
         </tr>
     </tfoot>
