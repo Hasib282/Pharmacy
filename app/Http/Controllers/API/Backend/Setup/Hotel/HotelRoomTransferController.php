@@ -5,14 +5,16 @@ namespace App\Http\Controllers\API\Backend\Setup\Hotel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+
 use App\Models\Bed_Transfer;
+use App\Models\Booking;
 
 class HotelRoomTransferController extends Controller
 {
     // Show All Room Transfer Data
     public function Show(Request $req)
     {
-        $data = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User')->orderBy('added_at')->get();
+        $data = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User','Category')->orderBy('added_at')->get();
         return response()->json([
             'status' => true,
             'data' => $data,
@@ -28,19 +30,28 @@ class HotelRoomTransferController extends Controller
             "guest_id"      => 'required|exists:mysql_second.user__infos,user_id',
             "from_bed"      => 'required|exists:mysql_second.bed__lists,id',
             "to_bed"        => 'required|exists:mysql_second.bed__lists,id',
-            "transfer" => 'required|date',
-        
+            "transfer"      => 'required|date',
+            "booking_id"    => 'required|exists:mysql_second.bookings,booking_id',
+            "category_id"    => 'required|exists:mysql_second.bed__categories,id',
         ]);
 
         $insert = Bed_Transfer::on('mysql_second')->create([
-            "user_id"      => $req->guest_id,
+            'booking_id'    => $req->booking_id,
+            "user_id"       => $req->guest_id,
+            'category_id'   => $req->category_id,
             "from_bed"      => $req->from_bed,
             "to_bed"        => $req->to_bed,
             "transfer_date" => $req->transfer,
             "transfer_by"   => $req->transfer_by,
         ]);
 
-        $data = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User')->findOrFail($insert->id);
+        Booking::on('mysql_second')->where('booking_id', $req->booking_id)->update([
+            'bed_category' => $req->category_id,
+            'bed_list' => $req->to_bed,
+            "updated_at" => now()
+        ]);
+
+        $data = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User','Category')->findOrFail($insert->id);
 
         return response()->json([
             'status'  => true,
@@ -60,18 +71,28 @@ class HotelRoomTransferController extends Controller
             "guest_id"      => 'required|exists:mysql_second.user__infos,user_id',
             "from_bed"      => 'required|exists:mysql_second.bed__lists,id',
             "to_bed"        => 'required|exists:mysql_second.bed__lists,id',
-            "transfer" => 'required|date',
+            "transfer"      => 'required|date',
+            "booking_id"    => 'required|exists:mysql_second.bookings,booking_id',
+            "category_id"   => 'required|exists:mysql_second.bed__categories,id',
         ]);
 
         $data->update([
-            "user_id"      => $req->guest_id,
+            'booking_id'    => $req->booking_id,
+            "user_id"       => $req->guest_id,
+            'category_id'   => $req->category_id,
             "from_bed"      => $req->from_bed,
             "to_bed"        => $req->to_bed,
             "transfer_date" => $req->transfer,
             "updated_at"    => now(),
         ]);
 
-        $updatedData = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User')->findOrFail($req->id);
+        Booking::on('mysql_second')->where('booking_id', $req->booking_id)->update([
+            'bed_category'  => $req->category_id,
+            'bed_list'      => $req->to_bed,
+            "updated_at"    => now()
+        ]);
+
+        $updatedData = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User','Category')->findOrFail($req->id);
 
         return response()->json([
             'status'      => true,

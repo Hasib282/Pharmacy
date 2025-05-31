@@ -72,6 +72,29 @@
                             <span class="error" id="update_address_error"></span>
                         </div>
                     </div>
+                    <!-- Booking Id -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="updateHotel-booking">Booking Id</label>
+                            <input type="text" name="hotel_booking" class="input-small" id="updateHotel-booking" autocomplete="off"><hr>
+                            <div id="update-hotel-booking"></div>
+                            <span class="error" id="update_hotel_booking_error"></span>
+                        </div>
+                    </div>
+                    <!-- Check In -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="updateCheck_in">Check In</label>
+                            <input type="datetime-local" name="check_in" class="input-small" id="updateCheck_in">
+                        </div>
+                    </div>
+                    <!-- Checkout -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="updateCheck_out">Checkout Time</label>
+                            <input type="datetime-local" name="check_out" class="input-small" id="updateCheck_out">
+                        </div>
+                    </div>
                 </div>
             </fieldset>
 
@@ -82,7 +105,7 @@
                     <div class="c-12">
                         <div class="form-input-group">
                             <label for="updateBed_Category">Bed Category<span class="required">*</span></label>
-                            <input type="text" name="bed_category" class="input-small" id="updateBed_Category"><hr>
+                            <input type="text" name="bed_category" class="input-small" id="updateBed_Category" autocomplete="off"><hr>
                             <div id='update-bed_category'></div>
                             <span class="error" id="update_bed_category_error"></span>
                         </div>
@@ -99,7 +122,7 @@
                     <div class="c-6">
                         <div class="form-input-group">
                             <label for="updateBed_List">To Bed<span class="required">*</span></label>
-                            <input type="text" name="bed_list" class="input-small" id="updateBed_List"><hr>
+                            <input type="text" name="bed_list" class="input-small" id="updateBed_List" autocomplete="off"><hr>
                             <div id='update-bed_list'></div>
                             <span class="error" id="update_bed_list_error"></span>
                         </div>

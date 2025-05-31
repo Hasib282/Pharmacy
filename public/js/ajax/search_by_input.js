@@ -1106,6 +1106,12 @@ $(document).ready(function () {
         '#bed_category-list',
 
         '#bed_category-list li',
+
+        function (id) {
+            GetInputList('hotel/setup/roomlist/get/all', {bed_category: $('#bed_category').attr('data-id')}, "#bed-list-table table tbody");
+        },
+
+        "#bed-list-table table tbody",
     );
 
 
@@ -1124,6 +1130,12 @@ $(document).ready(function () {
         '#update-bed_category',
 
         '#update-bed_category li',
+
+        function (id) {
+            GetInputList('hotel/setup/roomlist/get/all', {bed_category: $('#updateBed_Category').attr('data-id')}, "#updateBed-list-table table tbody");
+        },
+
+        "#updateBed-list-table table tbody",
     );
     
     
@@ -1697,6 +1709,79 @@ $(document).ready(function () {
             $('#updatePassport').val(item.attr('data-passport'));
             $('#updateDriving_license').val(item.attr('data-driving_license'));
             $('#updateAddress').val('');
+        }
+    );
+
+
+
+
+
+    /////////////// ------------------ Search Booking Id And add value to input ajax part start ---------------- /////////////////////////////
+    // Booking Id Input Search
+    SearchByInput(
+        'hotel/booking/get',  
+
+        function ($input) {
+            return {
+                booking_id: $input.val(),
+                user_id: $('#guest').attr('data-id'),
+            };
+        }, 
+
+        '#hotel-booking', 
+
+        '#hotel-booking-list',
+
+        '#hotel-booking-list li',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            // $(targetInput).val(item.find('td:first').text());
+            $('#check_in').val(item.attr('data-checkin'));
+            $('#check_out').val(item.attr('data-checkout'));
+        },
+
+        function (targetInput) {
+            $('#check_in').val('');
+            $('#check_out').val('');
+        }
+    );
+
+
+    
+    // Update Booking Id Input Search
+    SearchByInput(
+        'hotel/booking/get', 
+
+        function ($input) {
+            return {
+                booking_id: $input.val(),
+                user_id: $('#updateGuest').attr('data-id'),
+            };
+        }, 
+
+        '#updateHotel-booking', 
+
+        '#update-hotel-booking',
+
+        '#update-hotel-booking li',
+
+        undefined, 
+
+        "",
+
+        function (targetInput, item) {
+            // $(targetInput).val(item.find('td:first').text());
+            $('#updateCheck_in').val(item.attr('data-checkin'));
+            $('#updateCheck_out').val(item.attr('data-checkout'));
+        },
+
+        function (targetInput) {
+            $('#updateCheck_in').val('');
+            $('#updateCheck_out').val('');
         }
     );
 });

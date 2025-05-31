@@ -1647,6 +1647,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/roomlist', 'Insert');
                 Route::put('/roomlist', 'Update');
                 Route::delete('/roomlist', 'Delete');
+                Route::get('/roomlist/get/all', 'GetAll');
             });
 
 
@@ -1678,6 +1679,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::post('/booking', 'Insert');
             Route::put('/booking', 'Update');
             Route::delete('/booking', 'Delete');
+            Route::get('/booking/get', 'Get');
         });
 
 
@@ -1740,6 +1742,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/services', 'Insert');
                 Route::put('/services', 'Update');
                 Route::delete('/services', 'Delete');
+                Route::get('/services/search', 'Search');
                 Route::get('/services/get', 'Get');
             });
         }); // End Hotel Transaction Routes
@@ -1978,6 +1981,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
 
 Route::middleware(['web'])->group(function () {
     Route::get('/get/invoice', [GeneralTransactionController::class, 'Invoice']);
+    Route::get('/get/clearence', [HotelBookingController::class, 'Invoice']);
 
     Route::get('/hr/report/salary/summary/print', [SalarySummaryController::class, 'Print']);
     Route::get('/hr/report/salary/details/print', [SalaryDetailController::class, 'Print']);

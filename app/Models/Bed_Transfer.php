@@ -15,6 +15,10 @@ class Bed_Transfer extends Model
     
     public $timestamps = false;
 
+    public function Category(){
+        return $this->belongsTo(Bed_Category::class,'category_id','id');
+    }
+
     public function FromList(){
         return $this->belongsTo(Bed_List::class,'from_bed','id');
     }

@@ -2,7 +2,7 @@ function ShowroomTransfer(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['user_id', 'user.user_name', 'from_list.name', 'to_list.name', 'transfer_date', 'transfer_by' ],
+        tbody: ['booking_id','user_id', 'user.user_name', 'category.name', 'from_list.name', 'to_list.name', 'transfer_date', 'transfer_by' ],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
@@ -18,14 +18,15 @@ $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
+        { label: 'Booking Id', key: 'booking_id' },
         { label: 'Guest Id', key: 'user_id' },
         { label: 'Guest Name', key: 'user.user_name' },
-        { label: 'From Bed', key: 'from_list.name' },
-        { label: 'To Bed', key: 'to_list.name' },
+        { label: 'Room Category', key: 'category.name' },
+        { label: 'From Room', key: 'from_list.name' },
+        { label: 'To Room', key: 'to_list.name' },
         { label: 'Transfer Date', key: 'transfer_date' },
         { label: 'Transfer By', key: 'transfer_by' },
         { label: 'Action', type: 'button' }
-
     ]);
 
 
@@ -43,11 +44,12 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hotel/roomtransfer', {guest_id: { selector: '#guest', attribute: 'data-id' },from_bed: { selector: '#from_bed', attribute: 'data-id' }, to_bed: { selector: '#bed_list', attribute: 'data-id' }}, function () {
+    InsertAjax('hotel/roomtransfer', {guest_id: { selector: '#guest', attribute: 'data-id' }, booking_id: { selector: '#hotel-booking', attribute: 'data-id' },from_bed: { selector: '#from_bed', attribute: 'data-id' }, to_bed: { selector: '#bed_list', attribute: 'data-id' }, category_id: { selector: '#bed_category', attribute: 'data-id' }}, function () {
         $('#guest').removeAttr('data-id');
         $('#bed_category').removeAttr('data-id');
         $('#from_bed').removeAttr('data-id');
         $('#bed_list').removeAttr('data-id');
+        $('#hotel-booking').removeAttr('data-id');
         $('#guest').focus();
     });
 
@@ -57,7 +59,14 @@ $(document).ready(function () {
 
 
     // Update Ajax
-    UpdateAjax('hotel/roomtransfer');
+    UpdateAjax('hotel/roomtransfer', {guest_id: { selector: '#updateGuest', attribute: 'data-id' }, booking_id: { selector: '#updateHotel-booking', attribute: 'data-id' },from_bed: { selector: '#updateFrom_bed', attribute: 'data-id' }, to_bed: { selector: '#updateBed_List', attribute: 'data-id' }, category_id: { selector: '#updateBed_Category', attribute: 'data-id' } }, function () {
+        $('#updateGuest').removeAttr('data-id');
+        $('#updateBed_Category').removeAttr('data-id');
+        $('#updateFrom_bed').removeAttr('data-id');
+        $('#updateBed_List').removeAttr('data-id');
+        $('#updateHotel-booking').removeAttr('data-id');
+        $('#updateGuest').focus();
+    });
 
 
     // Delete Ajax

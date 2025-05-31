@@ -148,4 +148,40 @@ class BedListController extends Controller
 
         return $list;
     } // End Method
+    
+    
+    
+    // Get Bed List
+    public function GetAll(Request $req){
+        $data = Bed_List::on('mysql_second')
+        ->where('category',  $req->bed_category)
+        ->orderBy('name')
+        ->get();
+
+        $list = "";
+        if($data->count() > 0){
+            foreach($data as $index => $item) {
+                $list .= '<tr tabindex="' . ($index + 1) . '" data-id="'.$item->id.'" data-price="'.$item->price.'"  data-capacity="'.$item->capacity.'">
+                            <td>'.$item->name.'</td>
+                            <td>'.$item->price.'</td>
+                            <td>'.$item->capacity.'</td>
+                        </tr>';
+            }
+        }
+        else{
+            if($req->bed_category != 'undefined' && $data->count() > 0){
+                $list .= '<tr>
+                            <td>Select Bed Category First</td>
+                        </tr>';
+            }
+            else{
+                $list .= '<tr>
+                            <td>No Data Found</td>
+                        </tr>';
+            }
+        }
+        
+
+        return $list;
+    } // End Method
 }

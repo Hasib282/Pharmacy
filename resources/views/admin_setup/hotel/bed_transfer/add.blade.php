@@ -71,6 +71,29 @@
                             <span class="error" id="address_error"></span>
                         </div>
                     </div>
+                    <!-- Booking Id -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="hotel-booking">Booking Id</label>
+                            <input type="text" name="hotel_booking" class="input-small" id="hotel-booking" autocomplete="off"><hr>
+                            <div id="hotel-booking-list"></div>
+                            <span class="error" id="hotel_booking_error"></span>
+                        </div>
+                    </div>
+                    <!-- Check In -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="check_in">Check In</label>
+                            <input type="datetime-local" name="check_in" class="input-small" id="check_in">
+                        </div>
+                    </div>
+                    <!-- Checkout -->
+                    <div class="c-4">
+                        <div class="form-input-group">
+                            <label for="check_out">Checkout Time</label>
+                            <input type="datetime-local" name="check_out" class="input-small" id="check_out">
+                        </div>
+                    </div>
                 </div>
             </fieldset>
 

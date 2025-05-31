@@ -14,7 +14,6 @@ use App\Models\Transaction_Main;
 
 class HotelServiceController extends Controller
 {
-    
    // Show All Services
     public function Show(Request $req){
         $data = Transaction_Main::on('mysql_second')
@@ -44,6 +43,7 @@ class HotelServiceController extends Controller
             "netAmount" => 'required',
             "advance" => 'required',
             "balance" => 'required',
+            "booking_id" => 'required|exists:mysql_second.bookings,booking_id',
         ]);
 
         if($req->discount > $req->amountRP){
@@ -102,6 +102,7 @@ class HotelServiceController extends Controller
                 "receive" => $receive,
                 "payment" => $payment,
                 "due" => $req->balance,
+                "booking_id" => $req->booking_id,
             ]);
 
 
@@ -137,6 +138,7 @@ class HotelServiceController extends Controller
                     "receive" => $receive,
                     "payment" => $payment,
                     "due" => $due,
+                    "booking_id" => $req->booking_id,
                 ]);
 
                 $billDiscount -= $discount;
@@ -165,6 +167,7 @@ class HotelServiceController extends Controller
             "netAmount"  => 'required|numeric',
             "advance"  => 'required|numeric',
             "balance"  => 'required|numeric',
+            "booking_id" => 'required|exists:mysql_second.bookings,booking_id',
         ]);
 
 
@@ -212,6 +215,7 @@ class HotelServiceController extends Controller
                 "receive" => $receive,
                 "payment" => $payment,
                 "due" => $req->balance,
+                "booking_id" => $req->booking_id,
                 "updated_at" => now()
             ]);
 
@@ -253,6 +257,7 @@ class HotelServiceController extends Controller
                     "payment" => $payment,
                     "due" => $due,
                     "tran_date" => $transaction->tran_date,
+                    "booking_id" => $req->booking_id,
                 ]);
 
                 $billDiscount -= $discount;

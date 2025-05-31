@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Backend\Setup\Hotel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\Booking;
 use App\Models\User_Info;
@@ -113,6 +114,7 @@ class HotelBookingController extends Controller
                 "payment" => 0,
                 "due" => 0,
                 "payment_mode" => $req->payment_method,
+                'booking_id' => $booking_id,
             ]);
 
             Transaction_Detail::on('mysql_second')->create([
@@ -131,6 +133,7 @@ class HotelBookingController extends Controller
                 "payment" => 0,
                 "due" => 0,
                 "payment_mode" => $req->payment_method,
+                'booking_id' => $booking_id,
             ]);
 
             $data = Booking::on('mysql_second')->with('User','Category','List','Sr','Bill')->findOrFail($insert->id);
@@ -210,5 +213,57 @@ class HotelBookingController extends Controller
             'status'=> true,
             'message'=> 'Booking Deleted Successfully'
         ], 200);
+    } // End Method
+    
+    
+    
+    // Get Booking/Reservation Id
+    public function Get(Request $req){
+        $data = Booking::on('mysql_second')
+        ->where('user_id', $req->user_id)
+        ->where('booking_id', 'like', $req->booking_id.'%')
+        ->where('status', 1)
+        ->get();
+        
+        $list = "<ul>";
+            if($data->count() > 0){
+                foreach($data as $index => $item) {
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->booking_id.'" data-checkin="'.$item->check_in.'" data-checkout="'.$item->check_out.'">'.$item->booking_id.'</li>';
+                }
+            }
+            else{
+                if($req->user_id != 'undefined' && $data->count() > 0){
+                    $list .= '<li>Select User First</li>';
+                }
+                else{
+                    $list .= '<li>No Data Found</li>';
+                }
+            }
+        $list .= "</ul>";
+
+        return $list;
+    } // End Method
+
+
+
+    // Show Booking Clearence Invoice/Receipt
+    public function Invoice(Request $req)
+    {
+        $transactionMain = Transaction_Main::on('mysql_second')->where('booking_id', $req->id)->first();
+        $transDetailsInvoice = Transaction_Detail::on('mysql_second')->
+        select(
+            'tran_head_id', 
+            'amount', 
+            DB::raw('SUM(quantity) as sum_quantity'), 
+            DB::raw('SUM(quantity_actual) as sum_quantity_actual'), 
+            DB::raw('SUM(tot_amount) as sum_tot_amount'), 
+            DB::raw('COUNT(*) as count')
+        )
+        ->where('booking_id', $req->id)
+        ->groupBy('tran_head_id','amount')
+        ->get();
+        
+        $pdf = Pdf::loadView('common_modals.billclearence', compact('transactionMain', 'transDetailsInvoice'));
+        return $pdf->stream();
     } // End Method
 }

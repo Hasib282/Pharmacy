@@ -80,6 +80,29 @@
                                 <span class="error" id="update_address_error"></span>
                             </div>
                         </div>
+                        <!-- Booking Id -->
+                        <div class="c-4">
+                            <div class="form-input-group">
+                                <label for="updateHotel-booking">Booking Id</label>
+                                <input type="text" name="hotel_booking" class="input-small" id="updateHotel-booking" autocomplete="off"><hr>
+                                <div id="update-hotel-booking"></div>
+                                <span class="error" id="update_hotel_booking_error"></span>
+                            </div>
+                        </div>
+                        <!-- Check In -->
+                        <div class="c-4">
+                            <div class="form-input-group">
+                                <label for="updateCheck_in">Check In</label>
+                                <input type="datetime-local" name="check_in" class="input-small" id="updateCheck_in">
+                            </div>
+                        </div>
+                        <!-- Checkout -->
+                        <div class="c-4">
+                            <div class="form-input-group">
+                                <label for="updateCheck_out">Checkout Time</label>
+                                <input type="datetime-local" name="check_out" class="input-small" id="updateCheck_out">
+                            </div>
+                        </div>
                         {{-- Services  --}}
                         <div class="c-6">
                             <div class="form-input-group">

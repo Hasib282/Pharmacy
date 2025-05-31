@@ -4,6 +4,8 @@ function ShowAppointment(res) {
         data: res.data,
         tbody: [ 'booking_id', 'user.user_name', 'user.user_phone', 'adult', 'children', 'check_in', 'check_out', 'status'],
         actions: (row) => `
+                <a class="print-receipt" href="/api/get/clearence?id=${row.booking_id}"> <i class="fa-solid fa-receipt"></i></a>
+                
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                         
                 <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>

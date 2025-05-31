@@ -655,6 +655,7 @@ function InsertTransaction(url, method, type, AddSuccessEvent) {
         let withs = $('#user').attr('data-with');
         let user = $('#user').attr('data-id');
         let ptn_id = $('#patient').attr('data-id');
+        let booking_id = $('#hotel-booking').val();
         let guest_id = $('#guest').attr('data-id');
         let name = $('#name').val();
         let phone = $('#phone').val();
@@ -670,7 +671,7 @@ function InsertTransaction(url, method, type, AddSuccessEvent) {
         $.ajax({
             url: `${apiUrl}/${url}`,
             method: 'POST',
-            data: { products:JSON.stringify(products), name, phone, address, type, method, withs, user, ptn_id, guest_id, store, amountRP, discount, netAmount, advance, balance, company, batch },
+            data: { products:JSON.stringify(products), booking_id, name, phone, address, type, method, withs, user, ptn_id, guest_id, store, amountRP, discount, netAmount, advance, balance, company, batch },
             success: function (res) {
                 if (res.status) {
                     $('#AddForm')[0].reset();
@@ -702,6 +703,7 @@ function UpdateTransaction(url, method, type, AddSuccessEvent = undefined) {
         products = JSON.parse(products);
 
         let tranid = $('#updateTranId').val();
+        let booking_id = $('#updateHotel-booking').val();
         let id = $('#id').val();
         let amountRP = $('#updateAmountRP').val();
         let totalDiscount = $('#updateTotalDiscount').val();
@@ -715,7 +717,7 @@ function UpdateTransaction(url, method, type, AddSuccessEvent = undefined) {
         $.ajax({
             url: `${apiUrl}/${url}`,
             method: 'PUT',
-            data: { products:JSON.stringify(products), name, phone, address, id, tranid, type, method, amountRP, totalDiscount, netAmount, advance, balance, status },
+            data: { products:JSON.stringify(products), booking_id, name, phone, address, id, tranid, type, method, amountRP, totalDiscount, netAmount, advance, balance, status },
             beforeSend:function() {
                 $(document).find('span.error').text('');  
             },
