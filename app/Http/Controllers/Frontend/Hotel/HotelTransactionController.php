@@ -38,12 +38,12 @@ class HotelTransactionController extends Controller
     // Show Hotel Deposits
     public function ShowDeposits(Request $req){
         $name = "Hotel Deposits";
-        $js = 'hotel/transaction/services';
+        $js = 'hotel/transaction/deposit';
         if ($req->ajax()) {
-            return view('transaction.hotel.ajaxBlade', compact('name', 'js'));
+            return view('transaction.deposit_refund.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.hotel.main', compact('name', 'js'));
+            return view('transaction.deposit_refund.main', compact('name', 'js'));
         }
     } // End Method
     
@@ -52,9 +52,9 @@ class HotelTransactionController extends Controller
     // Search Hotel Deposits
     public function SearchDeposits(Request $req){
         $name = "Hotel Deposits";
-        $js = 'hotel/transaction/services';
+        $js = 'hotel/transaction/deposit';
 
-        return view('transaction.hotel.main', compact('name', 'js'));        
+        return view('transaction.deposit_refund.main', compact('name', 'js'));        
     } // End Method
     
     
@@ -65,12 +65,12 @@ class HotelTransactionController extends Controller
     // Show Hotel Refunds
     public function ShowRefunds(Request $req){
         $name = "Hotel Refunds";
-        $js = 'hotel/transaction/services';
+        $js = 'hotel/transaction/refund';
         if ($req->ajax()) {
-            return view('transaction.hotel.ajaxBlade', compact('name', 'js'));
+            return view('transaction.deposit_refund.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('transaction.hotel.main', compact('name', 'js'));
+            return view('transaction.deposit_refund.main', compact('name', 'js'));
         }
     } // End Method
     
@@ -79,9 +79,9 @@ class HotelTransactionController extends Controller
     // Search Hotel Refunds
     public function SearchRefunds(Request $req){
         $name = "Hotel Refunds";
-        $js = 'hotel/transaction/services';
+        $js = 'hotel/transaction/refund';
 
-        return view('transaction.hotel.main', compact('name', 'js'));        
+        return view('transaction.deposit_refund.main', compact('name', 'js'));        
     } // End Method
     
 }
