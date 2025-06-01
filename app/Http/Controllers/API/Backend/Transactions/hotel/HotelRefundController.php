@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Backend\Transactions;
+namespace App\Http\Controllers\API\Backend\Transactions\Hotel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,12 +9,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Transaction_Detail;
 use App\Models\Transaction_Main;
 
-
-
-
-class HotelServiceController extends Controller
+class HotelRefundController extends Controller
 {
-   // Show All Services
+   // Show All Deposit Refunds
     public function Show(Request $req){
         $data = Transaction_Main::on('mysql_second')
         ->with('User')
@@ -32,7 +29,7 @@ class HotelServiceController extends Controller
 
 
 
-    // Insert Services
+    // Insert Deposit Refunds
     public function Insert(Request $req){
         $req->validate([
             "method" => 'required',
@@ -152,14 +149,14 @@ class HotelServiceController extends Controller
         
         return response()->json([
             'status'=> true,
-            'message' => 'Services Added Successfully',
+            'message' => 'Deposit Refunds Added Successfully',
             "data" => $data,
         ], 200);  
     } // End Method
 
 
 
-    // Update Services
+    // Update Deposit Refunds
     public function Update(Request $req){
         $req->validate([
             "amountRP"  => 'required|numeric',
@@ -278,7 +275,7 @@ class HotelServiceController extends Controller
 
 
 
-    // Delete Services
+    // Delete Deposit Refunds
     public function Delete(Request $req){
         $transaction = Transaction_Main::on('mysql_second')->findOrFail($req->id);
         
@@ -292,7 +289,7 @@ class HotelServiceController extends Controller
 
 
 
-    // Search Services
+    // Search Deposit Refunds
     public function Search(Request $req){
         $data = Transaction_Main::on('mysql_second')
         ->with('User')

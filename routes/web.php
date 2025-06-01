@@ -933,7 +933,7 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             ///////////////////// ------------------ Patient Bed Transfer Routes Start ------------------ /////////////////////
             Route::get('/bedtransfer',  'ShowBedTransfer')->name('show.bedTransfer');
 
-            
+
             ///////////////////// ------------------ Patient Bed Status Routes Start ------------------ /////////////////////
             Route::get('/bedstatus',  'ShowBedStatus')->name('show.bedStatus');
         });
@@ -1054,6 +1054,16 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 ///////////// --------------- Services Fee Routes Start ----------- ///////////////////
                 Route::get('/services',  'ShowServices')->name('show.hotelServices');
                 Route::get('/services/search',  'SearchServices')->name('search.hotelServices');
+                
+                
+                ///////////// --------------- Deposit Routes Start ----------- ///////////////////
+                Route::get('/deposits',  'ShowDeposits')->name('show.hotelDeposits');
+                Route::get('/deposits/search',  'SearchDeposits')->name('search.hotelDeposits');
+                
+                
+                ///////////// --------------- Refund Routes Start ----------- ///////////////////
+                Route::get('/refunds',  'ShowRefunds')->name('show.hotelRefunds');
+                Route::get('/refunds/search',  'SearchRefunds')->name('search.hotelRefunds');
             });
         }); // End Hotel Transaction Routes
         

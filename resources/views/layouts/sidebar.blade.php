@@ -2143,6 +2143,28 @@
                                     </div>
                                 </li>
                             @endif
+
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.hotelDeposits')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction' && Request::segment(3) == 'deposits') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Deposits
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+
+                            @if(auth()->user()->hasPermission(194))
+                                <li class="sub-menu1-item" data-url="{{route('show.hotelRefunds')}}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction' && Request::segment(3) == 'refunds') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-industry"></i>
+                                            Refunds
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
                         </ul>
                     </li>
                     

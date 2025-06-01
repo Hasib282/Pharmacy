@@ -86,7 +86,7 @@ class HotelBookingController extends Controller
                 ]);
             }
 
-            $tran_id = GenerateTranId(8,'Receive','HTR');
+            $tran_id = GenerateTranId(8,'Deposit','HMD');
             
             $insert = Booking::on('mysql_second')->create([
                 'booking_id' => $booking_id,
@@ -105,7 +105,7 @@ class HotelBookingController extends Controller
             Transaction_Main::on('mysql_second')->create([
                 "tran_id" => $tran_id,
                 "tran_type" => 8,
-                "tran_method" => 'Receive',
+                "tran_method" => 'Deposit',
                 "tran_user" => $guest_id,
                 "bill_amount" => $req->advance,
                 "discount" => 0,
@@ -120,7 +120,7 @@ class HotelBookingController extends Controller
             Transaction_Detail::on('mysql_second')->create([
                 "tran_id" => $tran_id,
                 "tran_type" => 8,
-                "tran_method" => 'Receive',
+                "tran_method" => 'Deposit',
                 "tran_user" => $guest_id,
                 "tran_groupe_id" => 9,
                 "tran_head_id" => 9,

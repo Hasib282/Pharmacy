@@ -129,7 +129,9 @@ use App\Http\Controllers\API\Backend\Setup\RoomTransferController;
 use App\Http\Controllers\API\Backend\Setup\Hotel\HotelBillClearenceController;
 
 //hotel service(transaction)
-use App\Http\Controllers\API\Backend\Transactions\HotelServiceController;
+use App\Http\Controllers\API\Backend\Transactions\Hotel\HotelServiceController;
+use App\Http\Controllers\API\Backend\Transactions\Hotel\HotelDepositController;
+use App\Http\Controllers\API\Backend\Transactions\Hotel\HotelRefundController;
 
 
 
@@ -1755,8 +1757,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         
         // *************************************** Hotel Transaction Routes Start *************************************** //
         Route::prefix('/transaction')->group(function () {
-          
-          
             // *************************************** Hotel Service Start *************************************** //
             Route::controller(HotelServiceController::class)->group(function(){
                 Route::get('/services', 'Show');
@@ -1765,6 +1765,28 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::delete('/services', 'Delete');
                 Route::get('/services/search', 'Search');
                 Route::get('/services/get', 'Get');
+            });
+            
+            
+            
+            // *************************************** Hotel Service Start *************************************** //
+            Route::controller(HotelDepositController::class)->group(function(){
+                Route::get('/deposits', 'Show');
+                Route::post('/deposits', 'Insert');
+                Route::put('/deposits', 'Update');
+                Route::delete('/deposits', 'Delete');
+                Route::get('/deposits/search', 'Search');
+            });
+            
+            
+            
+            // *************************************** Hotel Service Start *************************************** //
+            Route::controller(HotelRefundController::class)->group(function(){
+                Route::get('/refunds', 'Show');
+                Route::post('/refunds', 'Insert');
+                Route::put('/refunds', 'Update');
+                Route::delete('/refunds', 'Delete');
+                Route::get('/refunds/search', 'Search');
             });
         }); // End Hotel Transaction Routes
         
