@@ -36,4 +36,8 @@ class Transaction_Main extends Model
     public function Type(){
         return $this->belongsTo(Transaction_Main_Head::class,'tran_type','id');
     }
+
+    public function Booking(){
+        return $this->belongsTo(Booking::class,'booking_id','booking_id');
+    }
 }

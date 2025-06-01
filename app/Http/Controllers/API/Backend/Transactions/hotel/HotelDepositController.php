@@ -14,7 +14,7 @@ class HotelDepositController extends Controller
    // Show All Deposits
     public function Show(Request $req){
         $data = Transaction_Main::on('mysql_second')
-        ->with('User')
+        ->with('User','Booking')
         ->where('tran_method','Deposit')
         ->where('tran_type','8')
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
@@ -37,6 +37,7 @@ class HotelDepositController extends Controller
             "guest_id" => 'required|exists:mysql_second.user__infos,user_id',
             "amount" => 'required',
             "booking_id" => 'required|exists:mysql_second.bookings,booking_id',
+            'payment_method' => 'required|exists:mysql.payment__methods,id',
         ]);
 
         $id = GenerateTranId(8,'Deposit','HMD');
@@ -56,6 +57,7 @@ class HotelDepositController extends Controller
                 "payment" => 0,
                 "due" => 0,
                 "booking_id" => $req->booking_id,
+                "payment_mode" => $req->payment_method,
             ]);
 
 
@@ -75,9 +77,10 @@ class HotelDepositController extends Controller
                 "payment" => 0,
                 "due" => 0,
                 "booking_id" => $req->booking_id,
+                "payment_mode" => $req->payment_method,
             ]);
 
-            $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);
+            $data = Transaction_Main::on('mysql_second')->with('User','Booking')->findOrFail($insert->id);
         });
         
         return response()->json([
@@ -95,12 +98,14 @@ class HotelDepositController extends Controller
             "guest_id" => 'required|exists:mysql_second.user__infos,user_id',
             "amount" => 'required',
             "booking_id" => 'required|exists:mysql_second.bookings,booking_id',
+            'payment_method' => 'required|exists:mysql.payment__methods,id',
         ]);
 
         $transaction = Transaction_Main::on('mysql_second')->findOrFail($req->id);
 
         DB::transaction(function () use ($req, $transaction) {
             $transaction->update([
+                "tran_user" => $req->guest_id,
                 "bill_amount" => $req->amount,
                 "discount" => 0,
                 "net_amount" => $req->amount,
@@ -108,22 +113,25 @@ class HotelDepositController extends Controller
                 "payment" => 0,
                 "due" => 0,
                 "booking_id" => $req->booking_id,
-                "updated_at" => now()
+                "payment_mode" => $req->payment_method,
+                "updated_at" => now(),
             ]);
 
             // Get the previous transaction details
-            $details = Transaction_Detail::on('mysql_second')->where('tran_id', $req->tranid)->first();
-
+            $details = Transaction_Detail::on('mysql_second')->where('tran_id', $req->tranId)->first();
+            // dd($details);
             Transaction_Detail::on('mysql_second')->findOrFail($details->id)->update([
                 "tran_user" => $req->guest_id,
                 "amount" => $req->amount,
                 "tot_amount" => $req->amount,
-                "payment" => $req->amount,
+                "receive" => $req->amount,
                 "booking_id" => $req->booking_id,
+                "payment_mode" => $req->payment_method,
+                "updated_at" => now(),
             ]);
         });
 
-        $updatedData = Transaction_Main::on('mysql_second')->with('User')->findOrFail($req->id);
+        $updatedData = Transaction_Main::on('mysql_second')->with('User','Booking')->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,
@@ -151,7 +159,7 @@ class HotelDepositController extends Controller
     // Search Deposits
     public function Search(Request $req){
         $data = Transaction_Main::on('mysql_second')
-        ->with('User')
+        ->with('User','Booking')
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
         ->where('tran_method',$req->method)
         ->where('tran_type', 8)

@@ -1032,8 +1032,8 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
             // Hotel Room Status routes
             Route::get('/roomstatus',  'ShowRoomStatus')->name('show.roomStatus');
 
-            // Hotel Bill Clearence
-            Route::get('/billclearence',  'ShowBillClearence')->name('show.billClearence');
+            // Hotel Bill Settlement
+            Route::get('/billsettlement',  'ShowBillSettlement')->name('show.billSettlement');
         }); // End Hotel Setup Controller
 
 

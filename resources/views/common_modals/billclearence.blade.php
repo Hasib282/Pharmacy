@@ -91,44 +91,34 @@
             <td style="text-align:right;" colspan="6">Net Total:</td>
             <td style="text-align:right">{{ number_format($transactionMain->sum_net_amount) }}</td>
         </tr>
-        <tr>
-            <td style="text-align:right" colspan="6">Advance:</td>
-            <td style="text-align:right">
-                {{ number_format($transactionMain->sum_receive != null ? $transactionMain->sum_receive : $transactionMain->sum_payment ) }}
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:right" colspan="6">Due:</td>
-            <td style="text-align:right">
-                {{ number_format($transactionMain->sum_due) }}
-            </td>
-        </tr>
         <tr style="border-top:1px dashed;">
             <td style="text-align:right" colspan="6">Deposit:</td>
             <td style="text-align:right">
-                0
-                {{-- {{ number_format($transactionMain->sum_due) }} --}}
+                {{ number_format($deposit) }}
             </td>
         </tr>
         <tr>
             <td style="text-align:right" colspan="6">Refund:</td>
             <td style="text-align:right">
-                0
-                {{-- {{ number_format($transactionMain->sum_due) }} --}}
+                {{ number_format($refund) }}
             </td>
         </tr>
         <tr style="border-top:1px dashed;">
             <td style="text-align:right" colspan="6">Net Deposit:</td>
             <td style="text-align:right">
-                0
-                {{-- {{ number_format($transactionMain->sum_due) }} --}}
+                {{ number_format($deposit - $refund) }}
             </td>
         </tr>
         <tr style="border-top:1px dashed;">
-            <td style="text-align:right" colspan="6">Receiveable:</td>
+            <td style="text-align:right" colspan="6"> 
+                @if ($transactionMain->sum_net_amount > ($deposit - $refund))
+                    Reciveable
+                @else
+                    Payable
+                @endif
+            </td>
             <td style="text-align:right">
-                0
-                {{-- {{ number_format($transactionMain->sum_due) }} --}}
+                {{ number_format(abs($transactionMain->sum_net_amount - ($deposit - $refund))) }}
             </td>
         </tr>
     </tfoot>

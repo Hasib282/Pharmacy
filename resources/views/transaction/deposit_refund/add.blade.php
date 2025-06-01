@@ -29,7 +29,7 @@
                             <label for="guest">Guest Search <span class="required">*</span></label>
                             <input type="text" name="guest" class="input-small" id="guest" autocomplete="off"><hr>
                             <div id="guest-list"></div>
-                            <span class="error" id="guest_error"></span>
+                            <span class="error" id="guest_id_error"></span>
                         </div>
                     </div>
 
@@ -86,7 +86,7 @@
                             <label for="hotel-booking">Booking Id</label>
                             <input type="text" name="hotel_booking" class="input-small" id="hotel-booking" autocomplete="off"><hr>
                             <div id="hotel-booking-list"></div>
-                            <span class="error" id="hotel_booking_error"></span>
+                            <span class="error" id="booking_id_error"></span>
                         </div>
                     </div>
                     <!-- Check In -->
@@ -109,7 +109,7 @@
             <fieldset>
                 <div class="rows">
                     {{-- Services  --}}
-                    <div class="c-7">
+                    <div class="c-5">
                         <div class="form-input-group">
                             <label for="head">Services</label>
                             @if (Request::segment(3) == 'deposits')
@@ -142,6 +142,16 @@
                             <label for="totAmount">Total</label>
                             <input type="text" name="totAmount" class="input-small" id="totAmount" disabled>
                             <span class="error" id="totAmount_error"></span>
+                        </div>
+                    </div>
+                    <!-- Payment Method -->
+                    <div class="c-2">
+                        <div class="form-input-group">
+                            <label for="payment_method">Payment Method</label>
+                            <select name="payment_method" id="payment_method" class="input-small">
+    
+                            </select>
+                            <span class="error" id="payment_method_error"></span>
                         </div>
                     </div>
                 </div>

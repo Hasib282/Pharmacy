@@ -2191,12 +2191,12 @@
                         </ul>
                     </li>
 
-                    {{-- Hotel Bill Clearence Sub Menu --}}
-                    <li class="sub-menu-item"data-url="{{route('show.billClearence')}}">
-                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'billclearence') ? 'active':''}}">
+                    {{-- Hotel Bill Settlement Sub Menu --}}
+                    <li class="sub-menu-item"data-url="{{route('show.billSettlement')}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'billsettlement') ? 'active':''}}">
                             <p>
                                 <i class="fa-solid fa-users-gear"></i>
-                                Bill Clearence
+                                Bill Settlement
                             </p>
                         </div>
                     </li>

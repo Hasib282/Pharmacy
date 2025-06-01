@@ -132,16 +132,16 @@ class HotelSetupController extends Controller
     
     
     
-    /////////////////////////// --------------- Hotel Bill Clearence Methods start ---------- //////////////////////////
-    // Show All Hotel Bill Clearence
-    public function ShowBillClearence(Request $req){
-        $name = "Bill Clearence";
-        $js = 'hotel/bill_clearence';
+    /////////////////////////// --------------- Hotel Bill Settlement Methods start ---------- //////////////////////////
+    // Show All Hotel Bill Settlement
+    public function ShowBillSettlement(Request $req){
+        $name = "Bill Settlement";
+        $js = 'hotel/bill_settlement';
         if ($req->ajax()) {
-            return view('admin_setup.hotel.bill_clearence.ajaxBlade', compact('name', 'js'));
+            return view('admin_setup.hotel.bill_settlement.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('admin_setup.hotel.bill_clearence.main', compact('name', 'js'));
+            return view('admin_setup.hotel.bill_settlement.main', compact('name', 'js'));
         }
     } // End Method
 }

@@ -2,7 +2,7 @@ function ShowDeposits(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number',footerType:'sum'},{key:'discount', type: 'number',footerType:'sum'},{key:'net_amount', type: 'number',footerType:'sum'},{key:'receive', type: 'number',footerType:'sum'},{key:'due_col', type: 'number',footerType:'sum'},{key:'due_disc', type: 'number',footerType:'sum'},{key:'due', type: 'number',footerType:'sum'}, 'booking_id'],
+        tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number',footerType:'sum'}, 'booking_id'],
         actions: (row) => `
                 <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
 
@@ -19,13 +19,7 @@ $(document).ready(function () {
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Transaction Id', key: 'tran_id' },
         { label: 'User', key: 'user.user_name' },
-        { label: 'Total' },
-        { label: 'Discount' },
-        { label: 'Net Total' },
-        { label: 'Advance' },
-        { label: 'Due Col' },
-        { label: 'Due Discount' },
-        { label: 'Due' },
+        { label: 'Deposit Amount' },
         { label: 'Booking Id', key:'booking_id' },
         { label: 'Action', type: 'button' }
     ]);
@@ -40,39 +34,23 @@ $(document).ready(function () {
 
 
     // Insert Ajax
-    InsertAjax('hotel/transaction/deposits', {guest_id: { selector: '#guest', attribute: 'data-id' }, booking_id: { selector: '#hotel-booking', attribute: 'data-id' },head_id: { selector: '#head', attribute: 'data-id' }, groupe_id: { selector: '#groupe', attribute: 'data-groupe' }, type: 8, method: "Deposit"}, function () {
+    InsertAjax('hotel/transaction/deposits', {guest_id: { selector: '#guest', attribute: 'data-id' }, booking_id: { selector: '#hotel-booking', attribute: 'data-id' },head_id: { selector: '#head', attribute: 'data-id' }, groupe_id: { selector: '#head', attribute: 'data-groupe' }, type: 8, method: "Deposit"}, function () {
         $('#guest').removeAttr('data-id');
         $('#hotel-booking').removeAttr('data-id');
         $('#date').focus();
     });
 
 
-    // // Insert Transaction Receive ajax
-    // InsertTransaction('hotel/transaction/deposits', 'Receive', '8', function() {
-    //     $('#guest').removeAttr('data-id');
-    //     $('#date').focus();
-    //     $('.transaction_grid tbody').html('');
-    // });
-
-
     // Edit Ajax
     EditAjax(EditFormInputValue);
 
 
-    // Update Transaction Receive ajax
-    // UpdateTransaction('hotel/transaction/deposits', 'Receive', '8');
+    // Update ajax
+    UpdateAjax('hotel/transaction/deposits', {guest_id: { selector: '#updateGuest', attribute: 'data-id' }, booking_id: { selector: '#updateHotel-booking', attribute: 'data-id' },head_id: { selector: '#updateHead', attribute: 'data-id' }, groupe_id: { selector: '#updateHead', attribute: 'data-groupe' }});
     
 
     // Delete Ajax
     DeleteAjax('hotel/transaction/deposits');
-
-
-    // Pagination Ajax
-    // PaginationAjax(ShowDeposits);
-
-
-    // Search Ajax
-    // SearchAjax('hotel/transaction/deposits', ShowDeposits, { type: 1, method: 'Receive' });
 
 
     // Search By Date
@@ -81,36 +59,33 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(item){
-        $('#updateHead').val('');
-        $('#updateHead').removeAttr('data-id');
-        $('#updateHead').removeAttr('data-groupe');
-        $('#updatePatient').val();
-        $('#updatePatient').removeAttr('data-id');
-        $('#updateQty').val('1');
-        $('#updateAmount').val('');
-        $('#updateTotAmount').val('');
-        localStorage.removeItem('transactionData');
-        $('.transaction_grid tbody').html('');
-
-        getTransactionGrid(item.tran_id);
-
         $('#id').val(item.id);
-        
         $('#updateTranId').val(item.tran_id);
-
-        var timestamps = new Date(item.tran_date);
-        var formattedDate = timestamps.toLocaleDateString('en-US', { timeZone: 'UTC' });
-        $('#updateDate').val(formattedDate);
         
-        $('#updatePatient').attr('data-id',item.ptn_id);
-        $('#updatePatient').val(item.patient.name);
-
-
-        $('#updateTotalDiscount').val(item.discount);
-
-        $('#updateAdvance').val(item.receive);
-
+        $('#updateGuest').attr('data-id',item.tran_user);
+        $('#updateGuest').val(item.user.user_name);
+        $('#updateGuest').val(item.user.user_name);
+        $('#updateTitle').val(item.user.title);
+        $('#updateName').val(item.user.user_name);
+        $('#updatePhone').val(item.user.user_phone);
+        $('#updateEmail').val(item.user.user_email);
+        $('#updateAddress').val(item.user.address);
         
-        $("#updateHead").focus();
+        $('#updateHotel-booking').attr('data-id',item.booking_id);
+        $('#updateHotel-booking').val(item.booking_id);
+        $('#updateCheck_in').val(item.booking.check_in);
+        $('#updateCheck_out').val(item.booking.check_out);
+        $("#updateAmount").val(item.bill_amount);
+        $("#updateTotAmount").val(item.bill_amount);
+        $("#updatePayment_method").val(item.payment_mode);
+
+        $("#updateAmount").focus();
     }
+
+
+    // Get Company Type
+    GetSelectInputList('admin/payment_method/get', function (res) {
+        CreateSelectOptions('#payment_method', 'Select Payment Method', res.data, 'name');
+        CreateSelectOptions('#updatePayment_method', 'Select Payment Method', res.data, 'name');
+    })
 });

@@ -6,36 +6,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Bed_Transfer;
+use App\Models\Booking;
 
-class HotelBillClearenceController extends Controller
+class HotelBillSettlementController extends Controller
 {
-    // Show All Hotel Bill Clearence Data
+    // Show All Hotel Bill Settlement Data
     public function Show(Request $req)
     {
-        $data = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User')->orderBy('added_at')->get();
-        // $transactionMain = Transaction_Main::on('mysql_second')->where('tran_id', $req->id)->first();
-        // $transDetailsInvoice = Transaction_Detail::on('mysql_second')->
-        // select(
-        //     'tran_head_id', 
-        //     'amount', 
-        //     DB::raw('SUM(quantity) as sum_quantity'), 
-        //     DB::raw('SUM(quantity_actual) as sum_quantity_actual'), 
-        //     DB::raw('SUM(tot_amount) as sum_tot_amount'), 
-        //     DB::raw('COUNT(*) as count')
-        // )
-        // ->where('tran_id', $req->id)
-        // ->groupBy('tran_head_id','amount')
-        // ->get();
-        
+        $data = Booking::on('mysql_second')->with('User','Category','List','Sr','Bill')->get();
+
         return response()->json([
-            'status' => true,
-            'data' => $data,
-        ], 200);
+            'status'=>true,
+            'data'=>$data
+        ],200);
     }
 
 
 
-    // Insert Hotel Bill Clearence Data
+    // Insert Hotel Bill Settlement Data
     public function Insert(Request $req)
     {
         $req->validate([
@@ -58,14 +46,14 @@ class HotelBillClearenceController extends Controller
 
         return response()->json([
             'status'  => true,
-            'message' => 'Hotel Bill Clearence Completed successfully',
+            'message' => 'Hotel Bill Settlement Completed successfully',
             'data'    => $data,
         ], 200);
     }
 
 
 
-    // Update Hotel Bill Clearence Data
+    // Update Hotel Bill Settlement Data
     public function Update(Request $req)
     {
         $data = Bed_Transfer::on('mysql_second')->findOrFail($req->id);
@@ -89,20 +77,20 @@ class HotelBillClearenceController extends Controller
 
         return response()->json([
             'status'      => true,
-            'message'     => 'Hotel Bill Clearence updated successfully',
+            'message'     => 'Hotel Bill Settlement updated successfully',
             "updatedData" => $updatedData,
         ], 200);
     }
 
 
 
-    // Delete Hotel Bill Clearence Data
+    // Delete Hotel Bill Settlement Data
     public function Delete(Request $req)
     {
         $data = Bed_Transfer::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'  => true,
-            'message' => 'Hotel Bill Clearence deleted successfully',
+            'message' => 'Hotel Bill Settlement deleted successfully',
         ], 200);
     }
 }

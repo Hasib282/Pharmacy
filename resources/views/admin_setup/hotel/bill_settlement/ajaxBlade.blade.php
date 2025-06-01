@@ -31,9 +31,9 @@
 </div>
 
 
-@include('admin_setup.hotel.bill_clearence.add')
+@include('admin_setup.hotel.bill_settlement.add')
 
-@include('admin_setup.hotel.bill_clearence.edit')
+@include('admin_setup.hotel.bill_settlement.edit')
 
 @include('common_modals.delete')
 

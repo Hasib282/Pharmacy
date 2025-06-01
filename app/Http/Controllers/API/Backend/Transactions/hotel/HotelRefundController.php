@@ -14,8 +14,8 @@ class HotelRefundController extends Controller
    // Show All Deposit Refunds
     public function Show(Request $req){
         $data = Transaction_Main::on('mysql_second')
-        ->with('User')
-        ->where('tran_method','Receive')
+        ->with('User','Booking')
+        ->where('tran_method','Refund')
         ->where('tran_type','8')
         ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
         ->orderBy('tran_date')
@@ -37,6 +37,7 @@ class HotelRefundController extends Controller
             "guest_id" => 'required|exists:mysql_second.user__infos,user_id',
             "amount" => 'required',
             "booking_id" => 'required|exists:mysql_second.bookings,booking_id',
+            'payment_method' => 'required|exists:mysql.payment__methods,id',
         ]);
 
         $id = GenerateTranId(8,'Refund','HMR');
@@ -56,6 +57,7 @@ class HotelRefundController extends Controller
                 "payment" => $req->amount,
                 "due" => 0,
                 "booking_id" => $req->booking_id,
+                "payment_mode" => $req->payment_method,
             ]);
 
 
@@ -75,9 +77,10 @@ class HotelRefundController extends Controller
                 "payment" => $req->amount,
                 "due" => 0,
                 "booking_id" => $req->booking_id,
+                "payment_mode" => $req->payment_method,
             ]);
 
-            $data = Transaction_Main::on('mysql_second')->with('User')->findOrFail($insert->id);
+            $data = Transaction_Main::on('mysql_second')->with('User','Booking')->findOrFail($insert->id);
         });
         
         return response()->json([
@@ -95,12 +98,14 @@ class HotelRefundController extends Controller
             "guest_id" => 'required|exists:mysql_second.user__infos,user_id',
             "amount" => 'required',
             "booking_id" => 'required|exists:mysql_second.bookings,booking_id',
+            'payment_method' => 'required|exists:mysql.payment__methods,id',
         ]);
 
         $transaction = Transaction_Main::on('mysql_second')->findOrFail($req->id);
 
         DB::transaction(function () use ($req, $transaction) {
             $transaction->update([
+                "tran_user" => $req->guest_id,
                 "bill_amount" => $req->amount,
                 "discount" => 0,
                 "net_amount" => $req->amount,
@@ -108,11 +113,12 @@ class HotelRefundController extends Controller
                 "payment" => $req->amount,
                 "due" => 0,
                 "booking_id" => $req->booking_id,
+                "payment_mode" => $req->payment_method,
                 "updated_at" => now()
             ]);
 
             // Delete the previous transaction details
-            $details = Transaction_Detail::on('mysql_second')->where('tran_id', $req->tranid)->first();
+            $details = Transaction_Detail::on('mysql_second')->where('tran_id', $req->tranId)->first();
 
             Transaction_Detail::on('mysql_second')->findOrFail($details->id)->update([
                 "tran_user" => $req->guest_id,
@@ -120,10 +126,12 @@ class HotelRefundController extends Controller
                 "tot_amount" => $req->amount,
                 "payment" => $req->amount,
                 "booking_id" => $req->booking_id,
+                "payment_mode" => $req->payment_method,
+                "updated_at" => now()
             ]);
         });
 
-        $updatedData = Transaction_Main::on('mysql_second')->with('User')->findOrFail($req->id);
+        $updatedData = Transaction_Main::on('mysql_second')->with('User','Booking')->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,
@@ -151,9 +159,9 @@ class HotelRefundController extends Controller
     // Search Deposit Refunds
     public function Search(Request $req){
         $data = Transaction_Main::on('mysql_second')
-        ->with('User')
+        ->with('User','Booking')
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-        ->where('tran_method',$req->method)
+        ->where('tran_method',"Refund")
         ->where('tran_type', 8)
         ->orderBy('tran_id','asc')
         ->get();
@@ -163,5 +171,4 @@ class HotelRefundController extends Controller
             'data' => $data,
         ], 200);
     } // End Method
-
 }
