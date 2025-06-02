@@ -179,25 +179,21 @@
                                 </tr>
                                 <tr>
                                     <td><label for="totalDiscount">Discount</label></td>
-                                    <td><input type="text" name="totalDiscount" class="input-small" id="totalDiscount" value="0"
-                                            style="text-align: right;"></td>
+                                    <td><input type="text" name="totalDiscount" class="input-small" id="totalDiscount" value="0" disabled style="text-align: right;"></td>
                                 </tr>
                                 <tr>
                                     <td><label for="netAmount">Net Amount</label>
-                                    <td><input type="text" name="netAmount" class="input-small" id="netAmount" value="0"
-                                            disabled style="text-align: right;">
+                                    <td><input type="text" name="netAmount" class="input-small" id="netAmount" value="0" disabled style="text-align: right;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><label for="advance">Advance</label>
-                                    <td><input type="text" name="advance" class="input-small" id="advance" value="0"
-                                            style="text-align: right;">
+                                    <td><input type="text" name="advance" class="input-small" id="advance" value="0" disabled style="text-align: right;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><label for="balance">Balance</label>
-                                    <td><input type="text" name="balance" class="input-small" id="balance" value="0" disabled
-                                            style="text-align: right;"></td>
+                                    <td><input type="text" name="balance" class="input-small" id="balance" value="0" disabled style="text-align: right;"></td>
                                 </tr>
                             </table>
                             <div class="center" style="margin-top: 10px;">

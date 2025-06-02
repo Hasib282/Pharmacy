@@ -2,7 +2,7 @@ function ShowAppointment(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: [ 'booking_id', 'user.user_name', 'user.user_phone', 'adult', 'children', 'check_in', 'check_out', 'status'],
+        tbody: [ 'booking_id', 'user.user_name', 'user.user_phone', 'adult', 'children', 'check_in', 'check_out', {key:'status', type:'status-show', options:[{id:0, name:'Check-Out'},{id:1, name:'Check-In'},{id:2, name:'Booked'},{id:3, name:'Maintenence'}]}],
         actions: (row) => `
                 <a class="print-receipt" href="/api/get/clearence?id=${row.booking_id}"> <i class="fa-solid fa-receipt"></i></a>
                 
@@ -25,7 +25,7 @@ $(document).ready(function () {
         { label: 'Children', key: 'children' },
         { label: 'Check In', key: 'check_in' },
         { label: 'Check Out', key: 'check_out' },
-        { label: 'Status', key: 'status' },
+        { label: 'Status', key:'status', type: 'select', method:'custom', options:[{val:0, text:'Check-Out'},{val:1, text:'Check-In'},{val:2, text:'Booked'},{val:3, text:'Maintenence'}] },
         { label: 'Action', type: 'button' }
     ]);
 

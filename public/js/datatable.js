@@ -238,7 +238,11 @@ class GenerateTable {
                                 <span class="slider round"></span>
                             </label>
                         </td>`;
-    
+
+                    case 'status-show':
+                        const status = data.options.find(option => option.id == value);
+                        return `<td><strong>${status ? status.name : 'Available'}</strong></td>`;
+
                     default:
                         return `<td>${value ?? ''}</td>`;
                 }

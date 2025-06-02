@@ -172,7 +172,7 @@
                                 <tr>
                                     <td><label for="updateTotalDiscount">Discount</label></td>
                                     <td><input type="text" name="totalDiscount" class="input-small" id="updateTotalDiscount"
-                                            value="0" style="text-align: right;"></td>
+                                        disabled value="0" style="text-align: right;"></td>
                                 </tr>
                                 <tr>
                                     <td><label for="updateNetAmount">Net Amount</label>
@@ -182,7 +182,7 @@
                                 <tr>
                                     <td><label for="updateAdvance">Advance</label>
                                     <td><input type="text" name="advance" class="input-small" id="updateAdvance" value="0"
-                                            style="text-align: right;">
+                                        disabled style="text-align: right;">
                                     </td>
                                 </tr>
                                 <tr>

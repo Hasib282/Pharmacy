@@ -1731,10 +1731,11 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         // *************************************** Hotel Bill Settlement Start *************************************** //
         Route::controller(HotelBillSettlementController::class)->group(function(){
             Route::get('/billsettlement', 'Show');
-            Route::post('/billsettlement', 'Insert');
-            Route::put('/billsettlement', 'Update');
-            Route::delete('/billsettlement', 'Delete');
-            Route::get('/billsettlement/get', 'Get');
+            Route::get('/billsettlement/edit', 'Edit');
+            Route::post('/billsettlement', 'Settlement');
+            // Route::put('/billsettlement', 'Update');
+            // Route::delete('/billsettlement', 'Delete');
+            // Route::get('/billsettlement/get', 'Get');
         });
         
         

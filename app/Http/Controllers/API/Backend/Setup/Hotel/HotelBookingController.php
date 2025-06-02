@@ -252,15 +252,13 @@ class HotelBookingController extends Controller
         $booking = Booking::on('mysql_second')->with('User','Category','List','Sr','Bill')->where('booking_id', $req->id)->first();
         $deposit = Transaction_Main::on('mysql_second')->where('tran_method', 'Deposit')->where('booking_id', $req->id)->sum('bill_amount');
         $refund = Transaction_Main::on('mysql_second')->where('tran_method', 'Refund')->where('booking_id', $req->id)->sum('bill_amount');
-        
+        $discount = Transaction_Main::on('mysql_second')->where('tran_method', 'Discount')->where('booking_id', $req->id)->sum('bill_amount');
+
         $transactionMain = Transaction_Main::on('mysql_second')
         ->select(
             DB::raw('SUM(bill_amount) as sum_bill_amount'), 
             DB::raw('SUM(discount) as sum_discount'), 
-            DB::raw('SUM(net_amount) as sum_net_amount'), 
-            DB::raw('SUM(receive) as sum_receive'), 
-            DB::raw('SUM(payment) as sum_payment'), 
-            DB::raw('SUM(due) as sum_due')
+            DB::raw('SUM(net_amount) as sum_net_amount'),
         )
         ->where('tran_method', 'Receive')
         ->where('booking_id', $req->id)
@@ -268,23 +266,41 @@ class HotelBookingController extends Controller
 
         
         
-        $transDetailsInvoice = Transaction_Detail::on('mysql_second')->
-        select(
+        // $transDetailsInvoice = Transaction_Detail::on('mysql_second')->
+        // select(
+        //     'tran_head_id', 
+        //     'amount', 
+        //     DB::raw('SUM(quantity) as sum_quantity'), 
+        //     DB::raw('SUM(quantity_actual) as sum_quantity_actual'), 
+        //     DB::raw('SUM(tot_amount) as sum_tot_amount'), 
+        //     DB::raw('COUNT(*) as count'),
+        //     'tran_id',
+        //     'tran_date'
+        // )
+        // ->where('booking_id', $req->id)
+        // ->where('tran_method', 'Receive')
+        // ->groupBy('tran_head_id','amount', 'tran_id', 'tran_date')
+        // ->get();
+        $transDetailsInvoice = Transaction_Detail::on('mysql_second')
+        ->with(['groupe', 'head'])
+        ->select(
+            'tran_groupe_id', 
             'tran_head_id', 
             'amount', 
-            DB::raw('SUM(quantity) as sum_quantity'), 
-            DB::raw('SUM(quantity_actual) as sum_quantity_actual'), 
-            DB::raw('SUM(tot_amount) as sum_tot_amount'), 
-            DB::raw('COUNT(*) as count'),
+            'quantity', 
+            'quantity_actual',
+            'tot_amount',
             'tran_id',
             'tran_date'
         )
         ->where('booking_id', $req->id)
         ->where('tran_method', 'Receive')
-        ->groupBy('tran_head_id','amount', 'tran_id', 'tran_date')
-        ->get();
+        ->orderBy('tran_groupe_id')
+        ->orderBy('tran_id')
+        ->get()
+        ->groupBy('tran_groupe_id');
         
-        $pdf = Pdf::loadView('common_modals.billclearence', compact('transactionMain', 'transDetailsInvoice', 'booking','deposit','refund'));
+        $pdf = Pdf::loadView('common_modals.billclearence', compact('transactionMain', 'transDetailsInvoice', 'booking','deposit','refund','discount'));
         return $pdf->stream();
     } // End Method
 }
