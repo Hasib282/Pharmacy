@@ -45,7 +45,7 @@ function ShowCompanyPermissions(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['company_id','company_name','permissionNames'],
+        tbody: ['company_id','company_name',{ type:'multi-data', key:'permissions' }],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.company_id}"><i class="fas fa-edit"></i></button>
                 `,
@@ -82,8 +82,8 @@ $(document).ready(function () {
     ReloadData('admin/permission/company_permissions', ShowCompanyPermissions);
 
 
-    //Edit Ajax
-    EditAjax('admin/permission/company_permissions', EditFormInputValue);
+    // Edit By Ajax Call
+    EditAjaxCall('admin/permission/company_permissions', EditFormInputValue);
 
 
     // Update Ajax
@@ -106,6 +106,7 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
+        $('#id').val(res.company.id)
         $('#companyid').text(`Company Name: ${res.company.company_name} (${res.company.company_id})`);
         $('#company').val(res.company.company_id);
 

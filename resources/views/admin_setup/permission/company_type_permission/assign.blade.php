@@ -11,6 +11,7 @@
         <form id="EditForm" method="post">
             @csrf
             @method('PUT')
+            <input type="hidden" id="id" name="id">
             <div class="rows">
                 <div class="c-8"><h4 id="typeid"></h4></div>
                 <div class="c-4">

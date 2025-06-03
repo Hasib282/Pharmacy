@@ -3,12 +3,12 @@
 
 //     if(data.length > 0){
 //         $.each(data, function(key, item) {
-//             let permissionNames = '';
+            // let permissionNames = '';
             
-//             // Loop through item.routes and concatenate the route names
-//             $.each(item.permissions, function (key, permission) {
-//                 permissionNames += `${permission.name}, `;
-//             });
+            // // Loop through item.routes and concatenate the route names
+            // $.each(item.permissions, function (key, permission) {
+            //     permissionNames += `${permission.name}, `;
+            // });
 
 //             // Remove the trailing comma and space if there are route names
 //             permissionNames = permissionNames.slice(0, -2);
@@ -50,7 +50,7 @@ function ShowUserPermissions(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['user_id','user_name','company.company_name','permissionNames'],
+        tbody: ['user_id','user_name','company.company_name',{ type:'multi-data', key:'permissions' }],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.user_id}"><i class="fas fa-edit"></i></button>
                 `,
@@ -89,8 +89,8 @@ $(document).ready(function () {
     ReloadData('admin/permission/userpermissions', ShowUserPermissions);
 
 
-    //Edit Ajax
-    EditAjax('admin/permission/userpermissions', EditFormInputValue);
+    // Edit By Ajax Call
+    EditAjaxCall('admin/permission/userpermissions', EditFormInputValue);
 
 
     // Update Ajax
@@ -113,6 +113,7 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
+        $('#id').val(res.user.id)
         $('#userid').text(`User Name: ${res.user.user_name} (${res.user.user_id})`);
         $('#user').val(res.user.user_id);
 

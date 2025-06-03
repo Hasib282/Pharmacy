@@ -189,31 +189,36 @@ function EditAjax(AddEvent=undefined, Id = 'id') {
         }
     });
 }
-// function EditAjax(link, AddSuccessEvent, AddClickEvent=undefined) {
-//     $(document).off('click', '#edit').on('click', '#edit', function () {
-//         let modalId = $(this).data('modal-id');
-//         let id = $(this).data('id');
-//         let status = $('#status').val();
+
+
+
+
+// Edit By Ajax Call
+function EditAjaxCall(link, AddSuccessEvent, AddClickEvent=undefined) {
+    $(document).off('click', '#edit').on('click', '#edit', function () {
+        let modalId = $(this).data('modal-id');
+        let id = $(this).data('id');
+        let status = $('#status').val();
         
-//         if(typeof AddClickEvent === 'function'){
-//             AddClickEvent();
-//         }
+        if(typeof AddClickEvent === 'function'){
+            AddClickEvent();
+        }
         
-//         $.ajax({
-//             url: `${apiUrl}/${link}/edit`,
-//             method: 'GET',
-//             data: { id, status },
-//             success: function (res) {
-//                 if(typeof AddSuccessEvent === 'function'){
-//                     AddSuccessEvent(res);
-//                 }
+        $.ajax({
+            url: `${apiUrl}/${link}/edit`,
+            method: 'GET',
+            data: { id, status },
+            success: function (res) {
+                if(typeof AddSuccessEvent === 'function'){
+                    AddSuccessEvent(res);
+                }
                 
-//                 var modal = document.getElementById(modalId);
-//                 modal.style.display = 'block';
-//             }
-//         });
-//     });
-// }
+                var modal = document.getElementById(modalId);
+                modal.style.display = 'block';
+            }
+        });
+    });
+}
 
 
 

@@ -17,7 +17,6 @@ class UserPermissionController extends Controller
 {
     // Show All User Permissions
     public function Show(Request $req){
-        $roles = Role::on('mysql')->whereNotIn('id', ['1'])->get();
         if(Auth::user()->user_role == 1){
             $data = Login_User::on('mysql')->whereNotIn('user_role', ['1','4','5'])->with('permissions','company')->orderBy('user_id')->get();
         }
@@ -25,14 +24,9 @@ class UserPermissionController extends Controller
             $data = Login_User::on('mysql')->whereNotIn('user_role', ['1','4','5'])->whereNotIn('user_id', [Auth::user()->user_id])->with('permissions')->where('company_id', Auth::user()->company_id)->orderBy('user_id')->get();
         }
 
-        // $data->getCollection()->transform(function ($user) {
-        //     $user->auth_user_role = Auth::user()->user_role;
-        //     return $user;
-        // });
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'roles' => $roles,
         ], 200);
     } // End Method
 
@@ -220,8 +214,8 @@ class UserPermissionController extends Controller
     // Copy User Permissions
     public function Copy(Request $req){
         $req->validate([
-            'from' => 'required|exists:mysql.user__infos,user_id',
-            'to' => 'required|exists:mysql.user__infos,user_id',
+            'from' => 'required|exists:mysql_second.user__infos,user_id',
+            'to' => 'required|exists:mysql_second.user__infos,user_id',
         ]);
 
         $from = Login_User::on('mysql')->whereNotIn('user_role', ['1','4','5'])->where('user_id', $req->from)->first();

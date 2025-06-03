@@ -44,7 +44,7 @@ function ShowRolePermissions(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['name','permissionNames'],
+        tbody: ['name',{ type:'multi-data', key:'permissions' }],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `,
@@ -66,8 +66,8 @@ $(document).ready(function () {
     ReloadData('admin/permission/company_type_permissions', ShowRolePermissions);
 
 
-    //Edit Ajax
-    EditAjax('admin/permission/company_type_permissions', EditFormInputValue);
+    // Edit By Ajax Call
+    EditAjaxCall('admin/permission/company_type_permissions', EditFormInputValue);
 
 
     // Update Ajax
@@ -78,6 +78,7 @@ $(document).ready(function () {
 
     // Additional Edit Functionality
     function EditFormInputValue(res){
+        $('#id').val(res.type.id)
         $('#typeid').text(`Role: ${res.type.name}`);
         $('#type').val(res.type.id);
 

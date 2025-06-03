@@ -32,6 +32,22 @@ class UserInfoSeeder extends Seeder
                 'user_type' => 1,
                 'password' => Hash::make('12345')
             ],
+            [
+                'user_id' => 'SA000000003',
+                'user_name' => 'Samin Rahman',
+                'user_email' => 'samin1105009@gmail.com',
+                'user_phone' => '01858162015',
+                'user_type' => 1,
+                'password' => Hash::make('12345')
+            ],
+            [
+                'user_id' => 'SA000000004',
+                'user_name' => 'Md. Assaduzzaman',
+                'user_email' => 'azshifat07@gmail.com',
+                'user_phone' => '01828908967',
+                'user_type' => 1,
+                'password' => Hash::make('12345')
+            ],
         ];
 
         Login_User::on('mysql')->insert($data);
