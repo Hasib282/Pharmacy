@@ -43,7 +43,8 @@ class AccountSummaryController extends Controller
         $bank = $this->GetAccountSummaryStatement(4);
         $inventory = $this->GetAccountSummaryStatement(5);
         $pharmacy = $this->GetAccountSummaryStatement(6);
-        $michellaneous = $this->GetAccountSummaryStatement(7);
+        $hospital = $this->GetAccountSummaryStatement(7);
+        $hotel = $this->GetAccountSummaryStatement(8);
         
         $opening = Transaction_Detail::on('mysql_second')
         ->select(
@@ -63,7 +64,8 @@ class AccountSummaryController extends Controller
             'Bank'              =>      $bank,
             'Inventory'         =>      $inventory,
             'Pharmacy'          =>      $pharmacy,
-            'Michellaneous'     =>      $michellaneous,
+            'Hospital'          =>      $hospital,
+            'Hotel'             =>      $hotel,
         ];
         
         return response()->json([
@@ -164,7 +166,10 @@ class AccountSummaryController extends Controller
                 $data['Pharmacy'] = $this->FindAccountSummaryStatement(6, $req);
                 break;
             case 7:
-                $data['Michellaneous'] = $this->FindAccountSummaryStatement(7, $req);
+                $data['Hospital'] = $this->FindAccountSummaryStatement(7, $req);
+                break;
+            case 8:
+                $data['Hotel'] = $this->FindAccountSummaryStatement(8, $req);
                 break;
             default:
                 $data['General'] = $this->FindAccountSummaryStatement(1, $req);
@@ -173,7 +178,8 @@ class AccountSummaryController extends Controller
                 $data['Bank'] = $this->FindAccountSummaryStatement(4, $req);
                 $data['Inventory'] = $this->FindAccountSummaryStatement(5, $req);
                 $data['Pharmacy'] = $this->FindAccountSummaryStatement(6, $req);
-                $data['Michellaneous'] = $this->FindAccountSummaryStatement(7, $req);
+                $data['Hospital'] = $this->FindAccountSummaryStatement(7, $req);
+                $data['Hotel'] = $this->FindAccountSummaryStatement(8, $req);
         }
         
         return response()->json([

@@ -72,7 +72,7 @@ class GuestController extends Controller
     // Get Current Guests
     public function Get(Request $req){
         $data = User_info::on('mysql_second')
-            ->with('latestBooking','latestBooking.category','latestBooking.list')
+            ->with('latestBooking','earliestBooking','earliestBooking.category','earliestBooking.list')
             ->where('user_role', 7)
             ->where(function($query) use ($req) {
                 $query->where('user_id', 'like', 'P%' . $req->guest . '%')
@@ -101,7 +101,7 @@ class GuestController extends Controller
                         if($data->count() > 0){
                             foreach($data as $index => $item) {
                                 // $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->ptn_id.'" data-title="'.$item->title.'" data-name="'.$item->name.'" data-phone="'.$item->phone.'" data-email="'.$item->email.'" data-gender="'.$item->gender.'" data-nationality="'.$item->nationality.'" data-religion="'.$item->religion.'" data-address="'.$item->address.'">'.$item->name. '('.$item->ptn_id.')</li>';
-                                $list .= '<tr tabindex="' . ($index + 1) . '" data-id="'.$item->user_id.'" data-title="'.$item->title.'" data-name="'.$item->user_name.'" data-phone="'.$item->user_phone.'" data-email="'.$item->user_email.'" data-category-id="'.$item->latestBooking->category->id.'" data-category-name="'.$item->latestBooking->category->name.'" data-list-id="'.$item->latestBooking->list->id.'" data-list-name="'.$item->latestBooking->list->name.'">
+                                $list .= '<tr tabindex="' . ($index + 1) . '" data-id="'.$item->user_id.'" data-title="'.$item->title.'" data-name="'.$item->user_name.'" data-phone="'.$item->user_phone.'" data-email="'.$item->user_email.'" data-category-id="'.$item->earliestBooking->category->id.'" data-category-name="'.$item->earliestBooking->category->name.'" data-list-id="'.$item->earliestBooking->list->id.'" data-list-name="'.$item->earliestBooking->list->name.'" data-booking="'.$item->earliestBooking->booking_id.'" data-checkin="'.$item->earliestBooking->check_in.'" data-checkout="'.$item->earliestBooking->check_out.'">
                                             <td>' .$item->user_id. '</td>
                                             <td>' .$item->user_name. '</td>
                                             <td>' .$item->user_phone. '</td>

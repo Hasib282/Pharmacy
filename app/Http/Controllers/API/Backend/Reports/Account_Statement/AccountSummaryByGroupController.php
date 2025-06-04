@@ -15,7 +15,9 @@ class AccountSummaryByGroupController extends Controller
 {
     // Create a Common Function for Getting Data Easily
     public function GetAccountSummaryGroupeStatement($tranType) {
-        return Transaction_Detail::on('mysql_second')->select(
+        return Transaction_Detail::on('mysql_second')
+            ->with('Groupe')
+            ->select(
                 'tran_date', 
                 'tran_groupe_id', 
                 DB::raw('SUM(receive) as total_receive'), 
@@ -38,7 +40,8 @@ class AccountSummaryByGroupController extends Controller
         $bank = $this->GetAccountSummaryGroupeStatement(4);
         $inventory = $this->GetAccountSummaryGroupeStatement(5);
         $pharmacy = $this->GetAccountSummaryGroupeStatement(6);
-        $michellaneous = $this->GetAccountSummaryGroupeStatement(7);
+        $hospital = $this->GetAccountSummaryGroupeStatement(7);
+        $hotel = $this->GetAccountSummaryGroupeStatement(8);
 
         $opening = Transaction_Detail::on('mysql_second')->select(
             DB::raw('SUM(receive) as total_receive'), 
@@ -51,13 +54,14 @@ class AccountSummaryByGroupController extends Controller
 
         $data = [       
             'opening'           =>      $opening,
-            'general'           =>      $general,
-            'party'             =>      $party,
-            'payroll'           =>      $payroll,
-            'bank'              =>      $bank,
-            'inventory'         =>      $inventory,
-            'pharmacy'          =>      $pharmacy,
-            'michellaneous'     =>      $michellaneous,
+            'General'           =>      $general,
+            'Party'             =>      $party,
+            'Payroll'           =>      $payroll,
+            'Bank'              =>      $bank,
+            'Inventory'         =>      $inventory,
+            'Pharmacy'          =>      $pharmacy,
+            'Hospital'          =>      $hospital,
+            'Hotel'             =>      $hotel,
         ];
         
         return response()->json([
@@ -110,34 +114,38 @@ class AccountSummaryByGroupController extends Controller
 
         switch ($req->type) {
             case 1:
-                $data['general'] = $this->FindAccountSummaryGroupeStatement(1, $req);
+                $data['General'] = $this->FindAccountSummaryGroupeStatement(1, $req);
                 break;
             case 2:
-                $data['party'] = $this->FindAccountSummaryGroupeStatement(2, $req);
+                $data['Party'] = $this->FindAccountSummaryGroupeStatement(2, $req);
                 break;
             case 3:
-                $data['payroll'] = $this->FindAccountSummaryGroupeStatement(3, $req);
+                $data['Payroll'] = $this->FindAccountSummaryGroupeStatement(3, $req);
                 break;
             case 4:
-                $data['bank'] = $this->FindAccountSummaryGroupeStatement(4, $req);
+                $data['Bank'] = $this->FindAccountSummaryGroupeStatement(4, $req);
                 break;
             case 5:
-                $data['inventory'] = $this->FindAccountSummaryGroupeStatement(5, $req);
+                $data['Inventory'] = $this->FindAccountSummaryGroupeStatement(5, $req);
                 break;
             case 6:
-                $data['pharmacy'] = $this->FindAccountSummaryGroupeStatement(6, $req);
+                $data['Pharmacy'] = $this->FindAccountSummaryGroupeStatement(6, $req);
                 break;
             case 7:
-                $data['michellaneous'] = $this->FindAccountSummaryGroupeStatement(7, $req);
+                $data['Hospital'] = $this->FindAccountSummaryGroupeStatement(7, $req);
+                break;
+            case 8:
+                $data['Hotel'] = $this->FindAccountSummaryGroupeStatement(8, $req);
                 break;
             default:
-                $data['general'] = $this->FindAccountSummaryGroupeStatement(1, $req);
-                $data['party'] = $this->FindAccountSummaryGroupeStatement(2, $req);
-                $data['payroll'] = $this->FindAccountSummaryGroupeStatement(3, $req);
-                $data['bank'] = $this->FindAccountSummaryGroupeStatement(4, $req);
-                $data['inventory'] = $this->FindAccountSummaryGroupeStatement(5, $req);
-                $data['pharmacy'] = $this->FindAccountSummaryGroupeStatement(6, $req);
-                $data['michellaneous'] = $this->FindAccountSummaryGroupeStatement(7, $req);
+                $data['General'] = $this->FindAccountSummaryGroupeStatement(1, $req);
+                $data['Party'] = $this->FindAccountSummaryGroupeStatement(2, $req);
+                $data['Payroll'] = $this->FindAccountSummaryGroupeStatement(3, $req);
+                $data['Bank'] = $this->FindAccountSummaryGroupeStatement(4, $req);
+                $data['Inventory'] = $this->FindAccountSummaryGroupeStatement(5, $req);
+                $data['Pharmacy'] = $this->FindAccountSummaryGroupeStatement(6, $req);
+                $data['Hospital'] = $this->FindAccountSummaryGroupeStatement(7, $req);
+                $data['Hotel'] = $this->FindAccountSummaryGroupeStatement(8, $req);
         }
         
         return response()->json([

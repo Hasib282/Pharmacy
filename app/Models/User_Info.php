@@ -109,4 +109,9 @@ class User_Info extends Model
     public function latestBooking(){
         return $this->hasOne(Booking::class, 'user_id', 'user_id')->latestOfMany();
     }
+
+    public function earliestBooking()
+    {
+        return $this->hasOne(Booking::class, 'user_id', 'user_id')->where('status', 1)->oldestOfMany();
+    }
 }

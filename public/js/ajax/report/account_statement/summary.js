@@ -123,8 +123,8 @@ function ShowSummaryReports(res) {
                                         tableRows += `
                                         <tr>
                                             <td>${key +1}</td>
-                                            ${item.tran_groupe_id != lastGroupeId ? `<td>${item.tran_groupe_id}</td>` : `<td></td>`}
-                                            <td>${item.tran_head_id}</td>
+                                            ${item.tran_groupe_id != lastGroupeId ? `<td>${item.groupe.tran_groupe_name}</td>` : `<td></td>`}
+                                            <td>${item.head.tran_head_name}</td>
                                             <td style="text-align: right">${formatNumber(item.total_receive)}</td>
                                             <td style="text-align: right">${formatNumber(item.total_payment)}</td>
                                         </tr>`;

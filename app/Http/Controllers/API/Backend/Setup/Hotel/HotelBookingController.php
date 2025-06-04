@@ -220,6 +220,7 @@ class HotelBookingController extends Controller
     // Get Booking/Reservation Id
     public function Get(Request $req){
         $data = Booking::on('mysql_second')
+        ->with('Category','List')
         ->where('user_id', $req->user_id)
         ->where('booking_id', 'like', $req->booking_id.'%')
         ->where('status', 1)
@@ -228,7 +229,7 @@ class HotelBookingController extends Controller
         $list = "<ul>";
             if($data->count() > 0){
                 foreach($data as $index => $item) {
-                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->booking_id.'" data-checkin="'.$item->check_in.'" data-checkout="'.$item->check_out.'">'.$item->booking_id.'</li>';
+                    $list .= '<li tabindex="' . ($index + 1) . '" data-id="'.$item->booking_id.'" data-checkin="'.$item->check_in.'" data-checkout="'.$item->check_out.'" data-category-id="'.$item->category->id.'" data-category-name="'.$item->category->name.'" data-list-id="'.$item->list->id.'" data-list-name="'.$item->list->name.'">'.$item->booking_id.'</li>';
                 }
             }
             else{

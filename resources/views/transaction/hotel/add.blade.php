@@ -39,7 +39,7 @@
                             <div class="c-2">
                                 <div class="form-input-group">
                                     <label for="title">Title</label>
-                                    <select name="title" id="title" class="input-small">
+                                    <select name="title" id="title" class="input-small" disabled>
                                         <option value="Mr.">Mr.</option>
                                         <option value="Mrs.">Mrs.</option>
                                     </select>
@@ -51,7 +51,7 @@
                             <div class="c-10">
                                 <div class="form-input-group">
                                     <label for="name">Name</label>
-                                    <input type="text" name="name" class="input-small" id="name">
+                                    <input type="text" name="name" class="input-small" id="name" disabled>
                                     <span class="error" id="name_error"></span>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                             <div class="c-6">
                                 <div class="form-input-group">
                                     <label for="phone">Phone</label>
-                                    <input type="text" name="phone" class="input-small" id="phone">
+                                    <input type="text" name="phone" class="input-small" id="phone" disabled>
                                     <span class="error" id="phone_error"></span>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                             <div class="c-6">
                                 <div class="form-input-group">
                                     <label for="email">Email</label>
-                                    <input type="text" name="email" class="input-small" id="email">
+                                    <input type="text" name="email" class="input-small" id="email" disabled>
                                     <span class="error" id="email_error"></span>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                             <div class="c-12">
                                 <div class="form-input-group">
                                     <label for="address">Address</label>
-                                    <input type="text" name="address" class="input-small" id="address">
+                                    <input type="text" name="address" class="input-small" id="address" disabled>
                                     <span class="error" id="address_error"></span>
                                 </div>
                             </div>
@@ -95,14 +95,28 @@
                             <div class="c-4">
                                 <div class="form-input-group">
                                     <label for="check_in">Check In</label>
-                                    <input type="datetime-local" name="check_in" class="input-small" id="check_in">
+                                    <input type="datetime-local" name="check_in" class="input-small" id="check_in" disabled>
                                 </div>
                             </div>
                             <!-- Checkout -->
                             <div class="c-4">
                                 <div class="form-input-group">
                                     <label for="check_out">Checkout Time</label>
-                                    <input type="datetime-local" name="check_out" class="input-small" id="check_out">
+                                    <input type="datetime-local" name="check_out" class="input-small" id="check_out" disabled>
+                                </div>
+                            </div>
+                            <!-- Bed Category -->
+                            <div class="c-6">
+                                <div class="form-input-group">
+                                    <label for="bed_category">Room Category<span class="required">*</span></label>
+                                    <input type="text" name="bed_category" class="input-small" id="bed_category" autocomplete="off" disabled>
+                                </div>
+                            </div>
+                            <!-- Bed list -->
+                            <div class="c-6">
+                                <div class="form-input-group">
+                                    <label for="from_bed">Room No<span class="required">*</span></label>
+                                    <input type="text" name="from_bed" class="input-small" id="from_bed" autocomplete="off" disabled>
                                 </div>
                             </div>
                         </div>

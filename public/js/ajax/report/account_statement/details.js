@@ -140,7 +140,7 @@ function ShowDetailsReports(res) {
                                             <td>${key +1}</td>
                                             ${item.tran_id != lastTranId ? 
                                                 `<td>${item.tran_id}</td>
-                                                <td>${item.tran_groupe_id}</td>` 
+                                                <td>${item.groupe.tran_groupe_name}</td>` 
                                                 // <td>${item.groupe.tran_groupe_name}</td>` 
                                                 :  
                                                 `<td></td>
@@ -152,7 +152,7 @@ function ShowDetailsReports(res) {
                                                 }`
                                             }
                                             
-                                            <td>${item.tran_head_id}</td>
+                                            <td>${item.head.tran_head_name}</td>
                                             <td style="text-align: right">${formatNumber(item.receive)}</td>
                                             <td style="text-align: right">${formatNumber(item.payment)}</td>
                                         </tr>`;

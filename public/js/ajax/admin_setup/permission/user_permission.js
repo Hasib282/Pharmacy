@@ -99,14 +99,6 @@ $(document).ready(function () {
     });
 
 
-    // Pagination Ajax
-    // PaginationAjax(ShowUserPermissions);
-
-
-    // Search Ajax
-    // SearchAjax('admin/permission/userpermissions', ShowUserPermissions, {role: { selector: "#role"}});
-
-
     // Search By Methods, Roles, Types
     // SearchBySelect('admin/permission/userpermissions', ShowUserPermissions, '#role', {role: { selector: "#role"}});
 

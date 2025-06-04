@@ -32,7 +32,8 @@ class AccountDetailsController extends Controller
         $bank = $this->GetAccountDetailsStatement(4);
         $inventory = $this->GetAccountDetailsStatement(5);
         $pharmacy = $this->GetAccountDetailsStatement(6);
-        $michellaneous = $this->GetAccountDetailsStatement(7);
+        $hospital = $this->GetAccountDetailsStatement(7);
+        $hotel = $this->GetAccountDetailsStatement(8);
         
         $opening = Transaction_Detail::on('mysql_second')->select(
             DB::raw('SUM(receive) as total_receive'), 
@@ -45,13 +46,14 @@ class AccountDetailsController extends Controller
         
         $data = [       
             'opening'           =>      $opening,
-            'general'           =>      $general,
-            'party'             =>      $party,
-            'payroll'           =>      $payroll,
-            'bank'              =>      $bank,
-            'inventory'         =>      $inventory,
-            'pharmacy'          =>      $pharmacy,
-            'michellaneous'     =>      $michellaneous,
+            'General'           =>      $general,
+            'Party'             =>      $party,
+            'Payroll'           =>      $payroll,
+            'Bank'              =>      $bank,
+            'Inventory'         =>      $inventory,
+            'Pharmacy'          =>      $pharmacy,
+            'Hospital'          =>      $hospital,
+            'Hotel'             =>      $hotel,
         ];
         
         return response()->json([
@@ -91,34 +93,38 @@ class AccountDetailsController extends Controller
 
         switch ($req->type) {
             case 1:
-                $data['general'] = $this->FindAccountDetailsStatement(1, $req);
+                $data['General'] = $this->FindAccountDetailsStatement(1, $req);
                 break;
             case 2:
-                $data['party'] = $this->FindAccountDetailsStatement(2, $req);
+                $data['Party'] = $this->FindAccountDetailsStatement(2, $req);
                 break;
             case 3:
-                $data['payroll'] = $this->FindAccountDetailsStatement(3, $req);
+                $data['Payroll'] = $this->FindAccountDetailsStatement(3, $req);
                 break;
             case 4:
-                $data['bank'] = $this->FindAccountDetailsStatement(4, $req);
+                $data['Bank'] = $this->FindAccountDetailsStatement(4, $req);
                 break;
             case 5:
-                $data['inventory'] = $this->FindAccountDetailsStatement(5, $req);
+                $data['Inventory'] = $this->FindAccountDetailsStatement(5, $req);
                 break;
             case 6:
-                $data['pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
+                $data['Pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
                 break;
             case 7:
-                $data['michellaneous'] = $this->FindAccountDetailsStatement(7, $req);
+                $data['Hospital'] = $this->FindAccountDetailsStatement(7, $req);
+                break;
+            case 8:
+                $data['Hotel'] = $this->FindAccountDetailsStatement(8, $req);
                 break;
             default:
-                $data['general'] = $this->FindAccountDetailsStatement(1, $req);
-                $data['party'] = $this->FindAccountDetailsStatement(2, $req);
-                $data['payroll'] = $this->FindAccountDetailsStatement(3, $req);
-                $data['bank'] = $this->FindAccountDetailsStatement(4, $req);
-                $data['inventory'] = $this->FindAccountDetailsStatement(5, $req);
-                $data['pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
-                $data['michellaneous'] = $this->FindAccountDetailsStatement(7, $req);
+                $data['General'] = $this->FindAccountDetailsStatement(1, $req);
+                $data['Party'] = $this->FindAccountDetailsStatement(2, $req);
+                $data['Payroll'] = $this->FindAccountDetailsStatement(3, $req);
+                $data['Bank'] = $this->FindAccountDetailsStatement(4, $req);
+                $data['Inventory'] = $this->FindAccountDetailsStatement(5, $req);
+                $data['Pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
+                $data['Hospital'] = $this->FindAccountDetailsStatement(7, $req);
+                $data['Hotel'] = $this->FindAccountDetailsStatement(8, $req);
         }
         
         return response()->json([
@@ -141,39 +147,43 @@ class AccountDetailsController extends Controller
     
     
             $data = [
-                'opening' => $opening,
+                'Opening' => $opening,
             ];
     
             switch ($req->type) {
                 case 1:
-                    $data['general'] = $this->FindAccountDetailsStatement(1, $req);
+                    $data['General'] = $this->FindAccountDetailsStatement(1, $req);
                     break;
                 case 2:
-                    $data['party'] = $this->FindAccountDetailsStatement(2, $req);
+                    $data['Party'] = $this->FindAccountDetailsStatement(2, $req);
                     break;
                 case 3:
-                    $data['payroll'] = $this->FindAccountDetailsStatement(3, $req);
+                    $data['Payroll'] = $this->FindAccountDetailsStatement(3, $req);
                     break;
                 case 4:
-                    $data['bank'] = $this->FindAccountDetailsStatement(4, $req);
+                    $data['Bank'] = $this->FindAccountDetailsStatement(4, $req);
                     break;
                 case 5:
-                    $data['inventory'] = $this->FindAccountDetailsStatement(5, $req);
+                    $data['Inventory'] = $this->FindAccountDetailsStatement(5, $req);
                     break;
                 case 6:
-                    $data['pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
+                    $data['Pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
                     break;
                 case 7:
-                    $data['michellaneous'] = $this->FindAccountDetailsStatement(7, $req);
+                    $data['Hospital'] = $this->FindAccountDetailsStatement(7, $req);
+                    break;
+                case 8:
+                    $data['Hotel'] = $this->FindAccountDetailsStatement(8, $req);
                     break;
                 default:
-                    $data['general'] = $this->FindAccountDetailsStatement(1, $req);
-                    $data['party'] = $this->FindAccountDetailsStatement(2, $req);
-                    $data['payroll'] = $this->FindAccountDetailsStatement(3, $req);
-                    $data['bank'] = $this->FindAccountDetailsStatement(4, $req);
-                    $data['inventory'] = $this->FindAccountDetailsStatement(5, $req);
-                    $data['pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
-                    $data['michellaneous'] = $this->FindAccountDetailsStatement(7, $req);
+                    $data['General'] = $this->FindAccountDetailsStatement(1, $req);
+                    $data['Party'] = $this->FindAccountDetailsStatement(2, $req);
+                    $data['Payroll'] = $this->FindAccountDetailsStatement(3, $req);
+                    $data['Bank'] = $this->FindAccountDetailsStatement(4, $req);
+                    $data['Inventory'] = $this->FindAccountDetailsStatement(5, $req);
+                    $data['Pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
+                    $data['Hospital'] = $this->FindAccountDetailsStatement(7, $req);
+                    $data['Hotel'] = $this->FindAccountDetailsStatement(8, $req);
             }
         }
         else {
@@ -183,7 +193,8 @@ class AccountDetailsController extends Controller
             $bank = $this->GetAccountDetailsStatement(4);
             $inventory = $this->GetAccountDetailsStatement(5);
             $pharmacy = $this->GetAccountDetailsStatement(6);
-            $michellaneous = $this->GetAccountDetailsStatement(7);
+            $hospital = $this->GetAccountDetailsStatement(7);
+            $hotel = $this->GetAccountDetailsStatement(8);
             
             $opening = Transaction_Detail::on('mysql_second')->select(
                 DB::raw('SUM(receive) as total_receive'), 
@@ -195,14 +206,15 @@ class AccountDetailsController extends Controller
             $type = Transaction_Main_Head::on('mysql')->get();
             
             $data = [       
-                'opening'           =>      $opening,
-                'general'           =>      $general,
-                'party'             =>      $party,
-                'payroll'           =>      $payroll,
-                'bank'              =>      $bank,
-                'inventory'         =>      $inventory,
-                'pharmacy'          =>      $pharmacy,
-                'michellaneous'     =>      $michellaneous,
+                'Opening'           =>      $opening,
+                'General'           =>      $general,
+                'Party'             =>      $party,
+                'Payroll'           =>      $payroll,
+                'Bank'              =>      $bank,
+                'Inventory'         =>      $inventory,
+                'Pharmacy'          =>      $pharmacy,
+                'Hospital'          =>      $hospital,
+                'Hotel'             =>      $hotel,
             ];
         }
         

@@ -41,7 +41,10 @@ $(document).ready(function () {
 
     // Add Modal Open Functionality
     AddModalFunctionality("#date", function(){
-        $('#date').focus();
+        $('#guest').removeAttr('data-id');
+        $('#hotel-booking').removeAttr('data-id');
+        $('#bed_category').removeAttr('data-id');
+        $('#from_bed').removeAttr('data-id');
         localStorage.removeItem('transactionData');
         $('.transaction_grid tbody').html('');
     });
@@ -54,6 +57,9 @@ $(document).ready(function () {
     // Insert Transaction Receive ajax
     InsertTransaction('hotel/transaction/services', 'Receive', '8', function() {
         $('#guest').removeAttr('data-id');
+        $('#hotel-booking').removeAttr('data-id');
+        $('#bed_category').removeAttr('data-id');
+        $('#from_bed').removeAttr('data-id');
         $('#date').focus();
         $('.transaction_grid tbody').html('');
     });
@@ -107,7 +113,7 @@ $(document).ready(function () {
         $('#updateDate').val(formattedDate);
         
         $('#updatePatient').attr('data-id',item.ptn_id);
-        $('#updatePatient').val(item.patient.name);
+        $('#updatePatient').val(item.user.user_name);
 
 
         $('#updateTotalDiscount').val(item.discount);

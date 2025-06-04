@@ -1540,6 +1540,10 @@ $(document).ready(function () {
             $('#bed_category').attr('data-id',item.attr('data-category-id'));
             $('#from_bed').val(item.attr('data-list-name'));
             $('#from_bed').attr('data-id',item.attr('data-list-id'));
+            $('#hotel-booking').val(item.attr('data-booking'));
+            $('#hotel-booking').attr('data-id',item.attr('data-booking'));
+            $('#check_in').val(item.attr('data-checkin'));
+            $('#check_out').val(item.attr('data-checkout'));
         },
 
         function (targetInput) {
@@ -1552,6 +1556,10 @@ $(document).ready(function () {
             $('#bed_category').removeAttr('data-id');
             $('#from_bed').val('');
             $('#from_bed').removeAttr('data-id');
+            $('#hotel-booking').val('');
+            $('#hotel-booking').removeAttr('data-id');
+            $('#check_in').val('');
+            $('#check_out').val('');
         }
     );
 
@@ -1583,13 +1591,15 @@ $(document).ready(function () {
             $('#updateName').val(item.attr('data-name'));
             $('#updatePhone').val(item.attr('data-phone'));
             $('#updateEmail').val(item.attr('data-email'));
-            $('#updateGender').val(item.attr('data-gender'));
-            $('#updateReligion').val(item.attr('data-religion'));
-            $('#updateNationality').val(item.attr('data-nationality'));
-            $('#updateNid').val(item.attr('data-nid'));
-            $('#updatePassport').val(item.attr('data-passport'));
-            $('#updateDriving_license').val(item.attr('data-driving_license'));
             $('#updateAddress').val(item.attr('data-address'));
+            $('#updateBed_category').val(item.attr('data-category-name'));
+            $('#updateBed_category').attr('data-id',item.attr('data-category-id'));
+            $('#updateFrom_bed').val(item.attr('data-list-name'));
+            $('#updateFrom_bed').attr('data-id',item.attr('data-list-id'));
+            $('#updateHotel-booking').val(item.attr('data-booking'));
+            $('#updateHotel-booking').attr('data-id',item.attr('data-booking'));
+            $('#updateCheck_in').val(item.attr('data-checkin'));
+            $('#updateCheck_out').val(item.attr('data-checkout'));
         },
 
         function (targetInput) {
@@ -1597,13 +1607,15 @@ $(document).ready(function () {
             $('#updateName').val('');
             $('#updatePhone').val('');
             $('#updateEmail').val('');
-            $('#updateGender').val('');
-            $('#updateReligion').val('');
-            $('#updateNationality').val('');
-            $('#updateNid').val(item.attr('data-nid'));
-            $('#updatePassport').val(item.attr('data-passport'));
-            $('#updateDriving_license').val(item.attr('data-driving_license'));
             $('#updateAddress').val('');
+            $('#updateBed_category').val('');
+            $('#updateBed_category').removeAttr('data-id');
+            $('#updateFrom_bed').val('');
+            $('#updateFrom_bed').removeAttr('data-id');
+            $('#updateHotel-booking').val('');
+            $('#updateHotel-booking').removeAttr('data-id');
+            $('#updateCheck_in').val('');
+            $('#updateCheck_out').val('');
         }
     );
     
@@ -1742,11 +1754,19 @@ $(document).ready(function () {
             // $(targetInput).val(item.find('td:first').text());
             $('#check_in').val(item.attr('data-checkin'));
             $('#check_out').val(item.attr('data-checkout'));
+            $('#bed_category').val(item.attr('data-category-name'));
+            $('#bed_category').attr('data-id',item.attr('data-category-id'));
+            $('#from_bed').val(item.attr('data-list-name'));
+            $('#from_bed').attr('data-id',item.attr('data-list-id'));
         },
 
         function (targetInput) {
             $('#check_in').val('');
             $('#check_out').val('');
+            $('#bed_category').val('');
+            $('#bed_category').removeAttr('data-id');
+            $('#from_bed').val('');
+            $('#from_bed').removeAttr('data-id');
         }
     );
 
@@ -1777,11 +1797,19 @@ $(document).ready(function () {
             // $(targetInput).val(item.find('td:first').text());
             $('#updateCheck_in').val(item.attr('data-checkin'));
             $('#updateCheck_out').val(item.attr('data-checkout'));
+            $('#updateBed_category').val(item.attr('data-category-name'));
+            $('#updateBed_category').attr('data-id',item.attr('data-category-id'));
+            $('#updateFrom_bed').val(item.attr('data-list-name'));
+            $('#updateFrom_bed').attr('data-id',item.attr('data-list-id'));
         },
 
         function (targetInput) {
             $('#updateCheck_in').val('');
             $('#updateCheck_out').val('');
+            $('#updateBed_category').val('');
+            $('#updateBed_category').removeAttr('data-id');
+            $('#updateFrom_bed').val('');
+            $('#updateFrom_bed').removeAttr('data-id');
         }
     );
 });
