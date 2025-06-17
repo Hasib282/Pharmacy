@@ -28,7 +28,7 @@ return [
     6 => [
         ['uri' => 'api/admin/permission/userpermissions/edit', 'method' => 'GET'],
         ['uri' => 'api/admin/permission/userpermissions', 'method' => 'PUT'],
-        ['uri' => 'api/admin/permission/userpermissions/copy', 'method' => 'POST'],
+        ['uri' => 'api/admin/permission/userpermissions/copy', 'method' => 'PUT'],
         ['uri' => 'api/admin/permission/userpermissions/from', 'method' => 'GET'],
         ['uri' => 'api/admin/permission/userpermissions/to', 'method' => 'GET'],
     ],
@@ -1123,7 +1123,7 @@ return [
         ['uri' => 'api/inventory/transaction/purchase', 'method' => 'DELETE'],
     ],
     234 => [
-        ['uri' => 'api/inventory/transaction/purchase/verify', 'method' => 'POST'],
+        ['uri' => 'api/inventory/transaction/purchase/verify', 'method' => 'DELETE'],
     ],
     235 => [
         ['uri' => 'api/inventory/transaction/issue', 'method' => 'GET'],

@@ -49,7 +49,7 @@ class BankTransactionController extends Controller
             $id = GenerateTranId(4, 'Withdraw', 'BMW');
             // $id = ($transaction) ? 'BMW' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'BMW000000001';
         }
-        else if($req->method === ''){
+        else if($req->method === 'Deposit'){
             $id = GenerateTranId(4, 'Deposit', 'BMD');
             // $id = ($transaction) ? 'BMD' . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) :  'BMD000000001';
         }

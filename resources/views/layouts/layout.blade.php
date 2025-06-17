@@ -86,6 +86,7 @@
         {{-- {!! Toastr::message()  --}}
         <script>
             let role = @json(UserRole());
+            let userPermissions = @json(UserPermissions());
         </script>
         {{-- @if (session('message'))
             <script>

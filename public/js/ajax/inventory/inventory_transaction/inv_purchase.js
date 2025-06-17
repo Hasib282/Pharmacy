@@ -157,11 +157,11 @@ $(document).ready(function () {
 
 
     // Search By Date
-    SearchByDateAjax('inventory/transaction/purchase/search', ShowInventoryPurchases, { type: 6, method: 'Purchase' });
+    SearchByDateAjax('inventory/transaction/purchase/search', ShowInventoryPurchases, { type: 5, method: 'Purchase' });
 
 
     // Search By Methods, Roles, Types
-    SearchBySelect('inventory/transaction/purchase/search', ShowInventoryPurchases, '#status', { type: 6, method: 'Purchase' } );
+    SearchBySelect('inventory/transaction/purchase/search', ShowInventoryPurchases, '#status', { type: 5, method: 'Purchase' } );
 
 
     // Additional Edit Functionality

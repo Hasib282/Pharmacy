@@ -33,11 +33,9 @@
     </div>
 
 
-    @if (Auth::user()->user_role == 1)
-        @include('admin_setup.location.add')
+    @include('admin_setup.location.add')
 
-        @include('admin_setup.location.edit')
-    @endif
+    @include('admin_setup.location.edit')
     
     @include('common_modals.delete')
 

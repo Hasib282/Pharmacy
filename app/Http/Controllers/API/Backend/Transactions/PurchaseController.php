@@ -88,15 +88,19 @@ class PurchaseController extends Controller
         if ($req->type && isset($prefixes[$req->type])) {
             $prefix = $prefixes[$req->type][$req->method] ?? null;
             if ($prefix) {
-                // $transaction = Transaction_Mains_Temp::on('mysql_second')
-                // ->where('tran_type', $req->type)
-                // ->where('tran_method', $req->method)
-                // ->latest('tran_id')
-                // ->first();
+                $transaction = Transaction_Mains_Temp::on('mysql_second')
+                ->where('tran_type', $req->type)
+                ->where('tran_method', $req->method)
+                ->latest('tran_id')
+                ->first();
     
-                // $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
-
-                $id = GenerateTranId($req->type, $req->method, $prefix);
+                $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
+                // if($req->type == 5){
+                //     $id = GenerateTranId($req->type, $req->method, 'IIP');
+                // }
+                // else if($req->type == 6){
+                //     $id = GenerateTranId($req->type, $req->method, 'PIP');
+                // }
                 
                 $data = null;
 

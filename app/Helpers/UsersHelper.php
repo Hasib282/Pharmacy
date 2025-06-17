@@ -57,6 +57,12 @@ if (!function_exists('UserStore')) {
     }
 }
 
+// This Helper Function is for Getting Login User Store 
+if (!function_exists('UserPermissions')) {
+    function UserPermissions() {
+        return Cache::get("permission_ids_". Auth::user()->user_id);
+    }
+}
 
 
 

@@ -7,7 +7,7 @@
 <div class="add-search">
     <div class="rows">
         <div class="c-3">
-                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
         </div>
         <div class="c-6">
 
@@ -31,11 +31,11 @@
 </div>
 
 
-@if (Auth::user()->user_role == 1)
-    @include('admin_setup.location.add')
 
-    @include('admin_setup.location.edit')
-@endif
+@include('admin_setup.location.add')
+
+@include('admin_setup.location.edit')
+
 
 @include('common_modals.delete')
 
