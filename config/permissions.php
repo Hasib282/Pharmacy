@@ -1402,6 +1402,649 @@ return [
     ],
 
 
+    284 => [
+        ['uri' => 'api/admin/banks', 'method' => 'POST'],
+    ],
+    285 => [
+        ['uri' => 'api/admin/banks/edit', 'method' => 'GET'],
+        ['uri' => 'api/admin/banks', 'method' => 'PUT'],
+    ],
+    286 => [
+        ['uri' => 'api/admin/banks', 'method' => 'DELETE'],
+    ],
+    
+    
+    287 => [ 
+        ['uri' => 'api/admin/payment_method', 'method' => 'GET'],
+        ['uri' => 'api/admin/payment_method/search', 'method' => 'GET'],
+        ['uri' => 'api/admin/payment_method/details', 'method' => 'GET'],
+        ['uri' => 'admin/payment_method', 'method' => 'GET'],
+        ['uri' => 'admin/payment_method/search', 'method' => 'GET'],
+    ],
+    288 => [
+        ['uri' => 'api/admin/payment_method', 'method' => 'POST'],
+    ],
+    289 => [
+        ['uri' => 'api/admin/payment_method/edit', 'method' => 'GET'],
+        ['uri' => 'api/admin/payment_method', 'method' => 'PUT'],
+    ],
+    290 => [
+        ['uri' => 'api/admin/payment_method', 'method' => 'DELETE'],
+    ],
+    
+    
+    291 => [ 
+        ['uri' => 'api/admin/corporate', 'method' => 'GET'],
+        ['uri' => 'api/admin/corporate/search', 'method' => 'GET'],
+        ['uri' => 'api/admin/corporate/details', 'method' => 'GET'],
+        ['uri' => 'admin/corporate', 'method' => 'GET'],
+        ['uri' => 'admin/corporate/search', 'method' => 'GET'],
+    ],
+    292 => [
+        ['uri' => 'api/admin/corporate', 'method' => 'POST'],
+    ],
+    293 => [
+        ['uri' => 'api/admin/corporate/edit', 'method' => 'GET'],
+        ['uri' => 'api/admin/corporate', 'method' => 'PUT'],
+    ],
+    294 => [
+        ['uri' => 'api/admin/corporate', 'method' => 'DELETE'],
+    ],
+    
+    
+
+
+
+
+
+
+
+    ///////////////////////////
+    295 => [ 
+        ['uri' => 'api/hotel/setup/floor', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/floor/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/floor/details', 'method' => 'GET'],
+        ['uri' => 'hotel/setup/floor', 'method' => 'GET'],
+        ['uri' => 'hotel/setup/floor/search', 'method' => 'GET'],
+    ],
+    296 => [
+        ['uri' => 'api/hotel/setup/floor', 'method' => 'POST'],
+    ],
+    297 => [
+        ['uri' => 'api/hotel/setup/floor/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/floor', 'method' => 'PUT'],
+    ],
+    298 => [
+        ['uri' => 'api/hotel/setup/floor', 'method' => 'DELETE'],
+    ],
+    
+    
+    299 => [ 
+        ['uri' => 'api/hotel/setup/roomcatagory', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/roomcatagory/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/roomcatagory/details', 'method' => 'GET'],
+        ['uri' => 'hotel/setup/roomcatagory', 'method' => 'GET'],
+        ['uri' => 'hotel/setup/roomcatagory/search', 'method' => 'GET'],
+    ],
+    300 => [
+        ['uri' => 'api/hotel/setup/roomcatagory', 'method' => 'POST'],
+    ],
+    301 => [
+        ['uri' => 'api/hotel/setup/roomcatagory/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/roomcatagory', 'method' => 'PUT'],
+    ],
+    302 => [
+        ['uri' => 'api/hotel/setup/roomcatagory', 'method' => 'DELETE'],
+    ],
+    
+    
+    303 => [ 
+        ['uri' => 'api/hotel/setup/roomlist', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/roomlist/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/roomlist/details', 'method' => 'GET'],
+        ['uri' => 'hotel/setup/roomlist', 'method' => 'GET'],
+        ['uri' => 'hotel/setup/roomlist/search', 'method' => 'GET'],
+    ],
+    304 => [
+        ['uri' => 'api/hotel/setup/roomlist', 'method' => 'POST'],
+    ],
+    305 => [
+        ['uri' => 'api/hotel/setup/roomlist/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/roomlist', 'method' => 'PUT'],
+    ],
+    306 => [
+        ['uri' => 'api/hotel/setup/roomlist', 'method' => 'DELETE'],
+    ],
+    
+    
+    307 => [ 
+        ['uri' => 'api/hotel/setup/groupe', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/groupe/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/groupe/details', 'method' => 'GET'],
+        ['uri' => 'hotel/setup/groupe', 'method' => 'GET'],
+        ['uri' => 'hotel/setup/groupe/search', 'method' => 'GET'],
+    ],
+    308 => [
+        ['uri' => 'api/hotel/setup/groupe', 'method' => 'POST'],
+    ],
+    309 => [
+        ['uri' => 'api/hotel/setup/groupe/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/groupe', 'method' => 'PUT'],
+    ],
+    310 => [
+        ['uri' => 'api/hotel/setup/groupe', 'method' => 'DELETE'],
+    ],
+    
+    
+    311 => [ 
+        ['uri' => 'api/hotel/setup/service', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/service/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/service/details', 'method' => 'GET'],
+        ['uri' => 'hotel/setup/service', 'method' => 'GET'],
+        ['uri' => 'hotel/setup/service/search', 'method' => 'GET'],
+    ],
+    312 => [
+        ['uri' => 'api/hotel/setup/service', 'method' => 'POST'],
+    ],
+    313 => [
+        ['uri' => 'api/hotel/setup/service/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/service', 'method' => 'PUT'],
+    ],
+    314 => [
+        ['uri' => 'api/hotel/setup/service', 'method' => 'DELETE'],
+    ],
+    
+    
+    315 => [ 
+        ['uri' => 'api/hotel/booking', 'method' => 'GET'],
+        ['uri' => 'api/hotel/booking/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/booking/details', 'method' => 'GET'],
+        ['uri' => 'hotel/booking', 'method' => 'GET'],
+        ['uri' => 'hotel/booking/search', 'method' => 'GET'],
+    ],
+    316 => [
+        ['uri' => 'api/hotel/booking', 'method' => 'POST'],
+    ],
+    317 => [
+        ['uri' => 'api/hotel/booking/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/booking', 'method' => 'PUT'],
+    ],
+    318 => [
+        ['uri' => 'api/hotel/booking', 'method' => 'DELETE'],
+    ],
+    
+    
+    319 => [ 
+        ['uri' => 'api/hotel/roomtransfer', 'method' => 'GET'],
+        ['uri' => 'api/hotel/roomtransfer/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/roomtransfer/details', 'method' => 'GET'],
+        ['uri' => 'hotel/roomtransfer', 'method' => 'GET'],
+        ['uri' => 'hotel/roomtransfer/search', 'method' => 'GET'],
+    ],
+    320 => [
+        ['uri' => 'api/hotel/roomtransfer', 'method' => 'POST'],
+    ],
+    321 => [
+        ['uri' => 'api/hotel/roomtransfer/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/roomtransfer', 'method' => 'PUT'],
+    ],
+    322 => [
+        ['uri' => 'api/hotel/roomtransfer', 'method' => 'DELETE'],
+    ],
+    
+    
+    323 => [ 
+        ['uri' => 'api/hotel/roomstatus', 'method' => 'GET'],
+        ['uri' => 'api/hotel/roomstatus/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/roomstatus/details', 'method' => 'GET'],
+        ['uri' => 'hotel/roomstatus', 'method' => 'GET'],
+        ['uri' => 'hotel/roomstatus/search', 'method' => 'GET'],
+    ],
+    324 => [
+        ['uri' => 'api/hotel/roomstatus', 'method' => 'POST'],
+    ],
+    325 => [
+        ['uri' => 'api/hotel/roomstatus/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/roomstatus', 'method' => 'PUT'],
+    ],
+    326 => [
+        ['uri' => 'api/hotel/roomstatus', 'method' => 'DELETE'],
+    ],
+    
+    
+    327 => [ 
+        ['uri' => 'api/hotel/users/guests', 'method' => 'GET'],
+        ['uri' => 'api/hotel/users/guests/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/users/guests/details', 'method' => 'GET'],
+        ['uri' => 'hotel/users/guests', 'method' => 'GET'],
+        ['uri' => 'hotel/users/guests/search', 'method' => 'GET'],
+    ],
+    328 => [
+        ['uri' => 'api/hotel/users/guests', 'method' => 'POST'],
+    ],
+    329 => [
+        ['uri' => 'api/hotel/users/guests/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/users/guests', 'method' => 'PUT'],
+    ],
+    330 => [
+        ['uri' => 'api/hotel/users/guests', 'method' => 'DELETE'],
+    ],
+    
+    
+    331 => [ 
+        ['uri' => 'api/hotel/transaction/services', 'method' => 'GET'],
+        ['uri' => 'api/hotel/transaction/services/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/transaction/services/details', 'method' => 'GET'],
+        ['uri' => 'hotel/transaction/services', 'method' => 'GET'],
+        ['uri' => 'hotel/transaction/services/search', 'method' => 'GET'],
+    ],
+    332 => [
+        ['uri' => 'api/hotel/transaction/services', 'method' => 'POST'],
+    ],
+    333 => [
+        ['uri' => 'api/hotel/transaction/services/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/transaction/services', 'method' => 'PUT'],
+    ],
+    334 => [
+        ['uri' => 'api/hotel/transaction/services', 'method' => 'DELETE'],
+    ],
+    
+    
+    335 => [ 
+        ['uri' => 'api/hotel/transaction/deposits', 'method' => 'GET'],
+        ['uri' => 'api/hotel/transaction/deposits/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/transaction/deposits/details', 'method' => 'GET'],
+        ['uri' => 'hotel/transaction/deposits', 'method' => 'GET'],
+        ['uri' => 'hotel/transaction/deposits/search', 'method' => 'GET'],
+    ],
+    336 => [
+        ['uri' => 'api/hotel/transaction/deposits', 'method' => 'POST'],
+    ],
+    337 => [
+        ['uri' => 'api/hotel/transaction/deposits/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/transaction/deposits', 'method' => 'PUT'],
+    ],
+    338 => [
+        ['uri' => 'api/hotel/transaction/deposits', 'method' => 'DELETE'],
+    ],
+    
+    
+    339 => [ 
+        ['uri' => 'api/hotel/transaction/refunds', 'method' => 'GET'],
+        ['uri' => 'api/hotel/transaction/refunds/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/transaction/refunds/details', 'method' => 'GET'],
+        ['uri' => 'hotel/transaction/refunds', 'method' => 'GET'],
+        ['uri' => 'hotel/transaction/refunds/search', 'method' => 'GET'],
+    ],
+    340 => [
+        ['uri' => 'api/hotel/transaction/refunds', 'method' => 'POST'],
+    ],
+    341 => [
+        ['uri' => 'api/hotel/transaction/refunds/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/transaction/refunds', 'method' => 'PUT'],
+    ],
+    342 => [
+        ['uri' => 'api/hotel/transaction/refunds', 'method' => 'DELETE'],
+    ],
+    
+    
+    343 => [ 
+        ['uri' => 'api/hotel/billsettlement', 'method' => 'GET'],
+        ['uri' => 'api/hotel/billsettlement/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/billsettlement/details', 'method' => 'GET'],
+        ['uri' => 'hotel/billsettlement', 'method' => 'GET'],
+        ['uri' => 'hotel/billsettlement/search', 'method' => 'GET'],
+    ],
+    344 => [
+        ['uri' => 'api/hotel/billsettlement', 'method' => 'POST'],
+    ],
+    345 => [
+        ['uri' => 'api/hotel/billsettlement/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/billsettlement', 'method' => 'PUT'],
+    ],
+
+
+
+
+
+/////////////////////////Hospital////////////////////////////////////////////
+
+
+    346 => [ 
+        ['uri' => 'api/hospital/setup/specialization', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/specialization/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/specialization/details', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/specialization', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/specialization/search', 'method' => 'GET'],
+    ],
+    347 => [
+        ['uri' => 'api/hospital/setup/specialization', 'method' => 'POST'],
+    ],
+    348 => [
+        ['uri' => 'api/hospital/setup/specialization/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/specialization', 'method' => 'PUT'],
+    ],
+    349 => [
+        ['uri' => 'api/hospital/setup/specialization', 'method' => 'DELETE'],
+    ],
+
+
+    350 => [ 
+        ['uri' => 'api/hospital/setup/floor', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/floor/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/floor/details', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/floor', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/floor/search', 'method' => 'GET'],
+    ],
+    351 => [
+        ['uri' => 'api/hospital/setup/floor', 'method' => 'POST'],
+    ],
+    352 => [
+        ['uri' => 'api/hospital/setup/floor/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/floor', 'method' => 'PUT'],
+    ],
+    353 => [
+        ['uri' => 'api/hospital/setup/floor', 'method' => 'DELETE'],
+    ],
+
+
+    354 => [ 
+        ['uri' => 'api/hospital/setup/nursingstation', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/nursingstation/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/nursingstation/details', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/nursingstation', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/nursingstation/search', 'method' => 'GET'],
+    ],
+    355 => [
+        ['uri' => 'api/hospital/setup/nursingstation', 'method' => 'POST'],
+    ],
+    356 => [
+        ['uri' => 'api/hospital/setup/nursingstation/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/nursingstation', 'method' => 'PUT'],
+    ],
+    357 => [
+        ['uri' => 'api/hospital/setup/nursingstation', 'method' => 'DELETE'],
+    ],
+
+
+    358 => [ 
+        ['uri' => 'api/hospital/setup/bedcategory', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/bedcategory/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/bedcategory/details', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/bedcategory', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/bedcategory/search', 'method' => 'GET'],
+    ],
+    359 => [
+        ['uri' => 'api/hospital/setup/bedcategory', 'method' => 'POST'],
+    ],
+    360 => [
+        ['uri' => 'api/hospital/setup/bedcategory/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/bedcategory', 'method' => 'PUT'],
+    ],
+    361 => [
+        ['uri' => 'api/hospital/setup/bedcategory', 'method' => 'DELETE'],
+    ],
+
+
+    362 => [ 
+        ['uri' => 'api/hospital/setup/bedlist', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/bedlist/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/bedlist/details', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/bedlist', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/bedlist/search', 'method' => 'GET'],
+    ],
+    363 => [
+        ['uri' => 'api/hospital/setup/bedlist', 'method' => 'POST'],
+    ],
+    364 => [
+        ['uri' => 'api/hospital/setup/bedlist/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/bedlist', 'method' => 'PUT'],
+    ],
+    365 => [
+        ['uri' => 'api/hospital/setup/bedlist', 'method' => 'DELETE'],
+    ],
+
+
+
+    366 => [ 
+        ['uri' => 'api/hospital/setup/groupe', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/groupe/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/groupe/details', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/groupe', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/groupe/search', 'method' => 'GET'],
+    ],
+    367 => [
+        ['uri' => 'api/hospital/setup/groupe', 'method' => 'POST'],
+    ],
+    368 => [
+        ['uri' => 'api/hospital/setup/groupe/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/groupe', 'method' => 'PUT'],
+    ],
+    369 => [
+        ['uri' => 'api/hospital/setup/groupe', 'method' => 'DELETE'],
+    ],
+
+
+
+    370 => [ 
+        ['uri' => 'api/hospital/setup/services', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/services/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/services/details', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/services', 'method' => 'GET'],
+        ['uri' => 'hospital/setup/services/search', 'method' => 'GET'],
+    ],
+    371 => [
+        ['uri' => 'api/hospital/setup/services', 'method' => 'POST'],
+    ],
+    372 => [
+        ['uri' => 'api/hospital/setup/services/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/setup/services', 'method' => 'PUT'],
+    ],
+    373 => [
+        ['uri' => 'api/hospital/setup/services', 'method' => 'DELETE'],
+    ],
+
+
+
+
+    374 => [ 
+        ['uri' => 'api/hospital/ptnappointment', 'method' => 'GET'],
+        ['uri' => 'api/hospital/ptnappointment/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/ptnappointment/details', 'method' => 'GET'],
+        ['uri' => 'hospital/ptnappointment', 'method' => 'GET'],
+        ['uri' => 'hospital/ptnappointment/search', 'method' => 'GET'],
+    ],
+    375 => [
+        ['uri' => 'api/hospital/ptnappointment', 'method' => 'POST'],
+    ],
+    376 => [
+        ['uri' => 'api/hospital/ptnappointment/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/ptnappointment', 'method' => 'PUT'],
+    ],
+    377 => [
+        ['uri' => 'api/hospital/ptnappointment', 'method' => 'DELETE'],
+    ],
+
+
+
+    378 => [ 
+        ['uri' => 'api/hospital/ptnregistration', 'method' => 'GET'],
+        ['uri' => 'api/hospital/ptnregistration/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/ptnregistration/details', 'method' => 'GET'],
+        ['uri' => 'hospital/ptnregistration', 'method' => 'GET'],
+        ['uri' => 'hospital/ptnregistration/search', 'method' => 'GET'],
+    ],
+    379 => [
+        ['uri' => 'api/hospital/ptnregistration', 'method' => 'POST'],
+    ],
+    380 => [
+        ['uri' => 'api/hospital/ptnregistration/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/ptnregistration', 'method' => 'PUT'],
+    ],
+    381 => [
+        ['uri' => 'api/hospital/ptnregistration', 'method' => 'DELETE'],
+    ],
+
+
+
+    382 => [ 
+        ['uri' => 'api/hospital/bedtransfer', 'method' => 'GET'],
+        ['uri' => 'api/hospital/bedtransfer/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/bedtransfer/details', 'method' => 'GET'],
+        ['uri' => 'hospital/bedtransfer', 'method' => 'GET'],
+        ['uri' => 'hospital/bedtransfer/search', 'method' => 'GET'],
+    ],
+    383 => [
+        ['uri' => 'api/hospital/bedtransfer', 'method' => 'POST'],
+    ],
+    384 => [
+        ['uri' => 'api/hospital/bedtransfer/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/bedtransfer', 'method' => 'PUT'],
+    ],
+    385 => [
+        ['uri' => 'api/hospital/bedtransfer', 'method' => 'DELETE'],
+    ],
+
+
+
+    386 => [ 
+        ['uri' => 'api/hospital/bedstatus', 'method' => 'GET'],
+        ['uri' => 'api/hospital/bedstatus/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/bedstatus/details', 'method' => 'GET'],
+        ['uri' => 'hospital/bedstatus', 'method' => 'GET'],
+        ['uri' => 'hospital/bedstatus/search', 'method' => 'GET'],
+    ],
+    387 => [
+        ['uri' => 'api/hospital/bedstatus', 'method' => 'POST'],
+    ],
+    388 => [
+        ['uri' => 'api/hospital/bedstatus/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/bedstatus', 'method' => 'PUT'],
+    ],
+    389 => [
+        ['uri' => 'api/hospital/bedstatus', 'method' => 'DELETE'],
+    ],
+
+
+
+
+
+    390 => [ 
+        ['uri' => 'api/hospital/users/doctors', 'method' => 'GET'],
+        ['uri' => 'api/hospital/users/doctors/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/users/doctors/details', 'method' => 'GET'],
+        ['uri' => 'hospital/users/doctors', 'method' => 'GET'],
+        ['uri' => 'hospital/users/doctors/search', 'method' => 'GET'],
+    ],
+    391 => [
+        ['uri' => 'api/hospital/users/doctors', 'method' => 'POST'],
+    ],
+    392 => [
+        ['uri' => 'api/hospital/users/doctors/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/users/doctors', 'method' => 'PUT'],
+    ],
+    393 => [
+        ['uri' => 'api/hospital/users/doctors', 'method' => 'DELETE'],
+    ], 
+
+
+    394 => [ 
+        ['uri' => 'api/hospital/users/patients', 'method' => 'GET'],
+        ['uri' => 'api/hospital/users/patients/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/users/patients/details', 'method' => 'GET'],
+        ['uri' => 'hospital/users/patients', 'method' => 'GET'],
+        ['uri' => 'hospital/users/patients/search', 'method' => 'GET'],
+    ],
+    395 => [
+        ['uri' => 'api/hospital/users/patients', 'method' => 'POST'],
+    ],
+    396 => [
+        ['uri' => 'api/hospital/users/patients/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/users/patients', 'method' => 'PUT'],
+    ],
+    397 => [
+        ['uri' => 'api/hospital/users/patients', 'method' => 'DELETE'],
+    ], 
+
+
+    398 => [ 
+        ['uri' => 'api/hospital/transaction/admission', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/admission/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/admission/details', 'method' => 'GET'],
+        ['uri' => 'hospital/transaction/admission', 'method' => 'GET'],
+        ['uri' => 'hospital/transaction/admission/search', 'method' => 'GET'],
+    ],
+    399 => [
+        ['uri' => 'api/hospital/transaction/admission', 'method' => 'POST'],
+    ],
+    400 => [
+        ['uri' => 'api/hospital/transaction/admission/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/admission', 'method' => 'PUT'],
+    ],
+    401 => [
+        ['uri' => 'api/hospital/transaction/admission', 'method' => 'DELETE'],
+    ], 
+
+
+    402 => [ 
+        ['uri' => 'api/hospital/transaction/deposit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/deposit/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/deposit/details', 'method' => 'GET'],
+        ['uri' => 'hospital/transaction/deposit', 'method' => 'GET'],
+        ['uri' => 'hospital/transaction/deposit/search', 'method' => 'GET'],
+    ],
+    403 => [
+        ['uri' => 'api/hospital/transaction/deposit', 'method' => 'POST'],
+    ],
+    404 => [
+        ['uri' => 'api/hospital/transaction/deposit/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/deposit', 'method' => 'PUT'],
+    ],
+    405 => [
+        ['uri' => 'api/hospital/transaction/deposit', 'method' => 'DELETE'],
+    ], 
+
+
+    406 => [ 
+        ['uri' => 'api/hospital/transaction/depositrefund', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/depositrefund/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/depositrefund/details', 'method' => 'GET'],
+        ['uri' => 'hospital/transaction/depositrefund', 'method' => 'GET'],
+        ['uri' => 'hospital/transaction/depositrefund/search', 'method' => 'GET'],
+    ],
+    407 => [
+        ['uri' => 'api/hospital/transaction/depositrefund', 'method' => 'POST'],
+    ],
+    408 => [
+        ['uri' => 'api/hospital/transaction/depositrefund/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/depositrefund', 'method' => 'PUT'],
+    ],
+    409 => [
+        ['uri' => 'api/hospital/transaction/depositrefund', 'method' => 'DELETE'],
+    ], 
+
+
+    410 => [ 
+        ['uri' => 'api/hospital/transaction/services', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/services/search', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/services/details', 'method' => 'GET'],
+        ['uri' => 'hospital/transaction/services', 'method' => 'GET'],
+        ['uri' => 'hospital/transaction/services/search', 'method' => 'GET'],
+    ],
+    411 => [
+        ['uri' => 'api/hospital/transaction/services', 'method' => 'POST'],
+    ],
+    412 => [
+        ['uri' => 'api/hospital/transaction/services/edit', 'method' => 'GET'],
+        ['uri' => 'api/hospital/transaction/services', 'method' => 'PUT'],
+    ],
+    413 => [
+        ['uri' => 'api/hospital/transaction/services', 'method' => 'DELETE'],
+    ], 
+
+
+   
+
 
 
 

@@ -484,20 +484,201 @@
 
 
     
-    { "permission_mainhead":"7", "name":"Show Account Statement Summary Report" },
+    { "permission_mainhead":"12", "name":"Show Account Statement Summary Report" },
     
-    { "permission_mainhead":"7", "name":"Show Account Statement By Groupe Report" },
+    { "permission_mainhead":"12", "name":"Show Account Statement By Groupe Report" },
     
-    { "permission_mainhead":"7", "name":"Show Account Statement Details Report" },
+    { "permission_mainhead":"12", "name":"Show Account Statement Details Report" },
     
-    { "permission_mainhead":"7", "name":"Show Party Statement Summary Report" },
+    { "permission_mainhead":"12", "name":"Show Party Statement Summary Report" },
     
-    { "permission_mainhead":"7", "name":"Show Party Statement Details Report" },
+    { "permission_mainhead":"12", "name":"Show Party Statement Details Report" },
     
 
 
     
     { "permission_mainhead":"1", "name":"Add Locations" },
     { "permission_mainhead":"1", "name":"Edit Locations" },
-    { "permission_mainhead":"1", "name":"Delete Locations" }
+    { "permission_mainhead":"1", "name":"Delete Locations" },
+    
+    { "permission_mainhead":"1", "name":"Add Banks" },
+    { "permission_mainhead":"1", "name":"Edit Banks" },
+    { "permission_mainhead":"1", "name":"Delete Banks" },
+
+    { "permission_mainhead":"1", "name":"Show Payment Methods" },
+    { "permission_mainhead":"1", "name":"Add Payment Methods" },
+    { "permission_mainhead":"1", "name":"Edit Payment Methods" },
+    { "permission_mainhead":"1", "name":"Delete Payment Methods" },
+
+    { "permission_mainhead":"1", "name":"Show Corporate" },
+    { "permission_mainhead":"1", "name":"Add Corporate" },
+    { "permission_mainhead":"1", "name":"Edit Corporate" },
+    { "permission_mainhead":"1", "name":"Delete Corporate" },
+
+
+
+
+
+
+
+
+
+    { "permission_mainhead":"8", "name":"Show Floors" },
+    { "permission_mainhead":"8", "name":"Add Floors" },
+    { "permission_mainhead":"8", "name":"Edit Floors" },
+    { "permission_mainhead":"8", "name":"Delete Floors" },
+    
+    { "permission_mainhead":"8", "name":"Show Room Catagory" },
+    { "permission_mainhead":"8", "name":"Add Room Catagory" },
+    { "permission_mainhead":"8", "name":"Edit Room Catagory" },
+    { "permission_mainhead":"8", "name":"Delete Room Catagory" },
+
+    { "permission_mainhead":"8", "name":"Show Room List" },
+    { "permission_mainhead":"8", "name":"Add Room List" },
+    { "permission_mainhead":"8", "name":"Edit Room List" },
+    { "permission_mainhead":"8", "name":"Delete Room List" },
+
+    { "permission_mainhead":"8", "name":"Show Groupe" },
+    { "permission_mainhead":"8", "name":"Add Groupe" },
+    { "permission_mainhead":"8", "name":"Edit Groupe" },
+    { "permission_mainhead":"8", "name":"Delete Groupe" },
+
+    { "permission_mainhead":"8", "name":"Show Service" },
+    { "permission_mainhead":"8", "name":"Add Service" },
+    { "permission_mainhead":"8", "name":"Edit Service" },
+    { "permission_mainhead":"8", "name":"Delete Service" },
+
+    { "permission_mainhead":"8", "name":"Show Hotel Booking" },
+    { "permission_mainhead":"8", "name":"Add Hotel Booking" },
+    { "permission_mainhead":"8", "name":"Edit Hotel Booking" },
+    { "permission_mainhead":"8", "name":"Delete Hotel Booking" },
+
+    { "permission_mainhead":"8", "name":"Show Room Transfer" },
+    { "permission_mainhead":"8", "name":"Add Room Transfer" },
+    { "permission_mainhead":"8", "name":"Edit Room Transfer" },
+    { "permission_mainhead":"8", "name":"Delete Room Transfer" },
+
+    { "permission_mainhead":"8", "name":"Show Room Status" },
+    { "permission_mainhead":"8", "name":"Add Room Status" },
+    { "permission_mainhead":"8", "name":"Edit Room Status" },
+    { "permission_mainhead":"8", "name":"Delete Room Status" },
+
+    { "permission_mainhead":"8", "name":"Show Guest List" },
+    { "permission_mainhead":"8", "name":"Add Guest List" },
+    { "permission_mainhead":"8", "name":"Edit Guest List" },
+    { "permission_mainhead":"8", "name":"Delete Guest List" },
+
+    { "permission_mainhead":"8", "name":"Show Service" },
+    { "permission_mainhead":"8", "name":"Add Service" },
+    { "permission_mainhead":"8", "name":"Edit Service" },
+    { "permission_mainhead":"8", "name":"Delete Service" },
+
+    { "permission_mainhead":"8", "name":"Show Deposits" },
+    { "permission_mainhead":"8", "name":"Add Deposits" },
+    { "permission_mainhead":"8", "name":"Edit Deposits" },
+    { "permission_mainhead":"8", "name":"Delete Deposits" },
+
+    { "permission_mainhead":"8", "name":"Show Refunds" },
+    { "permission_mainhead":"8", "name":"Add Refunds" },
+    { "permission_mainhead":"8", "name":"Edit Refunds" },
+    { "permission_mainhead":"8", "name":"Delete Refunds" },
+
+    { "permission_mainhead":"8", "name":"Show Bill Settlement" },
+    { "permission_mainhead":"8", "name":"Add Bill Settlement" },
+    { "permission_mainhead":"8", "name":"Edit Bill Settlement" },
+
+
+
+
+
+
+  
+    { "permission_mainhead":"7", "name":"Show Specialization" },
+    { "permission_mainhead":"7", "name":"Add Specialization" },
+    { "permission_mainhead":"7", "name":"Edit Specialization" },
+    { "permission_mainhead":"7", "name":"Delete Specialization" },
+  
+    { "permission_mainhead":"7", "name":"Show Floors" },
+    { "permission_mainhead":"7", "name":"Add Floors" },
+    { "permission_mainhead":"7", "name":"Edit Floors" },
+    { "permission_mainhead":"7", "name":"Delete Floors" },
+  
+    { "permission_mainhead":"7", "name":"Show Nursing Station" },
+    { "permission_mainhead":"7", "name":"Add Nursing Station" },
+    { "permission_mainhead":"7", "name":"Edit Nursing Station" },
+    { "permission_mainhead":"7", "name":"Delete Nursing Station" },
+  
+    { "permission_mainhead":"7", "name":"Show Bed Category" },
+    { "permission_mainhead":"7", "name":"Add Bed Category" },
+    { "permission_mainhead":"7", "name":"Edit Bed Category" },
+    { "permission_mainhead":"7", "name":"Delete Bed Category" },
+  
+    { "permission_mainhead":"7", "name":"Show Bed List" },
+    { "permission_mainhead":"7", "name":"Add Bed List" },
+    { "permission_mainhead":"7", "name":"Edit Bed List" },
+    { "permission_mainhead":"7", "name":"Delete Bed List" },
+  
+    { "permission_mainhead":"7", "name":"Show Hospital Groupe" },
+    { "permission_mainhead":"7", "name":"Add Hospital Groupe" },
+    { "permission_mainhead":"7", "name":"Edit Hospital Groupe" },
+    { "permission_mainhead":"7", "name":"Delete Hospital Groupe" },
+  
+    { "permission_mainhead":"7", "name":"Show Hospital Services" },
+    { "permission_mainhead":"7", "name":"Add Hospital Services" },
+    { "permission_mainhead":"7", "name":"Edit Hospital Services" },
+    { "permission_mainhead":"7", "name":"Delete Hospital Services" },
+  
+    { "permission_mainhead":"7", "name":"Show APPOINMENT" },
+    { "permission_mainhead":"7", "name":"Add APPOINMENT" },
+    { "permission_mainhead":"7", "name":"Edit APPOINMENT" },
+    { "permission_mainhead":"7", "name":"Delete APPOINMENT" },
+  
+    { "permission_mainhead":"7", "name":"Show PATIENTS REGISTRATION" },
+    { "permission_mainhead":"7", "name":"Add PATIENTS REGISTRATION" },
+    { "permission_mainhead":"7", "name":"Edit PATIENTS REGISTRATION" },
+    { "permission_mainhead":"7", "name":"Delete PATIENTS REGISTRATION" },
+  
+    { "permission_mainhead":"7", "name":"Show Bed Transfer" },
+    { "permission_mainhead":"7", "name":"Add Bed Transfer" },
+    { "permission_mainhead":"7", "name":"Edit Bed Transfer" },
+    { "permission_mainhead":"7", "name":"Delete Bed Transfer" },
+  
+    { "permission_mainhead":"7", "name":"Show Bed Status" },
+    { "permission_mainhead":"7", "name":"Add Bed Status" },
+    { "permission_mainhead":"7", "name":"Edit Bed Status" },
+    { "permission_mainhead":"7", "name":"Delete Bed Status" },
+  
+    { "permission_mainhead":"7", "name":"Show Doctors" },
+    { "permission_mainhead":"7", "name":"Add Doctors" },
+    { "permission_mainhead":"7", "name":"Edit Doctors" },
+    { "permission_mainhead":"7", "name":"Delete Doctors" },
+  
+    { "permission_mainhead":"7", "name":"Show Patients" },
+    { "permission_mainhead":"7", "name":"Add Patients" },
+    { "permission_mainhead":"7", "name":"Edit Patients" },
+    { "permission_mainhead":"7", "name":"Delete Patients" },
+  
+    { "permission_mainhead":"7", "name":"Show Admission Fee" },
+    { "permission_mainhead":"7", "name":"Add Admission Fee" },
+    { "permission_mainhead":"7", "name":"Edit Admission Fee" },
+    { "permission_mainhead":"7", "name":"Delete Admission Fee" },
+  
+    { "permission_mainhead":"7", "name":"Show Deposit" },
+    { "permission_mainhead":"7", "name":"Add Deposit" },
+    { "permission_mainhead":"7", "name":"Edit Deposit" },
+    { "permission_mainhead":"7", "name":"Delete Deposit" },
+  
+    { "permission_mainhead":"7", "name":"Show Deposit Refunds" },
+    { "permission_mainhead":"7", "name":"Add Deposit Refunds" },
+    { "permission_mainhead":"7", "name":"Edit Deposit Refunds" },
+    { "permission_mainhead":"7", "name":"Delete Deposit Refunds" },
+  
+    { "permission_mainhead":"7", "name":"Show Services Transection" },
+    { "permission_mainhead":"7", "name":"Add Service Transection" },
+    { "permission_mainhead":"7", "name":"Edit Service Transection" },
+    { "permission_mainhead":"7", "name":"Delete Service Transection" }
+
+    
+
+
 ]
