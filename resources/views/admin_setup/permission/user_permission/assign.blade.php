@@ -1,5 +1,5 @@
 <div id="editModal" class="modal-container">
-    <div class="modal-subject" style="width: 80%;">
+    <div class="modal-subject" style="width: 100%;margin:0;padding:0;">
         <div class="modal-heading banner">
             <div class="center">
                 <h3>Assign User Permission</h3>

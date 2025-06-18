@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Cache;
 
 use App\Models\Role;
 use App\Models\Login_User;
+use App\Models\Company_Details;
 use App\Models\Permission_User;
 use App\Models\Permission_Head;
 
@@ -36,19 +37,228 @@ class UserPermissionController extends Controller
     public function Edit(Request $req){
         $user = Login_User::on('mysql')->whereNotIn('user_role', ['1','4','5'])->where('user_id',$req->id)->first();
         $userpermission = Permission_User::on('mysql')->where('user_id', $req->id)->pluck('permission_id')->toArray();
-        $permissions = Permission_Head::on('mysql')->with('mainhead')
+        $companyPermission = Company_Details::on('mysql')->with('permissions')->where('company_id', $user->company_id)->first()->permissions->pluck('id')->toArray();
+        
+        $permissions = Permission_Head::on('mysql')
+        ->with('mainhead')
+        ->whereIn('id', $companyPermission)
         ->orderBy('permission_mainhead')
         ->get()
         ->groupBy('permission_mainhead');
-        // ->groupBy(function ($item) {
-        //     return $item->mainhead->name;
+
+
+        $groupedPermissions = [];
+
+        foreach ($permissions as $mainheadId => $group) {
+            foreach ($group as $permission) {
+                // dd($permission->name);
+                $name = $permission->name;
+                $groupKey = 'Other';
+
+                // Custom grouping logic
+                if (str_contains($name, ' Admin')) $groupKey = 'Admin';
+                elseif (str_contains($name, 'Clients')) $groupKey = 'Clients';
+                elseif (str_contains($name, 'Suppliers')) $groupKey = 'Suppliers';
+                elseif (str_contains($name, 'Roles')) $groupKey = 'Roles';
+                elseif (str_contains($name, 'Permissions')) $groupKey = 'Permissions';
+                elseif (str_contains($name, 'Banks')) $groupKey = 'Banks';
+                elseif (str_contains($name, 'Locations')) $groupKey = 'Locations';
+                elseif (str_contains($name, 'Stores')) $groupKey = 'Stores';
+
+                elseif (str_contains($name, 'Transaction Receive')) $groupKey = 'Transaction-Receive';
+                elseif (str_contains($name, 'Transaction Payment')) $groupKey = 'Transaction-Payment';
+
+                elseif (str_contains($name, 'Withdraws')) $groupKey = 'Bank-Withdraws';
+                elseif (str_contains($name, 'Deposits')) $groupKey = 'Bank-Deposits';
+
+                elseif (str_contains($name, 'All Employee')) $groupKey = 'All-Employee';
+                elseif (str_contains($name, 'Personal')) $groupKey = 'Employee-Personal-Details';
+                elseif (str_contains($name, 'Education')) $groupKey = 'Employee-Education-Details';
+                elseif (str_contains($name, 'Trainning')) $groupKey = 'Employee-Trainning-Details';
+                elseif (str_contains($name, 'Experience')) $groupKey = 'Employee-Experience-Details';
+                elseif (str_contains($name, 'Organization')) $groupKey = 'Employee-Organization-Details';
+                elseif (str_contains($name, 'Attandence')) $groupKey = 'Attendance';
+                elseif (str_contains($name, 'Payroll Setup')) $groupKey = 'Payroll-Setup';
+                elseif (str_contains($name, 'Middleware')) $groupKey = 'Payroll-Middleware';
+                elseif (str_contains($name, 'Process')) $groupKey = 'Payroll-Process';
+                elseif (str_contains($name, 'Department')) $groupKey = 'Department';
+                elseif (str_contains($name, 'Designation')) $groupKey = 'Designation';
+                elseif (str_contains($name, 'Salary') && str_contains($name, 'Report')) $groupKey = 'Salary-Report';
+
+                elseif (str_contains($name, 'Manufacturer')) $groupKey = 'Manufacturer';
+                elseif (str_contains($name, 'Category')) $groupKey = 'Category';
+                elseif (str_contains($name, 'Unit')) $groupKey = 'Unit';
+                elseif (str_contains($name, 'Form')) $groupKey = 'Form';
+                elseif (str_contains($name, 'Product')) $groupKey = 'Product';
+                elseif (str_contains($name, 'Purchase') && str_contains($name, 'Transaction')) $groupKey = 'Purchase-Transaction';
+                elseif (str_contains($name, 'Issue') && str_contains($name, 'Transaction')) $groupKey = 'Issue-Transaction';
+                elseif (str_contains($name, 'Client Return') && str_contains($name, 'Transaction')) $groupKey = 'Client-Return-Transaction';
+                elseif (str_contains($name, 'Supplier Return') && str_contains($name, 'Transaction')) $groupKey = 'Supplier-Return-Transaction';
+                elseif (str_contains($name, 'Positive')) $groupKey = 'Positive';
+                elseif (str_contains($name, 'Negative')) $groupKey = 'Negative';
+
+                elseif (str_contains($name, 'From Client')) $groupKey = 'From-Client';
+                elseif (str_contains($name, 'To Supplier')) $groupKey = 'To-Supplier';
+
+                elseif (str_contains($name, 'Balance Sheet')) $groupKey = 'Balance-Sheet';
+                elseif (str_contains($name, 'Account Statement')) $groupKey = 'Account-Statement';
+                elseif (str_contains($name, 'Party Statement')) $groupKey = 'Party-Statement';
+
+                $groupedPermissions[$permission->mainhead->name ?? 'Uncategorized'][$groupKey][] = [
+                    'id' => $permission->id,
+                    'name' => $permission->name,
+                    'checked' => in_array($permission->id, $userpermission),
+                    'permission_mainhead' => $permission->permission_mainhead,
+                ];
+            }
+        }
+
+        // $('#id').val(res.user.id)
+        // $('#userid').text(`User Name: ${res.user.user_name} (${res.user.user_id})`);
+        // $('#user').val(res.user.user_id);
+
+        // $('#permission-container').html('');
+        // $.each(res.permissions, function (mainhead, permissions) {
+        //     let counter = 0;
+        //     // Append the main head with 'Select All' option
+            
+
+        //     let groupedPermissions = {
+        //         //Admin
+        //         'Admin': '', 'Clients': '', 'Suppliers': '', 'Roles': '', 'Permissions': '', 'Banks': '', 
+        //         'Locations': '', 'Stores': '', 'Tran-With': '', 'Tran-Groupe': '', 'Tran-Head': '',
+        //         // General
+        //         'Transaction-Receive': '', 'Transaction-Payment': '', 
+        //         // Bank
+        //         'Bank-Withdraws': '', 'Bank-Deposits': '',
+        //         // HR
+        //         'All-Employee': '', 'Employee-Personal-Details': '', 'Employee-Education-Details': '', 
+        //         'Employee-Trainning-Details': '', 'Employee-Experience-Details': '', 'Employee-Organization-Details': '', 
+        //         'Attendance': '',  'Payroll-Setup': '', 'Payroll-Middleware': '', 'Payroll-Process': '', 
+        //         'Department': '', 'Designation': '', 'Salary-Report': '',
+        //         // Pharmacy and Inventory
+        //         'Manufacturer': '', 'Category': '', 'Unit': '', 'Form': '', 'Product': '', 'Purchase-Transaction': '', 
+        //         'Issue-Transaction': '', 'Client-Return-Transaction': '', 'Supplier-Return-Transaction': '', 'Positive': '', 'Negative': '',
+        //         // Party
+        //         'From-Client': '', 'To-Supplier': '',
+        //         // Report
+        //         'Balance-Sheet': '', 'Account-Statement': '', 'Party-Statement': '',
+        //         // Other
+        //         'Other': ''
+        //     };
+            
+        //     $.each(permissions, function(index, item) {
+        //         if(counter === 0){
+        //             $('#permission-container').append(`
+        //                 <div class="rows">
+        //                     <div class="c-8">
+        //                         <h3>${item.mainhead.name}:</h3>
+        //                     </div>
+        //                     <div class="c-4" style="display:flex; aling-items:center; justify-content: flex-end;">
+        //                         <label>
+        //                             <input type="checkbox" id="select-all-${item.permission_mainhead}" class="select-all"> Select All
+        //                         </label>
+        //                     </div>
+        //                 </div>
+        //             `);
+        //             counter++;
+        //         }
+
+
+        //         let groupKey = 'Other';
+        //         let name = item.name;
+
+        //         if (name.includes(' Admin')) groupKey = 'Admin';
+        //         else if (name.includes('Clients')) groupKey = 'Clients';
+        //         else if (name.includes('Suppliers')) groupKey = 'Suppliers';
+        //         else if (name.includes('Roles')) groupKey = 'Roles';
+        //         else if (name.includes('Permissions')) groupKey = 'Permissions';
+        //         else if (name.includes('Banks')) groupKey = 'Banks';
+        //         else if (name.includes('Locations')) groupKey = 'Locations';
+        //         else if (name.includes('Stores')) groupKey = 'Stores';
+        //         else if (name.includes('TranWith')) groupKey = 'Tran-With';
+        //         else if (name.includes('Tran Groupe')) groupKey = 'Tran-Groupe';
+        //         else if (name.includes('Tran Head')) groupKey = 'Tran-Head';
+
+        //         else if (name.includes('Transaction Receive')) groupKey = 'Transaction-Receive';
+        //         else if (name.includes('Transaction Payment')) groupKey = 'Transaction-Payment';
+                
+        //         else if (name.includes('Withdraws')) groupKey = 'Bank-Withdraws';
+        //         else if (name.includes('Deposits')) groupKey = 'Bank-Deposits';
+
+        //         else if (name.includes('All Employee')) groupKey = 'All-Employee';
+        //         else if (name.includes('Personal')) groupKey = 'Employee-Personal-Details';
+        //         else if (name.includes('Education')) groupKey = 'Employee-Education-Details';
+        //         else if (name.includes('Trainning')) groupKey = 'Employee-Trainning-Details';
+        //         else if (name.includes('Experience')) groupKey = 'Employee-Experience-Details';
+        //         else if (name.includes('Organization')) groupKey = 'Employee-Organization-Details';
+        //         else if (name.includes('Attandence')) groupKey = 'Attendance';
+        //         else if (name.includes('Payroll Setup')) groupKey = 'Payroll-Setup';
+        //         else if (name.includes('Middleware')) groupKey = 'Payroll-Middleware';
+        //         else if (name.includes('Process')) groupKey = 'Payroll-Process';
+        //         else if (name.includes('Department')) groupKey = 'Department';
+        //         else if (name.includes('Designation')) groupKey = 'Designation';
+        //         else if (name.includes('Salary') && name.includes('Report')) groupKey = 'Salary-Report';
+                
+        //         else if (name.includes('Manufacturer')) groupKey = 'Manufacturer';
+        //         else if (name.includes('Category')) groupKey = 'Category';
+        //         else if (name.includes('Unit')) groupKey = 'Unit';
+        //         else if (name.includes('Form')) groupKey = 'Form';
+        //         else if (name.includes('Product')) groupKey = 'Product';
+        //         else if (name.includes('Purchase') && name.includes('Transaction')) groupKey = 'Purchase-Transaction';
+        //         else if (name.includes('Issue') && name.includes('Transaction')) groupKey = 'Issue-Transaction';
+        //         else if (name.includes('Client Return') && name.includes('Transaction')) groupKey = 'Client-Return-Transaction';
+        //         else if (name.includes('Supplier Return') && name.includes('Transaction')) groupKey = 'Supplier-Return-Transaction';
+        //         else if (name.includes('Positive')) groupKey = 'Positive';
+        //         else if (name.includes('Negative')) groupKey = 'Negative';
+        //         // else if (name.includes('From Client')) groupKey = 'From-Client';
+
+
+        //         else if (name.includes('From Client')) groupKey = 'From-Client';
+        //         else if (name.includes('To Supplier')) groupKey = 'To-Supplier';
+
+        //         else if (name.includes('Balance Sheet')) groupKey = 'Balance-Sheet';
+        //         else if (name.includes('Account Statement')) groupKey = 'Account-Statement';
+        //         else if (name.includes('Party Statement')) groupKey = 'Party-Statement';
+
+        //         // Append the permission to the appropriate group
+        //         groupedPermissions[groupKey] += `
+        //                 <div class="c-3">
+        //                     <label for="permissions-${item.id}" style="font-weight: normal;">
+        //                         <input type="checkbox" id="permissions-${item.id}" class="permission permission-${item.permission_mainhead}" name="permissions[]" value="${item.id}" ${res.userpermission.includes(item.id) ? 'checked' : ''} />
+        //                         ${item.name}
+        //                     </label>
+        //                 </div>
+        //             `;
+        //     });
+        //     $('#permission-container').append(`<hr>`);
+        //     $.each(groupedPermissions, function (groupKey, permissionsHtml) {
+        //         if (permissionsHtml) { // Append only non-empty groups
+        //             $('#permission-container').append(`
+        //                 <div id="group-${groupKey}">
+        //                     <span class="sub-name" style="padding: 4px 6px; font-weight: 600;">${groupKey}</span>
+        //                     <div class="rows">${permissionsHtml}</div>
+        //                 </div>
+        //             `);
+        //         }
+        //     });
+        //     $('#permission-container').append(`<hr>`);
         // });
+
+
+
+
+
+
+
+
         
         return response()->json([
             'status'=> true,
             'permissions'=>$permissions,
             'userpermission'=>$userpermission,
-            'user'=>$user
+            'user'=>$user,
+            'groupedPermissions'=>$groupedPermissions
         ], 200);
     } // End Method
 

@@ -244,14 +244,12 @@ class GenerateTable {
                         return `<td><strong>${status ? status.name : 'Available'}</strong></td>`;
                     
                     case 'multi-data':
-                        console.log(value);
                         let permissionNames = '';
             
                         value.map((item, i) => { 
                             permissionNames += item.name+',' ;
                         });
-                        return `<td>${permissionNames}</td>`;
-                        // return `<td><strong>${status ? status.name : 'Available'}</strong></td>`;
+                        return `<td class="truncate-text">${permissionNames}</td>`;
 
                     default:
                         return `<td>${value ?? ''}</td>`;
