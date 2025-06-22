@@ -19,7 +19,7 @@ class PersonalDetailsController extends Controller
 {
     // Show All Employee Personal Details
     public function Show(Request $req){
-        $data = User_Info::on('mysql_second')->with('Withs','Location')->where('user_role', 3)->orderBy('added_at','asc')->get();
+        $data = User_Info::on('mysql_second')->with('Withs','Location','personalDetail')->where('user_role', 3)->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -109,7 +109,7 @@ class PersonalDetailsController extends Controller
                 "image" => $imageName,
             ]);
 
-            $data = User_Info::on('mysql_second')->where('user_role', 3)->with('Withs','Location')->findOrFail($insert->id);
+            $data = User_Info::on('mysql_second')->where('user_role', 3)->with('Withs','Location','personalDetail')->findOrFail($insert->id);
         });
 
         
@@ -124,7 +124,8 @@ class PersonalDetailsController extends Controller
 
     // Update Employee Personal Details
     public function Update(Request $req){
-        $data = User_Info::on('mysql_second')->where('user_role', 3)->where('user_id', $req->employee_id)->first();
+        $data = User_Info::on('mysql_second')->with('Withs','Location','personalDetail')->where('user_role', 3)->findOrFail($req->id);
+        // $data = User_Info::on('mysql_second')->where('user_role', 3)->where('user_id', $req->employee_id)->first();
         
         $req->validate([
             'name' => 'required',
@@ -143,7 +144,7 @@ class PersonalDetailsController extends Controller
             // Calling UserHelper Functions
             $imageName = UpdateUserImage($req, $data->image, $login_user->company_id, $data->user_id);
 
-            Login_User::on('mysql')->where('user_id', $req->employee_id)->update([
+            Login_User::on('mysql')->findOrFail($login_user->id)->update([
                 "user_name" => $req->name,
                 "user_phone" => $req->phn_no,
                 "user_email" => $req->email,
@@ -152,7 +153,7 @@ class PersonalDetailsController extends Controller
             ]);
 
             
-            User_Info::on('mysql_second')->where('user_id', $req->employee_id)->update([
+            User_Info::on('mysql_second')->findOrFail($req->id)->update([
                 "user_name" => $req->name,
                 "user_email" => $req->email,
                 "user_phone" => $req->phn_no,
@@ -166,7 +167,7 @@ class PersonalDetailsController extends Controller
                 "updated_at" => now()
             ]);
 
-            Employee_Personal_Detail::on('mysql_second')->findOrFail($req->id)->update([
+            Employee_Personal_Detail::on('mysql_second')->findOrFail($data->personalDetail->id)->update([
                 'name' => $req->name,
                 "fathers_name" => $req->fathers_name,
                 "mothers_name" => $req->mothers_name,
@@ -185,14 +186,14 @@ class PersonalDetailsController extends Controller
                 "image" => $imageName,
                 "updated_at" => now()
             ]);
-        
-            
         });
+
+        $updatedData = User_Info::on('mysql_second')->with('Withs','Location','personalDetail')->where('user_role', 3)->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,
             'message' => 'Employee Personal Details Updated Successfully',
-            // "updatedData" => $updatedData,
+            "updatedData" => $updatedData,
         ], 200);
     } // End Method
 

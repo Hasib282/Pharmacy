@@ -154,7 +154,9 @@ function InsertAjax(link, AddData = {}, AddSuccessEvent, method ="POST") {
 
                     // ReloadData(link, RenderData);
                     
-                    tableInstance.addRow(res.data);
+                    if(res.data){
+                        tableInstance.addRow(res.data);
+                    }
 
                     toastr.success(res.message, 'Added!');
                 }

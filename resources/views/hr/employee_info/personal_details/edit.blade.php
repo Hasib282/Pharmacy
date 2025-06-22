@@ -17,11 +17,11 @@
                 <input type="hidden" name="id" id="id">
                 {{-- employee id  --}}
                 <input type="hidden" name="employee_id" id="employee_id">
-                {{-- employee type --}}
-                <div class="c-6">
-                    <div class="form-input-group">
-                        <label for="update_type">Employee Type <span class="required" title="Required">*</span></label>
-                        <select name="type" id="update_type">
+                {{-- type --}}
+                <div class="c-6">  
+                    <div class="form-input-group">   
+                        <label for="updateType">Employee Type <span class="required" title="Required">*</span></label>
+                        <select name="type" id="updateType">
                             
                         </select>
                         <span class="error" id="update_type_error"></span>
@@ -30,8 +30,8 @@
                 {{-- name --}}
                 <div class="c-6">
                     <div class="form-input-group">
-                        <label for="update_name">Name <span class="required" title="Required">*</span></label>
-                        <input type="text" name="name" id="update_name" class="form-input">
+                        <label for="updateName">Name <span class="required" title="Required">*</span></label>
+                        <input type="text" name="name" id="updateName" class="form-input">
                         <span class="error" id="update_name_error"></span>
                     </div>
                 </div>
@@ -64,7 +64,9 @@
                     <div class="form-input-group">
                         <label for="update_gender">Gender <span class="required" title="Required">*</span></label>
                         <select name="gender" id="update_gender">
-
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
                         </select>
                         <span class="error" id="update_gender_error"></span>
                     </div>
@@ -74,7 +76,11 @@
                     <div class="form-input-group">
                         <label for="update_religion">Religion <span class="required" title="Required">*</span></label>
                         <select name="religion" id="update_religion">
-
+                            <option value="Islam">Islam</option>
+                            <option value="Hinduism">Hinduism</option>
+                            <option value="Christianity">Christianity</option>
+                            <option value="Buddhism">Buddhism</option>
+                            <option value="Judaism ">Judaism</option>
                         </select>
                         <span class="error" id="update_religion_error"></span>
                     </div>
@@ -84,7 +90,8 @@
                     <div class="form-input-group">
                         <label for="update_marital_status">Marital Status <span class="required" title="Required">*</span></label>
                         <select name="marital_status" id="update_marital_status">
-
+                            <option value="Unmarried">Unmarried</option>
+                            <option value="Married">Married</option>
                         </select>
                         <span class="error" id="update_marital_status_error"></span>
                     </div>
@@ -126,7 +133,15 @@
                     <div class="form-input-group">
                         <label for="updateDivision">Division <span class="required" title="Required">*</span></label>
                         <select name="division" id="updateDivision">
-        
+                            <option value="">Select Division</option>
+                            <option value="Dhaka">Dhaka</option>
+                            <option value="Chittagong">Chittagong</option>
+                            <option value="Rajshahi">Rajshahi</option>
+                            <option value="Khulna">Khulna</option>
+                            <option value="Sylhet">Sylhet</option>
+                            <option value="Barishal">Barishal</option>
+                            <option value="Rangpur">Rangpur</option>
+                            <option value="Mymensingh">Mymensingh</option>
                         </select>
                         <span class="error" id="update_division_error"></span>
                     </div>
@@ -153,7 +168,15 @@
                     <div class="form-input-group">
                         <label for="update_blood_group">Blood Group</label>
                         <select name="blood_group" id="update_blood_group">
-
+                            <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
                         </select>
                         <span class="error" id="update_blood_group_error"></span>
                     </div>

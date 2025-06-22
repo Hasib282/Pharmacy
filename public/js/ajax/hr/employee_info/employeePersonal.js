@@ -54,9 +54,9 @@ function ShowEmployeePersonalDetails(res) {
         tbody: ['user_id','user_name','withs.tran_with_name',{key:'dob', type: 'date'},'gender','user_email', 'user_phone','address',{key:'image', type: 'image'},{key:'status', type: 'status'}],
         actions: (row) => `
                 <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
-                            
-                <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${row.user_id}"><i class="fas fa-edit"></i></button>
-                            
+                
+                <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                
                 <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
     });
@@ -117,68 +117,32 @@ $(document).ready(function () {
     // Additional Edit Functionality
     function EditFormInputValue(item){
         $('#id').val(item.id);
-        $('#employee_id').val(item.employee_id);
-        $('#update_name').val(item.name);
-        $('#update_name').focus();
-        $('#update_fathers_name').val(item.fathers_name);
-        $('#update_mothers_name').val(item.mothers_name);
-        $('#update_dob').val(item.dob);
+        $('#employee_id').val(item.user_id);
+        $('#updateType').focus();
+        $('#updateType').val(item.personal_detail.tran_user_type);
+        $('#updateName').val(item.personal_detail.name);
+        $('#update_fathers_name').val(item.personal_detail.fathers_name);
+        $('#update_mothers_name').val(item.personal_detail.mothers_name);
+        $('#update_dob').val(item.personal_detail.dob);
 
         // Create options dynamically
-        $('#update_gender').empty();
-        $('#update_gender').append(`<option value="Male" ${item.gender === 'Male' ? 'selected' : ''}>Male</option>
-                                    <option value="Female" ${item.gender === 'Female' ? 'selected' : ''}>Female</option>
-                                    <option value="Others" ${item.gender === 'Others' ? 'selected' : ''}>Others</option>`);
-
-        $('#update_religion').empty();
-        $('#update_religion').append(`<option value="Islam" ${item.religion === 'Islam' ? 'selected' : ''}>Islam</option>
-                                    <option value="Hinduism" ${item.religion === 'Hinduism' ? 'selected' : ''}>Hinduism</option>
-                                    <option value="Christianity" ${item.religion === 'Christianity' ? 'selected' : ''}>Christianity</option>
-                                    <option value="Buddhism" ${item.religion === 'Buddhism' ? 'selected' : ''}>Buddhism</option>
-                                    <option value="Judaism" ${item.religion === 'Judaism' ? 'selected' : ''}>Judaism</option>`);
-
-        $('#update_marital_status').empty();
-        $('#update_marital_status').append(`<option value="Married" ${item.marital_status === 'Married' ? 'selected' : ''}>Married</option>
-                                            <option value="Unmarried" ${item.marital_status === 'Unmarried' ? 'selected' : ''}>Unmarried</option>`);
-
-        $('#update_nationality').val(item.nationality);
-        $('#update_nid_no').val(item.nid_no);
-        $('#update_phn_no').val(item.phn_no);
-        $('#update_blood_group').empty();
-        $('#update_blood_group').append(`<option value="A+" ${item.blood_group === 'A+' ? 'selected' : ''}>A+</option>
-                                    <option value="A-" ${item.blood_group === 'A-' ? 'selected' : ''}>A-</option>
-                                    <option value="B+" ${item.blood_group === 'B+' ? 'selected' : ''}>B+</option>
-                                    <option value="B-" ${item.blood_group === 'B-' ? 'selected' : ''}>B-</option>
-                                    <option value="O+" ${item.blood_group === 'O+' ? 'selected' : ''}>O+</option>
-                                    <option value="O-" ${item.blood_group === 'O-' ? 'selected' : ''}>O-</option>
-                                    <option value="AB+" ${item.blood_group === 'AB+' ? 'selected' : ''}>AB+</option>
-                                    <option value="AB-" ${item.blood_group === 'AB-' ? 'selected' : ''}>AB-</option>`);
-
-        $('#update_email').val(item.email);
+        $('#update_gender').val(item.personal_detail.gender);
+        $('#update_religion').val(item.personal_detail.religion);
+        $('#update_marital_status').val(item.personal_detail.marital_status);
+        $('#update_nationality').val(item.personal_detail.nationality);
+        $('#update_nid_no').val(item.personal_detail.nid_no);
+        $('#update_phn_no').val(item.personal_detail.phn_no);
+        $('#update_blood_group').val(item.personal_detail.blood_group);
+        $('#update_email').val(item.personal_detail.email);
 
         // Create options dynamically
-        $('#updateDivision').empty();
-        $('#updateDivision').append(`<option value="Dhaka" ${item.location.division === 'Dhaka' ? 'selected' : ''}>Dhaka</option>
-            <option value="Chittagong" ${item.location.division === 'Chittagong' ? 'selected' : ''}>Chittagong</option>
-            <option value="Rajshahi" ${item.location.division === 'Rajshahi' ? 'selected' : ''}>Rajshahi</option>
-            <option value="Khulna" ${item.location.division === 'Khulna' ? 'selected' : ''}>Khulna</option>
-            <option value="Sylhet" ${item.location.division === 'Sylhet' ? 'selected' : ''}>Sylhet</option>
-            <option value="Barisal" ${item.location.division === 'Barisal' ? 'selected' : ''}>Barisal</option>
-            <option value="Rangpur" ${item.location.division === 'Rangpur' ? 'selected' : ''}>Rangpur</option>
-            <option value="Mymensingh" ${item.location.division === 'Mymensingh' ? 'selected' : ''}>Mymensingh</option>`);
-
+        $('#updateDivision').val(item.location.division);
+        
         $('#updateLocation').val(item.location.upazila);
-        $('#updateLocation').attr('data-id',item.location_id);
+        $('#updateLocation').attr('data-id',item.loc_id);
 
-        // Create options dynamically
-        $('#update_type').empty();
-        $.each(res.tranwith, function (key, withs) {
-            $('#update_type').append(`<option value="${withs.id}" ${item.tran_user_type === withs.id ? 'selected' : ''}>${withs.tran_with_name}</option>`);
-        });
-
-        $('#update_address').val(item.address);
-        $('#update_password').val(item.password);
-        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${item.image ? item.image : (item.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
+        $('#update_address').val(item.personal_detail.address);
+        $('#updatePreviewImage').attr('src',`${apiUrl.replace('/api', '')}/storage/${item.personal_detail.image ? item.personal_detail.image : (item.personal_detail.gender == 'female' ? 'female.png' : 'male.png')}?${new Date().getTime()} `).show();
     }
 
     

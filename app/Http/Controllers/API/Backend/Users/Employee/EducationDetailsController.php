@@ -63,14 +63,11 @@ class EducationDetailsController extends Controller
             ];
         }
     
-        $insert = Employee_Education_Detail::on('mysql_second')->create($educationDetails);
+        Employee_Education_Detail::on('mysql_second')->insert($educationDetails);
 
-        // $data = Employee_Education_Detail::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
-        
         return response()->json([
             'status'=> true,
             'message' => 'Employee Education Details Added Successfully',
-            // "data" => $data,
         ], 200);  
     } // End Method
 

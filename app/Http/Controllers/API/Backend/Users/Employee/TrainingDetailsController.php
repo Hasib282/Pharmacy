@@ -51,14 +51,11 @@ class TrainingDetailsController extends Controller
             ];
         }
 
-        $insert = Employee_Training_Detail::on('mysql_second')->create($trainingDetails);
+        $insert = Employee_Training_Detail::on('mysql_second')->Insert($trainingDetails);
         
-        // $data = Employee_Training_Detail::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
-
         return response()->json([
             'status'=> true,
             'message' => 'Employee Training Details Added Successfully',
-            // "data" => $data,
         ], 200);  
     } // End Method
 

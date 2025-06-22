@@ -41,12 +41,9 @@ class OrganizationDetailsController extends Controller
             "designation" => $req->designation,
         ]);
 
-        // $data = Employee_Organization_Detail::on('mysql_second')->with('Withs','Location')->findOrFail($insert->id);
-        
         return response()->json([
             'status'=> true,
             'message' => 'Employee Organization Details Added Successfully',
-            // "data" => $data,
         ], 200);  
     } // End Method
 

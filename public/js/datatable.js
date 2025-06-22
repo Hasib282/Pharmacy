@@ -194,7 +194,7 @@ class GenerateTable {
 
         // Extracting the Rows one By one and create colums
         tbody.innerHTML = datas.map((row, i) => { 
-            const columns = this.tbody.map(col => { // Create Colums acording to tbody values
+            const columns = this.tbody.filter(col => !(typeof col === 'object' && col.grid === true)).map(col => { // Create Colums acording to tbody values
                 const data = typeof col === 'string' ? { key: col, type: 'text' } : col;
                 const value = data.key.split('.').reduce((obj, key) => obj?.[key], row);
                 const type = data.type || 'text';
@@ -255,13 +255,17 @@ class GenerateTable {
                         return `<td>${value ?? ''}</td>`;
                 }
             }).join('');
-    
+            
+            const hasGrid = this.tbody.some(col => typeof col === 'object' && col.grid === true);
+            
             return `
                 <tr>
                     <td>${startIndex + i + 1}</td>
                     ${columns}
                     ${this.renderActions(row)}
-                </tr>`;
+                </tr>
+                ${hasGrid ? `<tr id="grid${row.user_id}" style="display:none"></tr>` : ""}
+            `;
         }).join('');
 
         this.renderTableFooter(datas);
