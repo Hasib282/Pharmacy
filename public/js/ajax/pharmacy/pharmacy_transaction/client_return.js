@@ -76,13 +76,29 @@ function ShowPharmacyClientReturns(res) {
         tableId: '#data-table',
         data: res.data,
         tbody: ['tran_id','user.user_name',{key:'bill_amount', type: 'number',footerType:'sum'},{key:'discount', type: 'number',footerType:'sum'},{key:'net_amount', type: 'number',footerType:'sum'},{key:'receive', type: 'number',footerType:'sum'},{key:'due_col', type: 'number',footerType:'sum'},{key:'due_disc', type: 'number',footerType:'sum'},{key:'due', type: 'number',footerType:'sum'}],
-        actions: (row) => `
-                <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
+       
 
-                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                        
-                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
-                `,
+        actions: (row) => {
+            let buttons = '';
+
+            buttons += `
+                    <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
+                `;
+        
+            if (userPermissions.includes(159)) {
+                buttons += `
+                    <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                `;
+            }
+            
+            if (userPermissions.include(160)) {
+                buttons += `
+                    <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `;
+            }
+        
+            return buttons;
+        }
     });
 }
 

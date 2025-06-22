@@ -48,9 +48,24 @@ function ShowAttendence(res) {
         tableId: '#data-table',
         data: res.data,
         tbody: ['emp_id','user.user_name','date','in','out','','insert_at','updated_at'],
-        actions: (row) => `
-                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                `,
+        
+         actions: (row) => {
+            let buttons = '';
+        
+            if (userPermissions.includes(95)) {
+                buttons += `
+                    <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                `;
+            }
+            
+            if (userPermissions.include(95)) {
+                buttons += `
+                    <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `;
+            }
+        
+            return buttons;
+        }
     });
 }
 

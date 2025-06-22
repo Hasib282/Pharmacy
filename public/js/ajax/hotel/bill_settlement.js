@@ -8,6 +8,22 @@ function ShowBillSettlements(res) {
                 
                 <button data-modal-id="editModal" id="edit" data-id="${row.booking_id}"><i class="fas fa-edit"></i></button>
                 `,
+        actions: (row) => {
+            let buttons = '';
+
+            buttons += `
+                   <a class="print-receipt" href="/api/get/clearence?id=${row.booking_id}"> <i class="fa-solid fa-receipt"></i></a>
+                `;
+        
+            if (userPermissions.includes(345)) {
+                buttons += `
+                   <button data-modal-id="editModal" id="edit" data-id="${row.booking_id}"><i class="fas fa-edit"></i></button>
+                `;
+            }
+            
+            
+            return buttons;
+        }
     });
 }
 

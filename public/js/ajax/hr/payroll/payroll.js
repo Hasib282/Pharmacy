@@ -37,6 +37,7 @@ function ShowPayrolls(res) {
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.emp_id}"><i class="fas fa-edit"></i></button>
                 `,
+                
     });
 }
 

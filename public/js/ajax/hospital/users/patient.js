@@ -3,11 +3,24 @@ function ShowPatients(res) {
         tableId: '#data-table',
         data: res.data,
         tbody: ['user_id','title','user_name','user_email', 'user_phone','gender','address'],
-        actions: (row) => `
-                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                        
-                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
-                `,
+        
+        actions: (row) => {
+            let buttons = '';
+        
+            if (userPermissions.includes(396)) {
+                buttons += `
+                    <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                `;
+            }
+            
+            if (userPermissions.include(397)) {
+                buttons += `
+                    <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `;
+            }
+        
+            return buttons;
+        }
     });
 }
 

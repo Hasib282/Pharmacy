@@ -3,11 +3,23 @@ function ShowInventoryCategorys(res) {
         tableId: '#data-table',
         data: res.data,
         tbody: ['category_name','company_id'],
-        actions: (row) => `
-                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                        
-                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
-                `,
+        actions: (row) => {
+            let buttons = '';
+        
+            if (userPermissions.includes(200)) {
+                buttons += `
+                    <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                `;
+            }
+            
+            if (userPermissions.include(201)) {
+                buttons += `
+                    <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `;
+            }
+        
+            return buttons;
+        }
     });
 }
 

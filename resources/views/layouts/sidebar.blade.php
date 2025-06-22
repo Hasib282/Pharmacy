@@ -192,7 +192,7 @@
                         </li>
                     @endif
 
-                    @if(auth()->user()->hasPermission(9))
+                    @if(auth()->user()->hasPermission(287))
                         <li class="sub-menu-item" data-url="{{route('show.paymentMethod')}}">
                             <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'payment_method') ? 'active':''}}">
                                 <p>
@@ -232,7 +232,7 @@
                         </li>
                     @endif
 
-                    @if(auth()->user()->hasPermission(9))
+                    @if(auth()->user()->hasPermission(291))
                     <li class="sub-menu-item" data-url="{{route('show.corporate')}}">
                         <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'advance_receive') ? 'active':''}}">
                             <p>
@@ -1651,7 +1651,7 @@
 
         
         <!-- Hospital Menu Start -->
-        @if(auth()->user()->hasPermissionMainHead('8'))
+        @if(auth()->user()->hasPermissionMainHead('7'))
             <li class="menu-item">
                 <div class="menu-title {{ Request::segment(1) == 'hospital' ? 'active':''}}">
                     <p>
@@ -1671,7 +1671,7 @@
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup') ? 'show':''}}">              
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(346))
                                 <li class="sub-menu1-item" data-url="{{route('show.specialization')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'specialization') ? 'active':''}}">
                                         <p>
@@ -1682,7 +1682,7 @@
                                 </li>
                             @endif
 
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(350))
                                 <li class="sub-menu1-item" data-url="{{route('show.hospitalFloors')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'floor') ? 'active':''}}">
                                         <p>
@@ -1693,7 +1693,7 @@
                                 </li>
                             @endif
                             
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(354))
                                 <li class="sub-menu1-item" data-url="{{route('show.nursingStation')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'nursingstation') ? 'active':''}}">
                                         <p>
@@ -1704,7 +1704,7 @@
                                 </li>
                             @endif
 
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(358))
                                 <li class="sub-menu1-item" data-url="{{route('show.bedcategory')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedcategory') ? 'active':''}}">
                                         <p>
@@ -1715,7 +1715,7 @@
                                 </li>
                             @endif
 
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(362))
                                 <li class="sub-menu1-item" data-url="{{route('show.bedlist')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'bedlist') ? 'active':''}}">
                                         <p>
@@ -1726,7 +1726,7 @@
                                 </li>
                             @endif
 
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(366))
                                 <li class="sub-menu1-item" data-url="{{route('show.hospitalGroupe')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'groupe') ? 'active':''}}">
                                         <p>
@@ -1737,7 +1737,7 @@
                                 </li>
                             @endif
 
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(370))
                                 <li class="sub-menu1-item" data-url="{{route('show.hospitalServices')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'setup' && Request::segment(3) == 'services') ? 'active':''}}">
                                         <p>
@@ -1751,7 +1751,7 @@
                     </li>
 
                     {{-- Hospital Setup Sub Menu --}}
-                    @if(auth()->user()->hasPermission(194))
+                    @if(auth()->user()->hasPermission(374))
                         <li class="sub-menu-item" data-url="{{route('show.patientAppointment')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'ptnappointment') ? 'active':''}}">
                                 <p>
@@ -1763,7 +1763,7 @@
                     @endif
                     
                     {{-- Hospital Setup Sub Menu --}}
-                    @if(auth()->user()->hasPermission(194))
+                    @if(auth()->user()->hasPermission(378))
                         <li class="sub-menu-item" data-url="{{route('show.patientRegistration')}}">
                             <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'ptnregistration') ? 'active':''}}">
                                 <p>
@@ -1776,25 +1776,29 @@
 
 
                     {{-- Bed Transfer User Sub Menu --}}
-                    <li class="sub-menu-item"data-url="{{route('show.bedTransfer')}}">
-                        <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'bedtransfer') ? 'active':''}}">
-                            <p>
-                                <i class="fa-solid fa-users-gear"></i>
-                                Bed Transfer 
-                            </p>
-                        </div>
-                    </li>
+                    @if(auth()->user()->hasPermission(382))
+                        <li class="sub-menu-item"data-url="{{route('show.bedTransfer')}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'bedtransfer') ? 'active':''}}">
+                                <p>
+                                    <i class="fa-solid fa-users-gear"></i>
+                                    Bed Transfer 
+                                </p>
+                            </div>
+                        </li>
+                    @endif
     
 
                     {{-- Bed Status Sub Menu --}}
-                    <li class="sub-menu-item"data-url="{{route('show.bedStatus')}}">
-                        <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'bedstatus') ? 'active':''}}">
-                            <p>
-                                <i class="fa-solid fa-users-gear"></i>
-                                Bed Status
-                            </p>
-                        </div>
-                    </li>
+                    @if(auth()->user()->hasPermission(386))
+                        <li class="sub-menu-item"data-url="{{route('show.bedStatus')}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'bedstatus') ? 'active':''}}">
+                                <p>
+                                    <i class="fa-solid fa-users-gear"></i>
+                                    Bed Status
+                                </p>
+                            </div>
+                        </li>
+                    @endif
 
                     {{-- Hospital User Sub Menu --}}
                     <li class="sub-menu-item">
@@ -1806,7 +1810,7 @@
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'users') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'users') ? 'show':''}}">              
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(390))
                                 <li class="sub-menu1-item" data-url="{{route('show.doctors')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'users' && Request::segment(3) == 'doctors') ? 'active':''}}">
                                         <p>
@@ -1817,7 +1821,7 @@
                                 </li>
                             @endif
                             
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(394))
                                 <li class="sub-menu1-item" data-url="{{route('show.patients')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'users' && Request::segment(3) == 'patients') ? 'active':''}}">
                                         <p>
@@ -1863,7 +1867,7 @@
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'transaction') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'transaction') ? 'show':''}}">              
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(398))
                                 <li class="sub-menu1-item" data-url="{{route('show.admission')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'transaction' && Request::segment(3) == 'admission') ? 'active':''}}">
                                         <p>
@@ -1874,7 +1878,7 @@
                                 </li>
                             @endif
                             
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(402))
                                 <li class="sub-menu1-item" data-url="{{route('show.deposit')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'transaction' && Request::segment(3) == 'deposit') ? 'active':''}}">
                                         <p>
@@ -1885,7 +1889,7 @@
                                 </li>
                             @endif
                             
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(406))
                                 <li class="sub-menu1-item" data-url="{{route('show.depositrefund')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'transaction' && Request::segment(3) == 'depositrefund') ? 'active':''}}">
                                         <p>
@@ -1896,7 +1900,7 @@
                                 </li>
                             @endif
                             
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(410))
                                 <li class="sub-menu1-item" data-url="{{route('show.services')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hospital' && Request::segment(2) == 'transaction' && Request::segment(3) == 'services') ? 'active':''}}">
                                         <p>
@@ -1961,7 +1965,7 @@
         
         
         <!-- Hotel Menu Start -->
-        @if(auth()->user()->hasPermissionMainHead('9'))
+        @if(auth()->user()->hasPermissionMainHead('8'))
             <li class="menu-item">
                 <div class="menu-title {{ Request::segment(1) == 'hotel' ? 'active':''}}">
                     <p>
@@ -1983,7 +1987,7 @@
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup') ? 'show':''}}">    
                             
                             {{-- Hotel,Setup Sub Menu  Floor --}}
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(295))
                                 <li class="sub-menu1-item" data-url="{{route('show.floor')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'floor') ? 'active':''}}">
                                         <p>
@@ -1996,7 +2000,7 @@
 
 
                             {{-- Hotel,Setup Sub Menu  Floor Room Catagory --}}
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(299))
                                 <li class="sub-menu1-item" data-url="{{route('show.roomcatagory')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'roomcatagory') ? 'active':''}}">
                                         <p>
@@ -2009,7 +2013,7 @@
 
 
                             {{-- Hotel,Setup Sub Menu  Room List --}}
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(303))
                                 <li class="sub-menu1-item" data-url="{{route('show.roomlist')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'roomlist') ? 'active':''}}">
                                         <p>
@@ -2023,7 +2027,7 @@
 
 
                             {{-- Hotel,Setup Sub Menu  Group --}}
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(307))
                                 <li class="sub-menu1-item" data-url="{{route('show.groupe')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'groupe') ? 'active':''}}">
                                         <p>
@@ -2036,7 +2040,7 @@
 
 
                             {{-- Hotel,Setup Sub Menu Service --}}
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(311))
                                 <li class="sub-menu1-item"  data-url="{{route('show.service')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'setup' && Request::segment(3) == 'service') ? 'active':''}}">
                                         <p>
@@ -2051,37 +2055,44 @@
                     </li>
 
                     {{-- Hotel User Sub Menu --}}
-                    <li class="sub-menu-item"data-url="{{route('show.booking')}}">
-                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'booking') ? 'active':''}}">
-                            <p>
-                                <i class="fa-solid fa-users-gear"></i>
-                                Hotel Booking
-                            </p>
-                        </div>
-                    </li>
+                    @if(auth()->user()->hasPermission(315))
+                        <li class="sub-menu-item"data-url="{{route('show.booking')}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'booking') ? 'active':''}}">
+                                <p>
+                                    <i class="fa-solid fa-users-gear"></i>
+                                    Hotel Booking
+                                </p>
+                            </div>
+                        </li>
+                    @endif 
 
                     {{-- Room Transfer User Sub Menu --}}
-                    <li class="sub-menu-item"data-url="{{route('show.roomTransfer')}}">
-                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'roomtransfer') ? 'active':''}}">
-                            <p>
-                                <i class="fa-solid fa-users-gear"></i>
-                                Room Transfer 
-                            </p>
-                        </div>
-                    </li>
+                    @if(auth()->user()->hasPermission(319))
+                        <li class="sub-menu-item"data-url="{{route('show.roomTransfer')}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'roomtransfer') ? 'active':''}}">
+                                <p>
+                                    <i class="fa-solid fa-users-gear"></i>
+                                    Room Transfer 
+                                </p>
+                            </div>
+                        </li>
+                    @endif 
     
 
                     {{-- Hotel Room Status Sub Menu --}}
-                    <li class="sub-menu-item"data-url="{{route('show.roomStatus')}}">
-                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'roomstatus') ? 'active':''}}">
-                            <p>
-                                <i class="fa-solid fa-users-gear"></i>
-                                Room Status
-                            </p>
-                        </div>
-                    </li>
+                    @if(auth()->user()->hasPermission(323))
+                        <li class="sub-menu-item"data-url="{{route('show.roomStatus')}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'roomstatus') ? 'active':''}}">
+                                <p>
+                                    <i class="fa-solid fa-users-gear"></i>
+                                    Room Status
+                                </p>
+                            </div>
+                        </li>
+                    @endif 
 
                     {{-- Hotel Users Sub Menu --}}
+                   
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'active':''}}">
                             <p>
@@ -2092,7 +2103,7 @@
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users') ? 'show':''}}">    
                             {{-- Hotel Users Sub Menu Guest List--}}
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(327))
                                 <li class="sub-menu1-item" data-url="{{route('show.hotelGuests')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'users' && Request::segment(3) == 'guests') ? 'active':''}}">
                                         <p>
@@ -2133,7 +2144,7 @@
 
                                  
                                 
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(331))
                                 <li class="sub-menu1-item" data-url="{{route('show.hotelServices')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction' && Request::segment(3) == 'services') ? 'active':''}}">
                                         <p>
@@ -2144,7 +2155,7 @@
                                 </li>
                             @endif
 
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(335))
                                 <li class="sub-menu1-item" data-url="{{route('show.hotelDeposits')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction' && Request::segment(3) == 'deposits') ? 'active':''}}">
                                         <p>
@@ -2155,7 +2166,7 @@
                                 </li>
                             @endif
 
-                            @if(auth()->user()->hasPermission(194))
+                            @if(auth()->user()->hasPermission(339))
                                 <li class="sub-menu1-item" data-url="{{route('show.hotelRefunds')}}">
                                     <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'transaction' && Request::segment(3) == 'refunds') ? 'active':''}}">
                                         <p>
@@ -2192,16 +2203,19 @@
                     </li>
 
                     {{-- Hotel Bill Settlement Sub Menu --}}
-                    <li class="sub-menu-item"data-url="{{route('show.billSettlement')}}">
-                        <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'billsettlement') ? 'active':''}}">
-                            <p>
-                                <i class="fa-solid fa-users-gear"></i>
-                                Bill Settlement
-                            </p>
-                        </div>
-                    </li>
+                    @if(auth()->user()->hasPermission(343))
+                        <li class="sub-menu-item"data-url="{{route('show.billSettlement')}}">
+                            <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'billsettlement') ? 'active':''}}">
+                                <p>
+                                    <i class="fa-solid fa-users-gear"></i>
+                                    Bill Settlement
+                                </p>
+                            </div>
+                        </li>
+                    @endif
                     
                     {{-- Hotel Reports Sub Menu --}}
+                    
                     <li class="sub-menu-item">
                         <div class="menu-title {{ (Request::segment(1) == 'hotel' && Request::segment(2) == 'report') ? 'active':''}}">
                             <p>
@@ -2231,7 +2245,7 @@
         
         
         <!-- Restaurant Menu Start -->
-        @if(auth()->user()->hasPermissionMainHead('10'))
+        @if(auth()->user()->hasPermissionMainHead('9'))
             <li class="menu-item">
                 <div class="menu-title {{ Request::segment(1) == 'resturant' ? 'active':''}}">
                     <p>
@@ -2382,7 +2396,7 @@
         
         
         <!-- Diagnosis Menu Start -->
-        @if(auth()->user()->hasPermissionMainHead('11'))
+        @if(auth()->user()->hasPermissionMainHead('10'))
             <li class="menu-item">
                 <div class="menu-title {{ Request::segment(1) == 'diagnosis' ? 'active':''}}">
                     <p>
@@ -2533,7 +2547,7 @@
         
         
         <!-- School Menu Start -->
-        @if(auth()->user()->hasPermissionMainHead('12'))
+        @if(auth()->user()->hasPermissionMainHead('11'))
             <li class="menu-item">
                 <div class="menu-title {{ Request::segment(1) == 'school' ? 'active':''}}">
                     <p>
@@ -2685,7 +2699,7 @@
         
             
         {{-- Reports and Querrys  --}}
-        @if(auth()->user()->hasPermissionMainHead('7'))
+        @if(auth()->user()->hasPermissionMainHead('12'))
             <li class="menu-item">
                 <div class="menu-title {{ Request::segment(1) == 'report' ? 'active':''}}">
                     <p>
