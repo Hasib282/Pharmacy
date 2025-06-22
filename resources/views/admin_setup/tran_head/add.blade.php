@@ -27,11 +27,13 @@
                 <span class="error" id="headName_error"></span>
             </div>
             {{-- price --}}
-            <div class="form-input-group">
-                <label for="price">Price</label>
-                <input type="text" name="price" class="form-input" id="price" value="0">
-                <span class="error" id="price_error"></span>
-            </div>
+            @if (Request::segment(1) != 'hr' && Request::segment(1) != 'transaction')
+                <div class="form-input-group">
+                    <label for="price">Price</label>
+                    <input type="text" name="price" class="form-input" id="price" value="0">
+                    <span class="error" id="price_error"></span>
+                </div>
+            @endif
             {{-- company --}}
             @if (auth()->user()->user_role == 1)
                 <div class="form-input-group">
@@ -44,8 +46,10 @@
                 <input type="text" name="company" class="form-input" id="company" data-id="{{auth()->user()->company_id}}" style="display: none">
             @endif
 
-            <input type="checkbox" name="editable" id="editable"> <label for="editable">Editable</label>
-
+            @if (Request::segment(1) != 'hr' && Request::segment(1) != 'transaction')
+                <input type="checkbox" name="editable" id="editable"> <label for="editable">Editable</label>
+            @endif
+            
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Submit</button>
             </div>

@@ -40,7 +40,6 @@ $(document).ready(function () {
     // Insert Ajax
     InsertAjax('admin/tranheads', {company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#groupe').focus();
-        $('#company').removeAttr('data-id');
     });
 
 

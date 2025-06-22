@@ -110,7 +110,7 @@ class ClientController extends Controller
             ]);
         });
 
-        $updatedData = User_Info::on('mysql_second')->findOrFail($req->id);
+        $updatedData = User_Info::on('mysql_second')->with('Withs', 'Location')->findOrFail($req->id);
 
         return response()->json([
             'status'=>true,

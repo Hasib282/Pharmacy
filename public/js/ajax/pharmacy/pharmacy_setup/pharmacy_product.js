@@ -59,7 +59,6 @@ $(document).ready(function () {
             $('#form').removeAttr('data-id');
             $('#unit').removeAttr('data-id');
             $('#store').removeAttr('data-id');
-            $('#company').removeAttr('data-id');
         }
     );
 

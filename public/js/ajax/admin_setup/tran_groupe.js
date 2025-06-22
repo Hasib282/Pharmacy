@@ -36,7 +36,6 @@ $(document).ready(function () {
     // Insert Ajax
     InsertAjax('admin/trangroupes', {company: { selector: "#company", attribute: 'data-id' }}, function() {
         $('#groupeName').focus();
-        $('#company').removeAttr('data-id');
     });
 
 
