@@ -8,9 +8,8 @@
     {{-- <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                @if(Auth::user()->hasPermissionToRoute('insert.payroll'))
-                    <button id="PayrollProcess" data-modal-id="confirmModal"><i
-                        class="fa-solid fa-rotate"></i> Process Payroll</button>
+                 @if(auth()->user()->hasPermission(109))
+                    <button id="PayrollProcess" data-modal-id="confirmModal"><i class="fa-solid fa-rotate"></i> Process Payroll</button>
                 @endif
             </div>
             <div class="c-1">

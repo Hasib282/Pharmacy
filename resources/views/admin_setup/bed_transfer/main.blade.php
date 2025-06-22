@@ -9,8 +9,9 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-            </div>
+                    @if(auth()->user()->hasPermission(320))
+                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                    @endif
             <div class="c-6">
 
             </div>
