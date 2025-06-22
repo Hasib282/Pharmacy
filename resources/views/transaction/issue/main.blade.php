@@ -10,8 +10,8 @@
     {{-- <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                @if(Auth::user()->hasPermissionToRoute('insert.pharmacyIssue'))
-                    <button class="open-modal add" data-modal-id="addModal">Add Pharmacy Issue</button>
+                @if(auth()->user()->hasPermission(236))
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
             </div>
             <div class="c-2">

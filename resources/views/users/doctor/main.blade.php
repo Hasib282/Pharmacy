@@ -8,8 +8,9 @@
     {{-- <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
-            </div>
+                  @if(auth()->user()->hasPermission(391))
+                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                    @endif
             <div class="c-9 search">
                 <select name="searchOption" id="searchOption" class="select-small">
                     <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Name</option>

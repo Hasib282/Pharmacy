@@ -9,8 +9,8 @@
     {{-- <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                @if(Auth::user()->hasPermissionToRoute('insert.payrollMiddlewire'))
-                <button class="open-modal add" data-modal-id="addModal">Add {{ $name }}</button>
+                 @if(auth()->user()->hasPermission(95))
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
             </div>
             <div class="c-2">
