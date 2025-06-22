@@ -3,13 +3,28 @@ function ShowAppointment(res) {
         tableId: '#data-table',
         data: res.data,
         tbody: [ 'booking_id', 'user.user_name', 'user.user_phone', 'adult', 'children', 'check_in', 'check_out', {key:'status', type:'status-show', options:[{id:0, name:'Check-Out'},{id:1, name:'Check-In'},{id:2, name:'Booked'},{id:3, name:'Maintenence'}]}],
-        actions: (row) => `
-                <a class="print-receipt" href="/api/get/clearence?id=${row.booking_id}"> <i class="fa-solid fa-receipt"></i></a>
-                
-                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                        
-                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
-                `,
+        
+        actions: (row) => {
+            let buttons = '';
+
+            buttons += `
+                    <a class="print-receipt" href="/api/get/clearence?id=${row.booking_id}"> <i class="fa-solid fa-receipt"></i></a>
+                `;
+        
+            if (userPermissions.includes(317)) {
+                buttons += `
+                    <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                `;
+            }
+            
+            if (userPermissions.include(318)) {
+                buttons += `
+                    <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `;
+            }
+        
+            return buttons;
+        }
     });
 }
 

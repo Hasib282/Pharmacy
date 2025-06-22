@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\Login_User;
 use App\Models\User_Info;
+use Illuminate\Support\Facades\Cache;
 
 
 // --------------------------------------- Get Transaction Type Data -------------------------------- //
@@ -60,7 +61,14 @@ if (!function_exists('UserStore')) {
 // This Helper Function is for Getting Login User Store 
 if (!function_exists('UserPermissions')) {
     function UserPermissions() {
-        return Cache::get("permission_ids_". Auth::user()->user_id);
+        $userPermissions = Cache::get("permission_ids_". Auth::user()->user_id);
+        if(!$userPermissions){
+            $user_data = Auth::user();
+            $userPermissions = Cache::rememberForever("permission_ids_". Auth::user()->user_id, function () use ($user_data) {
+                return $user_data->permissions->pluck('id')->unique()->toArray();
+            });
+        }
+        return $userPermissions;
     }
 }
 

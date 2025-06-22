@@ -1,13 +1,28 @@
 function ShowCorporate(res) {
+    
+    
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
         tbody: ['name','discount'],
-        actions: (row) => `
-                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                        
-                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
-                `,
+        actions: (row) => {
+            let buttons = '';
+        
+            if (userPermissions.includes(293)) {
+                buttons += `
+                    <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                `;
+            }
+            
+            if (userPermissions.include(294)) {
+                buttons += `
+                    <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `;
+            }
+        
+            return buttons;
+        }
+                
     });
 }
 

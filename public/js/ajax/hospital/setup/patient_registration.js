@@ -3,11 +3,24 @@ function ShowPatientRegistration(res) {
         tableId: '#data-table',
         data: res.data,
         tbody: ['booking_id','user.user_name','list.name','doctors.name', 'sr.user_name','admission_by',{key:'added_at',type:'date'}],
-        actions: (row) => `
-                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                        
-                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
-                `,
+        
+         actions: (row) => {
+            let buttons = '';
+        
+            if (userPermissions.includes(380)) {
+                buttons += `
+                    <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                `;
+            }
+            
+            if (userPermissions.include(381)) {
+                buttons += `
+                    <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `;
+            }
+        
+            return buttons;
+        }
     });
 }
 
