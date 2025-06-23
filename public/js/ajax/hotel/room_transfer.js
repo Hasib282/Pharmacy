@@ -13,7 +13,7 @@ function ShowroomTransfer(res) {
                 `;
             }
             
-            if (userPermissions.include(322)) {
+            if (userPermissions.includes(322)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

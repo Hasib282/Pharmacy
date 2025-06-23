@@ -48,7 +48,7 @@ class TranHeadController extends Controller
         $insert = Transaction_Head::on('mysql')->create([
             "tran_head_name" => $req->headName,
             "groupe_id" => $req->groupe,
-            "mrp" => $req->price,
+            "mrp" => $req->price ?? 0,
             "editable"=> ($req->editable == 'on') ? 1 : 0,
             "company_id" => $req->company,
         ]);
@@ -77,7 +77,7 @@ class TranHeadController extends Controller
         $update = $data->update([
             "tran_head_name" => $req->headName,
             "groupe_id" => $req->groupe,
-            "mrp" => $req->price,
+            "mrp" => $req->price ?? 0,
             "editable"=> ($req->editable == 'on') ? 1 : 0,
             "updated_at" => now()
         ]);

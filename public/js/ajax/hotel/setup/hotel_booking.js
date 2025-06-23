@@ -17,7 +17,7 @@ function ShowAppointment(res) {
                 `;
             }
             
-            if (userPermissions.include(318)) {
+            if (userPermissions.includes(318)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

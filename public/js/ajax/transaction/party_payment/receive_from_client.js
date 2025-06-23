@@ -58,7 +58,7 @@ function ShowReceiveFromClients(res) {
                 `;
             }
             
-            if (userPermissions.include(44)) {
+            if (userPermissions.includes(44)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

@@ -316,9 +316,9 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         // *************************************** Bank Controller Start *************************************** //
         Route::controller(BankController::class)->group(function () {
             Route::get('/banks', 'Show');
-            Route::post('/banks', 'Insert')->middleware(SuperAdminAccess::class);
-            Route::put('/banks', 'Update')->middleware(SuperAdminAccess::class);
-            Route::delete('/banks', 'Delete')->middleware(SuperAdminAccess::class);
+            Route::post('/banks', 'Insert');
+            Route::put('/banks', 'Update');
+            Route::delete('/banks', 'Delete');
             Route::get('/banks/details', 'Details');
             Route::get('/banks/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
@@ -328,9 +328,9 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         // *************************************** Location Controller Start *************************************** //
         Route::controller(LocationController::class)->group(function () {
             Route::get('/locations', 'Show');
-            Route::post('/locations', 'Insert')->middleware(SuperAdminAccess::class);
-            Route::put('/locations', 'Update')->middleware(SuperAdminAccess::class);
-            Route::delete('/locations', 'Delete')->middleware(SuperAdminAccess::class);
+            Route::post('/locations', 'Insert');
+            Route::put('/locations', 'Update');
+            Route::delete('/locations', 'Delete');
             Route::get('/locations/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
 
@@ -1424,7 +1424,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/specialization', 'Insert');
                 Route::put('/specialization', 'Update');
                 Route::delete('/specialization', 'Delete');
-                Route::get('/specialization/get', 'Get');
+                Route::get('/specialization/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
 
@@ -1435,7 +1435,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/floor', 'Insert');
                 Route::put('/floor', 'Update');
                 Route::delete('/floor', 'Delete');
-                Route::get('/floor/get', 'Get');
+                Route::get('/floor/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
 
@@ -1446,7 +1446,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/bedcategory', 'Insert');
                 Route::put('/bedcategory', 'Update');
                 Route::delete('/bedcategory', 'Delete');
-                Route::get('/bedcategory/get', 'Get');
+                Route::get('/bedcategory/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
 
@@ -1457,7 +1457,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/bedlist', 'Insert');
                 Route::put('/bedlist', 'Update');
                 Route::delete('/bedlist', 'Delete');
-                Route::get('/bedlist/get', 'Get');
+                Route::get('/bedlist/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
 
@@ -1468,7 +1468,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/nursingstation', 'Insert');
                 Route::put('/nursingstation', 'Update');
                 Route::delete('/nursingstation', 'Delete');
-                Route::get('/nursingstation/get', 'Get');
+                Route::get('/nursingstation/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
 
@@ -1499,7 +1499,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::post('/ptnregistration', 'Insert');
             Route::put('/ptnregistration', 'Update');
             Route::delete('/ptnregistration', 'Delete');
-            Route::get('/ptnregistration/get', 'Get');
+            Route::get('/ptnregistration/get', 'Get')->withoutMiddleware(CheckPermission::class);
             // Route::get('/ptnregistration/get/patient', 'GetPatient');
         });
 
@@ -1511,7 +1511,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::post('/ptnappointment', 'Insert');
             Route::put('/ptnappointment', 'Update');
             Route::delete('/ptnappointment', 'Delete');
-            Route::get('/ptnappointment/get', 'Get');
+            Route::get('/ptnappointment/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
 
 
@@ -1532,7 +1532,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::post('/bedstatus', 'Insert');
             Route::put('/bedstatus', 'Update');
             Route::delete('/bedstatus', 'Delete');
-            Route::get('/bedstatus/get', 'Get');
+            Route::get('/bedstatus/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
         
         
@@ -1545,7 +1545,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/doctors', 'Insert');
                 Route::put('/doctors', 'Update');
                 Route::delete('/doctors', 'Delete');
-                Route::get('/doctors/get', 'Get');
+                Route::get('/doctors/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
 
@@ -1556,7 +1556,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/patients', 'Insert');
                 Route::put('/patients', 'Update');
                 Route::delete('/patients', 'Delete');
-                Route::get('/patients/get', 'Get');
+                Route::get('/patients/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
         }); // End Hospital Users Routes
         
@@ -1649,7 +1649,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/floor', 'Insert');
                 Route::put('/floor', 'Update');
                 Route::delete('/floor', 'Delete');
-                Route::get('/floor/get', 'Get');
+                Route::get('/floor/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
 
@@ -1670,7 +1670,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/roomlist', 'Insert');
                 Route::put('/roomlist', 'Update');
                 Route::delete('/roomlist', 'Delete');
-                Route::get('/roomlist/get/all', 'GetAll');
+                Route::get('/roomlist/get/all', 'GetAll')->withoutMiddleware(CheckPermission::class);
             });
 
 
@@ -1702,7 +1702,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::post('/booking', 'Insert');
             Route::put('/booking', 'Update');
             Route::delete('/booking', 'Delete');
-            Route::get('/booking/get', 'Get');
+            Route::get('/booking/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
 
 
@@ -1723,7 +1723,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::post('/roomstatus', 'Insert');
             Route::put('/roomstatus', 'Update');
             Route::delete('/roomstatus', 'Delete');
-            Route::get('/roomstatus/get', 'Get');
+            Route::get('/roomstatus/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
         
         
@@ -1749,8 +1749,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/guests', 'Insert');
                 Route::put('/guests', 'Update');
                 Route::delete('/guests', 'Delete');
-                Route::get('/guests/get', 'Get');
-                Route::get('/guests/getall', 'GetAll');
+                Route::get('/guests/get', 'Get')->withoutMiddleware(CheckPermission::class);
+                Route::get('/guests/getall', 'GetAll')->withoutMiddleware(CheckPermission::class);
             });
         }); // End Hotel Users Routes
         
@@ -1765,7 +1765,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::put('/services', 'Update');
                 Route::delete('/services', 'Delete');
                 Route::get('/services/search', 'Search');
-                Route::get('/services/get', 'Get');
+                Route::get('/services/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
             
             

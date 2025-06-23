@@ -14,7 +14,7 @@ function ShowTranGroupe(res) {
                 `;
             }
             
-            if (userPermissions.include(16)) {
+            if (userPermissions.includes(16)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

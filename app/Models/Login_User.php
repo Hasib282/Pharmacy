@@ -39,7 +39,7 @@ class Login_User extends Authenticatable
     }
 
     public function Department(){
-        return $this->belongsTo(Department_Info::class,'dept_id','id');
+        return $this->belongsTo(Department::class,'dept_id','id');
     }
 
     public function Location(){

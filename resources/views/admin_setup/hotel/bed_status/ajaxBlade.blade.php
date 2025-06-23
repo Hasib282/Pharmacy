@@ -8,6 +8,10 @@
 <div class="add-search">
     <div class="rows">
         <div class="c-3">
+           
+                   
+                
+        </div>
         
         </div>
         <div class="c-6">

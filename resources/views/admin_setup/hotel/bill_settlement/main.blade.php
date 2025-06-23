@@ -9,9 +9,7 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                    @if(auth()->user()->hasPermission(344))
-                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                    @endif
+                    
             </div>
             <div class="c-6">
 
@@ -35,7 +33,7 @@
     </div>
 
 
-    @include('admin_setup.hotel.bill_settlement.add')
+
 
     @include('admin_setup.hotel.bill_settlement.edit')
 
