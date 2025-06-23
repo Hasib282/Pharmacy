@@ -28,13 +28,13 @@
                 <td>{{ $item->end_date }}</td>
                 <td>
                     <div style="display: flex;gap:5px;">
-                        {{-- @if(Auth::user()->hasPermissionToRoute('update.employeeExperience')) --}}
-                        <button class="open-modal" data-modal-id="editModal" id="edit" data-id="{{ $item->id }}"><i
+                        @if(auth()->user()->hasPermission(87))
+                            <button class="open-modal" data-modal-id="editModal" id="edit" data-id="{{ $item->id }}"><i
                                 class="fas fa-edit"></i></button>
-                        {{-- @endif --}}
-                        {{-- @if(Auth::user()->hasPermissionToRoute('delete.employeeExperience')) --}}
-                        <button data-id="{{ $item->id }}" id="delete"><i class="fas fa-trash"></i></button>
-                        {{-- @endif --}}
+                        @endif
+                        @if(auth()->user()->hasPermission(88))
+                            <button data-id="{{ $item->id }}" id="delete"><i class="fas fa-trash"></i></button>
+                        @endif
                     </div>
                 </td>
             </tr>

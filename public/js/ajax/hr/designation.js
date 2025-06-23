@@ -13,7 +13,7 @@ function ShowDesignations(res) {
                 `;
             }
             
-            if (userPermissions.include(64)) {
+            if (userPermissions.includes(64)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

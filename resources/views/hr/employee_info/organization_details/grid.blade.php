@@ -24,13 +24,13 @@
                     <td>{{ $item->Designation->designation }}</td>
                     <td>
                         <div style="display: flex;gap:5px;">
-                            {{-- @if(Auth::user()->hasPermissionToRoute('update.employeeOrganization')) --}}
-                                <button class="open-modal" data-modal-id="editModal" id="edit"
-                                    data-id="{{ $item->id }}"><i class="fas fa-edit"></i></button>
-                            {{-- @endif --}}
-                            {{-- @if(Auth::user()->hasPermissionToRoute('delete.employeeOrganization')) --}}
-                                <button data-id="{{ $item->id }}" id="delete"><i class="fas fa-trash"></i></button>
-                            {{-- @endif --}}
+                            @if(auth()->user()->hasPermission(90))
+                            <button class="open-modal" data-modal-id="editModal" id="edit" data-id="{{ $item->id }}"><i
+                                class="fas fa-edit"></i></button>
+                        @endif
+                        @if(auth()->user()->hasPermission(92))
+                            <button data-id="{{ $item->id }}" id="delete"><i class="fas fa-trash"></i></button>
+                        @endif
                         </div>
                     </td>
                 </tr>

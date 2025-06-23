@@ -12,7 +12,7 @@ function ShowBankDeposits(res) {
                 `;
             }
             
-            if (userPermissions.include(52)) {
+            if (userPermissions.includes(52)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

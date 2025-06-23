@@ -58,7 +58,7 @@ function ShowAttendence(res) {
                 `;
             }
             
-            if (userPermissions.include(95)) {
+            if (userPermissions.includes(95)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

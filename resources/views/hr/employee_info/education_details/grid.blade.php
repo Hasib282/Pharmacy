@@ -36,13 +36,12 @@
                 <td>{{ $item->batch }}</td>
                 <td>
                     <div style="display: flex;gap:5px;">
-                        {{-- @if(Auth::user()->hasPermissionToRoute('update.employeeEducation')) --}}
-                        <button class="open-modal" data-modal-id="editModal" id="edit" data-id="{{ $item->id }}"
-                            data-form-id="form_{{ $item->id }}"><i class="fas fa-edit"></i></button>
-                        {{-- @endif --}}
-                        {{-- @if(Auth::user()->hasPermissionToRoute('delete.employeeEducation')) --}}
-                        <button data-id="{{ $item->id }}" id="delete"><i class="fas fa-trash"></i></button>
-                        {{-- @endif --}}
+                        @if(auth()->user()->hasPermission(79))
+                            <button class="open-modal" data-modal-id="editModal" id="edit" data-id="{{ $item->id }}" data-form-id="form_{{ $item->id }}"><i class="fas fa-edit"></i></button>
+                        @endif
+                        @if(auth()->user()->hasPermission(80))
+                            <button data-id="{{ $item->id }}" id="delete"><i class="fas fa-trash"></i></button>
+                        @endif
                     </div>
                 </td>
             </tr>
