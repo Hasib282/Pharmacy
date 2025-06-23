@@ -57,7 +57,7 @@ function ShowSuppliers(res) {
                 `;
             }
             
-            if (userPermissions.include(32)) {
+            if (userPermissions.includes(32)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

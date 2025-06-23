@@ -13,7 +13,7 @@ function ShowGuests(res) {
                 `;
             }
             
-            if (userPermissions.include(330)) {
+            if (userPermissions.includes(330)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

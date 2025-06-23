@@ -59,7 +59,7 @@ function ShowPaymentToSuppliers(res) {
                 `;
             }
             
-            if (userPermissions.include(48)) {
+            if (userPermissions.includes(48)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

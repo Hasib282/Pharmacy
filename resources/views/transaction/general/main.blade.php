@@ -68,7 +68,16 @@
     <div class="add-search">
         <div class="rows" style="align-items:center;">
             <div class="c-3">
-                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                
+                @if(Request::segment(1) == 'transaction' && Request::segment(2) == 'receive'   && auth()->user()->hasPermission(34))
+                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
+                @if(Request::segment(1) == 'transaction' && Request::segment(2) == 'payment'   && auth()->user()->hasPermission(38))
+                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
+
             </div>
             <div class="c-3">
                 <label for="startDate">Start Date</label>

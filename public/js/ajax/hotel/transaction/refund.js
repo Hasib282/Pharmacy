@@ -17,7 +17,7 @@ function ShowRefunds(res) {
                 `;
             }
             
-            if (userPermissions.include(342)) {
+            if (userPermissions.includes(342)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

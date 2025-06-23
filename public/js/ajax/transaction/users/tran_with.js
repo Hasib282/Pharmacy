@@ -12,7 +12,7 @@ function ShowTranWith(res) {
                 `;
             }
             
-            if (userPermissions.include(24)) {
+            if (userPermissions.includes(24)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

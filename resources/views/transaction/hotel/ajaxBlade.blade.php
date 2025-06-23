@@ -67,7 +67,15 @@
 <div class="add-search">
     <div class="rows" style="align-items:center;">
         <div class="c-3">
-                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+               
+
+                <div class="c-3">
+                   
+                    @if(Request::segment(1) == 'hotel' && Request::segment(3) == 'services'  && auth()->user()->hasPermission(332))
+                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                    @endif
+
+        </div>
         </div>
         <div class="c-3">
             <label for="startDate">Start Date</label>

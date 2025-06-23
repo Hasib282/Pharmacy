@@ -89,7 +89,7 @@ function ShowTransactionPayments(res) {
                 `;
             }
             
-            if (userPermissions.include(40)) {
+            if (userPermissions.includes(40)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

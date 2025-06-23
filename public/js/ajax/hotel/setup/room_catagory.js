@@ -12,7 +12,7 @@ function ShowRoomCatagory(res) {
                 `;
             }
             
-            if (userPermissions.include(302)) {
+            if (userPermissions.includes(302)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

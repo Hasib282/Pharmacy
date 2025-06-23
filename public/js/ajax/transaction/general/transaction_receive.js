@@ -91,7 +91,7 @@ function ShowTransactionReceives(res) {
                 `;
             }
             
-            if (userPermissions.include(36)) {
+            if (userPermissions.includes(36)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
