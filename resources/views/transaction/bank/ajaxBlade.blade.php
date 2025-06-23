@@ -64,7 +64,12 @@
 <div class="add-search">
     <div class="rows" style="align-items:center;">
         <div class="c-3">
+            @if(Request::segment(3) == 'withdraw' && auth()->user()->hasPermission(54))
                 <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
+            @if(Request::segment(3) == 'deposit' && auth()->user()->hasPermission(50))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
         </div>
         <div class="c-3">
             <label for="startDate">Start Date</label>
