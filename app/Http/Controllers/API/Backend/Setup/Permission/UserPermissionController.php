@@ -57,20 +57,28 @@ class UserPermissionController extends Controller
 
                 // Custom grouping logic
                 if (str_contains($name, ' Admin')) $groupKey = 'Admin';
-                elseif (str_contains($name, 'Clients')) $groupKey = 'Clients';
-                elseif (str_contains($name, 'Suppliers')) $groupKey = 'Suppliers';
                 elseif (str_contains($name, 'Roles')) $groupKey = 'Roles';
                 elseif (str_contains($name, 'Permissions')) $groupKey = 'Permissions';
                 elseif (str_contains($name, 'Banks')) $groupKey = 'Banks';
                 elseif (str_contains($name, 'Locations')) $groupKey = 'Locations';
                 elseif (str_contains($name, 'Stores')) $groupKey = 'Stores';
+                elseif (str_contains($name, 'Payment Methods')) $groupKey = 'Payment Methods';
+                elseif (str_contains($name, 'Corporate')) $groupKey = 'Corporate';
 
-                elseif (str_contains($name, 'Transaction Receive')) $groupKey = 'Transaction-Receive';
-                elseif (str_contains($name, 'Transaction Payment')) $groupKey = 'Transaction-Payment';
+                elseif (str_contains($name, 'Groupes')) $groupKey = 'Groupes';
+                elseif (str_contains($name, 'Service / Product')) $groupKey = 'Service / Product';
+                elseif (str_contains($name, 'Client/Supplier')) $groupKey = 'Client/Supplier';
+                elseif (str_contains($name, 'Clients')) $groupKey = 'Clients';
+                elseif (str_contains($name, 'Suppliers')) $groupKey = 'Suppliers';
+                elseif (str_contains($name, 'Transaction With Client')) $groupKey = 'Transaction With Client';
+                elseif (str_contains($name, 'Transaction With Supplier')) $groupKey = 'Transaction With Supplier';
+                elseif (str_contains($name, 'From Client')) $groupKey = 'From-Client';
+                elseif (str_contains($name, 'To Supplier')) $groupKey = 'To-Supplier';
 
-                elseif (str_contains($name, 'Withdraws')) $groupKey = 'Bank-Withdraws';
-                elseif (str_contains($name, 'Deposits')) $groupKey = 'Bank-Deposits';
+                elseif (str_contains($name, 'Bank Withdraw')) $groupKey = 'Bank-Withdraws';
+                elseif (str_contains($name, 'Bank Deposit')) $groupKey = 'Bank-Deposits';
 
+                elseif (str_contains($name, 'Employee Type')) $groupKey = 'Employee Type';
                 elseif (str_contains($name, 'All Employee')) $groupKey = 'All-Employee';
                 elseif (str_contains($name, 'Personal')) $groupKey = 'Employee-Personal-Details';
                 elseif (str_contains($name, 'Education')) $groupKey = 'Employee-Education-Details';
@@ -97,8 +105,7 @@ class UserPermissionController extends Controller
                 elseif (str_contains($name, 'Positive')) $groupKey = 'Positive';
                 elseif (str_contains($name, 'Negative')) $groupKey = 'Negative';
 
-                elseif (str_contains($name, 'From Client')) $groupKey = 'From-Client';
-                elseif (str_contains($name, 'To Supplier')) $groupKey = 'To-Supplier';
+                
 
                 elseif (str_contains($name, 'Balance Sheet')) $groupKey = 'Balance-Sheet';
                 elseif (str_contains($name, 'Account Statement')) $groupKey = 'Account-Statement';

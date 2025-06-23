@@ -14,7 +14,7 @@ function ShowCorporate(res) {
                 `;
             }
             
-            if (userPermissions.include(294)) {
+            if (userPermissions.includes(294)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

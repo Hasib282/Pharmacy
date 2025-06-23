@@ -3,11 +3,23 @@ function ShowAdmins(res) {
         tableId: '#data-table',
         data: res.data,
         tbody: ['user_id','user_name','user_email', 'user_phone', {key:'image', type: 'image'},{key:'status', type: 'status'},'store.store_name'],
-        actions: (row) => `
-                <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                        
-                <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
-                `,
+        actions: (row) => {
+            let buttons = '';
+            
+            if (userPermissions.includes(3)) {
+                buttons += `
+                    <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                `;
+            }
+            
+            if (userPermissions.includes(4)) {
+                buttons += `
+                    <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                `;
+            }
+        
+            return buttons;
+        }
     });
 }
 

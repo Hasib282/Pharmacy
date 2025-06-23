@@ -14,7 +14,7 @@ function ShowStores(res) {
                 `;
             }
             
-            if (userPermissions.include(12)) {
+            if (userPermissions.includes(12)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

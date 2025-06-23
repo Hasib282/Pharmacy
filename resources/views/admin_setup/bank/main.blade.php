@@ -9,7 +9,7 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                @if (Auth::user()->user_role == 1)
+                @if(auth()->user()->hasPermission(284))
                     <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
             </div>
@@ -35,11 +35,11 @@
     </div>
 
 
-    @if (Auth::user()->user_role == 1)
-        @include('admin_setup.bank.add')
+    {{-- @if (Auth::user()->user_role == 1) --}}
+    @include('admin_setup.bank.add')
 
-        @include('admin_setup.bank.edit')
-    @endif
+    @include('admin_setup.bank.edit')
+    {{-- @endif --}}
 
     @include('common_modals.detailsModal')
     

@@ -12,7 +12,7 @@ function ShowPaymentMethod(res) {
                 `;
             }
             
-            if (userPermissions.include(290)) {
+            if (userPermissions.includes(290)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

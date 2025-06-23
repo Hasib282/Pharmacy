@@ -52,8 +52,19 @@ function ShowUserPermissions(res) {
         data: res.data,
         tbody: ['user_id','user_name','company.company_name',{ type:'multi-data', key:'permissions' }],
         actions: (row) => `
-                <button data-modal-id="editModal" id="edit" data-id="${row.user_id}"><i class="fas fa-edit"></i></button>
+                
                 `,
+        actions: (row) => {
+            let buttons = '';
+            
+            if (userPermissions.includes(6)) {
+                buttons += `
+                    <button data-modal-id="editModal" id="edit" data-id="${row.user_id}"><i class="fas fa-edit"></i></button>
+                `;
+            }
+        
+            return buttons;
+        }
     });
 }
 

@@ -5,15 +5,19 @@ function ShowBanks(res) {
         tbody: ['user_id','name','email', 'phone','location.upazila','address'],
         actions: (row) => {
             let buttons = '';
-        
+            
             buttons += `
                 <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
             `;
-            
-            if (role == 1) {
+
+            if (userPermissions.includes(285)) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                    
+                `;
+            }
+            
+            if (userPermissions.includes(286)) {
+                buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
             }

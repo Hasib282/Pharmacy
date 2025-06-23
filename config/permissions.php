@@ -59,7 +59,7 @@ return [
         ['uri' => 'api/admin/stores', 'method' => 'PUT'],
     ],
     12 => [
-        ['uri' => 'api/admin/stores', 'method' => 'Delete'],
+        ['uri' => 'api/admin/stores', 'method' => 'DELETE'],
     ],
 
 
@@ -1391,14 +1391,14 @@ return [
 
 
     281 => [
-        ['uri' => 'admin/locations', 'method' => 'POST'],
+        ['uri' => 'api/admin/locations', 'method' => 'POST'],
     ],
     282 => [
-        ['uri' => 'admin/locations/edit', 'method' => 'GET'],
-        ['uri' => 'admin/locations', 'method' => 'PUT'],
+        ['uri' => 'api/admin/locations/edit', 'method' => 'GET'],
+        ['uri' => 'api/admin/locations', 'method' => 'PUT'],
     ],
     283 => [
-        ['uri' => 'admin/locations', 'method' => 'DELETE'],
+        ['uri' => 'api/admin/locations', 'method' => 'DELETE'],
     ],
 
 
@@ -1537,21 +1537,21 @@ return [
     
     
     311 => [ 
-        ['uri' => 'api/hotel/setup/service', 'method' => 'GET'],
-        ['uri' => 'api/hotel/setup/service/search', 'method' => 'GET'],
-        ['uri' => 'api/hotel/setup/service/details', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/services', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/services/search', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/services/details', 'method' => 'GET'],
         ['uri' => 'hotel/setup/service', 'method' => 'GET'],
         ['uri' => 'hotel/setup/service/search', 'method' => 'GET'],
     ],
     312 => [
-        ['uri' => 'api/hotel/setup/service', 'method' => 'POST'],
+        ['uri' => 'api/hotel/setup/services', 'method' => 'POST'],
     ],
     313 => [
-        ['uri' => 'api/hotel/setup/service/edit', 'method' => 'GET'],
-        ['uri' => 'api/hotel/setup/service', 'method' => 'PUT'],
+        ['uri' => 'api/hotel/setup/services/edit', 'method' => 'GET'],
+        ['uri' => 'api/hotel/setup/services', 'method' => 'PUT'],
     ],
     314 => [
-        ['uri' => 'api/hotel/setup/service', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/setup/services', 'method' => 'DELETE'],
     ],
     
     

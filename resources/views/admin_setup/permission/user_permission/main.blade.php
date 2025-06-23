@@ -53,9 +53,9 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                <button class="open-modal btn-blue" data-modal-id="copyPermission" id="permissionCopy"><i class="fas fa-edit"></i>
-                    Assign Permission To Another User</button>
-                    {{-- <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button> --}}
+                @if(auth()->user()->hasPermission(6))
+                    <button class="open-modal btn-blue" data-modal-id="copyPermission" id="permissionCopy"><i class="fas fa-edit"></i>Assign Permission To Another User</button>
+                @endif
             </div>
             <div class="c-6">
 
