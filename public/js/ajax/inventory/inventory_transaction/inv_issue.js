@@ -87,7 +87,7 @@ function ShowInventoryIssues(res) {
                 `;
             }
             
-            if (userPermissions.include(238)) {
+            if (userPermissions.includes(238)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

@@ -51,7 +51,7 @@ function ShowPharmacyNegativeAdjustments(res) {
                 `;
             }
             
-            if (userPermissions.include(172)) {
+            if (userPermissions.includes(172)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

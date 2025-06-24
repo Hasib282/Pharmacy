@@ -18,6 +18,14 @@
                     <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
 
+                @if(Request::segment(1) == 'inventory' && auth()->user()->hasPermission(211))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                 @endif
+
+                @if(Request::segment(1) == 'pharmacy' && auth()->user()->hasPermission(119))
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
             </div>
             <div class="c-6">
 

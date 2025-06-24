@@ -13,7 +13,7 @@ function ShowPharmacyCategorys(res) {
                 `;
             }
             
-            if (userPermissions.include(119)) {
+            if (userPermissions.includes(119)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

@@ -17,7 +17,7 @@ function ShowClients(res) {
                 `;
             }
             
-            if (userPermissions.include(225)) {
+            if (userPermissions.includes(225)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

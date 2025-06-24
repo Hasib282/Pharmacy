@@ -8,9 +8,21 @@
 <div class="add-search">
     <div class="rows">
         <div class="c-3">
-               @if(Request::segment(1) == 'transaction' && auth()->user()->hasPermission(22))
+            @if(Request::segment(1) == 'transaction' && auth()->user()->hasPermission(22))
                         <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                @endif
+            @endif
+
+            @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'usertype' && auth()->user()->hasPermission(	
+219
+))
+                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
+
+            @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'usertype' && auth()->user()->hasPermission(	
+137
+))
+                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
         </div>
         <div class="c-6">
 

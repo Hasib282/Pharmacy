@@ -52,7 +52,7 @@ function ShowInventoryProducts(res) {
                 `;
             }
             
-            if (userPermissions.include(217)) {
+            if (userPermissions.includes(217)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

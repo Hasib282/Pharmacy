@@ -63,7 +63,21 @@
 <div class="add-search">
     <div class="rows" style="align-items:center;">
         <div class="c-3">
-                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+               @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'positive'   && auth()->user()->hasPermission(248))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
+                @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'negative'   && auth()->user()->hasPermission(252))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
+                @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'positive'   && auth()->user()->hasPermission(166))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
+                @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'negative'   && auth()->user()->hasPermission(170))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
         </div>
         <div class="c-3">
             <label for="startDate">Start Date</label>
