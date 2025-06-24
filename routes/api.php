@@ -623,6 +623,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::controller(EducationDetailsController::class)->group(function () {
                 Route::get('/education', 'Show');
                 Route::post('/education', 'Insert');
+                Route::get('/education/edit', 'Edit');
                 Route::put('/education', 'Update');
                 Route::delete('/education', 'Delete');
                 Route::get('/education/grid', 'Grid');
@@ -634,6 +635,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::controller(TrainingDetailsController::class)->group(function () {
                 Route::get('/training', 'Show');
                 Route::post('/training', 'Insert');
+                Route::get('/training/edit', 'Edit');
                 Route::put('/training', 'Update');
                 Route::delete('/training', 'Delete');
                 Route::get('/training/grid', 'Grid');
@@ -645,6 +647,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::controller(ExperienceDetailsController::class)->group(function () {
                 Route::get('/experience', 'Show');
                 Route::post('/experience', 'Insert');
+                Route::get('/experience/edit', 'Edit');
                 Route::put('/experience', 'Update');
                 Route::delete('/experience', 'Delete');
                 Route::get('/experience/grid', 'Grid');
@@ -656,6 +659,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::controller(OrganizationDetailsController::class)->group(function () {
                 Route::get('/organization', 'Show');
                 Route::post('/organization', 'Insert');
+                Route::get('/organization/edit', 'Edit');
                 Route::put('/organization', 'Update');
                 Route::delete('/organization', 'Delete');
                 Route::get('/organization/grid', 'Grid');

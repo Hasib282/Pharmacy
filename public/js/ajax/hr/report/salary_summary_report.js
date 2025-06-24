@@ -5,6 +5,8 @@ function ShowSalarySummary(res) {
         tbody: ['tran_user','user.user_name',{key:'bill_amount',type:'number',footerType:'sum'},{key:'tran_date',type:'date'}],
         actions: undefined,
     });
+
+    UpdateUrl('/api/hr/report/salary/summary/print', {startDate: $('#startDate').val(), endDate: $('#endDate').val() });
 }
 
 

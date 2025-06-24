@@ -52,6 +52,8 @@ function ShowSalaryDetails(res) {
         data: res.data,
         tbody: ['tran_user','user.user_name','head.tran_head_name',{key:'amount',type:'number',footerType:'sum'},{key:'tran_date',type:'date'}],
     });
+    
+    UpdateUrl('/api/hr/report/salary/details/print', {startDate: $('#startDate').val(), endDate: $('#endDate').val() });
 }
 
 $(document).ready(function () {

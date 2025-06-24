@@ -284,7 +284,7 @@ $(document).ready(function () {
                 });
 
                 $('#permission-container').append(`
-                    <div id="group-${groupName}">
+                    <div id="group-${groupName}" style="padding: 6px 0px;">
                         <span class="sub-name" style="padding: 4px 6px; font-weight: 600;padding-left:12px;">${groupName}</span>
                         <div class="rows">${permissionsHtml}</div>
                     </div>

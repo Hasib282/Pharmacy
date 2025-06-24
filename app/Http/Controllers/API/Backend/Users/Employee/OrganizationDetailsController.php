@@ -49,6 +49,17 @@ class OrganizationDetailsController extends Controller
 
 
 
+    // Edit Employee Education Details
+    public function Edit(Request $req){
+        $data = Employee_Organization_Detail::on('mysql_second')->with('Location','department','designation')->findOrFail($req->id);
+        return response()->json([
+            'status'=> true,
+            "data" => $data,
+        ], 200);  
+    }
+
+
+
     // Update Employee Organization Details
     public function Update(Request $req){
         $data = Employee_Organization_Detail::on('mysql_second')->where('emp_id', $req->emp_id)->first();

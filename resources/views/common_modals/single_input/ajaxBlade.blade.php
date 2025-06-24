@@ -44,40 +44,46 @@
 <div class="add-search">
     <div class="rows">
         <div class="c-3">
-                {{-- pharmacy --}}
-                @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'manufacturer'   && auth()->user()->hasPermission(113))
-                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                @endif
+            @if(Request::segment(2) == 'payment_method' && auth()->user()->hasPermission(288))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
+            @if(Request::segment(1) == 'hr' && Request::segment(3) == 'departments' && auth()->user()->hasPermission(58))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
+            {{-- pharmacy --}}
+            @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'manufacturer'   && auth()->user()->hasPermission(113))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
 
-                @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'category'   && auth()->user()->hasPermission(117))
-                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                @endif
+            @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'category'   && auth()->user()->hasPermission(117))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
 
-                @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'unit'   && auth()->user()->hasPermission(121))
-                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                @endif
+            @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'unit'   && auth()->user()->hasPermission(121))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
 
-                @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'form'   && auth()->user()->hasPermission(125))
-                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                @endif
+            @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'form'   && auth()->user()->hasPermission(125))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
 
 
-                {{-- inventory --}}
-                @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'manufacturer'   && auth()->user()->hasPermission(195))
-                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                @endif
+            {{-- inventory --}}
+            @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'manufacturer'   && auth()->user()->hasPermission(195))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
 
-                @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'category'   && auth()->user()->hasPermission(199))
-                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                @endif
+            @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'category'   && auth()->user()->hasPermission(199))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
 
-                @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'unit'   && auth()->user()->hasPermission(203))
-                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                @endif
+            @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'unit'   && auth()->user()->hasPermission(203))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
 
-                @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'form'   && auth()->user()->hasPermission(207))
-                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                @endif
+            @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'form'   && auth()->user()->hasPermission(207))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
         </div>
         <div class="c-6">
 

@@ -51,28 +51,16 @@ class SalaryDetailController extends Controller
 
     // Print Salary Details Report
     public function Print(Request $req){
-        if ($req->query()) {
-            $currentYear = $req->year;
-            $currentMonth = $req->month;
-            $data = Transaction_Detail::on('mysql_second')->with('User','Head')
-            ->whereHas('User', function ($query) use ($req) {
-                $query->where('user_name', 'like', '%'.$req->search.'%');
-                $query->orWhere('user_id', 'like', '%'.$req->search.'%');
-            })
-            ->where('tran_type', 3)
-            ->where('tran_method','Payment')
-            ->whereYear('tran_date', $currentYear)
-            ->whereMonth('tran_date', $currentMonth)
-            ->orderBy('id','asc')
-            ->get();
-        } else {
-            $data = Transaction_Detail::on('mysql_second')
-            ->with('User','Head')
-            ->where('tran_method','Payment')
-            ->where('tran_type', 3)
-            ->orderBy('id','asc')
-            ->get();
-        }
+        $start = Carbon::parse($req->startDate)->startOfMonth()->toDateString(); // 2025-01-01
+        $end = Carbon::parse($req->endDate)->endOfMonth()->toDateString();
+
+        $data = Transaction_Detail::on('mysql_second')
+        ->with('User','Head')
+        ->where('tran_type', 3)
+        ->where('tran_method','Payment')
+        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$start, $end])
+        ->orderBy('id','asc')
+        ->get();
 
 
         $report_name = 'Salary Details Report';

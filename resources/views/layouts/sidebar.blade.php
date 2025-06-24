@@ -196,7 +196,7 @@
                         <li class="sub-menu-item" data-url="{{route('show.paymentMethod')}}">
                             <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'payment_method') ? 'active':''}}">
                                 <p>
-                                    <i class="fa-solid fa-shop"></i>
+                                    <i class="fa-solid fa-credit-card"></i>
                                     Payment Method
                                 </p>
                             </div>
@@ -236,7 +236,7 @@
                     <li class="sub-menu-item" data-url="{{route('show.corporate')}}">
                         <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'advance_receive') ? 'active':''}}">
                             <p>
-                                <i class="fa-solid fa-shop"></i>
+                                <i class="fa-solid fa-building-columns"></i>
                                 Corporate
                             </p>
                         </div>

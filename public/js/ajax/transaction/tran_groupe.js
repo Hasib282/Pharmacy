@@ -47,7 +47,6 @@ $(document).ready(function () {
     // Insert Ajax
     InsertAjax('transaction/setup/groupes', {company: { selector: "#company", attribute: 'data-id' },type: 1}, function() {
         $('#groupeName').focus();
-        $('#company').removeAttr('data-id');
     });
 
 

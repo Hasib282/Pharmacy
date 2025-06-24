@@ -49,7 +49,6 @@ $(document).ready(function () {
     // Insert Ajax
     InsertAjax('transaction/setup/heads', {company: { selector: "#company", attribute: 'data-id' },}, function() {
         $('#groupe').focus();
-        $('#company').removeAttr('data-id');
     });
 
 

@@ -109,7 +109,7 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax(EditFormInputValue);
+    EditAjaxCall('hr/employee/organization', EditFormInputValue)
 
 
     // Update Ajax
@@ -135,15 +135,15 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(item){
-        $('#id').val(item.id);
-        $('#emp_id').val(item.emp_id);
-        $('#update_joining_date').val(item.joining_date);
-        $('#updateLocation').val(item.location.upazila);
-        $('#updateLocation').attr('data-id',item.joining_location);
-        $('#updateDepartment').val(item.department.name);
-        $('#updateDepartment').attr('data-id',item.department.id);
-        $('#updateDesignation').val(item.designation.designation);
-        $('#updateDesignation').attr('data-id',item.designation.id);
+    function EditFormInputValue(res){
+        $('#id').val(res.data.id);
+        $('#emp_id').val(res.data.emp_id);
+        $('#update_joining_date').val(res.data.joining_date);
+        $('#updateLocation').val(res.data.location.upazila);
+        $('#updateLocation').attr('data-id',res.data.joining_location);
+        $('#updateDepartment').val(res.data.department.name);
+        $('#updateDepartment').attr('data-id',res.data.department.id);
+        $('#updateDesignation').val(res.data.designation.designation);
+        $('#updateDesignation').attr('data-id',res.data.designation.id);
     }
 });

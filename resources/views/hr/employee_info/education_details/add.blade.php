@@ -45,7 +45,7 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="group_0">Group</label>
-                        <select name="group" id="group_0" class="group-dropdown">
+                        <select name="group[]" id="group_0" class="group-dropdown">
                             <option value="">Select</option>
                             <option value="Science">Science</option>
                             <option value="Commerce">Commerce</option>

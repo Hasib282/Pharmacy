@@ -67,6 +67,17 @@ class ExperienceDetailsController extends Controller
 
 
 
+    // Edit Employee Education Details
+    public function Edit(Request $req){
+        $data = Employee_Experience_Detail::on('mysql_second')->findOrFail($req->id);
+        return response()->json([
+            'status'=> true,
+            "data" => $data,
+        ], 200);  
+    }
+
+
+
     // Update Employee Experience Details
     public function Update(Request $req){
         $data = Employee_Experience_Detail::on('mysql_second')->findOrFail($req->id);

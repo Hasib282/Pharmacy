@@ -112,7 +112,7 @@ $(document).ready(function () {
     InsertAjax('hr/employee/personal', {location: { selector: '#location', attribute: 'data-id' }, company: { selector: '#company', attribute: 'data-id' }}, function() {
         $('#name').focus();
         $('#location').removeAttr('data-id');
-        $('#previewImage').attr('src',`#`).hide();
+        $('#previewImage').attr('src',`#`);
     });
 
 

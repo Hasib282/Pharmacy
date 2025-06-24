@@ -102,7 +102,7 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax(EditFormInputValue);
+    EditAjaxCall('hr/employee/experience', EditFormInputValue)
 
 
     // Update Ajax
@@ -122,15 +122,15 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(item){
-        $('#id').val(item.id);
-        $('#empId').val(item.emp_id);
-        $('#update_company_name').val(item.company_name);
-        $('#update_department').val(item.department);
-        $('#update_designation').val(item.designation);
-        $('#update_company_location').val(item.company_location);
-        $('#update_start_date').val(item.start_date);
-        $('#update_end_date').val(item.end_date);
+    function EditFormInputValue(res){
+        $('#id').val(res.data.id);
+        $('#empId').val(res.data.emp_id);
+        $('#update_company_name').val(res.data.company_name);
+        $('#update_department').val(res.data.department);
+        $('#update_designation').val(res.data.designation);
+        $('#update_company_location').val(res.data.company_location);
+        $('#update_start_date').val(res.data.start_date);
+        $('#update_end_date').val(res.data.end_date);
     }
 
 

@@ -7,14 +7,16 @@
 <div class="add-search">
     <div class="rows">
         <div class="c-3">
-                   
-                    @if(Request::segment(1) == 'transaction' && auth()->user()->hasPermission(18))
-                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                    @endif
+            @if(Request::segment(1) == 'transaction' && auth()->user()->hasPermission(18))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
+            @if(Request::segment(1) == 'hr' && Request::segment(3) == 'heads' && auth()->user()->hasPermission(97))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
 
-                    @if(Request::segment(1) == 'hotel' && auth()->user()->hasPermission(312))
-                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                    @endif
+            @if(Request::segment(1) == 'hotel' && auth()->user()->hasPermission(312))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
         </div>
         <div class="c-6">
 

@@ -53,7 +53,7 @@ class EmployeeInfoController extends Controller
     /////////////////////////// --------------- Employee Education Details Table Methods Start---------- //////////////////////////
     // Show All Employees
     public function EducationDetails(Request $req){
-        $name = "Personal Details";
+        $name = "Education Details";
         if ($req->ajax()) {
             return view('hr.employee_info.education_details.ajaxBlade', compact('name'));
         }

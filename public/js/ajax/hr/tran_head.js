@@ -13,7 +13,7 @@ function ShowTranHead(res) {
                 `;
             }
             
-            if (userPermissions.include(99)) {
+            if (userPermissions.includes(99)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

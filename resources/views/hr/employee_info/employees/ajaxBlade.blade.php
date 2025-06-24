@@ -6,7 +6,11 @@
 {{-- Add Button And Search Fields --}}
 <div class="add-search">
     <div class="rows">
-        <div class="c-3"></div>
+        <div class="c-3">
+            @if(Request::segment(1) == 'hr' && Request::segment(2) == 'employee' && Request::segment(3) == 'all' && auth()->user()->hasPermission(22))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
+        </div>
         <div class="c-6">
 
         </div>

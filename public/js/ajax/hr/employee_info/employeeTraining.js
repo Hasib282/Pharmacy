@@ -111,7 +111,7 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax(EditFormInputValue);
+    EditAjaxCall('hr/employee/training', EditFormInputValue)
 
 
     // Update Ajax
@@ -131,15 +131,15 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(item){
-        $('#id').val(item.id);
-        $('#empId').val(item.emp_id);
-        $('#update_training_title').val(item.training_title);
-        $('#update_country').val(item.country);
-        $('#update_topic').val(item.topic);
-        $('#update_institution_name').val(item.institution_name);
-        $('#update_start_date').val(item.start_date);
-        $('#update_end_date').val(item.end_date);
+    function EditFormInputValue(res){
+        $('#id').val(res.data.id);
+        $('#empId').val(res.data.emp_id);
+        $('#update_training_title').val(res.data.training_title);
+        $('#update_country').val(res.data.country);
+        $('#update_topic').val(res.data.topic);
+        $('#update_institution_name').val(res.data.institution_name);
+        $('#update_start_date').val(res.data.start_date);
+        $('#update_end_date').val(res.data.end_date);
     }
     
 

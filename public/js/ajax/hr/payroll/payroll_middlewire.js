@@ -64,7 +64,7 @@ function ShowPayrollMiddlewire(res) {
                 `;
             }
             
-            if (userPermissions.include(107)) {
+            if (userPermissions.includes(107)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

@@ -61,6 +61,17 @@ class TrainingDetailsController extends Controller
 
 
 
+    // Edit Employee Education Details
+    public function Edit(Request $req){
+        $data = Employee_Training_Detail::on('mysql_second')->findOrFail($req->id);
+        return response()->json([
+            'status'=> true,
+            "data" => $data,
+        ], 200);  
+    }
+
+
+
     // Update Employee Training Details
     public function Update(Request $req){
         $data = Employee_Training_Detail::on('mysql_second')->findOrFail($req->id);

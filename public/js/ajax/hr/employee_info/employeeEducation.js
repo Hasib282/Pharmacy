@@ -111,7 +111,7 @@ $(document).ready(function () {
 
 
     //Edit Ajax
-    EditAjax(EditFormInputValue);
+    EditAjaxCall('hr/employee/education', EditFormInputValue)
 
 
     // Update Ajax
@@ -131,36 +131,22 @@ $(document).ready(function () {
 
 
     // Additional Edit Functionality
-    function EditFormInputValue(item){
-        $('#id').val(item.id);
-        $('#empId').val(item.emp_id);
-        $('#update_degree').val(item.degree);
-        // Create options dynamically
-        $('#update_group').empty();
-        $('#update_group').append(`
-            <option value="Science" ${item.group === 'Science' ? 'selected' : ''}>Science</option>
-            <option value="Commerce" ${item.group === 'Commerce' ? 'selected' : ''}>Commerce</option>
-            <option value="Arts" ${item.group === 'Arts' ? 'selected' : ''}>Arts</option>
-        `);
-
-        $('#update_institution').val(item.institution);
-
-        // Create options dynamically
-        $('#update_result').empty();
-        $('#update_result').append(`
-            <option value="First Division/Class" ${item.result === 'First Division/Class' ? 'selected' : ''}>First Division/Class</option>
-            <option value="Second Division/Class" ${item.result === 'Second Division/Class' ? 'selected' : ''}>Second Division/Class</option>
-            <option value="Third Division/Class" ${item.result === 'Third Division/Class' ? 'selected' : ''}>Third Division/Class</option>
-            <option value="Grade" ${item.result === 'Grade' ? 'selected' : ''}>Grade</option>
-        `);
-
-        $('#update_marks').val(item.marks);
-        $('#update_scale').val(item.scale);
-        $('#update_cgpa').val(item.cgpa);
-        $('#update_batch').val(item.batch);
+    function EditFormInputValue(res){
+        console.log(res.data);
+        
+        $('#id').val(res.data.id);
+        $('#empId').val(res.data.emp_id);
+        $('#update_degree').val(res.data.degree);
+        $('#update_group').val(res.data.group);
+        $('#update_institution').val(res.data.institution);
+        $('#update_result').val(res.data.result);
+        $('#update_marks').val(res.data.marks);
+        $('#update_scale').val(res.data.scale);
+        $('#update_cgpa').val(res.data.cgpa);
+        $('#update_batch').val(res.data.batch);
         
         // Show or hide fields based on result
-        handleResultUpdate(item.result);
+        handleResultUpdate(res.data.result);
 
         // Attach change event handler to update fields dynamically
         $('#update_result').on('change', function () {

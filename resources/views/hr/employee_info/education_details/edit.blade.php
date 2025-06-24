@@ -28,9 +28,12 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_group">Group</label>
-                        <select name="group" id="update_group">
-
-                        </select>           
+                        <select name="group" id="update_group" class="group-dropdown">
+                            <option value="">Select</option>
+                            <option value="Science">Science</option>
+                            <option value="Commerce">Commerce</option>
+                            <option value="Arts">Arts</option>
+                        </select>
                         <span class="error" id="update_group_error"></span>
                     </div>
                 </div>
@@ -46,9 +49,13 @@
                 <div class="c-6">
                     <div class="form-input-group">
                         <label for="update_result">Result <span class="required" title="Required">*</span></label>
-                            <select name="result" id="update_result">
-
-                            </select>
+                        <select name="result" id="update_result" class="result-dropdown">
+                            <option value="">Select</option>
+                            <option value="First Division/Class">First Division/Class</option>
+                            <option value="Second Division/Class">Second Division/Class</option>
+                            <option value="Third Division/Class">Third Division/Class</option>
+                            <option value="Grade">Grade</option>
+                        </select>
                         <span class="error" id="update_result_error"></span>
                     </div>
                 </div>
