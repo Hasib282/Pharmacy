@@ -13,7 +13,7 @@ function ShowBedCategory(res) {
                 `;
             }
             
-            if (userPermissions.include(361)) {
+            if (userPermissions.includes(361)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

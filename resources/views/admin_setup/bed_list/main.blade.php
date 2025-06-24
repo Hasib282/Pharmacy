@@ -10,7 +10,10 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                @if(auth()->user()->hasPermission(304))
+                @if(Request::segment(1) == 'hotel'  && auth()->user()->hasPermission(304))
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+                @if(Request::segment(1) == 'hospital'  && auth()->user()->hasPermission(363))
                     <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
             </div>

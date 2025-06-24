@@ -68,7 +68,9 @@
         <div class="rows">
             <div class="c-3">
                 {{-- @if(Auth::user()->hasPermissionToRoute('insert.payroll')) --}}
+                     @if(auth()->user()->hasPermission(109))
                     <button id="PayrollProcess" data-modal-id="confirmModal"><i class="fa-solid fa-rotate"></i> Process Payroll</button>
+                @endif
                 {{-- @endif --}}
             </div>
             <div class="c-6">

@@ -13,7 +13,7 @@ function ShowPatientRegistration(res) {
                 `;
             }
             
-            if (userPermissions.include(381)) {
+            if (userPermissions.includes(381)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

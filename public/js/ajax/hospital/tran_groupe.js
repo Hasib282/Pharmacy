@@ -13,7 +13,7 @@ function ShowTranGroupe(res) {
                 `;
             }
             
-            if (userPermissions.include(369)) {
+            if (userPermissions.includes(369)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

@@ -8,9 +8,9 @@
     {{-- <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                  @if(auth()->user()->hasPermission(391))
-                        <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                    @endif
+                @if(auth()->user()->hasPermission(391))
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
             <div class="c-9 search">
                 <select name="searchOption" id="searchOption" class="select-small">
                     <option value="1" {{ $searchOptionValue == '1' ? 'selected' : '' }}>Name</option>
@@ -52,7 +52,9 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
+                @if(auth()->user()->hasPermission(391))
                     <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
             </div>
             <div class="c-6">
 
