@@ -54,33 +54,39 @@ function CheckIfLastPage(callback) {
 
 
 //////////////////// -------------------- Update URL With Query Parameters -------------------- ////////////////////
-function UpdateUrl(url, queryParams) {
-    let baseURL = url.replace(/^(http[s]?:\/\/[^/]+)(\/api)/, window.location.origin);
-    let separator = baseURL.includes('?') ? '&' : '?';
-    let newUrl = (!$.isEmptyObject(queryParams) && queryParams != undefined ) ? `${baseURL}${separator}${$.param(queryParams)}` : baseURL;
-    history.pushState(null, '', newUrl);
+// function UpdateUrl(url, queryParams) {
+//     let baseURL = url.replace(/^(http[s]?:\/\/[^/]+)(\/api)/, window.location.origin);
+//     let separator = baseURL.includes('?') ? '&' : '?';
+//     let newUrl = (!$.isEmptyObject(queryParams) && queryParams != undefined ) ? `${baseURL}${separator}${$.param(queryParams)}` : baseURL;
+//     history.pushState(null, '', newUrl);
 
-    // Update the Print Button href
-    if($('#print').length){
-        let urlObj = new URL(newUrl);
+//     // Update the Print Button href
+//     if($('#print').length){
+//         let urlObj = new URL(newUrl);
 
         
-        urlObj.searchParams.delete('page'); // remove 'page' query parameter
+//         urlObj.searchParams.delete('page'); // remove 'page' query parameter
 
-        let pathname = urlObj.pathname;
-        // Check if the pathname ends with '/search'
-        if (pathname.endsWith('/search')) {
-            pathname = pathname.replace(/\/search$/, '/print'); // Replace '/search' with '/print'
-        } else {
-            pathname = pathname.replace(/\/$/, '') + '/print'; // Append '/print' to the pathname
-        }
+//         let pathname = urlObj.pathname;
+//         // Check if the pathname ends with '/search'
+//         if (pathname.endsWith('/search')) {
+//             pathname = pathname.replace(/\/search$/, '/print'); // Replace '/search' with '/print'
+//         } else {
+//             pathname = pathname.replace(/\/$/, '') + '/print'; // Append '/print' to the pathname
+//         }
 
-        // Update #print href
-        $('#print').attr('href', `${urlObj.origin}/api${pathname}${urlObj.search}`);
-    }
+//         // Update #print href
+//         $('#print').attr('href', `${urlObj.origin}/api${pathname}${urlObj.search}`);
+//     }
+// }; // End Function
+
+function UpdateUrl(url, queryParams) {
+    let newUrl = `${url}?${$.param(queryParams)}`;
+    let urlObj = new URL(newUrl, window.location.origin);
+
+    // Update #print href
+    $('#print').attr('href', `${urlObj}`);
 }; // End Function
-
-
 
 
 

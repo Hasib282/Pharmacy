@@ -60,7 +60,7 @@ class PartyDetailsController extends Controller
         )
         ->orderBy('tran_id')
         ->orderBy('tran_date')
-        ->paginate(15);
+        ->get();
         
         return response()->json([
             'status'=> true,

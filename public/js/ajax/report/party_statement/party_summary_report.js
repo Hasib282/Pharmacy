@@ -81,6 +81,8 @@ function ShowPartySummaryReports(res) {
             {key:'total_due', type: 'number', footerType:'sum'},
         ],
     });
+
+    UpdateUrl('/api/report/party/summary/print', {method: $("#methodOption").val(),startDate: $('#startDate').val(), endDate: $('#endDate').val() });
 }
 
 

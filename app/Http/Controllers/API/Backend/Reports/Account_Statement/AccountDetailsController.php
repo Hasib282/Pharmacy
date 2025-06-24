@@ -137,85 +137,52 @@ class AccountDetailsController extends Controller
 
     // Print Account Details Report
     public function Print(Request $req){
-        if ($req->query()) {
-            $opening = Transaction_Detail::on('mysql_second')->select(
-                DB::raw('SUM(receive) as total_receive'), 
-                DB::raw('SUM(payment) as total_payment')
-            )
-            ->whereRaw("DATE(tran_date) < ?", [$req->startDate])
-            ->first();
-    
-    
-            $data = [
-                'Opening' => $opening,
-            ];
-    
-            switch ($req->type) {
-                case 1:
-                    $data['General'] = $this->FindAccountDetailsStatement(1, $req);
-                    break;
-                case 2:
-                    $data['Party'] = $this->FindAccountDetailsStatement(2, $req);
-                    break;
-                case 3:
-                    $data['Payroll'] = $this->FindAccountDetailsStatement(3, $req);
-                    break;
-                case 4:
-                    $data['Bank'] = $this->FindAccountDetailsStatement(4, $req);
-                    break;
-                case 5:
-                    $data['Inventory'] = $this->FindAccountDetailsStatement(5, $req);
-                    break;
-                case 6:
-                    $data['Pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
-                    break;
-                case 7:
-                    $data['Hospital'] = $this->FindAccountDetailsStatement(7, $req);
-                    break;
-                case 8:
-                    $data['Hotel'] = $this->FindAccountDetailsStatement(8, $req);
-                    break;
-                default:
-                    $data['General'] = $this->FindAccountDetailsStatement(1, $req);
-                    $data['Party'] = $this->FindAccountDetailsStatement(2, $req);
-                    $data['Payroll'] = $this->FindAccountDetailsStatement(3, $req);
-                    $data['Bank'] = $this->FindAccountDetailsStatement(4, $req);
-                    $data['Inventory'] = $this->FindAccountDetailsStatement(5, $req);
-                    $data['Pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
-                    $data['Hospital'] = $this->FindAccountDetailsStatement(7, $req);
-                    $data['Hotel'] = $this->FindAccountDetailsStatement(8, $req);
-            }
-        }
-        else {
-            $general = $this->GetAccountDetailsStatement(1);
-            $party = $this->GetAccountDetailsStatement(2);
-            $payroll = $this->GetAccountDetailsStatement(3);
-            $bank = $this->GetAccountDetailsStatement(4);
-            $inventory = $this->GetAccountDetailsStatement(5);
-            $pharmacy = $this->GetAccountDetailsStatement(6);
-            $hospital = $this->GetAccountDetailsStatement(7);
-            $hotel = $this->GetAccountDetailsStatement(8);
-            
-            $opening = Transaction_Detail::on('mysql_second')->select(
-                DB::raw('SUM(receive) as total_receive'), 
-                DB::raw('SUM(payment) as total_payment')
-            )
-            ->whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])
-            ->first();
+        $opening = Transaction_Detail::on('mysql_second')->select(
+            DB::raw('SUM(receive) as total_receive'), 
+            DB::raw('SUM(payment) as total_payment')
+        )
+        ->whereRaw("DATE(tran_date) < ?", [$req->startDate])
+        ->first();
 
-            $type = Transaction_Main_Head::on('mysql')->get();
-            
-            $data = [       
-                'Opening'           =>      $opening,
-                'General'           =>      $general,
-                'Party'             =>      $party,
-                'Payroll'           =>      $payroll,
-                'Bank'              =>      $bank,
-                'Inventory'         =>      $inventory,
-                'Pharmacy'          =>      $pharmacy,
-                'Hospital'          =>      $hospital,
-                'Hotel'             =>      $hotel,
-            ];
+
+        $data = [
+            'opening' => $opening,
+        ];
+
+        switch ($req->type) {
+            case 1:
+                $data['General'] = $this->FindAccountDetailsStatement(1, $req);
+                break;
+            case 2:
+                $data['Party'] = $this->FindAccountDetailsStatement(2, $req);
+                break;
+            case 3:
+                $data['Payroll'] = $this->FindAccountDetailsStatement(3, $req);
+                break;
+            case 4:
+                $data['Bank'] = $this->FindAccountDetailsStatement(4, $req);
+                break;
+            case 5:
+                $data['Inventory'] = $this->FindAccountDetailsStatement(5, $req);
+                break;
+            case 6:
+                $data['Pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
+                break;
+            case 7:
+                $data['Hospital'] = $this->FindAccountDetailsStatement(7, $req);
+                break;
+            case 8:
+                $data['Hotel'] = $this->FindAccountDetailsStatement(8, $req);
+                break;
+            default:
+                $data['General'] = $this->FindAccountDetailsStatement(1, $req);
+                $data['Party'] = $this->FindAccountDetailsStatement(2, $req);
+                $data['Payroll'] = $this->FindAccountDetailsStatement(3, $req);
+                $data['Bank'] = $this->FindAccountDetailsStatement(4, $req);
+                $data['Inventory'] = $this->FindAccountDetailsStatement(5, $req);
+                $data['Pharmacy'] = $this->FindAccountDetailsStatement(6, $req);
+                $data['Hospital'] = $this->FindAccountDetailsStatement(7, $req);
+                $data['Hotel'] = $this->FindAccountDetailsStatement(8, $req);
         }
         
         $report_name = 'Account Details Report';

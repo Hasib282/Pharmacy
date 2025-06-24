@@ -162,6 +162,8 @@ function ShowSummaryReports(res) {
     $('#grandReceive').text(Number(grandReceive));
     $('#grandPayment').text(Number(grandPayment));
     $('#closing').text(Number(opening + grandReceive - grandPayment));
+
+    UpdateUrl('/api/report/account/summary/print', {type: $("#typeOption").val(),startDate: $('#startDate').val(), endDate: $('#endDate').val() });
 }
 
 

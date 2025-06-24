@@ -80,7 +80,7 @@
                 <tr>
                     <td colspan="3">
                         <table class="show-table" style="margin:20px 0;">
-                            <caption class="sub-caption">{{ $title }} Transaction</caption>
+                            <caption style="text-align: left;font-size:18px;">{{ $title }} Transaction</caption>
                             <thead>
                                 <tr>
                                     <th style="width: 5%;">SL:</th>
