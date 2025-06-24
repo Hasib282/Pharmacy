@@ -13,7 +13,7 @@ function ShowDoctors(res) {
                 `;
             }
             
-            if (userPermissions.include(393)) {
+            if (userPermissions.includes(393)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

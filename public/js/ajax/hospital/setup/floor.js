@@ -13,7 +13,7 @@ function ShowFloor(res) {
                 `;
             }
             
-            if (userPermissions.include(353)) {
+            if (userPermissions.includes(353)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
