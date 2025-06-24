@@ -86,7 +86,7 @@ function ShowPharmacyPurchases(res) {
 
             let buttons = '';
             
-            if ($('#status').val() == 2) {
+            if ($('#status').val() == 2 && userPermissions.includes(152)) {
                 buttons += `<button class="open-modal" data-modal-id="verifyModal" id="verify" data-id="${row.tran_id}"><i class="fa-solid fa-check"></i> Verify</button>`
             }
 
@@ -100,7 +100,7 @@ function ShowPharmacyPurchases(res) {
                 `;
             }
             
-            if (userPermissions.include(151)) {
+            if (userPermissions.includes(151)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

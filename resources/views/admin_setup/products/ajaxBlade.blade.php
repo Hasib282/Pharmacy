@@ -62,7 +62,14 @@
 <div class="add-search">
     <div class="rows">
         <div class="c-3">
+               
+            @if(Request::segment(1) == 'inventory' && auth()->user()->hasPermission(215))
                 <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
+
+            @if(Request::segment(1) == 'pharmacy' && auth()->user()->hasPermission(133))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
         </div>
         <div class="c-6">
 

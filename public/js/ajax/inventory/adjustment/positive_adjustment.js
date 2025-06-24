@@ -12,7 +12,7 @@ function ShowInventoryPositiveAdjustments(res) {
                 `;
             }
             
-            if (userPermissions.include(250)) {
+            if (userPermissions.includes(250)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

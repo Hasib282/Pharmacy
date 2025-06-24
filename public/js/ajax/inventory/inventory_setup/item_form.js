@@ -12,7 +12,7 @@ function ShowInventoryForms(res) {
                 `;
             }
             
-            if (userPermissions.include(209)) {
+            if (userPermissions.includes(209)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

@@ -53,7 +53,7 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
-                @if(auth()->user()->hasPermission(6))
+                @if(auth()->user()->hasPermission(6) || auth()->user()->user_role == 1)
                     <button class="open-modal btn-blue" data-modal-id="copyPermission" id="permissionCopy"><i class="fas fa-edit"></i>Assign Permission To Another User</button>
                 @endif
             </div>

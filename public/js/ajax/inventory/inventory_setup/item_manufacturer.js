@@ -12,7 +12,7 @@ function ShowInventoryManufacturers(res) {
                 `;
             }
             
-            if (userPermissions.include(197)) {
+            if (userPermissions.includes(197)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

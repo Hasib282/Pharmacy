@@ -1095,7 +1095,7 @@ return [
         ['uri' => 'api/inventory/users/suppliers', 'method' => 'PUT'],
     ],
     229 => [
-        ['uri' => 'api/inventory/users/suppliers', 'method' => 'Delete'],
+        ['uri' => 'api/inventory/users/suppliers', 'method' => 'DELETE'],
     ],
     
     

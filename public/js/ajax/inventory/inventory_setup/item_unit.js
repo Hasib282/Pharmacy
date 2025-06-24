@@ -12,7 +12,7 @@ function ShowInventoryUnits(res) {
                 `;
             }
             
-            if (userPermissions.include(205)) {
+            if (userPermissions.includes(205)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

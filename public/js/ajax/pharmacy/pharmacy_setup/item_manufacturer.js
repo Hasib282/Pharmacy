@@ -13,7 +13,7 @@ function ShowPharmacyManufacturers(res) {
                 `;
             }
             
-            if (userPermissions.include(115)) {
+            if (userPermissions.includes(115)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

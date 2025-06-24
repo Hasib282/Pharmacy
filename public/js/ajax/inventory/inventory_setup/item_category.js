@@ -12,7 +12,7 @@ function ShowInventoryCategorys(res) {
                 `;
             }
             
-            if (userPermissions.include(201)) {
+            if (userPermissions.includes(201)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

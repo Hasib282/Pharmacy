@@ -91,7 +91,7 @@ function ShowPharmacyClientReturns(res) {
                 `;
             }
             
-            if (userPermissions.include(160)) {
+            if (userPermissions.includes(160)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

@@ -71,6 +71,24 @@
                 @if(Request::segment(1) == 'transaction' && Request::segment(3) == 'payment'   && auth()->user()->hasPermission(46))
                         <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
+
+                
+
+                @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'receive'   && auth()->user()->hasPermission(256))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
+                @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'payment'   && auth()->user()->hasPermission(260))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
+                @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'receive'   && auth()->user()->hasPermission(174))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
+                @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'payment'   && auth()->user()->hasPermission(178))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
         </div>
         <div class="c-3">
             <label for="startDate">Start Date</label>

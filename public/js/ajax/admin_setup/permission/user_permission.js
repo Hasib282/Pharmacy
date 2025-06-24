@@ -57,7 +57,7 @@ function ShowUserPermissions(res) {
         actions: (row) => {
             let buttons = '';
             
-            if (userPermissions.includes(6)) {
+            if (userPermissions.includes(6) || role ==1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.user_id}"><i class="fas fa-edit"></i></button>
                 `;

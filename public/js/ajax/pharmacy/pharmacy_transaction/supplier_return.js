@@ -91,7 +91,7 @@ function ShowPharmacySupplierReturns(res) {
                 `;
             }
             
-            if (userPermissions.include(164)) {
+            if (userPermissions.includes(164)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
