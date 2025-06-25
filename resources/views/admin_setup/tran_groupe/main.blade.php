@@ -22,7 +22,7 @@
                 <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                  @endif
 
-                @if(Request::segment(1) == 'pharmacy' && auth()->user()->hasPermission(119))
+                @if(Request::segment(1) == 'pharmacy' && auth()->user()->hasPermission(129))
                     <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
 

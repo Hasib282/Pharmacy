@@ -39,10 +39,6 @@ function ShowTranWith(res) {
         tbody: ['tran_with_name','role.name','tran_method'],
         actions: (row) => {
             let buttons = '';
-
-            buttons += `
-                    <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
-                `;
         
             if (userPermissions.includes(220)) {
                 buttons += `

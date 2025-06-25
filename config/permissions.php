@@ -712,7 +712,7 @@ return [
         ['uri' => 'api/pharmacy/transaction/purchase', 'method' => 'DELETE'],
     ],
     152 => [
-        ['uri' => 'api/pharmacy/transaction/purchase/verify', 'method' => 'POST'],
+        ['uri' => 'api/pharmacy/transaction/purchase/verify', 'method' => 'DELETE'],
     ],
     153 => [
         ['uri' => 'api/pharmacy/transaction/issue', 'method' => 'GET'],

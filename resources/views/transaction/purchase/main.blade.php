@@ -77,7 +77,10 @@
         <div class="rows" style="align-items:center;">
             <div class="c-3">
                 @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'purchase'   && auth()->user()->hasPermission(231))
-                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+                @if(Request::segment(1) == 'pharmacy' && Request::segment(3) == 'purchase'   && auth()->user()->hasPermission(149))
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
             </div>
             <div class="c-2">
