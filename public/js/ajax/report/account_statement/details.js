@@ -97,11 +97,24 @@
 
 function ShowDetailsReports(res) {
     let opening = Number(res.data.opening.total_receive - res.data.opening.total_payment);
-    $('#opening').text(opening)
 
     let tableRows = '';
     let grandReceive = 0;
     let grandPayment = 0;
+    let balance = opening;
+    console.log(opening);
+    
+    if ($('#data-table thead #opening-row').length === 0) {
+        $('#data-table thead').append(`<tr id="opening-row">
+                                        <th style="text-align: right;" colspan="5">Opening Balance</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th style="text-align: right; width:10%;" id="opening">${formatNumber(opening)}</th>
+                                    </tr>`);
+    }
+    else{
+        $('#opening').html(formatNumber(opening))
+    }
 
     if(!$.isEmptyObject(res.data)){
         $.each(res.data, function(title, datas) {
@@ -109,103 +122,102 @@ function ShowDetailsReports(res) {
                 if (Array.isArray(datas) && datas.length > 0) {
                     let totalReceive = 0;
                     let totalPayment = 0;
+                    let lastGroupeId = null;
+                    let lastTranId = null;
                     
                     tableRows += `
                     <tr>
-                        <td colspan="3">
-                            <table class="show-table" style="margin:20px 0;">
-                                <thead>
-                                    <caption class="sub-caption">${title} Transaction</caption>
-                                    <tr>
-                                        <th style="width: 5%;">SL:</th>
-                                        <th style="width: 10%;">Tran Id</th>
-                                        <th style="text-align: center; width:20%;">Groupe</th>
-                                        <th style="text-align: center; width:40%;">Product/Service</th>
-                                        <th style="text-align: center; width:12%;">Receive</th>
-                                        <th style="text-align: center; width:12%;">Payment</th>
-                                    </tr>
-                                </thead>
-                                <tbody>`;
+                        <td colspan="13" style="font-size:18px;padding: 8px 0 8px 4px;">
+                            <strong>${title} Transaction </strong>
+                        </td>    
+                    <tr>`;
 
-                                    $.each(datas, function(key, item) {
-                                        let lastGroupeId = null;
-                                        let lastTranId = null;
-                                        totalReceive += item.receive;
-                                        totalPayment += item.payment;
+                    $.each(datas, function(key, item) {
+                        
+                        totalReceive += item.receive;
+                        totalPayment += item.payment;
+                        balance += item.receive;
+                        balance -= item.payment;
+                        
 
-                                        
+                        tableRows += `
+                        <tr>
+                            ${item.tran_id != lastTranId ? 
+                                `<td>${item.tran_id}</td>
+                                <td>${new Date(item.tran_date).toLocaleDateString('en-US', { day:'numeric', month: 'short', year: 'numeric' })}</td> 
+                                <td>${item.tran_bank ? item.bank?.name: item.user?.user_name}</td> 
+                                <td>${item.groupe?.tran_groupe_name}</td>` 
+                                // <td>${item.groupe.tran_groupe_name}</td>` 
+                                :  
+                                `<td></td>
+                                <td></td>
+                                <td></td>
+                                ${item.tran_groupe_id != lastGroupeId ? 
+                                    `<td>${item.groupe?.tran_groupe_name}</td>` 
+                                    // `<td>${item.groupe.tran_groupe_name}</td>` 
+                                    : 
+                                    `<td></td>`
+                                }`
+                            }
+                            
+                            <td>${item.head?.tran_head_name}</td>
+                            <td style="text-align: right">${formatNumber(item.receive)}</td>
+                            <td style="text-align: right">${formatNumber(item.payment)}</td>
+                            <td style="text-align: right">${formatNumber(balance)}</td>
+                        </tr>`;
 
-                                        tableRows += `
-                                        <tr>
-                                            <td>${key +1}</td>
-                                            ${item.tran_id != lastTranId ? 
-                                                `<td>${item.tran_id}</td>
-                                                <td>${item.groupe.tran_groupe_name}</td>` 
-                                                // <td>${item.groupe.tran_groupe_name}</td>` 
-                                                :  
-                                                `<td></td>
-                                                ${item.tran_groupe_id != lastGroupeId ? 
-                                                    `<td>${item.groupe.tran_groupe_name}</td>` 
-                                                    // `<td>${item.groupe.tran_groupe_name}</td>` 
-                                                    : 
-                                                    `<td></td>`
-                                                }`
-                                            }
-                                            
-                                            <td>${item.head.tran_head_name}</td>
-                                            <td style="text-align: right">${formatNumber(item.receive)}</td>
-                                            <td style="text-align: right">${formatNumber(item.payment)}</td>
-                                        </tr>`;
+                        lastTranId = item.tran_id;
+                        lastGroupeId = item.tran_groupe_id;
+                    });
 
-                                        lastTranId = item.tran_id;
-                                        lastGroupeId = item.tran_groupe_id;
-                                    });
+                    grandReceive += totalReceive;
+                    grandPayment += totalPayment;
 
-                                    grandReceive += totalReceive;
-                                    grandPayment += totalPayment;
-
-                                tableRows += `
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="4" style="text-align: right">Sub Total:</td>
-                                        <td style="text-align: right;">${formatNumber(totalReceive)}</td>
-                                        <td style="text-align: right;">${formatNumber(totalPayment)}</td>
-                                    </tr>     
-                                </tfoot> 
-                            </table>
-                        </td>
+                    tableRows += `
+                    <tr>
+                        <td colspan="5">Sub Total:</td>
+                        <td style="text-align: right;">${formatNumber(totalReceive)}</td>
+                        <td style="text-align: right;">${formatNumber(totalPayment)}</td>
+                        <td style="text-align: right;">${formatNumber(balance)}</td>
                     </tr>`;
+
                 }
             }
         });
         $('#data-table tbody').html(tableRows);
     }
-    // tableInstance = new GenerateTable({
-    //     tableId: '#data-table',
-    //     data: res.data,
-    //     tbody: ['head.tran_head_name',{key:'expiry_date', type: 'date'},{key:'quantity',type:'number'},'tran_id'],
-    // });
 
-    $('#grandReceive').text(Number(grandReceive));
-    $('#grandPayment').text(Number(grandPayment));
-    $('#closing').text(Number(opening + grandReceive - grandPayment));
+    $('#data-table tfoot').html(
+        `<tr>
+            <td style="text-align: right;" colspan="5">Grand Total:</td>
+            <td style="text-align: right;width:10%;">${formatNumber(Number(grandReceive))}</td>
+            <td style="text-align: right;width:10%;">${formatNumber(Number(grandPayment))}</td>
+            <td style="width:10%;"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;" colspan="5">Closing Balance</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;">${formatNumber(Number(opening + grandReceive - grandPayment))}</td>
+        </tr>`
+    );
+    
 
     UpdateUrl('/api/report/account/details/print', {type: $("#typeOption").val(),startDate: $('#startDate').val(), endDate: $('#endDate').val() });
 }
 
 $(document).ready(function () {
-    // $(document).off(`.${'SearchBySelect'}`);
-
-
     // Render The Table Heads
-    // renderTableHead([
-    //     { label: 'SL:', type: 'select', options: [15, 30, 50, 100, 500] },
-    //     { label: 'Company Id', key: 'company_id' },
-    //     { label: 'Company Name', key: 'name' },
-    //     { label: 'Permission', key: 'permission' },
-    //     { label: 'Action', type: 'button' }
-    // ]);
+    renderTableHead([
+        { label: 'Tran Id', key: 'tran_id' },
+        { label: 'Date', key: 'tran_date', type:"date" },
+        { label: 'Client/Supplier', key: 'user.user_name' },
+        { label: 'Groupe', key: 'groupe.tran_groupe_name' },
+        { label: 'Product/Service', key:'head.tran_head_name' },
+        { label: 'Receive' },
+        { label: 'Payment' },
+        { label: 'Balance' },
+    ]);
 
 
     // Load Data on Hard Reload

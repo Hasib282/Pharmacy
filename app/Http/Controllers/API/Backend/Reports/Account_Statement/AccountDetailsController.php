@@ -15,10 +15,14 @@ class AccountDetailsController extends Controller
     // Create a Common Function for Getting Data Easily
     public function GetAccountDetailsStatement($tranType) {
         return Transaction_Detail::on('mysql_second')
-            ->with('Groupe', 'Head')
+            ->with('Groupe', 'Head','User','Bank')
+            ->whereDate('tran_date', date('Y-m-d'))
+            ->where(function ($query) {
+                $query->where('receive', '>', 0)
+                      ->orWhere('payment', '>', 0);
+            })
             ->where('tran_type', $tranType)
-            ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
-            ->orderBy('tran_date', 'asc')
+            ->orderBy('tran_id', 'asc')
             ->get();
     } // End Method
 
@@ -59,7 +63,6 @@ class AccountDetailsController extends Controller
         return response()->json([
             'status'=> true,
             'data' => $data,
-            'type' => $type,
         ], 200);
     } // End Method
 
@@ -67,12 +70,22 @@ class AccountDetailsController extends Controller
 
     // Create a Common Function for Getting Data Easily
     public function FindAccountDetailsStatement($tranType, $req) {
+        // return Transaction_Detail::on('mysql_second')
+        // ->with('Groupe', 'Head','User')
+        // ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        // ->where('tran_type', $tranType)
+        // ->orderBy('tran_date', 'asc')
+        // ->get();
         return Transaction_Detail::on('mysql_second')
-        ->with('Groupe', 'Head')
-        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-        ->where('tran_type', $tranType)
-        ->orderBy('tran_date', 'asc')
-        ->get();
+            ->with('Groupe', 'Head','User','Bank')
+            ->whereBetween(DB::raw('DATE(tran_date)'), [$req->startDate, $req->endDate])
+            ->where(function ($query) {
+                $query->where('receive', '>', 0)
+                      ->orWhere('payment', '>', 0);
+            })
+            ->where('tran_type', $tranType)
+            ->orderBy('tran_id', 'asc')
+            ->get();
     } // End Method
 
 
@@ -91,7 +104,7 @@ class AccountDetailsController extends Controller
             'opening' => $opening,
         ];
 
-        switch ($req->type) {
+        switch ($req->status) {
             case 1:
                 $data['General'] = $this->FindAccountDetailsStatement(1, $req);
                 break;
