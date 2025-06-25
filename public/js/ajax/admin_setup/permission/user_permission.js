@@ -257,10 +257,10 @@ $(document).ready(function () {
                 <br>
                 <div class="rows" style="border: 1px solid #80808069;align-items:center;">
                     <div class="c-8">
-                        <h3>${mainheadName}:</h3>
+                        <h3>${mainheadName.split('-')[0]}:</h3>
                     </div>
                     <div class="c-4" style="display:flex; justify-content:flex-end;">
-                        <label><input type="checkbox" id="select-all-${mainheadName}" class="select-all"> Select All</label>
+                        <label><input type="checkbox" id="select-all-${mainheadName.split('-')[1]}" class="select-all"> Select All</label>
                     </div>
                 </div>
                 <hr>

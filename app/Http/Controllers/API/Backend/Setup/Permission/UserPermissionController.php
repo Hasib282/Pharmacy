@@ -111,7 +111,7 @@ class UserPermissionController extends Controller
                 elseif (str_contains($name, 'Account Statement')) $groupKey = 'Account-Statement';
                 elseif (str_contains($name, 'Party Statement')) $groupKey = 'Party-Statement';
 
-                $groupedPermissions[$permission->mainhead->name ?? 'Uncategorized'][$groupKey][] = [
+                $groupedPermissions[$permission->mainhead->name.'-'.$permission->permission_mainhead ?? 'Uncategorized'][$groupKey][] = [
                     'id' => $permission->id,
                     'name' => $permission->name,
                     'checked' => in_array($permission->id, $userpermission),
