@@ -1,11 +1,11 @@
 let tableInstance = null;
 class GenerateTable {
-    constructor({tableId , data, tbody, actions, balance=0}) {
+    constructor({tableId , data, tbody, actions, balance=0,rowsPerPage = 15}) {
         this.table = document.querySelector(tableId); // Select Table
         this.data = data; // Original Data
         this.filteredData = [...data]; // Copy of Original data
         this.currentPage = 1;
-        this.rowsPerPage = 15;
+        this.rowsPerPage = rowsPerPage;
         this.sortKey = null;
         this.sortOrder = 'asc';
         this.tbody = tbody;
@@ -115,7 +115,11 @@ class GenerateTable {
 
         this.filteredData = this.data.filter(row => {
             return Object.keys(filters).every(key => {
-                const value = key.split('.').reduce((obj, k) => obj?.[k], row);
+                let value = key.split('.').reduce((obj, k) => obj?.[k], row);
+                // Special case: user_name / bank.name based on tran_bank
+                if (key === 'user.user_name') {
+                    value = row.tran_bank ? row.bank?.name : row.user?.user_name;
+                }
                 return (value ?? '').toString().toLowerCase().includes((filters[key] ?? '').toLowerCase());
             });
         });
@@ -191,13 +195,24 @@ class GenerateTable {
             return;
         }
 
+        // let lastTranId = null;
+        // let lastGroupeId = null;
 
         // Extracting the Rows one By one and create colums
         tbody.innerHTML = datas.map((row, i) => { 
             const columns = this.tbody.filter(col => !(typeof col === 'object' && col.grid === true)).map(col => { // Create Colums acording to tbody values
                 const data = typeof col === 'string' ? { key: col, type: 'text' } : col;
-                const value = data.key.split('.').reduce((obj, key) => obj?.[key], row);
+                let value = data.key.split('.').reduce((obj, key) => obj?.[key], row);
                 const type = data.type || 'text';
+
+                // Special case: user_name / bank.name based on tran_bank
+                if (data.key === 'user.user_name') {
+                    value = row.tran_bank ? row.bank?.name : row.user?.user_name;
+                }
+                
+                // Conditional logic for tran_id
+                // if (data.key === 'tran_id' && row.tran_id === lastTranId) return `<td></td>`;
+                // if (data.key === 'tran_date' && row.tran_id === lastTranId) return `<td></td>`;
                 
                 switch (type) {
                     case 'number':
@@ -251,11 +266,22 @@ class GenerateTable {
                         });
                         return `<td class="truncate-text">${permissionNames}</td>`;
 
+                    // case 'conditional':
+                    //     // let permissionNames = '';
+            
+                    //     // value.map((item, i) => { 
+                    //     //     permissionNames += item.name+',' ;
+                    //     // });
+                    //     return `<td>${permissionNames}</td>`;
+
                     default:
                         return `<td>${value ?? ''}</td>`;
                 }
             }).join('');
             
+            // lastTranId = row.tran_id;
+            // lastGroupeId = row.tran_groupe_id;
+
             const hasGrid = this.tbody.some(col => typeof col === 'object' && col.grid === true);
             
             return `
@@ -485,7 +511,7 @@ function renderTableHead(thead, tableId ='#data-table') {
 
     const row2 = thead.map(h => {
         if (h.type === 'date') { // Rowper page
-            return `<th><input class="col-filter" data-key="${h.key}" type="date" style="width:82px;font-size:10px;padding:2px;"></th>`;
+            return `<th><input class="col-filter" data-key="${h.key}" type="date" style="width:90px;font-size:10px;padding:2px;"></th>`;
         }
         else if (h.type === 'rowsPerPage') { // Rowper page
             const opts = h.options.map(option => `<option value="${option}">${option}</option>`).join('');
