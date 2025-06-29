@@ -10,7 +10,7 @@ class CollectionStatementController extends Controller
     //collection summery
       public function CollectionSummary(Request $req) {
         $name = "Collection Summary Statement";
-        $js = 'report/account_statement/summary';
+        $js = 'collection_statement/summary';
         if ($req->ajax()) {
             return view('reports.collections_statement.summary.ajaxBlade', compact('name', 'js'));
         }
@@ -23,7 +23,7 @@ class CollectionStatementController extends Controller
     //collection details
       public function CollectionDetails(Request $req) {
         $name = "Collection Details Statement";
-        $js = 'report/account_statement/summary';
+        $js = 'collection_statement/details';
         if ($req->ajax()) {
             return view('reports.collections_statement.details.ajaxBlade', compact('name', 'js'));
         }

@@ -14,14 +14,11 @@ class CollectionDetailsController extends Controller
     
     // Show All Collection Details Statement
     public function Show(Request $req){
-        $type = GetTranType($req->segment(2));
-
         $data = Transaction_Detail::on('mysql_second')
-        ->with('User','Head')
-        ->where('tran_method', 'Issue')
-        ->where('tran_type', $type)
-        ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
-        ->orderBy('id', 'asc')
+        ->with('User','Head','Groupe','Bank','Type')
+        ->where('receive','>',0)
+        ->whereDate("tran_date", date('Y-m-d'))
+        ->orderBy('tran_date', 'asc')
         ->get();
 
         return response()->json([
@@ -33,14 +30,12 @@ class CollectionDetailsController extends Controller
 
         // Search Collection Details Statement
     public function Search(Request $req){
-        $type = GetTranType($req->segment(2));
-
         $data = Transaction_Detail::on('mysql_second')
-        ->with('User','Head')
+        ->with('User','Head','Groupe','Bank','Type')
+        // ->where('tran_type',$req->status)
+        ->where('receive','>',0)
         ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
-        ->where('tran_method',$req->method)
-        ->where('tran_type', $type)
-        ->orderBy('tran_id','asc')
+        ->orderBy('tran_date','asc')
         ->get();
         
         return response()->json([

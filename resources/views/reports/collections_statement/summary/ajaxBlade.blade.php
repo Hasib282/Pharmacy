@@ -43,4 +43,4 @@
 
 
 <!-- ajax part start from here -->
-<script src="{{ asset('js/ajax/report/account_statement/summary.js') }}"></script>
+<script src="{{ asset('js/ajax/report').'/'. $js . '.js' }}"></script>
