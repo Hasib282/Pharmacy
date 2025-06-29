@@ -153,6 +153,21 @@ use App\Http\Controllers\API\Backend\Reports\Party_Statement\PartyDetailsControl
 use App\Http\Controllers\API\Backend\Reports\Party_Statement\PartySummaryController;
 
 
+// Report Collection Statement Controllers
+use App\Http\Controllers\API\Backend\Reports\Collection_Statement\CollectionDetailsController;
+use App\Http\Controllers\API\Backend\Reports\Collection_Statement\CollectionSummaryController;
+
+
+// Report Payment Statement Controllers
+use App\Http\Controllers\API\Backend\Reports\Payment_Statement\PaymentDetailsController;
+use App\Http\Controllers\API\Backend\Reports\Payment_Statement\PaymentSummaryController;
+
+
+// Report Consolidated Statement Controllers
+use App\Http\Controllers\API\Backend\Reports\Consolidated_Statement\ConsolidatedDetailsController;
+use App\Http\Controllers\API\Backend\Reports\Consolidated_Statement\ConsolidatedSummaryController;
+
+
 // Product Report Controllers
 use App\Http\Controllers\API\Backend\Reports\ItemFlowStatementController;
 use App\Http\Controllers\API\Backend\Reports\Purchase_Statement\PurchaseDetailController;
@@ -2001,6 +2016,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
         }); // End Account Statement Routes
         
         
+
+        
         
         // *************************************** Party Statement Routes Start *************************************** //
         Route::prefix('/party')->group(function () {
@@ -2018,6 +2035,69 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/details/search', 'Search');
             });
         }); // End Party Statement Routes
+        
+        
+
+
+        
+        // *************************************** Collection Statement Routes Start *************************************** //
+        Route::prefix('/collection')->group(function () {
+            ///////////// --------------- Collection Summary Statement Routes ----------- ///////////////////
+            Route::controller(CollectionSummaryController::class)->group(function () {
+                Route::get('/summary', 'Show');
+                Route::get('/summary/search', 'Search');
+            });
+            
+            
+            
+            ///////////// --------------- Collection Detail Statement Routes ----------- ///////////////////
+            Route::controller(CollectionDetailsController::class)->group(function () {
+                Route::get('/details', 'Show');
+                Route::get('/details/search', 'Search');
+            });
+        }); // End Collection Statement Routes
+        
+
+
+        
+        
+        // *************************************** Payment Statement Routes Start *************************************** //
+        Route::prefix('/payment')->group(function () {
+            ///////////// --------------- Payment Summary Statement Routes ----------- ///////////////////
+            Route::controller(PaymentSummaryController::class)->group(function () {
+                Route::get('/summary', 'Show');
+                Route::get('/summary/search', 'Search');
+            });
+            
+            
+            
+            ///////////// --------------- Payment Detail Statement Routes ----------- ///////////////////
+            Route::controller(PaymentDetailsController::class)->group(function () {
+                Route::get('/details', 'Show');
+                Route::get('/details/search', 'Search');
+            });
+        }); // End Payment Statement Routes
+        
+        
+
+
+        
+        // *************************************** Consolidated Statement Routes Start *************************************** //
+        Route::prefix('/consolidated')->group(function () {
+            ///////////// --------------- Consolidated Summary Statement Routes ----------- ///////////////////
+            Route::controller(ConsolidatedSummaryController::class)->group(function () {
+                Route::get('/summary', 'Show');
+                Route::get('/summary/search', 'Search');
+            });
+            
+            
+            
+            ///////////// --------------- Consolidated Detail Statement Routes ----------- ///////////////////
+            Route::controller(ConsolidatedDetailsController::class)->group(function () {
+                Route::get('/details', 'Show');
+                Route::get('/details/search', 'Search');
+            });
+        }); // End Consolidated Statement Routes
     }); // End Report Routes 
     
     /////-----/////-----/////-----/////-----/////-----///// Report Routes End /////-----/////-----/////-----/////-----/////-----/////

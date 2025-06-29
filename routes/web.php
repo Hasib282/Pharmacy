@@ -67,6 +67,9 @@ use App\Http\Controllers\Frontend\Hotel\HotelReportController;
 // Report Controllers
 use App\Http\Controllers\Frontend\Report\AccountStatementController;
 use App\Http\Controllers\Frontend\Report\PartyStatementController;
+use App\Http\Controllers\Frontend\Report\ConsolidatedStatementController;
+use App\Http\Controllers\Frontend\Report\PaymentStatementController;
+use App\Http\Controllers\Frontend\Report\CollectionStatementController;
 
 
 /*
@@ -1267,6 +1270,57 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 ///////////// --------------- Party Detail Statement Routes ----------- ///////////////////
                 Route::get('/details', 'PartyDetailsReport')->name('show.partyDetails');
                 Route::get('/details/search', 'SearchPartyDetailsReport')->name('search.partyDetails');
+            });
+        }); // End Party Statement Routes
+        
+        
+        
+        // *************************************** Consolidated Statement Routes Start *************************************** //
+        Route::prefix('/consolidated')->group(function () {
+            Route::controller(ConsolidatedStatementController::class)->group(function () {
+                ///////////// --------------- Consolidated Summary Statement Routes ----------- ///////////////////
+                Route::get('/summary', 'ConsolidatedSummaryReport')->name('show.consolidatedSummary');
+                Route::get('/summary/search', 'SearchConsolidatedSummaryReport')->name('search.consolidatedSummary');
+            
+            
+            
+                ///////////// --------------- Consolidated Detail Statement Routes ----------- ///////////////////
+                Route::get('/details', 'ConsolidatedDetailsReport')->name('show.consolidatedDetails');
+                Route::get('/details/search', 'SearchConsolidatedDetailsReport')->name('search.consolidatedDetails');
+            });
+        }); // End Consolidated Statement Routes
+        
+        
+        
+        // *************************************** Payment Statement Routes Start *************************************** //
+        Route::prefix('/payment')->group(function () {
+            Route::controller(PaymentStatementController::class)->group(function () {
+                ///////////// --------------- Payment Summary Statement Routes ----------- ///////////////////
+                Route::get('/summary', 'PaymentSummaryReport')->name('show.paymentSummary');
+                Route::get('/summary/search', 'SearchPaymentSummaryReport')->name('search.paymentSummary');
+            
+            
+            
+                ///////////// --------------- Payment Detail Statement Routes ----------- ///////////////////
+                Route::get('/details', 'PaymentDetailsReport')->name('show.paymentDetails');
+                Route::get('/details/search', 'SearchPaymentDetailsReport')->name('search.paymentDetails');
+            });
+        }); // End Party Statement Routes
+        
+        
+        
+        // *************************************** Collection Statement Routes Start *************************************** //
+        Route::prefix('/collection')->group(function () {
+            Route::controller(CollectionStatementController::class)->group(function () {
+                ///////////// --------------- Collection Summary Statement Routes ----------- ///////////////////
+                Route::get('/summary', 'CollectionSummaryReport')->name('show.collectionSummary');
+                Route::get('/summary/search', 'SearchCollectionSummaryReport')->name('search.collectionSummary');
+            
+            
+            
+                ///////////// --------------- Collection Detail Statement Routes ----------- ///////////////////
+                Route::get('/details', 'CollectionDetailsReport')->name('show.collectionDetails');
+                Route::get('/details/search', 'SearchCollectionDetailsReport')->name('search.collectionDetails');
             });
         }); // End Party Statement Routes
     }); // End Report Routes 
