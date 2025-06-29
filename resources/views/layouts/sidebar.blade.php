@@ -2791,7 +2791,7 @@
                      {{-- Collections statement part start --}}
 
                     <li class="sub-menu-item">
-                        <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment') ? 'active':''}}">
+                        <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection') ? 'active':''}}">
                             <p>
                                 <i class="fa-solid fa-file-invoice-dollar"></i>
                                 Collections Statement
