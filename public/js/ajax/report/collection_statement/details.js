@@ -12,6 +12,7 @@ function ShowDetailsReports(res) {
             'head.tran_head_name',
             {key:'receive', type: 'number', footerType:'sum'},
         ],
+        rowsPerPage: res.data.length,
     });
 
     UpdateUrl('/api/report/collection/details/print', {method: $("#methodOption").val(),startDate: $('#startDate').val(), endDate: $('#endDate').val() });
