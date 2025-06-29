@@ -2799,7 +2799,7 @@
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection') ? 'show':''}}">
-                            @if(auth()->user()->hasPermission(280))
+                            {{-- @if(auth()->user()->hasPermission(280)) --}}
                                 <li class="sub-menu1-item" data-url="{{ route('show.collectionDetails') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection' && Request::segment(3) == 'details') ? 'active':''}}">
                                         <p>
@@ -2808,9 +2808,9 @@
                                         </p>
                                     </div>
                                 </li>
-                            @endif
+                            {{-- @endif --}}
                                 
-                            @if(auth()->user()->hasPermission(279))
+                            {{-- @if(auth()->user()->hasPermission(279)) --}}
                                 <li class="sub-menu1-item" data-url="{{ route('show.collectionSummary') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection' && Request::segment(3) == 'summary') ? 'active':''}}">
                                         <p>
@@ -2819,7 +2819,7 @@
                                         </p>
                                     </div>
                                 </li>
-                            @endif
+                            {{-- @endif --}}
                         </ul>
                     </li>
 
@@ -2835,7 +2835,7 @@
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment') ? 'show':''}}">
-                            @if(auth()->user()->hasPermission(280))
+                            {{-- @if(auth()->user()->hasPermission(280)) --}}
                                 <li class="sub-menu1-item" data-url="{{ route('show.paymentDetails') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment' && Request::segment(3) == 'details') ? 'active':''}}">
                                         <p>
@@ -2844,9 +2844,9 @@
                                         </p>
                                     </div>
                                 </li>
-                            @endif
+                            {{-- @endif --}}
                                 
-                            @if(auth()->user()->hasPermission(279))
+                            {{-- @if(auth()->user()->hasPermission(279)) --}}
                                 <li class="sub-menu1-item" data-url="{{ route('show.paymentSummary') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment' && Request::segment(3) == 'summary') ? 'active':''}}">
                                         <p>
@@ -2855,7 +2855,7 @@
                                         </p>
                                     </div>
                                 </li>
-                            @endif
+                            {{-- @endif --}}
                         </ul>
                     </li>
 
@@ -2872,7 +2872,7 @@
                             <i class="fas fa-angle-right {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated') ? 'rotate':''}}"></i>
                         </div>
                         <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated') ? 'show':''}}">
-                            @if(auth()->user()->hasPermission(280))
+                            {{-- @if(auth()->user()->hasPermission(280)) --}}
                                 <li class="sub-menu1-item" data-url="{{ route('show.consolidatedDetails') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated' && Request::segment(3) == 'details') ? 'active':''}}">
                                         <p>
@@ -2881,9 +2881,9 @@
                                         </p>
                                     </div>
                                 </li>
-                            @endif
+                            {{-- @endif --}}
                                 
-                            @if(auth()->user()->hasPermission(279))
+                            {{-- @if(auth()->user()->hasPermission(279)) --}}
                                 <li class="sub-menu1-item" data-url="{{ route('show.consolidatedSummary') }}">
                                     <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated' && Request::segment(3) == 'summary') ? 'active':''}}">
                                         <p>
@@ -2892,7 +2892,7 @@
                                         </p>
                                     </div>
                                 </li>
-                            @endif
+                            {{-- @endif --}}
                         </ul>
                     </li>
                 </ul>

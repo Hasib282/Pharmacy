@@ -1,3 +1,11 @@
+@php
+    $searchValue = request()->query('search');
+    $searchOptionValue = request()->query('searchOption');
+    $searchMethodValue = request()->query('method');
+    $startDateValue = request()->query('startDate');
+    $endDateValue = request()->query('endDate');
+@endphp
+
 @extends('layouts.layout')
 @section('main-content')
     {{-- Add Button And Search Fields --}}

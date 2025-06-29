@@ -1279,14 +1279,14 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
         Route::prefix('/consolidated')->group(function () {
             Route::controller(ConsolidatedStatementController::class)->group(function () {
                 ///////////// --------------- Consolidated Summary Statement Routes ----------- ///////////////////
-                Route::get('/summary', 'ConsolidatedSummaryReport')->name('show.consolidatedSummary');
-                Route::get('/summary/search', 'SearchConsolidatedSummaryReport')->name('search.consolidatedSummary');
+                Route::get('/summary', 'ConsolidatedSummary')->name('show.consolidatedSummary');
+                Route::get('/summary/search', 'SearchConsolidatedSummary')->name('search.consolidatedSummary');
             
             
             
                 ///////////// --------------- Consolidated Detail Statement Routes ----------- ///////////////////
-                Route::get('/details', 'ConsolidatedDetailsReport')->name('show.consolidatedDetails');
-                Route::get('/details/search', 'SearchConsolidatedDetailsReport')->name('search.consolidatedDetails');
+                Route::get('/details', 'ConsolidatedDetails')->name('show.consolidatedDetails');
+                Route::get('/details/search', 'SearchConsolidatedDetails')->name('search.consolidatedDetails');
             });
         }); // End Consolidated Statement Routes
         
@@ -1296,14 +1296,14 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
         Route::prefix('/payment')->group(function () {
             Route::controller(PaymentStatementController::class)->group(function () {
                 ///////////// --------------- Payment Summary Statement Routes ----------- ///////////////////
-                Route::get('/summary', 'PaymentSummaryReport')->name('show.paymentSummary');
-                Route::get('/summary/search', 'SearchPaymentSummaryReport')->name('search.paymentSummary');
+                Route::get('/summary', 'PaymentSummary')->name('show.paymentSummary');
+                Route::get('/summary/search', 'SearchPaymentSummary')->name('search.paymentSummary');
             
             
             
                 ///////////// --------------- Payment Detail Statement Routes ----------- ///////////////////
-                Route::get('/details', 'PaymentDetailsReport')->name('show.paymentDetails');
-                Route::get('/details/search', 'SearchPaymentDetailsReport')->name('search.paymentDetails');
+                Route::get('/details', 'PaymentDetails')->name('show.paymentDetails');
+                Route::get('/details/search', 'SearchPaymentDetails')->name('search.paymentDetails');
             });
         }); // End Party Statement Routes
         
@@ -1313,14 +1313,14 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
         Route::prefix('/collection')->group(function () {
             Route::controller(CollectionStatementController::class)->group(function () {
                 ///////////// --------------- Collection Summary Statement Routes ----------- ///////////////////
-                Route::get('/summary', 'CollectionSummaryReport')->name('show.collectionSummary');
-                Route::get('/summary/search', 'SearchCollectionSummaryReport')->name('search.collectionSummary');
+                Route::get('/summary', 'CollectionSummary')->name('show.collectionSummary');
+                Route::get('/summary/search', 'SearchCollectionSummary')->name('search.collectionSummary');
             
             
             
                 ///////////// --------------- Collection Detail Statement Routes ----------- ///////////////////
-                Route::get('/details', 'CollectionDetailsReport')->name('show.collectionDetails');
-                Route::get('/details/search', 'SearchCollectionDetailsReport')->name('search.collectionDetails');
+                Route::get('/details', 'CollectionDetails')->name('show.collectionDetails');
+                Route::get('/details/search', 'SearchCollectionDetails')->name('search.collectionDetails');
             });
         }); // End Party Statement Routes
     }); // End Report Routes 

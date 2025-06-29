@@ -33,7 +33,6 @@
     </div>
 
     {{-- Datatable Part --}}
-    {{-- Datatable Part --}}
     <div class="load-data">
         <table class="data-table" id="data-table">
             <caption>{{ $name }}</caption>

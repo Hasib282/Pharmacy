@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CollectionStatementController extends Controller
 {
     //collection summery
-      public function ShowCollectionSummaryStatement(Request $req) {
+      public function CollectionSummary(Request $req) {
         $name = "Collection Summary Statement";
         $js = 'report/account_statement/summary';
         if ($req->ajax()) {
@@ -19,8 +19,9 @@ class CollectionStatementController extends Controller
         }
     } // End Method
 
+
     //collection details
-      public function ShowCollectionDetailsStatement(Request $req) {
+      public function CollectionDetails(Request $req) {
         $name = "Collection Details Statement";
         $js = 'report/account_statement/summary';
         if ($req->ajax()) {

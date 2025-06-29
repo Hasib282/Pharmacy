@@ -9,14 +9,14 @@ class PaymentStatementController extends Controller
 {
     ///////////////////////// --------------------------- Payment Statement Summary Report Part Start -------------------- /////////////////////////
     // Show Payment Statement Summary Report  
-    public function ShowPaymentSummary(Request $req){
+    public function PaymentSummary(Request $req){
         $name = "Payment Statement Summary";
         $js = 'payment_statement/summary';
         if ($req->ajax()) {
-            return view('reports.payment_statement.summary.ajaxBlade');
+            return view('reports.payment_statement.summary.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.payment_statement.summary.main');
+            return view('reports.payment_statement.summary.main', compact('name', 'js'));
         }
     }
 
@@ -26,7 +26,7 @@ class PaymentStatementController extends Controller
     public function SearchPaymentSummary(Request $req){
         $name = "Payment Statement Summary";
         $js = 'payment_statement/summary';
-        return view('reports.payment_statement.summary.main');
+        return view('reports.payment_statement.summary.main', compact('name', 'js'));
     }
 
 
@@ -35,14 +35,14 @@ class PaymentStatementController extends Controller
     
     ///////////////////////// --------------------------- Payment Statement Details Report Part Start -------------------- /////////////////////////
     // Show Payment Statement Details Report  
-    public function ShowPaymentDetails(Request $req){
+    public function PaymentDetails(Request $req){
         $name = "Payment Statement Details";
         $js = 'payment_statement/details';
         if ($req->ajax()) {
-            return view('reports.payment_statement.details.ajaxBlade');
+            return view('reports.payment_statement.details.ajaxBlade', compact('name', 'js'));
         }
         else{
-            return view('reports.payment_statement.details.main');
+            return view('reports.payment_statement.details.main', compact('name', 'js'));
         }
     }
 
@@ -52,6 +52,6 @@ class PaymentStatementController extends Controller
     public function SearchPaymentDetails(Request $req){
         $name = "Payment Statement Details";
         $js = 'payment_statement/details';
-        return view('reports.payment_statement.details.main');
+        return view('reports.payment_statement.details.main', compact('name', 'js'));
     }
 }

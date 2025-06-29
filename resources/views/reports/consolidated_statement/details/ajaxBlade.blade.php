@@ -1,3 +1,11 @@
+@php
+    $searchValue = request()->query('search');
+    $searchOptionValue = request()->query('searchOption');
+    $searchMethodValue = request()->query('method');
+    $startDateValue = request()->query('startDate');
+    $endDateValue = request()->query('endDate');
+@endphp
+
 {{-- Add Button And Search Fields --}}
 <div class="add-search">
     <div class="rows" style="align-items:center;">
