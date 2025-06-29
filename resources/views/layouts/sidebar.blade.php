@@ -2787,6 +2787,115 @@
                             @endif
                         </ul>
                     </li>
+
+                     {{-- Collections statement part start --}}
+
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                Collections Statement
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection') ? 'show':''}}">
+                            @if(auth()->user()->hasPermission(280))
+                                <li class="sub-menu1-item" data-url="{{ route('show.collectionDetails') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection' && Request::segment(3) == 'details') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Details
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                                
+                            @if(auth()->user()->hasPermission(279))
+                                <li class="sub-menu1-item" data-url="{{ route('show.collectionSummary') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection' && Request::segment(3) == 'summary') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Summary
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+
+
+                    {{-- Payment statement part start --}}
+
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                Payment Statement
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment') ? 'show':''}}">
+                            @if(auth()->user()->hasPermission(280))
+                                <li class="sub-menu1-item" data-url="{{ route('show.paymentDetails') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment' && Request::segment(3) == 'details') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Details
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                                
+                            @if(auth()->user()->hasPermission(279))
+                                <li class="sub-menu1-item" data-url="{{ route('show.paymentSummary') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment' && Request::segment(3) == 'summary') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Summary
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+
+
+
+                     {{-- Consolidated statement part start --}}
+
+                    <li class="sub-menu-item">
+                        <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated') ? 'active':''}}">
+                            <p>
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                Consolidated Statement
+                            </p>
+                            <i class="fas fa-angle-right {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated') ? 'rotate':''}}"></i>
+                        </div>
+                        <ul class="sub-menu1 {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated') ? 'show':''}}">
+                            @if(auth()->user()->hasPermission(280))
+                                <li class="sub-menu1-item" data-url="{{ route('show.consolidatedDetails') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated' && Request::segment(3) == 'details') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Details
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                                
+                            @if(auth()->user()->hasPermission(279))
+                                <li class="sub-menu1-item" data-url="{{ route('show.consolidatedSummary') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated' && Request::segment(3) == 'summary') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Summary
+                                        </p>
+                                    </div>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                </ul>
                 </ul>
             </li>
         @endif
