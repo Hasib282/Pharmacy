@@ -8,14 +8,18 @@ function ShowClients(res) {
             let buttons = '';
 
             buttons += `
-                   <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
-                `;
+                <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
+            `;
         
             if (userPermissions.includes(27)) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
             }
+
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
             
             if (userPermissions.includes(28)) {
                 buttons += `
@@ -73,6 +77,10 @@ $(document).ready(function () {
 
     // Delete Ajax
     DeleteAjax('transaction/users/clients');
+    
+
+    // Delete status Ajax
+    DeleteStatusAjax('transaction/users/clients');
 
 
     // Additional Edit Functionality

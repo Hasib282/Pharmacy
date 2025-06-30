@@ -12,6 +12,10 @@ function ShowGuests(res) {
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
             }
+
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
             
             if (userPermissions.includes(330)) {
                 buttons += `
@@ -59,6 +63,10 @@ $(document).ready(function () {
     
     // Delete Ajax
     DeleteAjax('hotel/users/guests', ShowGuests);
+
+    
+    // Delete status Ajax
+    DeleteStatusAjax('hotel/users/guests', ShowGuests);
 
 
     // Additional Edit Functionality

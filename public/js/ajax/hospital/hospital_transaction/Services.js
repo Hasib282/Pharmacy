@@ -17,6 +17,10 @@ function ShowServices(res) {
                 `;
             }
             
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
+
             if (userPermissions.includes(413)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
@@ -83,6 +87,10 @@ $(document).ready(function () {
 
     // Delete Ajax
     DeleteAjax('hospital/transaction/services');
+    
+
+    // Delete status Ajax
+    DeleteStatusAjax('hospital/transaction/services');
 
 
     // Pagination Ajax

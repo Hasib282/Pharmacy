@@ -3,9 +3,6 @@ function ShowRoomstatus(res) {
         tableId: '#data-table',
         data: res.data,
         tbody: ['bed_category.name','name', 'latest_booking.user.user_name', 'latest_booking.status'],
-
-        
-        
     });
 };
 

@@ -23,4 +23,8 @@ function SingleInputDataCrudeAjax(link, RenderData){
 
     // Delete Ajax
     DeleteAjax(link);
+    
+    
+    // Delete Status Ajax
+    DeleteStatusAjax(link);
 }

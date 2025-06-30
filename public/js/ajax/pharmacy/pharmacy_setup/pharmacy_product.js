@@ -13,6 +13,10 @@ function ShowPharmacyProducts(res) {
                 `;
             }
             
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
+
             if (userPermissions.includes(135)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
@@ -92,8 +96,12 @@ $(document).ready(function () {
     );
     
 
-    // Delete Ajax
+    // Delete status  Ajax
     DeleteAjax('pharmacy/setup/product');
+    
+
+    // Delete Ajax
+    DeleteStatusAjax('pharmacy/setup/product');
 
 
     // Additional Edit Functionality

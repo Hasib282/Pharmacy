@@ -13,6 +13,10 @@ function ShowAppointment(res) {
                 `;
             }
             
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
+
             if (userPermissions.includes(377)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
@@ -73,7 +77,10 @@ $(document).ready(function () {
     
     // Delete Ajax
     DeleteAjax('hospital/ptnappointment');
+    
 
+    // Delete status  Ajax
+    DeleteStatusAjax('hospital/ptnappointment');
    
    
     //  radio button controll on new and old patient
