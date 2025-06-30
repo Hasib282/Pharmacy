@@ -5,6 +5,8 @@ function ShowAdmins(res) {
         tbody: ['user_id','user_name','user_email','user_phone',{key:'image', type: 'image'}],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
                         
                 <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
@@ -50,6 +52,10 @@ $(document).ready(function () {
 
     // Delete Ajax
     DeleteAjax('admin/users/superadmins');
+    
+
+    // Delete Status Ajax
+    DeleteStatusAjax('admin/users/superadmins');
 
 
     // Additional Edit Functionality

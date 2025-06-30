@@ -17,6 +17,10 @@ function ShowAppointment(res) {
                 `;
             }
             
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
+
             if (userPermissions.includes(318)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
@@ -76,6 +80,10 @@ $(document).ready(function () {
 
     // Delete Ajax
     DeleteAjax('hotel/booking');
+
+
+    // Delete status Ajax
+    DeleteStatusAjax('hotel/booking');
 
 
     // Additional Edit Functionality

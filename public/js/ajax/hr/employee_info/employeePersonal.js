@@ -64,6 +64,10 @@ function ShowEmployeePersonalDetails(res) {
                     <button class="open-modal" data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
             }
+
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
             
             if (userPermissions.includes(76)) {
                 buttons += `
@@ -124,8 +128,8 @@ $(document).ready(function () {
     UpdateAjax('hr/employee/personal', {location: { selector: '#updateLocation', attribute: 'data-id' }});
     
 
-    // Delete Ajax
-    DeleteAjax('hr/employee/personal');
+    // Delete status Ajax
+    DeleteStatusAjax('hr/employee/personal');
 
 
     // Additional Edit Functionality

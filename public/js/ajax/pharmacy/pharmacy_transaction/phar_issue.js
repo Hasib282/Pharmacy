@@ -86,6 +86,10 @@ function ShowPharmacyIssues(res) {
                 `;
             }
             
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
+
             if (userPermissions.includes(156)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
@@ -161,7 +165,11 @@ $(document).ready(function () {
     
 
     // Delete Ajax
-    DeleteAjax('pharmacy/transaction/issue', ShowPharmacyIssues);
+    DeleteAjax('pharmacy/transaction/issue');
+    
+
+    // Delete status Ajax
+    DeleteStatusAjax('pharmacy/transaction/issue');
 
 
     // Search By Ajax

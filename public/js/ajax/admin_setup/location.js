@@ -13,6 +13,10 @@ function ShowLocations(res) {
                 `;
             }
             
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
+
             if (userPermissions.includes(283)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
@@ -61,7 +65,11 @@ $(document).ready(function () {
 
     // Delete Ajax
     DeleteAjax('admin/locations');
+    
 
+    // Delete status Ajax
+    DeleteStatusAjax('admin/locations');
+    
 
     // Additional Edit Functionality
     function EditFormInputValue(item){

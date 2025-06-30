@@ -12,6 +12,10 @@ function ShowPatients(res) {
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
             }
+
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
             
             if (userPermissions.includes(397)) {
                 buttons += `
@@ -58,8 +62,8 @@ $(document).ready(function () {
     UpdateAjax('hospital/users/patients');
 
     
-    // Delete Ajax
-    DeleteAjax('hospital/users/patients', ShowPatients);
+    // Delete status Ajax
+    DeleteStatusAjax('hospital/users/patients', ShowPatients);
 
 
     // Additional Edit Functionality

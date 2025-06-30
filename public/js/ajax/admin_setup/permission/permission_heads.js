@@ -5,6 +5,8 @@ function ShowPermissions(res) {
         tbody: ['mainhead.name','name'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
                         
                 <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
@@ -47,6 +49,10 @@ $(document).ready(function () {
 
     // Delete Ajax
     DeleteAjax('admin/permission/heads');
+    
+    
+    // Delete Status Ajax
+    DeleteStatusAjax('admin/permission/heads');
 
 
     // Additional Edit Functionality

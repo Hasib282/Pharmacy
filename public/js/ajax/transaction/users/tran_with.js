@@ -12,6 +12,10 @@ function ShowTranWith(res) {
                 `;
             }
             
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
+
             if (userPermissions.includes(24)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
@@ -58,6 +62,10 @@ $(document).ready(function () {
 
     // Delete Ajax
     DeleteAjax('transaction/users/usertype');
+    
+
+    // Delete status Ajax
+    DeleteStatusAjax('transaction/users/usertype');
 
 
     // Additional Edit Functionality

@@ -13,6 +13,10 @@ function ShowInventoryNegativeAdjustments(res) {
                 `;
             }
             
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
+
             if (userPermissions.includes(254)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
@@ -95,6 +99,10 @@ $(document).ready(function () {
 
     // Delete Ajax
     DeleteAjax('inventory/adjustment/negative');
+
+    
+    // Delete status bAjax
+    DeleteStatusAjax('inventory/adjustment/negative');
 
 
     // Search By Date Ajax

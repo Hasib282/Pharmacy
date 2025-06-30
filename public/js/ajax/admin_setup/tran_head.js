@@ -5,6 +5,8 @@ function ShowTranHead(res) {
         tbody: ['groupe.tran_groupe_name','tran_head_name','mrp','company_id'],
         actions: (row) => `
                 <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
                         
                 <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `,
@@ -53,6 +55,10 @@ $(document).ready(function () {
 
     // Delete Ajax
     DeleteAjax('admin/tranheads');
+    
+
+    // Delete status Ajax
+    DeleteStatusAjax('admin/tranheads');
 
 
     // Additional Edit Functionality

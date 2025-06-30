@@ -50,6 +50,10 @@ function ShowPharmacyPositiveAdjustments(res) {
                 `;
             }
             
+            buttons += `
+                <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
+            `;
+
             if (userPermissions.includes(168)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
@@ -130,6 +134,10 @@ $(document).ready(function () {
 
     // Delete Ajax
     DeleteAjax('pharmacy/adjustment/positive');
+    
+
+    // Delete status Ajax
+    DeleteStatusAjax('pharmacy/adjustment/positive');
 
 
     // Search By Date Ajax
