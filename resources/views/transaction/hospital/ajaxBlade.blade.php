@@ -66,8 +66,22 @@
 {{-- Add Button And Search Fields --}}
 <div class="add-search">
     <div class="rows" style="align-items:center;">
-        <div class="c-3">
-                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+       <div class="c-3">
+               @if(Request::segment(1) == 'hospital' && Request::segment(3) == 'admision'   && auth()->user()->hasPermission(398))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif      
+
+                @if(Request::segment(1) == 'hospital' && Request::segment(3) == 'deposit'   && auth()->user()->hasPermission(402))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
+                @if(Request::segment(1) == 'hospital' && Request::segment(3) == 'depositrefund'   && auth()->user()->hasPermission(406))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
+                @if(Request::segment(1) == 'hospital' && Request::segment(3) == 'services'   && auth()->user()->hasPermission(410))
+                            <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
         </div>
         <div class="c-3">
             <label for="startDate">Start Date</label>

@@ -17,7 +17,7 @@ function ShowServices(res) {
                 `;
             }
             
-            if (userPermissions.include(405)) {
+            if (userPermissions.includes(405)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
