@@ -10,8 +10,6 @@ use App\Models\Transaction_Head;
 
 class CollectionDetailsController extends Controller
 {
-    
-    
     // Show All Collection Details Statement
     public function Show(Request $req){
         $data = Transaction_Detail::on('mysql_second')
@@ -28,7 +26,7 @@ class CollectionDetailsController extends Controller
     } // End Method
 
 
-        // Search Collection Details Statement
+    // Search Collection Details Statement
     public function Search(Request $req){
         $data = Transaction_Detail::on('mysql_second')
         ->with('User','Head','Groupe','Bank','Type')

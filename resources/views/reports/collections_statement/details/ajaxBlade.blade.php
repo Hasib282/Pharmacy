@@ -23,25 +23,25 @@
         <div class="c-2">
             <label for="typeOption">Transaction Type</label>
             <select name="typeOption" id="typeOption">
-                options will be display dynamically
+                {{-- options will be display dynamically --}}
             </select>
         </div>
         <div class="c-3"></div>
     </div>
 </div>
 
-{{-- Datatable Part --}}
-{{-- Datatable Part --}}
-    <div class="load-data">
-        <table class="data-table" id="data-table">
-            <caption>{{ $name }}</caption>
-            <thead></thead>
-            <tbody></tbody>
-            <tfoot></tfoot>
-        </table>
 
-        <div id="paginate"></div>
-    </div>
+{{-- Datatable Part --}}
+<div class="load-data">
+    <table class="data-table" id="data-table">
+        <caption>{{ $name }}</caption>
+        <thead></thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+    </table>
+
+    <div id="paginate"></div>
+</div>
 
 
 <!-- ajax part start from here -->

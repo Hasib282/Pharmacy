@@ -23,10 +23,10 @@
                 <input type="date" name="endDate" id="endDate" class="form-input" value="{{ $endDateValue ? $endDateValue : date('Y-m-d') }}">
             </div>
             <div class="c-2">
-                {{-- <label for="typeOption">Transaction Type</label>
+                <label for="typeOption">Transaction Type</label>
                 <select name="typeOption" id="typeOption">
-                    options will be display dynamically
-                </select> --}}
+                    {{-- options will be display dynamically --}}
+                </select>
             </div>
             <div class="c-3"></div>
         </div>

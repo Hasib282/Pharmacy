@@ -27,7 +27,7 @@ $(document).ready(function () {
         { label: 'Date', key: 'tran_date', type:"date" },
         { label: 'Tran Id', key: 'tran_id' },
         { label: 'Client/Supplier', key: 'user.user_name' },
-        { label: 'Main Head', key: 'type.type_name' },
+        { label: 'Main Head', type:"select", key: 'tran_type', method:"fetch", link:'admin/mainheads/get', name:'type_name' },
         { label: 'Groupe', key: 'groupe.tran_groupe_name' },
         { label: 'Product/Service', key:'head.tran_head_name' },
         { label: 'Receive' },
@@ -47,8 +47,8 @@ $(document).ready(function () {
     SearchBySelect('report/collection/details/search', ShowDetailsReports, "#typeOption", {type: $("#typeOption").val()});
 
 
-    // // Get Trantype
-    // GetSelectInputList('admin/mainheads/get', function (res) {
-    //     CreateSelectOptions('#typeOption', "Select Tran Type", res.data, 'type_name');
-    // })
+    // Get Trantype
+    GetSelectInputList('admin/mainheads/get', function (res) {
+        CreateSelectOptions('#typeOption', "Select Tran Type", res.data, 'type_name');
+    })
 });

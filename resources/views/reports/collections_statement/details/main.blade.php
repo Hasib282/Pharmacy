@@ -25,7 +25,7 @@
             <div class="c-2">
                 <label for="typeOption">Transaction Type</label>
                 <select name="typeOption" id="typeOption">
-                    options will be display dynamically
+                    {{-- options will be display dynamically --}}
                 </select>
             </div>
             <div class="c-3"></div>
