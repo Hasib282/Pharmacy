@@ -307,6 +307,34 @@ function DeleteAjax(link) {
 
 
 
+//////////////////// -------------------- Delete Status Ajax Part Start -------------------- ////////////////////
+function DeleteStatusAjax(link) {
+    $(document).off('click', '#confirm_status').on('click', '#confirm_status', function (e) {
+        e.preventDefault();
+        let id = $(this).attr('data-id');
+        $('#confirm_status').prop('disabled', true);
+        $.ajax({
+            url: `${apiUrl}/${link}/delete`,
+            method: 'DELETE',
+            data:{ id },
+            success: function (res) {
+                if (res.status) {
+                    tableInstance.deleteRow(id);
+
+                    $('#deleteStatusModal').hide();
+
+                    toastr.success(res.message, 'Deleted!');
+                }
+            },
+            complete: function () {
+                $('#confirm_status').prop('disabled', false);
+            },
+        });
+    });
+}; // End Method
+
+
+
 
 
 //////////////////// -------------------- Details Ajax Part Start -------------------- ////////////////////
@@ -799,8 +827,28 @@ $(document).ready(function () {
     $(document).on('click', '#cancel', function (e) {
         e.preventDefault();
         $('#deleteModal').hide();
-    }); // End Cancle Button Event
+    }); // End Cancel Button Event
     //////////////////// -------------------- Delete Ajax Part End -------------------- ////////////////////
+    
+    
+    //////////////////// -------------------- Delete Status Ajax Part Start -------------------- ////////////////////
+    // Delete Status Button Functionality
+    $(document).on('click', '#delete_status', function (e) {
+        e.preventDefault();
+        $('#deleteStatusModal').show();
+        let id = $(this).data('id');
+        $('#confirm_status').attr('data-id',id);
+        $('#cancel_status').focus();
+    });  // End Delete Status Button Event
+
+
+
+    // Cancel Status Button Functionality
+    $(document).on('click', '#cancel_status', function (e) {
+        e.preventDefault();
+        $('#deleteStatusModal').hide();
+    }); // End Cancel Status Button Event
+    //////////////////// -------------------- Delete Status Ajax Part End -------------------- ////////////////////
 
 
 
