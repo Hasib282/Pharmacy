@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('joining_location')->comment('location__infos');
             $table->unsignedBigInteger('department');
             $table->unsignedBigInteger('designation');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 

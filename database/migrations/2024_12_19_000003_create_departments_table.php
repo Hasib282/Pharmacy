@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::connection('mysql_second')->create('departments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
         });
     }

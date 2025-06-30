@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::connection('mysql')->create('company__types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });

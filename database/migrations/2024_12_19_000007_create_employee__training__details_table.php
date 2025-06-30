@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('institution_name');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 

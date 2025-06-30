@@ -25,6 +25,7 @@ return new class extends Migration
             $table->date('expiry_date')->nullable();
             $table->boolean('editable')->default(0);
             $table->string('company_id')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 

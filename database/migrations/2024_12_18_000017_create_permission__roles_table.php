@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::connection('mysql')->create('permission__roles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('role_id');
+            $table->tinyInteger('status')->default('1');
             $table->unsignedBigInteger('permission_id');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();

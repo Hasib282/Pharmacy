@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::connection('mysql')->create('transaction__main__heads', function (Blueprint $table) {
             $table->id();
             $table->string('type_name');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });

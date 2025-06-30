@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('to_bed');
             $table->timestamp('transfer_date')->nullable();
             $table->timestamp('transfer_by')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('tran_groupe_type');
             $table->string('tran_method');
             $table->string('company_id')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 

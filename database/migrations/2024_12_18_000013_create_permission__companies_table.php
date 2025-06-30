@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('company_id');
             $table->unsignedBigInteger('permission_id');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
             

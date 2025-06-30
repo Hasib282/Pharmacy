@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('loc_id')->nullable();
             $table->string('address')->nullable();
             $table->string('logo')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 

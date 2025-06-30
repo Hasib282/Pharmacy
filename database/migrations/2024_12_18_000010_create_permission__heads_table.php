@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('permission_mainhead');
             $table->string('name');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('created_at')->nullable();
 
             $table->foreign('permission_mainhead')->references('id')->on('permission__main__heads')

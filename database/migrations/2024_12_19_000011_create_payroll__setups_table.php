@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('emp_id');
             $table->unsignedBigInteger('head_id')->comment('transaction__heads');
             $table->float('amount');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 
