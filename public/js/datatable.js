@@ -207,7 +207,7 @@ class GenerateTable {
 
                 // Special case: user_name / bank.name based on tran_bank
                 if (data.key === 'user.user_name') {
-                    value = row.tran_bank ? row.bank?.name : row.user?.user_name;
+                    value = row.tran_type == 4 ? row.bank?.name : row.user?.user_name;
                 }
                 
                 // Conditional logic for tran_id

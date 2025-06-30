@@ -1,7 +1,7 @@
 function ShowDetailsReports(res) {
     if ($('#data-table thead #opening-row').length === 0) {
         $('#data-table thead').append(`<tr id="opening-row">
-                                        <th style="text-align: right;" colspan="7">Opening Balance</th>
+                                        <th colspan="7">Opening Balance</th>
                                         <th></th>
                                         <th></th>
                                         <th style="text-align: right; width:10%;" id="opening">${formatNumber(res.opening)}</th>

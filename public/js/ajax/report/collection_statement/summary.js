@@ -7,6 +7,7 @@ function ShowSummaryReports(res) {
             'user.user_name',
             {key:'total_receive', type: 'number', footerType:'sum'},
         ],
+        rowsPerPage: res.data.length,
     });
 
     UpdateUrl('/api/report/collection/summary/print', {method: $("#methodOption").val(),startDate: $('#startDate').val(), endDate: $('#endDate').val() });
@@ -14,11 +15,10 @@ function ShowSummaryReports(res) {
 
 $(document).ready(function () {
     // Render The Table Heads
-        renderTableHead([
+    renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Client/Supplier', key: 'user.user_name' },
         { label: 'Receive' },
-      
     ]);
 
     // Load Data on Hard Reload
@@ -34,7 +34,7 @@ $(document).ready(function () {
 
 
     // Get Trantype
-    // GetSelectInputList('admin/mainheads/get', function (res) {
-    //     CreateSelectOptions('#typeOption', "Select Tran Type", res.data, 'type_name');
-    // })
+    GetSelectInputList('admin/mainheads/get', function (res) {
+        CreateSelectOptions('#typeOption', "Select Tran Type", res.data, 'type_name');
+    })
 });

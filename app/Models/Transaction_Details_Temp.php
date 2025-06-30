@@ -12,12 +12,21 @@ class Transaction_Details_Temp extends Model
     
     public $timestamps = false;
 
+    public function Bank(){
+        return $this->belongsTo(Bank::class,'tran_user','user_id');
+    }
+    
     public function User(){
         return $this->belongsTo(User_Info::class,'tran_user','user_id');
     }
-    
-    public function Patient(){
-        return $this->belongsTo(Patient_Information::class,'ptn_id','ptn_id');
+
+    public function getTranNameAttribute()
+    {
+        if ($this->tran_type == 4) {
+            return $this->bank?->name;
+        }
+
+        return $this->user?->user_name;
     }
 
     public function Head(){

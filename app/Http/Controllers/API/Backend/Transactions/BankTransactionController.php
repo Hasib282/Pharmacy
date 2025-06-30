@@ -63,7 +63,7 @@ class BankTransactionController extends Controller
                 "tran_id" => $id,
                 "tran_type" => 4,
                 "tran_method" => $req->method,
-                "tran_bank" => $req->bank,
+                "tran_user" => $req->bank,
                 "bill_amount" => $req->amount,
                 "discount" => 0,
                 "net_amount" => $req->amount,
@@ -77,7 +77,7 @@ class BankTransactionController extends Controller
                 "tran_id" => $id,
                 "tran_type" => 4,
                 "tran_method" => $req->method,
-                "tran_bank" => $req->bank,
+                "tran_user" => $req->bank,
                 "tran_groupe_id" => $req->groupe,
                 "tran_head_id" => $req->head,
                 "amount" => $req->amount,
@@ -116,7 +116,7 @@ class BankTransactionController extends Controller
             $receive = $req->method === 'Withdraw' ? $req->amount : null;
             $payment = $req->method === 'Deposit' ? $req->amount : null;
             Transaction_Main::on('mysql_second')->where('tran_id', $transaction->tran_id)->update([
-                "tran_bank" => $req->bank,
+                "tran_user" => $req->bank,
                 "bill_amount" => $req->amount,
                 "net_amount" => $req->amount,
                 "receive" => $receive,
@@ -126,7 +126,7 @@ class BankTransactionController extends Controller
 
 
             $transaction->update([
-                "tran_bank" => $req->bank,
+                "tran_user" => $req->bank,
                 "tran_head_id" => $req->head,
                 "amount" => $req->amount,
                 "tot_amount" => $req->amount,

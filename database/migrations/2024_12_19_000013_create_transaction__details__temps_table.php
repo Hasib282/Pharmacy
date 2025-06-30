@@ -53,12 +53,12 @@ return new class extends Migration
             // Foreignkey Decleration
             $table->foreign('tran_type_with')->references('id')->on('transaction__withs')
                     ->onUpdate('cascade');
-        //     $table->foreign('tran_groupe_id')->references('id')->on('transaction__groupes')
-        //             ->onUpdate('cascade');
-        //     $table->foreign('tran_head_id')->references('id')->on('transaction__heads')
-        //             ->onUpdate('cascade');
-            $table->foreign('tran_user')->references('user_id')->on('user__infos')
-                    ->onUpdate('cascade');
+            // $table->foreign('tran_groupe_id')->references('id')->on('transaction__groupes')
+            //         ->onUpdate('cascade');
+            // $table->foreign('tran_head_id')->references('id')->on('transaction__heads')
+            //         ->onUpdate('cascade');
+            // $table->foreign('tran_user')->references('user_id')->on('user__infos')
+            //         ->onUpdate('cascade');
             $table->foreign('store_id')->references('id')->on('stores')
                     ->onUpdate('cascade');
         });

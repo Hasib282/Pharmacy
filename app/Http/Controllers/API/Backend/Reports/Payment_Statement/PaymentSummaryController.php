@@ -4,56 +4,50 @@ namespace App\Http\Controllers\API\Backend\Reports\Payment_Statement;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Models\Transaction_Main;
 
 class PaymentSummaryController extends Controller
 {
-    // Create a Common Function for Getting Data Easily
-    public function GetAccountDetailsStatement($tranType) {
-        return Transaction_Detail::on('mysql_second')
-            ->with('Groupe', 'Head','User','Bank')
-            ->whereDate('tran_date', date('Y-m-d'))
-            ->where(function ($query) {
-                $query->where('receive', '>', 0)
-                      ->orWhere('payment', '>', 0);
-            })
-            ->where('tran_type', $tranType)
-            ->orderBy('tran_id', 'asc')
-            ->get();
-    } // End Method
-
-
-    
-    // Show All Salary Details Report
+    // Show All Payment Summary Report
     public function Show(Request $req){
-        $general = $this->GetAccountDetailsStatement(1);
-        $party = $this->GetAccountDetailsStatement(2);
-        $payroll = $this->GetAccountDetailsStatement(3);
-        $bank = $this->GetAccountDetailsStatement(4);
-        $inventory = $this->GetAccountDetailsStatement(5);
-        $pharmacy = $this->GetAccountDetailsStatement(6);
-        $hospital = $this->GetAccountDetailsStatement(7);
-        $hotel = $this->GetAccountDetailsStatement(8);
-        
-        $opening = Transaction_Detail::on('mysql_second')->select(
-            DB::raw('SUM(receive) as total_receive'), 
-            DB::raw('SUM(payment) as total_payment')
+        $data = Transaction_Main::on('mysql_second')
+        ->with('User','Bank')
+        ->select(
+            'tran_type',
+            'tran_user',
+            DB::raw('SUM(payment) as total_payment'),
         )
-        ->whereRaw("DATE(tran_date) < ?", [date('Y-m-d')])
-        ->first();
-
-        $type = Transaction_Main_Head::on('mysql')->get();
+        ->where('payment','>',0)
+        ->whereRaw("DATE(tran_date) = ?", [date('Y-m-d')])
+        ->groupBy('tran_user','tran_type')
+        ->orderBy('tran_user')
+        ->get();
         
-        $data = [       
-            'opening'           =>      $opening,
-            'General'           =>      $general,
-            'Party'             =>      $party,
-            'Payroll'           =>      $payroll,
-            'Bank'              =>      $bank,
-            'Inventory'         =>      $inventory,
-            'Pharmacy'          =>      $pharmacy,
-            'Hospital'          =>      $hospital,
-            'Hotel'             =>      $hotel,
-        ];
+        return response()->json([
+            'status'=> true,
+            'data' => $data,
+        ], 200);
+    } // End Method
+    
+    
+    
+    // Search All Payment Summary Report
+    public function Search(Request $req){
+        $data = Transaction_Main::on('mysql_second')
+        ->with('User','Bank')
+        ->select(
+            'tran_type',
+            'tran_user',
+            DB::raw('SUM(payment) as total_payment'),
+        )
+        ->where('payment','>',0)
+        // ->where('tran_type', $req->type)
+        ->whereRaw("DATE(tran_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        ->groupBy('tran_user','tran_type')
+        ->orderBy('tran_user')
+        ->get();
         
         return response()->json([
             'status'=> true,

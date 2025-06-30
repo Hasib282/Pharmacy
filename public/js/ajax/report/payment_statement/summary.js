@@ -1,5 +1,13 @@
 function ShowSummaryReports(res) {
-    
+    tableInstance = new GenerateTable({
+        tableId: '#data-table',
+        data: res.data,
+        tbody: [
+            'user.user_name',
+            {key:'total_payment', type: 'number', footerType:'sum'},
+        ],
+        rowsPerPage: res.data.length,
+    });
 
     UpdateUrl('/api/report/payment/summary/print', {type: $("#typeOption").val(),startDate: $('#startDate').val(), endDate: $('#endDate').val() });
 }
@@ -9,11 +17,9 @@ function ShowSummaryReports(res) {
 $(document).ready(function () {
     // Render The Table Heads
     renderTableHead([
-        { label: 'SL:' },
-        { label: 'Company Id', key: 'company_id' },
-        { label: 'Company Name', key: 'name' },
-        { label: 'Permission', key: 'permission' },
-        { label: 'Action', type: 'button' }
+        { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
+        { label: 'Client/Supplier', key: 'user.user_name' },
+        { label: 'Payment' },
     ]);
 
 
@@ -30,7 +36,7 @@ $(document).ready(function () {
 
 
     // Get Trantype
-    // GetSelectInputList('admin/mainheads/get', function (res) {
-    //     CreateSelectOptions('#typeOption', "Select Tran Type", res.data, 'type_name');
-    // })
+    GetSelectInputList('admin/mainheads/get', function (res) {
+        CreateSelectOptions('#typeOption', "Select Tran Type", res.data, 'type_name');
+    })
 });
