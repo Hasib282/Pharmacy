@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigInteger('user_role')->comment('roles');
             $table->bigInteger('tran_type')->comment('transaction__main__heads');
             $table->string('tran_method');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });

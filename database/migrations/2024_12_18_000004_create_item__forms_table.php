@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('type_id')->nullable();
             $table->string('form_name');
             $table->string('company_id')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 

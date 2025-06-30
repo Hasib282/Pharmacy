@@ -46,6 +46,7 @@ return new class extends Migration
             $table->unsignedBigInteger('payment_mode')->nullable();
             $table->string('batch_id')->nullable();
             $table->string('booking_id')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('tran_date')->useCurrent();
             $table->timestamp('updated_at')->nullable();
             

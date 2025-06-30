@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('division');
             $table->string('district');
             $table->string('upazila');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });

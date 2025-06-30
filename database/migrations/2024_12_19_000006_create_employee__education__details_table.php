@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('cgpa')->nullable();
             $table->decimal('marks')->nullable();
             $table->integer('batch');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 

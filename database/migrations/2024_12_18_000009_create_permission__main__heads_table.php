@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::connection('mysql')->create('permission__main__heads', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('created_at')->nullable();
         });
     }

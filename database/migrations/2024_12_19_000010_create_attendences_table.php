@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('date');
             $table->time('in');
             $table->time('out')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('insert_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 

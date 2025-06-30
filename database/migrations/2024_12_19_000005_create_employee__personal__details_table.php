@@ -30,6 +30,7 @@ return new class extends Migration
             $table->unsignedBigInteger('tran_user_type');
             $table->text('address')->nullable();
             $table->binary('image')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 
