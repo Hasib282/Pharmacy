@@ -123,6 +123,8 @@
 
     @include('common_modals.delete')
 
+    @include('common_modals.deleteStatus')
+
     @include('transaction.purchase.verify')
 
 

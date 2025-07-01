@@ -93,6 +93,8 @@
 
 @include('common_modals.delete')
 
+@include('common_modals.deleteStatus')
+
 <!-- ajax part start from here -->
 <script src="{{ asset('js/ajax/hr/employee_info/employeeOrganization.js') }}"></script>
 <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>

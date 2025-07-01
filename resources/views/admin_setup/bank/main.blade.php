@@ -45,6 +45,8 @@
     
     @include('common_modals.delete')
 
+    @include('common_modals.deleteStatus')
+
     <!-- ajax part start from here -->
     <script src="{{ asset('js/ajax/admin_setup/bank_info.js') }}"></script>
     <script src="{{ asset('js/ajax/search_by_input.js') }}"></script>

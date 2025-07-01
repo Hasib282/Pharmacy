@@ -92,6 +92,8 @@
     @include('hr.employee_info.experience_details.edit')
 
     @include('common_modals.delete')
+
+    @include('common_modals.deleteStatus')
     
     <!-- ajax part start from here -->
     <script src="{{ asset('js/ajax/hr/employee_info/employeeExperience.js') }}"></script>
