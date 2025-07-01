@@ -51,7 +51,7 @@ function ShowReceiveFromClients(res) {
          actions: (row) => {
             let buttons = '';
         
-            if (userPermissions.includes(175)) {
+            if (userPermissions.includes(175) || role == 1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
@@ -61,7 +61,7 @@ function ShowReceiveFromClients(res) {
                 <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
             `;
 
-            if (userPermissions.includes(176)) {
+            if (userPermissions.includes(176) || role == 1) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

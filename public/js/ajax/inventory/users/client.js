@@ -11,7 +11,7 @@ function ShowClients(res) {
                     <button class="open-modal" data-modal-id="detailsModal" id="details" data-id="${row.user_id}"><i class="fa-solid fa-circle-info"></i></button>
                 `;
         
-            if (userPermissions.includes(224)) {
+            if (userPermissions.includes(224) || role == 1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
@@ -22,7 +22,7 @@ function ShowClients(res) {
             `;
 
             
-            if (userPermissions.includes(225)) {
+            if (userPermissions.includes(225) || role == 1) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

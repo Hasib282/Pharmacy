@@ -7,7 +7,7 @@ function ShowTranWith(res) {
         actions: (row) => {
             let buttons = '';
 
-            if (userPermissions.includes(138)) {
+            if (userPermissions.includes(138) || role == 1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
@@ -17,7 +17,7 @@ function ShowTranWith(res) {
                 <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
             `;
             
-            if (userPermissions.includes(139)) {
+            if (userPermissions.includes(139) || role == 1) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
@@ -66,7 +66,7 @@ $(document).ready(function () {
     // Delete Ajax
     DeleteAjax('pharmacy/users/usertype');
 
-    
+
     // Delete status  Ajax
     DeleteStatusAjax('pharmacy/users/usertype');
 
