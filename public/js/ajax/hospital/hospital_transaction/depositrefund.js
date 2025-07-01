@@ -12,7 +12,7 @@ function ShowServices(res) {
                     <a class="print-receipt" href="/api/get/invoice?id=${row.tran_id}&status=1"> <i class="fa-solid fa-receipt"></i></a>
                 `;
         
-            if (userPermissions.includes(408)) {
+            if (userPermissions.includes(408) || role == 1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
@@ -22,7 +22,7 @@ function ShowServices(res) {
                 <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
             `;
             
-            if (userPermissions.includes(409)) {
+            if (userPermissions.includes(409) || role == 1) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

@@ -7,7 +7,7 @@ function ShowPharmacyManufacturers(res) {
         actions: (row) => {
             let buttons = '';
         
-            if (userPermissions.includes(114)) {
+            if (userPermissions.includes(114) || role == 1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
@@ -18,7 +18,7 @@ function ShowPharmacyManufacturers(res) {
             `;
 
             
-            if (userPermissions.includes(115)) {
+            if (userPermissions.includes(115) || role == 1) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

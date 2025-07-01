@@ -11,7 +11,7 @@ function ShowAppointment(res) {
                     <a class="print-receipt" href="/api/get/clearence?id=${row.booking_id}"> <i class="fa-solid fa-receipt"></i></a>
                 `;
         
-            if (userPermissions.includes(317)) {
+            if (userPermissions.includes(317) || role == 1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
@@ -21,7 +21,7 @@ function ShowAppointment(res) {
                 <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
             `;
 
-            if (userPermissions.includes(318)) {
+            if (userPermissions.includes(318) || role == 1) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

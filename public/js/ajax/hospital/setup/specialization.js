@@ -6,7 +6,7 @@ function ShowSpecialization(res) {
         actions: (row) => {
             let buttons = '';
         
-            if (userPermissions.includes(348)) {
+            if (userPermissions.includes(348) || role == 1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
@@ -16,7 +16,7 @@ function ShowSpecialization(res) {
                 <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
             `;
             
-            if (userPermissions.includes(349)) {
+            if (userPermissions.includes(349) || role == 1) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;

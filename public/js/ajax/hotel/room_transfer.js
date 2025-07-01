@@ -7,7 +7,7 @@ function ShowroomTransfer(res) {
         actions: (row) => {
             let buttons = '';
         
-            if (userPermissions.includes(321)) {
+            if (userPermissions.includes(321) || role == 1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
@@ -17,7 +17,7 @@ function ShowroomTransfer(res) {
                 <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
             `;
 
-            if (userPermissions.includes(322)) {
+            if (userPermissions.includes(322) || role == 1) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
@@ -90,7 +90,7 @@ $(document).ready(function () {
     DeleteAjax('hotel/roomtransfer');
 
 
-    // Delete status Ajax
+    // Delete stat Ajax
     DeleteStatusAjax('hotel/roomtransfer');
 
 

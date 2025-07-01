@@ -46,7 +46,7 @@ function ShowInventoryProducts(res) {
         actions: (row) => {
             let buttons = '';
         
-            if (userPermissions.includes(216)) {
+            if (userPermissions.includes(216) || role == 1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
@@ -56,7 +56,7 @@ function ShowInventoryProducts(res) {
                 <button data-id="${row.id}" id="delete_status"><i class="fa-solid fa-trash-arrow-up"></i></button>
             `;
 
-            if (userPermissions.includes(217)) {
+            if (userPermissions.includes(217) || role == 1) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
@@ -140,7 +140,7 @@ $(document).ready(function () {
     // Delete Ajax
     DeleteAjax('inventory/setup/product');
 
-    
+
     // Delete statusn Ajax
     DeleteStatusAjax('inventory/setup/product');
 
