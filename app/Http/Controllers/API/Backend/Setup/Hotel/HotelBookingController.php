@@ -214,6 +214,22 @@ class HotelBookingController extends Controller
             'message'=> 'Booking Deleted Successfully'
         ], 200);
     } // End Method
+
+
+
+    // Delete Booking/Reservation Status
+    public function DeleteStatus(Request $req){
+        $data = Booking::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Booking::on('mysql_second')->with('User','Category','List','Sr','Bill')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Booking/Reservation Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
     
     
     

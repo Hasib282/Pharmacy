@@ -126,11 +126,8 @@ class CompanyController extends Controller
     // Delete Companies Status
     public function DeleteStatus(Request $req){
         $data = Company_Details::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
 
-        // Toggle status: if 1 then 0, if 0 then 1
-        $data->status = $data->status == 0 ? 1 : 0;
-        $data->save();
-        
         $updatedData = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
         
         return response()->json([

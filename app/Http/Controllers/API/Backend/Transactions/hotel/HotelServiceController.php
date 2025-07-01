@@ -289,6 +289,24 @@ class HotelServiceController extends Controller
 
 
 
+    // Delete Services Status
+    public function DeleteStatus(Request $req){
+        $data = Transaction_Main::on('mysql_second')->findOrFail($req->id);
+        
+        Transaction_Main::on('mysql_second')->where("tran_id", $data->tran_id)->update(['status' => $data->status == 0 ? 1 : 0]);
+        Transaction_Detail::on('mysql_second')->where("tran_id", $data->tran_id)->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Company_Details::on('mysql')->with('User','Booking')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Services Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Search Services
     public function Search(Request $req){
         $data = Transaction_Main::on('mysql_second')

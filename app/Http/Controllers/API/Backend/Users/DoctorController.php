@@ -105,6 +105,22 @@ class DoctorController extends Controller
         ], 200);
     } // End Method
 
+
+
+    // Delete Doctors Status
+    public function DeleteStatus(Request $req){
+        $data = Doctor_Information::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Doctor_Information::on('mysql_second')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Doctor Details Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
     
 
     // Get Doctors

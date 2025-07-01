@@ -115,6 +115,22 @@ class TrainingDetailsController extends Controller
 
 
 
+    // Delete Companies Status
+    public function DeleteStatus(Request $req){
+        $data = Company_Details::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Company Details Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Show Employee Training Details Grid
     public function Grid(Request $req){
         $employeetraining = Employee_Training_Detail::with('personalDetail')->where('emp_id', $req->id)->paginate(15);

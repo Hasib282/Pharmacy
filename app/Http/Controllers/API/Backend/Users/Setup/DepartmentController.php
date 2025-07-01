@@ -77,6 +77,22 @@ class DepartmentController extends Controller
     } // End Method
 
 
+
+    // Delete Departments Status
+    public function DeleteStatus(Request $req){
+        $data = Department::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Department::on('mysql_second')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Department Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
     
     // Get Departments
     public function Get(Request $req){

@@ -70,13 +70,29 @@ class NursingStationController extends Controller
 
 
 
-    // Delete Nursing station
+    // Delete Nursing Station
     public function Delete(Request $req){
         Nursing_Station::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
-            'message' => 'Nursing station Deleted Successfully',
+            'message' => 'Nursing Station Deleted Successfully',
         ], 200); 
+    } // End Method
+
+
+
+    // Delete Nursing Station Status
+    public function DeleteStatus(Request $req){
+        $data = Nursing_Station::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Nursing_Station::on('mysql_second')->with('Floor')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Nursing Station Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
     } // End Method
 
 

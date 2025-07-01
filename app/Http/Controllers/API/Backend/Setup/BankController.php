@@ -104,6 +104,22 @@ class BankController extends Controller
 
 
 
+    // Delete Banks Status
+    public function DeleteStatus(Request $req){
+        $data = Bank::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Bank::on('mysql')->with('Location')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Banks Details Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Banks
     public function Get(Request $req){
         $banks = Bank::on('mysql')

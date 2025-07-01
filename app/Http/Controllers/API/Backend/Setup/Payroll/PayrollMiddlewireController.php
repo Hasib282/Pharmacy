@@ -174,6 +174,22 @@ class PayrollMiddlewireController extends Controller
 
 
 
+    // Delete Payroll Middlewire Status
+    public function DeleteStatus(Request $req){
+        $data = Payroll_Middlewire::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Payroll_Middlewire::on('mysql_second')->with('Employee','Head')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Payroll Middlewire Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Search Payroll Middlewire
     public function Search(Request $req){
         $currentYear = $req->year;

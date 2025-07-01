@@ -86,6 +86,22 @@ class LocationController extends Controller
 
 
 
+    // Delete Locations Status
+    public function DeleteStatus(Request $req){
+        $data = Location_Info::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Location_Info::on('mysql')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Location Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Location By Upazila
     public function Get(Request $req){
         $data = Location_Info::on('mysql')

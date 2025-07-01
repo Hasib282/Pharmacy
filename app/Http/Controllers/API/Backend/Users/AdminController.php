@@ -155,4 +155,21 @@ class AdminController extends Controller
             'message' => 'Admin Details Deleted Successfully',
         ], 200); 
     } // End Method
+
+
+
+    // Delete Admins Status
+    public function DeleteStatus(Request $req){
+        $data = User_Info::on('mysql_second')->where('user_role', 2)->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        Login_User::on('mysql')->where('user_id',$data->login_user_id)->update(['status' => $data->status == 0 ? 1 : 0]);
+
+        $updatedData = User_Info::on('mysql_second')->with('Store')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Admin Details Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
 }

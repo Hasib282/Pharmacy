@@ -78,6 +78,22 @@ class PermissionMainHeadController extends Controller
 
 
 
+    // Delete Permission Mainheads Status
+    public function DeleteStatus(Request $req){
+        $data = Permission_Main_Head::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Permission_Main_Head::on('mysql')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Permission Mainheads Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Permission Mainheads
     public function Get(){
         $data = Permission_Main_Head::on('mysql')->select('id','name')->orderBy('name')->get();

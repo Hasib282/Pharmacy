@@ -101,6 +101,22 @@ class TranGroupController extends Controller
 
 
 
+    // Delete Transaction Group Status
+    public function DeleteStatus(Request $req){
+        $data = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4'])->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Transaction Group Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Transaction Groupes By Type
     public function Get(Request $req){
         $type = $req->type;

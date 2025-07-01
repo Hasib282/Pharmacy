@@ -79,6 +79,22 @@ class MainHeadController extends Controller
 
 
 
+    // Delete MainHeads Status
+    public function DeleteStatus(Request $req){
+        $data = Transaction_Main_Head::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Transaction_Main_Head::on('mysql')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'MainHead Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Transaction Main Head
     public function Get(){
         $data = Transaction_Main_Head::on('mysql')->select('id','type_name')->get();

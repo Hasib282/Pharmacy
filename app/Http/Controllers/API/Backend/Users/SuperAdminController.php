@@ -109,4 +109,20 @@ class SuperAdminController extends Controller
             'message' => 'SuperAdmin Details Deleted Successfully',
         ], 200); 
     } // End Method
+
+
+
+    // Delete SuperAdmins Status
+    public function DeleteStatus(Request $req){
+        $data = Login_User::on('mysql')->where('user_role', 1)->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Login_User::on('mysql')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'SuperAdmin Details Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
 }

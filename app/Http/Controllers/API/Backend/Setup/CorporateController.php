@@ -80,6 +80,22 @@ class CorporateController extends Controller
 
 
 
+    // Delete corporate Status
+    public function DeleteStatus(Request $req){
+        $data = Corporate::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Corporate::on('mysql_second')->with('Type')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'corporate Details Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get corporate
     public function Get(Request $req){
         $data = Corporate::on('mysql_second')
