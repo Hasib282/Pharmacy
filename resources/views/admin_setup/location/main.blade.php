@@ -41,6 +41,8 @@
     
     @include('common_modals.delete')
 
+    @include('common_modals.deleteStatus')
+
     {{-- ajax part start from here --}}
     <script src="{{ asset('js/ajax/admin_setup/location.js') }}"></script>
 @endsection

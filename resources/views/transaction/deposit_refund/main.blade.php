@@ -110,6 +110,9 @@
     @include('common_modals.delete')
 
 
+    @include('common_modals.deleteStatus')
+
+
     <!-- ajax part start from here -->
     <script src="{{ asset('js/ajax/common_ajax/common_transaction_calculations.js') }}"></script>
     <script src="{{ asset('js/ajax').'/' . $js . '.js' }}"></script>
