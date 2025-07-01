@@ -162,6 +162,23 @@ class BankTransactionController extends Controller
 
 
 
+    // Delete Bank Transactions Status
+    public function DeleteStatus(Request $req){
+        $data = Transaction_Detail::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        Transaction_Main::on('mysql_second')->where('tran_id',$data->tran_id)->update(['status' => $data->status == 0 ? 1 : 0]);
+
+        $updatedData = Transaction_Detail::on('mysql_second')->with('Bank','Head')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Bank Transactions Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Search Bank Transactions
     public function Search(Request $req){
         $data = Transaction_Detail::on('mysql_second')

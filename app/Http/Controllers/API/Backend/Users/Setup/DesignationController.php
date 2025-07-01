@@ -87,6 +87,22 @@ class DesignationController extends Controller
 
 
 
+    // Delete Designations Status
+    public function DeleteStatus(Request $req){
+        $data = Designation::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Designation::on('mysql_second')->with('Department:id,name')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Designation Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Designation By Department
     public function Get(Request $req){
         $data = Designation::on('mysql_second')

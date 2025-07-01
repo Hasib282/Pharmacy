@@ -147,5 +147,21 @@ class PatientRegistrationController extends Controller
             'message'=> 'Patient Registrations Deleted Successfully'
         ], 200);
     } // End Method
+
+
+
+    // Delete Patient Registrations Status
+    public function DeleteStatus(Request $req){
+        $data = Booking::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Booking::on('mysql_second')->with('User','Category','List','Doctors','Sr')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Patient Registrations Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
 }
     

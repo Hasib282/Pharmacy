@@ -80,6 +80,22 @@ class CategoryController extends Controller
 
 
 
+    // Delete Item/Product Category Status
+    public function DeleteStatus(Request $req){
+        $data = Item_Category::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Item_Category::on('mysql')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Item/Product Category Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Item/Product Category By Name
     public function Get(Request $req){
         $type = GetTranType($req->type);

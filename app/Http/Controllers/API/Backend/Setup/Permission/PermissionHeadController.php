@@ -80,4 +80,20 @@ class PermissionHeadController extends Controller
             'message' => 'Permission Head Deleted Successfully',
         ], 200); 
     } // End Method
+
+
+
+    // Delete Permission Head Status
+    public function DeleteStatus(Request $req){
+        $data = Permission_Head::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Permission_Head::on('mysql')->with('mainhead')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Permission Head Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
 }

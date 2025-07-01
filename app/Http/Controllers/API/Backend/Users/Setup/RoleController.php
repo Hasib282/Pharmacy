@@ -78,6 +78,22 @@ class RoleController extends Controller
 
 
 
+    // Delete User Roles Status
+    public function DeleteStatus(Request $req){
+        $data = Role::on('mysql')->whereNotIn('id', ['1'])->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Role::on('mysql')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'User Role Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Roles
     public function Get(){
         $data = Role::on('mysql')

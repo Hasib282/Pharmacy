@@ -12,7 +12,7 @@ use App\Models\Transaction_Groupe;
 
 class ProductsController extends Controller
 {
-    // Show All Pharmacy Item/Products
+    // Show All Item/Products
     public function Show(Request $req){
         // Update Product Quantity
         // DB::connection('mysql')
@@ -48,7 +48,7 @@ class ProductsController extends Controller
 
 
 
-    // Insert Pharmacy Item/Products
+    // Insert Item/Products
     public function Insert(Request $req){
         $req->validate([
             "productName" => 'required|unique:mysql.transaction__heads,tran_head_name',
@@ -80,7 +80,7 @@ class ProductsController extends Controller
 
 
 
-    // Update Pharmacy Item/Products
+    // Update Item/Products
     public function Update(Request $req){
         $data = Transaction_Head::findOrFail($req->id);
         
@@ -123,7 +123,7 @@ class ProductsController extends Controller
 
 
 
-    // Delete Pharmacy Item/Products
+    // Delete Item/Products
     public function Delete(Request $req){
         Transaction_Head::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
@@ -134,7 +134,23 @@ class ProductsController extends Controller
 
 
 
-    // Get Pharmacy Product By Groupe
+    // Delete Item/Products Status
+    public function DeleteStatus(Request $req){
+        $data = Transaction_Head::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Item/Products Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
+    // Get Product By Groupe
     public function Get(Request $req){
         // Update Product Quantity
         // DB::connection('mysql')
@@ -184,7 +200,7 @@ class ProductsController extends Controller
 
 
 
-    // Get Pharmacy Product List
+    // Get Product List
     public function GetProductList(Request $req){
         $heads = filterByCompany(
                     Transaction_Head::on('mysql')

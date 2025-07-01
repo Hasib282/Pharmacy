@@ -38,7 +38,7 @@ class FormController extends Controller
         
         return response()->json([
             'status'=> true,
-            'message' => 'Form Added Successfully',
+            'message' => 'Item/Product Form Added Successfully',
             "data" => $data,
         ], 200);  
     } // End Method
@@ -61,7 +61,7 @@ class FormController extends Controller
         if($update){
             return response()->json([
                 'status'=>true,
-                'message' => 'Location Updated Successfully',
+                'message' => 'Item/Product Form Updated Successfully',
                 "updatedData" => $updatedData,
             ], 200); 
         }
@@ -74,8 +74,24 @@ class FormController extends Controller
         Item_Form::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
-            'message' => 'Location Deleted Successfully',
+            'message' => 'Item/Product Form Deleted Successfully',
         ], 200); 
+    } // End Method
+
+
+
+    // Delete Item/Product Form Status
+    public function DeleteStatus(Request $req){
+        $data = Item_Form::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Item_Form::on('mysql')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Item/Product Form Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
     } // End Method
 
 

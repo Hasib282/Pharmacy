@@ -136,6 +136,22 @@ class SupplierController extends Controller
 
 
 
+    // Delete Suppliers Status
+    public function DeleteStatus(Request $req){
+        $data = User_Info::on('mysql_second')->where('user_role', 5)->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = User_Info::on('mysql_second')->with('Withs', 'Location')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Suppliers Details Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Show Supplier Details
     public function Details(Request $req){
         $supplier = User_Info::on('mysql_second')->where('user_role', 5)->with('Location','Withs')->where('user_id', "=", $req->id)->first();

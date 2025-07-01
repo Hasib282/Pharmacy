@@ -89,6 +89,22 @@ class StoreController extends Controller
 
 
 
+    // Delete Store Status
+    public function DeleteStatus(Request $req){
+        $data = Store::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Store::on('mysql_second')->with('Location')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Store Details Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Store By Name
     public function Get(Request $req){
         $data = Store::on('mysql_second')

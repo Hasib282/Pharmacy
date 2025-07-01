@@ -100,6 +100,22 @@ class TranWithController extends Controller
 
 
 
+    // Delete Tranwith Status
+    public function DeleteStatus(Request $req){
+        $data = Transaction_With::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Transaction_With::on('mysql_second')->with('Role','Type')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Tranwith Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Tran With By Transaction Method And Type
     public function Get(Request $req){
         if ($req->type == null && $req->method != null) { // Find Transaction With For Party Payment

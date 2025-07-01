@@ -77,6 +77,22 @@ class PatientController extends Controller
 
 
 
+    // Delete Patients Status
+    public function DeleteStatus(Request $req){
+        $data = User_Info::on('mysql_second')->where('user_role',6)->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = User_Info::on('mysql_second')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Patient Details Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Patients
     public function Get(Request $req){
         $data = User_info::on('mysql_second')

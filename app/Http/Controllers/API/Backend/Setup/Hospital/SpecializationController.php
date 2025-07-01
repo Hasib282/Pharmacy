@@ -79,6 +79,22 @@ class SpecializationController extends Controller
 
 
 
+    // Delete Doctors Specialization Status
+    public function DeleteStatus(Request $req){
+        $data = Specialization::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Specialization::on('mysql_second')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Doctors Specialization Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Transaction Main Head
     public function Get(Request $req){
         $data = Specialization::on('mysql_second')

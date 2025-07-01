@@ -118,6 +118,22 @@ class BedListController extends Controller
 
 
 
+    // Delete Bed List Status
+    public function DeleteStatus(Request $req){
+        $data = Bed_List::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Bed_List::on('mysql_second')->with('bed_category','nursing','floor')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Bed List Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Bed List
     public function Get(Request $req){
         $data = Bed_List::on('mysql_second')

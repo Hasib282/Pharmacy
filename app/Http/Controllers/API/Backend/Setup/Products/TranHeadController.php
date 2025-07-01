@@ -106,6 +106,22 @@ class TranHeadController extends Controller
 
 
 
+    // Delete Transaction Heads Status
+    public function DeleteStatus(Request $req){
+        $data = Transaction_Head::on('mysql')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Transaction_Head::on('mysql')->with('Groupe')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Transaction Heads Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Transaction Heads By Name And Groupe
     public function Get(Request $req){
         $query = Transaction_Head::on('mysql')

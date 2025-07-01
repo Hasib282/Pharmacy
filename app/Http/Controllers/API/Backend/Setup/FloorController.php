@@ -76,6 +76,22 @@ class FloorController extends Controller
 
 
 
+    // Delete Floor Status
+    public function DeleteStatus(Request $req){
+        $data = Floor::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Floor::on('mysql_second')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Floor Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Transaction Main Head
     public function Get(){
         $data = Floor::on('mysql_second')->get();

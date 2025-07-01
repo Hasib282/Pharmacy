@@ -69,13 +69,29 @@ class ManufacturerController extends Controller
 
 
 
-    // Delete Item/Product MAnufacturer
+    // Delete Item/Product Manufacturer
     public function Delete(Request $req){
         Item_Manufacturer::on('mysql')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Manufacturer Deleted Successfully',
         ], 200); 
+    } // End Method
+
+
+
+    // Delete Item/Product Manufacturer Status
+    public function DeleteStatus(Request $req){
+        $data = Item_Manufacturer::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Item_Manufacturer::on('mysql')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Item/Product Manufacturer Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
     } // End Method
 
 

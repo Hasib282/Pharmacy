@@ -111,5 +111,21 @@ class RoomTransferController extends Controller
             'status'  => true,
             'message' => 'Room Transfer deleted successfully',
         ], 200);
-    }
+    } // End Method
+
+
+
+    // Delete Room Transfer Status
+    public function DeleteStatus(Request $req){
+        $data = Bed_Transfer::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User','Category')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Room Transfer Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
 }

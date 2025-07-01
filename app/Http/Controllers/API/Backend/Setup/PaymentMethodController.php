@@ -79,6 +79,22 @@ class PaymentMethodController extends Controller
 
 
 
+    // Delete Payment Method Status
+    public function DeleteStatus(Request $req){
+        $data = Payment_Method::on('mysql')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Payment_Method::on('mysql')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Payment Method Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Get Transaction Main Head
     public function Get(){
         $data = Payment_Method::on('mysql')->select('id','name')->get();

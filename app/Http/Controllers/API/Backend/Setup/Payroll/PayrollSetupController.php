@@ -135,6 +135,22 @@ class PayrollSetupController extends Controller
 
 
 
+    // Delete Payroll Setup Status
+    public function DeleteStatus(Request $req){
+        $data = Payroll_Setup::on('mysql_second')->findOrFail($req->id);
+        $data->update(['status' => $data->status == 0 ? 1 : 0]);
+        
+        $updatedData = Payroll_Setup::on('mysql_second')->with('Employee','Head')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Payroll Setup Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200);
+    } // End Method
+
+
+
     // Search Payroll Setup
     public function Search(Request $req){
         if($req->searchOption == 1){
