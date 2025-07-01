@@ -319,7 +319,7 @@ function DeleteStatusAjax(link) {
             data:{ id },
             success: function (res) {
                 if (res.status) {
-                    tableInstance.deleteRow(id);
+                    tableInstance.updateRow(id, res.updatedData);
 
                     $('#deleteStatusModal').hide();
 

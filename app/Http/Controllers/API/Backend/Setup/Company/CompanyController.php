@@ -57,7 +57,7 @@ class CompanyController extends Controller
                 "logo" => $imageName,
             ]);
             
-            $data = Company_Details::on('mysql')->with('Type')->findOrFail($insert->id);
+            $data = Company_Details::on('mysql')->findOrFail($insert->id);
         });
         
         return response()->json([
@@ -118,6 +118,25 @@ class CompanyController extends Controller
         return response()->json([
             'status'=> true,
             'message' => 'Company Details Deleted Successfully',
+        ], 200);
+    } // End Method
+
+
+
+    // Delete Companies Status
+    public function DeleteStatus(Request $req){
+        $data = Company_Details::on('mysql')->findOrFail($req->id);
+
+        // Toggle status: if 1 then 0, if 0 then 1
+        $data->status = $data->status == 0 ? 1 : 0;
+        $data->save();
+        
+        $updatedData = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
+        
+        return response()->json([
+            'status'=> true,
+            'message' => 'Company Details Deleted Successfully',
+            'updatedData' => $updatedData
         ], 200);
     } // End Method
 

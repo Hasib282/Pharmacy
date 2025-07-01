@@ -79,6 +79,24 @@ class CompanyTypeController extends Controller
 
 
 
+    // Delete Company Types Status
+    public function DeleteStatus(Request $req){
+        $data = Company_Type::on('mysql')->findOrFail($req->id);
+
+        // Toggle status: if 1 then 0, if 0 then 1
+        $data->status = $data->status == 0 ? 1 : 0;
+        $data->save();
+
+        $updatedData = Company_Type::on('mysql')->findOrFail($req->id);
+        return response()->json([
+            'status'=> true,
+            'message' => 'Company Type Deleted Successfully',
+            'updatedData' => $updatedData
+        ], 200); 
+    } // End Method
+
+
+
     // Get All Company Types
     public function Get(){
         $data = Company_Type::on('mysql')->select('id','name')->get();

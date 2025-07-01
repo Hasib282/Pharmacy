@@ -285,7 +285,7 @@ class GenerateTable {
             const hasGrid = this.tbody.some(col => typeof col === 'object' && col.grid === true);
             
             return `
-                <tr>
+                <tr style="${row.status == 0 ? 'background:#f916168a' : ''}">
                     <td>${startIndex + i + 1}</td>
                     ${columns}
                     ${this.renderActions(row)}
