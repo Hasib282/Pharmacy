@@ -1287,6 +1287,18 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 ///////////// --------------- Consolidated Detail Statement Routes ----------- ///////////////////
                 Route::get('/details', 'ConsolidatedDetails')->name('show.consolidatedDetails');
                 Route::get('/details/search', 'SearchConsolidatedDetails')->name('search.consolidatedDetails');
+                
+                
+                
+                ///////////// --------------- Consolidated Invoice Summary Statement Routes ----------- ///////////////////
+                Route::get('/invoice_summary', 'ConsolidatedInvoiceSummary')->name('show.consolidatedInvoiceSummary');
+                Route::get('/invoice_summary/search', 'SearchConsolidatedInvoiceSummary')->name('search.consolidatedInvoiceSummary');
+            
+            
+            
+                ///////////// --------------- Consolidated Invoice Detail Statement Routes ----------- ///////////////////
+                Route::get('/invoice_details', 'ConsolidatedInvoiceDetails')->name('show.consolidatedInvoiceDetails');
+                Route::get('/invoice_details/search', 'SearchConsolidatedInvoiceDetails')->name('search.consolidatedInvoiceDetails');
             });
         }); // End Consolidated Statement Routes
         
@@ -1304,6 +1316,18 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 ///////////// --------------- Payment Detail Statement Routes ----------- ///////////////////
                 Route::get('/details', 'PaymentDetails')->name('show.paymentDetails');
                 Route::get('/details/search', 'SearchPaymentDetails')->name('search.paymentDetails');
+                
+                
+                
+                ///////////// --------------- Payment Invoice Summary Statement Routes ----------- ///////////////////
+                Route::get('/invoice_summary', 'PaymentInvoiceSummary')->name('show.paymentInvoiceSummary');
+                Route::get('/invoice_summary/search', 'SearchPaymentInvoiceSummary')->name('search.paymentInvoiceSummary');
+            
+            
+            
+                ///////////// --------------- Payment Invoice Detail Statement Routes ----------- ///////////////////
+                Route::get('/invoice_details', 'PaymentInvoiceDetails')->name('show.paymentInvoiceDetails');
+                Route::get('/invoice_details/search', 'SearchPaymentInvoiceDetails')->name('search.paymentInvoiceDetails');
             });
         }); // End Party Statement Routes
         
@@ -1321,6 +1345,18 @@ Route::middleware([ValidUser::class, CheckPermission::class])->group(function ()
                 ///////////// --------------- Collection Detail Statement Routes ----------- ///////////////////
                 Route::get('/details', 'CollectionDetails')->name('show.collectionDetails');
                 Route::get('/details/search', 'SearchCollectionDetails')->name('search.collectionDetails');
+                
+                
+                
+                ///////////// --------------- Collection Invoice Summary Statement Routes ----------- ///////////////////
+                Route::get('/invoice_summary', 'CollectionInvoiceSummary')->name('show.collectionInvoiceSummary');
+                Route::get('/invoice_summary/search', 'SearchCollectionInvoiceSummary')->name('search.collectionInvoiceSummary');
+            
+            
+            
+                ///////////// --------------- Collection Invoice Detail Statement Routes ----------- ///////////////////
+                Route::get('/invoice_details', 'CollectionInvoiceDetails')->name('show.collectionInvoiceDetails');
+                Route::get('/invoice_details/search', 'SearchCollectionInvoiceDetails')->name('search.collectionInvoiceDetails');
             });
         }); // End Party Statement Routes
     }); // End Report Routes 

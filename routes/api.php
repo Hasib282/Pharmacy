@@ -156,16 +156,22 @@ use App\Http\Controllers\API\Backend\Reports\Party_Statement\PartySummaryControl
 // Report Collection Statement Controllers
 use App\Http\Controllers\API\Backend\Reports\Collection_Statement\CollectionDetailsController;
 use App\Http\Controllers\API\Backend\Reports\Collection_Statement\CollectionSummaryController;
+use App\Http\Controllers\API\Backend\Reports\Collection_Statement\CollectionInvoiceDetailsController;
+use App\Http\Controllers\API\Backend\Reports\Collection_Statement\CollectionInvoiceSummaryController;
 
 
 // Report Payment Statement Controllers
 use App\Http\Controllers\API\Backend\Reports\Payment_Statement\PaymentDetailsController;
 use App\Http\Controllers\API\Backend\Reports\Payment_Statement\PaymentSummaryController;
+use App\Http\Controllers\API\Backend\Reports\Payment_Statement\PaymentInvoiceDetailsController;
+use App\Http\Controllers\API\Backend\Reports\Payment_Statement\PaymentInvoiceSummaryController;
 
 
 // Report Consolidated Statement Controllers
 use App\Http\Controllers\API\Backend\Reports\Consolidated_Statement\ConsolidatedDetailsController;
 use App\Http\Controllers\API\Backend\Reports\Consolidated_Statement\ConsolidatedSummaryController;
+use App\Http\Controllers\API\Backend\Reports\Consolidated_Statement\ConsolidatedInvoiceDetailsController;
+use App\Http\Controllers\API\Backend\Reports\Consolidated_Statement\ConsolidatedInvoiceSummaryController;
 
 
 // Product Report Controllers
@@ -2146,6 +2152,22 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/details', 'Show');
                 Route::get('/details/search', 'Search');
             });
+            
+            
+            
+            ///////////// --------------- Collection Invoice Summary Statement Routes ----------- ///////////////////
+            Route::controller(CollectionInvoiceSummaryController::class)->group(function () {
+                Route::get('/invoice_summary', 'Show');
+                Route::get('/invoice_summary/search', 'Search');
+            });
+            
+            
+            
+            ///////////// --------------- Collection Invoice Detail Statement Routes ----------- ///////////////////
+            Route::controller(CollectionInvoiceDetailsController::class)->group(function () {
+                Route::get('/invoice_details', 'Show');
+                Route::get('/invoice_details/search', 'Search');
+            });
         }); // End Collection Statement Routes
         
 
@@ -2167,6 +2189,22 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/details', 'Show');
                 Route::get('/details/search', 'Search');
             });
+            
+            
+            
+            ///////////// --------------- Payment Invoice Summary Statement Routes ----------- ///////////////////
+            Route::controller(PaymentInvoiceSummaryController::class)->group(function () {
+                Route::get('/invoice_summary', 'Show');
+                Route::get('/invoice_summary/search', 'Search');
+            });
+            
+            
+            
+            ///////////// --------------- Payment Invoice Detail Statement Routes ----------- ///////////////////
+            Route::controller(PaymentInvoiceDetailsController::class)->group(function () {
+                Route::get('/invoice_details', 'Show');
+                Route::get('/invoice_details/search', 'Search');
+            });
         }); // End Payment Statement Routes
         
         
@@ -2187,6 +2225,22 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::controller(ConsolidatedDetailsController::class)->group(function () {
                 Route::get('/details', 'Show');
                 Route::get('/details/search', 'Search');
+            });
+            
+            
+            
+            ///////////// --------------- Consolidated Invoice Summary Statement Routes ----------- ///////////////////
+            Route::controller(ConsolidatedInvoiceSummaryController::class)->group(function () {
+                Route::get('/invoice_summary', 'Show');
+                Route::get('/invoice_summary/search', 'Search');
+            });
+            
+            
+            
+            ///////////// --------------- Consolidated Invoice Detail Statement Routes ----------- ///////////////////
+            Route::controller(ConsolidatedInvoiceDetailsController::class)->group(function () {
+                Route::get('/invoice_details', 'Show');
+                Route::get('/invoice_details/search', 'Search');
             });
         }); // End Consolidated Statement Routes
     }); // End Report Routes 

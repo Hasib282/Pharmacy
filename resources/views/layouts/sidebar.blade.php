@@ -2820,6 +2820,27 @@
                                     </div>
                                 </li>
                             {{-- @endif --}}
+                            {{-- @if(auth()->user()->hasPermission(280)) --}}
+                                <li class="sub-menu1-item" data-url="{{ route('show.collectionInvoiceDetails') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection' && Request::segment(3) == 'invoice_details') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Details (Invoice)
+                                        </p>
+                                    </div>
+                                </li>
+                            {{-- @endif --}}
+                                
+                            {{-- @if(auth()->user()->hasPermission(279)) --}}
+                                <li class="sub-menu1-item" data-url="{{ route('show.collectionInvoiceSummary') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'collection' && Request::segment(3) == 'invoice_summary') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Summary (Invoice)
+                                        </p>
+                                    </div>
+                                </li>
+                            {{-- @endif --}}
                         </ul>
                     </li>
 
@@ -2852,6 +2873,27 @@
                                         <p>
                                             <i class="fa-solid fa-file-invoice"></i>
                                             Summary
+                                        </p>
+                                    </div>
+                                </li>
+                            {{-- @endif --}}
+                            {{-- @if(auth()->user()->hasPermission(280)) --}}
+                                <li class="sub-menu1-item" data-url="{{ route('show.paymentInvoiceDetails') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment' && Request::segment(3) == 'invoice_details') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Details (Invoice)
+                                        </p>
+                                    </div>
+                                </li>
+                            {{-- @endif --}}
+                                
+                            {{-- @if(auth()->user()->hasPermission(279)) --}}
+                                <li class="sub-menu1-item" data-url="{{ route('show.paymentInvoiceSummary') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'payment' && Request::segment(3) == 'invoice_summary') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Summary (Invoice)
                                         </p>
                                     </div>
                                 </li>
@@ -2889,6 +2931,27 @@
                                         <p>
                                             <i class="fa-solid fa-file-invoice"></i>
                                             Summary
+                                        </p>
+                                    </div>
+                                </li>
+                            {{-- @endif --}}
+                            {{-- @if(auth()->user()->hasPermission(280)) --}}
+                                <li class="sub-menu1-item" data-url="{{ route('show.consolidatedInvoiceDetails') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated' && Request::segment(3) == 'invoice_details') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Details (Invoice)
+                                        </p>
+                                    </div>
+                                </li>
+                            {{-- @endif --}}
+                                
+                            {{-- @if(auth()->user()->hasPermission(279)) --}}
+                                <li class="sub-menu1-item" data-url="{{ route('show.consolidatedInvoiceSummary') }}">
+                                    <div class="menu-title {{ (Request::segment(1) == 'report' && Request::segment(2) == 'consolidated' && Request::segment(3) == 'invoice_summary') ? 'active':''}}">
+                                        <p>
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                            Summary (Invoice)
                                         </p>
                                     </div>
                                 </li>
