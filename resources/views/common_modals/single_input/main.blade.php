@@ -44,6 +44,9 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
+                @if((Request::segment(2) == 'companytype' || Request::segment(3) == 'roles' || Request::segment(3) == 'mainhead') && Auth::user()->user_role == 1)
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
                 @if(Request::segment(2) == 'payment_method' && auth()->user()->hasPermission(288))
                     <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
@@ -112,6 +115,8 @@
     @include('common_modals.single_input.edit')
 
     @include('common_modals.delete')
+
+    @include('common_modals.deleteStatus')
 
 
     <!-- ajax part start from here -->

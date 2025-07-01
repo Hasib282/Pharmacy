@@ -479,8 +479,8 @@ class GenerateTable {
 
     // Add Row After Inserting into Database
     addRow(data) {
-        this.data.unshift(data);
-        this.filteredData.unshift(data);
+        this.data.push(data);
+        this.filteredData.push(data);
         this.renderTableBody();
     }
 

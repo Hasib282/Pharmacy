@@ -7,6 +7,9 @@
 <div class="add-search">
     <div class="rows">
         <div class="c-3">
+            @if(Request::segment(1) == 'admin')
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
             @if(Request::segment(1) == 'transaction' && auth()->user()->hasPermission(18))
                 <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
             @endif

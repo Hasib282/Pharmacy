@@ -9,18 +9,21 @@
     <div class="add-search">
         <div class="rows">
             <div class="c-3">
+                @if(Request::segment(1) == 'admin')
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
+
                 @if(Request::segment(1) == 'transaction' && auth()->user()->hasPermission(14))
                     <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
 
-                
                 @if(Request::segment(1) == 'hotel' && auth()->user()->hasPermission(308))
                     <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
                 @endif
 
                 @if(Request::segment(1) == 'inventory' && auth()->user()->hasPermission(211))
-                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
-                 @endif
+                    <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+                @endif
 
                 @if(Request::segment(1) == 'pharmacy' && auth()->user()->hasPermission(129))
                     <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>

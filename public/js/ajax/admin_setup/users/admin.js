@@ -6,7 +6,7 @@ function ShowAdmins(res) {
         actions: (row) => {
             let buttons = '';
             
-            if (userPermissions.includes(3)) {
+            if (userPermissions.includes(3) || role == 1) {
                 buttons += `
                     <button data-modal-id="editModal" id="edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
                 `;
@@ -17,7 +17,7 @@ function ShowAdmins(res) {
                 `;
             
             
-            if (userPermissions.includes(4)) {
+            if (userPermissions.includes(4) || role == 1) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
