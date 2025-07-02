@@ -1813,6 +1813,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::put('/booking', 'Update');
             Route::delete('/booking', 'Delete');
             Route::put('/booking/delete', 'DeleteStatus');
+            Route::get('/booking/search', 'Search');
             Route::get('/booking/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
 
@@ -1825,6 +1826,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::put('/roomtransfer', 'Update');
             Route::delete('/roomtransfer', 'Delete');
             Route::put('/roomtransfer/delete', 'DeleteStatus');
+            Route::get('/roomtransfer/search', 'Search');
         });
 
 

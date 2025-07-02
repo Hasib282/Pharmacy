@@ -84,7 +84,7 @@ class BedCatagoryController extends Controller
         $data = Bed_Category::on('mysql_second')->findOrFail($req->id);
         $data->update(['status' => $data->status == 0 ? 1 : 0]);
         
-        $updatedData = Bed_Category::on('mysql_second')->with('Type')->findOrFail($req->id);
+        $updatedData = Bed_Category::on('mysql_second')->findOrFail($req->id);
         
         return response()->json([
             'status'=> true,

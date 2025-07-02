@@ -2,7 +2,7 @@ function ShowFloor(res) {
     tableInstance = new GenerateTable({
         tableId: '#data-table',
         data: res.data,
-        tbody: ['name', 'no_of_rooms', 'start_room_no'],
+        tbody: ['name', ],//'no_of_rooms', 'start_room_no'],
         
         actions: (row) => {
             let buttons = '';
@@ -36,8 +36,8 @@ $(document).ready(function () {
     renderTableHead([
         { label: 'SL:', type: 'rowsPerPage', options: [15, 30, 50, 100, 500] },
         { label: 'Floor Name', key: 'name' },
-        { label: 'Number of Rooms', key: 'no_of_rooms' },
-        { label: 'Starting Room Number', key: 'start_room_no' },
+        // { label: 'Number of Rooms', key: 'no_of_rooms' },
+        // { label: 'Starting Room Number', key: 'start_room_no' },
         { label: 'Action', type: 'button' }
 
     ]);

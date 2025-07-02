@@ -43,7 +43,7 @@
 
 @include('admin_setup.floor.add')
 
-@include('admin_setup.floor.add')
+@include('admin_setup.floor.edit')
 
 @include('common_modals.delete')
 

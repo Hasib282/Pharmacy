@@ -85,6 +85,9 @@ $(document).ready(function () {
     // Delete status Ajax
     DeleteStatusAjax('hotel/booking');
 
+    // Search By Date
+    SearchByDateAjax('hotel/booking/search', ShowAppointment);
+
 
     // Additional Edit Functionality
     function EditFormInputValue(item) {

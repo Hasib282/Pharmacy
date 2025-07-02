@@ -17,21 +17,7 @@
                 <span class="error" id="name_error"></span>
             </div>
 
-            @if (Request::segment(1) == 'hotel')
-                {{-- Number of Rooms --}}
-                <div class="form-input-group">
-                    <label for="number_of_rooms">Number of Rooms</label>
-                    <input type="number" name="number_of_rooms" id="number_of_rooms" class="form-input" min="1">
-                    <span class="error" id="number_of_rooms_error"></span>
-                </div>
-
-                {{-- Starting Floor --}}
-                <div class="form-input-group">
-                    <label for="starting_floor">Starting Floor</label>
-                    <input type="text" name="starting_floor" id="starting_floor" class="form-input">
-                    <span class="error" id="starting_floor_error"></span>
-                </div>  
-            @endif
+            
 
             <div class="center">
                 <button type="submit" id="Insert" class="btn-blue">Submit</button>

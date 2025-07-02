@@ -93,6 +93,9 @@ $(document).ready(function () {
     // Delete stat Ajax
     DeleteStatusAjax('hotel/roomtransfer');
 
+     // Search By Date
+    SearchByDateAjax('hotel/roomtransfer/search', ShowroomTransfer);
+
 
     // Additional Edit Functionality
     function EditFormInputValue(item) {
