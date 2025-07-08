@@ -676,7 +676,22 @@
     { "permission_mainhead":"7", "name":"Show Services Transection" },
     { "permission_mainhead":"7", "name":"Add Service Transection" },
     { "permission_mainhead":"7", "name":"Edit Service Transection" },
-    { "permission_mainhead":"7", "name":"Delete Service Transection" }
+    { "permission_mainhead":"7", "name":"Delete Service Transection" },
+
+
+
+    { "permission_mainhead":"12", "name":"Show Collecetion Statement Details Report" },
+    { "permission_mainhead":"12", "name":"Show Collecetion Statement Summary Report" },
+    { "permission_mainhead":"12", "name":"Show Collecetion Statement Invoice Details Report" },
+    { "permission_mainhead":"12", "name":"Show Collecetion Statement Invoice Summary Report" },
+    { "permission_mainhead":"12", "name":"Show Payment Statement Details Report" },
+    { "permission_mainhead":"12", "name":"Show Payment Statement Summary Report" },
+    { "permission_mainhead":"12", "name":"Show Payment Statement Invoice Details Report" },
+    { "permission_mainhead":"12", "name":"Show Payment Statement Invoice Summary Report" },
+    { "permission_mainhead":"12", "name":"Show Consodilated Statement Details Report" },
+    { "permission_mainhead":"12", "name":"Show Consodilated Statement Summary Report" },
+    { "permission_mainhead":"12", "name":"Show Consodilated Statement Invoice Details Report" },
+    { "permission_mainhead":"12", "name":"Show Consodilated Statement Invoice Summary Report" }
 
     
 
