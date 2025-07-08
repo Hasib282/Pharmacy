@@ -35,9 +35,9 @@ class GuestController extends Controller
 
         $update = User_Info::on('mysql_second')->where('user_role',7)->findOrFail($req-> id)->update([
             'title'=>$req->title,
-            'name'=> $req->name,
-            'email'=> $req->email,
-            'phone'=> $req->phone,
+            'user_name'=> $req->name,
+            'user_email'=> $req->email,
+            'user_phone'=> $req->phone,
             'address'=> $req->address,
             'gender'=> $req->gender,
             'nationality'=> $req->nationality,

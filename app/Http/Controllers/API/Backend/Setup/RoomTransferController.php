@@ -14,7 +14,10 @@ class RoomTransferController extends Controller
     // Show All Room Transfer Data
     public function Show(Request $req)
     {
-        $data = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User','Category')->orderBy('added_at')->get();
+        $data = Bed_Transfer::on('mysql_second')->with('FromList','ToList','User','Category')
+        ->whereRaw("DATE(transfer_date) = ?", [date('Y-m-d')])
+        ->orderBy('added_at')->get();
+
         return response()->json([
             'status' => true,
             'data' => $data,
@@ -128,4 +131,20 @@ class RoomTransferController extends Controller
             'updatedData' => $updatedData
         ], 200);
     } // End Method
+
+
+
+        // Search All Booking/Reservation
+    public function Search(Request $req){
+        $data = Bed_Transfer::on('mysql_second')
+        ->with('FromList','ToList','User','Category')
+        ->whereRaw("DATE(transfer_date) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        ->get();
+
+        return response()->json([
+            'status'=>true,
+            'data'=>$data
+        ],200);
+    } // End Method
+    
 }

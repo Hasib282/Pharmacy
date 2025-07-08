@@ -1814,6 +1814,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::put('/booking', 'Update');
             Route::delete('/booking', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
             Route::delete('/booking/delete', 'DeleteStatus');
+            Route::get('/booking/search', 'Search');
             Route::get('/booking/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
 
@@ -1824,6 +1825,9 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/roomtransfer', 'Show');
             Route::post('/roomtransfer', 'Insert');
             Route::put('/roomtransfer', 'Update');
+            Route::delete('/roomtransfer', 'Delete');
+            Route::put('/roomtransfer/delete', 'DeleteStatus');
+            Route::get('/roomtransfer/search', 'Search');
             Route::delete('/roomtransfer', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
             Route::delete('/roomtransfer/delete', 'DeleteStatus');
         });

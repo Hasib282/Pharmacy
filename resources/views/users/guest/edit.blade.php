@@ -40,8 +40,8 @@
                 <div class="c-4">
                     <div class="form-input-group">
                         <label for="updatePhone">Phone</label>
-                        <input type="text" name="ptn_phone" class="input-small" id="updatePhone">
-                        <span class="error" id="update_ptn_phone_error"></span>
+                        <input type="text" name="phone" class="input-small" id="updatePhone">
+                        <span class="error" id="update_phone_error"></span>
                     </div>
                 </div>
 

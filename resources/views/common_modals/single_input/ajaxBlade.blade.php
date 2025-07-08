@@ -87,6 +87,13 @@
             @if(Request::segment(1) == 'inventory' && Request::segment(3) == 'form'   && auth()->user()->hasPermission(207))
                 <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
             @endif
+
+             {{-- hotel --}}
+            @if(Request::segment(1) == 'hotel' && Request::segment(3) == 'roomcatagory'   && auth()->user()->hasPermission(300))
+                <button class="open-modal" data-modal-id="addModal" id="add"><i class="fa-solid fa-plus"></i> Add {{ $name }} </button>
+            @endif
+
+            
         </div>
         <div class="c-6">
 

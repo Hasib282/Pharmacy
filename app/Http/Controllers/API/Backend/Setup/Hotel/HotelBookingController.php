@@ -17,7 +17,10 @@ class HotelBookingController extends Controller
 {
     // Show All Booking/Reservation
     public function Show(Request $req){
-        $data = Booking::on('mysql_second')->with('User','Category','List','Sr','Bill')->get();
+        $data = Booking::on('mysql_second')
+        ->with('User','Category','List','Sr','Bill')
+        ->whereRaw("DATE(check_in) = ?", [date('Y-m-d')])
+        ->get();
 
         return response()->json([
             'status'=>true,
@@ -229,6 +232,21 @@ class HotelBookingController extends Controller
             'message' => 'Booking/Reservation Deleted Successfully',
             'updatedData' => $updatedData
         ], 200);
+    } // End Method
+
+
+
+    // Search All Booking/Reservation
+    public function Search(Request $req){
+        $data = Booking::on('mysql_second')
+        ->with('User','Category','List','Sr','Bill')
+        ->whereRaw("DATE(check_in) BETWEEN ? AND ?", [$req->startDate, $req->endDate])
+        ->get();
+
+        return response()->json([
+            'status'=>true,
+            'data'=>$data
+        ],200);
     } // End Method
     
     
