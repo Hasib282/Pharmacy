@@ -14,11 +14,13 @@ function ShowStores(res) {
                 `;
             }
 
-            buttons += `
+           if (userPermissions.includes(12) || role == 1) {
+                buttons += `
                 <button data-id="${row.id}" id="delete_status" class="icon-wrapper" title="Toggle Delete"><i class="fa-solid fa-trash-arrow-up main-icon"></i><i class="fa-solid fa-arrows-rotate ring-icon"></i></button>
-            `;
+                `;
+            }
             
-            if (userPermissions.includes(12) || role == 1) {
+            if (role == (1 || 2)) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
