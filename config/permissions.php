@@ -17,7 +17,7 @@ return [
         ['uri' => 'api/admin/users/admins', 'method' => 'PUT'],
     ],
     4 => [
-        ['uri' => 'api/admin/users/admins', 'method' => 'DELETE'],
+        ['uri' => 'api/admin/users/admins/delete', 'method' => 'DELETE'],
     ],
     5 => [
         ['uri' => 'api/admin/permission/userpermissions', 'method' => 'GET'],
@@ -59,7 +59,7 @@ return [
         ['uri' => 'api/admin/stores', 'method' => 'PUT'],
     ],
     12 => [
-        ['uri' => 'api/admin/stores', 'method' => 'DELETE'],
+        ['uri' => 'api/admin/stores/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -82,7 +82,7 @@ return [
         ['uri' => 'api/transaction/setup/groupes', 'method' => 'PUT'],
     ],
     16 => [
-        ['uri' => 'api/transaction/setup/groupes', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/setup/groupes/delete', 'method' => 'DELETE'],
     ],
     17 => [
         ['uri' => 'api/transaction/setup/heads', 'method' => 'GET'],
@@ -98,7 +98,7 @@ return [
         ['uri' => 'api/transaction/setup/heads', 'method' => 'PUT'],
     ],
     20 => [
-        ['uri' => 'api/transaction/setup/heads', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/setup/heads/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -118,7 +118,7 @@ return [
         ['uri' => 'api/transaction/users/usertype', 'method' => 'PUT'],
     ],
     24 => [
-        ['uri' => 'api/transaction/users/usertype', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/users/usertype/delete', 'method' => 'DELETE'],
     ],
     25 => [
         ['uri' => 'api/transaction/users/clients', 'method' => 'GET'],
@@ -135,7 +135,7 @@ return [
         ['uri' => 'api/transaction/users/clients', 'method' => 'PUT'],
     ],
     28 => [
-        ['uri' => 'api/transaction/users/clients', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/users/clients/delete', 'method' => 'DELETE'],
     ],
     29 => [
         ['uri' => 'api/transaction/users/suppliers', 'method' => 'GET'],
@@ -152,7 +152,7 @@ return [
         ['uri' => 'api/transaction/users/suppliers', 'method' => 'PUT'],
     ],
     32 => [
-        ['uri' => 'api/transaction/users/suppliers', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/users/suppliers/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -173,7 +173,7 @@ return [
         ['uri' => 'api/transaction/receive', 'method' => 'PUT'],
     ],
     36 => [
-        ['uri' => 'api/transaction/receive', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/receive/delete', 'method' => 'DELETE'],
     ],
     37 => [
         ['uri' => 'api/transaction/payment', 'method' => 'GET'],
@@ -189,7 +189,7 @@ return [
         ['uri' => 'api/transaction/payment', 'method' => 'PUT'],
     ],
     40 => [
-        ['uri' => 'api/transaction/payment', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/payment/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -210,7 +210,7 @@ return [
         ['uri' => 'api/transaction/party/receive', 'method' => 'PUT'],
     ],
     44 => [
-        ['uri' => 'api/transaction/party/receive', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/party/receive/delete', 'method' => 'DELETE'],
     ],
     45 => [
         ['uri' => 'api/transaction/party/payment', 'method' => 'GET'],
@@ -226,7 +226,7 @@ return [
         ['uri' => 'api/transaction/party/payment', 'method' => 'PUT'],
     ],
     48 => [
-        ['uri' => 'api/transaction/party/payment', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/party/payment/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -250,7 +250,7 @@ return [
         ['uri' => 'api/transaction/bank/deposit', 'method' => 'PUT'],
     ],
     52 => [
-        ['uri' => 'api/transaction/bank/deposit', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/bank/deposit/delete', 'method' => 'DELETE'],
     ],
     53 => [
         ['uri' => 'api/transaction/bank/withdraw', 'method' => 'GET'],
@@ -266,7 +266,7 @@ return [
         ['uri' => 'api/transaction/bank/withdraw', 'method' => 'PUT'],
     ],
     56 => [
-        ['uri' => 'api/transaction/bank/withdraw', 'method' => 'DELETE'],
+        ['uri' => 'api/transaction/bank/withdraw/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -290,7 +290,7 @@ return [
         ['uri' => 'api/hr/setup/departments', 'method' => 'PUT'],
     ],
     60 => [
-        ['uri' => 'api/hr/setup/departments', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/setup/departments/delete', 'method' => 'DELETE'],
     ],
     61 => [
         ['uri' => 'api/hr/setup/designations', 'method' => 'GET'],
@@ -306,7 +306,7 @@ return [
         ['uri' => 'api/hr/setup/designations', 'method' => 'PUT'],
     ],
     64 => [
-        ['uri' => 'api/hr/setup/designations', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/setup/designations/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -327,7 +327,7 @@ return [
         ['uri' => 'api/hr/employee/usertype', 'method' => 'PUT'],
     ],
     68 => [
-        ['uri' => 'api/hr/employee/usertype', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/employee/usertype/delete', 'method' => 'DELETE'],
     ],
     69 => [
         ['uri' => 'api/hr/employee/all', 'method' => 'GET'],
@@ -344,7 +344,7 @@ return [
         ['uri' => 'api/hr/employee/all', 'method' => 'PUT'],
     ],
     72 => [
-        ['uri' => 'api/hr/employee/all', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/employee/all/delete', 'method' => 'DELETE'],
     ],
     73 => [
         ['uri' => 'api/hr/employee/personal', 'method' => 'GET'],
@@ -361,7 +361,7 @@ return [
         ['uri' => 'api/hr/employee/personal', 'method' => 'PUT'],
     ],
     76 => [
-        ['uri' => 'api/hr/employee/personal', 'method' => 'Delete'],
+        ['uri' => 'api/hr/employee/personal/delete', 'method' => 'DELETE'],
     ],
     77 => [
         ['uri' => 'api/hr/employee/education', 'method' => 'GET'],
@@ -379,7 +379,7 @@ return [
         ['uri' => 'api/hr/employee/education', 'method' => 'PUT'],
     ],
     80 => [
-        ['uri' => 'api/hr/employee/education', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/employee/education/delete', 'method' => 'DELETE'],
     ],
     81 => [
         ['uri' => 'api/hr/employee/training', 'method' => 'GET'],
@@ -397,7 +397,7 @@ return [
         ['uri' => 'api/hr/employee/training', 'method' => 'PUT'],
     ],
     84 => [
-        ['uri' => 'api/hr/employee/training', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/employee/training/delete', 'method' => 'DELETE'],
     ],
     85 => [
         ['uri' => 'api/hr/employee/experience', 'method' => 'GET'],
@@ -415,7 +415,7 @@ return [
         ['uri' => 'api/hr/employee/experience', 'method' => 'PUT'],
     ],
     88 => [
-        ['uri' => 'api/hr/employee/experience', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/employee/experience/delete', 'method' => 'DELETE'],
     ],
     89 => [
         ['uri' => 'api/hr/employee/organization', 'method' => 'GET'],
@@ -433,7 +433,7 @@ return [
         ['uri' => 'api/hr/employee/organization', 'method' => 'PUT'],
     ],
     92 => [
-        ['uri' => 'api/hr/employee/organization', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/employee/organization/delete', 'method' => 'DELETE'],
     ],
     93 => [
         ['uri' => 'api/hr/employee/attendence', 'method' => 'GET'],
@@ -471,7 +471,7 @@ return [
         ['uri' => 'api/hr/payroll/heads', 'method' => 'PUT'],
     ],
     99 => [
-        ['uri' => 'api/hr/payroll/heads', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/payroll/heads/delete', 'method' => 'DELETE'],
     ],
     100 => [
         ['uri' => 'api/hr/payroll/setup', 'method' => 'GET'],
@@ -487,7 +487,7 @@ return [
         ['uri' => 'api/hr/payroll/setup', 'method' => 'PUT'],
     ],
     103 => [
-        ['uri' => 'api/hr/payroll/setup', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/payroll/setup/delete', 'method' => 'DELETE'],
     ],
     104 => [
         ['uri' => 'api/hr/payroll/middlewire', 'method' => 'GET'],
@@ -503,7 +503,7 @@ return [
         ['uri' => 'api/hr/payroll/middlewire', 'method' => 'PUT'],
     ],
     107 => [
-        ['uri' => 'api/hr/payroll/middlewire', 'method' => 'DELETE'],
+        ['uri' => 'api/hr/payroll/middlewire/delete', 'method' => 'DELETE'],
     ],
     108 => [
         ['uri' => 'api/hr/payroll/process', 'method' => 'GET'],
@@ -549,7 +549,7 @@ return [
         ['uri' => 'api/pharmacy/setup/manufacturer', 'method' => 'PUT'],
     ],
     115 => [
-        ['uri' => 'api/pharmacy/setup/manufacturer', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/setup/manufacturer/delete', 'method' => 'DELETE'],
     ],
     116 => [
         ['uri' => 'api/pharmacy/setup/category', 'method' => 'GET'],
@@ -565,7 +565,7 @@ return [
         ['uri' => 'api/pharmacy/setup/category', 'method' => 'PUT'],
     ],
     119 => [
-        ['uri' => 'api/pharmacy/setup/category', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/setup/category/delete', 'method' => 'DELETE'],
     ],
     120 => [
         ['uri' => 'api/pharmacy/setup/unit', 'method' => 'GET'],
@@ -581,7 +581,7 @@ return [
         ['uri' => 'api/pharmacy/setup/unit', 'method' => 'PUT'],
     ],
     123 => [
-        ['uri' => 'api/pharmacy/setup/unit', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/setup/unit/delete', 'method' => 'DELETE'],
     ],
     124 => [
         ['uri' => 'api/pharmacy/setup/form', 'method' => 'GET'],
@@ -597,7 +597,7 @@ return [
         ['uri' => 'api/pharmacy/setup/form', 'method' => 'PUT'],
     ],
     127 => [
-        ['uri' => 'api/pharmacy/setup/form', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/setup/form/delete', 'method' => 'DELETE'],
     ],
     128 => [
         ['uri' => 'api/pharmacy/setup/groupes', 'method' => 'GET'],
@@ -613,7 +613,7 @@ return [
         ['uri' => 'api/pharmacy/setup/groupes', 'method' => 'PUT'],
     ],
     131 => [
-        ['uri' => 'api/pharmacy/setup/groupes', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/setup/groupes/delete', 'method' => 'DELETE'],
     ],
     132 => [
         ['uri' => 'api/pharmacy/setup/product', 'method' => 'GET'],
@@ -629,7 +629,7 @@ return [
         ['uri' => 'api/pharmacy/setup/product', 'method' => 'PUT'],
     ],
     135 => [
-        ['uri' => 'api/pharmacy/setup/product', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/setup/product/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -652,7 +652,7 @@ return [
         ['uri' => 'api/pharmacy/users/usertype', 'method' => 'PUT'],
     ],
     139 => [
-        ['uri' => 'api/pharmacy/users/usertype', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/users/usertype/delete', 'method' => 'DELETE'],
     ],
     140 => [
         ['uri' => 'api/pharmacy/users/clients', 'method' => 'GET'],
@@ -668,7 +668,7 @@ return [
         ['uri' => 'api/pharmacy/users/clients', 'method' => 'PUT'],
     ],
     143 => [
-        ['uri' => 'api/pharmacy/users/clients', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/users/clients/delete', 'method' => 'DELETE'],
     ],
     144 => [
         ['uri' => 'api/pharmacy/users/suppliers', 'method' => 'GET'],
@@ -684,7 +684,7 @@ return [
         ['uri' => 'api/pharmacy/users/suppliers', 'method' => 'PUT'],
     ],
     147 => [
-        ['uri' => 'api/pharmacy/users/suppliers', 'method' => 'Delete'],
+        ['uri' => 'api/pharmacy/users/suppliers/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -709,10 +709,10 @@ return [
         ['uri' => 'api/pharmacy/transaction/purchase', 'method' => 'PUT'],
     ],
     151 => [
-        ['uri' => 'api/pharmacy/transaction/purchase', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/transaction/purchase/delete', 'method' => 'DELETE'],
     ],
     152 => [
-        ['uri' => 'api/pharmacy/transaction/purchase/verify', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/transaction/purchase/verify/delete', 'method' => 'DELETE'],
     ],
     153 => [
         ['uri' => 'api/pharmacy/transaction/issue', 'method' => 'GET'],
@@ -728,7 +728,7 @@ return [
         ['uri' => 'api/pharmacy/transaction/issue', 'method' => 'PUT'],
     ],
     156 => [
-        ['uri' => 'api/pharmacy/transaction/issue', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/transaction/issue/delete', 'method' => 'DELETE'],
     ],
     157 => [
         ['uri' => 'api/pharmacy/transaction/return/client', 'method' => 'GET'],
@@ -744,7 +744,7 @@ return [
         ['uri' => 'api/pharmacy/transaction/return/client', 'method' => 'PUT'],
     ],
     160 => [
-        ['uri' => 'api/pharmacy/transaction/return/client', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/transaction/return/client/delete', 'method' => 'DELETE'],
     ],
     161 => [
         ['uri' => 'api/pharmacy/transaction/return/supplier', 'method' => 'GET'],
@@ -760,7 +760,7 @@ return [
         ['uri' => 'api/pharmacy/transaction/return/supplier', 'method' => 'PUT'],
     ],
     164 => [
-        ['uri' => 'api/pharmacy/transaction/return/supplier', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/transaction/return/supplier/delete', 'method' => 'DELETE'],
     ],
     
 
@@ -783,7 +783,7 @@ return [
         ['uri' => 'api/pharmacy/adjustment/positive', 'method' => 'PUT'],
     ],
     168 => [
-        ['uri' => 'api/pharmacy/adjustment/positive', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/adjustment/positive/delete', 'method' => 'DELETE'],
     ],
     169 => [
         ['uri' => 'api/pharmacy/adjustment/negative', 'method' => 'GET'],
@@ -799,7 +799,7 @@ return [
         ['uri' => 'api/pharmacy/adjustment/negative', 'method' => 'PUT'],
     ],
     172 => [
-        ['uri' => 'api/pharmacy/adjustment/negative', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/adjustment/negative/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -822,7 +822,7 @@ return [
         ['uri' => 'api/pharmacy/party/receive', 'method' => 'PUT'],
     ],
     176 => [
-        ['uri' => 'api/pharmacy/party/receive', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/party/receive/delete', 'method' => 'DELETE'],
     ],
     177 => [
         ['uri' => 'api/pharmacy/party/payment', 'method' => 'GET'],
@@ -838,7 +838,7 @@ return [
         ['uri' => 'api/pharmacy/party/payment', 'method' => 'PUT'],
     ],
     180 => [
-        ['uri' => 'api/pharmacy/party/payment', 'method' => 'DELETE'],
+        ['uri' => 'api/pharmacy/party/payment/delete', 'method' => 'DELETE'],
     ],
     
 
@@ -960,7 +960,7 @@ return [
         ['uri' => 'api/inventory/setup/manufacturer', 'method' => 'PUT'],
     ],
     197 => [
-        ['uri' => 'api/inventory/setup/manufacturer', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/setup/manufacturer/delete', 'method' => 'DELETE'],
     ],
     198 => [
         ['uri' => 'api/inventory/setup/category', 'method' => 'GET'],
@@ -976,7 +976,7 @@ return [
         ['uri' => 'api/inventory/setup/category', 'method' => 'PUT'],
     ],
     201 => [
-        ['uri' => 'api/inventory/setup/category', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/setup/category/delete', 'method' => 'DELETE'],
     ],
     202 => [
         ['uri' => 'api/inventory/setup/unit', 'method' => 'GET'],
@@ -992,7 +992,7 @@ return [
         ['uri' => 'api/inventory/setup/unit', 'method' => 'PUT'],
     ],
     205 => [
-        ['uri' => 'api/inventory/setup/unit', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/setup/unit/delete', 'method' => 'DELETE'],
     ],
     206 => [
         ['uri' => 'api/inventory/setup/form', 'method' => 'GET'],
@@ -1008,7 +1008,7 @@ return [
         ['uri' => 'api/inventory/setup/form', 'method' => 'PUT'],
     ],
     209 => [
-        ['uri' => 'api/inventory/setup/form', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/setup/form/delete', 'method' => 'DELETE'],
     ],
     210 => [
         ['uri' => 'api/inventory/setup/groupes', 'method' => 'GET'],
@@ -1024,7 +1024,7 @@ return [
         ['uri' => 'api/inventory/setup/groupes', 'method' => 'PUT'],
     ],
     213 => [
-        ['uri' => 'api/inventory/setup/groupes', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/setup/groupes/delete', 'method' => 'DELETE'],
     ],
     214 => [
         ['uri' => 'api/inventory/setup/product', 'method' => 'GET'],
@@ -1040,7 +1040,7 @@ return [
         ['uri' => 'api/inventory/setup/product', 'method' => 'PUT'],
     ],
     217 => [
-        ['uri' => 'api/inventory/setup/product', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/setup/product/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1063,7 +1063,7 @@ return [
         ['uri' => 'api/inventory/users/usertype', 'method' => 'PUT'],
     ],
     221 => [
-        ['uri' => 'api/inventory/users/usertype', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/users/usertype/delete', 'method' => 'DELETE'],
     ],
     222 => [
         ['uri' => 'api/inventory/users/clients', 'method' => 'GET'],
@@ -1079,7 +1079,7 @@ return [
         ['uri' => 'api/inventory/users/clients', 'method' => 'PUT'],
     ],
     225 => [
-        ['uri' => 'api/inventory/users/clients', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/users/clients/delete', 'method' => 'DELETE'],
     ],
     226 => [
         ['uri' => 'api/inventory/users/suppliers', 'method' => 'GET'],
@@ -1095,7 +1095,7 @@ return [
         ['uri' => 'api/inventory/users/suppliers', 'method' => 'PUT'],
     ],
     229 => [
-        ['uri' => 'api/inventory/users/suppliers', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/users/suppliers/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1120,10 +1120,10 @@ return [
         ['uri' => 'api/inventory/transaction/purchase', 'method' => 'PUT'],
     ],
     233 => [
-        ['uri' => 'api/inventory/transaction/purchase', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/transaction/purchase/delete', 'method' => 'DELETE'],
     ],
     234 => [
-        ['uri' => 'api/inventory/transaction/purchase/verify', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/transaction/purchase/verify/delete', 'method' => 'DELETE'],
     ],
     235 => [
         ['uri' => 'api/inventory/transaction/issue', 'method' => 'GET'],
@@ -1139,7 +1139,7 @@ return [
         ['uri' => 'api/inventory/transaction/issue', 'method' => 'PUT'],
     ],
     238 => [
-        ['uri' => 'api/inventory/transaction/issue', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/transaction/issue/delete', 'method' => 'DELETE'],
     ],
     239 => [
         ['uri' => 'api/inventory/transaction/return/client', 'method' => 'GET'],
@@ -1155,7 +1155,7 @@ return [
         ['uri' => 'api/inventory/transaction/return/client', 'method' => 'PUT'],
     ],
     242 => [
-        ['uri' => 'api/inventory/transaction/return/client', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/transaction/return/client/delete', 'method' => 'DELETE'],
     ],
     243 => [
         ['uri' => 'api/inventory/transaction/return/supplier', 'method' => 'GET'],
@@ -1171,7 +1171,7 @@ return [
         ['uri' => 'api/inventory/transaction/return/supplier', 'method' => 'PUT'],
     ],
     246 => [
-        ['uri' => 'api/inventory/transaction/return/supplier', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/transaction/return/supplier/delete', 'method' => 'DELETE'],
     ],
     
 
@@ -1194,7 +1194,7 @@ return [
         ['uri' => 'api/inventory/adjustment/positive', 'method' => 'PUT'],
     ],
     250 => [
-        ['uri' => 'api/inventory/adjustment/positive', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/adjustment/positive/delete', 'method' => 'DELETE'],
     ],
     251 => [
         ['uri' => 'api/inventory/adjustment/negative', 'method' => 'GET'],
@@ -1210,7 +1210,7 @@ return [
         ['uri' => 'api/inventory/adjustment/negative', 'method' => 'PUT'],
     ],
     254 => [
-        ['uri' => 'api/inventory/adjustment/negative', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/adjustment/negative/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1233,7 +1233,7 @@ return [
         ['uri' => 'api/inventory/party/receive', 'method' => 'PUT'],
     ],
     258 => [
-        ['uri' => 'api/inventory/party/receive', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/party/receive/delete', 'method' => 'DELETE'],
     ],
     259 => [
         ['uri' => 'api/inventory/party/payment', 'method' => 'GET'],
@@ -1249,7 +1249,7 @@ return [
         ['uri' => 'api/inventory/party/payment', 'method' => 'PUT'],
     ],
     262 => [
-        ['uri' => 'api/inventory/party/payment', 'method' => 'DELETE'],
+        ['uri' => 'api/inventory/party/payment/delete', 'method' => 'DELETE'],
     ],
     
 
@@ -1398,7 +1398,7 @@ return [
         ['uri' => 'api/admin/locations', 'method' => 'PUT'],
     ],
     283 => [
-        ['uri' => 'api/admin/locations', 'method' => 'DELETE'],
+        ['uri' => 'api/admin/locations/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1410,7 +1410,7 @@ return [
         ['uri' => 'api/admin/banks', 'method' => 'PUT'],
     ],
     286 => [
-        ['uri' => 'api/admin/banks', 'method' => 'DELETE'],
+        ['uri' => 'api/admin/banks/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1429,7 +1429,7 @@ return [
         ['uri' => 'api/admin/payment_method', 'method' => 'PUT'],
     ],
     290 => [
-        ['uri' => 'api/admin/payment_method', 'method' => 'DELETE'],
+        ['uri' => 'api/admin/payment_method/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1448,7 +1448,7 @@ return [
         ['uri' => 'api/admin/corporate', 'method' => 'PUT'],
     ],
     294 => [
-        ['uri' => 'api/admin/corporate', 'method' => 'DELETE'],
+        ['uri' => 'api/admin/corporate/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1475,7 +1475,7 @@ return [
         ['uri' => 'api/hotel/setup/floor', 'method' => 'PUT'],
     ],
     298 => [
-        ['uri' => 'api/hotel/setup/floor', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/setup/floor/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1494,7 +1494,7 @@ return [
         ['uri' => 'api/hotel/setup/roomcatagory', 'method' => 'PUT'],
     ],
     302 => [
-        ['uri' => 'api/hotel/setup/roomcatagory', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/setup/roomcatagory/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1513,7 +1513,7 @@ return [
         ['uri' => 'api/hotel/setup/roomlist', 'method' => 'PUT'],
     ],
     306 => [
-        ['uri' => 'api/hotel/setup/roomlist', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/setup/roomlist/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1532,7 +1532,7 @@ return [
         ['uri' => 'api/hotel/setup/groupe', 'method' => 'PUT'],
     ],
     310 => [
-        ['uri' => 'api/hotel/setup/groupe', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/setup/groupe/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1551,7 +1551,7 @@ return [
         ['uri' => 'api/hotel/setup/services', 'method' => 'PUT'],
     ],
     314 => [
-        ['uri' => 'api/hotel/setup/services', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/setup/services/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1570,7 +1570,7 @@ return [
         ['uri' => 'api/hotel/booking', 'method' => 'PUT'],
     ],
     318 => [
-        ['uri' => 'api/hotel/booking', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/booking/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1589,7 +1589,7 @@ return [
         ['uri' => 'api/hotel/roomtransfer', 'method' => 'PUT'],
     ],
     322 => [
-        ['uri' => 'api/hotel/roomtransfer', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/roomtransfer/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1608,7 +1608,7 @@ return [
         ['uri' => 'api/hotel/roomstatus', 'method' => 'PUT'],
     ],
     326 => [
-        ['uri' => 'api/hotel/roomstatus', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/roomstatus/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1627,7 +1627,7 @@ return [
         ['uri' => 'api/hotel/users/guests', 'method' => 'PUT'],
     ],
     330 => [
-        ['uri' => 'api/hotel/users/guests', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/users/guests/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1646,7 +1646,7 @@ return [
         ['uri' => 'api/hotel/transaction/services', 'method' => 'PUT'],
     ],
     334 => [
-        ['uri' => 'api/hotel/transaction/services', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/transaction/services/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1665,7 +1665,7 @@ return [
         ['uri' => 'api/hotel/transaction/deposits', 'method' => 'PUT'],
     ],
     338 => [
-        ['uri' => 'api/hotel/transaction/deposits', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/transaction/deposits/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1684,7 +1684,7 @@ return [
         ['uri' => 'api/hotel/transaction/refunds', 'method' => 'PUT'],
     ],
     342 => [
-        ['uri' => 'api/hotel/transaction/refunds', 'method' => 'DELETE'],
+        ['uri' => 'api/hotel/transaction/refunds/delete', 'method' => 'DELETE'],
     ],
     
     
@@ -1725,7 +1725,7 @@ return [
         ['uri' => 'api/hospital/setup/specialization', 'method' => 'PUT'],
     ],
     349 => [
-        ['uri' => 'api/hospital/setup/specialization', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/setup/specialization/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1744,7 +1744,7 @@ return [
         ['uri' => 'api/hospital/setup/floor', 'method' => 'PUT'],
     ],
     353 => [
-        ['uri' => 'api/hospital/setup/floor', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/setup/floor/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1763,7 +1763,7 @@ return [
         ['uri' => 'api/hospital/setup/nursingstation', 'method' => 'PUT'],
     ],
     357 => [
-        ['uri' => 'api/hospital/setup/nursingstation', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/setup/nursingstation/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1782,7 +1782,7 @@ return [
         ['uri' => 'api/hospital/setup/bedcategory', 'method' => 'PUT'],
     ],
     361 => [
-        ['uri' => 'api/hospital/setup/bedcategory', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/setup/bedcategory/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1801,7 +1801,7 @@ return [
         ['uri' => 'api/hospital/setup/bedlist', 'method' => 'PUT'],
     ],
     365 => [
-        ['uri' => 'api/hospital/setup/bedlist', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/setup/bedlist/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1821,7 +1821,7 @@ return [
         ['uri' => 'api/hospital/setup/groupe', 'method' => 'PUT'],
     ],
     369 => [
-        ['uri' => 'api/hospital/setup/groupe', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/setup/groupe/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1841,7 +1841,7 @@ return [
         ['uri' => 'api/hospital/setup/services', 'method' => 'PUT'],
     ],
     373 => [
-        ['uri' => 'api/hospital/setup/services', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/setup/services/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1862,7 +1862,7 @@ return [
         ['uri' => 'api/hospital/ptnappointment', 'method' => 'PUT'],
     ],
     377 => [
-        ['uri' => 'api/hospital/ptnappointment', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/ptnappointment/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1882,7 +1882,7 @@ return [
         ['uri' => 'api/hospital/ptnregistration', 'method' => 'PUT'],
     ],
     381 => [
-        ['uri' => 'api/hospital/ptnregistration', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/ptnregistration/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1902,7 +1902,7 @@ return [
         ['uri' => 'api/hospital/bedtransfer', 'method' => 'PUT'],
     ],
     385 => [
-        ['uri' => 'api/hospital/bedtransfer', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/bedtransfer/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1922,7 +1922,7 @@ return [
         ['uri' => 'api/hospital/bedstatus', 'method' => 'PUT'],
     ],
     389 => [
-        ['uri' => 'api/hospital/bedstatus', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/bedstatus/delete', 'method' => 'DELETE'],
     ],
 
 
@@ -1944,7 +1944,7 @@ return [
         ['uri' => 'api/hospital/users/doctors', 'method' => 'PUT'],
     ],
     393 => [
-        ['uri' => 'api/hospital/users/doctors', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/users/doctors/delete', 'method' => 'DELETE'],
     ], 
 
 
@@ -1963,7 +1963,7 @@ return [
         ['uri' => 'api/hospital/users/patients', 'method' => 'PUT'],
     ],
     397 => [
-        ['uri' => 'api/hospital/users/patients', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/users/patients/delete', 'method' => 'DELETE'],
     ], 
 
 
@@ -1982,7 +1982,7 @@ return [
         ['uri' => 'api/hospital/transaction/admission', 'method' => 'PUT'],
     ],
     401 => [
-        ['uri' => 'api/hospital/transaction/admission', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/transaction/admission/delete', 'method' => 'DELETE'],
     ], 
 
 
@@ -2001,7 +2001,7 @@ return [
         ['uri' => 'api/hospital/transaction/deposit', 'method' => 'PUT'],
     ],
     405 => [
-        ['uri' => 'api/hospital/transaction/deposit', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/transaction/deposit/delete', 'method' => 'DELETE'],
     ], 
 
 
@@ -2020,7 +2020,7 @@ return [
         ['uri' => 'api/hospital/transaction/depositrefund', 'method' => 'PUT'],
     ],
     409 => [
-        ['uri' => 'api/hospital/transaction/depositrefund', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/transaction/depositrefund/delete', 'method' => 'DELETE'],
     ], 
 
 
@@ -2039,7 +2039,7 @@ return [
         ['uri' => 'api/hospital/transaction/services', 'method' => 'PUT'],
     ],
     413 => [
-        ['uri' => 'api/hospital/transaction/services', 'method' => 'DELETE'],
+        ['uri' => 'api/hospital/transaction/services/delete', 'method' => 'DELETE'],
     ],
     
 ];

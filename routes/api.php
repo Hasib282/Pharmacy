@@ -3,6 +3,7 @@
 use App\Http\Middleware\ApiValidUser;
 use App\Http\Middleware\SuperAdminAccess;
 use App\Http\Middleware\CheckPermission;
+use App\Http\Middleware\AdminSuperAdminAccess;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -214,8 +215,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/companytype', 'Show');
                 Route::post('/companytype', 'Insert');
                 Route::put('/companytype', 'Update');
-                Route::delete('/companytype', 'Delete');
-                Route::put('/companytype/delete', 'DeleteStatus');
+                Route::delete('/companytype', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/companytype/delete', 'DeleteStatus');
                 Route::get('/companytype/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -226,8 +227,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/companies', 'Show');
                 Route::post('/companies', 'Insert');
                 Route::put('/companies', 'Update');
-                Route::delete('/companies', 'Delete');
-                Route::put('/companies/delete', 'DeleteStatus');
+                Route::delete('/companies', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/companies/delete', 'DeleteStatus');
                 Route::get('/companies/details', 'Details');
                 Route::get('/companies/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
             });
@@ -243,8 +244,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::get('/roles', 'Show');
                     Route::post('/roles', 'Insert');
                     Route::put('/roles', 'Update');
-                    Route::delete('/roles', 'Delete');
-                    Route::put('/role/delete', 'DeleteStatus');
+                    Route::delete('/roles', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                    Route::delete('/role/delete', 'DeleteStatus');
                     Route::get('/roles/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 });
 
@@ -255,8 +256,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::get('/superadmins', 'Show');
                     Route::post('/superadmins', 'Insert');
                     Route::put('/superadmins', 'Update');
-                    Route::delete('/superadmins', 'Delete');
-                    Route::put('/superadmins/delete', 'DeleteStatus');
+                    Route::delete('/superadmins', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                    Route::delete('/superadmins/delete', 'DeleteStatus');
                 });
             });
             
@@ -266,8 +267,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/admins', 'Show');
                 Route::post('/admins', 'Insert');
                 Route::put('/admins', 'Update');
-                Route::delete('/admins', 'Delete');
-                Route::put('/admins/delete', 'DeleteStatus');
+                Route::delete('/admins', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/admins/delete', 'DeleteStatus');
             });
         }); // End User Routes
 
@@ -281,8 +282,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::get('/mainhead', 'Show');
                     Route::post('/mainhead', 'Insert');
                     Route::put('/mainhead', 'Update');
-                    Route::delete('/mainhead', 'Delete');
-                    Route::put('/mainhead/delete', 'DeleteStatus');
+                    Route::delete('/mainhead', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                    Route::delete('/mainhead/delete', 'DeleteStatus');
                     Route::get('/mainhead/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 });
                 
@@ -293,8 +294,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::get('/heads', 'Show');
                     Route::post('/heads', 'Insert');
                     Route::put('/heads', 'Update');
-                    Route::delete('/heads', 'Delete');
-                    Route::put('/heads/delete', 'DeleteStatus');
+                    Route::delete('/heads', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                    Route::delete('/heads/delete', 'DeleteStatus');
                     Route::get('/heads/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
                 });
                 
@@ -346,8 +347,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/banks', 'Show');
             Route::post('/banks', 'Insert');
             Route::put('/banks', 'Update');
-            Route::delete('/banks', 'Delete');
-            Route::put('/banks/delete', 'DeleteStatus');
+            Route::delete('/banks', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/banks/delete', 'DeleteStatus');
             Route::get('/banks/details', 'Details');
             Route::get('/banks/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
@@ -359,8 +360,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/locations', 'Show');
             Route::post('/locations', 'Insert');
             Route::put('/locations', 'Update');
-            Route::delete('/locations', 'Delete');
-            Route::put('/locations/delete', 'DeleteStatus');
+            Route::delete('/locations', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/locations/delete', 'DeleteStatus');
             Route::get('/locations/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
 
@@ -370,8 +371,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/stores', 'Show');
             Route::post('/stores', 'Insert');
             Route::put('/stores', 'Update');
-            Route::delete('/stores', 'Delete');
-            Route::put('/stores/delete', 'DeleteStatus');
+            Route::delete('/stores', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/stores/delete', 'DeleteStatus');
             Route::get('/stores/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
         
@@ -382,8 +383,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/payment_method', 'Show');
             Route::post('/payment_method', 'Insert');
             Route::put('/payment_method', 'Update');
-            Route::delete('/payment_method', 'Delete');
-            Route::put('/payment_method/delete', 'DeleteStatus');
+            Route::delete('/payment_method', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/payment_method/delete', 'DeleteStatus');
             Route::get('/payment_method/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
 
@@ -397,8 +398,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/mainheads', 'Show');
                 Route::post('/mainheads', 'Insert');
                 Route::put('/mainheads', 'Update');
-                Route::delete('/mainheads', 'Delete');
-                Route::put('/mainheads/delete', 'DeleteStatus');
+                Route::delete('/mainheads', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/mainheads/delete', 'DeleteStatus');
                 Route::get('/mainheads/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
             });
 
@@ -416,8 +417,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/trangroupes', 'Show');
                 Route::post('/trangroupes', 'Insert');
                 Route::put('/trangroupes', 'Update');
-                Route::delete('/trangroupes', 'Delete');
-                Route::put('/trangroupes/delete', 'DeleteStatus');
+                Route::delete('/trangroupes', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/trangroupes/delete', 'DeleteStatus');
                 Route::get('/trangroupes/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
             });
             
@@ -428,8 +429,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/tranheads', 'Show');
                 Route::post('/tranheads', 'Insert');
                 Route::put('/tranheads', 'Update');
-                Route::delete('/tranheads', 'Delete');
-                Route::put('/tranheads/delete', 'DeleteStatus');
+                Route::delete('/tranheads', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/tranheads/delete', 'DeleteStatus');
                 Route::get('/tranheads/get', 'Get')->withoutMiddleware([CheckPermission::class, SuperAdminAccess::class]);
             });
         });
@@ -439,8 +440,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/corporate', 'Show');
             Route::post('/corporate', 'Insert');
             Route::put('/corporate', 'Update');
-            Route::delete('/corporate', 'Delete');
-            Route::put('/corporate/delete', 'DeleteStatus');
+            Route::delete('/corporate', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/corporate/delete', 'DeleteStatus');
             Route::get('/corporate/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
     });
@@ -460,8 +461,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/groupes', 'Show');
                 Route::post('/groupes', 'Insert');
                 Route::put('/groupes', 'Update');
-                Route::delete('/groupes', 'Delete');
-                Route::put('/groupes/delete', 'DeleteStatus');
+                Route::delete('/groupes', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/groupes/delete', 'DeleteStatus');
             });
 
 
@@ -471,8 +472,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/heads', 'Show');
                 Route::post('/heads', 'Insert');
                 Route::put('/heads', 'Update');
-                Route::delete('/heads', 'Delete');
-                Route::put('/heads/delete', 'DeleteStatus');
+                Route::delete('/heads', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/heads/delete', 'DeleteStatus');
             });
         });
 
@@ -483,8 +484,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/usertype', 'Show');
                 Route::post('/usertype', 'Insert');
                 Route::put('/usertype', 'Update');
-                Route::delete('/usertype', 'Delete');
-                Route::put('/usertype/delete', 'DeleteStatus');
+                Route::delete('/usertype', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/usertype/delete', 'DeleteStatus');
             });
 
 
@@ -494,8 +495,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/clients', 'Show');
                 Route::post('/clients', 'Insert');
                 Route::put('/clients', 'Update');
-                Route::delete('/clients', 'Delete');
-                Route::put('/clients/delete', 'DeleteStatus');
+                Route::delete('/clients', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/clients/delete', 'DeleteStatus');
                 Route::get('/clients/details', 'Details');
             });
             
@@ -506,8 +507,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/suppliers', 'Show');
                 Route::post('/suppliers', 'Insert');
                 Route::put('/suppliers', 'Update');
-                Route::delete('/suppliers', 'Delete');
-                Route::put('/suppliers/delete', 'DeleteStatus');
+                Route::delete('/suppliers', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/suppliers/delete', 'DeleteStatus');
                 Route::get('/suppliers/details', 'Details');
             });
         });
@@ -520,8 +521,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/receive', 'ShowAllReceive');
             Route::post('/receive', 'Insert');
             Route::put('/receive', 'Update');
-            Route::delete('/receive', 'Delete');
-            Route::put('/receive/delete', 'DeleteStatus');
+            Route::delete('/receive', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/receive/delete', 'DeleteStatus');
             Route::get('/receive/search', 'Search');
 
 
@@ -530,8 +531,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/payment', 'ShowAllPayment');
             Route::post('/payment', 'Insert');
             Route::put('/payment', 'Update');
-            Route::delete('/payment', 'Delete');
-            Route::put('/payment/delete', 'DeleteStatus');
+            Route::delete('/payment', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/payment/delete', 'DeleteStatus');
             Route::get('/payment/search', 'Search');
 
 
@@ -553,8 +554,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/receive', 'Show');
                 Route::post('/receive', 'Insert');
                 // Route::put('/receive', 'Update');
-                // Route::delete('/receive', 'Delete');
-                //Route::put('/receive/delete', 'DeleteStatus');
+                // Route::delete('/receive', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                //Route::delete('/receive/delete', 'DeleteStatus');
 
                 Route::get('/receive/search', 'Search');
 
@@ -563,8 +564,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/payment', 'Show');
                 Route::post('/payment', 'Insert');
                 // Route::put('/payment', 'Update');
-                // Route::delete('/payment', 'Delete');
-                //Route::put('/payment/delete', 'DeleteStatus');
+                // Route::delete('/payment', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                //Route::delete('/payment/delete', 'DeleteStatus');
                 
                 Route::get('/payment/search', 'Search');
 
@@ -582,8 +583,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/withdraw', 'ShowAllWithdraws');
                 Route::post('/withdraw', 'Insert');
                 Route::put('/withdraw', 'Update');
-                Route::delete('/withdraw', 'Delete');
-                Route::put('/withdraw/delete', 'DeleteStatus');
+                Route::delete('/withdraw', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/withdraw/delete', 'DeleteStatus');
                 Route::get('/withdraw/search', 'Search');
 
 
@@ -592,8 +593,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/deposit', 'ShowAllDeposits');
                 Route::post('/deposit', 'Insert');
                 Route::put('/deposit', 'Update');
-                Route::delete('/deposit', 'Delete');
-                Route::put('/deposit/delete', 'DeleteStatus');
+                Route::delete('/deposit', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/deposit/delete', 'DeleteStatus');
                 Route::get('/deposit/search', 'Search');
             });
         }); // End BankTransactionController
@@ -614,8 +615,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/departments', 'Show');
                 Route::post('/departments', 'Insert');
                 Route::put('/departments', 'Update');
-                Route::delete('/departments', 'Delete');
-                Route::put('/departments/delete', 'DeleteStatus');
+                Route::delete('/departments', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/departments/delete', 'DeleteStatus');
                 Route::get('/department/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -626,8 +627,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/designations', 'Show');
                 Route::post('/designations', 'Insert');
                 Route::put('/designations', 'Update');
-                Route::delete('/designations', 'Delete');
-                Route::put('/designations/delete', 'DeleteStatus');
+                Route::delete('/designations', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/designations/delete', 'DeleteStatus');
                 Route::get('/designation/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
         });
@@ -641,8 +642,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/usertype', 'Show');
                 Route::post('/usertype', 'Insert');
                 Route::put('/usertype', 'Update');
-                Route::delete('/usertype', 'Delete');
-                Route::put('/usertype/delete', 'DeleteStatus');
+                Route::delete('/usertype', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/usertype/delete', 'DeleteStatus');
             });
 
 
@@ -650,7 +651,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             ///////////// --------------- All Employeee Routes ----------- ///////////////////
             Route::controller(EmployeeController::class)->group(function () {
                 Route::get('/all', 'Show');
-                Route::delete('/all', 'Delete');
+                Route::delete('/all', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
                 Route::get('/all/details', 'Details');
                 Route::get('/personal/details', 'Details');
                 Route::get('/education/details', 'Details');
@@ -666,8 +667,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/personal', 'Show');
                 Route::post('/personal', 'Insert');
                 Route::put('/personal', 'Update');
-                Route::delete('/personal', 'Delete');
-                Route::put('/personal/delete', 'DeleteStatus');
+                Route::delete('/personal', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/personal/delete', 'DeleteStatus');
             });
 
 
@@ -678,8 +679,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/education', 'Insert');
                 Route::get('/education/edit', 'Edit');
                 Route::put('/education', 'Update');
-                Route::delete('/education', 'Delete');
-                Route::put('/education/delete', 'DeleteStatus');
+                Route::delete('/education', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/education/delete', 'DeleteStatus');
                 Route::get('/education/grid', 'Grid');
             });
 
@@ -691,8 +692,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/training', 'Insert');
                 Route::get('/training/edit', 'Edit');
                 Route::put('/training', 'Update');
-                Route::delete('/training', 'Delete');
-                Route::put('/training/delete', 'DeleteStatus');
+                Route::delete('/training', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/training/delete', 'DeleteStatus');
                 Route::get('/training/grid', 'Grid');
             });
 
@@ -704,8 +705,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/experience', 'Insert');
                 Route::get('/experience/edit', 'Edit');
                 Route::put('/experience', 'Update');
-                Route::delete('/experience', 'Delete');
-                Route::put('/experience/delete', 'DeleteStatus');
+                Route::delete('/experience', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/experience/delete', 'DeleteStatus');
                 Route::get('/experience/grid', 'Grid');
             });
 
@@ -717,8 +718,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/organization', 'Insert');
                 Route::get('/organization/edit', 'Edit');
                 Route::put('/organization', 'Update');
-                Route::delete('/organization', 'Delete');
-                Route::put('/organization/delete', 'DeleteStatus');
+                Route::delete('/organization', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/organization/delete', 'DeleteStatus');
                 Route::get('/organization/grid', 'Grid');
             });
             
@@ -730,8 +731,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/attendence', 'Show');
                 Route::post('/attendence', 'Insert');
                 Route::put('/attendence', 'Update');
-                Route::delete('/attendence', 'Delete');
-                Route::put('/attendence/delete', 'DeleteStatus');
+                Route::delete('/attendence', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/attendence/delete', 'DeleteStatus');
 
             });
         }); // End Hr Employee Routes
@@ -745,8 +746,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/heads', 'Show');
                 Route::post('/heads', 'Insert');
                 Route::put('/heads', 'Update');
-                Route::delete('/heads', 'Delete');
-                Route::put('/heads/delete', 'DeleteStatus');
+                Route::delete('/heads', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/heads/delete', 'DeleteStatus');
             });
 
 
@@ -756,8 +757,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/setup', 'Show');
                 Route::post('/setup', 'Insert');
                 Route::put('/setup', 'Update');
-                Route::delete('/setup', 'Delete');
-                Route::put('/setup/delete', 'DeleteStatus');
+                Route::delete('/setup', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/setup/delete', 'DeleteStatus');
                 Route::get('/setup/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -768,8 +769,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/middlewire', 'Show');
                 Route::post('/middlewire', 'Insert');
                 Route::put('/middlewire', 'Update');
-                Route::delete('/middlewire', 'Delete');
-                Route::put('/middlewire/delete', 'DeleteStatus');
+                Route::delete('/middlewire', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/middlewire/delete', 'DeleteStatus');
             });
 
 
@@ -780,7 +781,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/process', 'Insert');
                 Route::get('/process/edit', 'Edit');
                 // Route::put('/process', 'Update');
-                // Route::delete('/process', 'Delete');
+                // Route::delete('/process', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
                 Route::get('/process/search', 'Search');
                 Route::get('/get', 'Get')->withoutMiddleware(CheckPermission::class);
                 // Route::get('/get/data', 'GetByDate');
@@ -823,8 +824,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/manufacturer', 'Show');
                 Route::post('/manufacturer', 'Insert');
                 Route::put('/manufacturer', 'Update');
-                Route::delete('/manufacturer', 'Delete');
-                Route::put('/manufacturer/delete', 'DeleteStatus');
+                Route::delete('/manufacturer', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/manufacturer/delete', 'DeleteStatus');
                 Route::get('/manufacturer/get',  'Get')->withoutMiddleware(CheckPermission::class);
             });
     
@@ -835,8 +836,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/category', 'Show');
                 Route::post('/category', 'Insert');
                 Route::put('/category', 'Update');
-                Route::delete('/category', 'Delete');
-                Route::put('/category/delete', 'DeleteStatus');
+                Route::delete('/category', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/category/delete', 'DeleteStatus');
                 Route::get('/category/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
@@ -847,8 +848,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/unit', 'Show');
                 Route::post('/unit', 'Insert');
                 Route::put('/unit', 'Update');
-                Route::delete('/unit', 'Delete');
-                Route::put('/unit/delete', 'DeleteStatus');
+                Route::delete('/unit', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/unit/delete', 'DeleteStatus');
                 Route::get('/unit/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
@@ -859,8 +860,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/form', 'Show');
                 Route::post('/form', 'Insert');
                 Route::put('/form', 'Update');
-                Route::delete('/form', 'Delete');
-                Route::put('/form/delete', 'DeleteStatus');
+                Route::delete('/form', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/form/delete', 'DeleteStatus');
                 Route::get('/form/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
     
@@ -871,8 +872,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/groupes', 'Show');
                 Route::post('/groupes', 'Insert');
                 Route::put('/groupes', 'Update');
-                Route::put('/groupes/delete', 'DeleteStatus');
-                Route::delete('/groupes', 'Delete');
+                Route::delete('/groupes', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/groupes/delete', 'DeleteStatus');
             });
 
 
@@ -882,8 +883,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/product', 'Show');
                 Route::post('/product', 'Insert');
                 Route::put('/product', 'Update');
-                Route::delete('/product', 'Delete');
-                Route::put('/product/delete', 'DeleteStatus');
+                Route::delete('/product', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/product/delete', 'DeleteStatus');
                 Route::get('/product/get', 'Get')->withoutMiddleware(CheckPermission::class);
                 Route::get('/product/get/list', 'GetProductList')->withoutMiddleware(CheckPermission::class);
             });
@@ -898,8 +899,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/usertype', 'Show');
                 Route::post('/usertype', 'Insert');
                 Route::put('/usertype', 'Update');
-                Route::delete('/usertype', 'Delete');
-                Route::put('/usertype/delete', 'DeleteStatus');
+                Route::delete('/usertype', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/usertype/delete', 'DeleteStatus');
             });
 
 
@@ -909,8 +910,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/clients', 'Show');
                 Route::post('/clients', 'Insert');
                 Route::put('/clients', 'Update');
-                Route::delete('/clients', 'Delete');
-                Route::put('/clients/delete', 'DeleteStatus');
+                Route::delete('/clients', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/clients/delete', 'DeleteStatus');
                 Route::get('/clients/details', 'Details');
             });
             
@@ -921,8 +922,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/suppliers', 'Show');
                 Route::post('/suppliers', 'Insert');
                 Route::put('/suppliers', 'Update');
-                Route::delete('/suppliers', 'Delete');
-                Route::put('/suppliers/delete', 'DeleteStatus');
+                Route::delete('/suppliers', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/suppliers/delete', 'DeleteStatus');
                 Route::get('/suppliers/details', 'Details');
             });
         });
@@ -937,8 +938,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/purchase', 'Insert');
                 Route::get('/purchase/edit', 'Edit');
                 Route::put('/purchase', 'Update');
-                Route::delete('/purchase', 'Delete');
-                Route::put('/purchase/delete', 'DeleteStatus');
+                Route::delete('/purchase', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/purchase/delete', 'DeleteStatus');
                 Route::get('/purchase/search', 'Search');
                 Route::delete('/purchase/verify', 'Verify');
             });
@@ -951,8 +952,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/issue', 'Insert');
                 Route::get('/issue/edit', 'Edit');
                 Route::put('/issue', 'Update');
-                Route::delete('/issue', 'Delete');
-                Route::put('/issue/delete', 'DeleteStatus');
+                Route::delete('/issue', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/issue/delete', 'DeleteStatus');
                 Route::get('/issue/search', 'Search');
             });
 
@@ -966,8 +967,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::post('/supplier', 'Insert');
                     // Route::get('/supplier/edit', 'Edit');
                     // Route::put('/supplier', 'Update');
-                    Route::delete('/supplier', 'Delete');
-                    Route::put('/supplier/delete', 'DeleteStatus');
+                    Route::delete('/supplier', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                    Route::delete('/supplier/delete', 'DeleteStatus');
                     Route::get('/supplier/search', 'Search');
                 });
                 
@@ -979,8 +980,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::post('/client', 'Insert');
                     // Route::get('/client/edit', 'Edit');
                     // Route::put('/client', 'Update');
-                    Route::delete('/client', 'Delete');
-                    Route::put('/client/delete', 'DeleteStatus');
+                    Route::delete('/client', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                    Route::delete('/client/delete', 'DeleteStatus');
                     Route::get('/client/search', 'Search');
                 });
             }); // End Inventory Transaction Return Routes
@@ -996,8 +997,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/positive', 'Insert');
                 Route::get('/positive/edit', 'Edit');
                 Route::put('/positive', 'Update');
-                Route::delete('/positive', 'Delete');
-                Route::put('/positive/delete', 'DeleteStatus');
+                Route::delete('/positive', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/positive/delete', 'DeleteStatus');
                 Route::get('/positive/search', 'Search');
 
 
@@ -1007,8 +1008,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/negative', 'Insert');
                 Route::get('/negative/edit', 'Edit');
                 Route::put('/negative', 'Update');
-                Route::delete('/negative', 'Delete');
-                Route::put('/negative/delete', 'DeleteStatus');
+                Route::delete('/negative', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/negative/delete', 'DeleteStatus');
                 Route::get('/negative/search', 'Search');
             });
         }); // End Inventory Adjustment Routes
@@ -1022,8 +1023,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/receive', 'Show');
                 Route::post('/receive', 'Insert');
                 // Route::put('/receive', 'Update');
-                // Route::delete('/receive', 'Delete');
-                // Route::put('/receive/delete', 'DeleteStatus');
+                // Route::delete('/receive', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                // Route::delete('/receive/delete', 'DeleteStatus');
                 Route::get('/receive/search', 'Search');
 
 
@@ -1031,8 +1032,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/payment', 'Show');
                 Route::post('/payment', 'Insert');
                 // Route::put('/payment', 'Update');
-                // Route::delete('/payment', 'Delete');
-                // Route::put('/payment/delete', 'DeleteStatus');
+                // Route::delete('/payment', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                // Route::delete('/payment/delete', 'DeleteStatus');
                 Route::get('/payment/search', 'Search');
 
                 // Common Routes
@@ -1176,8 +1177,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/manufacturer', 'Show');
                 Route::post('/manufacturer', 'Insert');
                 Route::put('/manufacturer', 'Update');
-                Route::delete('/manufacturer', 'Delete');
-                Route::put('/manufacturer/delete', 'DeleteStatus');
+                Route::delete('/manufacturer', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/manufacturer/delete', 'DeleteStatus');
             });
     
     
@@ -1187,8 +1188,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/category', 'Show');
                 Route::post('/category', 'Insert');
                 Route::put('/category', 'Update');
-                Route::delete('/category', 'Delete');
-                Route::put('/category/delete', 'DeleteStatus');
+                Route::delete('/category', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/category/delete', 'DeleteStatus');
             });
     
     
@@ -1198,8 +1199,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/unit', 'Show');
                 Route::post('/unit', 'Insert');
                 Route::put('/unit', 'Update');
-                Route::delete('/unit', 'Delete');
-                Route::put('/unit/delete', 'DeleteStatus');
+                Route::delete('/unit', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/unit/delete', 'DeleteStatus');
             });
     
     
@@ -1209,8 +1210,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/form', 'Show');
                 Route::post('/form', 'Insert');
                 Route::put('/form', 'Update');
-                Route::delete('/form', 'Delete');
-                Route::put('/form/delete', 'DeleteStatus');
+                Route::delete('/form', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/form/delete', 'DeleteStatus');
             });
     
     
@@ -1220,8 +1221,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/groupes', 'Show');
                 Route::post('/groupes', 'Insert');
                 Route::put('/groupes', 'Update');
-                Route::delete('/groupes', 'Delete');
-                Route::put('/groupes/delete', 'DeleteStatus');
+                Route::delete('/groupes', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/groupes/delete', 'DeleteStatus');
             });
 
 
@@ -1231,8 +1232,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/product', 'Show');
                 Route::post('/product', 'Insert');
                 Route::put('/product', 'Update');
-                Route::delete('/product', 'Delete');
-                Route::put('/product/delete', 'DeleteStatus');
+                Route::delete('/product', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/product/delete', 'DeleteStatus');
                 Route::get('/product/get', 'Get')->withoutMiddleware(CheckPermission::class);
                 Route::get('/product/get/list', 'GetProductList')->withoutMiddleware(CheckPermission::class);
             });
@@ -1246,8 +1247,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/usertype', 'Show');
                 Route::post('/usertype', 'Insert');
                 Route::put('/usertype', 'Update');
-                Route::delete('/usertype', 'Delete');
-                Route::put('/usertype/delete', 'DeleteStatus');
+                Route::delete('/usertype', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/usertype/delete', 'DeleteStatus');
             });
 
 
@@ -1257,8 +1258,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/clients', 'Show');
                 Route::post('/clients', 'Insert');
                 Route::put('/clients', 'Update');
-                Route::delete('/clients', 'Delete');
-                Route::put('/clients/delete', 'DeleteStatus');
+                Route::delete('/clients', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/clients/delete', 'DeleteStatus');
                 Route::get('/clients/details', 'Details');
             });
             
@@ -1269,8 +1270,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/suppliers', 'Show');
                 Route::post('/suppliers', 'Insert');
                 Route::put('/suppliers', 'Update');
-                Route::delete('/suppliers', 'Delete');
-                Route::put('/category/delete', 'DeleteStatus');
+                Route::delete('/suppliers', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/category/delete', 'DeleteStatus');
                 Route::get('/suppliers/details', 'Details');
             });
         });
@@ -1285,8 +1286,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/purchase', 'Insert');
                 Route::get('/purchase/edit', 'Edit');
                 Route::put('/purchase', 'Update');
-                Route::delete('/purchase', 'Delete');
-                Route::put('/purchase/delete', 'DeleteStatus');
+                Route::delete('/purchase', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/purchase/delete', 'DeleteStatus');
                 Route::get('/purchase/search', 'Search');
                 Route::delete('/purchase/verify', 'Verify');
             });
@@ -1299,8 +1300,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/issue', 'Insert');
                 Route::get('/issue/edit', 'Edit');
                 Route::put('/issue', 'Update');
-                Route::delete('/issue', 'Delete');
-                Route::put('/issue/delete', 'DeleteStatus');
+                Route::delete('/issue', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/issue/delete', 'DeleteStatus');
                 Route::get('/issue/search', 'Search');
             });
 
@@ -1314,8 +1315,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::post('/supplier', 'Insert');
                     Route::get('/supplier/edit', 'Edit');
                     Route::put('/supplier', 'Update');
-                    Route::delete('/supplier', 'Delete');
-                    Route::put('/supplier/delete', 'DeleteStatus');
+                    Route::delete('/supplier', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                    Route::delete('/supplier/delete', 'DeleteStatus');
                     Route::get('/supplier/search', 'Search');
                 });
                 
@@ -1327,8 +1328,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                     Route::post('/client', 'Insert');
                     Route::get('/client/edit', 'Edit');
                     Route::put('/client', 'Update');
-                    Route::delete('/client', 'Delete');
-                    Route::put('/client/delete', 'DeleteStatus');
+                    Route::delete('/client', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                    Route::delete('/client/delete', 'DeleteStatus');
                     Route::get('/client/search', 'Search');
                 });
             }); // End Pharmacy Transaction Return Routes
@@ -1344,8 +1345,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/positive', 'Insert');
                 Route::get('/positive/edit', 'Edit');
                 Route::put('/positive', 'Update');
-                Route::delete('/positive', 'Delete');
-                Route::put('/positive/delete', 'DeleteStatus');
+                Route::delete('/positive', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/positive/delete', 'DeleteStatus');
                 Route::get('/positive/search', 'Search');
 
 
@@ -1355,8 +1356,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::post('/negative', 'Insert');
                 Route::get('/negative/edit', 'Edit');
                 Route::put('/negative', 'Update');
-                Route::delete('/negative', 'Delete');
-                Route::put('/negative/delete', 'DeleteStatus');
+                Route::delete('/negative', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/negative/delete', 'DeleteStatus');
                 Route::get('/negative/search', 'Search');
             });
         }); // End Pharmacy Adjustment Routes
@@ -1370,8 +1371,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/receive', 'Show');
                 Route::post('/receive', 'Insert');
                 // Route::put('/receive', 'Update');
-                // Route::delete('/receive', 'Delete');
-                // Route::put('/receive/delete', 'DeleteStatus');
+                // Route::delete('/receive', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                // Route::delete('/receive/delete', 'DeleteStatus');
                 Route::get('/receive/search', 'Search');
 
 
@@ -1379,8 +1380,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/payment', 'Show');
                 Route::post('/payment', 'Insert');
                 // Route::put('/payment', 'Update');
-                // Route::delete('/payment', 'Delete');
-                // Route::put('/payment/delete', 'DeleteStatus');
+                // Route::delete('/payment', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                // Route::delete('/payment/delete', 'DeleteStatus');
                 Route::get('/payment/search', 'Search');
 
                 // Common Routes
@@ -1524,8 +1525,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/specialization', 'Show');
                 Route::post('/specialization', 'Insert');
                 Route::put('/specialization', 'Update');
-                Route::delete('/specialization', 'Delete');
-                Route::put('/specialization/delete', 'DeleteStatus');
+                Route::delete('/specialization', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/specialization/delete', 'DeleteStatus');
                 Route::get('/specialization/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -1536,8 +1537,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/floor', 'Show');
                 Route::post('/floor', 'Insert');
                 Route::put('/floor', 'Update');
-                Route::delete('/floor', 'Delete');
-                Route::put('/floor/delete', 'DeleteStatus');
+                Route::delete('/floor', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/floor/delete', 'DeleteStatus');
                 Route::get('/floor/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -1548,8 +1549,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/bedcategory', 'Show');
                 Route::post('/bedcategory', 'Insert');
                 Route::put('/bedcategory', 'Update');
-                Route::delete('/bedcategory', 'Delete');
-                Route::put('/bedcategory/delete', 'DeleteStatus');
+                Route::delete('/bedcategory', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/bedcategory/delete', 'DeleteStatus');
                 Route::get('/bedcategory/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -1560,8 +1561,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/bedlist', 'Show');
                 Route::post('/bedlist', 'Insert');
                 Route::put('/bedlist', 'Update');
-                Route::delete('/bedlist', 'Delete');
-                Route::put('/bedlist/delete', 'DeleteStatus');
+                Route::delete('/bedlist', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/bedlist/delete', 'DeleteStatus');
                 Route::get('/bedlist/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -1572,8 +1573,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/nursingstation', 'Show');
                 Route::post('/nursingstation', 'Insert');
                 Route::put('/nursingstation', 'Update');
-                Route::delete('/nursingstation', 'Delete');
-                Route::put('/nursingstation/delete', 'DeleteStatus');
+                Route::delete('/nursingstation', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/nursingstation/delete', 'DeleteStatus');
                 Route::get('/nursingstation/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -1584,8 +1585,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/groupe', 'Show');
                 Route::post('/groupe', 'Insert');
                 Route::put('/groupe', 'Update');
-                Route::delete('/groupe', 'Delete');
-                Route::put('/groupe/delete', 'DeleteStatus');
+                Route::delete('/groupe', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/groupe/delete', 'DeleteStatus');
             });
             
 
@@ -1595,8 +1596,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/services', 'Show');
                 Route::post('/services', 'Insert');
                 Route::put('/services', 'Update');
-                Route::delete('/services', 'Delete');
-                Route::put('/services/delete', 'DeleteStatus');
+                Route::delete('/services', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/services/delete', 'DeleteStatus');
             });
         }); // End Hospital Setup Routes
 
@@ -1606,8 +1607,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/ptnregistration', 'Show');
             Route::post('/ptnregistration', 'Insert');
             Route::put('/ptnregistration', 'Update');
-            Route::delete('/ptnregistration', 'Delete');
-            Route::put('/ptnregistration/delete', 'DeleteStatus');
+            Route::delete('/ptnregistration', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/ptnregistration/delete', 'DeleteStatus');
             Route::get('/ptnregistration/get', 'Get')->withoutMiddleware(CheckPermission::class);
             // Route::get('/ptnregistration/get/patient', 'GetPatient');
         });
@@ -1619,8 +1620,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/ptnappointment', 'Show');
             Route::post('/ptnappointment', 'Insert');
             Route::put('/ptnappointment', 'Update');
-            Route::delete('/ptnappointment', 'Delete');
-            Route::put('/ptnappointment/delete', 'DeleteStatus');
+            Route::delete('/ptnappointment', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/ptnappointment/delete', 'DeleteStatus');
             Route::get('/ptnappointment/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
 
@@ -1631,8 +1632,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/bedtransfer', 'Show');
             Route::post('/bedtransfer', 'Insert');
             Route::put('/bedtransfer', 'Update');
-            Route::delete('/bedtransfer', 'Delete');
-            Route::put('/bedtransfer/delete', 'DeleteStatus');
+            Route::delete('/bedtransfer', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/bedtransfer/delete', 'DeleteStatus');
         });
 
 
@@ -1642,8 +1643,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/bedstatus', 'Show');
             Route::post('/bedstatus', 'Insert');
             Route::put('/bedstatus', 'Update');
-            Route::delete('/bedstatus', 'Delete');
-            Route::put('/bedstatus/delete', 'DeleteStatus');
+            Route::delete('/bedstatus', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/bedstatus/delete', 'DeleteStatus');
             Route::get('/bedstatus/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
         
@@ -1656,8 +1657,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/doctors', 'Show');
                 Route::post('/doctors', 'Insert');
                 Route::put('/doctors', 'Update');
-                Route::delete('/doctors', 'Delete');
-                Route::put('/doctors/delete', 'DeleteStatus');
+                Route::delete('/doctors', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/doctors/delete', 'DeleteStatus');
                 Route::get('/doctors/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -1668,8 +1669,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/patients', 'Show');
                 Route::post('/patients', 'Insert');
                 Route::put('/patients', 'Update');
-                Route::delete('/patients', 'Delete');
-                Route::put('/patients/delete', 'DeleteStatus');
+                Route::delete('/patients', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/patients/delete', 'DeleteStatus');
                 Route::get('/patients/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
         }); // End Hospital Users Routes
@@ -1683,8 +1684,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/admission', 'Show');
                 Route::post('/admission', 'Insert');
                 Route::put('/admission', 'Update');
-                Route::delete('/admission', 'Delete');
-                Route::put('/admission/delete', 'DeleteStatus');
+                Route::delete('/admission', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/admission/delete', 'DeleteStatus');
             });
             
             
@@ -1694,8 +1695,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/deposit', 'Show');
                 Route::post('/deposit', 'Insert');
                 Route::put('/deposit', 'Update');
-                Route::delete('/deposit', 'Delete');
-                Route::put('/deposit/delete', 'DeleteStatus');
+                Route::delete('/deposit', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/deposit/delete', 'DeleteStatus');
             });
             
             
@@ -1705,8 +1706,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/depositrefund', 'Show');
                 Route::post('/depositrefund', 'Insert');
                 Route::put('/depositrefund', 'Update');
-                Route::delete('/depositrefund', 'Delete');
-                Route::put('/depositrefund/delete', 'DeleteStatus');
+                Route::delete('/depositrefund', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/depositrefund/delete', 'DeleteStatus');
             });
             
             
@@ -1716,8 +1717,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/services', 'Show');
                 Route::post('/services', 'Insert');
                 Route::put('/services', 'Update');
-                Route::delete('/services', 'Delete');
-                Route::put('/services/delete', 'DeleteStatus');
+                Route::delete('/services', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/services/delete', 'DeleteStatus');
                 Route::get('/services/search', 'Search');
             });
         }); // End Hospital Transaction Routes
@@ -1753,8 +1754,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/floor', 'Show');
                 Route::post('/floor', 'Insert');
                 Route::put('/floor', 'Update');
-                Route::delete('/floor', 'Delete');
-                Route::put('/floor/delete', 'DeleteStatus');
+                Route::delete('/floor', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/floor/delete', 'DeleteStatus');
                 Route::get('/floor/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -1765,8 +1766,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/roomcatagory', 'Show');
                 Route::post('/roomcatagory', 'Insert');
                 Route::put('/roomcatagory', 'Update');
-                Route::delete('/roomcatagory', 'Delete');
-                Route::put('/roomcatagory/delete', 'DeleteStatus');
+                Route::delete('/roomcatagory', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/roomcatagory/delete', 'DeleteStatus');
             });
 
 
@@ -1776,8 +1777,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/roomlist', 'Show');
                 Route::post('/roomlist', 'Insert');
                 Route::put('/roomlist', 'Update');
-                Route::delete('/roomlist', 'Delete');
-                Route::put('/roomlist/delete', 'DeleteStatus');
+                Route::delete('/roomlist', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/roomlist/delete', 'DeleteStatus');
                 Route::get('/roomlist/get/all', 'GetAll')->withoutMiddleware(CheckPermission::class);
             });
 
@@ -1788,8 +1789,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/groupe', 'Show');
                 Route::post('/groupe', 'Insert');
                 Route::put('/groupe', 'Update');
-                Route::delete('/groupe', 'Delete');
-                Route::put('/groupe/delete', 'DeleteStatus');
+                Route::delete('/groupe', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/groupe/delete', 'DeleteStatus');
             });
 
 
@@ -1799,8 +1800,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/services', 'Show');
                 Route::post('/services', 'Insert');
                 Route::put('/services', 'Update');
-                Route::delete('/services', 'Delete');
-                Route::put('/services/delete', 'DeleteStatus');
+                Route::delete('/services', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/services/delete', 'DeleteStatus');
             });
         }); // End Hotel Setup Routes
 
@@ -1811,8 +1812,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/booking', 'Show');
             Route::post('/booking', 'Insert');
             Route::put('/booking', 'Update');
-            Route::delete('/booking', 'Delete');
-            Route::put('/booking/delete', 'DeleteStatus');
+            Route::delete('/booking', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/booking/delete', 'DeleteStatus');
             Route::get('/booking/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
 
@@ -1823,8 +1824,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/roomtransfer', 'Show');
             Route::post('/roomtransfer', 'Insert');
             Route::put('/roomtransfer', 'Update');
-            Route::delete('/roomtransfer', 'Delete');
-            Route::put('/roomtransfer/delete', 'DeleteStatus');
+            Route::delete('/roomtransfer', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+            Route::delete('/roomtransfer/delete', 'DeleteStatus');
         });
 
 
@@ -1834,7 +1835,6 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/roomstatus', 'Show');
             Route::post('/roomstatus', 'Insert');
             Route::put('/roomstatus', 'Update');
-            Route::delete('/roomstatus', 'Delete');
             Route::get('/roomstatus/get', 'Get')->withoutMiddleware(CheckPermission::class);
         });
         
@@ -1846,7 +1846,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             Route::get('/billsettlement/edit', 'Edit');
             Route::post('/billsettlement', 'Settlement');
             // Route::put('/billsettlement', 'Update');
-            // Route::delete('/billsettlement', 'Delete');
+            // Route::delete('/billsettlement', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
             // Route::get('/billsettlement/get', 'Get');
         });
         
@@ -1860,8 +1860,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/guests', 'Show');
                 Route::post('/guests', 'Insert');
                 Route::put('/guests', 'Update');
-                Route::delete('/guests', 'Delete');
-                Route::put('/guests/delete', 'DeleteStatus');
+                Route::delete('/guests', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/guests/delete', 'DeleteStatus');
                 Route::get('/guests/get', 'Get')->withoutMiddleware(CheckPermission::class);
                 Route::get('/guests/getall', 'GetAll')->withoutMiddleware(CheckPermission::class);
             });
@@ -1876,8 +1876,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/services', 'Show');
                 Route::post('/services', 'Insert');
                 Route::put('/services', 'Update');
-                Route::delete('/services', 'Delete');
-                Route::put('/services/delete', 'DeleteStatus');
+                Route::delete('/services', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/services/delete', 'DeleteStatus');
                 Route::get('/services/search', 'Search');
                 Route::get('/services/get', 'Get')->withoutMiddleware(CheckPermission::class);
             });
@@ -1889,8 +1889,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/deposits', 'Show');
                 Route::post('/deposits', 'Insert');
                 Route::put('/deposits', 'Update');
-                Route::delete('/deposits', 'Delete');
-                Route::put('/deposits/delete', 'DeleteStatus');
+                Route::delete('/deposits', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/deposits/delete', 'DeleteStatus');
                 Route::get('/deposits/search', 'Search');
             });
             
@@ -1901,8 +1901,8 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
                 Route::get('/refunds', 'Show');
                 Route::post('/refunds', 'Insert');
                 Route::put('/refunds', 'Update');
-                Route::delete('/refunds', 'Delete');
-                Route::put('/refunds/delete', 'DeleteStatus');
+                Route::delete('/refunds', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
+                Route::delete('/refunds/delete', 'DeleteStatus');
                 Route::get('/refunds/search', 'Search');
             });
         }); // End Hotel Transaction Routes
@@ -1939,7 +1939,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             //     Route::post('/purchase', 'Insert');
             //     Route::get('/purchase/edit', 'Edit');
             //     Route::put('/purchase', 'Update');
-            //     Route::delete('/purchase', 'Delete');
+            //     Route::delete('/purchase', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
             //     Route::get('/purchase/search', 'Search');
             //     Route::delete('/purchase/verify', 'Verify');
             // });
@@ -1991,7 +1991,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             //     Route::post('/purchase', 'Insert');
             //     Route::get('/purchase/edit', 'Edit');
             //     Route::put('/purchase', 'Update');
-            //     Route::delete('/purchase', 'Delete');
+            //     Route::delete('/purchase', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
             //     Route::get('/purchase/search', 'Search');
             //     Route::delete('/purchase/verify', 'Verify');
             // });
@@ -2043,7 +2043,7 @@ Route::middleware(['auth:sanctum', ApiValidUser::class, CheckPermission::class])
             //     Route::post('/purchase', 'Insert');
             //     Route::get('/purchase/edit', 'Edit');
             //     Route::put('/purchase', 'Update');
-            //     Route::delete('/purchase', 'Delete');
+            //     Route::delete('/purchase', 'Delete')->withoutMiddleware([CheckPermission::class])->middleware(AdminSuperAdminAccess::class);
             //     Route::get('/purchase/search', 'Search');
             //     Route::delete('/purchase/verify', 'Verify');
             // });

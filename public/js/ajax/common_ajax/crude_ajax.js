@@ -315,7 +315,7 @@ function DeleteStatusAjax(link) {
         $('#confirm_status').prop('disabled', true);
         $.ajax({
             url: `${apiUrl}/${link}/delete`,
-            method: 'PUT',
+            method: 'DELETE',
             data:{ id },
             success: function (res) {
                 if (res.status) {
