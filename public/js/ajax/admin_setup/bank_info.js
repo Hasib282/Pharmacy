@@ -22,7 +22,7 @@ function ShowBanks(res) {
                 `;
             }
             
-            if (role == (1 || 2)) {
+            if (role == 1 || role == 2) {
                 buttons += `
                     <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
                 `;
