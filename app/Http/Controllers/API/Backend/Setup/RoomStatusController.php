@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 
 use App\Models\Bed_List;
 
-
-
 class RoomStatusController extends Controller
 {
     // Show Room Status By Room List

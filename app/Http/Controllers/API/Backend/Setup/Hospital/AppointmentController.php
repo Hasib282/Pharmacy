@@ -4,8 +4,7 @@ namespace App\Http\Controllers\API\Backend\Setup\Hospital;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Mockery\Generator\StringManipulation\Pass\Pass;
-use App\Models\Patient_Registration;
+
 use App\Models\User_Info;
 use App\Models\Appoinment;
 

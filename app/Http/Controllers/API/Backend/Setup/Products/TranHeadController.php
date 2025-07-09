@@ -16,7 +16,7 @@ class TranHeadController extends Controller
         $type = GetTranType($req->segment(2));
 
         $data = filterByCompany(
-                    Transaction_Head::on('mysql')
+                    Transaction_Head::on('mysql_second')
                     ->with('Groupe')
                     ->when($type, function ($query) use ($type) { // when $type is not null
                         $query->whereHas('Groupe', function ($q) use ($type) {
@@ -38,14 +38,14 @@ class TranHeadController extends Controller
     // Insert Transaction Heads
     public function Insert(Request $req){
         $req->validate([
-            "headName" => 'required|unique:mysql.transaction__heads,tran_head_name',
-            "groupe" => 'required|exists:mysql.transaction__groupes,id',
+            "headName" => 'required|unique:mysql_second.transaction__heads,tran_head_name',
+            "groupe" => 'required|exists:mysql_second.transaction__groupes,id',
             "price" => 'nullable|numeric',
         ]);
 
 
 
-        $insert = Transaction_Head::on('mysql')->create([
+        $insert = Transaction_Head::on('mysql_second')->create([
             "tran_head_name" => $req->headName,
             "groupe_id" => $req->groupe,
             "mrp" => $req->price ?? 0,
@@ -53,7 +53,7 @@ class TranHeadController extends Controller
             "company_id" => $req->company,
         ]);
 
-        $data = Transaction_Head::on('mysql')->with('Groupe')->findOrFail($insert->id);
+        $data = Transaction_Head::on('mysql_second')->with('Groupe')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -66,11 +66,11 @@ class TranHeadController extends Controller
 
     // Update Transaction Heads
     public function Update(Request $req){
-        $data = Transaction_Head::on('mysql')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id);
+        $data = Transaction_Head::on('mysql_second')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id);
 
         $req->validate([
-            "headName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($data->id)],
-            "groupe"  => 'required|exists:mysql.transaction__groupes,id',
+            "headName" => ['required',Rule::unique('mysql_second.transaction__heads', 'tran_head_name')->ignore($data->id)],
+            "groupe"  => 'required|exists:mysql_second.transaction__groupes,id',
             "price" => 'nullable|numeric',
         ]);
 
@@ -82,7 +82,7 @@ class TranHeadController extends Controller
             "updated_at" => now()
         ]);
 
-        $updatedData = Transaction_Head::on('mysql')->with('Groupe')->findOrFail($req->id);
+        $updatedData = Transaction_Head::on('mysql_second')->with('Groupe')->findOrFail($req->id);
 
         if($update){
             return response()->json([
@@ -97,7 +97,7 @@ class TranHeadController extends Controller
 
     // Delete Transaction Heads
     public function Delete(Request $req){
-        Transaction_Head::on('mysql')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id)->delete();
+        Transaction_Head::on('mysql_second')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Transaction Heads Deleted Successfully',
@@ -108,10 +108,10 @@ class TranHeadController extends Controller
 
     // Delete Transaction Heads Status
     public function DeleteStatus(Request $req){
-        $data = Transaction_Head::on('mysql')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id);
+        $data = Transaction_Head::on('mysql_second')->whereNotIn('id', ['1','2','3','4','5','6'])->findOrFail($req->id);
         $data->update(['status' => $data->status == 0 ? 1 : 0]);
         
-        $updatedData = Transaction_Head::on('mysql')->with('Groupe')->findOrFail($req->id);
+        $updatedData = Transaction_Head::on('mysql_second')->with('Groupe')->findOrFail($req->id);
         
         return response()->json([
             'status'=> true,
@@ -124,7 +124,7 @@ class TranHeadController extends Controller
 
     // Get Transaction Heads By Name And Groupe
     public function Get(Request $req){
-        $query = Transaction_Head::on('mysql')
+        $query = Transaction_Head::on('mysql_second')
         ->where('tran_head_name', 'like', $req->head . '%')
         ->orderBy('tran_head_name')
         ->take(10);

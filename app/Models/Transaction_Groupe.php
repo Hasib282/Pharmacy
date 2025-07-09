@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction_Groupe extends Model
 {
-    protected $connection = 'mysql';
+    protected $connection = 'mysql_second';
 
     protected $guarded = [];
     public $timestamps = false;

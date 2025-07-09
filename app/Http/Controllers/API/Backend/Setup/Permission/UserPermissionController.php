@@ -5,10 +5,8 @@ namespace App\Http\Controllers\API\Backend\Setup\Permission;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Cache;
 
-use App\Models\Role;
 use App\Models\Login_User;
 use App\Models\Company_Details;
 use App\Models\Permission_User;

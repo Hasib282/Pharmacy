@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item_Form extends Model
 {
-    protected $connection = 'mysql';
+    protected $connection = 'mysql_second';
 
     protected $guarded = [];
     

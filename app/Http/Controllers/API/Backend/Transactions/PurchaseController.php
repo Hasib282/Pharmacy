@@ -125,7 +125,7 @@ class PurchaseController extends Controller
                     $billAdvance = $req->advance;
                     $products = json_decode($req->products, true);
                     foreach($products as $product){
-                        $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
+                        $p = Transaction_Head::on('mysql_second')->findOrFail($product['product']);
                         // Calculate Profit
                         $totalMrp = $product['quantity'] * $product['mrp'];
                         $totalCp = $product['quantity'] * $product['cp'];
@@ -254,7 +254,7 @@ class PurchaseController extends Controller
             if($req->status == 1){
                 $details = Transaction_Detail::on('mysql_second')->where('tran_id', $req->tranid)->get();
                 foreach($details as $item){
-                    $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
+                    $product = Transaction_Head::on('mysql_second')->findOrfail($item->tran_head_id);
                     if($product){
                         $quantity = $product->quantity - $item->quantity;
 
@@ -278,7 +278,7 @@ class PurchaseController extends Controller
             $products = json_decode($req->products, true);
             
             foreach($products as $product) {
-                $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
+                $p = Transaction_Head::on('mysql_second')->findOrFail($product['product']);
                 $quantity = $p->quantity + $product['quantity'];
                 // Calculate Profit
                 $totalMrp = $product['quantity'] * $product['mrp'];
@@ -363,7 +363,7 @@ class PurchaseController extends Controller
             $details = Transaction_Detail::on('mysql_second')->where("tran_id", $data->tran_id)->get();
 
             foreach($details as $item){
-                $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
+                $product = Transaction_Head::on('mysql_second')->findOrfail($item->tran_head_id);
                 if($product){
                     $quantity = $product->quantity - $item->quantity;
 
@@ -481,7 +481,7 @@ class PurchaseController extends Controller
                 
                 
                 foreach($details as $detail){
-                    $p = Transaction_Head::on('mysql')->findOrFail($detail->tran_head_id);
+                    $p = Transaction_Head::on('mysql_second')->findOrFail($detail->tran_head_id);
                     $quantity = $p->quantity + $detail->quantity;
                     $p->update([
                         "quantity" => $quantity, 

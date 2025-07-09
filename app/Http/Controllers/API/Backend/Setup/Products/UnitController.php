@@ -12,7 +12,7 @@ class UnitController extends Controller
     // Show All Item/Product Unit
     public function Show(Request $req){
         $type = GetTranType($req->segment(2));
-        $data = filterByCompany(Item_Unit::on('mysql')->where('type_id', $type))->orderBy('added_at','asc')->get();
+        $data = filterByCompany(Item_Unit::on('mysql_second')->where('type_id', $type))->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -28,13 +28,13 @@ class UnitController extends Controller
             'name' => 'required',
         ]);
 
-        $insert = Item_Unit::on('mysql')->create([
+        $insert = Item_Unit::on('mysql_second')->create([
             'unit_name' => $req->name,
             'company_id' => $req->company,
             'type_id'=> $type,
         ]);
 
-        $data = Item_Unit::on('mysql')->findOrFail($insert->id);
+        $data = Item_Unit::on('mysql_second')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -51,12 +51,12 @@ class UnitController extends Controller
             'name' => 'required',
         ]);
 
-        $update = Item_Unit::on('mysql')->findOrFail($req->id)->update([
+        $update = Item_Unit::on('mysql_second')->findOrFail($req->id)->update([
             'unit_name' => $req->name,
             "updated_at" => now()
         ]);
 
-        $updatedData = Item_Unit::on('mysql')->findOrFail($req->id);
+        $updatedData = Item_Unit::on('mysql_second')->findOrFail($req->id);
 
         if($update){
             return response()->json([
@@ -71,7 +71,7 @@ class UnitController extends Controller
 
     // Delete Item/Product Unit
     public function Delete(Request $req){
-        Item_Unit::on('mysql')->findOrFail($req->id)->delete();
+        Item_Unit::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Unit Deleted Successfully',
@@ -82,10 +82,10 @@ class UnitController extends Controller
 
     // Delete Item/Product Unit Status
     public function DeleteStatus(Request $req){
-        $data = Item_Unit::on('mysql')->findOrFail($req->id);
+        $data = Item_Unit::on('mysql_second')->findOrFail($req->id);
         $data->update(['status' => $data->status == 0 ? 1 : 0]);
         
-        $updatedData = Item_Unit::on('mysql')->findOrFail($req->id);
+        $updatedData = Item_Unit::on('mysql_second')->findOrFail($req->id);
         
         return response()->json([
             'status'=> true,
@@ -100,7 +100,7 @@ class UnitController extends Controller
     public function Get(Request $req){
         $type = GetTranType($req->type);
         $data = filterByCompany(
-                    Item_Unit::on('mysql')
+                    Item_Unit::on('mysql_second')
                     ->where('type_id', $type)
                     ->where('unit_name', 'like', '%'.$req->unit.'%')
                 )

@@ -14,7 +14,7 @@ class StockSummaryController extends Controller
     public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
-        $data = Transaction_Head::on('mysql')
+        $data = Transaction_Head::on('mysql_second')
         ->with("Unit","Form","Manufecturer","Category",'Groupe')
         ->whereHas('Groupe', function ($query) use ($type){
             $query->where('tran_groupe_type', $type);
@@ -34,7 +34,7 @@ class StockSummaryController extends Controller
     public function Search(Request $req){
         $type = GetTranType($req->segment(2));
 
-        $data = Transaction_Head::on('mysql')
+        $data = Transaction_Head::on('mysql_second')
         ->with("Unit","Form","Manufecturer","Category",'Groupe')
         ->whereHas('Groupe', function ($query) use ($type){
             $query->where('tran_groupe_type', $type);
@@ -56,7 +56,7 @@ class StockSummaryController extends Controller
 
         if ($req->query()) {
             if($req->searchOption == 1){
-                $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
+                $data = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
                 ->whereHas('Groupe', function ($query) use ($type){
                     $query->where('tran_groupe_type', $type);
                 })
@@ -65,7 +65,7 @@ class StockSummaryController extends Controller
                 ->get();
             }
             else if($req->searchOption == 2){
-                $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
+                $data = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
                 ->whereHas('Groupe', function ($query) use ($req, $type){
                     $query->where('tran_groupe_type', $type);
                     $query->where('tran_groupe_name', 'like', $req->search . '%');
@@ -74,7 +74,7 @@ class StockSummaryController extends Controller
                 ->get();
             }
             else if($req->searchOption == 3){
-                $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
+                $data = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
                 ->whereHas('Groupe', function ($query) use ($type){
                     $query->where('tran_groupe_type', $type);
                 })
@@ -85,7 +85,7 @@ class StockSummaryController extends Controller
                 ->get();
             }
             else if($req->searchOption == 4){
-                $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
+                $data = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
                 ->whereHas('Groupe', function ($query) use ($type){
                     $query->where('tran_groupe_type', $type);
                 })
@@ -96,7 +96,7 @@ class StockSummaryController extends Controller
                 ->get();
             }
             else if($req->searchOption == 5){
-                $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
+                $data = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
                 ->whereHas('Groupe', function ($query) use ($type){
                     $query->where('tran_groupe_type', $type);
                 })
@@ -108,7 +108,7 @@ class StockSummaryController extends Controller
             }
         }
         else {
-            $data = Transaction_Head::on('mysql')->with("Unit","Form","Manufecturer","Category",'Groupe')
+            $data = Transaction_Head::on('mysql_second')->with("Unit","Form","Manufecturer","Category",'Groupe')
             ->whereHas('Groupe', function ($query) use ($type){
                 $query->where('tran_groupe_type', $type);
             })

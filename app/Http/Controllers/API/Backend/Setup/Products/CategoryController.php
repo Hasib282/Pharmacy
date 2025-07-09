@@ -12,7 +12,7 @@ class CategoryController extends Controller
     // Show All Item/Product Category
     public function Show(Request $req){
         $type = GetTranType($req->segment(2));
-        $data = filterByCompany(Item_Category::on('mysql'))->where('type_id', $type)->orderBy('added_at','asc')->get();
+        $data = filterByCompany(Item_Category::on('mysql_second'))->where('type_id', $type)->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -28,13 +28,13 @@ class CategoryController extends Controller
             'name' => 'required',
         ]);
 
-        $insert = Item_Category::on('mysql')->create([
+        $insert = Item_Category::on('mysql_second')->create([
             'category_name' => $req->name,
             'company_id' => $req->company,
             'type_id'=> $type,
         ]);
 
-        $data = Item_Category::on('mysql')->findOrFail($insert->id);
+        $data = Item_Category::on('mysql_second')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -51,12 +51,12 @@ class CategoryController extends Controller
             'name' => 'required',
         ]);
 
-        $update = Item_Category::on('mysql')->findOrFail($req->id)->update([
+        $update = Item_Category::on('mysql_second')->findOrFail($req->id)->update([
             'category_name' => $req->name,
             "updated_at" => now()
         ]);
 
-        $updatedData = Item_Category::on('mysql')->findOrFail($req->id);
+        $updatedData = Item_Category::on('mysql_second')->findOrFail($req->id);
 
         if($update){
             return response()->json([
@@ -71,7 +71,7 @@ class CategoryController extends Controller
 
     // Delete Item/Product Category
     public function Delete(Request $req){
-        Item_Category::on('mysql')->findOrFail($req->id)->delete();
+        Item_Category::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Category Deleted Successfully',
@@ -82,10 +82,10 @@ class CategoryController extends Controller
 
     // Delete Item/Product Category Status
     public function DeleteStatus(Request $req){
-        $data = Item_Category::on('mysql')->findOrFail($req->id);
+        $data = Item_Category::on('mysql_second')->findOrFail($req->id);
         $data->update(['status' => $data->status == 0 ? 1 : 0]);
         
-        $updatedData = Item_Category::on('mysql')->findOrFail($req->id);
+        $updatedData = Item_Category::on('mysql_second')->findOrFail($req->id);
         
         return response()->json([
             'status'=> true,
@@ -100,7 +100,7 @@ class CategoryController extends Controller
     public function Get(Request $req){
         $type = GetTranType($req->type);
         $data = filterByCompany(
-                        Item_Category::on('mysql')
+                        Item_Category::on('mysql_second')
                         ->where('type_id', $type)
                         ->where('category_name', 'like', '%'.$req->category.'%')
                     )

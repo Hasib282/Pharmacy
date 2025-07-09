@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql')->create('item__manufacturers', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('item__manufacturers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('type_id')->nullable();
             $table->string('manufacturer_name');
@@ -20,11 +20,11 @@ return new class extends Migration
             $table->timestamp('added_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
 
-            $table->foreign('type_id')->references('id')->on('transaction__main__heads')
-                    ->cascadeOnUpdate()
-                    ->cascadeOnDelete();
-            $table->foreign('company_id')->references('company_id')->on('company__details')
-                    ->onUpdate('cascade');
+            // $table->foreign('type_id')->references('id')->on('transaction__main__heads')
+            //         ->cascadeOnUpdate()
+            //         ->cascadeOnDelete();
+            // $table->foreign('company_id')->references('company_id')->on('company__details')
+            //         ->onUpdate('cascade');
         });
     }
 
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql')->dropIfExists('item__manufacturers');
+        Schema::connection('mysql_second')->dropIfExists('item__manufacturers');
     }
 };

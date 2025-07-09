@@ -16,7 +16,7 @@ class ItemFlowStatementController extends Controller
     public function Show(Request $req){
         $type = GetTranType($req->segment(2));
 
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '$type')->orderBy('added_at','asc')->get();
+        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '$type')->orderBy('added_at','asc')->get();
         return response()->json([
             'status'=> true,
             'data' => [],

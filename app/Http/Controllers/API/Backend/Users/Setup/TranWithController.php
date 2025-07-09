@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 use App\Models\Transaction_With;
-use App\Models\Transaction_Main_Head;
 use App\Models\Role;
 
 class TranWithController extends Controller

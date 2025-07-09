@@ -18,7 +18,7 @@ class TransactionGroupeSeeder extends Seeder
         $data = collect(json_decode($json));
 
         $data->each(function($item){
-            Transaction_Groupe::on('mysql')->create([
+            Transaction_Groupe::on('mysql_second')->create([
                 "tran_groupe_name"=>$item->tran_groupe_name,
                 "tran_groupe_type"=>$item->tran_groupe_type,
                 "tran_method"=>$item->tran_method,

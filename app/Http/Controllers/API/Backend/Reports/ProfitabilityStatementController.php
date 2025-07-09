@@ -66,7 +66,7 @@ class ProfitabilityStatementController extends Controller
                 ->get();
             }
             else if($req->searchOption == 2){
-                $heads = Transaction_Head::on('mysql')
+                $heads = Transaction_Head::on('mysql_second')
                 ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
                 ->whereHas('Groupe', function ($q) use ($type){
                     $q->where('tran_groupe_type', $type);

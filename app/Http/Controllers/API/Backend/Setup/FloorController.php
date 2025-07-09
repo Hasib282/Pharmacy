@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\API\Backend\Setup;
 
 use App\Http\Controllers\Controller;
-use App\Models\Floor;
 use Illuminate\Http\Request;
+
+use App\Models\Floor;
 
 class FloorController extends Controller
 {

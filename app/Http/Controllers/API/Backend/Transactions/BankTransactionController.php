@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Transaction_With;
-use App\Models\Transaction_Groupe;
 use App\Models\Transaction_Detail;
 use App\Models\Transaction_Main;
 
@@ -39,7 +37,7 @@ class BankTransactionController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "bank"  => 'required|exists:mysql.banks,user_id',
-            "head"  => 'required|exists:mysql.transaction__heads,id',
+            "head"  => 'required|exists:mysql_second.transaction__heads,id',
             "amount"  => 'required|numeric',
         ]);
 
@@ -106,7 +104,7 @@ class BankTransactionController extends Controller
     public function Update(Request $req){
         $req->validate([
             "bank"  => 'required|exists:mysql.banks,user_id',
-            "head"  => 'required|exists:mysql.transaction__heads,id',
+            "head"  => 'required|exists:mysql_second.transaction__heads,id',
             "amount"  => 'required|numeric',
         ]);
 

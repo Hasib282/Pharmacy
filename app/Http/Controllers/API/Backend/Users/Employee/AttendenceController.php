@@ -5,19 +5,8 @@ namespace App\Http\Controllers\API\Backend\Users\Employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
-use App\Models\User_Info;
 use App\Models\Attendence;
-use App\Models\Pay_Roll_Setup;
-use App\Models\Transaction_With;
-use App\Models\Employee_Personal_Detail;
-use App\Models\Employee_Training_Detail;
-use App\Models\Employee_Education_Detail;
-use App\Models\Employee_Experience_Detail;
-use App\Models\Employee_Organization_Detail;
 
 class AttendenceController extends Controller
 {
@@ -98,10 +87,10 @@ class AttendenceController extends Controller
 
     // Delete Companies Status
     public function DeleteStatus(Request $req){
-        $data = Company_Details::on('mysql')->findOrFail($req->id);
+        $data = Attendence::on('mysql')->findOrFail($req->id);
         $data->update(['status' => $data->status == 0 ? 1 : 0]);
         
-        $updatedData = Company_Details::on('mysql')->with('Type')->findOrFail($req->id);
+        $updatedData = Attendence::on('mysql')->with('Type')->findOrFail($req->id);
         
         return response()->json([
             'status'=> true,

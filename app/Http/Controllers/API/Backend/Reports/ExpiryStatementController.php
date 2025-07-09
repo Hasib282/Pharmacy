@@ -46,7 +46,7 @@ class ExpiryStatementController extends Controller
         ->get();
 
         // if($req->searchOption == 1){
-        //     $heads = Transaction_Head::on('mysql')
+        //     $heads = Transaction_Head::on('mysql_second')
         //     ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
         //     ->whereHas('Groupe', function ($q) use ($type) {
         //         $q->where('tran_groupe_type', $type);
@@ -88,7 +88,7 @@ class ExpiryStatementController extends Controller
 
         if ($req->query()) {
             if($req->searchOption == 1){
-                $heads = Transaction_Head::on('mysql')
+                $heads = Transaction_Head::on('mysql_second')
                 ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
                 ->whereHas('Groupe', function ($q) use ($type) {
                     $q->where('tran_groupe_type', $type);

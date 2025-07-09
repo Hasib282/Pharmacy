@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql')->create('transaction__heads', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('transaction__heads', function (Blueprint $table) {
             $table->id();
             $table->string('tran_head_name');
             $table->unsignedBigInteger('groupe_id')->nullabe();
@@ -30,23 +30,23 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
 
             // Foreignkey Decleration
-            $table->foreign('groupe_id')->references('id')->on('transaction__groupes')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('item__categories')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            $table->foreign('manufacturer_id')->references('id')->on('item__manufacturers')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            $table->foreign('form_id')->references('id')->on('item__forms')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            $table->foreign('unit_id')->references('id')->on('item__units')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            $table->foreign('company_id')->references('company_id')->on('company__details')
-                    ->onUpdate('cascade');
+        //     $table->foreign('groupe_id')->references('id')->on('transaction__groupes')
+        //             ->onUpdate('cascade')
+        //             ->onDelete('cascade');
+        //     $table->foreign('category_id')->references('id')->on('item__categories')
+        //             ->onUpdate('cascade')
+        //             ->onDelete('cascade');
+        //     $table->foreign('manufacturer_id')->references('id')->on('item__manufacturers')
+        //             ->onUpdate('cascade')
+        //             ->onDelete('cascade');
+        //     $table->foreign('form_id')->references('id')->on('item__forms')
+        //             ->onUpdate('cascade')
+        //             ->onDelete('cascade');
+        //     $table->foreign('unit_id')->references('id')->on('item__units')
+        //             ->onUpdate('cascade')
+        //             ->onDelete('cascade');
+        //     $table->foreign('company_id')->references('company_id')->on('company__details')
+        //             ->onUpdate('cascade');
         });
     }
 
@@ -55,6 +55,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql')->dropIfExists('transaction__heads');
+        Schema::connection('mysql_second')->dropIfExists('transaction__heads');
     }
 };

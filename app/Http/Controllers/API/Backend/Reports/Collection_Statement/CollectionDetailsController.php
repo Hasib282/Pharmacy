@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Transaction_Detail;
-use App\Models\Transaction_Head;
 
 class CollectionDetailsController extends Controller
 {

@@ -62,7 +62,7 @@ class HotelBookingController extends Controller
         DB::transaction(function () use ($req, &$data ) {
             $guest_id = $req->guest;
             $groupe = GetTranType($req->segment(2));
-            $head = Transaction_Head::on('mysql')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$req->bed_list)->first();
+            $head = Transaction_Head::on('mysql_second')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$req->bed_list)->first();
 
             //auto generate booking id
             $id = Booking::on('mysql_second')->orderby('booking_id','desc')->first();

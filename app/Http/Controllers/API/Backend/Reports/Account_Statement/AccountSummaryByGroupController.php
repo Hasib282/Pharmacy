@@ -75,7 +75,7 @@ class AccountSummaryByGroupController extends Controller
 
     // Create a Common Function for Getting Data Easily
     public function FindAccountSummaryGroupeStatement($tranType, $req) {
-        // $groupes = Transaction_Groupe::on('mysql')
+        // $groupes = Transaction_Groupe::on('mysql_second')
         //     ->where('tran_groupe_name', 'like', $req->search.'%')
         //     ->orderBy('tran_groupe_name','asc')
         //     ->pluck('id');

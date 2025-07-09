@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
-use App\Models\Transaction_Groupe;
 use App\Models\Transaction_Detail;
 use App\Models\Transaction_Main;
 use App\Models\Transaction_Details_Temp;

@@ -43,7 +43,7 @@ class BedListController extends Controller
 
         // Insert Transaction Head
         $groupe = GetTranType($req->segment(2));
-        Transaction_Head::on('mysql')->create([
+        Transaction_Head::on('mysql_second')->create([
             "tran_head_name" => 'Bed-'.$req->bed_category_name.'-'.$req->bed_list,
             "groupe_id" => $groupe,
             "mrp" => $req->price,
@@ -74,10 +74,10 @@ class BedListController extends Controller
 
         // Update Transaction Head
         $groupe = GetTranType($req->segment(2));
-        // $abc = Transaction_Head::on('mysql')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$data->bed_category->name.'-'.$data->name)->first();
+        // $abc = Transaction_Head::on('mysql_second')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$data->bed_category->name.'-'.$data->name)->first();
         // dd($abc);
 
-        Transaction_Head::on('mysql')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$data->bed_category->name.'-'.$data->name)->update([
+        Transaction_Head::on('mysql_second')->where('groupe_id',$groupe)->where('tran_head_name','Bed-'.$data->bed_category->name.'-'.$data->name)->update([
             "tran_head_name" => 'Bed-'.$req->bed_category_name.'-'.$req->bed_list,
             "mrp" => $req->price
         ]);

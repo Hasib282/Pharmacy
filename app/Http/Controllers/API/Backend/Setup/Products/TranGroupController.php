@@ -17,7 +17,7 @@ class TranGroupController extends Controller
         $type = GetTranType($req->segment(2));
 
         $data = filterByCompany(
-                    Transaction_Groupe::on('mysql')
+                    Transaction_Groupe::on('mysql_second')
                     ->with('Type')
                     ->when($type, function ($query) use ($type) { // when $type is not null
                         $query->where('tran_groupe_type', $type);
@@ -37,19 +37,19 @@ class TranGroupController extends Controller
     // Insert Transaction Group
     public function Insert(Request $req){
         $req->validate([
-            "groupeName" => 'required|unique:mysql.transaction__groupes,tran_groupe_name',
+            "groupeName" => 'required|unique:mysql_second.transaction__groupes,tran_groupe_name',
             "type" => 'required|exists:mysql.transaction__main__heads,id',
             "method" => 'required|in:Receive,Payment,Both',
         ]);
 
-        $insert = Transaction_Groupe::on('mysql')->create([
+        $insert = Transaction_Groupe::on('mysql_second')->create([
             "tran_groupe_name" => $req->groupeName,
             "tran_groupe_type" => $req->type,
             "tran_method" => $req->method,
             "company_id" => $req->company,
         ]);
 
-        $data = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($insert->id);
+        $data = Transaction_Groupe::on('mysql_second')->with('Type')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -62,10 +62,10 @@ class TranGroupController extends Controller
 
     // Update Transaction Group
     public function Update(Request $req){
-        $data = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4'])->findOrFail($req->id);
+        $data = Transaction_Groupe::on('mysql_second')->whereNotIn('id', ['1','2','3','4'])->findOrFail($req->id);
 
         $req->validate([
-            "groupeName" => ['required', Rule::unique('mysql.transaction__groupes', 'tran_groupe_name')->ignore($data->id)],
+            "groupeName" => ['required', Rule::unique('mysql_second.transaction__groupes', 'tran_groupe_name')->ignore($data->id)],
             "type" => 'required|exists:mysql.transaction__main__heads,id',
             "method" => 'required|in:Receive,Payment,Both',
         ]);
@@ -77,7 +77,7 @@ class TranGroupController extends Controller
             "updated_at" => now()
         ]);
 
-        $updatedData = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($req->id);
+        $updatedData = Transaction_Groupe::on('mysql_second')->with('Type')->findOrFail($req->id);
 
         if($update){
             return response()->json([
@@ -92,7 +92,7 @@ class TranGroupController extends Controller
 
     // Delete Transaction Group
     public function Delete(Request $req){
-        Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4'])->findOrFail($req->id)->delete();
+        Transaction_Groupe::on('mysql_second')->whereNotIn('id', ['1','2','3','4'])->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Transaction Groupe Deleted Successfully',
@@ -103,10 +103,10 @@ class TranGroupController extends Controller
 
     // Delete Transaction Group Status
     public function DeleteStatus(Request $req){
-        $data = Transaction_Groupe::on('mysql')->whereNotIn('id', ['1','2','3','4'])->findOrFail($req->id);
+        $data = Transaction_Groupe::on('mysql_second')->whereNotIn('id', ['1','2','3','4'])->findOrFail($req->id);
         $data->update(['status' => $data->status == 0 ? 1 : 0]);
         
-        $updatedData = Transaction_Groupe::on('mysql')->with('Type')->findOrFail($req->id);
+        $updatedData = Transaction_Groupe::on('mysql_second')->with('Type')->findOrFail($req->id);
         
         return response()->json([
             'status'=> true,
@@ -123,7 +123,7 @@ class TranGroupController extends Controller
         $method = $req->method;
 
         $data = filterByCompany(
-                    Transaction_Groupe::on('mysql')
+                    Transaction_Groupe::on('mysql_second')
                     ->when($type, function ($query) use ($type) { // when $type is not null
                         $query->where('tran_groupe_type', $type);
                     })

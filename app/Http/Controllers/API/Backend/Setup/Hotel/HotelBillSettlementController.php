@@ -4,10 +4,8 @@ namespace App\Http\Controllers\API\Backend\Setup\Hotel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Bed_Transfer;
 use App\Models\Booking;
 use App\Models\Transaction_Main;
 use App\Models\Transaction_Detail;

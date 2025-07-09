@@ -18,7 +18,7 @@ class ItemCategorySeeder extends Seeder
         $data = collect(json_decode($json));
 
         $data->each(function($item){
-            Item_Category::on('mysql')->create([
+            Item_Category::on('mysql_second')->create([
                 "category_name"=>$item->category_name,
                 "type_id"=>$item->type_id,
             ]);

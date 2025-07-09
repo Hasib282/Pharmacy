@@ -38,8 +38,8 @@ class AdjustmentController extends Controller
             "method" => 'required',
             "store" => 'required|exists:mysql_second.stores,id',
             "type" => 'required|exists:mysql.transaction__main__heads,id',
-            "groupe" => 'required|exists:mysql.transaction__groupes,id',
-            "product" => 'required|exists:mysql.transaction__heads,id',
+            "groupe" => 'required|exists:mysql_second.transaction__groupes,id',
+            "product" => 'required|exists:mysql_second.transaction__heads,id',
         ]);
 
         $prefixes = [
@@ -59,7 +59,7 @@ class AdjustmentController extends Controller
                 // $id = ($transaction) ? $prefix . str_pad((intval(substr($transaction->tran_id, 3)) + 1), 9, '0', STR_PAD_LEFT) : $prefix . '000000001';
                 
                 // Get Selected Product Details By Id
-                $product = Transaction_Head::on('mysql')->findOrFail($req->product);
+                $product = Transaction_Head::on('mysql_second')->findOrFail($req->product);
                 if ($req->method === "Positive") {
                     $quantity = $product->quantity + $req->quantity;
                     $product->update([
@@ -141,8 +141,8 @@ class AdjustmentController extends Controller
             "method" => 'required',
             "store" => 'required|exists:mysql_second.stores,id',
             "type" => 'required|exists:mysql.transaction__main__heads,id',
-            "groupe" => 'required|exists:mysql.transaction__groupes,id',
-            "product" => 'required|exists:mysql.transaction__heads,id',
+            "groupe" => 'required|exists:mysql_second.transaction__groupes,id',
+            "product" => 'required|exists:mysql_second.transaction__heads,id',
             "quantity" => 'required|numeric'
         ]);
     
@@ -154,7 +154,7 @@ class AdjustmentController extends Controller
     
         if ($transaction) {
             // Find the Product
-            $product = Transaction_Head::on('mysql')->findOrFail($req->product);
+            $product = Transaction_Head::on('mysql_second')->findOrFail($req->product);
 
             // Calculate the new quantity based on the method
             $quantity = $product->quantity;
@@ -213,7 +213,7 @@ class AdjustmentController extends Controller
     public function Delete(Request $req){
         $transaction = Transaction_Detail::on('mysql_second')->findOrFail($req->id);
 
-        $product = Transaction_Head::on('mysql')->findOrFail($transaction->tran_head_id);
+        $product = Transaction_Head::on('mysql_second')->findOrFail($transaction->tran_head_id);
 
         $quantity = $product->quantity;
         if ($transaction->tran_method === "Positive") {

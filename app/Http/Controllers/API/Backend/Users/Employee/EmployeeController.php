@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 use App\Models\User_Info;
 use App\Models\Payroll_Setup;
-use App\Models\Transaction_With;
 use App\Models\Employee_Personal_Detail;
 use App\Models\Employee_Training_Detail;
 use App\Models\Employee_Education_Detail;

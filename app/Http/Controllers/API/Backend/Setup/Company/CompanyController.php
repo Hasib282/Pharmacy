@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 
 use App\Models\Company_Details;
 use App\Models\Company_Type;
-use App\Models\Transaction_Main;
 
 class CompanyController extends Controller
 {

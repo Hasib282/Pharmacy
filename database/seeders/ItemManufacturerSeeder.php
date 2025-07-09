@@ -18,7 +18,7 @@ class ItemManufacturerSeeder extends Seeder
         $data = collect(json_decode($json));
 
         $data->each(function($item){
-            Item_Manufacturer::on('mysql')->create([
+            Item_Manufacturer::on('mysql_second')->create([
                 "manufacturer_name"=>$item->manufacturer_name,
                 "type_id"=>$item->type_id,
             ]);

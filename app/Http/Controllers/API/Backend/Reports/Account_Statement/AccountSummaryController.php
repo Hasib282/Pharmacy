@@ -80,7 +80,7 @@ class AccountSummaryController extends Controller
     // Create a Common Function for Getting Data Easily
     public function FindAccountSummaryStatement($tranType, $req) {
         // if($req->searchOption == 1){
-        //     $groupes = Transaction_Groupe::on('mysql')
+        //     $groupes = Transaction_Groupe::on('mysql_second')
         //     ->where('tran_groupe_name', 'like', '%'.$req->search.'%')
         //     ->orderBy('tran_groupe_name','asc')
         //     ->pluck('id');
@@ -88,7 +88,7 @@ class AccountSummaryController extends Controller
             
         // }
         // else if($req->searchOption == 2){
-        //     $heads = Transaction_Head::on('mysql')
+        //     $heads = Transaction_Head::on('mysql_second')
         //     ->where('tran_head_name', 'like', $req->search.'%')
         //     ->orderBy('tran_head_name','asc')
         //     ->pluck('id'); // Base query

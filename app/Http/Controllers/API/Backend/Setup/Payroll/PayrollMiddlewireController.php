@@ -24,7 +24,7 @@ class PayrollMiddlewireController extends Controller
             ->whereMonth('date', $currentMonth)
             ->get(); 
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
-        $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
+        $heads = Transaction_Head::on('mysql_second')->where('groupe_id','1')->get();
 
         return response()->json([
             'status'=> true,
@@ -44,7 +44,7 @@ class PayrollMiddlewireController extends Controller
 
         $req->validate([
             "user" => 'required|exists:mysql_second.employee__personal__details,employee_id',
-            "head" => 'required|exists:mysql.transaction__heads,id',
+            "head" => 'required|exists:mysql_second.transaction__heads,id',
             "amount" => 'required|numeric',
         ]);
 
@@ -95,7 +95,7 @@ class PayrollMiddlewireController extends Controller
     public function Edit(Request $req){
         $payroll = Payroll_Middlewire::on('mysql_second')->with('Employee', 'Head')->where('id',$req->id)->findOrFail($req->id);
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
-        $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
+        $heads = Transaction_Head::on('mysql_second')->where('groupe_id','1')->get();
         return response()->json([
             'status'=> true,
             'payroll'=>$payroll,
@@ -113,7 +113,7 @@ class PayrollMiddlewireController extends Controller
 
         $req->validate([
             "user" => 'required|exists:mysql_second.employee__personal__details,employee_id',
-            "head" => 'required|exists:mysql.transaction__heads,id',
+            "head" => 'required|exists:mysql_second.transaction__heads,id',
             "amount" => 'required|numeric',
         ]);
 
@@ -218,7 +218,7 @@ class PayrollMiddlewireController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $head = Transaction_Head::on('mysql')
+            $head = Transaction_Head::on('mysql_second')
             ->where('tran_head_name', 'like', '%'.$req->search.'%')
             ->orderby('tran_head_name')
             ->pluck('id');

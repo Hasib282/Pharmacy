@@ -180,9 +180,9 @@ class IssueController extends Controller
                             $billAdvance -= $advance;
                             $billNet -= $amount;
 
-                            $heads = Transaction_Head::on('mysql')->where('id',$product['product'])->first();
+                            $heads = Transaction_Head::on('mysql_second')->where('id',$product['product'])->first();
                             $remain_quantity = $heads->quantity - $product['quantity'];
-                            Transaction_Head::on('mysql')->findOrFail($product['product'])->update([
+                            Transaction_Head::on('mysql_second')->findOrFail($product['product'])->update([
                                 "quantity" => $remain_quantity
                             ]);
                         }
@@ -300,9 +300,9 @@ class IssueController extends Controller
                                 }
                             }
             
-                            $heads = Transaction_Head::on('mysql')->where('id',$product['product'])->first();
+                            $heads = Transaction_Head::on('mysql_second')->where('id',$product['product'])->first();
                             $remain_quantity = $heads->quantity - $product['quantity'];
-                            Transaction_Head::on('mysql')->findOrFail($product['product'])->update([
+                            Transaction_Head::on('mysql_second')->findOrFail($product['product'])->update([
                                 "quantity" => $remain_quantity
                             ]);
                         }
@@ -390,7 +390,7 @@ class IssueController extends Controller
             // Update the data and delete previous transaction
             $details = Transaction_Detail::on('mysql_second')->where('tran_id', $req->tranid)->get();
             foreach($details as $item){
-                $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
+                $product = Transaction_Head::on('mysql_second')->findOrfail($item->tran_head_id);
                 if($product){
                     $quantity = $product->quantity + $item->quantity;
 
@@ -478,9 +478,9 @@ class IssueController extends Controller
                     $billAdvance -= $advance;
                     $billNet -= $amount;
 
-                    $heads = Transaction_Head::on('mysql')->where('id',$product['product'])->first();
+                    $heads = Transaction_Head::on('mysql_second')->where('id',$product['product'])->first();
                     $remain_quantity = $heads->quantity - $product['quantity'];
-                    Transaction_Head::on('mysql')->findOrFail($product['product'])->update([
+                    Transaction_Head::on('mysql_second')->findOrFail($product['product'])->update([
                         "quantity" => $remain_quantity
                     ]);
                 }
@@ -598,9 +598,9 @@ class IssueController extends Controller
                         }
                     }
     
-                    $heads = Transaction_Head::on('mysql')->where('id',$product['product'])->first();
+                    $heads = Transaction_Head::on('mysql_second')->where('id',$product['product'])->first();
                     $remain_quantity = $heads->quantity - $product['quantity'];
-                    Transaction_Head::on('mysql')->findOrFail($product['product'])->update([
+                    Transaction_Head::on('mysql_second')->findOrFail($product['product'])->update([
                         "quantity" => $remain_quantity
                     ]);
                 }
@@ -624,7 +624,7 @@ class IssueController extends Controller
         $details = Transaction_Detail::on('mysql_second')->where("tran_id", $data->tran_id)->get();
         DB::transaction(function () use ($req, $details, &$data) {
             foreach($details as $item){
-                $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
+                $product = Transaction_Head::on('mysql_second')->findOrfail($item->tran_head_id);
                 if($product){
                     $quantity = $product->quantity + $item->quantity;
 

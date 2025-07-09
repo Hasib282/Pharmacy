@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\Login_User;
 use App\Models\User_Info;
-use App\Models\Location_Info;
-use App\Models\Transaction_With;
 use App\Models\Employee_Personal_Detail;
 
 class PersonalDetailsController extends Controller

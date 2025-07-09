@@ -15,7 +15,7 @@ class ProductsController extends Controller
     // Show All Item/Products
     public function Show(Request $req){
         // Update Product Quantity
-        // DB::connection('mysql')
+        // DB::connection('mysql_second')
         // ->table('transaction__heads as h')
         // ->join(DB::raw("(SELECT tran_head_id, SUM(IF(tran_method = 'Purchase',quantity_actual,0)) 
         // -SUM(IF(tran_method = 'Issue',quantity_actual,0)) 
@@ -31,7 +31,7 @@ class ProductsController extends Controller
         $type = GetTranType($req->segment(2));
 
         $data = filterByCompany(
-                    Transaction_Head::on('mysql')
+                    Transaction_Head::on('mysql_second')
                     ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
                     ->whereHas('Groupe', function ($query) use($type){
                         $query->where('tran_groupe_type', $type);
@@ -51,15 +51,15 @@ class ProductsController extends Controller
     // Insert Item/Products
     public function Insert(Request $req){
         $req->validate([
-            "productName" => 'required|unique:mysql.transaction__heads,tran_head_name',
-            "groupe" => 'required|exists:mysql.transaction__groupes,id',
-            "category" => 'nullable|exists:mysql.item__categories,id',
-            "manufacturer" => 'nullable|exists:mysql.item__manufacturers,id',
-            "form" => 'nullable|exists:mysql.item__forms,id',
-            "unit" => 'nullable|exists:mysql.item__units,id',
+            "productName" => 'required|unique:mysql_second.transaction__heads,tran_head_name',
+            "groupe" => 'required|exists:mysql_second.transaction__groupes,id',
+            "category" => 'nullable|exists:mysql_second.item__categories,id',
+            "manufacturer" => 'nullable|exists:mysql_second.item__manufacturers,id',
+            "form" => 'nullable|exists:mysql_second.item__forms,id',
+            "unit" => 'nullable|exists:mysql_second.item__units,id',
         ]);
 
-        $insert = Transaction_Head::on('mysql')->create([
+        $insert = Transaction_Head::on('mysql_second')->create([
             "tran_head_name" => $req->productName,
             "groupe_id" => $req->groupe,
             "category_id" => $req->category,
@@ -69,7 +69,7 @@ class ProductsController extends Controller
             'company_id' => $req->company,
         ]);
 
-        $data = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($insert->id);
+        $data = Transaction_Head::on('mysql_second')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($insert->id);
         
         return response()->json([
             'status'=> true,
@@ -85,12 +85,12 @@ class ProductsController extends Controller
         $data = Transaction_Head::findOrFail($req->id);
         
         $req->validate([
-            "productName" => ['required',Rule::unique('mysql.transaction__heads', 'tran_head_name')->ignore($req->id)],
-            "groupe" => 'required|exists:mysql.transaction__groupes,id',
-            "category" => 'nullable|exists:mysql.item__categories,id',
-            "manufacturer" => 'nullable|exists:mysql.item__manufacturers,id',
-            "form" => 'nullable|exists:mysql.item__forms,id',
-            "unit" => 'nullable|exists:mysql.item__units,id',
+            "productName" => ['required',Rule::unique('mysql_second.transaction__heads', 'tran_head_name')->ignore($req->id)],
+            "groupe" => 'required|exists:mysql_second.transaction__groupes,id',
+            "category" => 'nullable|exists:mysql_second.item__categories,id',
+            "manufacturer" => 'nullable|exists:mysql_second.item__manufacturers,id',
+            "form" => 'nullable|exists:mysql_second.item__forms,id',
+            "unit" => 'nullable|exists:mysql_second.item__units,id',
             "quantity" => 'required|numeric',
             "cp" => 'required|numeric',
             "mrp" => 'required|numeric',
@@ -110,7 +110,7 @@ class ProductsController extends Controller
             "updated_at" => now()
         ]);
 
-        $updatedData = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
+        $updatedData = Transaction_Head::on('mysql_second')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
 
         if($update){
             return response()->json([
@@ -125,7 +125,7 @@ class ProductsController extends Controller
 
     // Delete Item/Products
     public function Delete(Request $req){
-        Transaction_Head::on('mysql')->findOrFail($req->id)->delete();
+        Transaction_Head::on('mysql_second')->findOrFail($req->id)->delete();
         return response()->json([
             'status'=> true,
             'message' => 'Product Deleted Successfully',
@@ -136,10 +136,10 @@ class ProductsController extends Controller
 
     // Delete Item/Products Status
     public function DeleteStatus(Request $req){
-        $data = Transaction_Head::on('mysql')->findOrFail($req->id);
+        $data = Transaction_Head::on('mysql_second')->findOrFail($req->id);
         $data->update(['status' => $data->status == 0 ? 1 : 0]);
         
-        $updatedData = Transaction_Head::on('mysql')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
+        $updatedData = Transaction_Head::on('mysql_second')->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')->findOrFail($req->id);
         
         return response()->json([
             'status'=> true,
@@ -153,7 +153,7 @@ class ProductsController extends Controller
     // Get Product By Groupe
     public function Get(Request $req){
         // Update Product Quantity
-        // DB::connection('mysql')
+        // DB::connection('mysql_second')
         // ->table('transaction__heads as h')
         // ->join(DB::raw("(SELECT tran_head_id, SUM(IF(tran_method = 'Purchase',quantity_actual,0)) 
         // -SUM(IF(tran_method = 'Issue',quantity_actual,0)) 
@@ -167,7 +167,7 @@ class ProductsController extends Controller
         // ->update(['h.quantity' => DB::raw('x.balance')]);
 
         $data = filterByCompany(
-                    Transaction_Head::on('mysql')
+                    Transaction_Head::on('mysql_second')
                     ->with("Unit","Form","Manufecturer","Category")
                     ->where('tran_head_name', 'like', $req->product.'%')
                     ->whereIn('groupe_id', $req->groupe)
@@ -203,7 +203,7 @@ class ProductsController extends Controller
     // Get Product List
     public function GetProductList(Request $req){
         $heads = filterByCompany(
-                    Transaction_Head::on('mysql')
+                    Transaction_Head::on('mysql_second')
                     ->with("Unit","Form","Manufecturer","Category")
                     ->where('tran_head_name', 'like', $req->product.'%')
                     ->whereIn('groupe_id', $req->groupe)

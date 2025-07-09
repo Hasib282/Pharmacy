@@ -18,7 +18,7 @@ class ItemUnitSeeder extends Seeder
         $data = collect(json_decode($json));
 
         $data->each(function($item){
-            Item_Unit::on('mysql')->create([
+            Item_Unit::on('mysql_second')->create([
                 "unit_name"=>$item->unit_name,
                 "type_id"=>$item->type_id,
             ]);

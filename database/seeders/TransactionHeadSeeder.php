@@ -18,7 +18,7 @@ class TransactionHeadSeeder extends Seeder
         $data = collect(json_decode($json));
 
         $data->each(function($item){
-            Transaction_Head::on('mysql')->create([
+            Transaction_Head::on('mysql_second')->create([
                 "tran_head_name" => $item->tran_head_name,
                 "groupe_id" => $item->groupe_id,
                 "category_id" => $item->category_id,

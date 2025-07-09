@@ -54,7 +54,7 @@ class StockDetailController extends Controller
         $type = GetTranType($req->segment(2));
 
         if ($req->query()) {
-            $query = Transaction_Head::on('mysql')
+            $query = Transaction_Head::on('mysql_second')
             ->with('Groupe', 'Category', 'Manufecturer', 'Form', 'Unit', 'Store')
             ->whereHas('Groupe', function ($q) use ($type){
                 $q->where('tran_groupe_type', $type);

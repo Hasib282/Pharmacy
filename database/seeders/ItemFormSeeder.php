@@ -18,7 +18,7 @@ class ItemFormSeeder extends Seeder
         $data = collect(json_decode($json));
 
         $data->each(function($item){
-            Item_Form::on('mysql')->create([
+            Item_Form::on('mysql_second')->create([
                 "form_name"=>$item->form_name,
                 "type_id"=>$item->type_id,
             ]);

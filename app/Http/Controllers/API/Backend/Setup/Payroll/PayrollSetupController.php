@@ -15,7 +15,7 @@ class PayrollSetupController extends Controller
     public function Show(Request $req){
         $data = Payroll_Setup::on('mysql_second')->with('Employee','Head')->orderBy('emp_id','asc')->get();
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
-        $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
+        $heads = Transaction_Head::on('mysql_second')->where('groupe_id','1')->get();
         return response()->json([
             'status'=> true,
             'data' => $data,
@@ -30,7 +30,7 @@ class PayrollSetupController extends Controller
     public function Insert(Request $req){
         $req->validate([
             "user" => 'required|exists:mysql_second.employee__personal__details,employee_id',
-            "head" => 'required|exists:mysql.transaction__heads,id',
+            "head" => 'required|exists:mysql_second.transaction__heads,id',
             "amount" => 'required|numeric',
         ]);
 
@@ -70,7 +70,7 @@ class PayrollSetupController extends Controller
     public function Edit(Request $req){
         $payroll = Payroll_Setup::on('mysql_second')->with('Employee')->where('id',$req->id)->findOrFail($req->id);
         $tranwith = Transaction_With::on('mysql_second')->where('user_role', 3)->get();
-        $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
+        $heads = Transaction_Head::on('mysql_second')->where('groupe_id','1')->get();
         return response()->json([
             'status' => true,
             'payroll'=>$payroll,
@@ -85,7 +85,7 @@ class PayrollSetupController extends Controller
     public function Update(Request $req){
         $req->validate([
             "user" => 'required|exists:mysql_second.employee__personal__details,employee_id',
-            "head" => 'required|exists:mysql.transaction__heads,id',
+            "head" => 'required|exists:mysql_second.transaction__heads,id',
             "amount" => 'required|numeric',
         ]);
 
@@ -163,7 +163,7 @@ class PayrollSetupController extends Controller
             ->paginate(15);
         }
         else if($req->searchOption == 2){
-            $head = Transaction_Head::on('mysql')
+            $head = Transaction_Head::on('mysql_second')
             ->where('tran_head_name', 'like', '%'.$req->search.'%')
             ->orderby('tran_head_name')
             ->pluck('id');
@@ -185,7 +185,7 @@ class PayrollSetupController extends Controller
 
     // Get Payroll Category
     public function Get(){
-        $data = Transaction_Head::on('mysql')->where('groupe_id','1')->select('id','tran_head_name')->get();
+        $data = Transaction_Head::on('mysql_second')->where('groupe_id','1')->select('id','tran_head_name')->get();
         return response()->json([
             'status' => true,
             'data'=> $data,

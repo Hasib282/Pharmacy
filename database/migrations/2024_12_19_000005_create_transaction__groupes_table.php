@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql')->create('transaction__groupes', function (Blueprint $table) {
+        Schema::connection('mysql_second')->create('transaction__groupes', function (Blueprint $table) {
             $table->id();
             $table->string('tran_groupe_name');
             $table->unsignedBigInteger('tran_groupe_type');
@@ -22,18 +22,18 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
 
             // Foreignkey Decleration
-            $table->foreign('tran_groupe_type')->references('id')->on('transaction__main__heads')
-                    ->onUpdate('cascade');
-            $table->foreign('company_id')->references('company_id')->on('company__details')
-                    ->onUpdate('cascade');
+            // $table->foreign('tran_groupe_type')->references('id')->on('transaction__main__heads')
+            //         ->onUpdate('cascade');
+            // $table->foreign('company_id')->references('company_id')->on('company__details')
+            //         ->onUpdate('cascade');
         });
     }
 
     /**
      * Reverse the migrations.
-     */
+    */
     public function down(): void
     {
-        Schema::connection('mysql')->dropIfExists('transaction__groupes');
+        Schema::connection('mysql_second')->dropIfExists('transaction__groupes');
     }
 };

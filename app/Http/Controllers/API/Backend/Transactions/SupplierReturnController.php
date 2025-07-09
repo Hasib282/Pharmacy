@@ -123,7 +123,7 @@ class SupplierReturnController extends Controller
                     foreach($products as $product){
                         $totalAmount = $product['totAmount'];
                         // Update Quantity in Product Table
-                        $p = Transaction_Head::on('mysql')->findOrFail($product['product']);
+                        $p = Transaction_Head::on('mysql_second')->findOrFail($product['product']);
                         $quantity = $p->quantity - $product['quantity'];
                         $p->update([
                             "quantity" => $quantity
@@ -230,7 +230,7 @@ class SupplierReturnController extends Controller
         $details = Transaction_Detail::on('mysql_second')->where("tran_id", $data->tran_id)->get();
         DB::transaction(function () use ($req, $details, &$data) {
             foreach($details as $item){
-                $product = Transaction_Head::on('mysql')->findOrfail($item->tran_head_id);
+                $product = Transaction_Head::on('mysql_second')->findOrfail($item->tran_head_id);
                 if($product){
                     $quantity = $product->quantity - $item->quantity;
 

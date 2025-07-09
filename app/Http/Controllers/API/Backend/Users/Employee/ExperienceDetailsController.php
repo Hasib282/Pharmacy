@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 use App\Models\User_Info;
 use App\Models\Employee_Experience_Detail;
-use App\Models\Employee_Personal_Detail;
 
 class ExperienceDetailsController extends Controller
 {

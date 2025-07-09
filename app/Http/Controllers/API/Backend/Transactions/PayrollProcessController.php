@@ -181,7 +181,7 @@ class PayrollProcessController extends Controller
         ->orderBy('emp_id')
         ->get();
         
-        $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
+        $heads = Transaction_Head::on('mysql_second')->where('groupe_id','1')->get();
         return response()->json([
             'status'=> 'success',
             'data'=> view('hr.payroll.details',compact('payrolls'))->render(),
@@ -334,7 +334,7 @@ class PayrollProcessController extends Controller
     //     ->orderBy('emp_id')
     //     ->get();
         
-    //     $heads = Transaction_Head::on('mysql')->where('groupe_id','1')->get();
+    //     $heads = Transaction_Head::on('mysql_second')->where('groupe_id','1')->get();
     //     return response()->json([
     //         'status'=> 'success',
     //         'data'=> view('hr.payroll.details',compact('payrolls'))->render(),
