@@ -16,12 +16,12 @@ function ShowBankWithdraws(res) {
                 buttons += `
                 <button data-id="${row.id}" id="delete_status" class="icon-wrapper" title="Toggle Delete"><i class="fa-solid fa-trash-arrow-up main-icon"></i><i class="fa-solid fa-arrows-rotate ring-icon"></i></button>
                 `;
-            }
-            
-            if (role == 1 || role == 2) {
-                buttons += `
-                    <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
-                `;
+                
+                if (role == 1 || role == 2) {
+                    buttons += `
+                        <button data-id="${row.id}" id="delete"><i class="fas fa-trash"></i></button>
+                    `;
+                }
             }
         
             return buttons;
@@ -119,7 +119,7 @@ $(document).ready(function () {
         $('#updateHead').attr('data-id', item.tran_head_id);
         $('#updateHead').attr('data-group', item.tran_groupe_id);
         
-        $('#updateBank').attr('data-id',item.tran_bank);
+        $('#updateBank').attr('data-id',item.tran_user);
         $('#updateBank').val(item.bank.name);
 
         $('#updateAmount').val(item.amount);

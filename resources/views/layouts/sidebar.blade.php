@@ -234,7 +234,7 @@
 
                     @if(auth()->user()->hasPermission(291))
                     <li class="sub-menu-item" data-url="{{route('show.corporate')}}">
-                        <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'advance_receive') ? 'active':''}}">
+                        <div class="menu-title  {{ (Request::segment(1) == 'admin' && Request::segment(2) == 'corporate') ? 'active':''}}">
                             <p>
                                 <i class="fa-solid fa-building-columns"></i>
                                 Corporate

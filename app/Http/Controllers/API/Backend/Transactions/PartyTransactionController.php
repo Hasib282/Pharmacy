@@ -31,7 +31,7 @@ class PartyTransactionController extends Controller
         ->orderBy('tran_date','asc')
         ->get();
         
-        $groupes = Transaction_Groupe::on('mysql')->where('tran_groupe_type', '2')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
+        $groupes = Transaction_Groupe::on('mysql_second')->where('tran_groupe_type', '2')->whereIn('tran_method',["Receive",'Both'])->orderBy('added_at','asc')->get();
         
         
         if (!isset($type)) {
